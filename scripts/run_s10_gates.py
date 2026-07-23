@@ -63,6 +63,19 @@ def redacted(value: str) -> str:
     return value.replace(str(ROOT), "<PROJECT_ROOT>").replace(str(Path.home()), "<HOME>")
 
 
+def redacted_value(value: Any) -> Any:
+    """Redact host paths recursively before structured evidence is persisted."""
+    if isinstance(value, str):
+        return redacted(value)
+    if isinstance(value, dict):
+        return {key: redacted_value(item) for key, item in value.items()}
+    if isinstance(value, list):
+        return [redacted_value(item) for item in value]
+    if isinstance(value, tuple):
+        return tuple(redacted_value(item) for item in value)
+    return value
+
+
 def command_log(results: list[CommandResult]) -> str:
     sections: list[str] = []
     for result in results:
@@ -269,7 +282,9 @@ def main() -> int:
     )
     if (STAGE_ROOT / "test-results.xml").is_file():
         store.index_existing("test-results.xml", "application/xml")
-    secret = run(("uv", "run", "python", "scripts/check_secrets.py", "--format", "json"), commands)
+    pre_secret = run(
+        ("uv", "run", "python", "scripts/check_secrets.py", "--format", "json"), commands
+    )
     links = run(("uv", "run", "python", "scripts/check_markdown_links.py"), commands)
     license_check = run(("uv", "run", "python", "scripts/check_license.py"), commands)
     diff_check = run(("git", "diff", "--check"), commands)
@@ -397,13 +412,13 @@ def main() -> int:
             commands,
         )
         deployed_files = len([path for path in deploy_dir.rglob("*") if path.is_file()])
-        smoke = {
+        smoke = redacted_value({
             "valid": mock_run.ok and mock_verify.ok and deploy.ok and deployed_files == 7,
             "mock": parse_json(mock_run),
             "mock_verification": parse_json(mock_verify),
             "deploy": parse_json(deploy),
             "deployed_files": deployed_files,
-        }
+        })
 
         dist = temporary_root / "dist"
         build = run(("uv", "build", "--out-dir", str(dist)), commands)
@@ -511,11 +526,11 @@ def main() -> int:
             "module_audit": module_result,
         },
     )
-    secret_payload = parse_json(secret)
+    pre_secret_payload = parse_json(pre_secret)
     store.write_json(
         "evidence/security-license-docs.json",
         {
-            "secret_scan": secret_payload,
+            "secret_scan": pre_secret_payload,
             "markdown_links": links.ok,
             "license_attribution": license_check.ok,
             "git_diff_check": diff_check.ok,
@@ -533,6 +548,26 @@ def main() -> int:
     )
     store.write_json("evidence/fresh-install.json", fresh_install)
     store.write_json("evidence/reproduction-smoke.json", smoke)
+
+    # The first scan validates the incoming public tree. Run a second scan after
+    # generating release evidence so S10 cannot certify artifacts that it did
+    # not inspect itself.
+    secret = run(
+        ("uv", "run", "python", "scripts/check_secrets.py", "--format", "json"), commands
+    )
+    secret_payload = parse_json(secret)
+    store.write_json(
+        "evidence/security-license-docs.json",
+        {
+            "secret_scan": secret_payload,
+            "pre_generation_secret_scan": pre_secret_payload,
+            "markdown_links": links.ok,
+            "license_attribution": license_check.ok,
+            "git_diff_check": diff_check.ok,
+            "bilingual_readme": (ROOT / "README.md").is_file()
+            and (ROOT / "README_zh.md").is_file(),
+        },
+    )
 
     pytest_count = 0
     if (STAGE_ROOT / "test-results.xml").is_file():

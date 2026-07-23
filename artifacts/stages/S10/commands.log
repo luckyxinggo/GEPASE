@@ -4061,6 +4061,7 @@ exit_code=0
 ?? tests/statistics/
 ?? tests/store/
 ?? tests/unit/test_runtime.py
+?? tests/unit/test_s10_gates.py
 [stderr]
 
 
@@ -4089,9 +4090,9 @@ $ uv run pytest -q --junitxml=<PROJECT_ROOT>/artifacts/stages/S10/test-results.x
 exit_code=0
 [stdout]
 ........................................................................ [ 47%]
-........................................................................ [ 95%]
-.......                                                                  [100%]
-151 passed in 7.46s
+........................................................................ [ 94%]
+........                                                                 [100%]
+152 passed in 7.07s
 [stderr]
 
 
@@ -4101,7 +4102,7 @@ exit_code=0
 {
   "findings": [],
   "include_generated": true,
-  "scanned_files": 5833,
+  "scanned_files": 5834,
   "tracked_skills_test_files": 0,
   "tracked_skills_test_paths": [],
   "valid": true
@@ -4664,13 +4665,13 @@ exit_code=0
 [stderr]
 
 
-$ uv run gepase mock run --config configs/examples/mock.yaml --output <PROJECT_ROOT>/artifacts/local/s10-release-rmv4j1sg/mock --format json
+$ uv run gepase mock run --config configs/examples/mock.yaml --output <PROJECT_ROOT>/artifacts/local/s10-release-sl2omw39/mock --format json
 exit_code=0
 [stdout]
 {
   "config_hash": "dc83c452b115095fc7a221e51f9c560281e1542ed13dadd358b999e75e1ef122",
   "schema_version": "1.0.0",
-  "source_tree_hash": "1bd8c7f65ef353b588e96af837c4c9874fbd3b74436d8c8804c5042246dc6505",
+  "source_tree_hash": "017eb83c2581dceea761bc56e0994a43b0706bea9db0e5cbe8f09587e8102579",
   "summary": {
     "passed": 2,
     "total": 2
@@ -4693,7 +4694,7 @@ exit_code=0
 [stderr]
 
 
-$ uv run gepase artifact verify <PROJECT_ROOT>/artifacts/local/s10-release-rmv4j1sg/mock --format json
+$ uv run gepase artifact verify <PROJECT_ROOT>/artifacts/local/s10-release-sl2omw39/mock --format json
 exit_code=0
 [stdout]
 {
@@ -4707,51 +4708,51 @@ exit_code=0
 [stderr]
 
 
-$ uv run gepase report deploy --config configs/canaries/slack-gif-creator-r5.json --report-dir artifacts/runs/r5-slack-gif-creator-report --output <PROJECT_ROOT>/artifacts/local/s10-release-rmv4j1sg/deployed-package --format json
+$ uv run gepase report deploy --config configs/canaries/slack-gif-creator-r5.json --report-dir artifacts/runs/r5-slack-gif-creator-report --output <PROJECT_ROOT>/artifacts/local/s10-release-sl2omw39/deployed-package --format json
 exit_code=0
 [stdout]
 {
   "candidate_id": "candidate-04b26dff2bc83b82334bf184",
   "files": 7,
-  "output": "<PROJECT_ROOT>/artifacts/local/s10-release-rmv4j1sg/deployed-package",
+  "output": "<PROJECT_ROOT>/artifacts/local/s10-release-sl2omw39/deployed-package",
   "valid": true
 }
 [stderr]
 
 
-$ uv build --out-dir <PROJECT_ROOT>/artifacts/local/s10-release-rmv4j1sg/dist
+$ uv build --out-dir <PROJECT_ROOT>/artifacts/local/s10-release-sl2omw39/dist
 exit_code=0
 [stdout]
 
 [stderr]
 Building source distribution...
 Building wheel from source distribution...
-Successfully built artifacts/local/s10-release-rmv4j1sg/dist/gepase-0.1.0.tar.gz
-Successfully built artifacts/local/s10-release-rmv4j1sg/dist/gepase-0.1.0-py3-none-any.whl
+Successfully built artifacts/local/s10-release-sl2omw39/dist/gepase-0.1.0.tar.gz
+Successfully built artifacts/local/s10-release-sl2omw39/dist/gepase-0.1.0-py3-none-any.whl
 
-$ <PROJECT_ROOT>/.venv/bin/python3 -m venv <PROJECT_ROOT>/artifacts/local/s10-release-rmv4j1sg/venv
+$ <PROJECT_ROOT>/.venv/bin/python3 -m venv <PROJECT_ROOT>/artifacts/local/s10-release-sl2omw39/venv
 exit_code=0
 [stdout]
 
 [stderr]
 
 
-$ uv pip install --python <PROJECT_ROOT>/artifacts/local/s10-release-rmv4j1sg/venv/bin/python --offline <PROJECT_ROOT>/artifacts/local/s10-release-rmv4j1sg/dist/gepase-0.1.0-py3-none-any.whl
+$ uv pip install --python <PROJECT_ROOT>/artifacts/local/s10-release-sl2omw39/venv/bin/python --offline <PROJECT_ROOT>/artifacts/local/s10-release-sl2omw39/dist/gepase-0.1.0-py3-none-any.whl
 exit_code=0
 [stdout]
 
 [stderr]
-Using Python 3.13.13 environment at: artifacts/local/s10-release-rmv4j1sg/venv
+Using Python 3.13.13 environment at: artifacts/local/s10-release-sl2omw39/venv
 WARN typer==0.27.0 needs to be downloaded from a registry
 WARN typer needs to be downloaded from a registry
 Resolved 20 packages in 14ms
-Prepared 1 package in 18ms
-Installed 20 packages in 36ms
+Prepared 1 package in 17ms
+Installed 20 packages in 18ms
  + annotated-doc==0.0.4
  + annotated-types==0.7.0
  + attrs==26.1.0
  + gepa==0.1.4
- + gepase==0.1.0 (from file://<PROJECT_ROOT>/artifacts/local/s10-release-rmv4j1sg/dist/gepase-0.1.0-py3-none-any.whl)
+ + gepase==0.1.0 (from file://<PROJECT_ROOT>/artifacts/local/s10-release-sl2omw39/dist/gepase-0.1.0-py3-none-any.whl)
  + jsonschema==4.26.0
  + jsonschema-specifications==2025.9.1
  + markdown-it-py==4.2.0
@@ -4768,14 +4769,14 @@ Installed 20 packages in 36ms
  + typing-extensions==4.16.0
  + typing-inspection==0.4.2
 
-$ <PROJECT_ROOT>/artifacts/local/s10-release-rmv4j1sg/venv/bin/gepase --version
+$ <PROJECT_ROOT>/artifacts/local/s10-release-sl2omw39/venv/bin/gepase --version
 exit_code=0
 [stdout]
 0.1.0
 [stderr]
 
 
-$ <PROJECT_ROOT>/artifacts/local/s10-release-rmv4j1sg/venv/bin/gepase --help
+$ <PROJECT_ROOT>/artifacts/local/s10-release-sl2omw39/venv/bin/gepase --help
 exit_code=0
 [stdout]
                                                                                 
@@ -4817,7 +4818,7 @@ exit_code=0
 [stderr]
 
 
-$ <PROJECT_ROOT>/artifacts/local/s10-release-rmv4j1sg/venv/bin/gepase config validate configs/examples/mock.yaml --format json
+$ <PROJECT_ROOT>/artifacts/local/s10-release-sl2omw39/venv/bin/gepase config validate configs/examples/mock.yaml --format json
 exit_code=0
 [stdout]
 {
@@ -4855,6 +4856,20 @@ exit_code=0
       "redact": true
     }
   },
+  "valid": true
+}
+[stderr]
+
+
+$ uv run python scripts/check_secrets.py --format json
+exit_code=0
+[stdout]
+{
+  "findings": [],
+  "include_generated": true,
+  "scanned_files": 5840,
+  "tracked_skills_test_files": 0,
+  "tracked_skills_test_paths": [],
   "valid": true
 }
 [stderr]

@@ -103,14 +103,14 @@
     "deploy": {
       "candidate_id": "candidate-04b26dff2bc83b82334bf184",
       "files": 7,
-      "output": "/Users/didi/for_autumn/GEPASE/artifacts/local/s10-release-rmv4j1sg/deployed-package",
+      "output": "<PROJECT_ROOT>/artifacts/local/s10-release-sl2omw39/deployed-package",
       "valid": true
     },
     "deployed_files": 7,
     "mock": {
       "config_hash": "dc83c452b115095fc7a221e51f9c560281e1542ed13dadd358b999e75e1ef122",
       "schema_version": "1.0.0",
-      "source_tree_hash": "1bd8c7f65ef353b588e96af837c4c9874fbd3b74436d8c8804c5042246dc6505",
+      "source_tree_hash": "017eb83c2581dceea761bc56e0994a43b0706bea9db0e5cbe8f09587e8102579",
       "summary": {
         "passed": 2,
         "total": 2

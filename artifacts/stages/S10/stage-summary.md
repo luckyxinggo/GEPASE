@@ -1,7 +1,7 @@
 # S10 release summary
 
 - Machine Gates: 7/7
-- Full tests: 151 passed
+- Full tests: 152 passed
 - Public schemas: 32 stable exports
 - Secret findings: 0
 - Fresh wheel install: passed
