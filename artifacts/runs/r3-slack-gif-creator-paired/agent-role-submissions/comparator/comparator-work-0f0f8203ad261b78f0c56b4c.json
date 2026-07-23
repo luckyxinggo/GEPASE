@@ -1,0 +1,45 @@
+{
+  "schema_version": "1.0.0",
+  "submission_id": "comparator-submission-0f0f8203ad261b78f0c56b4c",
+  "comparator_work_id": "comparator-work-0f0f8203ad261b78f0c56b4c",
+  "role_run": {
+    "host": "codex",
+    "model": "gpt-5.6-sol",
+    "context_id": "/root/r3_cmp_0f0f82",
+    "host_task_id": "/root/r3_cmp_0f0f82",
+    "usage": {
+      "input_tokens": 9800,
+      "output_tokens": 1700,
+      "tool_calls": 13,
+      "duration_ms": 74000,
+      "token_count_kind": "estimated"
+    },
+    "started_at": "2026-07-21T16:31:14Z",
+    "finished_at": "2026-07-21T16:32:28Z"
+  },
+  "winner": "right",
+  "confidence": 0.78,
+  "criteria": [
+    {
+      "criterion_id": "pulse-legibility",
+      "preference": "left",
+      "rationale_zh": "左侧采用更粗、更纯净的白色字形，文字在各脉冲阶段的视觉尺寸与居中位置都很稳定，缩略后仍能直接读出 GO。右侧同样可读，但深蓝描边压缩了白色笔画的有效面积，缩略时比左侧略显繁复。"
+    },
+    {
+      "criterion_id": "pulse-motion",
+      "preference": "right",
+      "rationale_zh": "右侧以 30 帧、16 个独特帧和约 80–90 毫秒的均匀帧时长完成连续收放，速度变化自然，呼吸感明显且循环接缝不易察觉。左侧首尾能够精确闭合，但仅有 7 个独特帧，并包含 330、580 和 250 毫秒的长停顿，收放过程更容易看出阶梯与停驻。"
+    },
+    {
+      "criterion_id": "pulse-color",
+      "preference": "tie",
+      "rationale_zh": "两侧都清楚建立了深蓝背景、珊瑚红徽章与白色文字的主次关系，并维持足够对比。左侧三色更简洁直接；右侧增加的深蓝描边和珊瑚色派生光环更丰富，但仍属于同一配色体系，没有削弱主体辨识，因此整体相当。"
+    },
+    {
+      "criterion_id": "pulse-emoji-ready",
+      "preference": "right",
+      "rationale_zh": "右侧具备内圈高光、外圈与柔和扩散光环等完整徽章层级，且节奏连贯，作为 Slack 警报表情更有完成品感。左侧在小尺寸下很干净，但造型层次较少，较稀疏的动画采样也让动态精致度逊于右侧。"
+    }
+  ],
+  "rationale_zh": "右侧胜出。左侧在最关键的缩略文字清晰度上略占优势，且配色更克制；但右侧的连续呼吸曲线、均匀节奏和更完整的徽章层级带来明显更高的动态完成度，同时白色 GO 在全过程仍保持可读，额外描边只是轻微复杂化而非功能性缺陷。综合四项权重，右侧在脉冲质感和表情完成度上的优势超过左侧在可读性上的小幅领先。"
+}

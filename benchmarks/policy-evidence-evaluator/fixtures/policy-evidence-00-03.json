@@ -1,0 +1,97 @@
+{
+  "direction": "lte",
+  "policy_id": "policy-00-03",
+  "records": [
+    {
+      "id": "P0003000",
+      "score": 34,
+      "segment": "new"
+    },
+    {
+      "id": "P0003001",
+      "score": 45,
+      "segment": "returning"
+    },
+    {
+      "id": "P0003002",
+      "score": 56,
+      "segment": "priority"
+    },
+    {
+      "id": "P0003003",
+      "score": 67,
+      "segment": "new"
+    },
+    {
+      "id": "P0003004",
+      "score": 78,
+      "segment": "returning"
+    },
+    {
+      "id": "P0003005",
+      "score": 29,
+      "segment": "priority"
+    },
+    {
+      "id": "P0003006",
+      "score": 40,
+      "segment": "new"
+    },
+    {
+      "id": "P0003007",
+      "score": 51,
+      "segment": "returning"
+    },
+    {
+      "id": "P0003008",
+      "score": 62,
+      "segment": "priority"
+    },
+    {
+      "id": "P0003009",
+      "score": 73,
+      "segment": "new"
+    },
+    {
+      "id": "P0003010",
+      "score": 84,
+      "segment": "returning"
+    },
+    {
+      "id": "P0003011",
+      "score": 35,
+      "segment": "priority"
+    },
+    {
+      "id": "P0003012",
+      "score": 46,
+      "segment": "new"
+    },
+    {
+      "id": "P0003013",
+      "score": 57,
+      "segment": "returning"
+    },
+    {
+      "id": "P0003014",
+      "score": 68,
+      "segment": "priority"
+    },
+    {
+      "id": "P0003015",
+      "score": 79,
+      "segment": "new"
+    },
+    {
+      "id": "P0003016",
+      "score": 30,
+      "segment": "returning"
+    },
+    {
+      "id": "P0003017",
+      "score": 41,
+      "segment": "priority"
+    }
+  ],
+  "threshold": 48
+}

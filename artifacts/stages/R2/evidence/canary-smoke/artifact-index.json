@@ -1,0 +1,17 @@
+{
+  "artifacts": [
+    {
+      "media_type": "image/gif",
+      "path": "slack-gif-creator-smoke.gif",
+      "sha256": "443debec7eebed82ff7f4ff14a85d173028e30ab03453e23d5e4ccefb06375ae",
+      "size_bytes": 16000
+    },
+    {
+      "media_type": "application/json",
+      "path": "smoke-report.json",
+      "sha256": "e86e5262c575747d586efcdd0601d21894d8ee8a71f77fbf5760e125bbd2c0a1",
+      "size_bytes": 1023
+    }
+  ],
+  "schema_version": "1.0.0"
+}

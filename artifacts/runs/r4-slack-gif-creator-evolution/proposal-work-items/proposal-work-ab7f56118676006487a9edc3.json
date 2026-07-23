@@ -1,0 +1,207 @@
+{
+  "actionable_side_information": {
+    "causal_contract": {
+      "required": true
+    },
+    "causal_targets": [
+      {
+        "allowed_operation_classes": [
+          "replace_markdown_block"
+        ],
+        "causal_path_node_ids": [
+          "node-46d940221fa8caf3b6c22d2c"
+        ],
+        "executable_target": false,
+        "expected_affected_assertions": [],
+        "expected_affected_metrics": [
+          "task_correctness",
+          "output_quality",
+          "skill_gain"
+        ],
+        "failure_evidence_ids": [
+          "artifacts/runs/r3-slack-gif-creator-paired/analyzer-submissions/analyzer-work-66550acf708dcf7d83b689cb.json"
+        ],
+        "node_id": "node-46d940221fa8caf3b6c22d2c"
+      }
+    ],
+    "failure_evidence": {
+      "evidence_refs": [
+        "artifacts/runs/r3-slack-gif-creator-paired/deterministic/work-4d807d3a99ff3d159ec6fb29.json",
+        "artifacts/runs/r3-slack-gif-creator-paired/grader-submissions/grader-work-2c8028d145484e7e5af04b94.json",
+        "artifacts/runs/r3-slack-gif-creator-paired/records/record-af968875d3c07bdc96f582cf.json",
+        "artifacts/runs/r3-slack-gif-creator-paired/package-access/work-4d807d3a99ff3d159ec6fb29.json",
+        "artifacts/runs/r2-slack-gif-creator-evalplan/package/graph.json"
+      ],
+      "issue_zh": "original 的 E3 五项断言全部通过、task correctness 为 1.0，但盲评质量仅 0.849；其中 motion 为 0.82、emoji-ready 为 0.72。其无限循环首尾平均像素差为 24.1511，约为相邻帧平均差 3.6405 的 6.6 倍，稳定态会明显跳回起始低位。E2 又显示已经执行 validate_gif 并通过尺寸检查，说明当前验证路径未把循环接缝纳入可操作的成品检查。",
+      "kind": "low_score",
+      "recommendation_zh": "在 core/validators.py 及其 SKILL.md 验证示例中加入有界的循环接缝检查：重开 GIF 后计算首尾帧差，并与相邻帧差的稳健统计量比较；当接缝显著偏大时给出失败或明确警告。示例同时要求在停稳后预留回程帧，或把位移轨迹设计为首尾连续，并在导出后复验该指标。",
+      "skill_gain": -0.04117499999999996,
+      "task_id": "functional-train-input-badge-003"
+    },
+    "graph_slice": {
+      "nodes": [
+        {
+          "distance": 0,
+          "node_id": "node-0f241aa06504163be33132f8",
+          "rank": 1,
+          "reason": "failure seed",
+          "score": 1.2
+        },
+        {
+          "distance": 0,
+          "node_id": "node-46d940221fa8caf3b6c22d2c",
+          "rank": 2,
+          "reason": "failure seed",
+          "score": 1.2
+        },
+        {
+          "distance": 1,
+          "node_id": "node-390c19b0fbd4439b006d6a79",
+          "rank": 3,
+          "reason": "reverse contains dependency of node-46d940221fa8caf3b6c22d2c",
+          "score": 0.5
+        },
+        {
+          "distance": 1,
+          "node_id": "node-ad0ec7c5b1cfab9dc320d69b",
+          "rank": 4,
+          "reason": "reverse contains dependency of node-0f241aa06504163be33132f8",
+          "score": 0.5
+        },
+        {
+          "distance": 4,
+          "node_id": "node-fddc99453114c3a40363b219",
+          "rank": 5,
+          "reason": "reverse contains dependency of node-ce609b198696eee0ac59fa35",
+          "score": 0.4
+        },
+        {
+          "distance": 2,
+          "node_id": "node-44a9519223abe9c140f2eb20",
+          "rank": 6,
+          "reason": "reverse contains dependency of node-390c19b0fbd4439b006d6a79",
+          "score": 0.333333
+        },
+        {
+          "distance": 3,
+          "node_id": "node-ce609b198696eee0ac59fa35",
+          "rank": 7,
+          "reason": "reverse contains dependency of node-44a9519223abe9c140f2eb20",
+          "score": 0.25
+        }
+      ],
+      "omitted_nodes": 0,
+      "package_id": "slack-gif-creator",
+      "schema_version": "1.0.0",
+      "seed_node_ids": [
+        "node-0f241aa06504163be33132f8",
+        "node-46d940221fa8caf3b6c22d2c"
+      ],
+      "token_estimate": 214
+    },
+    "preserve": [
+      "unrelated package behavior",
+      "public interfaces unless explicitly targeted",
+      "all source and fixture files outside the exported target"
+    ]
+  },
+  "allowed_operations": [
+    "replace_markdown_block"
+  ],
+  "edit_budget": {
+    "allow_file_topology_edits": false,
+    "allow_script_edits": true,
+    "max_added_files": 0,
+    "max_changed_files": 1,
+    "max_deleted_files": 0,
+    "max_operations": 1,
+    "max_total_replacement_chars": 24000
+  },
+  "evidence_refs": [
+    "artifacts/runs/r3-slack-gif-creator-paired/analyzer-submissions/analyzer-work-66550acf708dcf7d83b689cb.json"
+  ],
+  "output_instructions": "Return only a typed PackagePatch proposal for the exported target. Preserve the target's Markdown heading or Python signature, do not read assertions, sibling candidates, or repository state, and do not edit files.",
+  "parent_candidate_id": "candidate-21242a10bcbaeb9631f3b2da",
+  "parent_content_hash": "ce42d8a837acf9feda9706a3418fc26a77c497d9615079e616b5fdc6870ef64e",
+  "parent_snapshot_hash": "ce42d8a837acf9feda9706a3418fc26a77c497d9615079e616b5fdc6870ef64e",
+  "rejected_history": [],
+  "repair_attempt": 0,
+  "run_id": "r4-slack-gif-creator-evolution",
+  "schema_version": "1.0.0",
+  "selector": "graph_guided",
+  "targets": [
+    {
+      "content": "```python\nfrom core.validators import validate_gif, is_slack_ready\n\n# Detailed validation\npasses, info = validate_gif('my.gif', is_emoji=True, verbose=True)\n\n# Quick check\nif is_slack_ready('my.gif'):\n    print(\"Ready!\")\n```\n",
+      "content_hash": "951bd4e2b513b7780d40bda28c1ccf3e51c2945e2375f6a21a665517af6803f7",
+      "locator": "section/slack-gif-creator#1/available-utilities#1/validators-core-validators#1/block#2",
+      "node_id": "node-46d940221fa8caf3b6c22d2c",
+      "node_kind": "instruction",
+      "path": "SKILL.md",
+      "selection": {
+        "contributions": [
+          {
+            "contribution": 3.0,
+            "feature": "failure_coverage",
+            "raw_value": 1.0,
+            "weight": 3.0
+          },
+          {
+            "contribution": 2.0,
+            "feature": "inverse_distance",
+            "raw_value": 1.0,
+            "weight": 2.0
+          },
+          {
+            "contribution": 0.0,
+            "feature": "dynamic_access",
+            "raw_value": 0.0,
+            "weight": 1.4
+          },
+          {
+            "contribution": 1.2,
+            "feature": "diagnostic_severity",
+            "raw_value": 1.0,
+            "weight": 1.2
+          },
+          {
+            "contribution": 0.4,
+            "feature": "historical_yield",
+            "raw_value": 0.5,
+            "weight": 0.8
+          },
+          {
+            "contribution": 0.6,
+            "feature": "exploration_bonus",
+            "raw_value": 1.0,
+            "weight": 0.6
+          },
+          {
+            "contribution": -0.02941176,
+            "feature": "fan_out_risk",
+            "raw_value": 0.02941176,
+            "weight": -1.0
+          },
+          {
+            "contribution": -0.0,
+            "feature": "historical_regression",
+            "raw_value": 0.0,
+            "weight": -1.5
+          }
+        ],
+        "evidence_refs": [
+          "artifacts/runs/r3-slack-gif-creator-paired/analyzer-submissions/analyzer-work-66550acf708dcf7d83b689cb.json"
+        ],
+        "high_blast_radius": false,
+        "locator": "section/slack-gif-creator#1/available-utilities#1/validators-core-validators#1/block#2",
+        "node_id": "node-46d940221fa8caf3b6c22d2c",
+        "path": "SKILL.md",
+        "rank": 1,
+        "reason_code": "graph_failure_impact_priority",
+        "score": 7.17058824
+      }
+    }
+  ],
+  "task_id": "functional-train-input-badge-003",
+  "work_id": "proposal-work-ab7f56118676006487a9edc3",
+  "work_type": "package_patch_proposal"
+}

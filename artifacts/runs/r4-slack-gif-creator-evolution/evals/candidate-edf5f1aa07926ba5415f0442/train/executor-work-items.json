@@ -1,0 +1,177 @@
+{
+  "count": 5,
+  "schema_version": "1.0.0",
+  "work_items": [
+    {
+      "fixture_refs": [
+        "benchmarks/canaries/slack-gif-creator/fixtures/message-status.json"
+      ],
+      "package_graph_ref": "artifacts/runs/r4-slack-gif-creator-evolution/candidates/candidate-edf5f1aa07926ba5415f0442/graph.json",
+      "package_node_map": {
+        "LICENSE.txt": "node-7fd627ed0d50ee9e04018c8a",
+        "SKILL.md": "node-fddc99453114c3a40363b219",
+        "core/easing.py": "node-dbf396ac6852bf4706f33ebf",
+        "core/frame_composer.py": "node-bd3bececef13aaeef0c22570",
+        "core/gif_builder.py": "node-2c61585b9d40c2df7343f499",
+        "core/validators.py": "node-0f241aa06504163be33132f8",
+        "requirements.txt": "node-cc27fb4d7208967c86b1a7e8"
+      },
+      "prompt": "制作一张适合发在 Slack 消息里的方形部署状态卡 GIF。按随附配置依次呈现 waiting、processing、complete 三个阶段：前两阶段保留 DEPLOY 标识，完成阶段清楚显示 DONE；用图形和颜色变化帮助读者一眼理解状态推进。请输出指定文件。",
+      "requested_output": {
+        "description_zh": "480×480、三阶段推进的 Slack 部署状态消息 GIF。",
+        "filename": "deployment_status.gif",
+        "media_type": "image/gif"
+      },
+      "required_capabilities": [
+        "message_gif_composition",
+        "text_rendering",
+        "multi_phase_animation",
+        "gif_metadata_validation"
+      ],
+      "role": "executor",
+      "schema_version": "1.0.0",
+      "skill_ref": "artifacts/runs/r4-slack-gif-creator-evolution/candidate-workspaces/applications/application-b75f0a0da538fa167f904c8a",
+      "submission_schema_ref": "schemas/execution_bundle.schema.json",
+      "task_id": "functional-train-message-status-002",
+      "timeout_seconds": 600,
+      "work_id": "work-3a278906910253ca31f1eb0a"
+    },
+    {
+      "fixture_refs": [
+        "benchmarks/canaries/slack-gif-creator/fixtures/easing-orbit.json"
+      ],
+      "package_graph_ref": "artifacts/runs/r4-slack-gif-creator-evolution/candidates/candidate-edf5f1aa07926ba5415f0442/graph.json",
+      "package_node_map": {
+        "LICENSE.txt": "node-7fd627ed0d50ee9e04018c8a",
+        "SKILL.md": "node-fddc99453114c3a40363b219",
+        "core/easing.py": "node-dbf396ac6852bf4706f33ebf",
+        "core/frame_composer.py": "node-bd3bececef13aaeef0c22570",
+        "core/gif_builder.py": "node-2c61585b9d40c2df7343f499",
+        "core/validators.py": "node-0f241aa06504163be33132f8",
+        "requirements.txt": "node-cc27fb4d7208967c86b1a7e8"
+      },
+      "prompt": "创作一个 128×128 的 Slack emoji GIF：青色小卫星沿明显的弧线路径绕过橙色行星，并在目标位置平滑减速停靠。请使用非线性的 ease-out 运动，让最后一段位移逐步缩小；构图和星空细节可以自行发挥，输出指定文件。",
+      "requested_output": {
+        "description_zh": "青色卫星沿弧线运动并 ease-out 停靠的 128×128 Slack GIF。",
+        "filename": "satellite_orbit_ease.gif",
+        "media_type": "image/gif"
+      },
+      "required_capabilities": [
+        "arc_motion_generation",
+        "easing_function_application",
+        "color_subject_tracking",
+        "emoji_gif_export"
+      ],
+      "role": "executor",
+      "schema_version": "1.0.0",
+      "skill_ref": "artifacts/runs/r4-slack-gif-creator-evolution/candidate-workspaces/applications/application-b75f0a0da538fa167f904c8a",
+      "submission_schema_ref": "schemas/execution_bundle.schema.json",
+      "task_id": "functional-train-easing-orbit-005",
+      "timeout_seconds": 600,
+      "work_id": "work-64bc8b5b5180da4402e479d0"
+    },
+    {
+      "fixture_refs": [
+        "benchmarks/canaries/slack-gif-creator/fixtures/message-readable.json"
+      ],
+      "package_graph_ref": "artifacts/runs/r4-slack-gif-creator-evolution/candidates/candidate-edf5f1aa07926ba5415f0442/graph.json",
+      "package_node_map": {
+        "LICENSE.txt": "node-7fd627ed0d50ee9e04018c8a",
+        "SKILL.md": "node-fddc99453114c3a40363b219",
+        "core/easing.py": "node-dbf396ac6852bf4706f33ebf",
+        "core/frame_composer.py": "node-bd3bececef13aaeef0c22570",
+        "core/gif_builder.py": "node-2c61585b9d40c2df7343f499",
+        "core/validators.py": "node-0f241aa06504163be33132f8",
+        "requirements.txt": "node-cc27fb4d7208967c86b1a7e8"
+      },
+      "prompt": "设计一张温暖、友好的 Slack 会议提醒 GIF。按照配置在 480×480 画布上同时清晰呈现 SYNC 与 10:30，使用给定的米白、深棕黑和砖红配色；动画可以让标题或时间获得轻微强调，但不能牺牲阅读时间或把文字移出安全区。输出指定 GIF。",
+      "requested_output": {
+        "description_zh": "480×480、突出 SYNC 与 10:30 可读性的会议提醒 GIF。",
+        "filename": "meeting_sync_reminder.gif",
+        "media_type": "image/gif"
+      },
+      "required_capabilities": [
+        "text_layout",
+        "contrast_management",
+        "message_gif_animation",
+        "frame_content_analysis"
+      ],
+      "role": "executor",
+      "schema_version": "1.0.0",
+      "skill_ref": "artifacts/runs/r4-slack-gif-creator-evolution/candidate-workspaces/applications/application-b75f0a0da538fa167f904c8a",
+      "submission_schema_ref": "schemas/execution_bundle.schema.json",
+      "task_id": "functional-train-text-readable-004",
+      "timeout_seconds": 600,
+      "work_id": "work-78a7f2375b445898bca057e7"
+    },
+    {
+      "fixture_refs": [
+        "benchmarks/canaries/slack-gif-creator/fixtures/emoji-bounce.json"
+      ],
+      "package_graph_ref": "artifacts/runs/r4-slack-gif-creator-evolution/candidates/candidate-edf5f1aa07926ba5415f0442/graph.json",
+      "package_node_map": {
+        "LICENSE.txt": "node-7fd627ed0d50ee9e04018c8a",
+        "SKILL.md": "node-fddc99453114c3a40363b219",
+        "core/easing.py": "node-dbf396ac6852bf4706f33ebf",
+        "core/frame_composer.py": "node-bd3bececef13aaeef0c22570",
+        "core/gif_builder.py": "node-2c61585b9d40c2df7343f499",
+        "core/validators.py": "node-0f241aa06504163be33132f8",
+        "requirements.txt": "node-cc27fb4d7208967c86b1a7e8"
+      },
+      "prompt": "请依据随附配置从空白画布创作一个 Slack 表情 GIF：一颗带粗描边和小高光的黄色五角星从上方落下，只反弹一次后稳稳停住；背景使用深海军蓝到靛蓝渐变。成品应可直接作为 Slack emoji 上传，并保存为指定 GIF。",
+      "requested_output": {
+        "description_zh": "128×128、单次反弹并可循环的 Slack 星星表情 GIF。",
+        "filename": "emoji_star_bounce.gif",
+        "media_type": "image/gif"
+      },
+      "required_capabilities": [
+        "programmatic_frame_drawing",
+        "emoji_gif_optimization",
+        "temporal_motion_analysis",
+        "gif_metadata_validation"
+      ],
+      "role": "executor",
+      "schema_version": "1.0.0",
+      "skill_ref": "artifacts/runs/r4-slack-gif-creator-evolution/candidate-workspaces/applications/application-b75f0a0da538fa167f904c8a",
+      "submission_schema_ref": "schemas/execution_bundle.schema.json",
+      "task_id": "functional-train-emoji-bounce-001",
+      "timeout_seconds": 600,
+      "work_id": "work-9f3e7140a9c34fc8b7adbb5f"
+    },
+    {
+      "fixture_refs": [
+        "benchmarks/canaries/slack-gif-creator/fixtures/input-badge.json",
+        "benchmarks/canaries/slack-gif-creator/fixtures/input-badge.ppm"
+      ],
+      "package_graph_ref": "artifacts/runs/r4-slack-gif-creator-evolution/candidates/candidate-edf5f1aa07926ba5415f0442/graph.json",
+      "package_node_map": {
+        "LICENSE.txt": "node-7fd627ed0d50ee9e04018c8a",
+        "SKILL.md": "node-fddc99453114c3a40363b219",
+        "core/easing.py": "node-dbf396ac6852bf4706f33ebf",
+        "core/frame_composer.py": "node-bd3bececef13aaeef0c22570",
+        "core/gif_builder.py": "node-2c61585b9d40c2df7343f499",
+        "core/validators.py": "node-0f241aa06504163be33132f8",
+        "requirements.txt": "node-cc27fb4d7208967c86b1a7e8"
+      },
+      "prompt": "请直接使用随附 PPM 徽章图像作为动画主体，而不是重新画一个替代品。依照配置将它放入 128×128 的 Slack emoji：徽章先上浮，略微越过最终高度，再回落稳定；保留原图的徽章轮廓以及青色、橙色关系，可增加不遮挡主体的背景或光效。输出指定 GIF。",
+      "requested_output": {
+        "description_zh": "保留本地输入徽章特征、带上浮越位回稳动作的 128×128 GIF。",
+        "filename": "uploaded_badge_lift.gif",
+        "media_type": "image/gif"
+      },
+      "required_capabilities": [
+        "local_image_loading",
+        "input_asset_preservation",
+        "overshoot_easing",
+        "emoji_gif_export"
+      ],
+      "role": "executor",
+      "schema_version": "1.0.0",
+      "skill_ref": "artifacts/runs/r4-slack-gif-creator-evolution/candidate-workspaces/applications/application-b75f0a0da538fa167f904c8a",
+      "submission_schema_ref": "schemas/execution_bundle.schema.json",
+      "task_id": "functional-train-input-badge-003",
+      "timeout_seconds": 600,
+      "work_id": "work-bce91b40eaf86b80c2c83b99"
+    }
+  ]
+}

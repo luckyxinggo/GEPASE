@@ -1,0 +1,21 @@
+{
+  "candidate_snapshot_hash": "20232f3aeb397f28e32d38cc016ce6dbffa2112effd52813b0cbec243c1307ce",
+  "efficiency": 0.83644925,
+  "evidence_refs": [
+    "artifacts/runs/r3-slack-gif-creator-paired/records/record-5cae6ab70b2c391655894a95.json",
+    "artifacts/runs/r3-slack-gif-creator-paired/records/record-8b31942640c3015af61ccda3.json",
+    "artifacts/runs/r3-slack-gif-creator-paired/deterministic/work-46dec20be705aa5122c31a80.json",
+    "artifacts/runs/r3-slack-gif-creator-paired/grader-submissions/grader-work-8f56a61cc53adbddea427249.json",
+    "artifacts/runs/r3-slack-gif-creator-paired/e0-package-record.json"
+  ],
+  "output_quality": 0.9315,
+  "package_quality": 1.0,
+  "pair_id": "pair-06eaafe5031550bf100734fc",
+  "reliability": 0.9,
+  "schema_version": "1.0.0",
+  "scoring_policy_ref": "configs/canaries/slack-gif-creator-r3-scoring.json",
+  "skill_gain": 0.0,
+  "task_correctness": 0.8,
+  "task_id": "functional-train-emoji-bounce-001",
+  "variant": "no-skill"
+}

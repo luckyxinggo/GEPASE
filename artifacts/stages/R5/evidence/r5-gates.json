@@ -1,0 +1,75 @@
+{
+  "gates": [
+    {
+      "detail": "R2/R3/R4 are complete with passing upstream Gates; R5 consumed them with 0 Agent/API calls.",
+      "evidence": [
+        "artifacts/stages/R2/stage_report.json",
+        "artifacts/stages/R3/stage_report.json",
+        "artifacts/stages/R4/stage_report.json",
+        "evidence-manifest.json"
+      ],
+      "gate_id": "R5-G01-end-to-end-complete",
+      "status": "passed"
+    },
+    {
+      "detail": "Verified 9 copied task-native GIFs against sealed sources; upstream seals are clean.",
+      "evidence": [
+        "assets/gifs/",
+        "evidence-manifest.json",
+        "report-data.json"
+      ],
+      "gate_id": "R5-G02-real-artifacts-verified",
+      "status": "passed"
+    },
+    {
+      "detail": "Candidate candidate-04b26dff2bc83b82334bf184 has recomputed held-out mean delta=0.12426667, 3/3 wins, and no floor violation.",
+      "evidence": [
+        "../r4-slack-gif-creator-evolution/deployable-frontier.json",
+        "../r4-slack-gif-creator-evolution/evals/candidate-04b26dff2bc83b82334bf184/validation/candidate-run-summary.json"
+      ],
+      "gate_id": "R5-G03-strict-improvement-observed",
+      "status": "passed"
+    },
+    {
+      "detail": "A same-package two-parent merge child was materialized, evaluated through held-out Gate, and honestly rejected.",
+      "evidence": [
+        "../r4-slack-gif-creator-evolution/merge/build-record.json",
+        "../r4-slack-gif-creator-evolution/merge/conflict-report.json"
+      ],
+      "gate_id": "R5-G04-merge-path-exercised",
+      "status": "passed"
+    },
+    {
+      "detail": "Report seal checked=20; report payload/manifests/copied outputs match independent recollection.",
+      "evidence": [
+        "index.html",
+        "report-data.json",
+        "evidence-manifest.json",
+        "artifact-index.json"
+      ],
+      "gate_id": "R5-G05-report-reproducible",
+      "status": "passed"
+    },
+    {
+      "detail": "All preceding R5 Gates passed; deployable archive contains 7 hash-matched Package files.",
+      "evidence": [
+        "deployable/slack-gif-creator-candidate-04b26dff2bc83b82334bf184.zip",
+        "report-data.json"
+      ],
+      "gate_id": "R5-G06-release-candidate-ready",
+      "status": "passed"
+    }
+  ],
+  "report_id": "r5-slack-gif-creator-report",
+  "schema_version": "1.0.0",
+  "summary": {
+    "agent_calls": 0,
+    "deployable_candidate_id": "candidate-04b26dff2bc83b82334bf184",
+    "headless_provider_calls": 0,
+    "passed": 6,
+    "report_artifacts_checked": 20,
+    "total": 6,
+    "validation_mean_delta": 0.1242666666666667
+  },
+  "valid": true
+}

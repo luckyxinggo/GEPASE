@@ -1,0 +1,150 @@
+{
+  "agent_calls_in_s10": 0,
+  "canary_result": {
+    "accepted_changed_files": "SKILL.md",
+    "candidate_id": "candidate-04b26dff2bc83b82334bf184",
+    "package_id": "slack-gif-creator",
+    "single_canary_scope": true,
+    "train_mean_delta": 0.04189999999999998,
+    "validation_cases": 3,
+    "validation_mean_delta": 0.1242666666666667,
+    "validation_wins": 3
+  },
+  "fresh_install": {
+    "installed_version": "0.1.0",
+    "offline_install": true,
+    "sdist_size_bytes": 248756,
+    "valid": true,
+    "wheel_size_bytes": 324711
+  },
+  "headless_calls_in_s10": 0,
+  "languages": [
+    "README.md",
+    "README_zh.md"
+  ],
+  "private_paths_published": 0,
+  "private_skills_published": 0,
+  "public_runs": {
+    "artifacts/runs/r2-slack-gif-creator-evalplan": {
+      "checked": 19,
+      "hash_mismatch": 0,
+      "missing": 0,
+      "schema_errors": 0,
+      "unindexed_files": 0,
+      "valid": true
+    },
+    "artifacts/runs/r3-slack-gif-creator-paired": {
+      "checked": 429,
+      "hash_mismatch": 0,
+      "missing": 0,
+      "schema_errors": 0,
+      "unindexed_files": 0,
+      "valid": true
+    },
+    "artifacts/runs/r4-slack-gif-creator-evolution": {
+      "checked": 877,
+      "hash_mismatch": 0,
+      "missing": 0,
+      "schema_errors": 0,
+      "unindexed_files": 0,
+      "valid": true
+    },
+    "artifacts/runs/r5-slack-gif-creator-report": {
+      "checked": 20,
+      "hash_mismatch": 0,
+      "missing": 0,
+      "schema_errors": 0,
+      "unindexed_files": 0,
+      "valid": true
+    },
+    "artifacts/stages/R1": {
+      "checked": 14,
+      "hash_mismatch": 0,
+      "missing": 0,
+      "schema_errors": 0,
+      "unindexed_files": 0,
+      "valid": true
+    },
+    "artifacts/stages/R2": {
+      "checked": 14,
+      "hash_mismatch": 0,
+      "missing": 0,
+      "schema_errors": 0,
+      "unindexed_files": 0,
+      "valid": true
+    },
+    "artifacts/stages/R3": {
+      "checked": 8,
+      "hash_mismatch": 0,
+      "missing": 0,
+      "schema_errors": 0,
+      "unindexed_files": 0,
+      "valid": true
+    },
+    "artifacts/stages/R4": {
+      "checked": 8,
+      "hash_mismatch": 0,
+      "missing": 0,
+      "schema_errors": 0,
+      "unindexed_files": 0,
+      "valid": true
+    },
+    "artifacts/stages/R5": {
+      "checked": 11,
+      "hash_mismatch": 0,
+      "missing": 0,
+      "schema_errors": 0,
+      "unindexed_files": 0,
+      "valid": true
+    }
+  },
+  "public_schemas": 32,
+  "reproduction_smoke": {
+    "deploy": {
+      "candidate_id": "candidate-04b26dff2bc83b82334bf184",
+      "files": 7,
+      "output": "/Users/didi/for_autumn/GEPASE/artifacts/local/s10-release-rmv4j1sg/deployed-package",
+      "valid": true
+    },
+    "deployed_files": 7,
+    "mock": {
+      "config_hash": "dc83c452b115095fc7a221e51f9c560281e1542ed13dadd358b999e75e1ef122",
+      "schema_version": "1.0.0",
+      "source_tree_hash": "1bd8c7f65ef353b588e96af837c4c9874fbd3b74436d8c8804c5042246dc6505",
+      "summary": {
+        "passed": 2,
+        "total": 2
+      },
+      "tasks": [
+        {
+          "evidence_tier": "E0",
+          "output": "ALPHA:cd9cb488986c",
+          "passed": true,
+          "task_id": "mock-uppercase"
+        },
+        {
+          "evidence_tier": "E0",
+          "output": "ROWS=2:156ea304da3b",
+          "passed": true,
+          "task_id": "mock-table"
+        }
+      ]
+    },
+    "mock_verification": {
+      "checked": 3,
+      "hash_mismatch": 0,
+      "missing": 0,
+      "schema_errors": 0,
+      "unindexed_files": 1,
+      "valid": true
+    },
+    "valid": true
+  },
+  "schema_hashes_stable": true,
+  "schema_version": "1.0.0",
+  "version": "0.1.0",
+  "visuals": [
+    "docs/assets/architecture.svg",
+    "docs/assets/canary-results.svg"
+  ]
+}

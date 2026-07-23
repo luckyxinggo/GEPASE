@@ -1,0 +1,73 @@
+{
+  "schema_version": "1.0.0",
+  "submission_id": "analyzer-submission-273dec6a54de9a55e19062bb",
+  "analyzer_work_id": "analyzer-work-273dec6a54de9a55e19062bb",
+  "role_run": {
+    "host": "codex",
+    "model": "gpt-5.6-sol",
+    "context_id": "/root/r3_ana_273dec",
+    "host_task_id": "/root/r3_ana_273dec",
+    "usage": {
+      "duration_ms": 360000,
+      "input_tokens": 42000,
+      "output_tokens": 3200,
+      "tool_calls": 8,
+      "token_count_kind": "estimated"
+    },
+    "started_at": "2026-07-21T16:35:00Z",
+    "finished_at": "2026-07-21T16:41:00Z"
+  },
+  "analyses": [
+    {
+      "analysis_id": "analysis-original-emoji-scale-styling",
+      "variant": "original",
+      "issue_zh": "original 的 E2 执行与 Package 访问均完整有效，E3 五项判据也全部通过，但独立盲评仅为 0.8495；清晰度 0.80、精修度 0.81。主体约只占画布宽度四分之一，紫色外轮廓与深色背景接近且不够均匀，高光略像贴在轮廓外侧，说明现有“粗线、对比、细节”指导仍缺少面向 128×128 Slack emoji 的可量化缩略图检查。",
+      "evidence_refs": [
+        "artifacts/runs/r3-slack-gif-creator-paired/grader-submissions/grader-work-ec063676b56f60e96e618c8a.json",
+        "artifacts/runs/r3-slack-gif-creator-paired/deterministic/work-aeaea033cebc5f6b4e948b5e.json",
+        "artifacts/runs/r3-slack-gif-creator-paired/package-access/work-aeaea033cebc5f6b4e948b5e.json",
+        "artifacts/runs/r2-slack-gif-creator-evalplan/package/graph.json"
+      ],
+      "target_node_ids": [
+        "node-ad47cfa9d2c418b4831753c1",
+        "node-2a90ff631f2398aac141f34b",
+        "node-a1b9e03d4267a1db0d60f659",
+        "node-cb7d4b33a0fc46c362ae75f4"
+      ],
+      "confidence": 0.94,
+      "recommendation_zh": "在“Making Graphics Look Good”范围补充一项 128×128 emoji 预检：关键落稳帧主体宽度以约 35%–50% 画布为目标，描边采用与背景有明显明度差的均匀 3–4px 视觉厚度；高光必须完整落入主体掩膜。建议用高倍画布绘制后高质量下采样，并在最终尺寸检查轮廓、锯齿和高光归属，且不改动已经通过的运动与容器流程。"
+    },
+    {
+      "analysis_id": "analysis-original-settle-loop-seam",
+      "variant": "original",
+      "issue_zh": "original 的单次反弹、触地压缩和二次收稳已经正确，E3 循环判据也通过；但 24 帧均为 80ms，独立盲评指出落稳停留偏短，末帧星星仍在底部而首帧主体已在画外，重启接缝可察觉，Slack 适用性因此仅得 0.84。当前 Bounce 指导覆盖下落与落地 easing，却未明确落稳停留和循环闭合策略。",
+      "evidence_refs": [
+        "artifacts/runs/r3-slack-gif-creator-paired/grader-submissions/grader-work-ec063676b56f60e96e618c8a.json",
+        "artifacts/runs/r3-slack-gif-creator-paired/deterministic/work-aeaea033cebc5f6b4e948b5e.json",
+        "artifacts/runs/r3-slack-gif-creator-paired/records/record-c10c64f070d69bb688b5814d.json",
+        "artifacts/runs/r2-slack-gif-creator-evalplan/package/graph.json"
+      ],
+      "target_node_ids": [
+        "node-f261697c2af2929117a965e9",
+        "node-22c65da75b6b57d2df4166e1",
+        "node-00732444be18eb7ff229f73e"
+      ],
+      "confidence": 0.91,
+      "recommendation_zh": "在 Bounce 指导中增加循环收尾检查：为落稳状态保留约 200–300ms 的可读停顿，再用 2–3 帧短淡出回到纯背景，或采用等价的首尾状态匹配；导出前同时检查首末帧与连续播放，避免靠降低动作清晰度掩盖接缝。该建议只约束时间分配和收尾，不改变一次反弹的既有轨迹。"
+    },
+    {
+      "analysis_id": "analysis-no-skill-highlight-detectability",
+      "variant": "no-skill",
+      "issue_zh": "no-skill 的独立盲评为 0.9315，人工观察认为小高光可见，但 E3 的 subject 判据测得 highlight_peak 为 0.0，导致唯一失败项并把正确性降到 0.8；这表明视觉上类似高光的细节没有稳定落入可执行内容判据可识别的亮色区域。由于该变体没有 Package 访问，本项不归因到任何 Package 节点。",
+      "evidence_refs": [
+        "artifacts/runs/r3-slack-gif-creator-paired/deterministic/work-46dec20be705aa5122c31a80.json",
+        "artifacts/runs/r3-slack-gif-creator-paired/grader-submissions/grader-work-8f56a61cc53adbddea427249.json",
+        "artifacts/runs/r3-slack-gif-creator-paired/records/record-5cae6ab70b2c391655894a95.json"
+      ],
+      "target_node_ids": [],
+      "confidence": 0.97,
+      "recommendation_zh": "在 no-skill 产物生成侧，把高光绘制为主体内部、面积足以在 GIF 调色后保留的亮色实心区域；保存后重新解码逐帧检查亮色像素峰值与主体相交关系，若峰值为零则仅放大或内移高光后重导出。"
+    }
+  ],
+  "summary_zh": "两侧 E2 均为完整、无失败执行；original 还具有有效的 Package 读取与核心模块执行记录。E3 显示 original 以 1.0 完成全部冻结判据，而 no-skill 因高光可检测性缺失得 0.8；独立盲评则显示 original 的视觉精修和循环体验仍落后于 no-skill。由于本 work item 没有 Comparator，不作盲比较胜负断言。建议保持 original 已验证的运动正确性，优先收紧 128×128 主体/描边/高光预检与 Bounce 循环收尾指导，并把 no-skill 高光问题作为无 Package 节点归因的执行侧补充。"
+}

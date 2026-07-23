@@ -1,0 +1,23 @@
+{
+  "work_id": "work-a2e2a2aedb4cf5049c623860",
+  "context": "/root/r3_exec_a2e2a2",
+  "status": "completed",
+  "requested_artifact": "deployment_status.gif",
+  "verification": {
+    "format": "GIF",
+    "dimensions": [480, 480],
+    "frame_count": 24,
+    "frame_duration_ms": 100,
+    "total_duration_ms": 2400,
+    "loop": 0,
+    "phase_order": ["waiting", "processing", "complete"],
+    "status_text": ["DEPLOY", "DEPLOY", "DONE"],
+    "visual_semantics": {
+      "waiting": "amber clock with pulsing ring",
+      "processing": "blue rotating segmented spinner",
+      "complete": "green success mark with orbiting sparkle"
+    },
+    "progress_track": "three labeled nodes advance from WAIT through BUILD to DONE",
+    "result": "passed"
+  }
+}

@@ -1,0 +1,236 @@
+{
+  "$defs": {
+    "EvidenceTier": {
+      "enum": [
+        "E0",
+        "E1",
+        "E2",
+        "E3"
+      ],
+      "title": "EvidenceTier",
+      "type": "string"
+    },
+    "PairingSnapshot": {
+      "additionalProperties": false,
+      "properties": {
+        "fixture_hash": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Fixture Hash",
+          "type": "string"
+        },
+        "host_model_snapshot": {
+          "title": "Host Model Snapshot",
+          "type": "string"
+        },
+        "policy_hash": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Policy Hash",
+          "type": "string"
+        },
+        "prompt_hash": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Prompt Hash",
+          "type": "string"
+        },
+        "provider_snapshot": {
+          "title": "Provider Snapshot",
+          "type": "string"
+        },
+        "seed": {
+          "title": "Seed",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "prompt_hash",
+        "fixture_hash",
+        "policy_hash",
+        "provider_snapshot",
+        "host_model_snapshot",
+        "seed"
+      ],
+      "title": "PairingSnapshot",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "candidate_snapshot_hash": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Candidate Snapshot Hash",
+      "type": "string"
+    },
+    "case_contract_hash": {
+      "anyOf": [
+        {
+          "pattern": "^[0-9a-f]{64}$",
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Case Contract Hash"
+    },
+    "created_at": {
+      "format": "date-time",
+      "title": "Created At",
+      "type": "string"
+    },
+    "evidence_tier": {
+      "$ref": "#/$defs/EvidenceTier"
+    },
+    "fixture_ref": {
+      "title": "Fixture Ref",
+      "type": "string"
+    },
+    "fixture_refs": {
+      "default": [],
+      "items": {
+        "type": "string"
+      },
+      "title": "Fixture Refs",
+      "type": "array"
+    },
+    "frozen_plan_hash": {
+      "anyOf": [
+        {
+          "pattern": "^[0-9a-f]{64}$",
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Frozen Plan Hash"
+    },
+    "package_graph_ref": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Package Graph Ref"
+    },
+    "package_node_map": {
+      "additionalProperties": {
+        "type": "string"
+      },
+      "title": "Package Node Map",
+      "type": "object"
+    },
+    "pair_id": {
+      "title": "Pair Id",
+      "type": "string"
+    },
+    "pairing": {
+      "$ref": "#/$defs/PairingSnapshot"
+    },
+    "prompt": {
+      "title": "Prompt",
+      "type": "string"
+    },
+    "provider_id": {
+      "title": "Provider Id",
+      "type": "string"
+    },
+    "requested_output": {
+      "additionalProperties": {
+        "type": "string"
+      },
+      "title": "Requested Output",
+      "type": "object"
+    },
+    "required_capabilities": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Required Capabilities",
+      "type": "array"
+    },
+    "schema_version": {
+      "default": "1.0.0",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "skill_id": {
+      "title": "Skill Id",
+      "type": "string"
+    },
+    "skill_ref": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Skill Ref"
+    },
+    "split": {
+      "anyOf": [
+        {
+          "enum": [
+            "train",
+            "validation",
+            "test"
+          ],
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Split"
+    },
+    "task_id": {
+      "title": "Task Id",
+      "type": "string"
+    },
+    "timeout_seconds": {
+      "default": 600,
+      "minimum": 1,
+      "title": "Timeout Seconds",
+      "type": "integer"
+    },
+    "variant": {
+      "enum": [
+        "no-skill",
+        "original",
+        "candidate"
+      ],
+      "title": "Variant",
+      "type": "string"
+    },
+    "work_id": {
+      "title": "Work Id",
+      "type": "string"
+    }
+  },
+  "required": [
+    "work_id",
+    "pair_id",
+    "task_id",
+    "skill_id",
+    "variant",
+    "evidence_tier",
+    "provider_id",
+    "prompt",
+    "fixture_ref",
+    "requested_output",
+    "candidate_snapshot_hash",
+    "pairing",
+    "required_capabilities"
+  ],
+  "title": "EvalWorkItem",
+  "type": "object"
+}

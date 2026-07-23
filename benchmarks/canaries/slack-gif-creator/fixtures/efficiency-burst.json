@@ -1,0 +1,7 @@
+{
+  "canvas": [480, 480],
+  "file_size_kb_max": 900,
+  "fps_range": [10, 16],
+  "subject": "a celebratory particle burst around a check mark",
+  "tradeoff": "retain smooth motion and readable silhouette while staying compact"
+}

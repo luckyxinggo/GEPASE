@@ -1,0 +1,4 @@
+interface:
+  display_name: "Policy Evidence Evaluator"
+  short_description: "Evaluate decision policies with reproducible evidence"
+  default_prompt: "Use -evidence-evaluator to evaluate this policy fixture and produce a traceable evidence report."

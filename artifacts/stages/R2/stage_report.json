@@ -1,0 +1,193 @@
+{
+  "schema_version": "1.0.0",
+  "stage_id": "R2",
+  "status": "complete",
+  "started_from_commit": "ea84ea8983509a91770932b9e21a74cd43235810",
+  "finished_commit": "ea84ea8983509a91770932b9e21a74cd43235810",
+  "source_tree_hash": "6ad89be3040de7616f7a03d1c81362a3916e9974d7fc6532c74d61ea8ec37b2b",
+  "resolved_config_ref": "resolved-config.json",
+  "input_artifacts": [
+    {
+      "path": "artifacts/stages/R1/stage_report.json",
+      "role": "completed upstream stage"
+    },
+    {
+      "path": "benchmarks/canaries/slack-gif-creator/source-provenance.json",
+      "sha256": "98e0204dc337de5dde2480d97c3eb97ef00a0143d16fa4be4136250553e906d8"
+    },
+    {
+      "path": "benchmarks/canaries/slack-gif-creator/upstream-tree.json",
+      "sha256": "8c5bc2332e0a6f57c65d0613242ef7d6a9afca52b674e43563fc935efae9e128"
+    },
+    {
+      "path": "benchmarks/canaries/slack-gif-creator/requirements.lock",
+      "sha256": "015a3d3009d3aeb5ef33f5ed84ef49438ae5d87822c3d21c9f736f2e0c51bd87"
+    },
+    {
+      "path": "configs/canaries/slack-gif-creator-r2.yaml",
+      "sha256": "e3d4d8485276e31c0bfff7747c99d4df1d7f6c50eaf2bc317fdb14b76863b9fe"
+    }
+  ],
+  "output_artifacts": [
+    {
+      "path": "preflight.json",
+      "sha256": "e86f22e99ab326d5e5995dfbab096641f46a4f13668aa5772fcdf4efb2dbeeba",
+      "media_type": "application/json",
+      "size_bytes": 1968
+    },
+    {
+      "path": "resolved-config.json",
+      "sha256": "bd17a20ccdf152269f4c9925b81ee16d7d2fb28c959207ee3d405c82f9e75c16",
+      "media_type": "application/json",
+      "size_bytes": 895
+    },
+    {
+      "path": "evidence/onboarding-summary.json",
+      "sha256": "13f7c9a441ca137bb09f470711ec8038a9dbbe3dbaef746bd6791946056efb4e",
+      "media_type": "application/json",
+      "size_bytes": 1631
+    },
+    {
+      "path": "evidence/review-ui-validation.json",
+      "sha256": "aae2533ec31102e8af8f62d521f66e9e973e03343c545e13a393e1bb26955849",
+      "media_type": "application/json",
+      "size_bytes": 1002
+    },
+    {
+      "path": "evidence/human-offline-validation.json",
+      "sha256": "948a925fa70853db1433a098f884922080d6d47f2a86d2a55e4872e94dc02701",
+      "media_type": "application/json",
+      "size_bytes": 745
+    },
+    {
+      "path": "evidence/completion-audit.json",
+      "sha256": "998756aca7ea4730c1b6dbe256b49b2ba87eba3888607881c4a3393726424351",
+      "media_type": "application/json",
+      "size_bytes": 5980
+    },
+    {
+      "path": "evidence/r2-gates.json",
+      "sha256": "dd580862a0756eb75ab062de7967bf26280a1bc0dcd2b5577aecfd4051706c31",
+      "media_type": "application/json",
+      "size_bytes": 4291
+    },
+    {
+      "path": "evidence/canary-smoke/smoke-report.json",
+      "sha256": "e86e5262c575747d586efcdd0601d21894d8ee8a71f77fbf5760e125bbd2c0a1",
+      "media_type": "application/json",
+      "size_bytes": 1023
+    },
+    {
+      "path": "evidence/canary-smoke/slack-gif-creator-smoke.gif",
+      "sha256": "443debec7eebed82ff7f4ff14a85d173028e30ab03453e23d5e4ccefb06375ae",
+      "media_type": "image/gif",
+      "size_bytes": 16000
+    },
+    {
+      "path": "test-results.xml",
+      "sha256": "1dedb697ee5043d74301095b3b26531876983a665ed2f170bee13689090b5a88",
+      "media_type": "application/xml",
+      "size_bytes": 18030
+    },
+    {
+      "path": "commands.log",
+      "sha256": "1605906a4f01f797b2eeeda152055cb6bb8fedbb9345fc7b728385d364c3d1eb",
+      "media_type": "text/plain",
+      "size_bytes": 3801
+    },
+    {
+      "path": "external-validation.md",
+      "sha256": "79a9568c0c07b0f9915c054d733c80afbeb8d51d7ff1e3a1eabc72caf3bf7f41",
+      "media_type": "text/markdown",
+      "size_bytes": 1001
+    }
+  ],
+  "run_artifacts": [
+    {"path": "agent/designer-submission.json", "sha256": "957ed7f14177a28dc714cc90423f3299f7b8fc57dea7112ab91830e775c125a0", "size_bytes": 47717},
+    {"path": "agent/review.json", "sha256": "928a46e5c6ba9cfca72e48d42ae8fd091eb6ecdeeb7e3a6358b1aeec922f3c5f", "size_bytes": 4780},
+    {"path": "automatic-check-report.json", "sha256": "85febfab91ce34e09eb529333663405a8a5dd0522e219c95ed71478d25e7bbd0", "size_bytes": 3136},
+    {"path": "checkpoint.json", "sha256": "ab5169e4af03f66efe8cc14ef88ba1b1f5ea0c7acc851a4a4038d6773e462a02", "size_bytes": 591},
+    {"path": "design-brief.json", "sha256": "fde1bf40e61cde5941b283d704526d86d1581bac8c0c033e05aa5deb5598de60", "size_bytes": 1187},
+    {"path": "designer-submission.json", "sha256": "ed96effc6e26b0165b22df339525fa33ed0d07d020830ebe666543a7c35ea90f", "size_bytes": 47717},
+    {"path": "designer-work-item.json", "sha256": "0cd0060f362aefbd508f3639070b48bb2003d949982db1f1773b8a10c0ddc28d", "size_bytes": 12617},
+    {"path": "eval-plan-draft.json", "sha256": "22d9e0b083807b4a55a95e01f7816cc12ab0a1c1d746229ebac53c2806fe4e74", "size_bytes": 46230},
+    {"path": "frozen-eval-plan.json", "sha256": "d526d074ed240ac7766f50b24428f6b0937c905735bce012c47234457a574e91", "size_bytes": 45205},
+    {"path": "onboarding-events.jsonl", "sha256": "68976b3f1acc1a089d607946f0c1a4f33704fe78cb021965ee9f0227d0112b04", "size_bytes": 2399},
+    {"path": "package/diagnostics.json", "sha256": "83dfc9887d81f382111af740369610312e1f01eabae00746d3c703c9cb18ee3c", "size_bytes": 90},
+    {"path": "package/graph.json", "sha256": "a05716cc8dc8fb9e181384d8456e39869d014624c10fcb72612f706b95a32822", "size_bytes": 384390},
+    {"path": "package/package-ir.json", "sha256": "76ab1d92d151d3fb05b86715873188321875e07c5c9aa3dd98c11982bdec5417", "size_bytes": 384369},
+    {"path": "package/snapshot.json", "sha256": "56ddcd6e1cece6c5f7c6d3e4ef4d9e713d09df01cfe15ef3c25a984d106f7575", "size_bytes": 2150},
+    {"path": "post-review-check-report.json", "sha256": "ed9e0ac3b6ffb7f2970fed0385f4afac16367a34c6eb8368ee1214ba5636b9df", "size_bytes": 3136},
+    {"path": "review-ledger.jsonl", "sha256": "2931b4562124dbdf704e7074aa554b5ea4a830ef4e4a75b50c937ccea994b44d", "size_bytes": 5140},
+    {"path": "review.html", "sha256": "3fd5872a3a27fd28f13e992d43669daa3acf6283b255df9ca2f9ab2df76284e2", "size_bytes": 340558},
+    {"path": "review.json", "sha256": "fc129b863ffd68841cac4181cc2e7c76d3c048555afbf64a2d48a9b0add195c2", "size_bytes": 6262},
+    {"path": "source-provenance.json", "sha256": "98e0204dc337de5dde2480d97c3eb97ef00a0143d16fa4be4136250553e906d8", "size_bytes": 822}
+  ],
+  "commands": [
+    "uv run python scripts/run_r2_canary_smoke.py --package <pinned-package> --output-dir <evidence-dir>",
+    "uv run gepase eval onboarding-start/submit-design/review/import-review/resume/status",
+    "uv run python scripts/run_r2_gates.py",
+    "uv run pytest -q --junitxml=artifacts/stages/R2/test-results.xml",
+    "uv run ruff check .",
+    "uv run pyright src tests scripts",
+    "uv run python scripts/export_core_schemas.py",
+    "uv run python scripts/check_secrets.py --format json",
+    "uv run python scripts/check_markdown_links.py",
+    "uv run python scripts/check_license.py",
+    "git diff --check",
+    "python skill-creator/scripts/quick_validate.py .agents/skills/gepase-orchestrator"
+  ],
+  "gate_results": [
+    {"gate_id": "R2-G01-pinned-source", "status": "passed", "evidence": ["evidence/r2-gates.json"]},
+    {"gate_id": "R2-G02-real-local-smoke", "status": "passed", "evidence": ["evidence/canary-smoke/smoke-report.json"]},
+    {"gate_id": "R2-G03-package-graph", "status": "passed", "evidence": ["evidence/r2-gates.json"]},
+    {"gate_id": "R2-G04-isolated-eval-designer", "status": "passed", "evidence": ["evidence/onboarding-summary.json"]},
+    {"gate_id": "R2-G05-evalplan-automatic-checks", "status": "passed", "evidence": ["evidence/r2-gates.json"]},
+    {"gate_id": "R2-G06-channel-and-executor-isolation", "status": "passed", "evidence": ["evidence/r2-gates.json"]},
+    {"gate_id": "R2-G07-review-freeze-resume", "status": "passed", "evidence": ["evidence/onboarding-summary.json"]},
+    {"gate_id": "R2-G08-offline-review-static-contract", "status": "passed", "evidence": ["evidence/review-ui-validation.json"]},
+    {"gate_id": "R2-G09-offline-browser-human-validation", "status": "passed", "evidence": ["evidence/human-offline-validation.json", "external-validation.md"]},
+    {"gate_id": "R2-G10-scope-boundary", "status": "passed", "evidence": ["evidence/r2-gates.json"]}
+  ],
+  "real_agent_runs": 1,
+  "headless_provider_runs": 0,
+  "metrics": {
+    "package_files": 7,
+    "package_graph_nodes": 370,
+    "package_graph_edges": 474,
+    "package_diagnostics": 0,
+    "real_gif_smoke_passed": true,
+    "trigger_cases": 18,
+    "functional_cases": 8,
+    "automatic_checks_passed": 13,
+    "review_decisions": 26,
+    "unresolved_review_decisions": 0,
+    "run_artifacts_checked": 19,
+    "run_artifact_failures": 0,
+    "pytest_passed": 132,
+    "pyright_errors": 0,
+    "secret_scan_files": 4687,
+    "secret_scan_findings": 0,
+    "machine_gates_passed": 10,
+    "machine_gates_total": 10,
+    "real_skill_effect_validated": false
+  },
+  "known_issues": [
+    "The current review is truthfully recorded as agent-assisted rather than user human review.",
+    "R3 paired no-skill/original execution, graders, comparator, and TaskScoreVector are not implemented or run.",
+    "No optimization-effect claim is supported."
+  ],
+  "design_decisions": [
+    "Vendor the exact complete upstream Package and keep its source byte-identical; exclude the vendored directory from repository lint rather than rewriting it.",
+    "Use one domain-neutral EvalPlan onboarding state machine and keep GIF prompts, fixtures, rubrics, and oracles in the canary plan.",
+    "Use a real isolated Agent-native Eval Designer with complete Package reads and typed provenance; do not call an external model API.",
+    "Keep Trigger and Functional channels separate and default Functional evidence to E2/E3 with E1 disabled.",
+    "Keep agent-assisted semantic review distinct from the user's human validation of offline-page interactions.",
+    "Do not attempt a localhost or alternate-browser workaround after file URL navigation was blocked by browser policy.",
+    "Verify the vendored Package against upstream Git blob identities and file modes rather than relying only on a content snapshot hash."
+  ],
+  "unlocks": [
+    "R3 real paired Executor, deterministic and independent Graders, anonymous Comparator, and TaskScoreVector"
+  ],
+  "generated_at": "2026-07-21T11:15:22Z"
+}

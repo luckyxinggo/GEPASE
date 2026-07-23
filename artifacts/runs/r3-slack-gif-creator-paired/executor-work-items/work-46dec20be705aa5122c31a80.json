@@ -1,0 +1,26 @@
+{
+  "fixture_refs": [
+    "benchmarks/canaries/slack-gif-creator/fixtures/emoji-bounce.json"
+  ],
+  "package_graph_ref": null,
+  "package_node_map": {},
+  "prompt": "请依据随附配置从空白画布创作一个 Slack 表情 GIF：一颗带粗描边和小高光的黄色五角星从上方落下，只反弹一次后稳稳停住；背景使用深海军蓝到靛蓝渐变。成品应可直接作为 Slack emoji 上传，并保存为指定 GIF。",
+  "requested_output": {
+    "description_zh": "128×128、单次反弹并可循环的 Slack 星星表情 GIF。",
+    "filename": "emoji_star_bounce.gif",
+    "media_type": "image/gif"
+  },
+  "required_capabilities": [
+    "programmatic_frame_drawing",
+    "emoji_gif_optimization",
+    "temporal_motion_analysis",
+    "gif_metadata_validation"
+  ],
+  "role": "executor",
+  "schema_version": "1.0.0",
+  "skill_ref": null,
+  "submission_schema_ref": "schemas/execution_bundle.schema.json",
+  "task_id": "functional-train-emoji-bounce-001",
+  "timeout_seconds": 600,
+  "work_id": "work-46dec20be705aa5122c31a80"
+}

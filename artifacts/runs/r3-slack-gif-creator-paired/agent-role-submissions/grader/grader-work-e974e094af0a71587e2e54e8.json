@@ -1,0 +1,67 @@
+{
+  "schema_version": "1.0.0",
+  "submission_id": "grade-submission-e974e094af0a71587e2e54e8",
+  "grader_work_id": "grader-work-e974e094af0a71587e2e54e8",
+  "role_run": {
+    "host": "codex",
+    "model": "gpt-5.6-sol",
+    "context_id": "/root/r3_grade_e974e0",
+    "host_task_id": "/root/r3_grade_e974e0",
+    "usage": {
+      "input_tokens": 15000,
+      "output_tokens": 2600,
+      "tool_calls": 7,
+      "duration_ms": 95011,
+      "token_count_kind": "estimated"
+    },
+    "started_at": "2026-07-21T16:21:27Z",
+    "finished_at": "2026-07-21T16:23:02Z"
+  },
+  "criterion_grades": [
+    {
+      "criterion_id": "efficiency-budget",
+      "score": 1.0,
+      "evidence_refs": [
+        "artifacts/runs/r3-slack-gif-creator-paired/workspaces/work-06e0ca3901e49580a002d129/compact_check_burst.gif",
+        "artifacts/runs/r3-slack-gif-creator-paired/blind-inspections/blind-82e8ed2563ad56b040ea114a.json"
+      ],
+      "rationale_zh": "实测为 480×480、469924 字节、12.5 FPS，严格满足 900KB 上限与 10–16 FPS 预算；22 帧全部唯一且统一为 80ms，既没有用重复帧浪费体积，也没有为压缩牺牲到过低帧率。"
+    },
+    {
+      "criterion_id": "efficiency-readability",
+      "score": 0.98,
+      "evidence_refs": [
+        "artifacts/runs/r3-slack-gif-creator-paired/workspaces/work-06e0ca3901e49580a002d129/compact_check_burst.gif",
+        "artifacts/runs/r3-slack-gif-creator-paired/derived/work-06e0ca3901e49580a002d129/contact-sheet.png"
+      ],
+      "rationale_zh": "白色粗笔画勾号与绿色圆章形成强对比，外圈粒子始终留在圆章之外，没有遮挡主体；从小尺寸入场到末帧定格，勾号轮廓均完整、辨识迅速。仅最初帧主体相对较小，故保留极小扣分。"
+    },
+    {
+      "criterion_id": "efficiency-motion",
+      "score": 0.95,
+      "evidence_refs": [
+        "artifacts/runs/r3-slack-gif-creator-paired/workspaces/work-06e0ca3901e49580a002d129/compact_check_burst.gif",
+        "artifacts/runs/r3-slack-gif-creator-paired/derived/work-06e0ca3901e49580a002d129/contact-sheet.png",
+        "artifacts/runs/r3-slack-gif-creator-paired/blind-inspections/blind-82e8ed2563ad56b040ea114a.json"
+      ],
+      "rationale_zh": "逐帧可见彩色粒子从中心附近沿径向外扩，并在后半程连续减弱直至消失；12.5 FPS、等长 80ms 帧和 22 个唯一帧共同保证了紧凑而连贯的节奏。末段极淡粒子到完全消失的过渡略快，因此未给满分。"
+    },
+    {
+      "criterion_id": "efficiency-balance",
+      "score": 0.96,
+      "evidence_refs": [
+        "artifacts/runs/r3-slack-gif-creator-paired/workspaces/work-06e0ca3901e49580a002d129/compact_check_burst.gif",
+        "artifacts/runs/r3-slack-gif-creator-paired/derived/work-06e0ca3901e49580a002d129/contact-sheet.png"
+      ],
+      "rationale_zh": "受控的扁平配色保住了白色勾号、绿色圆章和多色粒子的清晰边界，序列中未见严重色带、轮廓破碎或难看的节奏跳跃；深色背景渐变仍有轻微 GIF 抖动纹理，但不影响主体观感。"
+    }
+  ],
+  "overall_score": 0.9745,
+  "factual_claims_zh": [
+    "GIF 尺寸为 480×480，文件大小为 469924 字节，有效帧率为 12.5 FPS。",
+    "动画共 22 帧且 22 帧均唯一，每帧时长均为 80ms，总时长为 1760ms，并设置为循环播放。",
+    "接触表序列显示粒子环随时间扩大，后半程逐步淡出；中心勾号持续可见。",
+    "按权重重算：1.0×0.30 + 0.98×0.25 + 0.95×0.25 + 0.96×0.20 = 0.9745。"
+  ],
+  "feedback_zh": "成品在不到体积上限约一半的情况下完整满足尺寸与帧率要求，主体清楚、爆发方向明确、配色克制，属于高质量紧凑 GIF。若继续优化，可把末段粒子透明度再细分一两级，并针对深蓝渐变调整调色板或抖动策略，以减少轻微纹理而维持当前体积。"
+}

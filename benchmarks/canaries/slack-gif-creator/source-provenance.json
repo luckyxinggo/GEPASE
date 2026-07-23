@@ -1,0 +1,14 @@
+{
+  "dependency_lock_ref": "benchmarks/canaries/slack-gif-creator/requirements.lock",
+  "dependency_manifest_ref": "benchmarks/canaries/slack-gif-creator/package/requirements.txt",
+  "license_ref": "benchmarks/canaries/slack-gif-creator/package/LICENSE.txt",
+  "license_spdx": "Apache-2.0",
+  "package_snapshot_hash": "ce42d8a837acf9feda9706a3418fc26a77c497d9615079e616b5fdc6870ef64e",
+  "repository_url": "https://github.com/anthropics/skills",
+  "retrieved_at": "2026-07-21T10:15:00Z",
+  "source_commit": "fa0fa64bdc967915dc8399e803be67759e1e62b8",
+  "source_subpath": "skills/slack-gif-creator",
+  "upstream_tree_hash": "c61d2f7bb6334b68a6936ad3f41ebfc7cb76fe2a",
+  "upstream_manifest_ref": "benchmarks/canaries/slack-gif-creator/upstream-tree.json",
+  "vendored_ref": "benchmarks/canaries/slack-gif-creator/package"
+}

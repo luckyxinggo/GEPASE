@@ -1,0 +1,12 @@
+.venv/bin/gepase report build --config configs/canaries/slack-gif-creator-r5.json --output artifacts/runs/r5-slack-gif-creator-report --format json
+.venv/bin/gepase report verify --config configs/canaries/slack-gif-creator-r5.json --report-dir artifacts/runs/r5-slack-gif-creator-report --format json
+.venv/bin/gepase artifact verify artifacts/runs/r5-slack-gif-creator-report --format json
+.venv/bin/python scripts/run_r5_gates.py --repo . --config configs/canaries/slack-gif-creator-r5.json --report-dir artifacts/runs/r5-slack-gif-creator-report --output artifacts/stages/R5/evidence/r5-gates.json
+node -e '<extract inline script and compile with new Function>' artifacts/runs/r5-slack-gif-creator-report/index.html
+.venv/bin/ruff check .
+.venv/bin/pyright --pythonpath .venv/bin/python
+.venv/bin/pytest -q --junitxml=artifacts/stages/R5/test-results.xml
+.venv/bin/python scripts/check_secrets.py --root . --format json
+.venv/bin/python scripts/check_markdown_links.py
+.venv/bin/python scripts/check_license.py
+git diff --check

@@ -1,0 +1,220 @@
+{
+  "$defs": {
+    "AnalysisNodeHint": {
+      "additionalProperties": false,
+      "properties": {
+        "kind": {
+          "title": "Kind",
+          "type": "string"
+        },
+        "label": {
+          "title": "Label",
+          "type": "string"
+        },
+        "node_id": {
+          "title": "Node Id",
+          "type": "string"
+        },
+        "path": {
+          "title": "Path",
+          "type": "string"
+        }
+      },
+      "required": [
+        "node_id",
+        "path",
+        "kind",
+        "label"
+      ],
+      "title": "AnalysisNodeHint",
+      "type": "object"
+    },
+    "AnalyzerEvidenceSummary": {
+      "additionalProperties": false,
+      "properties": {
+        "deterministic_bundle_ref": {
+          "title": "Deterministic Bundle Ref",
+          "type": "string"
+        },
+        "execution_record_ref": {
+          "title": "Execution Record Ref",
+          "type": "string"
+        },
+        "failed_expectation_ids": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Failed Expectation Ids",
+          "type": "array"
+        },
+        "failure_kind": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/ProviderFailureKind"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "grader_feedback_zh": {
+          "title": "Grader Feedback Zh",
+          "type": "string"
+        },
+        "independent_grade_ref": {
+          "title": "Independent Grade Ref",
+          "type": "string"
+        },
+        "output_quality": {
+          "maximum": 1,
+          "minimum": 0,
+          "title": "Output Quality",
+          "type": "number"
+        },
+        "package_access_ref": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Package Access Ref"
+        },
+        "task_correctness": {
+          "maximum": 1,
+          "minimum": 0,
+          "title": "Task Correctness",
+          "type": "number"
+        },
+        "variant": {
+          "enum": [
+            "no-skill",
+            "original"
+          ],
+          "title": "Variant",
+          "type": "string"
+        }
+      },
+      "required": [
+        "variant",
+        "execution_record_ref",
+        "deterministic_bundle_ref",
+        "independent_grade_ref",
+        "task_correctness",
+        "output_quality",
+        "failed_expectation_ids",
+        "grader_feedback_zh"
+      ],
+      "title": "AnalyzerEvidenceSummary",
+      "type": "object"
+    },
+    "ProviderFailureKind": {
+      "enum": [
+        "invalid_submission",
+        "duplicate",
+        "timeout",
+        "partial_artifact",
+        "interrupted",
+        "unsupported_capability",
+        "task_failure",
+        "environment_unavailable"
+      ],
+      "title": "ProviderFailureKind",
+      "type": "string"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "analyzer_work_id": {
+      "title": "Analyzer Work Id",
+      "type": "string"
+    },
+    "baseline": {
+      "$ref": "#/$defs/AnalyzerEvidenceSummary"
+    },
+    "comparator_ref": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Comparator Ref"
+    },
+    "forbidden_inputs": {
+      "default": [
+        "candidate identity",
+        "search history",
+        "patch proposal",
+        "grader conversation",
+        "comparator conversation"
+      ],
+      "items": {
+        "type": "string"
+      },
+      "title": "Forbidden Inputs",
+      "type": "array"
+    },
+    "node_hints": {
+      "items": {
+        "$ref": "#/$defs/AnalysisNodeHint"
+      },
+      "title": "Node Hints",
+      "type": "array"
+    },
+    "original": {
+      "$ref": "#/$defs/AnalyzerEvidenceSummary"
+    },
+    "package_graph_ref": {
+      "title": "Package Graph Ref",
+      "type": "string"
+    },
+    "pair_id": {
+      "title": "Pair Id",
+      "type": "string"
+    },
+    "role": {
+      "const": "analyzer",
+      "default": "analyzer",
+      "title": "Role",
+      "type": "string"
+    },
+    "schema_version": {
+      "default": "1.0.0",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "submission_schema_ref": {
+      "title": "Submission Schema Ref",
+      "type": "string"
+    },
+    "task_id": {
+      "title": "Task Id",
+      "type": "string"
+    },
+    "task_prompt": {
+      "title": "Task Prompt",
+      "type": "string"
+    }
+  },
+  "required": [
+    "analyzer_work_id",
+    "task_id",
+    "pair_id",
+    "task_prompt",
+    "baseline",
+    "original",
+    "package_graph_ref",
+    "node_hints",
+    "submission_schema_ref"
+  ],
+  "title": "AnalyzerWorkItem",
+  "type": "object"
+}

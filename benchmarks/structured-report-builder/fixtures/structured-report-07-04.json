@@ -1,0 +1,54 @@
+{
+  "metrics": [
+    {
+      "label": "Revenue",
+      "unit": " USD",
+      "value": 2275
+    },
+    {
+      "label": "Orders",
+      "unit": "",
+      "value": 65
+    },
+    {
+      "label": "Conversion",
+      "unit": "",
+      "value": 0.155
+    }
+  ],
+  "provenance": {
+    "source": "synthetic-report-07-04"
+  },
+  "sections": [
+    {
+      "heading": "Regional detail South",
+      "summary": "Synthetic evidence slice 7-4.",
+      "table": {
+        "columns": [
+          "Region",
+          "Orders",
+          "Revenue"
+        ],
+        "rows": [
+          {
+            "Orders": 65,
+            "Region": "South",
+            "Revenue": 2275
+          },
+          {
+            "Orders": 62,
+            "Region": "Reference-A",
+            "Revenue": 2185
+          },
+          {
+            "Orders": 67,
+            "Region": "Reference-B",
+            "Revenue": 2320
+          }
+        ]
+      }
+    }
+  ],
+  "subtitle": "Auditable synthetic operating summary",
+  "title": "South Performance Review Q4 Scenario 07-04"
+}

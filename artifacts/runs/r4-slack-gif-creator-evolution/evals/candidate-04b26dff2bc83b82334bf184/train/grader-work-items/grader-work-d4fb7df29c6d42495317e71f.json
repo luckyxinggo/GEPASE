@@ -1,0 +1,54 @@
+{
+  "blind_artifact": {
+    "artifact": {
+      "media_type": "image/gif",
+      "path": "deployment_status.gif",
+      "sha256": "b98c56960cfba4daede85fcfbe64a1e6ff20b45fae2752990aa6e6ad1f22e970",
+      "size_bytes": 87647
+    },
+    "artifact_root": "artifacts/runs/r4-slack-gif-creator-evolution/evals/candidate-04b26dff2bc83b82334bf184/train/workspaces/work-9ecf15590215f5ff1128beba",
+    "blind_id": "blind-d35f182b973e2119cfe99f75",
+    "contact_sheet_ref": "artifacts/runs/r4-slack-gif-creator-evolution/evals/candidate-04b26dff2bc83b82334bf184/train/derived/work-9ecf15590215f5ff1128beba/contact-sheet.png",
+    "inspection_ref": "artifacts/runs/r4-slack-gif-creator-evolution/evals/candidate-04b26dff2bc83b82334bf184/train/blind-inspections/blind-d35f182b973e2119cfe99f75.json"
+  },
+  "expected_output_zh": "一个可循环的部署状态卡，waiting、processing、complete 依序且易于区分，DEPLOY 与 DONE 文本可读；允许图标、过渡方式和版式存在创作差异。",
+  "forbidden_inputs": [
+    "variant identity",
+    "candidate identity",
+    "sibling output",
+    "expected winner",
+    "executor conversation"
+  ],
+  "grader_work_id": "grader-work-d4fb7df29c6d42495317e71f",
+  "role": "independent_grader",
+  "rubric": [
+    {
+      "criterion_id": "status-hierarchy",
+      "description_zh": "标题、状态和辅助图形组织清楚，在 Slack 消息尺寸下易扫读。",
+      "label_zh": "信息层级",
+      "weight": 0.25
+    },
+    {
+      "criterion_id": "status-progression",
+      "description_zh": "三个阶段的先后和含义明确，过渡不混淆。",
+      "label_zh": "状态叙事",
+      "weight": 0.3
+    },
+    {
+      "criterion_id": "status-motion",
+      "description_zh": "各阶段停留足够辨认，切换自然且整体节奏紧凑。",
+      "label_zh": "动态节奏",
+      "weight": 0.2
+    },
+    {
+      "criterion_id": "status-finish",
+      "description_zh": "色彩、图标和版式具有一致性，成品可直接用于团队沟通。",
+      "label_zh": "视觉完成度",
+      "weight": 0.25
+    }
+  ],
+  "schema_version": "1.0.0",
+  "submission_schema_ref": "schemas/independent_grader_submission.schema.json",
+  "task_id": "functional-train-message-status-002",
+  "task_prompt": "制作一张适合发在 Slack 消息里的方形部署状态卡 GIF。按随附配置依次呈现 waiting、processing、complete 三个阶段：前两阶段保留 DEPLOY 标识，完成阶段清楚显示 DONE；用图形和颜色变化帮助读者一眼理解状态推进。请输出指定文件。"
+}

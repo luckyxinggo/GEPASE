@@ -1,0 +1,65 @@
+{
+  "submission_id": "grade-submission-871f3e18a4f66a1dada22bd7",
+  "grader_work_id": "grader-work-871f3e18a4f66a1dada22bd7",
+  "role_run": {
+    "host": "codex",
+    "model": "gpt-5.6-sol",
+    "context_id": "/root/r3_grade_871f3e",
+    "host_task_id": "/root/r3_grade_871f3e",
+    "usage": {
+      "input_tokens": 12500,
+      "output_tokens": 2600,
+      "tool_calls": 21,
+      "duration_ms": 324000,
+      "token_count_kind": "estimated"
+    },
+    "started_at": "2026-07-21T16:10:00Z",
+    "finished_at": "2026-07-21T16:15:24Z"
+  },
+  "criterion_grades": [
+    {
+      "criterion_id": "badge-fidelity",
+      "score": 0.96,
+      "evidence_refs": [
+        "artifacts/runs/r3-slack-gif-creator-paired/workspaces/work-b836a5a0009428cefa51ce4f/uploaded_badge_lift.gif",
+        "artifacts/runs/r3-slack-gif-creator-paired/derived/work-b836a5a0009428cefa51ce4f/contact-sheet.png"
+      ],
+      "rationale_zh": "逐帧可见像素徽章的阶梯式青色外轮廓与居中的橙色核心始终清楚可辨；对齐各帧后，主体青橙掩模几何保持一致，没有重绘变形或关键结构丢失。"
+    },
+    {
+      "criterion_id": "badge-motion",
+      "score": 0.95,
+      "evidence_refs": [
+        "artifacts/runs/r3-slack-gif-creator-paired/workspaces/work-b836a5a0009428cefa51ce4f/uploaded_badge_lift.gif",
+        "artifacts/runs/r3-slack-gif-creator-paired/derived/work-b836a5a0009428cefa51ce4f/contact-sheet.png"
+      ],
+      "rationale_zh": "主体从低位连续上浮，位移步长先增后减，越过最终稳定高度约 4 像素后回落，并以极小的二次调整停稳，完整呈现了上浮、轻微越位和缓动回稳。"
+    },
+    {
+      "criterion_id": "badge-integration",
+      "score": 0.96,
+      "evidence_refs": [
+        "artifacts/runs/r3-slack-gif-creator-paired/workspaces/work-b836a5a0009428cefa51ce4f/uploaded_badge_lift.gif",
+        "artifacts/runs/r3-slack-gif-creator-paired/derived/work-b836a5a0009428cefa51ce4f/contact-sheet.png"
+      ],
+      "rationale_zh": "深色背景、柔和青色辉光、底部阴影和少量点状装饰均与主体保持分离，强化了高度和对比度，没有遮挡青色轮廓或橙色核心。"
+    },
+    {
+      "criterion_id": "badge-emoji-ready",
+      "score": 0.85,
+      "evidence_refs": [
+        "artifacts/runs/r3-slack-gif-creator-paired/workspaces/work-b836a5a0009428cefa51ce4f/uploaded_badge_lift.gif",
+        "artifacts/runs/r3-slack-gif-creator-paired/blind-inspections/blind-a42a1eab2e88d33d07012cb1.json"
+      ],
+      "rationale_zh": "128×128 画布、约 100 KB 文件、2 秒时长和 10 fps 节奏适合表情使用，主体在小尺寸下仍有强对比和简洁轮廓；但无限循环的末帧停稳位置会直接跳回首帧低位，首尾像素差明显，循环衔接不够顺滑。"
+    }
+  ],
+  "overall_score": 0.9405,
+  "factual_claims_zh": [
+    "GIF 为 128×128，共 20 帧，每帧 100 毫秒，总时长 2000 毫秒，并设置为无限循环。",
+    "逐帧跟踪橙色核心顶边，其纵坐标从 88 上移至 53，再回落到 58 并稳定在 57。",
+    "检查记录给出的首尾平均像素差为 27.357421875，明显高于相邻帧平均像素差 2.4331975568804824。",
+    "文件大小为 99878 字节，20 帧中有 19 个唯一帧。"
+  ],
+  "feedback_zh": "成品很好地保留了青色轮廓与橙色核心，主体位移曲线也准确完成了上浮、轻微越位、回落和停稳；背景光效简洁且不抢主体。最值得改进的是循环闭合：可在停稳后加入回到底部的过渡，或把首尾设计成连续运动，避免当前末帧到首帧的明显瞬移。"
+}

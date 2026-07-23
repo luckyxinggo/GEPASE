@@ -1,0 +1,11 @@
+{
+  "ab_candidate_outcome": "loss",
+  "ab_submission_ref": "artifacts/runs/r4-slack-gif-creator-evolution/evals/candidate-2dad7a05ce4a6460dd71f470/validation/records/record-eac435aace00bbc2599090be.json",
+  "ba_candidate_outcome": "loss",
+  "ba_submission_ref": "artifacts/runs/r4-slack-gif-creator-evolution/evals/candidate-2dad7a05ce4a6460dd71f470/validation/records/record-eac435aace00bbc2599090be.json",
+  "candidate_margin": -1.0,
+  "consistent": true,
+  "pair_id": "pair-061ca407be66d6970b347bc5",
+  "schema_version": "1.0.0",
+  "task_id": "functional-validation-efficiency-007"
+}

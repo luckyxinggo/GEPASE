@@ -1,0 +1,181 @@
+{
+  "assertion_results": [
+    {
+      "assertion_id": "emoji-bounce-container",
+      "detail": "通过内容/元数据检查",
+      "evidence_refs": [
+        "artifacts/runs/r3-slack-gif-creator-paired/derived/work-46dec20be705aa5122c31a80/measurements.json",
+        "artifacts/runs/r3-slack-gif-creator-paired/derived/work-46dec20be705aa5122c31a80/contact-sheet.png"
+      ],
+      "family": "artifact_metadata",
+      "measurements": {
+        "frame_count": 22,
+        "height": 128,
+        "loop_count": 0,
+        "unique_frame_count": 17,
+        "width": 128
+      },
+      "passed": true,
+      "weight": 0.2
+    },
+    {
+      "assertion_id": "emoji-bounce-duration",
+      "detail": "通过内容/元数据检查",
+      "evidence_refs": [
+        "artifacts/runs/r3-slack-gif-creator-paired/derived/work-46dec20be705aa5122c31a80/measurements.json",
+        "artifacts/runs/r3-slack-gif-creator-paired/derived/work-46dec20be705aa5122c31a80/contact-sheet.png"
+      ],
+      "family": "artifact_metadata",
+      "measurements": {
+        "maximum_ms": 2400,
+        "minimum_ms": 1,
+        "non_positive_frames": 0,
+        "total_duration_ms": 1920
+      },
+      "passed": true,
+      "weight": 0.2
+    },
+    {
+      "assertion_id": "emoji-bounce-subject",
+      "detail": "未满足已冻结 expectation 的可执行判据",
+      "evidence_refs": [
+        "artifacts/runs/r3-slack-gif-creator-paired/derived/work-46dec20be705aa5122c31a80/measurements.json",
+        "artifacts/runs/r3-slack-gif-creator-paired/derived/work-46dec20be705aa5122c31a80/contact-sheet.png"
+      ],
+      "family": "frame_content",
+      "measurements": {
+        "highlight_peak": 0.0,
+        "yellow_fraction_by_frame": [
+          0.03277587890625,
+          0.03314208984375,
+          0.03564453125,
+          0.03533935546875,
+          0.035400390625,
+          0.03515625,
+          0.03564453125,
+          0.0355224609375,
+          0.035888671875,
+          0.0364990234375,
+          0.03558349609375,
+          0.03564453125,
+          0.0355224609375,
+          0.0355224609375,
+          0.0361328125,
+          0.0355224609375,
+          0.0355224609375,
+          0.03564453125,
+          0.03558349609375,
+          0.0364990234375,
+          0.03662109375,
+          0.037353515625
+        ]
+      },
+      "passed": false,
+      "weight": 0.2
+    },
+    {
+      "assertion_id": "emoji-bounce-motion",
+      "detail": "通过内容/元数据检查",
+      "evidence_refs": [
+        "artifacts/runs/r3-slack-gif-creator-paired/derived/work-46dec20be705aa5122c31a80/measurements.json",
+        "artifacts/runs/r3-slack-gif-creator-paired/derived/work-46dec20be705aa5122c31a80/contact-sheet.png"
+      ],
+      "family": "temporal_sequence",
+      "measurements": {
+        "centroid_y": [
+          10.682828282828282,
+          11.261477045908183,
+          13.468518518518518,
+          17.892592592592592,
+          24.539594843462247,
+          33.243947858473,
+          44.23583180987203,
+          57.040219378427786,
+          71.08333333333333,
+          87.63780918727915,
+          78.97570093457944,
+          72.54098360655738,
+          68.04021937842779,
+          65.04021937842779,
+          64.1045045045045,
+          65.04021937842779,
+          68.04021937842779,
+          72.54098360655738,
+          78.97570093457944,
+          87.63780918727915,
+          87.7057761732852,
+          88.46354166666667
+        ],
+        "direction_changes": 2
+      },
+      "passed": true,
+      "weight": 0.2
+    },
+    {
+      "assertion_id": "emoji-bounce-loop",
+      "detail": "通过内容/元数据检查",
+      "evidence_refs": [
+        "artifacts/runs/r3-slack-gif-creator-paired/derived/work-46dec20be705aa5122c31a80/measurements.json",
+        "artifacts/runs/r3-slack-gif-creator-paired/derived/work-46dec20be705aa5122c31a80/contact-sheet.png"
+      ],
+      "family": "temporal_sequence",
+      "measurements": {
+        "first_last_delta": 12.084818522135416,
+        "threshold": 15.0
+      },
+      "passed": true,
+      "weight": 0.2
+    }
+  ],
+  "bundle_id": "deterministic-8b31942640c3015af61ccda3",
+  "e3_record_id": "record-8b31942640c3015af61ccda3",
+  "generated_at": "2026-07-21T15:53:41.048478Z",
+  "inspection": {
+    "artifact_ref": "artifacts/runs/r3-slack-gif-creator-paired/workspaces/work-46dec20be705aa5122c31a80/emoji_star_bounce.gif",
+    "artifact_sha256": "891427ce43a5b555bb860664c9dab92603bdd7e05b1d3251279e32d4c668384f",
+    "contact_sheet_ref": "artifacts/runs/r3-slack-gif-creator-paired/derived/work-46dec20be705aa5122c31a80/contact-sheet.png",
+    "effective_fps": 11.458333333333334,
+    "file_size_bytes": 85992,
+    "first_last_pixel_delta": 12.084818522135416,
+    "frame_count": 22,
+    "frame_durations_ms": [
+      80,
+      80,
+      80,
+      80,
+      80,
+      80,
+      80,
+      80,
+      80,
+      80,
+      80,
+      80,
+      80,
+      80,
+      80,
+      80,
+      80,
+      80,
+      80,
+      80,
+      80,
+      240
+    ],
+    "height": 128,
+    "loop_count": 0,
+    "mean_adjacent_pixel_delta": 4.430141872829862,
+    "measurements_ref": "artifacts/runs/r3-slack-gif-creator-paired/derived/work-46dec20be705aa5122c31a80/measurements.json",
+    "total_duration_ms": 1920,
+    "unique_frame_count": 17,
+    "width": 128
+  },
+  "oracle_ref": "benchmarks/canaries/slack-gif-creator/oracles/gif_oracle.py:evaluate",
+  "oracle_sha256": "9ccb487705abdfa91ff82437cc028f139a3af419ee16baac869aaddee75920fa",
+  "pair_id": "pair-06eaafe5031550bf100734fc",
+  "schema_version": "1.0.0",
+  "source_record_id": "record-5cae6ab70b2c391655894a95",
+  "task_id": "functional-train-emoji-bounce-001",
+  "variant": "no-skill",
+  "weighted_score": 0.8
+}

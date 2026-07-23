@@ -1,0 +1,9 @@
+{
+  "barrier": "candidate-edf5f1aa07926ba5415f0442:train:execution",
+  "fresh_candidate_only": true,
+  "max_concurrency": 3,
+  "reference_cache_hit": true,
+  "role": "executor",
+  "schema_version": "1.0.0",
+  "work_items": 5
+}

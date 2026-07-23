@@ -1,0 +1,18 @@
+{
+  "schema_version": "1.0.0",
+  "policy_id": "slack-gif-creator-r3-v1",
+  "frozen_plan_hash": "1893ad9a08978f2a8f107981a9a032c7581d08082926ee52276bd5feba2df950",
+  "oracle_ref": "benchmarks/canaries/slack-gif-creator/oracles/gif_oracle.py:evaluate",
+  "task_correctness_weight": 0.55,
+  "output_quality_weight": 0.45,
+  "comparator_weight": 0.2,
+  "duration_budget_ms": 600000,
+  "token_budget": 32000,
+  "tool_call_budget": 32,
+  "artifact_size_budget_bytes": 1500000,
+  "comparator_case_ids": [
+    "functional-validation-loop-sparkles-006",
+    "functional-validation-efficiency-007",
+    "functional-validation-pulse-text-008"
+  ]
+}

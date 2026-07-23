@@ -1,0 +1,33 @@
+R1 command log (Asia/Shanghai, 2026-07-21)
+
+[preflight]
+git status --short
+find/rg file-scale and import tracing commands
+uv run pytest -q                                      -> 151 passed
+uv run ruff check src/gepase tests scripts            -> passed
+uv run pyright src/gepase tests scripts                -> 6 pre-existing test typing errors
+
+[cleanup and contract verification]
+uv run python -m gepase --help                         -> passed
+uv run pytest -q                                      -> 127 passed after final contract tests
+uv run ruff check src/gepase tests scripts            -> passed
+uv run pyright src/gepase tests scripts                -> 0 errors
+uv run python scripts/export_core_schemas.py           -> passed
+shasum -a 256 schemas/*.json before/after export       -> identical
+uv run gepase <15 retained commands> --help            -> 15/15 passed
+uv run python -c import gepase/public API               -> passed
+
+[final gates]
+uv run pytest -q --junitxml=artifacts/stages/R1/test-results.xml -> 127 passed
+uv run python scripts/check_secrets.py --format json    -> 4652 files, 0 findings
+uv run python scripts/check_markdown_links.py           -> passed
+uv run python scripts/check_license.py                  -> passed
+git diff --check                                        -> passed
+git status --short -- skills_test                       -> no output
+rg old route/deleted imports/pricing fields             -> 0 matches
+
+[prohibited actions]
+git reset                                                -> not run
+git clean                                                -> not run
+LLM/API/Agent execution                                  -> not run
+skills_test modification                                 -> none

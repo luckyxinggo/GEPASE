@@ -1,0 +1,33 @@
+{
+  "file": "compact_check_burst.gif",
+  "media_type": "image/gif",
+  "content": "central check mark with an outward particle burst that fades",
+  "dimensions": [
+    480,
+    480
+  ],
+  "target_fps": 14,
+  "encoded_frame_delay_ms": 70,
+  "effective_fps": 12.245,
+  "source_frame_count": 28,
+  "encoded_frame_count": 24,
+  "duration_seconds": 1.96,
+  "palette_budget": 64,
+  "first_frame_color_count": 47,
+  "size_bytes": 669835,
+  "size_kb": 654.14,
+  "size_budget_kb": 900,
+  "within_size_budget": true,
+  "within_fps_budget": true,
+  "message_gif_validation_passed": true,
+  "builder": {
+    "dimensions": "480x480",
+    "colors": 64
+  },
+  "validator": {
+    "width": 480,
+    "height": 480,
+    "frame_count": 24,
+    "note": "Package validator checks dimensions; timing above is recomputed from all per-frame durations."
+  }
+}

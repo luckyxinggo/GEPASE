@@ -1,0 +1,75 @@
+{
+  "schema_version": "1.0.0",
+  "submission_id": "analyzer-submission-ce5ad0e351b4b48eb9e4cdf6",
+  "analyzer_work_id": "analyzer-work-ce5ad0e351b4b48eb9e4cdf6",
+  "role_run": {
+    "host": "codex",
+    "model": "gpt-5.6-sol",
+    "context_id": "/root/r3_ana_ce5ad0",
+    "host_task_id": "/root/r3_ana_ce5ad0",
+    "usage": {
+      "duration_ms": 126000,
+      "input_tokens": 7000,
+      "output_tokens": 2400,
+      "tool_calls": 8,
+      "token_count_kind": "estimated"
+    },
+    "started_at": "2026-07-21T16:44:32Z",
+    "finished_at": "2026-07-21T16:46:38Z"
+  },
+  "analyses": [
+    {
+      "analysis_id": "analysis-original-readable-ocr-validation-gap",
+      "variant": "original",
+      "issue_zh": "original 的 E3 总分为 0.7，唯一失败项 readable-ocr 的 glyph-template-iou 识别帧比例为 0.0；但独立盲评给可读性 0.98，并确认 SYNC 与 10:30 在全部采样时刻完整、稳定、清晰。E2 记录和 package access 又表明 core/validators.py 已被读取并执行且最终验证被声明为通过。这组证据说明主要缺口不是人眼可读性，而是 Package 当前验证契约没有覆盖冻结判据所要求的渲染后文字机器可识别性，导致验证通过与 E3 失败不一致。",
+      "evidence_refs": [
+        "artifacts/runs/r3-slack-gif-creator-paired/deterministic/work-229b28b7e4ec64d79ddc725d.json",
+        "artifacts/runs/r3-slack-gif-creator-paired/records/record-67068ea835b5ef99202e4d77.json",
+        "artifacts/runs/r3-slack-gif-creator-paired/grader-submissions/grader-work-9ac81de98524f9488fddb584.json",
+        "artifacts/runs/r3-slack-gif-creator-paired/package-access/work-229b28b7e4ec64d79ddc725d.json",
+        "artifacts/runs/r2-slack-gif-creator-evalplan/package/graph.json"
+      ],
+      "target_node_ids": [
+        "node-d6b82162668345e012dc6a34",
+        "node-390c19b0fbd4439b006d6a79",
+        "node-ecc7bba352a5b7625ee91599",
+        "node-46d940221fa8caf3b6c22d2c",
+        "node-0f241aa06504163be33132f8"
+      ],
+      "confidence": 0.94,
+      "recommendation_zh": "将改动限定在 Core Workflow、Validators 文档与 core/validators.py：为 validate_gif 增加可选的 required_text/safe_area 验收输入，并在导出后对代表帧或全部帧执行确定性的文字可识别性检查，输出逐字符串识别比例；低于阈值时明确失败，并提示改用常见粗体字体、增大字形或重新排版。保留现有尺寸、时长、循环和配色检查，不改动 easing、frame composer 或 GIFBuilder。"
+    },
+    {
+      "analysis_id": "analysis-original-semantic-emphasis-and-loop",
+      "variant": "original",
+      "issue_zh": "original 的独立盲评虽达到 0.962，但动态强调项只有 0.93：主要变化是时钟附近的小圆点，未直接强化 10:30；E3 还显示首尾像素差 0.8973、平均相邻像素差 0.2940，说明循环闭合和动态克制度仍有优化空间。当前 Pulse/Heartbeat 指南给出 0.8–1.2 的宽泛缩放范围，却没有为文字关键型提醒规定更小幅度、相位闭合和全帧可读性约束。",
+      "evidence_refs": [
+        "artifacts/runs/r3-slack-gif-creator-paired/deterministic/work-229b28b7e4ec64d79ddc725d.json",
+        "artifacts/runs/r3-slack-gif-creator-paired/records/record-67068ea835b5ef99202e4d77.json",
+        "artifacts/runs/r3-slack-gif-creator-paired/grader-submissions/grader-work-9ac81de98524f9488fddb584.json",
+        "artifacts/runs/r2-slack-gif-creator-evalplan/package/graph.json"
+      ],
+      "target_node_ids": [
+        "node-d02d108593bae9344b40fbdb",
+        "node-fd31bcd35904a27e0f989d7a",
+        "node-be602a85600a986c55bd5982"
+      ],
+      "confidence": 0.86,
+      "recommendation_zh": "仅收紧 Pulse/Heartbeat 指南：对包含关键文字的提醒，优先把极轻微强调施加到时间标签本身，建议缩放控制在约 0.98–1.02 或采用不降低对比度的微弱明暗变化；使用首尾同相位的周期函数，逐帧确认文字不越出安全区且始终可读，并避免为了制造唯一帧而增加与信息无关的装饰运动。"
+    },
+    {
+      "analysis_id": "analysis-no-skill-readable-ocr-gap",
+      "variant": "no-skill",
+      "issue_zh": "no-skill 同样只在 readable-ocr 上失败，识别帧比例为 0.0、E3 correctness 为 0.7，而盲评可读性为 0.97。两侧一致的自动判据失败说明该问题并非仅由 original Package 引入；no-skill 产物也缺少与冻结文字识别判据对齐的最终验收。",
+      "evidence_refs": [
+        "artifacts/runs/r3-slack-gif-creator-paired/deterministic/work-02f7b78398c181ede25632a6.json",
+        "artifacts/runs/r3-slack-gif-creator-paired/records/record-34e2c5f088159e646243484f.json",
+        "artifacts/runs/r3-slack-gif-creator-paired/grader-submissions/grader-work-e0aa342ebaa7c0f36b49d9e1.json"
+      ],
+      "target_node_ids": [],
+      "confidence": 0.92,
+      "recommendation_zh": "在 no-skill 执行流程中增加一次渲染后文字可识别性验收：用与目标字符串一致的自动探针检查 SYNC 和 10:30 的逐帧识别率；失败时仅调整字体、字号、描边或字距后重渲染，同时维持现有 480×480、2 秒循环、配色与安全区表现。"
+    }
+  ],
+  "summary_zh": "两侧 E3 correctness 均为 0.7，且都仅因 readable-ocr 的识别帧比例为 0.0 失分；与此同时，独立盲评分别给出 0.9475 与 0.962，确认核心文字在人眼观察下持续清晰。因此首要建议是让 original Package 的 Validators 与渲染后文字机器可识别性形成明确闭环，而不是重做整体视觉方案。original 的次要质量机会是把轻微动态更直接地用于 10:30，并用小幅、首尾同相位的脉冲保持循环克制。Comparator 未提供，故不据此推断配对胜负。"
+}

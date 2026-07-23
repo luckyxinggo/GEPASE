@@ -1,0 +1,19 @@
+{
+  "branch_id": "branch-5a046d53cfd34c51dc28206c",
+  "branch_root_candidate_id": "candidate-edf5f1aa07926ba5415f0442",
+  "candidate_chain": [
+    "candidate-21242a10bcbaeb9631f3b2da",
+    "candidate-edf5f1aa07926ba5415f0442"
+  ],
+  "failure_cluster_id": "train-feedback:functional-train-input-badge-003",
+  "generation": 1,
+  "head_candidate_id": "candidate-edf5f1aa07926ba5415f0442",
+  "lineage_root_candidate_id": "candidate-21242a10bcbaeb9631f3b2da",
+  "operator_history": [
+    "graph_guided_package_patch"
+  ],
+  "package_id": "slack-gif-creator",
+  "rejected_attempt_ids": [],
+  "source_snapshot_hash": "ce42d8a837acf9feda9706a3418fc26a77c497d9615079e616b5fdc6870ef64e",
+  "variant_index": 1
+}

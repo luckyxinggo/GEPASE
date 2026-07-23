@@ -1,0 +1,168 @@
+{
+  "artifact_root": "artifacts/runs/r4-slack-gif-creator-evolution/evals/candidate-04b26dff2bc83b82334bf184/train/workspaces/work-2feaa3a4dbb47f95a5b9aefa",
+  "artifacts": [
+    {
+      "media_type": "text/x-python",
+      "path": "generate_satellite_gif.py",
+      "sha256": "d56cbfc2d27d09005f9119d59bc1a790ef2b9dc53ac2093f4ae340fc8579345a",
+      "size_bytes": 10239
+    },
+    {
+      "media_type": "application/json",
+      "path": "observed-trace.json",
+      "sha256": "ba23f045cea50425d1094f94e3429b78d8be62ebd2706ebb520beca7ddff9bf0",
+      "size_bytes": 2476
+    },
+    {
+      "media_type": "application/json",
+      "path": "package-access.json",
+      "sha256": "8000c418fcbc22171d7146ad4e7406c4b86a1af65180e019476504fd91af9306",
+      "size_bytes": 1647
+    },
+    {
+      "media_type": "image/gif",
+      "path": "satellite_orbit_ease.gif",
+      "sha256": "b785a86e5a8b03a31b57c574715c068c5734dbdb2bd2ee234bc6119b9213810e",
+      "size_bytes": 51316
+    },
+    {
+      "media_type": "image/png",
+      "path": "satellite_orbit_ease_preview.png",
+      "sha256": "c34a494a24e5b89c1dec685b01e34e5d2d540d9b7451e37420b4cbd23d70079d",
+      "size_bytes": 23543
+    },
+    {
+      "media_type": "text/markdown",
+      "path": "transcript.md",
+      "sha256": "47b7fb03355cd787cca544247b840a4ade254a8a88f7b8993cc98594832d9790",
+      "size_bytes": 2011
+    },
+    {
+      "media_type": "application/json",
+      "path": "validation.json",
+      "sha256": "b96180b458b043933bc79f07869a0ff21c05d90332961790c31f1de052f4d6f5",
+      "size_bytes": 1312
+    }
+  ],
+  "assertion_results": [],
+  "candidate_snapshot_hash": "30b52f2cab481f75926545479d2fff8bd907d716c0fe241e8f4014369e0d867c",
+  "evidence_tier": "E2",
+  "failure_detail": null,
+  "failure_kind": null,
+  "fixture_hash": "380768a9e82d25d1c4740bce912fc57bb2264dcaaff0cd7de5ce97690cf3facb",
+  "host_model_snapshot": "edbfd8f0668f44e333585ee805a6f891a7443402aad61b3e8cfeca5913b1338b",
+  "observed_trace": [
+    {
+      "action": "inspect_work_item",
+      "outcome": "completed",
+      "sequence": 0,
+      "target": "artifacts/runs/r4-slack-gif-creator-evolution/evals/candidate-04b26dff2bc83b82334bf184/train/executor-work-items/work-2feaa3a4dbb47f95a5b9aefa.json",
+      "tool": "read"
+    },
+    {
+      "action": "inspect_fixture",
+      "outcome": "completed",
+      "sequence": 1,
+      "target": "benchmarks/canaries/slack-gif-creator/fixtures/easing-orbit.json",
+      "tool": "read"
+    },
+    {
+      "action": "inspect_package_graph",
+      "outcome": "completed",
+      "sequence": 2,
+      "target": "artifacts/runs/r4-slack-gif-creator-evolution/candidates/candidate-04b26dff2bc83b82334bf184/graph.json",
+      "tool": "read"
+    },
+    {
+      "action": "read_skill_instructions",
+      "outcome": "completed",
+      "sequence": 3,
+      "target": "SKILL.md",
+      "tool": "read"
+    },
+    {
+      "action": "read_package_modules",
+      "outcome": "completed",
+      "sequence": 4,
+      "target": "core/easing.py, core/frame_composer.py, core/gif_builder.py, core/validators.py",
+      "tool": "read"
+    },
+    {
+      "action": "preflight_integer_motion",
+      "outcome": "completed",
+      "sequence": 5,
+      "target": "ease_out arc centers and final six adjacent-frame displacements",
+      "tool": "core.easing"
+    },
+    {
+      "action": "render_animation_frames",
+      "outcome": "completed",
+      "sequence": 6,
+      "target": "workspaces/work-2feaa3a4dbb47f95a5b9aefa/generate_satellite_gif.py",
+      "tool": "Pillow and core.frame_composer"
+    },
+    {
+      "action": "export_task_native_gif",
+      "outcome": "completed",
+      "sequence": 7,
+      "target": "workspaces/work-2feaa3a4dbb47f95a5b9aefa/satellite_orbit_ease.gif",
+      "tool": "core.gif_builder"
+    },
+    {
+      "action": "validate_slack_gif",
+      "outcome": "completed",
+      "sequence": 8,
+      "target": "workspaces/work-2feaa3a4dbb47f95a5b9aefa/satellite_orbit_ease.gif",
+      "tool": "core.validators"
+    },
+    {
+      "action": "inspect_visual_contact_sheet",
+      "outcome": "completed",
+      "sequence": 9,
+      "target": "workspaces/work-2feaa3a4dbb47f95a5b9aefa/satellite_orbit_ease_preview.png",
+      "tool": "view_image"
+    },
+    {
+      "action": "record_execution_evidence",
+      "outcome": "completed",
+      "sequence": 10,
+      "target": "workspaces/work-2feaa3a4dbb47f95a5b9aefa",
+      "tool": "write"
+    }
+  ],
+  "pair_id": "pair-851662b37d33af41c90dee4a",
+  "planned_trace": [],
+  "policy_hash": "3b49f46ee66bafaf2bcf1aeac08f1bd7f4c719463b0e655afe40a98a4af6b3ec",
+  "prompt_hash": "13c580a58310f14e8d7174a2e07c39b564dd1cdd214c47ef7fb932a61d2576c2",
+  "provenance": {
+    "context_id": "r4_exec_easing_a",
+    "generated_at": "2026-07-22T08:24:43.050076Z",
+    "generated_by": "gepase.eval.ingest",
+    "host": "codex",
+    "host_task_id": "/root/r4_exec_easing_a",
+    "model": "gpt-5.6-sol",
+    "origin": "agent-native",
+    "provider_id": "agent-delegated-v1",
+    "submission_id": "submission-69231ac9b5c5d9ce13c14dcb"
+  },
+  "provider_snapshot": "agent-delegated-v1",
+  "record_id": "record-3157f17c235e22828255dcfa",
+  "schema_version": "1.0.0",
+  "score": null,
+  "seed": 42,
+  "skill_id": "slack-gif-creator",
+  "source_record_refs": [],
+  "task_id": "functional-train-easing-orbit-005",
+  "task_score_vector": null,
+  "trace_completeness": "complete",
+  "uncertainty": 0.1,
+  "usage": {
+    "duration_ms": 450000,
+    "input_tokens": 43500,
+    "output_tokens": 9600,
+    "token_count_kind": "estimated",
+    "tool_calls": 14
+  },
+  "variant": "candidate",
+  "work_id": "work-2feaa3a4dbb47f95a5b9aefa"
+}

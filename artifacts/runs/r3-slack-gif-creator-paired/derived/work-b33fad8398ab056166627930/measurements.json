@@ -1,0 +1,158 @@
+{
+  "artifact_sha256": "30a021068221a8826bc702862f626ae84b90c90bacdc5b454a1461b14cddc59e",
+  "assertions": [
+    {
+      "assertion_id": "loop-container",
+      "detail": "通过内容/元数据检查",
+      "family": "artifact_metadata",
+      "measurements": {
+        "frame_count": 12,
+        "height": 128,
+        "loop_count": 0,
+        "unique_frame_count": 12,
+        "width": 128
+      },
+      "passed": true,
+      "weight": 0.15
+    },
+    {
+      "assertion_id": "loop-duration",
+      "detail": "通过内容/元数据检查",
+      "family": "artifact_metadata",
+      "measurements": {
+        "maximum_ms": 2200,
+        "minimum_ms": 1,
+        "non_positive_frames": 0,
+        "total_duration_ms": 1200
+      },
+      "passed": true,
+      "weight": 0.15
+    },
+    {
+      "assertion_id": "loop-ring",
+      "detail": "通过内容/元数据检查",
+      "family": "frame_content",
+      "measurements": {
+        "maximum_drift": 0.0,
+        "tracked_centers": [
+          [
+            63.744323790720635,
+            63.67127344521224
+          ],
+          [
+            63.744323790720635,
+            63.67127344521224
+          ],
+          [
+            63.744323790720635,
+            63.67127344521224
+          ],
+          [
+            63.744323790720635,
+            63.67127344521224
+          ],
+          [
+            63.744323790720635,
+            63.67127344521224
+          ],
+          [
+            63.744323790720635,
+            63.67127344521224
+          ],
+          [
+            63.744323790720635,
+            63.67127344521224
+          ],
+          [
+            63.744323790720635,
+            63.67127344521224
+          ],
+          [
+            63.744323790720635,
+            63.67127344521224
+          ],
+          [
+            63.744323790720635,
+            63.67127344521224
+          ],
+          [
+            63.744323790720635,
+            63.67127344521224
+          ],
+          [
+            63.744323790720635,
+            63.67127344521224
+          ]
+        ]
+      },
+      "passed": true,
+      "weight": 0.2
+    },
+    {
+      "assertion_id": "loop-three-sparkles",
+      "detail": "未满足已冻结 expectation 的可执行判据",
+      "family": "temporal_sequence",
+      "measurements": {
+        "sector_brightness_ranges": [
+          8.556219566179728,
+          7.43159103187466,
+          7.9386930159443025
+        ]
+      },
+      "passed": false,
+      "weight": 0.25
+    },
+    {
+      "assertion_id": "loop-seam",
+      "detail": "通过内容/元数据检查",
+      "family": "temporal_sequence",
+      "measurements": {
+        "first_last_delta": 1.993408203125,
+        "threshold": 3.052686055501302
+      },
+      "passed": true,
+      "weight": 0.25
+    }
+  ],
+  "case_id": "functional-validation-loop-sparkles-006",
+  "common": {
+    "adjacent_pixel_deltas": [
+      2.0773111979166665,
+      1.6858113606770833,
+      1.6305745442708333,
+      2.4498087565104165,
+      2.4344889322916665,
+      1.7355143229166667,
+      1.7116495768229167,
+      2.1199951171875,
+      2.2673136393229165,
+      1.2640787760416667,
+      1.5785319010416667
+    ],
+    "effective_fps": 10.0,
+    "file_size_bytes": 27745,
+    "first_last_pixel_delta": 1.993408203125,
+    "frame_count": 12,
+    "frame_durations_ms": [
+      100,
+      100,
+      100,
+      100,
+      100,
+      100,
+      100,
+      100,
+      100,
+      100,
+      100,
+      100
+    ],
+    "height": 128,
+    "loop_count": 0,
+    "mean_adjacent_pixel_delta": 1.9050071022727275,
+    "total_duration_ms": 1200,
+    "unique_frame_count": 12,
+    "width": 128
+  },
+  "schema_version": "1.0.0"
+}

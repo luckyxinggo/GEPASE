@@ -1,0 +1,13 @@
+{
+  "designer_work_id": "eval-design-35fdb136ceda9ec147eda7c3",
+  "draft_hash": "8f249005e7f9ce57ed0bb0c5212cbc392d79e6710997e2651f4598fdd087128b",
+  "frozen_plan_hash": "1893ad9a08978f2a8f107981a9a032c7581d08082926ee52276bd5feba2df950",
+  "package_id": "slack-gif-creator",
+  "package_snapshot_hash": "ce42d8a837acf9feda9706a3418fc26a77c497d9615079e616b5fdc6870ef64e",
+  "review_id": "review-r2-agent-assisted-20260721",
+  "revision": 1,
+  "run_id": "r2-slack-gif-creator-evalplan",
+  "schema_version": "1.0.0",
+  "state": "execution_ready",
+  "updated_at": "2026-07-21T10:43:33.505267Z"
+}

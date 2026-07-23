@@ -1,0 +1,16 @@
+{
+  "candidate_ids": [
+    "candidate-21242a10bcbaeb9631f3b2da",
+    "candidate-04b26dff2bc83b82334bf184",
+    "candidate-2dad7a05ce4a6460dd71f470"
+  ],
+  "current_best_candidate_id": "candidate-2dad7a05ce4a6460dd71f470",
+  "current_best_index": 2,
+  "frontier_type": "instance",
+  "gepa_version": "0.1.4",
+  "official_state_consistent": true,
+  "pareto_selected_candidate_id": "candidate-2dad7a05ce4a6460dd71f470",
+  "pareto_selected_index": 2,
+  "schema_version": "1.0.0",
+  "task_level_scores_preserved": true
+}

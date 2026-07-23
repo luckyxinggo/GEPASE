@@ -1,0 +1,37 @@
+{
+  "schema_version": "1.0.0",
+  "report_ref": "artifacts/runs/r5-slack-gif-creator-report/index.html",
+  "valid": true,
+  "title": "slack-gif-creator 完整 Package 进化报告",
+  "html_ids": 41,
+  "unique_html_ids": 41,
+  "duplicate_ids": [],
+  "section_ids": [
+    "overview",
+    "package-graph",
+    "gif-comparison",
+    "evolution",
+    "scores",
+    "traceability",
+    "gate-funnel",
+    "runtime",
+    "provenance",
+    "deployable",
+    "reproduce"
+  ],
+  "responsive_media_queries": 3,
+  "interactive_controls_in_static_html": 8,
+  "external_scripts": 0,
+  "external_styles": 0,
+  "inline_report_data_blocks": 1,
+  "inline_javascript_syntax": "passed",
+  "copied_task_native_gifs": 9,
+  "copied_gif_hash_mismatches": 0,
+  "automated_browser_navigation": {
+    "status": "blocked_by_host_policy",
+    "url_scheme": "file",
+    "workaround_attempted": false
+  },
+  "manual_visual_confirmation": "passed",
+  "manual_visual_evidence_ref": "visual-validation.json"
+}

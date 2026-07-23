@@ -1,0 +1,45 @@
+{
+  "schema_version": "1.0.0",
+  "submission_id": "comparator-submission-17a2d879d5aa74690d415af6",
+  "comparator_work_id": "comparator-work-17a2d879d5aa74690d415af6",
+  "role_run": {
+    "host": "codex",
+    "model": "gpt-5.6-sol",
+    "context_id": "/root/r3_cmp_17a2d8",
+    "host_task_id": "/root/r3_cmp_17a2d8",
+    "usage": {
+      "input_tokens": 18000,
+      "output_tokens": 1600,
+      "tool_calls": 10,
+      "duration_ms": 78000,
+      "token_count_kind": "estimated"
+    },
+    "started_at": "2026-07-21T16:30:37Z",
+    "finished_at": "2026-07-21T16:31:55Z"
+  },
+  "winner": "right",
+  "confidence": 0.79,
+  "criteria": [
+    {
+      "criterion_id": "efficiency-budget",
+      "preference": "left",
+      "rationale_zh": "两侧均为 480×480、12.5 FPS 且明显低于 900KB，但左侧仅 139597B，约为右侧 469924B 的三成；在保持 18 个独立帧和完整爆发—渐隐过程的同时，左侧对色彩与重复信息的控制更高效。"
+    },
+    {
+      "criterion_id": "efficiency-readability",
+      "preference": "right",
+      "rationale_zh": "两侧勾号都没有被粒子遮挡；右侧的高亮外环、较大的最终主体和更强的明暗对比使勾号在动画各阶段更具视觉中心感，轮廓也保持完整清晰。"
+    },
+    {
+      "criterion_id": "efficiency-motion",
+      "preference": "right",
+      "rationale_zh": "右侧用 22 帧呈现粒子环持续向外扩张并逐步变暗，同时中心徽章平滑放大，方向和速度更易读；左侧虽能顺畅回到静态画面，但开头停顿后粒子出现略显突然，动态层次较少。"
+    },
+    {
+      "criterion_id": "efficiency-balance",
+      "preference": "right",
+      "rationale_zh": "左侧平涂方案更干净且首尾衔接更好；右侧渐变背景可见轻微量化纹理，首尾差异也较大会带来循环重置感。不过右侧在文件仍仅约 470KB 时换得了更丰富的粒子形状、色彩、尺度变化与更精致的主体层次，未出现严重色带或轮廓破碎，综合质量权衡仍更优。"
+    }
+  ],
+  "rationale_zh": "右侧整体胜出。左侧在体积和循环闭合上明显占优，且画面清爽；但右侧在不到 900KB 上限六成的预算内，提供了更强的勾号视觉层级、更连贯的径向扩散与渐隐、以及更充分的庆祝氛围。右侧的轻微渐变量化和循环跳变降低了优势幅度，但不足以抵消其在可读性、动态和成品质感上的领先。"
+}

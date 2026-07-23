@@ -1,0 +1,73 @@
+{
+  "context_id": "work-229b28b7e4ec64d79ddc725d",
+  "output": "artifacts/runs/r3-slack-gif-creator-paired/workspaces/work-229b28b7e4ec64d79ddc725d/meeting_sync_reminder.gif",
+  "build_info": {
+    "path": "artifacts/runs/r3-slack-gif-creator-paired/workspaces/work-229b28b7e4ec64d79ddc725d/meeting_sync_reminder.gif",
+    "size_kb": 258.712890625,
+    "size_mb": 0.25264930725097656,
+    "dimensions": "480x480",
+    "frame_count": 20,
+    "fps": 10,
+    "duration_seconds": 2.0,
+    "colors": 64
+  },
+  "reopen_verification": {
+    "dimensions": [
+      480,
+      480
+    ],
+    "frame_count": 20,
+    "frame_durations_ms": [
+      100,
+      100,
+      100,
+      100,
+      100,
+      100,
+      100,
+      100,
+      100,
+      100,
+      100,
+      100,
+      100,
+      100,
+      100,
+      100,
+      100,
+      100,
+      100,
+      100
+    ],
+    "total_duration_ms": 2000,
+    "loop": 0,
+    "all_primary_text_boxes_inside_42px_safe_area": true,
+    "primary_text_present_on_every_authored_frame": true,
+    "contrast_ratios": {
+      "SYNC_on_card": 11.73,
+      "10:30_on_accent": 5.42
+    },
+    "text_readability": "SYNC and 10:30 remain stationary, large, high-contrast, and unobscured in every frame."
+  },
+  "visual_inspection": {
+    "performed": true,
+    "result": "Primary text is large, crisp, centered, unobscured, and clearly readable against the warm card and brick-red time pill."
+  },
+  "package_validator": {
+    "passes": true,
+    "details": {
+      "file": "artifacts/runs/r3-slack-gif-creator-paired/workspaces/work-229b28b7e4ec64d79ddc725d/meeting_sync_reminder.gif",
+      "passes": true,
+      "width": 480,
+      "height": 480,
+      "size_kb": 258.712890625,
+      "size_mb": 0.25264930725097656,
+      "frame_count": 20,
+      "duration_seconds": 2.0,
+      "fps": 10.0,
+      "is_emoji": false,
+      "optimal": null
+    }
+  },
+  "checks_passed": true
+}

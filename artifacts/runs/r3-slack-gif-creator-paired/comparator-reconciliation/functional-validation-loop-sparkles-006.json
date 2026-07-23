@@ -1,0 +1,11 @@
+{
+  "ab_original_outcome": "loss",
+  "ab_submission_ref": "artifacts/runs/r3-slack-gif-creator-paired/comparator-submissions/comparator-work-485b9579ed3edf8ea3d12360.json",
+  "ba_original_outcome": "loss",
+  "ba_submission_ref": "artifacts/runs/r3-slack-gif-creator-paired/comparator-submissions/comparator-work-a657646dd736fc23641a96d9.json",
+  "consistent": true,
+  "original_margin": -1.0,
+  "pair_id": "pair-3c61dd0ee9d0c3845a03d9ad",
+  "schema_version": "1.0.0",
+  "task_id": "functional-validation-loop-sparkles-006"
+}

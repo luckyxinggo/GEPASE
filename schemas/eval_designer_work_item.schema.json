@@ -1,0 +1,205 @@
+{
+  "$defs": {
+    "EvalDesignBrief": {
+      "additionalProperties": false,
+      "properties": {
+        "brief_id": {
+          "title": "Brief Id",
+          "type": "string"
+        },
+        "coverage_notes_zh": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Coverage Notes Zh",
+          "type": "array"
+        },
+        "forbidden_design_shortcuts": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Forbidden Design Shortcuts",
+          "type": "array"
+        },
+        "language": {
+          "default": "zh-CN",
+          "title": "Language",
+          "type": "string"
+        },
+        "minimum_functional_cases": {
+          "default": 4,
+          "minimum": 2,
+          "title": "Minimum Functional Cases",
+          "type": "integer"
+        },
+        "minimum_train_cases": {
+          "default": 2,
+          "minimum": 1,
+          "title": "Minimum Train Cases",
+          "type": "integer"
+        },
+        "minimum_trigger_cases_per_kind": {
+          "default": 3,
+          "minimum": 1,
+          "title": "Minimum Trigger Cases Per Kind",
+          "type": "integer"
+        },
+        "minimum_validation_cases": {
+          "default": 2,
+          "minimum": 1,
+          "title": "Minimum Validation Cases",
+          "type": "integer"
+        },
+        "required_functional_families": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Required Functional Families",
+          "type": "array"
+        },
+        "required_output_media_types": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Required Output Media Types",
+          "type": "array"
+        }
+      },
+      "required": [
+        "brief_id",
+        "required_functional_families",
+        "required_output_media_types",
+        "coverage_notes_zh",
+        "forbidden_design_shortcuts"
+      ],
+      "title": "EvalDesignBrief",
+      "type": "object"
+    },
+    "PackageDesignHint": {
+      "additionalProperties": false,
+      "properties": {
+        "kind": {
+          "title": "Kind",
+          "type": "string"
+        },
+        "label": {
+          "title": "Label",
+          "type": "string"
+        },
+        "node_id": {
+          "title": "Node Id",
+          "type": "string"
+        },
+        "path": {
+          "title": "Path",
+          "type": "string"
+        }
+      },
+      "required": [
+        "kind",
+        "path",
+        "label",
+        "node_id"
+      ],
+      "title": "PackageDesignHint",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "created_at": {
+      "format": "date-time",
+      "title": "Created At",
+      "type": "string"
+    },
+    "design_brief": {
+      "$ref": "#/$defs/EvalDesignBrief"
+    },
+    "forbidden_inputs": {
+      "default": [
+        "candidate identity",
+        "expected winner",
+        "sibling output",
+        "search feedback"
+      ],
+      "items": {
+        "type": "string"
+      },
+      "title": "Forbidden Inputs",
+      "type": "array"
+    },
+    "package_diagnostics_ref": {
+      "title": "Package Diagnostics Ref",
+      "type": "string"
+    },
+    "package_graph_ref": {
+      "title": "Package Graph Ref",
+      "type": "string"
+    },
+    "package_hints": {
+      "items": {
+        "$ref": "#/$defs/PackageDesignHint"
+      },
+      "title": "Package Hints",
+      "type": "array"
+    },
+    "package_snapshot_hash": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Package Snapshot Hash",
+      "type": "string"
+    },
+    "required_package_reads": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Required Package Reads",
+      "type": "array"
+    },
+    "role": {
+      "const": "eval_designer",
+      "default": "eval_designer",
+      "title": "Role",
+      "type": "string"
+    },
+    "schema_version": {
+      "default": "1.0.0",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "skill_id": {
+      "title": "Skill Id",
+      "type": "string"
+    },
+    "skill_ref": {
+      "title": "Skill Ref",
+      "type": "string"
+    },
+    "source_provenance_ref": {
+      "title": "Source Provenance Ref",
+      "type": "string"
+    },
+    "submission_schema_ref": {
+      "title": "Submission Schema Ref",
+      "type": "string"
+    },
+    "work_id": {
+      "title": "Work Id",
+      "type": "string"
+    }
+  },
+  "required": [
+    "work_id",
+    "skill_id",
+    "skill_ref",
+    "package_snapshot_hash",
+    "package_graph_ref",
+    "package_diagnostics_ref",
+    "source_provenance_ref",
+    "design_brief",
+    "package_hints",
+    "submission_schema_ref",
+    "required_package_reads"
+  ],
+  "title": "EvalDesignerWorkItem",
+  "type": "object"
+}

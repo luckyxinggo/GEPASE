@@ -1,0 +1,58 @@
+{
+  "failure_detail": null,
+  "failure_kind": null,
+  "patch": {
+    "base_candidate_id": "candidate-21242a10bcbaeb9631f3b2da",
+    "base_content_hash": "ce42d8a837acf9feda9706a3418fc26a77c497d9615079e616b5fdc6870ef64e",
+    "base_snapshot_hash": "ce42d8a837acf9feda9706a3418fc26a77c497d9615079e616b5fdc6870ef64e",
+    "edit_budget": {
+      "allow_file_topology_edits": false,
+      "allow_script_edits": true,
+      "max_added_files": 0,
+      "max_changed_files": 1,
+      "max_deleted_files": 0,
+      "max_operations": 1,
+      "max_total_replacement_chars": 24000
+    },
+    "evidence_refs": [
+      "artifacts/runs/r3-slack-gif-creator-paired/analyzer-submissions/analyzer-work-66550acf708dcf7d83b689cb.json"
+    ],
+    "operations": [
+      {
+        "evidence_refs": [
+          "artifacts/runs/r3-slack-gif-creator-paired/analyzer-submissions/analyzer-work-66550acf708dcf7d83b689cb.json"
+        ],
+        "expected_benefit": "Makes first-to-last continuity and validation of the actual exported GIF explicit acceptance criteria, reducing visible restart jumps that ordinary size checks can miss.",
+        "op": "replace_markdown_block",
+        "operation_id": "op-46d940221fa8caf3b6c22d2c",
+        "path": "SKILL.md",
+        "precondition_hash": "951bd4e2b513b7780d40bda28c1ccf3e51c2945e2375f6a21a665517af6803f7",
+        "rationale": "The evidence reports a first-to-last pixel difference about 6.6 times the adjacent-frame average despite successful validation. Requiring bounded return frames, post-export validation, multi-cycle seam review, and revalidation directly addresses that failure without inventing validator parameters, result fields, or new Python APIs.",
+        "regression_risk": "low",
+        "replacement": "```python\nfrom core.validators import validate_gif, is_slack_ready\n\ngif_path = 'my.gif'\n\n# Design a closed loop before export: after any steady hold, include bounded\n# return frames so the final state approaches the starting state instead of\n# ending at maximum displacement.\n\n# Validate the final exported file by path, not only the in-memory frames.\npasses, info = validate_gif(gif_path, is_emoji=True, verbose=True)\nif not passes:\n    raise ValueError(f\"Exported GIF failed validation: {info}\")\n\n# Preview at least two complete cycles after export. Treat a visible jump from\n# the last frame back to the first as a failed loop, revise the return frames,\n# re-export, and rerun both checks even if dimensions and file size pass.\nif not is_slack_ready(gif_path):\n    raise ValueError(\"Exported GIF is not Slack-ready\")\n\nprint(\"Ready!\")\n```\n",
+        "target_node_id": "node-46d940221fa8caf3b6c22d2c"
+      }
+    ],
+    "patch_id": "patch-585677fdc0e6730315f1f1b5",
+    "proposal_work_id": "proposal-work-ab7f56118676006487a9edc3",
+    "schema_version": "1.0.0",
+    "selected_node_ids": [
+      "node-46d940221fa8caf3b6c22d2c"
+    ],
+    "selector": "graph_guided",
+    "summary": "Strengthen the documented GIF validation workflow so creators design a closed loop and treat post-export loop-seam review as a release gate."
+  },
+  "provenance": {
+    "duration_ms": 120000,
+    "host": "codex",
+    "host_task_id": "/root/r4_proposal_input_badge",
+    "model": "gpt-5.6-sol",
+    "token_estimate": 4000
+  },
+  "repair_count": 1,
+  "schema_version": "1.0.0",
+  "status": "completed",
+  "submission_id": "proposal-submission-a8e20df071ed0f8a8e7ace42",
+  "valid_on_first_attempt": false,
+  "work_id": "proposal-work-ab7f56118676006487a9edc3"
+}

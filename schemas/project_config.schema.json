@@ -1,0 +1,300 @@
+{
+  "$defs": {
+    "BudgetConfig": {
+      "additionalProperties": false,
+      "properties": {
+        "max_high_fidelity_items": {
+          "default": 0,
+          "minimum": 0,
+          "title": "Max High Fidelity Items",
+          "type": "integer"
+        },
+        "max_tokens": {
+          "anyOf": [
+            {
+              "minimum": 1,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Max Tokens"
+        },
+        "max_work_items": {
+          "default": 100,
+          "minimum": 1,
+          "title": "Max Work Items",
+          "type": "integer"
+        }
+      },
+      "title": "BudgetConfig",
+      "type": "object"
+    },
+    "DatasetConfig": {
+      "additionalProperties": false,
+      "properties": {
+        "manifest": {
+          "title": "Manifest",
+          "type": "string"
+        },
+        "split": {
+          "default": "train",
+          "title": "Split",
+          "type": "string"
+        }
+      },
+      "required": [
+        "manifest"
+      ],
+      "title": "DatasetConfig",
+      "type": "object"
+    },
+    "EvalPolicyConfig": {
+      "additionalProperties": false,
+      "properties": {
+        "allowed_tiers": {
+          "default": [
+            "E0"
+          ],
+          "items": {
+            "type": "string"
+          },
+          "title": "Allowed Tiers",
+          "type": "array"
+        },
+        "max_attempts": {
+          "default": 1,
+          "maximum": 10,
+          "minimum": 1,
+          "title": "Max Attempts",
+          "type": "integer"
+        },
+        "minimum_acceptance_tier": {
+          "default": "E0",
+          "title": "Minimum Acceptance Tier",
+          "type": "string"
+        },
+        "paired": {
+          "default": true,
+          "title": "Paired",
+          "type": "boolean"
+        }
+      },
+      "title": "EvalPolicyConfig",
+      "type": "object"
+    },
+    "OptimizerConfig": {
+      "additionalProperties": false,
+      "properties": {
+        "name": {
+          "default": "none",
+          "title": "Name",
+          "type": "string"
+        },
+        "seed": {
+          "default": 42,
+          "title": "Seed",
+          "type": "integer"
+        }
+      },
+      "title": "OptimizerConfig",
+      "type": "object"
+    },
+    "ProviderConfig": {
+      "additionalProperties": false,
+      "properties": {
+        "credential_env": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Credential Env"
+        },
+        "endpoint": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Endpoint"
+        },
+        "kind": {
+          "default": "mock",
+          "enum": [
+            "mock",
+            "agent_native",
+            "replay",
+            "headless"
+          ],
+          "title": "Kind",
+          "type": "string"
+        },
+        "model": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Model"
+        },
+        "name": {
+          "default": "deterministic-mock",
+          "title": "Name",
+          "type": "string"
+        }
+      },
+      "title": "ProviderConfig",
+      "type": "object"
+    },
+    "ReportConfig": {
+      "additionalProperties": false,
+      "properties": {
+        "formats": {
+          "default": [
+            "json"
+          ],
+          "items": {
+            "enum": [
+              "json",
+              "markdown",
+              "html"
+            ],
+            "type": "string"
+          },
+          "title": "Formats",
+          "type": "array"
+        },
+        "redact": {
+          "default": true,
+          "title": "Redact",
+          "type": "boolean"
+        }
+      },
+      "title": "ReportConfig",
+      "type": "object"
+    },
+    "RoleProviderConfig": {
+      "additionalProperties": false,
+      "description": "Provider-neutral role routing; execution remains outside the Python Core.",
+      "properties": {
+        "default": {
+          "$ref": "#/$defs/ProviderConfig",
+          "default": {
+            "credential_env": null,
+            "endpoint": null,
+            "kind": "agent_native",
+            "model": null,
+            "name": "host-agent"
+          }
+        },
+        "roles": {
+          "additionalProperties": {
+            "$ref": "#/$defs/ProviderConfig"
+          },
+          "propertyNames": {
+            "enum": [
+              "eval_designer",
+              "executor",
+              "independent_grader",
+              "comparator",
+              "analyzer",
+              "reflection",
+              "proposer"
+            ]
+          },
+          "title": "Roles",
+          "type": "object"
+        }
+      },
+      "title": "RoleProviderConfig",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "budget": {
+      "$ref": "#/$defs/BudgetConfig",
+      "default": {
+        "max_high_fidelity_items": 0,
+        "max_tokens": null,
+        "max_work_items": 100
+      }
+    },
+    "dataset": {
+      "$ref": "#/$defs/DatasetConfig"
+    },
+    "eval_policy": {
+      "$ref": "#/$defs/EvalPolicyConfig",
+      "default": {
+        "allowed_tiers": [
+          "E0"
+        ],
+        "max_attempts": 1,
+        "minimum_acceptance_tier": "E0",
+        "paired": true
+      }
+    },
+    "optimizer": {
+      "$ref": "#/$defs/OptimizerConfig",
+      "default": {
+        "name": "none",
+        "seed": 42
+      }
+    },
+    "project": {
+      "default": "gepase",
+      "title": "Project",
+      "type": "string"
+    },
+    "provider": {
+      "$ref": "#/$defs/ProviderConfig",
+      "default": {
+        "credential_env": null,
+        "endpoint": null,
+        "kind": "mock",
+        "model": null,
+        "name": "deterministic-mock"
+      }
+    },
+    "report": {
+      "$ref": "#/$defs/ReportConfig",
+      "default": {
+        "formats": [
+          "json"
+        ],
+        "redact": true
+      }
+    },
+    "role_providers": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/RoleProviderConfig"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null
+    }
+  },
+  "required": [
+    "dataset"
+  ],
+  "title": "ProjectConfig",
+  "type": "object"
+}

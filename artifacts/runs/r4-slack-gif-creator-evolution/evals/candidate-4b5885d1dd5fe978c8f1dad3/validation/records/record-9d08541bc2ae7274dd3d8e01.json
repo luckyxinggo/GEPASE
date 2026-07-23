@@ -1,0 +1,177 @@
+{
+  "artifact_root": "artifacts/runs/r4-slack-gif-creator-evolution/evals/candidate-4b5885d1dd5fe978c8f1dad3/validation/workspaces/work-854b925d0b1073833e96ddc2",
+  "artifacts": [
+    {
+      "media_type": "text/x-python",
+      "path": "generate_gif.py",
+      "sha256": "08b860bc38088fc62a2b3b241cfbbb9183c63fb1d5f72aaa88a03dd0bec45a09",
+      "size_bytes": 4157
+    },
+    {
+      "media_type": "image/gif",
+      "path": "go_alert_pulse.gif",
+      "sha256": "ca187648c5fba1ef4462b34eb563572449b9fed4f70505b1bd45bbc5f37d959a",
+      "size_bytes": 9148
+    },
+    {
+      "media_type": "application/json",
+      "path": "observed-trace.json",
+      "sha256": "bc2912c63a803b172ede4e78031bc91f5d7f19e6f9d48800f188ba844ce4da4e",
+      "size_bytes": 3111
+    },
+    {
+      "media_type": "application/json",
+      "path": "package-access.json",
+      "sha256": "eb56e79efb4fb2ec1c76cb5ec26b838f8be9ad49f6f8aa85be49beba1466441d",
+      "size_bytes": 1800
+    },
+    {
+      "media_type": "text/markdown",
+      "path": "transcript.md",
+      "sha256": "51d0de862dff9532aa54131dcb51d84902bf33bf56c0afd2575a25f1d08912cf",
+      "size_bytes": 1607
+    }
+  ],
+  "assertion_results": [],
+  "candidate_snapshot_hash": "da6b4cf13442eb63003d6763cf7e77cb7f7fdfdaaff3d221412cf6fe5177e558",
+  "evidence_tier": "E2",
+  "failure_detail": null,
+  "failure_kind": null,
+  "fixture_hash": "0ff0448593018eb3dd0bcaea625302d2b8ef766dd2a021e8502e78fef28b66ea",
+  "host_model_snapshot": "edbfd8f0668f44e333585ee805a6f891a7443402aad61b3e8cfeca5913b1338b",
+  "observed_trace": [
+    {
+      "action": "inspect_work_item",
+      "outcome": "completed",
+      "sequence": 0,
+      "target": "artifacts/runs/r4-slack-gif-creator-evolution/evals/candidate-4b5885d1dd5fe978c8f1dad3/validation/executor-work-items/work-854b925d0b1073833e96ddc2.json",
+      "tool": "read"
+    },
+    {
+      "action": "inspect_fixture",
+      "outcome": "completed",
+      "sequence": 1,
+      "target": "benchmarks/canaries/slack-gif-creator/fixtures/emoji-pulse-text.json",
+      "tool": "read"
+    },
+    {
+      "action": "inspect_package_graph",
+      "outcome": "completed",
+      "sequence": 2,
+      "target": "artifacts/runs/r4-slack-gif-creator-evolution/candidates/candidate-4b5885d1dd5fe978c8f1dad3/graph.json",
+      "tool": "read"
+    },
+    {
+      "action": "inspect_package_instructions",
+      "outcome": "completed",
+      "sequence": 3,
+      "target": "artifacts/runs/r4-slack-gif-creator-evolution/candidate-workspaces/applications/application-da89180cab97e9b294bda455/SKILL.md",
+      "tool": "read"
+    },
+    {
+      "action": "inspect_package_code",
+      "outcome": "completed",
+      "sequence": 4,
+      "target": "core/gif_builder.py; core/validators.py; core/easing.py; core/frame_composer.py; requirements.txt",
+      "tool": "read"
+    },
+    {
+      "action": "implement_animation",
+      "outcome": "completed",
+      "sequence": 5,
+      "target": "artifacts/runs/r4-slack-gif-creator-evolution/evals/candidate-4b5885d1dd5fe978c8f1dad3/validation/workspaces/work-854b925d0b1073833e96ddc2/generate_gif.py",
+      "tool": "apply_patch"
+    },
+    {
+      "action": "execute_generation",
+      "outcome": "failed: Pillow dependency unavailable in system interpreter",
+      "sequence": 6,
+      "target": "go_alert_pulse.gif",
+      "tool": "system_python"
+    },
+    {
+      "action": "execute_initial_package_generation",
+      "outcome": "completed; post-export check detected 9 frames after duplicate-frame coalescing",
+      "sequence": 7,
+      "target": "go_alert_pulse.gif",
+      "tool": "uv_python"
+    },
+    {
+      "action": "refine_integer_pulse_samples",
+      "outcome": "completed",
+      "sequence": 8,
+      "target": "generate_gif.py",
+      "tool": "apply_patch"
+    },
+    {
+      "action": "execute_final_package_generation",
+      "outcome": "completed",
+      "sequence": 9,
+      "target": "go_alert_pulse.gif",
+      "tool": "uv_python"
+    },
+    {
+      "action": "validate_final_gif",
+      "outcome": "passed: 128x128, 12 frames, 960 ms, 9148 bytes, three configured colors",
+      "sequence": 10,
+      "target": "go_alert_pulse.gif",
+      "tool": "core.validators.validate_gif"
+    },
+    {
+      "action": "inspect_visual_output",
+      "outcome": "completed: centered badge and GO text legible at 128x128",
+      "sequence": 11,
+      "target": "go_alert_pulse.gif",
+      "tool": "image_viewer"
+    },
+    {
+      "action": "inspect_loop_boundary",
+      "outcome": "completed: end-to-start difference empty and loop flag 0",
+      "sequence": 12,
+      "target": "go_alert_pulse.gif",
+      "tool": "PIL.ImageChops"
+    },
+    {
+      "action": "write_execution_evidence",
+      "outcome": "completed",
+      "sequence": 13,
+      "target": "transcript.md; package-access.json; observed-trace.json",
+      "tool": "apply_patch"
+    }
+  ],
+  "pair_id": "pair-e8356ab1f18344250959a6a9",
+  "planned_trace": [],
+  "policy_hash": "3b49f46ee66bafaf2bcf1aeac08f1bd7f4c719463b0e655afe40a98a4af6b3ec",
+  "prompt_hash": "327fef7c91b86c7fc779051410132874c557bf0e434800bccbbcc2d10bdc090c",
+  "provenance": {
+    "context_id": "r4_valexec_m_text",
+    "generated_at": "2026-07-22T10:27:44.470668Z",
+    "generated_by": "gepase.eval.ingest",
+    "host": "codex",
+    "host_task_id": "/root/r4_valexec_m_text",
+    "model": "gpt-5.6-sol",
+    "origin": "agent-native",
+    "provider_id": "agent-delegated-v1",
+    "submission_id": "submission-ed99be5f3ff8637f7957a3a8"
+  },
+  "provider_snapshot": "agent-delegated-v1",
+  "record_id": "record-9d08541bc2ae7274dd3d8e01",
+  "schema_version": "1.0.0",
+  "score": null,
+  "seed": 42,
+  "skill_id": "slack-gif-creator",
+  "source_record_refs": [],
+  "task_id": "functional-validation-pulse-text-008",
+  "task_score_vector": null,
+  "trace_completeness": "complete",
+  "uncertainty": 0.1,
+  "usage": {
+    "duration_ms": 480000,
+    "input_tokens": 18000,
+    "output_tokens": 5000,
+    "token_count_kind": "estimated",
+    "tool_calls": 24
+  },
+  "variant": "candidate",
+  "work_id": "work-854b925d0b1073833e96ddc2"
+}

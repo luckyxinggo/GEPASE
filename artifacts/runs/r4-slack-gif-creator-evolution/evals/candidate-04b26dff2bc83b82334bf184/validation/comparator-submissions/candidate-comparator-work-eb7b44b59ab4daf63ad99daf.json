@@ -1,0 +1,45 @@
+{
+  "comparator_work_id": "candidate-comparator-work-eb7b44b59ab4daf63ad99daf",
+  "confidence": 0.95,
+  "criteria": [
+    {
+      "criterion_id": "pulse-legibility",
+      "preference": "right",
+      "rationale_zh": "两侧 GO 均保持居中且全程可读；右侧白字增加深蓝描边，在珊瑚红徽章上形成更稳定的边界，缩略显示时字形分离度更好。"
+    },
+    {
+      "criterion_id": "pulse-motion",
+      "preference": "right",
+      "rationale_zh": "右侧以 32 帧、每帧 80ms 呈现 17 个独特画面，收放过渡连续且节奏均匀。左侧仅有 7 个独特画面，并混有 330ms、580ms 和 250ms 的长停顿，和相邻 80ms 帧衔接时产生明显的分段感。"
+    },
+    {
+      "criterion_id": "pulse-color",
+      "preference": "right",
+      "rationale_zh": "两侧都准确建立深蓝背景、珊瑚红徽章与白字的主色关系；右侧又以深蓝文字描边和徽章内轮廓呼应背景，使白字对比及三色层次更明确。"
+    },
+    {
+      "criterion_id": "pulse-emoji-ready",
+      "preference": "right",
+      "rationale_zh": "右侧八边形警报徽章、双层轮廓和短促强调线在小尺寸下仍有明确识别点，配合更平滑的节奏，整体更像完成度较高的 Slack 自定义表情。左侧圆形徽章清楚但造型与动态都更基础。"
+    }
+  ],
+  "rationale_zh": "右侧在四项标准上均占优：文字描边提升缩略可读性，均匀的 32 帧序列带来显著更自然的呼吸脉冲，三色层次更清楚，徽章细节也更适合 Slack 表情。左侧已满足基本画面、循环和配色要求，但不均匀帧时长与较少独特帧使动态明显停顿，完成度因而落后。",
+  "role_run": {
+    "context_id": "ctx-r4-cmp-a-pulse-ab-eb7b44b59ab4daf63ad99daf",
+    "finished_at": "2026-07-22T10:49:25Z",
+    "host": "codex",
+    "host_task_id": "/root/r4_cmp_a_pulse_ab",
+    "model": "gpt-5.6-sol",
+    "started_at": "2026-07-22T10:44:55Z",
+    "usage": {
+      "duration_ms": 270000,
+      "input_tokens": 5200,
+      "output_tokens": 850,
+      "token_count_kind": "estimated",
+      "tool_calls": 12
+    }
+  },
+  "schema_version": "1.0.0",
+  "submission_id": "candidate-comparator-submission-eb7b44b59ab4daf63ad99daf-codex-ab",
+  "winner": "right"
+}

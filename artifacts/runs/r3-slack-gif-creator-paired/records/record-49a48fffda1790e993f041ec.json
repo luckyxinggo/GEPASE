@@ -1,0 +1,309 @@
+{
+  "artifact_root": "artifacts/runs/r3-slack-gif-creator-paired/workspaces/work-ba5bed1fe1f6ee2b5cd0648b",
+  "artifacts": [
+    {
+      "media_type": "application/json",
+      "path": "execution-summary.json",
+      "sha256": "1ae0330d4c2067c1fd7a61aa55fcea6c318efcd4d672dbb6768ad232801dd3f2",
+      "size_bytes": 894
+    },
+    {
+      "media_type": "text/x-python",
+      "path": "generate_gif.py",
+      "sha256": "78324be9134c90df6488213ce4cabd1fff8815ee7f9c2dbf4f925d4dceeaef5d",
+      "size_bytes": 3409
+    },
+    {
+      "media_type": "application/json",
+      "path": "observed-trace.json",
+      "sha256": "fd1748543647df3b56c3c1ab54897215687e6d1a86cdce6867d9d365f9f678a0",
+      "size_bytes": 1398
+    },
+    {
+      "media_type": "application/json",
+      "path": "package-access.json",
+      "sha256": "c8951b1f7c9518bcf6123541cafafa29379b8648b19a6ff1b8b02ea44cb221c9",
+      "size_bytes": 27
+    },
+    {
+      "media_type": "image/gif",
+      "path": "satellite_orbit_ease.gif",
+      "sha256": "fa1067633cc6deb8232592866821acfc738a3830b9a7ae54befa5fda73e6e949",
+      "size_bytes": 21226
+    },
+    {
+      "media_type": "text/markdown",
+      "path": "transcript.md",
+      "sha256": "ec2547a460750ec6f8789381f1b706468e1d4edecd5256de81ed9becf33d1f62",
+      "size_bytes": 905
+    }
+  ],
+  "assertion_results": [
+    {
+      "assertion_id": "orbit-container",
+      "detail": "通过内容/元数据检查",
+      "evidence_refs": [
+        "artifacts/runs/r3-slack-gif-creator-paired/derived/work-ba5bed1fe1f6ee2b5cd0648b/measurements.json",
+        "artifacts/runs/r3-slack-gif-creator-paired/derived/work-ba5bed1fe1f6ee2b5cd0648b/contact-sheet.png"
+      ],
+      "family": "artifact_metadata",
+      "measurements": {
+        "frame_count": 24,
+        "height": 128,
+        "loop_count": 0,
+        "unique_frame_count": 24,
+        "width": 128
+      },
+      "passed": true,
+      "weight": 0.15
+    },
+    {
+      "assertion_id": "orbit-duration",
+      "detail": "通过内容/元数据检查",
+      "evidence_refs": [
+        "artifacts/runs/r3-slack-gif-creator-paired/derived/work-ba5bed1fe1f6ee2b5cd0648b/measurements.json",
+        "artifacts/runs/r3-slack-gif-creator-paired/derived/work-ba5bed1fe1f6ee2b5cd0648b/contact-sheet.png"
+      ],
+      "family": "artifact_metadata",
+      "measurements": {
+        "maximum_ms": 2700,
+        "minimum_ms": 1,
+        "non_positive_frames": 0,
+        "total_duration_ms": 2400
+      },
+      "passed": true,
+      "weight": 0.15
+    },
+    {
+      "assertion_id": "orbit-subjects",
+      "detail": "通过内容/元数据检查",
+      "evidence_refs": [
+        "artifacts/runs/r3-slack-gif-creator-paired/derived/work-ba5bed1fe1f6ee2b5cd0648b/measurements.json",
+        "artifacts/runs/r3-slack-gif-creator-paired/derived/work-ba5bed1fe1f6ee2b5cd0648b/contact-sheet.png"
+      ],
+      "family": "frame_content",
+      "measurements": {
+        "cyan_fraction": [
+          0.0045166015625,
+          0.00384521484375,
+          0.00408935546875,
+          0.00445556640625,
+          0.00445556640625,
+          0.00445556640625,
+          0.00433349609375,
+          0.00408935546875,
+          0.00372314453125,
+          0.0042724609375,
+          0.0045166015625,
+          0.0045166015625,
+          0.0042724609375,
+          0.0045166015625,
+          0.0042724609375,
+          0.004150390625,
+          0.004150390625,
+          0.00408935546875,
+          0.00396728515625,
+          0.00372314453125,
+          0.00384521484375,
+          0.00408935546875,
+          0.00396728515625,
+          0.00408935546875
+        ],
+        "orange_fraction": [
+          0.1142578125,
+          0.1142578125,
+          0.1142578125,
+          0.1142578125,
+          0.1142578125,
+          0.1142578125,
+          0.1142578125,
+          0.1142578125,
+          0.1142578125,
+          0.1142578125,
+          0.1142578125,
+          0.1142578125,
+          0.1142578125,
+          0.1142578125,
+          0.1142578125,
+          0.1142578125,
+          0.1142578125,
+          0.1142578125,
+          0.1142578125,
+          0.1142578125,
+          0.1142578125,
+          0.1142578125,
+          0.1142578125,
+          0.1142578125
+        ]
+      },
+      "passed": true,
+      "weight": 0.2
+    },
+    {
+      "assertion_id": "orbit-arc",
+      "detail": "通过内容/元数据检查",
+      "evidence_refs": [
+        "artifacts/runs/r3-slack-gif-creator-paired/derived/work-ba5bed1fe1f6ee2b5cd0648b/measurements.json",
+        "artifacts/runs/r3-slack-gif-creator-paired/derived/work-ba5bed1fe1f6ee2b5cd0648b/contact-sheet.png"
+      ],
+      "family": "temporal_sequence",
+      "measurements": {
+        "arc_distances": [
+          0.0,
+          11.490034422131917,
+          23.715776508081056,
+          34.004186636811085,
+          42.37042946622743,
+          49.103537576251476,
+          52.76992199347303,
+          55.04746085425401,
+          53.97105160174641,
+          52.39270752486517,
+          48.842804397303276,
+          44.99846979867594,
+          39.765289643608035,
+          34.23767801747468,
+          28.710066391341318,
+          24.276868850583075,
+          18.45482575338427,
+          14.17567998489172,
+          10.00914331557003,
+          6.670359860186901,
+          3.892668747305772,
+          1.9499378989425675,
+          1.3888455564405617,
+          0.0
+        ],
+        "peak_index": 7
+      },
+      "passed": true,
+      "weight": 0.25
+    },
+    {
+      "assertion_id": "orbit-ease-out",
+      "detail": "通过内容/元数据检查",
+      "evidence_refs": [
+        "artifacts/runs/r3-slack-gif-creator-paired/derived/work-ba5bed1fe1f6ee2b5cd0648b/measurements.json",
+        "artifacts/runs/r3-slack-gif-creator-paired/derived/work-ba5bed1fe1f6ee2b5cd0648b/contact-sheet.png"
+      ],
+      "family": "temporal_sequence",
+      "measurements": {
+        "linear_slope": -0.5421705677658464,
+        "tail_displacements": [
+          6.082762530298219,
+          4.47213595499958,
+          5.830951894845301,
+          4.357306651636022,
+          4.242640687119285,
+          3.605551275463989,
+          2.8284271247461903,
+          2.248447236301959,
+          1.0,
+          1.4142135623730951
+        ]
+      },
+      "passed": true,
+      "weight": 0.25
+    }
+  ],
+  "candidate_snapshot_hash": "20232f3aeb397f28e32d38cc016ce6dbffa2112effd52813b0cbec243c1307ce",
+  "evidence_tier": "E3",
+  "failure_detail": null,
+  "failure_kind": null,
+  "fixture_hash": "380768a9e82d25d1c4740bce912fc57bb2264dcaaff0cd7de5ce97690cf3facb",
+  "host_model_snapshot": "edbfd8f0668f44e333585ee805a6f891a7443402aad61b3e8cfeca5913b1338b",
+  "observed_trace": [
+    {
+      "action": "inspect_work_item",
+      "outcome": "completed",
+      "sequence": 0,
+      "target": "artifacts/runs/r3-slack-gif-creator-paired/executor-work-items/work-ba5bed1fe1f6ee2b5cd0648b.json",
+      "tool": "read"
+    },
+    {
+      "action": "inspect_fixture",
+      "outcome": "completed",
+      "sequence": 1,
+      "target": "benchmarks/canaries/slack-gif-creator/fixtures/easing-orbit.json",
+      "tool": "read"
+    },
+    {
+      "action": "create_generator",
+      "outcome": "completed",
+      "sequence": 2,
+      "target": "artifacts/runs/r3-slack-gif-creator-paired/workspaces/work-ba5bed1fe1f6ee2b5cd0648b/generate_gif.py",
+      "tool": "apply_patch"
+    },
+    {
+      "action": "generate_gif",
+      "outcome": "completed",
+      "sequence": 3,
+      "target": "artifacts/runs/r3-slack-gif-creator-paired/workspaces/work-ba5bed1fe1f6ee2b5cd0648b/satellite_orbit_ease.gif",
+      "tool": ".venv/bin/python -B"
+    },
+    {
+      "action": "reopen_and_verify_gif",
+      "outcome": "completed: GIF 128x128, 24 frames, 2400 ms, loop=0, cyan subject and orange planet detected, curved orbit and decreasing late displacement verified",
+      "sequence": 4,
+      "target": "artifacts/runs/r3-slack-gif-creator-paired/workspaces/work-ba5bed1fe1f6ee2b5cd0648b/satellite_orbit_ease.gif",
+      "tool": ".venv/bin/python -B with Pillow"
+    }
+  ],
+  "pair_id": "pair-b45bddd2be22dd318d8d737b",
+  "planned_trace": [],
+  "policy_hash": "3b49f46ee66bafaf2bcf1aeac08f1bd7f4c719463b0e655afe40a98a4af6b3ec",
+  "prompt_hash": "13c580a58310f14e8d7174a2e07c39b564dd1cdd214c47ef7fb932a61d2576c2",
+  "provenance": {
+    "context_id": null,
+    "generated_at": "2026-07-21T15:58:00.441961Z",
+    "generated_by": "FunctionalAssertionProvider.evaluate",
+    "host": "codex",
+    "host_task_id": "/root/r3_exec_ba5bed",
+    "model": "gpt-5.6-sol",
+    "origin": "assertion",
+    "provider_id": "functional-assertion-v1",
+    "submission_id": "submission-fbab466fa37922cb85ca191d"
+  },
+  "provider_snapshot": "functional-assertion-v1:9ccb487705abdfa91ff82437cc028f139a3af419ee16baac869aaddee75920fa",
+  "record_id": "record-49a48fffda1790e993f041ec",
+  "schema_version": "1.0.0",
+  "score": 1.0,
+  "seed": 42,
+  "skill_id": "slack-gif-creator",
+  "source_record_refs": [
+    "record-7c860f2a7745c0f3f0eaefe2"
+  ],
+  "task_id": "functional-train-easing-orbit-005",
+  "task_score_vector": {
+    "candidate_snapshot_hash": "20232f3aeb397f28e32d38cc016ce6dbffa2112effd52813b0cbec243c1307ce",
+    "efficiency": 0.8347435833333333,
+    "evidence_refs": [
+      "artifacts/runs/r3-slack-gif-creator-paired/records/record-7c860f2a7745c0f3f0eaefe2.json",
+      "artifacts/runs/r3-slack-gif-creator-paired/records/record-49a48fffda1790e993f041ec.json",
+      "artifacts/runs/r3-slack-gif-creator-paired/deterministic/work-ba5bed1fe1f6ee2b5cd0648b.json",
+      "artifacts/runs/r3-slack-gif-creator-paired/grader-submissions/grader-work-7ccc066c17938357a8a56748.json",
+      "artifacts/runs/r3-slack-gif-creator-paired/e0-package-record.json"
+    ],
+    "output_quality": 0.9359999999999999,
+    "package_quality": 1.0,
+    "pair_id": "pair-b45bddd2be22dd318d8d737b",
+    "reliability": 0.9,
+    "schema_version": "1.0.0",
+    "scoring_policy_ref": "configs/canaries/slack-gif-creator-r3-scoring.json",
+    "skill_gain": 0.0,
+    "task_correctness": 1.0,
+    "task_id": "functional-train-easing-orbit-005",
+    "variant": "no-skill"
+  },
+  "trace_completeness": "complete",
+  "uncertainty": 0.0,
+  "usage": {
+    "duration_ms": 150000,
+    "input_tokens": 3500,
+    "output_tokens": 1200,
+    "token_count_kind": "estimated",
+    "tool_calls": 8
+  },
+  "variant": "no-skill",
+  "work_id": "work-ba5bed1fe1f6ee2b5cd0648b-assertions"
+}

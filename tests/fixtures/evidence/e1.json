@@ -1,0 +1,53 @@
+{
+  "artifact_root": null,
+  "artifacts": [],
+  "assertion_results": [],
+  "candidate_snapshot_hash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+  "evidence_tier": "E1",
+  "failure_detail": null,
+  "failure_kind": null,
+  "fixture_hash": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+  "host_model_snapshot": "host-model",
+  "observed_trace": [],
+  "pair_id": "pair-E1",
+  "planned_trace": [
+    {
+      "action": "select_nodes",
+      "outcome": null,
+      "sequence": 0,
+      "target": null,
+      "tool": null
+    }
+  ],
+  "policy_hash": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+  "prompt_hash": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+  "provenance": {
+    "generated_at": "2026-07-15T13:40:56.869586Z",
+    "generated_by": "build_s2_fixtures",
+    "host": "fixture-host",
+    "host_task_id": "fixture-e1",
+    "model": "fixture-model",
+    "origin": "simulation",
+    "provider_id": "fixture",
+    "submission_id": "fixture-submission-e1"
+  },
+  "provider_snapshot": "provider-E1",
+  "record_id": "e1",
+  "schema_version": "1.0.0",
+  "score": null,
+  "seed": 42,
+  "skill_id": "fixture-skill",
+  "source_record_refs": [],
+  "task_id": "fixture-task",
+  "trace_completeness": "planned_only",
+  "uncertainty": 0.0,
+  "usage": {
+    "duration_ms": 0,
+    "input_tokens": 0,
+    "output_tokens": 0,
+    "token_count_kind": "unavailable",
+    "tool_calls": 0
+  },
+  "variant": "original",
+  "work_id": "work-e1"
+}

@@ -1,0 +1,134 @@
+{
+  "artifact_root": "artifacts/runs/r4-slack-gif-creator-evolution/evals/candidate-04b26dff2bc83b82334bf184/validation/workspaces/work-08e1a6a9f3780f71f6c4ca77",
+  "artifacts": [
+    {
+      "media_type": "text/x-python",
+      "path": "generate_sparkle_ring.py",
+      "sha256": "c5d592dffb6d38e734f1d8824ea7c13a4e19845c53fb572df937932cadc6cf4d",
+      "size_bytes": 7234
+    },
+    {
+      "media_type": "application/json",
+      "path": "observed-trace.json",
+      "sha256": "4948d063f5d6d149dfc4b1531881533a9a90622f19b7de2145a84342e1afed3c",
+      "size_bytes": 1407
+    },
+    {
+      "media_type": "application/json",
+      "path": "package-access.json",
+      "sha256": "20df03adb6f38cb8ebc8166f07bfcea9d989468e22263c3efab9c953325bc45c",
+      "size_bytes": 1097
+    },
+    {
+      "media_type": "image/gif",
+      "path": "sparkle_ring_loop.gif",
+      "sha256": "242eb7f0702ff9b2a7972dba24f35f4cbcf35df85db94bd08e09198ee6633ffc",
+      "size_bytes": 48114
+    },
+    {
+      "media_type": "text/markdown",
+      "path": "transcript.md",
+      "sha256": "86eb4bb80fbffe080ca5b9725e304feac2b848bf9602315aff801151321356d5",
+      "size_bytes": 1235
+    },
+    {
+      "media_type": "application/json",
+      "path": "validation.json",
+      "sha256": "95e0ed9eaa391d13ad73d918b45b34df500d1b8b2badad2519df4eea861b2af5",
+      "size_bytes": 1001
+    }
+  ],
+  "assertion_results": [],
+  "candidate_snapshot_hash": "30b52f2cab481f75926545479d2fff8bd907d716c0fe241e8f4014369e0d867c",
+  "evidence_tier": "E2",
+  "failure_detail": null,
+  "failure_kind": null,
+  "fixture_hash": "c1fcf5b5894f3e7fcb8442d64b69311924f959b6f0244d8a397d3f146ba992e1",
+  "host_model_snapshot": "edbfd8f0668f44e333585ee805a6f891a7443402aad61b3e8cfeca5913b1338b",
+  "observed_trace": [
+    {
+      "action": "inspect_fixture",
+      "outcome": "completed",
+      "sequence": 0,
+      "target": "benchmarks/canaries/slack-gif-creator/fixtures/loop-sparkles.json",
+      "tool": "jq"
+    },
+    {
+      "action": "read_package_instructions",
+      "outcome": "completed",
+      "sequence": 1,
+      "target": "SKILL.md",
+      "tool": "read"
+    },
+    {
+      "action": "inspect_package_utilities",
+      "outcome": "completed",
+      "sequence": 2,
+      "target": "core/gif_builder.py, core/validators.py, core/frame_composer.py",
+      "tool": "read"
+    },
+    {
+      "action": "render_periodic_frames",
+      "outcome": "completed",
+      "sequence": 3,
+      "target": "generate_sparkle_ring.py",
+      "tool": "Pillow and NumPy"
+    },
+    {
+      "action": "export_emoji_gif",
+      "outcome": "completed",
+      "sequence": 4,
+      "target": "sparkle_ring_loop.gif",
+      "tool": "core.gif_builder.GIFBuilder"
+    },
+    {
+      "action": "validate_dimensions_timing_and_seam",
+      "outcome": "completed",
+      "sequence": 5,
+      "target": "sparkle_ring_loop.gif and validation.json",
+      "tool": "core.validators.validate_gif and NumPy"
+    },
+    {
+      "action": "inspect_sampled_cycle_frames",
+      "outcome": "completed",
+      "sequence": 6,
+      "target": "sparkle_ring_loop.gif",
+      "tool": "contact sheet visual inspection"
+    }
+  ],
+  "pair_id": "pair-fb5346149a7720089b66c832",
+  "planned_trace": [],
+  "policy_hash": "3b49f46ee66bafaf2bcf1aeac08f1bd7f4c719463b0e655afe40a98a4af6b3ec",
+  "prompt_hash": "b1b46698a6fdcc4825b52a71521ea887e8b0e73a8d0a28ddb6ed6d790c62f5ca",
+  "provenance": {
+    "context_id": "r4_valexec_a_loop",
+    "generated_at": "2026-07-22T10:11:52.701510Z",
+    "generated_by": "gepase.eval.ingest",
+    "host": "codex",
+    "host_task_id": "/root/r4_valexec_a_loop",
+    "model": "gpt-5.6-sol",
+    "origin": "agent-native",
+    "provider_id": "agent-delegated-v1",
+    "submission_id": "submission-f25be157b6dc7ab91e5c82e9"
+  },
+  "provider_snapshot": "agent-delegated-v1",
+  "record_id": "record-21b5ef0e3f4fd9a28d7b7c12",
+  "schema_version": "1.0.0",
+  "score": null,
+  "seed": 42,
+  "skill_id": "slack-gif-creator",
+  "source_record_refs": [],
+  "task_id": "functional-validation-loop-sparkles-006",
+  "task_score_vector": null,
+  "trace_completeness": "complete",
+  "uncertainty": 0.1,
+  "usage": {
+    "duration_ms": 480000,
+    "input_tokens": 18000,
+    "output_tokens": 7000,
+    "token_count_kind": "estimated",
+    "tool_calls": 20
+  },
+  "variant": "candidate",
+  "work_id": "work-08e1a6a9f3780f71f6c4ca77"
+}

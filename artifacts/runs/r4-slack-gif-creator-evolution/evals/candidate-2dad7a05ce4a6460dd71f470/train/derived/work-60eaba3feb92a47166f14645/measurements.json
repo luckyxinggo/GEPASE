@@ -1,0 +1,146 @@
+{
+  "artifact_sha256": "ad3ef64f6264076f4dbf92545415ebe294621153f77084c119a3b30c4c07b546",
+  "assertions": [
+    {
+      "assertion_id": "readable-container",
+      "detail": "通过内容/元数据检查",
+      "family": "artifact_metadata",
+      "measurements": {
+        "frame_count": 20,
+        "height": 480,
+        "loop_count": 0,
+        "unique_frame_count": 20,
+        "width": 480
+      },
+      "passed": true,
+      "weight": 0.15
+    },
+    {
+      "assertion_id": "readable-duration",
+      "detail": "通过内容/元数据检查",
+      "family": "artifact_metadata",
+      "measurements": {
+        "maximum_ms": 2200,
+        "minimum_ms": 1800,
+        "non_positive_frames": 0,
+        "total_duration_ms": 2000
+      },
+      "passed": true,
+      "weight": 0.15
+    },
+    {
+      "assertion_id": "readable-ocr",
+      "detail": "通过内容/元数据检查",
+      "family": "frame_content",
+      "measurements": {
+        "method": "glyph-template-iou",
+        "recognized_frame_ratio": 1.0
+      },
+      "passed": true,
+      "weight": 0.3
+    },
+    {
+      "assertion_id": "readable-contrast",
+      "detail": "通过内容/元数据检查",
+      "family": "frame_content",
+      "measurements": {
+        "frame_luminance_spread": [
+          205.0,
+          205.0,
+          205.0,
+          205.0,
+          205.0,
+          205.0,
+          205.0,
+          205.0,
+          205.0,
+          205.0,
+          205.0,
+          205.0,
+          205.0,
+          205.0,
+          205.0,
+          205.0,
+          205.0,
+          205.0,
+          205.0,
+          205.0
+        ],
+        "minimum_required": 105
+      },
+      "passed": true,
+      "weight": 0.25
+    },
+    {
+      "assertion_id": "readable-palette",
+      "detail": "通过内容/元数据检查",
+      "family": "frame_content",
+      "measurements": {
+        "palette_fractions": [
+          0.3738671875,
+          0.5246223958333334,
+          0.09465277777777778
+        ]
+      },
+      "passed": true,
+      "weight": 0.15
+    }
+  ],
+  "case_id": "functional-train-text-readable-004",
+  "common": {
+    "adjacent_pixel_deltas": [
+      0.08380642361111111,
+      0.10943865740740741,
+      0.10732204861111111,
+      0.14065538194444444,
+      0.14881221064814815,
+      0.6099609375,
+      0.1416623263888889,
+      0.10281394675925926,
+      0.10430989583333333,
+      0.5827112268518518,
+      0.5978023726851852,
+      0.10687644675925925,
+      0.10621961805555556,
+      0.14593605324074074,
+      0.13573350694444444,
+      0.6095775462962963,
+      0.11189236111111112,
+      0.08227141203703704,
+      0.09357060185185186
+    ],
+    "effective_fps": 10.0,
+    "file_size_bytes": 30367,
+    "first_last_pixel_delta": 0.09618778935185185,
+    "frame_count": 20,
+    "frame_durations_ms": [
+      100,
+      100,
+      100,
+      100,
+      100,
+      100,
+      100,
+      100,
+      100,
+      100,
+      100,
+      100,
+      100,
+      100,
+      100,
+      100,
+      100,
+      100,
+      100,
+      100
+    ],
+    "height": 480,
+    "loop_count": 0,
+    "mean_adjacent_pixel_delta": 0.21691436708089668,
+    "total_duration_ms": 2000,
+    "unique_frame_count": 20,
+    "width": 480
+  },
+  "schema_version": "1.0.0"
+}

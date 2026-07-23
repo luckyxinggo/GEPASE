@@ -1,0 +1,26 @@
+{
+  "fixture_refs": [
+    "benchmarks/canaries/slack-gif-creator/fixtures/efficiency-burst.json"
+  ],
+  "package_graph_ref": null,
+  "package_node_map": {},
+  "prompt": "为 Slack 消息制作一个紧凑的庆祝 GIF：480×480 画布中央是清楚的勾号，周围粒子向外爆发后渐隐。请在动作顺滑和轮廓可读的前提下控制帧率、调色板与文件体积，严格遵循随附的体积和帧率预算，并输出指定文件。",
+  "requested_output": {
+    "description_zh": "在 900KB 预算内保留清晰勾号和顺滑粒子爆发的 480×480 GIF。",
+    "filename": "compact_check_burst.gif",
+    "media_type": "image/gif"
+  },
+  "required_capabilities": [
+    "message_gif_composition",
+    "particle_animation",
+    "gif_size_optimization",
+    "artifact_metadata_analysis"
+  ],
+  "role": "executor",
+  "schema_version": "1.0.0",
+  "skill_ref": null,
+  "submission_schema_ref": "schemas/execution_bundle.schema.json",
+  "task_id": "functional-validation-efficiency-007",
+  "timeout_seconds": 600,
+  "work_id": "work-18b797bfd1094a2c7da4ec6b"
+}

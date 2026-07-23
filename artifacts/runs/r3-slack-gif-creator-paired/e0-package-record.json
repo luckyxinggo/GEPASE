@@ -1,0 +1,11 @@
+{
+  "diagnostics": [],
+  "file_count": 7,
+  "graph_edges": 474,
+  "graph_nodes": 370,
+  "package_id": "slack-gif-creator",
+  "package_quality": 1.0,
+  "package_snapshot_hash": "ce42d8a837acf9feda9706a3418fc26a77c497d9615079e616b5fdc6870ef64e",
+  "schema_version": "1.0.0",
+  "valid": true
+}

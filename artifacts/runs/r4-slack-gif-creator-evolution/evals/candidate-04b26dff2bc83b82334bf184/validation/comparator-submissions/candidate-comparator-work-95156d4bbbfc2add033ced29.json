@@ -1,0 +1,45 @@
+{
+  "comparator_work_id": "candidate-comparator-work-95156d4bbbfc2add033ced29",
+  "confidence": 0.78,
+  "criteria": [
+    {
+      "criterion_id": "efficiency-budget",
+      "preference": "right",
+      "rationale_zh": "两侧均为 480×480、12.5 FPS 且远低于 900KB；右侧以 377145 字节承载 24 个独立帧，左侧为 469924 字节和 22 个独立帧，因此右侧在保留更多时序与装饰信息的同时压缩效率更高。"
+    },
+    {
+      "criterion_id": "efficiency-readability",
+      "preference": "left",
+      "rationale_zh": "左侧白色勾号造型更简洁、笔画连续，和绿色圆形底的明暗对比直接，粒子扩散时也始终醒目。右侧勾号仍可辨认，但深色描边、两端圆点及多层圆环增加了视觉干扰。"
+    },
+    {
+      "criterion_id": "efficiency-motion",
+      "preference": "right",
+      "rationale_zh": "右侧用 24 个等时长独立帧完成由中心建立、放射线提示到粒子外扩渐隐的连续过程，阶段衔接细密；其相邻帧平均像素变化也更低，有限帧率下的过渡更平顺。左侧爆发方向和渐隐同样清楚，但整体时序较短且变化步幅更大。"
+    },
+    {
+      "criterion_id": "efficiency-balance",
+      "preference": "tie",
+      "rationale_zh": "两侧均未见严重色带、轮廓破碎或突兀的节奏跳跃：左侧以较少颜色获得干净轮廓，右侧则在更小体积下维持了细线、圆环和多色粒子的完整性。二者采用不同但都合理的质量权衡。"
+    }
+  ],
+  "rationale_zh": "综合完整 rubric，右侧在压缩效率和粒子动态两项上占优，左侧在勾号可读性上更好，质量权衡项持平。按权重看，右侧的优势覆盖 0.55 权重，且其 377145 字节文件在更多独立帧和更丰富细节下仍保持清晰、连贯，因此判定右侧整体胜出；鉴于左侧的核心符号更简洁醒目且两侧均明显满足预算，置信度为中高。",
+  "role_run": {
+    "context_id": "r4_cmp_a_eff_ab",
+    "finished_at": "2026-07-22T10:45:42Z",
+    "host": "codex",
+    "host_task_id": "/root/r4_cmp_a_eff_ab",
+    "model": "gpt-5.6-sol",
+    "started_at": "2026-07-22T10:37:00Z",
+    "usage": {
+      "duration_ms": 522000,
+      "input_tokens": 22000,
+      "output_tokens": 2500,
+      "token_count_kind": "estimated",
+      "tool_calls": 20
+    }
+  },
+  "schema_version": "1.0.0",
+  "submission_id": "candidate-comparator-submission-95156d4bbbfc2add033ced29",
+  "winner": "right"
+}

@@ -1,0 +1,22 @@
+{
+  "candidate_snapshot_hash": "cf3c66eb21afcbcfc3518927b5572624075866213c16717d03010ccc25074525",
+  "efficiency": 0.36080591666666667,
+  "evidence_refs": [
+    "artifacts/runs/r4-slack-gif-creator-evolution/evals/candidate-2dad7a05ce4a6460dd71f470/train/records/record-c048a26b93515414c7dd00e9.json",
+    "artifacts/runs/r4-slack-gif-creator-evolution/evals/candidate-2dad7a05ce4a6460dd71f470/train/records/record-1fff0f6dc8acc377156ae1dd.json",
+    "artifacts/runs/r4-slack-gif-creator-evolution/evals/candidate-2dad7a05ce4a6460dd71f470/train/deterministic/work-a577fbd89f0d6020522f6512.json",
+    "artifacts/runs/r4-slack-gif-creator-evolution/evals/candidate-2dad7a05ce4a6460dd71f470/train/grader-submissions/grader-work-88642b54bc7a8d0a2cf6c9a7.json",
+    "artifacts/runs/r4-slack-gif-creator-evolution/evals/candidate-2dad7a05ce4a6460dd71f470/train/e0-package-record.json",
+    "artifacts/runs/r3-slack-gif-creator-paired/task-score-vectors/work-9a981b04ae2ac3fb91d31911.json"
+  ],
+  "output_quality": 0.962,
+  "package_quality": 1.0,
+  "pair_id": "pair-3e9e3c7b5d3685343ee17f83",
+  "reliability": 0.9,
+  "schema_version": "1.0.0",
+  "scoring_policy_ref": "configs/canaries/slack-gif-creator-r3-scoring.json",
+  "skill_gain": 0.0121500000000001,
+  "task_correctness": 1.0,
+  "task_id": "functional-train-message-status-002",
+  "variant": "candidate"
+}

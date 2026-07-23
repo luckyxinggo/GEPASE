@@ -1,0 +1,4 @@
+interface:
+  display_name: "GEPASE Orchestrator"
+  short_description: "Orchestrate isolated EvalPlan and Skill work"
+  default_prompt: "Use $gepase-orchestrator to execute the pending GEPASE EvalPlan design, evaluation, reflection, or bounded patch work and submit its typed evidence to Core."

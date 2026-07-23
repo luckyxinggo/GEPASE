@@ -1,0 +1,62 @@
+{
+  "deleted_git_entries": 3888,
+  "migrated_fixtures": {
+    "merge_suite_output": "artifacts/local/merge-fixture-work (Git ignored)",
+    "package_graph_overlay": "tests/package/conftest.py creates minimal typed E1/E2 evidence"
+  },
+  "module_audit": {
+    "allowed_entrypoints": [
+      "gepase.__main__"
+    ],
+    "parse_errors": [],
+    "source_modules": 147,
+    "unexplained_zero_inbound": [],
+    "valid": true,
+    "zero_inbound": [
+      "gepase.__main__"
+    ]
+  },
+  "permanent_delete_used": false,
+  "policy": "reference-traced targeted cleanup; recoverable archive outside repository",
+  "present_legacy_paths": [],
+  "private_skill_modified": false,
+  "removed_groups": [
+    {
+      "id": "invalid-historical-results",
+      "paths": [
+        "results/",
+        "artifacts/runs/s5-agent-native-search/"
+      ],
+      "reason": "old E1/proxy scores are not valid Skill optimization evidence"
+    },
+    {
+      "id": "historical-stage-outputs",
+      "paths": [
+        "artifacts/stages/S0-S7/",
+        "artifacts/runs/s2,s6,s7,s8/"
+      ],
+      "reason": "superseded by corrected R1-R5 evidence or migrated into minimal tests"
+    },
+    {
+      "id": "unreferenced-python-facades",
+      "paths": [
+        "evals/providers/replay.py",
+        "mutation/rollback.py",
+        "optimizer/merge/contract_fixtures.py",
+        "package/snapshot.py",
+        "store/checkpoints.py"
+      ],
+      "reason": "zero import/API/CLI/test inbound references; authoritative implementations remain"
+    },
+    {
+      "id": "historical-stage-runners",
+      "paths": [
+        "scripts/run_s0,s1a,s2,s3_gates.py",
+        "s2_agent_native_smoke.yaml"
+      ],
+      "reason": "hard-coded superseded artifacts and private-corpus inventory"
+    }
+  ],
+  "schema_version": "1.0.0",
+  "valid": true
+}

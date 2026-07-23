@@ -1,0 +1,116 @@
+{
+  "$defs": {
+    "ReflectionDiagnosis": {
+      "additionalProperties": false,
+      "properties": {
+        "diagnosis_zh": {
+          "minLength": 1,
+          "title": "Diagnosis Zh",
+          "type": "string"
+        },
+        "evidence_refs": {
+          "items": {
+            "type": "string"
+          },
+          "minItems": 1,
+          "title": "Evidence Refs",
+          "type": "array"
+        },
+        "recommendation_zh": {
+          "minLength": 1,
+          "title": "Recommendation Zh",
+          "type": "string"
+        },
+        "target_node_ids": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Target Node Ids",
+          "type": "array"
+        },
+        "task_id": {
+          "title": "Task Id",
+          "type": "string"
+        }
+      },
+      "required": [
+        "task_id",
+        "diagnosis_zh",
+        "evidence_refs",
+        "target_node_ids",
+        "recommendation_zh"
+      ],
+      "title": "ReflectionDiagnosis",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "context_id": {
+      "title": "Context Id",
+      "type": "string"
+    },
+    "diagnoses": {
+      "items": {
+        "$ref": "#/$defs/ReflectionDiagnosis"
+      },
+      "title": "Diagnoses",
+      "type": "array"
+    },
+    "duration_ms": {
+      "minimum": 0,
+      "title": "Duration Ms",
+      "type": "integer"
+    },
+    "host": {
+      "title": "Host",
+      "type": "string"
+    },
+    "host_task_id": {
+      "title": "Host Task Id",
+      "type": "string"
+    },
+    "model": {
+      "title": "Model",
+      "type": "string"
+    },
+    "schema_version": {
+      "const": "1.0.0",
+      "default": "1.0.0",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "submission_id": {
+      "title": "Submission Id",
+      "type": "string"
+    },
+    "summary_zh": {
+      "minLength": 1,
+      "title": "Summary Zh",
+      "type": "string"
+    },
+    "token_estimate": {
+      "minimum": 0,
+      "title": "Token Estimate",
+      "type": "integer"
+    },
+    "work_id": {
+      "title": "Work Id",
+      "type": "string"
+    }
+  },
+  "required": [
+    "submission_id",
+    "work_id",
+    "host",
+    "model",
+    "host_task_id",
+    "context_id",
+    "duration_ms",
+    "token_estimate",
+    "diagnoses",
+    "summary_zh"
+  ],
+  "title": "CandidateReflectionSubmission",
+  "type": "object"
+}

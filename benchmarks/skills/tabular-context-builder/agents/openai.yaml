@@ -1,0 +1,4 @@
+interface:
+  display_name: "Tabular Context Builder"
+  short_description: "Build traceable LLM-ready table context packs"
+  default_prompt: "Use -context-builder to convert this table fixture into a bounded, traceable context pack."

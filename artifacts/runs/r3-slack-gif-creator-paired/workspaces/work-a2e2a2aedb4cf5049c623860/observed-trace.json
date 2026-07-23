@@ -1,0 +1,47 @@
+{
+  "observed_trace": [
+    {
+      "sequence": 0,
+      "action": "inspect_work_item",
+      "target": "executor-work-items/work-a2e2a2aedb4cf5049c623860.json",
+      "tool": "read",
+      "outcome": "completed"
+    },
+    {
+      "sequence": 1,
+      "action": "inspect_fixture",
+      "target": "benchmarks/canaries/slack-gif-creator/fixtures/message-status.json",
+      "tool": "read",
+      "outcome": "completed"
+    },
+    {
+      "sequence": 2,
+      "action": "create_animation_script",
+      "target": "create_gif.py",
+      "tool": "apply_patch",
+      "outcome": "completed"
+    },
+    {
+      "sequence": 3,
+      "action": "render_gif",
+      "target": "deployment_status.gif",
+      "tool": ".venv/bin/python -B with Pillow",
+      "outcome": "completed"
+    },
+    {
+      "sequence": 4,
+      "action": "reopen_and_validate_metadata",
+      "target": "deployment_status.gif",
+      "tool": ".venv/bin/python -B with Pillow",
+      "outcome": "passed: GIF, 480x480, 24 frames, 100ms each, 2400ms total, loop 0"
+    },
+    {
+      "sequence": 5,
+      "action": "inspect_representative_frames",
+      "target": "verification_contact_sheet.png",
+      "tool": "image viewer",
+      "outcome": "passed: waiting DEPLOY, processing DEPLOY, complete DONE, distinct status graphics and progress track"
+    }
+  ]
+}
+

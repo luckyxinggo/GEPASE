@@ -1,0 +1,89 @@
+{
+  "artifacts": [
+    {
+      "media_type": "application/octet-stream",
+      "path": "commands.log",
+      "sha256": "55ed9a191b0e4a7e4836c23bfab5041d4d58dc662fd9f61b9c39db3c556d33d0",
+      "size_bytes": 1747
+    },
+    {
+      "media_type": "application/octet-stream",
+      "path": "evidence/authoritative-flow.json",
+      "sha256": "a6f0cc8c9f5d1d7a190f2a0f5264a5c5b540c61f833617e738cf749a2f2ab4d1",
+      "size_bytes": 1934
+    },
+    {
+      "media_type": "application/octet-stream",
+      "path": "evidence/authoritative-flow.md",
+      "sha256": "12bcc18b596ecbf263c6fd7928ad65385a21e9a5f0afd4aa1190867026ce2260",
+      "size_bytes": 1911
+    },
+    {
+      "media_type": "application/octet-stream",
+      "path": "evidence/cleanup-manifest.json",
+      "sha256": "51eefaa07717e4926427b32fcf75e295cb893ad109847b80e3bb6d8c6840465f",
+      "size_bytes": 7682
+    },
+    {
+      "media_type": "application/octet-stream",
+      "path": "evidence/cli-api-audit.json",
+      "sha256": "33424b552d44e13d6595c83510007d5bb99ae0b95d76d04ad656f2490ae98d0c",
+      "size_bytes": 767
+    },
+    {
+      "media_type": "application/octet-stream",
+      "path": "evidence/regression.json",
+      "sha256": "0a2e688835c9549303de132836e99948f4505b0a42621d730f32eb252d0b3886",
+      "size_bytes": 724
+    },
+    {
+      "media_type": "application/octet-stream",
+      "path": "evidence/schema-audit.json",
+      "sha256": "8257ddf8d46f3c3ba2b2a532a367bb70b844fcd8b16889579c75541446442e49",
+      "size_bytes": 1313
+    },
+    {
+      "media_type": "application/octet-stream",
+      "path": "evidence/security-and-docs.json",
+      "sha256": "f62136441f7b62e1337584b2e1db9f530bed7a5ef6e8d18c05b9bdcba4fe6ad9",
+      "size_bytes": 450
+    },
+    {
+      "media_type": "application/octet-stream",
+      "path": "evidence/static-audit.json",
+      "sha256": "20118937b7f269270838c0f4cdb7c4f29c21777be80ff47b561ca2cb9047c70a",
+      "size_bytes": 896
+    },
+    {
+      "media_type": "application/octet-stream",
+      "path": "external-validation.md",
+      "sha256": "4968f0b5548b7bdd1f66761990f8313d14584d6b4706abf2326c2c47432e16f4",
+      "size_bytes": 430
+    },
+    {
+      "media_type": "application/octet-stream",
+      "path": "preflight.json",
+      "sha256": "f4141d1541b4cee7e6508f89d5860ed72ec5aa8e4f82eccb514626657a9c5929",
+      "size_bytes": 2212
+    },
+    {
+      "media_type": "application/octet-stream",
+      "path": "stage_report.json",
+      "sha256": "8fdbb66b93f8f82cd6db6424128ab98adbc50ff08f1b0ab59ac2de932b51cca4",
+      "size_bytes": 6747
+    },
+    {
+      "media_type": "application/octet-stream",
+      "path": "test-results.xml",
+      "sha256": "9ce04a92d4cb35d80a5f587b81e9af676d2a13d47cfb2b66b477a7d3f705fd56",
+      "size_bytes": 17344
+    },
+    {
+      "media_type": "application/octet-stream",
+      "path": "evidence/artifact-verify.json",
+      "sha256": "8dcc63e5ec3b266d90a1e865fe39f569ec888c8f1710a321856af7f96071f80c",
+      "size_bytes": 169
+    }
+  ],
+  "schema_version": "1.0.0"
+}

@@ -1,0 +1,134 @@
+{
+  "artifact_root": "artifacts/runs/r3-slack-gif-creator-paired/workspaces/work-b33fad8398ab056166627930",
+  "artifacts": [
+    {
+      "media_type": "application/json",
+      "path": "execution-summary.json",
+      "sha256": "12ac81fb5eead68f2c56ff3cb8dd6877a34aba5b4a5bf202dbfe054e141a2a88",
+      "size_bytes": 1081
+    },
+    {
+      "media_type": "text/x-python",
+      "path": "generate.py",
+      "sha256": "cfaaa4ade8d4d3e925ca604b7804b1b8d85c264a3e58e77b27317d05b92a8e21",
+      "size_bytes": 4537
+    },
+    {
+      "media_type": "application/json",
+      "path": "observed-trace.json",
+      "sha256": "460bf19cc4fa570c7f6472aa0db8f5d8d1b64fbe343965a41b678efdd061336f",
+      "size_bytes": 1068
+    },
+    {
+      "media_type": "application/json",
+      "path": "package-access.json",
+      "sha256": "936c0ea7748fa540294c0259d9174382deac1fecd5e79815e85430fbc259546e",
+      "size_bytes": 1150
+    },
+    {
+      "media_type": "image/gif",
+      "path": "sparkle_ring_loop.gif",
+      "sha256": "30a021068221a8826bc702862f626ae84b90c90bacdc5b454a1461b14cddc59e",
+      "size_bytes": 27745
+    },
+    {
+      "media_type": "text/markdown",
+      "path": "transcript.md",
+      "sha256": "4b3a4cae9221fb65f3bb12749f14b9139a093083788e9c8196ff73ae47b3b18e",
+      "size_bytes": 1110
+    }
+  ],
+  "assertion_results": [],
+  "candidate_snapshot_hash": "ce42d8a837acf9feda9706a3418fc26a77c497d9615079e616b5fdc6870ef64e",
+  "evidence_tier": "E2",
+  "failure_detail": null,
+  "failure_kind": null,
+  "fixture_hash": "c1fcf5b5894f3e7fcb8442d64b69311924f959b6f0244d8a397d3f146ba992e1",
+  "host_model_snapshot": "edbfd8f0668f44e333585ee805a6f891a7443402aad61b3e8cfeca5913b1338b",
+  "observed_trace": [
+    {
+      "action": "read_skill",
+      "outcome": "completed",
+      "sequence": 0,
+      "target": "benchmarks/canaries/slack-gif-creator/package/SKILL.md",
+      "tool": "read"
+    },
+    {
+      "action": "inspect_fixture",
+      "outcome": "completed",
+      "sequence": 1,
+      "target": "benchmarks/canaries/slack-gif-creator/fixtures/loop-sparkles.json",
+      "tool": "read"
+    },
+    {
+      "action": "inspect_package_core",
+      "outcome": "completed",
+      "sequence": 2,
+      "target": "benchmarks/canaries/slack-gif-creator/package/core",
+      "tool": "read"
+    },
+    {
+      "action": "generate_gif",
+      "outcome": "completed",
+      "sequence": 3,
+      "target": "sparkle_ring_loop.gif",
+      "tool": ".venv/bin/python -B"
+    },
+    {
+      "action": "validate_with_package",
+      "outcome": "completed",
+      "sequence": 4,
+      "target": "sparkle_ring_loop.gif",
+      "tool": "core.validators.validate_gif"
+    },
+    {
+      "action": "reopen_and_measure",
+      "outcome": "completed",
+      "sequence": 5,
+      "target": "sparkle_ring_loop.gif",
+      "tool": "Pillow"
+    },
+    {
+      "action": "visual_inspection",
+      "outcome": "completed",
+      "sequence": 6,
+      "target": "sparkle_ring_loop.gif",
+      "tool": "image_viewer"
+    }
+  ],
+  "pair_id": "pair-3c61dd0ee9d0c3845a03d9ad",
+  "planned_trace": [],
+  "policy_hash": "3b49f46ee66bafaf2bcf1aeac08f1bd7f4c719463b0e655afe40a98a4af6b3ec",
+  "prompt_hash": "b1b46698a6fdcc4825b52a71521ea887e8b0e73a8d0a28ddb6ed6d790c62f5ca",
+  "provenance": {
+    "context_id": "r3-executor-work-b33fad8398ab056166627930",
+    "generated_at": "2026-07-21T15:54:36.932689Z",
+    "generated_by": "gepase.eval.ingest",
+    "host": "codex",
+    "host_task_id": "/root/r3_exec_b33fad",
+    "model": "gpt-5.6-sol",
+    "origin": "agent-native",
+    "provider_id": "agent-delegated-v1",
+    "submission_id": "submission-68fe8c0cbe3a373c324477ae"
+  },
+  "provider_snapshot": "agent-delegated-v1",
+  "record_id": "record-1f4e10b70613a105b271ed38",
+  "schema_version": "1.0.0",
+  "score": null,
+  "seed": 42,
+  "skill_id": "slack-gif-creator",
+  "source_record_refs": [],
+  "task_id": "functional-validation-loop-sparkles-006",
+  "task_score_vector": null,
+  "trace_completeness": "complete",
+  "uncertainty": 0.1,
+  "usage": {
+    "duration_ms": 150000,
+    "input_tokens": 4500,
+    "output_tokens": 1500,
+    "token_count_kind": "estimated",
+    "tool_calls": 9
+  },
+  "variant": "original",
+  "work_id": "work-b33fad8398ab056166627930"
+}

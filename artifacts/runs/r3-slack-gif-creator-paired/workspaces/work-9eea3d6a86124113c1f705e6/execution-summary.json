@@ -1,0 +1,30 @@
+{
+  "schema_version": "1.0.0",
+  "work_id": "work-9eea3d6a86124113c1f705e6",
+  "task_id": "functional-validation-pulse-text-008",
+  "role": "executor",
+  "context_id": "r3_exec_9eea3d",
+  "status": "completed",
+  "requested_output": {
+    "filename": "go_alert_pulse.gif",
+    "media_type": "image/gif"
+  },
+  "artifacts": [
+    "go_alert_pulse.gif",
+    "generate_gif.py",
+    "verification.json",
+    "transcript.md",
+    "observed-trace.json",
+    "package-access.json"
+  ],
+  "verification": {
+    "size": [128, 128],
+    "frame_count": 30,
+    "duration_ms": 2500,
+    "loop": 0,
+    "text_visible_all_frames": true,
+    "pulse_area_ratio": 2.131,
+    "visual_inspection": "passed"
+  },
+  "package_access_count": 0
+}

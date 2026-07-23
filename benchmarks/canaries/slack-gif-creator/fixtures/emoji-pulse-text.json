@@ -1,0 +1,8 @@
+{
+  "canvas": [128, 128],
+  "duration_seconds_max": 2.8,
+  "fps_target": 12,
+  "palette": ["#17213a", "#ff6b6b", "#ffffff"],
+  "subject": "a pulsing alert badge",
+  "text": "GO"
+}

@@ -1,0 +1,96 @@
+{
+  "checks": [
+    {
+      "check_id": "schema.unique-case-id",
+      "detail_zh": "所有 trigger/functional case ID 全局唯一。",
+      "related_case_ids": [],
+      "status": "passed"
+    },
+    {
+      "check_id": "trigger.coverage",
+      "detail_zh": "正例、负例和近边界 trigger query 均达到设计简报的最小数量。",
+      "related_case_ids": [],
+      "status": "passed"
+    },
+    {
+      "check_id": "functional.coverage",
+      "detail_zh": "功能 case 数量、train/validation 分布和必需 family 覆盖满足设计简报。",
+      "related_case_ids": [],
+      "status": "passed"
+    },
+    {
+      "check_id": "functional.native-output",
+      "detail_zh": "每个功能 case 都声明了任务原生输出，且媒体类型在设计简报允许范围内。",
+      "related_case_ids": [],
+      "status": "passed"
+    },
+    {
+      "check_id": "fixture.integrity",
+      "detail_zh": "fixture 存在、位于仓库内且内容 hash 与 draft 一致。",
+      "related_case_ids": [],
+      "status": "passed"
+    },
+    {
+      "check_id": "fixture.license",
+      "detail_zh": "所有 fixture 都有明确许可声明。",
+      "related_case_ids": [],
+      "status": "passed"
+    },
+    {
+      "check_id": "split.fixture-leakage",
+      "detail_zh": "train/validation 不复用相同 fixture 内容，所有功能 case 的 fixture 独立。",
+      "related_case_ids": [],
+      "status": "passed"
+    },
+    {
+      "check_id": "split.group-leakage",
+      "detail_zh": "同一 leakage group 未跨越 train/validation。",
+      "related_case_ids": [],
+      "status": "passed"
+    },
+    {
+      "check_id": "split.near-duplicate",
+      "detail_zh": "跨 split prompt 未达到近重复阈值 0.86。",
+      "related_case_ids": [],
+      "status": "passed"
+    },
+    {
+      "check_id": "oracle.nontrivial-assertion",
+      "detail_zh": "每个功能 case 至少有一个超越文件存在性的内容/元数据确定性检查。",
+      "related_case_ids": [],
+      "status": "passed"
+    },
+    {
+      "check_id": "isolation.executor-view",
+      "detail_zh": "Executor view 不含 assertions、rubric、expected answer、candidate 或 sibling output。",
+      "related_case_ids": [],
+      "status": "passed"
+    },
+    {
+      "check_id": "evidence.e0-e2-e3-default",
+      "detail_zh": "首个 canary 的功能 case 默认使用 E2/E3，E1 未启用。",
+      "related_case_ids": [],
+      "status": "passed"
+    },
+    {
+      "check_id": "source.license-and-snapshot",
+      "detail_zh": "Apache-2.0 来源与 draft 绑定的 PackageSnapshot hash 一致。",
+      "related_case_ids": [],
+      "status": "passed"
+    }
+  ],
+  "draft_hash": "8f249005e7f9ce57ed0bb0c5212cbc392d79e6710997e2651f4598fdd087128b",
+  "generated_at": "2026-07-21T10:43:33.205136Z",
+  "metrics": {
+    "functional_cases": 8,
+    "functional_families": 7,
+    "hard_failures": 0,
+    "train_functional_cases": 5,
+    "trigger_cases": 18,
+    "trigger_functional_channels_separate": true,
+    "validation_functional_cases": 3,
+    "warnings": 0
+  },
+  "schema_version": "1.0.0",
+  "valid": true
+}

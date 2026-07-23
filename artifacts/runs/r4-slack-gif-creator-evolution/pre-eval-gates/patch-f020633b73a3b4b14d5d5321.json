@@ -1,0 +1,87 @@
+{
+  "gate_0": {
+    "checks": {
+      "base_candidate_match": true,
+      "base_content_hash_match": true,
+      "base_snapshot_hash_match": true,
+      "exact_rejected_history": null,
+      "target_preconditions_match": true
+    },
+    "completed_at": "2026-07-22T09:15:21.856574+00:00",
+    "evidence_refs": [
+      "artifacts/runs/r4-slack-gif-creator-evolution/reflection-submissions/reflection-work-ece74a14e2ca67757504c20b.json",
+      "artifacts/runs/r4-slack-gif-creator-evolution/train-admission/candidate-edf5f1aa07926ba5415f0442.json"
+    ],
+    "human_summary": "PackagePatch schema, scope, hashes, and edit budget are valid.",
+    "level": "gate_0_schema",
+    "outcome": "passed",
+    "reason_codes": [
+      "schema_valid"
+    ],
+    "schema_version": "1.0.0",
+    "started_at": "2026-07-22T09:15:21.856235+00:00",
+    "target_calls": 0,
+    "usage": {
+      "duration_ms": 0,
+      "e2_calls": 0,
+      "e3_calls": 0,
+      "metric_calls": 0,
+      "tokens": 0
+    }
+  },
+  "gate_1": {
+    "checks": {
+      "baseline": {
+        "error_diagnostics": [],
+        "frontmatter_valid": true,
+        "issue_count": 1,
+        "python_syntax_valid": true,
+        "references_valid": true,
+        "ruff": {
+          "error": "ruff executable unavailable"
+        },
+        "ruff_valid": false,
+        "security_valid": true
+      },
+      "command_whitelist": [
+        "python.compile",
+        "ruff check"
+      ],
+      "error_diagnostics": [],
+      "frontmatter_valid": true,
+      "no_new_static_regression": true,
+      "package_parse": true,
+      "python_syntax_errors": [],
+      "python_syntax_valid": true,
+      "references_valid": true,
+      "regression_aware": true,
+      "ruff": {
+        "error": "ruff executable unavailable"
+      },
+      "ruff_valid": false,
+      "security_findings": [],
+      "security_valid": true,
+      "unit_tests": "not_declared_in_public_benchmark_package"
+    },
+    "completed_at": "2026-07-22T09:15:22.058871+00:00",
+    "evidence_refs": [
+      "application:application-20ada438d49e648f1bb86749"
+    ],
+    "human_summary": "Candidate package passed deterministic structure, syntax, lint, and safety checks.",
+    "level": "gate_1_static",
+    "outcome": "passed",
+    "reason_codes": [
+      "static_non_regression_passed"
+    ],
+    "schema_version": "1.0.0",
+    "started_at": "2026-07-22T09:15:22.058866+00:00",
+    "target_calls": 0,
+    "usage": {
+      "duration_ms": 0,
+      "e2_calls": 0,
+      "e3_calls": 0,
+      "metric_calls": 0,
+      "tokens": 0
+    }
+  }
+}

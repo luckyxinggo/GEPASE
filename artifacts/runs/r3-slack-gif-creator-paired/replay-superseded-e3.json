@@ -1,0 +1,55 @@
+{
+  "items": [
+    {
+      "current_e3_record_id": "record-715afe94cbf979c2930cfa7e",
+      "previous_e3_record_id": "record-ba5f1ac8f11ced02518e67b5",
+      "source_record_id": "record-34e2c5f088159e646243484f"
+    },
+    {
+      "current_e3_record_id": "record-a344124a436266458e6829c8",
+      "previous_e3_record_id": "record-06c5e4569ef75fd3e152e8a9",
+      "source_record_id": "record-38d361435a6958ed55305e46"
+    },
+    {
+      "current_e3_record_id": "record-8b31942640c3015af61ccda3",
+      "previous_e3_record_id": "record-293609fa38d12288932dc5f3",
+      "source_record_id": "record-5cae6ab70b2c391655894a95"
+    },
+    {
+      "current_e3_record_id": "record-ced1437b1f4c1d68fe57397b",
+      "previous_e3_record_id": "record-4838b8c69ecc4fde18825129",
+      "source_record_id": "record-67068ea835b5ef99202e4d77"
+    },
+    {
+      "current_e3_record_id": "record-eb468b902e806f73a8addd14",
+      "previous_e3_record_id": "record-e25484cadf220e87927c2e06",
+      "source_record_id": "record-7101b4f9ebce4127747d8dca"
+    },
+    {
+      "current_e3_record_id": "record-c17e42731cc79c2c75859e6a",
+      "previous_e3_record_id": "record-122a1c4d63300bd079d1a983",
+      "source_record_id": "record-7203e81ffaef3f3dc31fdeb1"
+    },
+    {
+      "current_e3_record_id": "record-53a43d7fba9f788db0cfccd9",
+      "previous_e3_record_id": "record-f6df1509e75b7b9fdf5995be",
+      "source_record_id": "record-813bda120b03d345d046e2ee"
+    },
+    {
+      "current_e3_record_id": "record-610e1b89b623050a749b6b8a",
+      "previous_e3_record_id": "record-f99a9e049dc9a2f612df77cc",
+      "source_record_id": "record-98d7627b1e837b4daa44c097"
+    },
+    {
+      "current_e3_record_id": "record-223235c16f4fa5a47e1e717f",
+      "previous_e3_record_id": "record-df9b0060c746667f6a765866",
+      "source_record_id": "record-af968875d3c07bdc96f582cf"
+    },
+    {
+      "current_e3_record_id": "record-2c6cc8a7811d2d78fa365a52",
+      "previous_e3_record_id": "record-6f2affeb3fb53d89018bb819",
+      "source_record_id": "record-b5215ea9b145bf3adc2bb94f"
+    }
+  ],
+  "schema_version": "1.0.0"
+}

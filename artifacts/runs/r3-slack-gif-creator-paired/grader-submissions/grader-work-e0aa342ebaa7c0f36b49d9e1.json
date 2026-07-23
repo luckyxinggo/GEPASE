@@ -1,0 +1,67 @@
+{
+  "criterion_grades": [
+    {
+      "criterion_id": "readable-legibility",
+      "evidence_refs": [
+        "artifacts/runs/r3-slack-gif-creator-paired/workspaces/work-02f7b78398c181ede25632a6/meeting_sync_reminder.gif",
+        "artifacts/runs/r3-slack-gif-creator-paired/derived/work-02f7b78398c181ede25632a6/contact-sheet.png"
+      ],
+      "rationale_zh": "SYNC 与 10:30 使用大号像素字形、深棕黑与砖红分别对米白底形成明确对比；接触表覆盖的 12 个采样时刻里，两段文字均完整同屏，缩略图中也能迅速、无歧义地读出。",
+      "score": 0.97
+    },
+    {
+      "criterion_id": "readable-layout",
+      "evidence_refs": [
+        "artifacts/runs/r3-slack-gif-creator-paired/workspaces/work-02f7b78398c181ede25632a6/meeting_sync_reminder.gif",
+        "artifacts/runs/r3-slack-gif-creator-paired/derived/work-02f7b78398c181ede25632a6/contact-sheet.png"
+      ],
+      "rationale_zh": "标题居上、时间居下，字号、色彩与垂直分区形成清楚层级；圆角边框、顶部横条和底部下划线保持居中且未侵入文字。左右留白相对紧凑，但文字始终处于边框内的安全区。",
+      "score": 0.94
+    },
+    {
+      "criterion_id": "readable-emphasis",
+      "evidence_refs": [
+        "artifacts/runs/r3-slack-gif-creator-paired/workspaces/work-02f7b78398c181ede25632a6/meeting_sync_reminder.gif",
+        "artifacts/runs/r3-slack-gif-creator-paired/derived/work-02f7b78398c181ede25632a6/contact-sheet.png",
+        "artifacts/runs/r3-slack-gif-creator-paired/blind-inspections/blind-7b028168fd24b882efb72065.json"
+      ],
+      "rationale_zh": "2 秒、20 帧的循环中，采样帧里的标题和时间位置保持稳定，变化集中在砖红装饰、下划线与小圆点，未造成阅读中断。全部 20 帧均为独特帧且相邻帧有持续变化，因此强调具有存在感；若进一步收敛装饰变化幅度，会更显克制。",
+      "score": 0.91
+    },
+    {
+      "criterion_id": "readable-tone",
+      "evidence_refs": [
+        "artifacts/runs/r3-slack-gif-creator-paired/workspaces/work-02f7b78398c181ede25632a6/meeting_sync_reminder.gif",
+        "artifacts/runs/r3-slack-gif-creator-paired/derived/work-02f7b78398c181ede25632a6/contact-sheet.png"
+      ],
+      "rationale_zh": "米白背景、深棕黑标题与砖红时间严格形成温暖而稳重的三色体系；圆角卡片、端点圆点和规整对称细节兼具亲和感与会议提醒所需的专业性。",
+      "score": 0.95
+    }
+  ],
+  "factual_claims_zh": [
+    "GIF 画布为 480×480，共 20 帧，每帧 100 毫秒，总时长 2000 毫秒，有效帧率 10 fps，并设置为无限循环。",
+    "接触表展示的 12 个采样帧中，SYNC 与 10:30 均完整可见且保持相同的标题在上、时间在下布局。",
+    "盲检记录显示 20 帧全部唯一，平均相邻像素差为 0.0782328216374269。",
+    "GIF 文件大小为 141587 字节，实测 SHA-256 与盲化清单中的 1c1dc5df9eea088e7326e16f94e88fe068e68c8e571de550b9ce72b531e0fbd7 一致。"
+  ],
+  "feedback_zh": "成品已很好满足会议提醒的核心目标：信息一眼可读、层级清楚、配色温暖专业，2 秒循环也没有让文字离开安全区。若继续优化，可略微降低下划线和小圆点的变化幅度或频率，让动态更安静，并为左右两侧再留少量呼吸空间。",
+  "grader_work_id": "grader-work-e0aa342ebaa7c0f36b49d9e1",
+  "overall_score": 0.9475,
+  "role_run": {
+    "context_id": "/root/r3_grade_e0aa34",
+    "finished_at": "2026-07-21T16:22:07Z",
+    "host": "codex",
+    "host_task_id": "/root/r3_grade_e0aa34",
+    "model": "gpt-5.6-sol",
+    "started_at": "2026-07-21T16:21:02Z",
+    "usage": {
+      "duration_ms": 65000,
+      "input_tokens": 18000,
+      "output_tokens": 1500,
+      "token_count_kind": "estimated",
+      "tool_calls": 9
+    }
+  },
+  "schema_version": "1.0.0",
+  "submission_id": "grade-submission-e0aa342ebaa7c0f36b49d9e1"
+}

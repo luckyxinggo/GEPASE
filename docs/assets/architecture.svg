@@ -1,0 +1,62 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="720" viewBox="0 0 1400 720" role="img" aria-labelledby="title desc">
+  <title id="title">GEPASE architecture</title>
+  <desc id="desc">Agent-host execution feeds typed evidence into the Python Core, which builds a Package Graph, evaluates tasks, evolves structured patches, and admits only held-out improvements.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#f8fafc"/><stop offset="1" stop-color="#eef2ff"/></linearGradient>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%"><feDropShadow dx="0" dy="8" stdDeviation="12" flood-color="#172554" flood-opacity=".10"/></filter>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0l10 5-10 5z" fill="#64748b"/></marker>
+    <style>
+      .title{font:700 30px ui-sans-serif,system-ui;fill:#0f172a}.sub{font:500 15px ui-sans-serif,system-ui;fill:#475569}.label{font:700 17px ui-sans-serif,system-ui;fill:#0f172a}.small{font:500 13px ui-sans-serif,system-ui;fill:#475569}.box{fill:#fff;stroke:#cbd5e1;stroke-width:1.5;rx:18;filter:url(#shadow)}.core{fill:#eef2ff;stroke:#818cf8}.gate{fill:#ecfdf5;stroke:#34d399}.host{fill:#fff7ed;stroke:#fb923c}.line{fill:none;stroke:#64748b;stroke-width:2;marker-end:url(#arrow)}
+    </style>
+  </defs>
+  <rect width="1400" height="720" rx="28" fill="url(#bg)"/>
+  <text x="70" y="72" class="title">GEPASE · complete Skill Package evolution</text>
+  <text x="70" y="102" class="sub">The Python Core owns evidence, candidates, search state and Gates; the Agent host is a thin, isolated execution layer.</text>
+
+  <rect x="70" y="145" width="1260" height="112" class="box host"/>
+  <text x="105" y="183" class="label">Agent host · optional execution plane</text>
+  <text x="105" y="211" class="small">Eval Designer · Executor · Independent Grader · Comparator · Analyzer · Reflection · Patch proposer</text>
+  <text x="105" y="235" class="small">Each role receives a typed WorkItem in an isolated context and returns a typed submission. No role owns acceptance.</text>
+
+  <path d="M700 258v48" class="line"/>
+  <rect x="70" y="307" width="1260" height="345" class="box core"/>
+  <text x="105" y="348" class="label">Independent Python Core + CLI + API</text>
+
+  <rect x="105" y="381" width="200" height="102" class="box"/>
+  <text x="125" y="416" class="label">Package IR</text>
+  <text x="125" y="443" class="small">SKILL.md · references</text>
+  <text x="125" y="465" class="small">scripts · assets · metadata</text>
+
+  <rect x="340" y="381" width="200" height="102" class="box"/>
+  <text x="360" y="416" class="label">Package Graph</text>
+  <text x="360" y="443" class="small">dependencies · traces</text>
+  <text x="360" y="465" class="small">failure slice · blast radius</text>
+
+  <rect x="575" y="381" width="200" height="102" class="box"/>
+  <text x="595" y="416" class="label">Real evaluation</text>
+  <text x="595" y="443" class="small">E0 / E2 / E3 evidence</text>
+  <text x="595" y="465" class="small">paired scores · ASI</text>
+
+  <rect x="810" y="381" width="200" height="102" class="box"/>
+  <text x="830" y="416" class="label">GEPA / Pareto</text>
+  <text x="830" y="443" class="small">task-level feedback</text>
+  <text x="830" y="465" class="small">branches · same-package merge</text>
+
+  <rect x="1045" y="381" width="250" height="102" class="box"/>
+  <text x="1065" y="416" class="label">Typed PackagePatch</text>
+  <text x="1065" y="443" class="small">bounded edits · preconditions</text>
+  <text x="1065" y="465" class="small">atomic apply · rollback</text>
+
+  <path d="M305 432h34" class="line"/><path d="M540 432h34" class="line"/><path d="M775 432h34" class="line"/><path d="M1010 432h34" class="line"/>
+
+  <rect x="340" y="526" width="670" height="82" class="box gate"/>
+  <text x="370" y="560" class="label">Gate 0–3 · schema → static → train → frozen validation</text>
+  <text x="370" y="585" class="small">Strict improvement, protected-category floors, rejection memory and content-addressed provenance.</text>
+  <path d="M1170 484v83h-159" class="line"/>
+  <path d="M675 526v-42" class="line"/>
+  <rect x="1045" y="526" width="250" height="82" class="box gate"/>
+  <text x="1065" y="560" class="label">Deployable frontier</text>
+  <text x="1065" y="585" class="small">verified Package + report</text>
+  <path d="M1010 567h34" class="line"/>
+  <text x="105" y="630" class="small">Source of truth: typed Core state + raw evidence + immutable hashes. Cross-package merge is rejected.</text>
+</svg>

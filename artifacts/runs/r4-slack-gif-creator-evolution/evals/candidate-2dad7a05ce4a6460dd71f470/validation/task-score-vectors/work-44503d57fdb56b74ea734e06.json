@@ -1,0 +1,20 @@
+{
+  "candidate_snapshot_hash": "cf3c66eb21afcbcfc3518927b5572624075866213c16717d03010ccc25074525",
+  "efficiency": 0.0,
+  "evidence_refs": [
+    "artifacts/runs/r4-slack-gif-creator-evolution/evals/candidate-2dad7a05ce4a6460dd71f470/validation/records/record-eac435aace00bbc2599090be.json",
+    "artifacts/runs/r4-slack-gif-creator-evolution/evals/candidate-2dad7a05ce4a6460dd71f470/validation/e0-package-record.json",
+    "artifacts/runs/r3-slack-gif-creator-paired/task-score-vectors/work-06e0ca3901e49580a002d129.json",
+    "artifacts/runs/r4-slack-gif-creator-evolution/evals/candidate-2dad7a05ce4a6460dd71f470/validation/comparator-reconciliation/functional-validation-efficiency-007.json"
+  ],
+  "output_quality": 0.0,
+  "package_quality": 1.0,
+  "pair_id": "pair-061ca407be66d6970b347bc5",
+  "reliability": 0.0,
+  "schema_version": "1.0.0",
+  "scoring_policy_ref": "configs/canaries/slack-gif-creator-r3-scoring.json",
+  "skill_gain": -0.9070600000000001,
+  "task_correctness": 0.0,
+  "task_id": "functional-validation-efficiency-007",
+  "variant": "candidate"
+}

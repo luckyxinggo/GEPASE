@@ -1,0 +1,32 @@
+{
+  "observed_trace": [
+    {
+      "sequence": 0,
+      "action": "inspect_fixture_config",
+      "target": "benchmarks/canaries/slack-gif-creator/fixtures/input-badge.json",
+      "tool": "read",
+      "outcome": "completed"
+    },
+    {
+      "sequence": 1,
+      "action": "load_input_image",
+      "target": "benchmarks/canaries/slack-gif-creator/fixtures/input-badge.ppm",
+      "tool": "Pillow",
+      "outcome": "completed"
+    },
+    {
+      "sequence": 2,
+      "action": "generate_animated_gif",
+      "target": "uploaded_badge_lift.gif",
+      "tool": "Pillow/imageio/numpy",
+      "outcome": "completed"
+    },
+    {
+      "sequence": 3,
+      "action": "reopen_and_verify_gif",
+      "target": "uploaded_badge_lift.gif",
+      "tool": "Pillow/numpy",
+      "outcome": "completed"
+    }
+  ]
+}

@@ -1,0 +1,45 @@
+{
+  "comparator_work_id": "candidate-comparator-work-de4d470908944899747c5316",
+  "confidence": 0.78,
+  "criteria": [
+    {
+      "criterion_id": "efficiency-budget",
+      "preference": "left",
+      "rationale_zh": "两侧均为 480×480、12.5 FPS 且远低于 900KB，但左侧在保留 24 个唯一帧（右侧 22 个）的同时仅为 330202 字节，明显小于右侧的 469924 字节；其配色与主要细节仍完整，因此体积、帧数和视觉信息的控制更高效。"
+    },
+    {
+      "criterion_id": "efficiency-readability",
+      "preference": "right",
+      "rationale_zh": "右侧的白色勾号置于高对比度的实心绿色圆章中，从首个采样帧起即完整、醒目，粒子外扩期间也未遮挡主体。左侧主爆发阶段的勾号同样清楚，但开头数帧处于绘制过程，完整可读性出现得更晚。"
+    },
+    {
+      "criterion_id": "efficiency-motion",
+      "preference": "left",
+      "rationale_zh": "两侧粒子都能沿径向外扩并渐隐，且均采用稳定的 80ms 帧时长。左侧用 24 个唯一帧完成 1.92 秒过程，接触表中扩散半径和透明度变化更细密；其平均相邻像素差为 2.61、首尾差为 5.15，均低于右侧的 4.96 和 12.81，结合逐帧画面表现出更柔和的帧间推进与收尾衔接。"
+    },
+    {
+      "criterion_id": "efficiency-balance",
+      "preference": "left",
+      "rationale_zh": "两侧都没有严重轮廓破碎或节奏跳跃。左侧在更低体积下仍保持连续的勾号边缘、清晰圆环和多色粒子，平坦深色背景也未见明显色带；右侧轮廓同样锐利，但渐变背景可见较明显的细密抖动纹理，因此左侧的压缩质量权衡略优。"
+    }
+  ],
+  "rationale_zh": "按 rubric 权重综合，左侧在压缩效率、粒子动态和质量权衡三项占优，尤其是在更多唯一帧下仍将体积控制到约 330KB；右侧的优势是勾号从首帧起更完整醒目。两者均达到任务底线，但左侧在保持可读性的同时实现了更好的体积与动画质量平衡，因此判定左侧胜出。",
+  "role_run": {
+    "context_id": "ctx-r4-comparator-efficiency-ba-de4d470908944899747c5316",
+    "finished_at": "2026-07-22T11:00:43Z",
+    "host": "codex",
+    "host_task_id": "/root/r4_cmp_m_eff_ba",
+    "model": "gpt-5.6-sol",
+    "started_at": "2026-07-22T10:54:43Z",
+    "usage": {
+      "duration_ms": 360000,
+      "input_tokens": 14500,
+      "output_tokens": 1400,
+      "token_count_kind": "estimated",
+      "tool_calls": 8
+    }
+  },
+  "schema_version": "1.0.0",
+  "submission_id": "candidate-comparator-submission-de4d470908944899747c5316-codex-ba",
+  "winner": "left"
+}

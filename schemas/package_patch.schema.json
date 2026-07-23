@@ -1,0 +1,680 @@
+{
+  "$defs": {
+    "AddFile": {
+      "additionalProperties": false,
+      "properties": {
+        "content": {
+          "minLength": 1,
+          "title": "Content",
+          "type": "string"
+        },
+        "evidence_refs": {
+          "items": {
+            "type": "string"
+          },
+          "minItems": 1,
+          "title": "Evidence Refs",
+          "type": "array"
+        },
+        "executable": {
+          "default": false,
+          "title": "Executable",
+          "type": "boolean"
+        },
+        "expected_benefit": {
+          "maxLength": 600,
+          "minLength": 1,
+          "title": "Expected Benefit",
+          "type": "string"
+        },
+        "op": {
+          "const": "add_file",
+          "title": "Op",
+          "type": "string"
+        },
+        "operation_id": {
+          "pattern": "^op-[a-zA-Z0-9._-]+$",
+          "title": "Operation Id",
+          "type": "string"
+        },
+        "path": {
+          "title": "Path",
+          "type": "string"
+        },
+        "precondition_hash": {
+          "default": "absent",
+          "title": "Precondition Hash",
+          "type": "string"
+        },
+        "rationale": {
+          "maxLength": 1200,
+          "minLength": 1,
+          "title": "Rationale",
+          "type": "string"
+        },
+        "regression_risk": {
+          "$ref": "#/$defs/RegressionRisk"
+        },
+        "target_node_id": {
+          "default": null,
+          "title": "Target Node Id",
+          "type": "null"
+        }
+      },
+      "required": [
+        "operation_id",
+        "path",
+        "evidence_refs",
+        "expected_benefit",
+        "regression_risk",
+        "rationale",
+        "op",
+        "content"
+      ],
+      "title": "AddFile",
+      "type": "object"
+    },
+    "DeleteFile": {
+      "additionalProperties": false,
+      "properties": {
+        "evidence_refs": {
+          "items": {
+            "type": "string"
+          },
+          "minItems": 1,
+          "title": "Evidence Refs",
+          "type": "array"
+        },
+        "expected_benefit": {
+          "maxLength": 600,
+          "minLength": 1,
+          "title": "Expected Benefit",
+          "type": "string"
+        },
+        "op": {
+          "const": "delete_file",
+          "title": "Op",
+          "type": "string"
+        },
+        "operation_id": {
+          "pattern": "^op-[a-zA-Z0-9._-]+$",
+          "title": "Operation Id",
+          "type": "string"
+        },
+        "orphan_evidence_ref": {
+          "minLength": 1,
+          "title": "Orphan Evidence Ref",
+          "type": "string"
+        },
+        "path": {
+          "title": "Path",
+          "type": "string"
+        },
+        "precondition_hash": {
+          "pattern": "^(?:[0-9a-f]{64}|absent)$",
+          "title": "Precondition Hash",
+          "type": "string"
+        },
+        "rationale": {
+          "maxLength": 1200,
+          "minLength": 1,
+          "title": "Rationale",
+          "type": "string"
+        },
+        "regression_risk": {
+          "$ref": "#/$defs/RegressionRisk"
+        },
+        "target_node_id": {
+          "title": "Target Node Id",
+          "type": "string"
+        }
+      },
+      "required": [
+        "operation_id",
+        "path",
+        "precondition_hash",
+        "evidence_refs",
+        "expected_benefit",
+        "regression_risk",
+        "rationale",
+        "op",
+        "target_node_id",
+        "orphan_evidence_ref"
+      ],
+      "title": "DeleteFile",
+      "type": "object"
+    },
+    "InsertReference": {
+      "additionalProperties": false,
+      "properties": {
+        "content": {
+          "minLength": 1,
+          "title": "Content",
+          "type": "string"
+        },
+        "evidence_refs": {
+          "items": {
+            "type": "string"
+          },
+          "minItems": 1,
+          "title": "Evidence Refs",
+          "type": "array"
+        },
+        "expected_benefit": {
+          "maxLength": 600,
+          "minLength": 1,
+          "title": "Expected Benefit",
+          "type": "string"
+        },
+        "op": {
+          "const": "insert_reference",
+          "title": "Op",
+          "type": "string"
+        },
+        "operation_id": {
+          "pattern": "^op-[a-zA-Z0-9._-]+$",
+          "title": "Operation Id",
+          "type": "string"
+        },
+        "path": {
+          "title": "Path",
+          "type": "string"
+        },
+        "precondition_hash": {
+          "default": "absent",
+          "title": "Precondition Hash",
+          "type": "string"
+        },
+        "rationale": {
+          "maxLength": 1200,
+          "minLength": 1,
+          "title": "Rationale",
+          "type": "string"
+        },
+        "referenced_from_node_id": {
+          "title": "Referenced From Node Id",
+          "type": "string"
+        },
+        "regression_risk": {
+          "$ref": "#/$defs/RegressionRisk"
+        },
+        "target_node_id": {
+          "default": null,
+          "title": "Target Node Id",
+          "type": "null"
+        }
+      },
+      "required": [
+        "operation_id",
+        "path",
+        "evidence_refs",
+        "expected_benefit",
+        "regression_risk",
+        "rationale",
+        "op",
+        "content",
+        "referenced_from_node_id"
+      ],
+      "title": "InsertReference",
+      "type": "object"
+    },
+    "PatchEditBudget": {
+      "additionalProperties": false,
+      "properties": {
+        "allow_file_topology_edits": {
+          "default": true,
+          "title": "Allow File Topology Edits",
+          "type": "boolean"
+        },
+        "allow_script_edits": {
+          "default": true,
+          "title": "Allow Script Edits",
+          "type": "boolean"
+        },
+        "max_added_files": {
+          "default": 1,
+          "maximum": 10,
+          "minimum": 0,
+          "title": "Max Added Files",
+          "type": "integer"
+        },
+        "max_changed_files": {
+          "default": 3,
+          "maximum": 20,
+          "minimum": 1,
+          "title": "Max Changed Files",
+          "type": "integer"
+        },
+        "max_deleted_files": {
+          "default": 1,
+          "maximum": 10,
+          "minimum": 0,
+          "title": "Max Deleted Files",
+          "type": "integer"
+        },
+        "max_operations": {
+          "default": 3,
+          "maximum": 20,
+          "minimum": 1,
+          "title": "Max Operations",
+          "type": "integer"
+        },
+        "max_total_replacement_chars": {
+          "default": 12000,
+          "maximum": 200000,
+          "minimum": 1,
+          "title": "Max Total Replacement Chars",
+          "type": "integer"
+        }
+      },
+      "title": "PatchEditBudget",
+      "type": "object"
+    },
+    "RegressionRisk": {
+      "enum": [
+        "low",
+        "medium",
+        "high"
+      ],
+      "title": "RegressionRisk",
+      "type": "string"
+    },
+    "ReplaceMarkdownBlock": {
+      "additionalProperties": false,
+      "properties": {
+        "evidence_refs": {
+          "items": {
+            "type": "string"
+          },
+          "minItems": 1,
+          "title": "Evidence Refs",
+          "type": "array"
+        },
+        "expected_benefit": {
+          "maxLength": 600,
+          "minLength": 1,
+          "title": "Expected Benefit",
+          "type": "string"
+        },
+        "op": {
+          "const": "replace_markdown_block",
+          "title": "Op",
+          "type": "string"
+        },
+        "operation_id": {
+          "pattern": "^op-[a-zA-Z0-9._-]+$",
+          "title": "Operation Id",
+          "type": "string"
+        },
+        "path": {
+          "title": "Path",
+          "type": "string"
+        },
+        "precondition_hash": {
+          "pattern": "^(?:[0-9a-f]{64}|absent)$",
+          "title": "Precondition Hash",
+          "type": "string"
+        },
+        "rationale": {
+          "maxLength": 1200,
+          "minLength": 1,
+          "title": "Rationale",
+          "type": "string"
+        },
+        "regression_risk": {
+          "$ref": "#/$defs/RegressionRisk"
+        },
+        "replacement": {
+          "minLength": 1,
+          "title": "Replacement",
+          "type": "string"
+        },
+        "target_node_id": {
+          "title": "Target Node Id",
+          "type": "string"
+        }
+      },
+      "required": [
+        "operation_id",
+        "path",
+        "precondition_hash",
+        "evidence_refs",
+        "expected_benefit",
+        "regression_risk",
+        "rationale",
+        "op",
+        "target_node_id",
+        "replacement"
+      ],
+      "title": "ReplaceMarkdownBlock",
+      "type": "object"
+    },
+    "ReplacePythonFunction": {
+      "additionalProperties": false,
+      "properties": {
+        "evidence_refs": {
+          "items": {
+            "type": "string"
+          },
+          "minItems": 1,
+          "title": "Evidence Refs",
+          "type": "array"
+        },
+        "expected_benefit": {
+          "maxLength": 600,
+          "minLength": 1,
+          "title": "Expected Benefit",
+          "type": "string"
+        },
+        "op": {
+          "const": "replace_python_function",
+          "title": "Op",
+          "type": "string"
+        },
+        "operation_id": {
+          "pattern": "^op-[a-zA-Z0-9._-]+$",
+          "title": "Operation Id",
+          "type": "string"
+        },
+        "path": {
+          "title": "Path",
+          "type": "string"
+        },
+        "precondition_hash": {
+          "pattern": "^(?:[0-9a-f]{64}|absent)$",
+          "title": "Precondition Hash",
+          "type": "string"
+        },
+        "rationale": {
+          "maxLength": 1200,
+          "minLength": 1,
+          "title": "Rationale",
+          "type": "string"
+        },
+        "regression_risk": {
+          "$ref": "#/$defs/RegressionRisk"
+        },
+        "replacement": {
+          "minLength": 1,
+          "title": "Replacement",
+          "type": "string"
+        },
+        "target_node_id": {
+          "title": "Target Node Id",
+          "type": "string"
+        }
+      },
+      "required": [
+        "operation_id",
+        "path",
+        "precondition_hash",
+        "evidence_refs",
+        "expected_benefit",
+        "regression_risk",
+        "rationale",
+        "op",
+        "target_node_id",
+        "replacement"
+      ],
+      "title": "ReplacePythonFunction",
+      "type": "object"
+    },
+    "ReplaceTextFile": {
+      "additionalProperties": false,
+      "properties": {
+        "evidence_refs": {
+          "items": {
+            "type": "string"
+          },
+          "minItems": 1,
+          "title": "Evidence Refs",
+          "type": "array"
+        },
+        "expected_benefit": {
+          "maxLength": 600,
+          "minLength": 1,
+          "title": "Expected Benefit",
+          "type": "string"
+        },
+        "op": {
+          "const": "replace_text_file",
+          "title": "Op",
+          "type": "string"
+        },
+        "operation_id": {
+          "pattern": "^op-[a-zA-Z0-9._-]+$",
+          "title": "Operation Id",
+          "type": "string"
+        },
+        "path": {
+          "title": "Path",
+          "type": "string"
+        },
+        "precondition_hash": {
+          "pattern": "^(?:[0-9a-f]{64}|absent)$",
+          "title": "Precondition Hash",
+          "type": "string"
+        },
+        "rationale": {
+          "maxLength": 1200,
+          "minLength": 1,
+          "title": "Rationale",
+          "type": "string"
+        },
+        "regression_risk": {
+          "$ref": "#/$defs/RegressionRisk"
+        },
+        "replacement": {
+          "minLength": 1,
+          "title": "Replacement",
+          "type": "string"
+        },
+        "target_node_id": {
+          "title": "Target Node Id",
+          "type": "string"
+        }
+      },
+      "required": [
+        "operation_id",
+        "path",
+        "precondition_hash",
+        "evidence_refs",
+        "expected_benefit",
+        "regression_risk",
+        "rationale",
+        "op",
+        "target_node_id",
+        "replacement"
+      ],
+      "title": "ReplaceTextFile",
+      "type": "object"
+    },
+    "UpdateFrontmatter": {
+      "additionalProperties": false,
+      "properties": {
+        "evidence_refs": {
+          "items": {
+            "type": "string"
+          },
+          "minItems": 1,
+          "title": "Evidence Refs",
+          "type": "array"
+        },
+        "expected_benefit": {
+          "maxLength": 600,
+          "minLength": 1,
+          "title": "Expected Benefit",
+          "type": "string"
+        },
+        "op": {
+          "const": "update_frontmatter",
+          "title": "Op",
+          "type": "string"
+        },
+        "operation_id": {
+          "pattern": "^op-[a-zA-Z0-9._-]+$",
+          "title": "Operation Id",
+          "type": "string"
+        },
+        "path": {
+          "title": "Path",
+          "type": "string"
+        },
+        "precondition_hash": {
+          "pattern": "^(?:[0-9a-f]{64}|absent)$",
+          "title": "Precondition Hash",
+          "type": "string"
+        },
+        "rationale": {
+          "maxLength": 1200,
+          "minLength": 1,
+          "title": "Rationale",
+          "type": "string"
+        },
+        "regression_risk": {
+          "$ref": "#/$defs/RegressionRisk"
+        },
+        "replacement": {
+          "minLength": 1,
+          "title": "Replacement",
+          "type": "string"
+        },
+        "target_node_id": {
+          "title": "Target Node Id",
+          "type": "string"
+        }
+      },
+      "required": [
+        "operation_id",
+        "path",
+        "precondition_hash",
+        "evidence_refs",
+        "expected_benefit",
+        "regression_risk",
+        "rationale",
+        "op",
+        "target_node_id",
+        "replacement"
+      ],
+      "title": "UpdateFrontmatter",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "base_candidate_id": {
+      "title": "Base Candidate Id",
+      "type": "string"
+    },
+    "base_content_hash": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Base Content Hash",
+      "type": "string"
+    },
+    "base_snapshot_hash": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Base Snapshot Hash",
+      "type": "string"
+    },
+    "edit_budget": {
+      "$ref": "#/$defs/PatchEditBudget"
+    },
+    "evidence_refs": {
+      "items": {
+        "type": "string"
+      },
+      "minItems": 1,
+      "title": "Evidence Refs",
+      "type": "array"
+    },
+    "operations": {
+      "items": {
+        "discriminator": {
+          "mapping": {
+            "add_file": "#/$defs/AddFile",
+            "delete_file": "#/$defs/DeleteFile",
+            "insert_reference": "#/$defs/InsertReference",
+            "replace_markdown_block": "#/$defs/ReplaceMarkdownBlock",
+            "replace_python_function": "#/$defs/ReplacePythonFunction",
+            "replace_text_file": "#/$defs/ReplaceTextFile",
+            "update_frontmatter": "#/$defs/UpdateFrontmatter"
+          },
+          "propertyName": "op"
+        },
+        "oneOf": [
+          {
+            "$ref": "#/$defs/ReplaceMarkdownBlock"
+          },
+          {
+            "$ref": "#/$defs/InsertReference"
+          },
+          {
+            "$ref": "#/$defs/UpdateFrontmatter"
+          },
+          {
+            "$ref": "#/$defs/ReplacePythonFunction"
+          },
+          {
+            "$ref": "#/$defs/ReplaceTextFile"
+          },
+          {
+            "$ref": "#/$defs/AddFile"
+          },
+          {
+            "$ref": "#/$defs/DeleteFile"
+          }
+        ]
+      },
+      "minItems": 1,
+      "title": "Operations",
+      "type": "array"
+    },
+    "patch_id": {
+      "title": "Patch Id",
+      "type": "string"
+    },
+    "proposal_work_id": {
+      "title": "Proposal Work Id",
+      "type": "string"
+    },
+    "schema_version": {
+      "const": "1.0.0",
+      "default": "1.0.0",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "selected_node_ids": {
+      "items": {
+        "type": "string"
+      },
+      "minItems": 1,
+      "title": "Selected Node Ids",
+      "type": "array"
+    },
+    "selector": {
+      "title": "Selector",
+      "type": "string"
+    },
+    "summary": {
+      "maxLength": 1500,
+      "minLength": 1,
+      "title": "Summary",
+      "type": "string"
+    }
+  },
+  "required": [
+    "patch_id",
+    "proposal_work_id",
+    "base_candidate_id",
+    "base_snapshot_hash",
+    "base_content_hash",
+    "selector",
+    "selected_node_ids",
+    "operations",
+    "edit_budget",
+    "evidence_refs",
+    "summary"
+  ],
+  "title": "PackagePatch",
+  "type": "object"
+}

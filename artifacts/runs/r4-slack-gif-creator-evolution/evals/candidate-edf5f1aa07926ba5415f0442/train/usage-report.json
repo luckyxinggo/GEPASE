@@ -1,0 +1,49 @@
+{
+  "roles": {
+    "analyzer": {
+      "calls": 0,
+      "failures": 0,
+      "usage": {
+        "duration_ms": 0,
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "token_count_kind": "estimated",
+        "tool_calls": 0
+      }
+    },
+    "comparator": {
+      "calls": 0,
+      "failures": 0,
+      "usage": {
+        "duration_ms": 0,
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "token_count_kind": "estimated",
+        "tool_calls": 0
+      }
+    },
+    "executor": {
+      "calls": 5,
+      "failures": 0,
+      "usage": {
+        "duration_ms": 2090000,
+        "input_tokens": 166000,
+        "output_tokens": 38000,
+        "token_count_kind": "estimated",
+        "tool_calls": 96
+      }
+    },
+    "independent_grader": {
+      "calls": 5,
+      "failures": 0,
+      "usage": {
+        "duration_ms": 1208000,
+        "input_tokens": 50000,
+        "output_tokens": 9000,
+        "token_count_kind": "estimated",
+        "tool_calls": 43
+      }
+    }
+  },
+  "schema_version": "1.0.0"
+}

@@ -1,0 +1,54 @@
+{
+  "metrics": [
+    {
+      "label": "Revenue",
+      "unit": " USD",
+      "value": 2022
+    },
+    {
+      "label": "Orders",
+      "unit": "",
+      "value": 58
+    },
+    {
+      "label": "Conversion",
+      "unit": "",
+      "value": 0.15
+    }
+  ],
+  "provenance": {
+    "source": "synthetic-report-06-00"
+  },
+  "sections": [
+    {
+      "heading": "Regional detail South",
+      "summary": "Synthetic evidence slice 6-0.",
+      "table": {
+        "columns": [
+          "Region",
+          "Orders",
+          "Revenue"
+        ],
+        "rows": [
+          {
+            "Orders": 58,
+            "Region": "South",
+            "Revenue": 2022
+          },
+          {
+            "Orders": 55,
+            "Region": "Reference-A",
+            "Revenue": 1932
+          },
+          {
+            "Orders": 60,
+            "Region": "Reference-B",
+            "Revenue": 2067
+          }
+        ]
+      }
+    }
+  ],
+  "subtitle": "Auditable synthetic operating summary",
+  "title": "South Performance Review Q3 Scenario 06-00"
+}

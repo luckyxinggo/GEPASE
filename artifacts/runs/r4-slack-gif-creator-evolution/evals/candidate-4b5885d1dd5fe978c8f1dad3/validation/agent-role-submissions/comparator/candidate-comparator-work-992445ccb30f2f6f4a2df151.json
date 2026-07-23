@@ -1,0 +1,45 @@
+{
+  "schema_version": "1.0.0",
+  "submission_id": "comparator-submission-749a4512-f946-4fcf-b3fb-22251befd717",
+  "comparator_work_id": "candidate-comparator-work-992445ccb30f2f6f4a2df151",
+  "role_run": {
+    "host": "codex",
+    "model": "gpt-5.6-sol",
+    "context_id": "comparator-context-f1c8762d-d68a-49f1-bf03-92f90742c7c0",
+    "host_task_id": "codex-task-r4-cmp-m-eff-ab-749a4512-f946-4fcf-b3fb-22251befd717",
+    "usage": {
+      "duration_ms": 360000,
+      "input_tokens": 6200,
+      "output_tokens": 1000,
+      "token_count_kind": "estimated",
+      "tool_calls": 9
+    },
+    "started_at": "2026-07-22T10:53:01Z",
+    "finished_at": "2026-07-22T10:59:01Z"
+  },
+  "winner": "right",
+  "confidence": 0.91,
+  "criteria": [
+    {
+      "criterion_id": "efficiency-budget",
+      "preference": "right",
+      "rationale_zh": "两侧均为 480×480、12.5 FPS 且远低于 900KB；右侧为 330,202B，较左侧 469,924B 小约 29.7%，并且右侧仍保留更多唯一帧（24 对 22）和更长时长（1.92 秒对 1.76 秒），预算利用明显更优。"
+    },
+    {
+      "criterion_id": "efficiency-readability",
+      "preference": "left",
+      "rationale_zh": "左侧勾号与绿色圆章更大、更亮，白色笔画粗且从开场即完整，在彩色粒子围绕时仍是绝对视觉中心；右侧中后段也清晰锐利，但开场经历由点和短笔画逐步绘成勾号，且主体相对更小、更暗。"
+    },
+    {
+      "criterion_id": "efficiency-motion",
+      "preference": "right",
+      "rationale_zh": "两侧粒子都能由中心向外扩散并渐隐，且帧时长均匀为 80ms。右侧以 24 个唯一帧完成更细腻的勾号绘制、粒子扩张和淡出，连续帧变化更克制（平均相邻像素差约 2.61，对左侧约 4.96），有限帧率下观感更平顺。"
+    },
+    {
+      "criterion_id": "efficiency-balance",
+      "preference": "right",
+      "rationale_zh": "两侧接触表均未见严重色带、轮廓破碎或突兀节奏。右侧在显著更小体积下仍保持勾号边缘、细环与多形状粒子的完整性，首尾像素差也更低（约 5.15，对左侧约 12.81），压缩、细节和循环衔接的综合权衡更好。"
+    }
+  ],
+  "rationale_zh": "右侧在严格预算内以约 29.7% 更小的文件承载更多唯一帧和更长动画，并在粒子扩张、渐隐与循环衔接上表现更细腻；左侧的优势是勾号更大、更亮且全程完整。按 rubric 权重综合，右侧在压缩效率、粒子动态和质量权衡三项占优，因此判定右侧胜出。"
+}

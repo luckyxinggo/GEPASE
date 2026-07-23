@@ -1,0 +1,38 @@
+{
+  "schema_version": "1.0.0",
+  "stage_id": "R3",
+  "captured_at": "2026-07-21T17:09:35Z",
+  "recording_kind": "consolidated_from_start_checks_and_durable_run_artifacts",
+  "started_from_commit": "ea84ea8983509a91770932b9e21a74cd43235810",
+  "upstream_stage": {
+    "stage_id": "R2",
+    "status": "complete",
+    "report_ref": "artifacts/stages/R2/stage_report.json"
+  },
+  "worktree_policy": {
+    "reset_run": false,
+    "clean_run": false,
+    "private_skill_modified": false,
+    "unknown_dirty_files_overwritten": false,
+    "existing_dirty_worktree_preserved": true
+  },
+  "scope": {
+    "canary": "anthropics/skills:skills/slack-gif-creator",
+    "frozen_plan_hash": "1893ad9a08978f2a8f107981a9a032c7581d08082926ee52276bd5feba2df950",
+    "functional_cases": 8,
+    "variants": ["no-skill", "original"],
+    "evidence_tiers": ["E0", "E2", "E3"],
+    "e1_enabled": false,
+    "candidate_search_in_scope": false,
+    "optimization_effect_in_scope": false,
+    "private_skills_in_scope": false,
+    "external_llm_api_allowed": false,
+    "agent_native_roles_allowed": true
+  },
+  "environment": {
+    "agent_host": "codex",
+    "role_model": "gpt-5.6-sol",
+    "gif_dependencies_resolved": true,
+    "package_snapshot_hash": "ce42d8a837acf9feda9706a3418fc26a77c497d9615079e616b5fdc6870ef64e"
+  }
+}

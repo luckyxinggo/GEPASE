@@ -1,0 +1,29 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v6
+        with:
+          enable-cache: true
+      - run: uv sync --all-extras --frozen
+      - run: uv run ruff check .
+      - run: uv run pyright src tests scripts
+      - run: uv run pytest -q
+      - run: uv run python scripts/export_core_schemas.py
+      - run: git diff --exit-code -- schemas
+      - run: uv run python scripts/check_secrets.py --format json
+      - run: uv run python scripts/check_markdown_links.py
+      - run: uv run python scripts/check_license.py
+      - run: uv run gepase doctor --format json
+      - run: uv run gepase mock run --config configs/examples/mock.yaml --output artifacts/ci/mock
+      - run: uv run gepase artifact verify artifacts/ci/mock --format json
+      - run: uv run gepase report verify --config configs/canaries/slack-gif-creator-r5.json --report-dir artifacts/runs/r5-slack-gif-creator-report --format json
+      - run: uv run python scripts/run_r5_gates.py --report-dir artifacts/runs/r5-slack-gif-creator-report
+      - run: uv build

@@ -1,0 +1,90 @@
+{
+  "gates": [
+    {
+      "detail": "8 pairs preserve prompt, fixtures, policy, host/model, seed, tools, capabilities, and timeout; Skill availability is the condition difference.",
+      "evidence": [
+        "run-metadata.json",
+        "ledger-snapshot.json",
+        "work-items/"
+      ],
+      "gate_id": "R3-G01-paired-configuration",
+      "status": "passed"
+    },
+    {
+      "detail": "16/16 E2 work items have a decodable multi-frame GIF, transcript, observed trace, usage, context identity, and verified artifact hash.",
+      "evidence": [
+        "execution-submissions/",
+        "workspaces/",
+        "records/"
+      ],
+      "gate_id": "R3-G02-real-e2-execution",
+      "status": "passed"
+    },
+    {
+      "detail": "Framework-created business GIFs=0, uniform business result.json=0, E1 records=0.",
+      "evidence": [
+        "workspaces/",
+        "run-metadata.json"
+      ],
+      "gate_id": "R3-G03-no-framework-business-output",
+      "status": "passed"
+    },
+    {
+      "detail": "All 16 canonical E3 records bind every PASS/FAIL to measurements and content or metadata evidence; filename/existence alone is insufficient. All 10 historical record files are explicitly classified as superseded and cannot be mistaken for canonical scoring inputs.",
+      "evidence": [
+        "deterministic/",
+        "derived/",
+        "records/",
+        "replay-superseded-e3.json"
+      ],
+      "gate_id": "R3-G04-content-level-e3",
+      "status": "passed"
+    },
+    {
+      "detail": "Fresh role contexts={'executor': 16, 'grader': 16, 'comparator': 6, 'analyzer': 8}; duplicate/oracle/sibling/candidate leaks are zero.",
+      "evidence": [
+        "isolation-audit.json",
+        "grader-work-items/",
+        "comparator-work-items/"
+      ],
+      "gate_id": "R3-G05-role-isolation",
+      "status": "passed"
+    },
+    {
+      "detail": "All no-skill access is empty; all original reads/executions resolve to frozen Graph nodes with byte/token accounting; every task has an original failure analysis whose non-empty targets resolve to the same frozen Graph.",
+      "evidence": [
+        "package-access-audit.json",
+        "package-access/",
+        "analyzer-submissions/",
+        "artifacts/runs/r2-slack-gif-creator-evalplan/package/graph.json"
+      ],
+      "gate_id": "R3-G06-graph-traceability",
+      "status": "passed"
+    },
+    {
+      "detail": "16 six-dimensional vectors independently reproduce from raw E2/E3, grades, AB/BA comparison, and E0; Trigger Eval remains separate.",
+      "evidence": [
+        "task-score-vectors/",
+        "score-independent-verification.json",
+        "trigger-eval-separation.json"
+      ],
+      "gate_id": "R3-G07-raw-score-recomputation",
+      "status": "passed"
+    },
+    {
+      "detail": "Calls, explicit token-count kind, timing, tools, and failures are reported for every role without a cost field; required typed outputs are durable and hash-verifiable.",
+      "evidence": [
+        "usage-report.json",
+        "functional-run-summary.json",
+        "asi-dataset.json"
+      ],
+      "gate_id": "R3-G08-usage-and-durable-outputs",
+      "status": "passed"
+    }
+  ],
+  "passed": 8,
+  "schema_version": "1.0.0",
+  "stage_id": "R3",
+  "total": 8,
+  "valid": true
+}

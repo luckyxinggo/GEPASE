@@ -1,0 +1,66 @@
+{
+  "criterion_grades": [
+    {
+      "criterion_id": "readable-legibility",
+      "evidence_refs": [
+        "artifacts/runs/r4-slack-gif-creator-evolution/evals/candidate-2dad7a05ce4a6460dd71f470/train/workspaces/work-60eaba3feb92a47166f14645/meeting_sync_reminder.gif",
+        "artifacts/runs/r4-slack-gif-creator-evolution/evals/candidate-2dad7a05ce4a6460dd71f470/train/derived/work-60eaba3feb92a47166f14645/contact-sheet.png"
+      ],
+      "rationale_zh": "完整 GIF 与接触表中的抽样帧均持续同时呈现 SYNC 和 10:30；两组文字字号大、字形粗、与背景对比强，在缩略接触表中仍能快速且无歧义地读出，未见裁切或出界。",
+      "score": 0.99
+    },
+    {
+      "criterion_id": "readable-layout",
+      "evidence_refs": [
+        "artifacts/runs/r4-slack-gif-creator-evolution/evals/candidate-2dad7a05ce4a6460dd71f470/train/derived/work-60eaba3feb92a47166f14645/contact-sheet.png"
+      ],
+      "rationale_zh": "接触表显示标题居中置于上半区，时间位于独立浅色圆角框内，辅助标签、时钟和底部装饰保持次要地位；四周安全边距充足，层级、对齐和留白稳定。顶部 MEETING 标签在缩略图中偏小，但不影响核心信息。",
+      "score": 0.97
+    },
+    {
+      "criterion_id": "readable-emphasis",
+      "evidence_refs": [
+        "artifacts/runs/r4-slack-gif-creator-evolution/evals/candidate-2dad7a05ce4a6460dd71f470/train/workspaces/work-60eaba3feb92a47166f14645/meeting_sync_reminder.gif",
+        "artifacts/runs/r4-slack-gif-creator-evolution/evals/candidate-2dad7a05ce4a6460dd71f470/train/derived/work-60eaba3feb92a47166f14645/contact-sheet.png",
+        "artifacts/runs/r4-slack-gif-creator-evolution/evals/candidate-2dad7a05ce4a6460dd71f470/train/blind-inspections/blind-ffed036d8c0069d3f98e67fe.json"
+      ],
+      "rationale_zh": "2 秒、20 帧的完整动画把变化主要限制在小型时钟指针和标题下方横线的轻微伸缩，核心文字始终留在原位并持续可读。20 个唯一帧提供了有效动态感；时钟指针变化相对连续活跃，因此保留少量扣分。",
+      "score": 0.94
+    },
+    {
+      "criterion_id": "readable-tone",
+      "evidence_refs": [
+        "artifacts/runs/r4-slack-gif-creator-evolution/evals/candidate-2dad7a05ce4a6460dd71f470/train/workspaces/work-60eaba3feb92a47166f14645/meeting_sync_reminder.gif",
+        "artifacts/runs/r4-slack-gif-creator-evolution/evals/candidate-2dad7a05ce4a6460dd71f470/train/derived/work-60eaba3feb92a47166f14645/contact-sheet.png"
+      ],
+      "rationale_zh": "米白、深棕黑和砖红的组合与圆角卡片、简洁时钟细节共同形成温暖且专业的提醒风格；醒目但不刺眼，适合 Slack 场景。深色主体略显厚重，但圆角和暖色细节有效缓和。",
+      "score": 0.96
+    }
+  ],
+  "factual_claims_zh": [
+    "盲检记录显示 GIF 尺寸为 480×480，共 20 帧，每帧 100 毫秒，总时长 2000 毫秒，有效帧率 10 FPS，循环计数为 0。",
+    "盲检记录显示 20 帧均为唯一帧，首尾像素差为 0.09618778935185185。",
+    "接触表所列抽样帧中，SYNC 与 10:30 均同时、完整地位于画面安全区内。",
+    "完整 GIF 的 SHA-256 为 ad3ef64f6264076f4dbf92545415ebe294621153f77084c119a3b30c4c07b546，文件大小为 30367 字节。"
+  ],
+  "feedback_zh": "成品已高质量满足会议提醒的核心目标：主信息在整个播放周期中稳定、清晰，版式层级成熟，配色温暖专业。若继续精修，可略微降低右上时钟指针的运动存在感，并提高小号 MEETING 标签在缩略尺寸下的可辨性；不应改变当前 SYNC 与 10:30 的静态高可读策略。",
+  "grader_work_id": "grader-work-420e3964b153d4f36969e204",
+  "overall_score": 0.9705,
+  "role_run": {
+    "context_id": "r4_grade_c_text",
+    "finished_at": "2026-07-22T09:35:56Z",
+    "host": "codex",
+    "host_task_id": "/root/r4_grade_c_text",
+    "model": "gpt-5.6-sol",
+    "started_at": "2026-07-22T09:29:00Z",
+    "usage": {
+      "duration_ms": 416000,
+      "input_tokens": 14000,
+      "output_tokens": 1500,
+      "token_count_kind": "estimated",
+      "tool_calls": 14
+    }
+  },
+  "schema_version": "1.0.0",
+  "submission_id": "grader-submission-b2de822165f34aba87980eeb1f45e377"
+}

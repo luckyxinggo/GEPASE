@@ -1,0 +1,185 @@
+{
+  "$defs": {
+    "CriterionGrade": {
+      "additionalProperties": false,
+      "properties": {
+        "criterion_id": {
+          "title": "Criterion Id",
+          "type": "string"
+        },
+        "evidence_refs": {
+          "items": {
+            "type": "string"
+          },
+          "minItems": 1,
+          "title": "Evidence Refs",
+          "type": "array"
+        },
+        "rationale_zh": {
+          "minLength": 1,
+          "title": "Rationale Zh",
+          "type": "string"
+        },
+        "score": {
+          "maximum": 1,
+          "minimum": 0,
+          "title": "Score",
+          "type": "number"
+        }
+      },
+      "required": [
+        "criterion_id",
+        "score",
+        "evidence_refs",
+        "rationale_zh"
+      ],
+      "title": "CriterionGrade",
+      "type": "object"
+    },
+    "RoleRunProvenance": {
+      "additionalProperties": false,
+      "properties": {
+        "context_id": {
+          "minLength": 1,
+          "title": "Context Id",
+          "type": "string"
+        },
+        "finished_at": {
+          "format": "date-time",
+          "title": "Finished At",
+          "type": "string"
+        },
+        "host": {
+          "minLength": 1,
+          "title": "Host",
+          "type": "string"
+        },
+        "host_task_id": {
+          "minLength": 1,
+          "title": "Host Task Id",
+          "type": "string"
+        },
+        "model": {
+          "minLength": 1,
+          "title": "Model",
+          "type": "string"
+        },
+        "started_at": {
+          "format": "date-time",
+          "title": "Started At",
+          "type": "string"
+        },
+        "usage": {
+          "$ref": "#/$defs/UsageRecord"
+        }
+      },
+      "required": [
+        "host",
+        "model",
+        "context_id",
+        "host_task_id",
+        "usage",
+        "started_at",
+        "finished_at"
+      ],
+      "title": "RoleRunProvenance",
+      "type": "object"
+    },
+    "UsageRecord": {
+      "additionalProperties": false,
+      "properties": {
+        "duration_ms": {
+          "default": 0,
+          "minimum": 0,
+          "title": "Duration Ms",
+          "type": "integer"
+        },
+        "input_tokens": {
+          "default": 0,
+          "minimum": 0,
+          "title": "Input Tokens",
+          "type": "integer"
+        },
+        "output_tokens": {
+          "default": 0,
+          "minimum": 0,
+          "title": "Output Tokens",
+          "type": "integer"
+        },
+        "token_count_kind": {
+          "default": "unavailable",
+          "enum": [
+            "reported",
+            "estimated",
+            "unavailable"
+          ],
+          "title": "Token Count Kind",
+          "type": "string"
+        },
+        "tool_calls": {
+          "default": 0,
+          "minimum": 0,
+          "title": "Tool Calls",
+          "type": "integer"
+        }
+      },
+      "title": "UsageRecord",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "criterion_grades": {
+      "items": {
+        "$ref": "#/$defs/CriterionGrade"
+      },
+      "title": "Criterion Grades",
+      "type": "array"
+    },
+    "factual_claims_zh": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Factual Claims Zh",
+      "type": "array"
+    },
+    "feedback_zh": {
+      "minLength": 1,
+      "title": "Feedback Zh",
+      "type": "string"
+    },
+    "grader_work_id": {
+      "title": "Grader Work Id",
+      "type": "string"
+    },
+    "overall_score": {
+      "maximum": 1,
+      "minimum": 0,
+      "title": "Overall Score",
+      "type": "number"
+    },
+    "role_run": {
+      "$ref": "#/$defs/RoleRunProvenance"
+    },
+    "schema_version": {
+      "default": "1.0.0",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "submission_id": {
+      "title": "Submission Id",
+      "type": "string"
+    }
+  },
+  "required": [
+    "submission_id",
+    "grader_work_id",
+    "role_run",
+    "criterion_grades",
+    "overall_score",
+    "factual_claims_zh",
+    "feedback_zh"
+  ],
+  "title": "IndependentGraderSubmission",
+  "type": "object"
+}

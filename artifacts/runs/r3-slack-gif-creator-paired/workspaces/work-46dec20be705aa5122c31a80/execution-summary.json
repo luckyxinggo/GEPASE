@@ -1,0 +1,21 @@
+{
+  "context_id": "/root/r3_exec_46dec2",
+  "work_id": "work-46dec20be705aa5122c31a80",
+  "requested_output": "emoji_star_bounce.gif",
+  "status": "completed",
+  "verification": {
+    "reopened_successfully": true,
+    "format": "GIF",
+    "dimensions": [128, 128],
+    "stored_frame_count": 22,
+    "nominal_frame_interval_ms": 80,
+    "final_hold_ms": 240,
+    "total_duration_ms": 1920,
+    "loop": 0,
+    "file_size_bytes": 85992,
+    "yellow_subject_centroid_y": [11.24, 11.84, 14.05, 18.51, 25.09, 33.87, 44.79, 57.54, 71.89, 88.53, 79.8, 73.08, 68.54, 65.54, 64.65, 65.54, 68.54, 73.08, 79.8, 88.53, 88.61, 88.8],
+    "motion_summary": "The subject descends to first contact, rises to one rebound apex, descends to final contact, then remains settled.",
+    "visual_check": "Contact sheet shows a yellow five-point star with a dark bold outline and small light highlight over a deep navy-to-indigo gradient."
+  },
+  "package_access": []
+}

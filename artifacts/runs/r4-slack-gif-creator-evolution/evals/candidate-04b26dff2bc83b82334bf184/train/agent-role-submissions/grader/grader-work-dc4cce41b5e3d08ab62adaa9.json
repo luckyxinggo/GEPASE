@@ -1,0 +1,66 @@
+{
+  "schema_version": "1.0.0",
+  "submission_id": "grader-submission-dc4cce41b5e3d08ab62adaa9",
+  "grader_work_id": "grader-work-dc4cce41b5e3d08ab62adaa9",
+  "role_run": {
+    "host": "codex",
+    "model": "gpt-5.6-sol",
+    "host_task_id": "/root/r4_grade_a_text",
+    "context_id": "r4_grade_a_text",
+    "usage": {
+      "duration_ms": 188000,
+      "input_tokens": 6400,
+      "output_tokens": 1250,
+      "tool_calls": 5,
+      "token_count_kind": "estimated"
+    },
+    "started_at": "2026-07-22T08:49:59Z",
+    "finished_at": "2026-07-22T08:53:07Z"
+  },
+  "criterion_grades": [
+    {
+      "criterion_id": "readable-legibility",
+      "score": 0.98,
+      "evidence_refs": [
+        "artifacts/runs/r4-slack-gif-creator-evolution/evals/candidate-04b26dff2bc83b82334bf184/train/workspaces/work-3a3525d61988b3d58944acd0/meeting_sync_reminder.gif",
+        "artifacts/runs/r4-slack-gif-creator-evolution/evals/candidate-04b26dff2bc83b82334bf184/train/derived/work-3a3525d61988b3d58944acd0/contact-sheet.png"
+      ],
+      "rationale_zh": "SYNC 与 10:30 始终同时完整呈现，深棕黑标题和米白数字分别在米白背景、砖红色块上形成很强对比；字号充足，缩略联系表中也能立即、无歧义地读出。"
+    },
+    {
+      "criterion_id": "readable-layout",
+      "score": 0.96,
+      "evidence_refs": [
+        "artifacts/runs/r4-slack-gif-creator-evolution/evals/candidate-04b26dff2bc83b82334bf184/train/workspaces/work-3a3525d61988b3d58944acd0/meeting_sync_reminder.gif",
+        "artifacts/runs/r4-slack-gif-creator-evolution/evals/candidate-04b26dff2bc83b82334bf184/train/derived/work-3a3525d61988b3d58944acd0/contact-sheet.png"
+      ],
+      "rationale_zh": "标题、下划线、时间色块和次要说明构成明确的纵向层级，左右装饰对称且边框内留白充分；核心文字远离裁切边缘。底部说明较小，但不影响题目要求的主信息层级。"
+    },
+    {
+      "criterion_id": "readable-emphasis",
+      "score": 0.91,
+      "evidence_refs": [
+        "artifacts/runs/r4-slack-gif-creator-evolution/evals/candidate-04b26dff2bc83b82334bf184/train/derived/work-3a3525d61988b3d58944acd0/contact-sheet.png",
+        "artifacts/runs/r4-slack-gif-creator-evolution/evals/candidate-04b26dff2bc83b82334bf184/train/blind-inspections/blind-83c7a10b6fbc0603c770e311.json"
+      ],
+      "rationale_zh": "13 帧、2 秒循环中核心文字位置和清晰度保持稳定，首尾像素差为 0，平均相邻像素变化仅约 0.172，因而没有闪烁、移出安全区或阅读中断。强调非常克制且舒适，不过动态存在感偏弱，效果更多是维持注意而非明显引导。"
+    },
+    {
+      "criterion_id": "readable-tone",
+      "score": 0.97,
+      "evidence_refs": [
+        "artifacts/runs/r4-slack-gif-creator-evolution/evals/candidate-04b26dff2bc83b82334bf184/train/workspaces/work-3a3525d61988b3d58944acd0/meeting_sync_reminder.gif",
+        "artifacts/runs/r4-slack-gif-creator-evolution/evals/candidate-04b26dff2bc83b82334bf184/train/derived/work-3a3525d61988b3d58944acd0/contact-sheet.png"
+      ],
+      "rationale_zh": "米白底、深棕黑轮廓与砖红重点色准确形成温暖而稳重的组合；时钟、细线和小星形细节让提醒显得友好，同时规整对齐与简洁字形保持专业感。"
+    }
+  ],
+  "overall_score": 0.9595,
+  "factual_claims_zh": [
+    "GIF 画布为 480×480 像素。",
+    "GIF 总时长为 2000 毫秒，共 13 帧，其中 7 帧唯一，并设置为无限循环。",
+    "检查记录中的首尾像素差为 0.0，平均相邻像素差约为 0.171577。",
+    "联系表所示抽样帧均同时完整呈现 SYNC 与 10:30。"
+  ],
+  "feedback_zh": "成品以高对比、大字号和稳定构图优先保障阅读，SYNC 与 10:30 在整个 2 秒循环及缩略视图中都十分清楚；配色温暖专业，装饰完整但不过量。动画十分克制，不会造成疲劳，若希望进一步提升，可在不改变文字位置和停留时长的前提下，让下划线或时间色块产生略更可感知的轻微呼吸强调。总分按 0.98×0.40 + 0.96×0.25 + 0.91×0.20 + 0.97×0.15 = 0.9595 精确计算。"
+}

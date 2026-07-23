@@ -1,0 +1,273 @@
+{
+  "$defs": {
+    "FunctionalPairSummary": {
+      "additionalProperties": false,
+      "properties": {
+        "comparator_consistent": {
+          "anyOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Comparator Consistent"
+        },
+        "comparator_margin": {
+          "anyOf": [
+            {
+              "maximum": 1,
+              "minimum": -1,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Comparator Margin"
+        },
+        "correctness_delta": {
+          "maximum": 1,
+          "minimum": -1,
+          "title": "Correctness Delta",
+          "type": "number"
+        },
+        "no_skill_vector_ref": {
+          "title": "No Skill Vector Ref",
+          "type": "string"
+        },
+        "original_vector_ref": {
+          "title": "Original Vector Ref",
+          "type": "string"
+        },
+        "pair_id": {
+          "title": "Pair Id",
+          "type": "string"
+        },
+        "paired_basis_delta": {
+          "maximum": 1,
+          "minimum": -1,
+          "title": "Paired Basis Delta",
+          "type": "number"
+        },
+        "quality_delta": {
+          "maximum": 1,
+          "minimum": -1,
+          "title": "Quality Delta",
+          "type": "number"
+        },
+        "schema_version": {
+          "default": "1.0.0",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "skill_gain": {
+          "maximum": 1,
+          "minimum": -1,
+          "title": "Skill Gain",
+          "type": "number"
+        },
+        "split": {
+          "enum": [
+            "train",
+            "validation",
+            "test"
+          ],
+          "title": "Split",
+          "type": "string"
+        },
+        "task_id": {
+          "title": "Task Id",
+          "type": "string"
+        }
+      },
+      "required": [
+        "task_id",
+        "pair_id",
+        "split",
+        "no_skill_vector_ref",
+        "original_vector_ref",
+        "correctness_delta",
+        "quality_delta",
+        "paired_basis_delta",
+        "skill_gain"
+      ],
+      "title": "FunctionalPairSummary",
+      "type": "object"
+    },
+    "ReliabilitySummary": {
+      "additionalProperties": false,
+      "properties": {
+        "failure_rate": {
+          "maximum": 1,
+          "minimum": 0,
+          "title": "Failure Rate",
+          "type": "number"
+        },
+        "maximum": {
+          "maximum": 1,
+          "minimum": 0,
+          "title": "Maximum",
+          "type": "number"
+        },
+        "mean": {
+          "maximum": 1,
+          "minimum": 0,
+          "title": "Mean",
+          "type": "number"
+        },
+        "minimum": {
+          "maximum": 1,
+          "minimum": 0,
+          "title": "Minimum",
+          "type": "number"
+        },
+        "outlier_count": {
+          "minimum": 0,
+          "title": "Outlier Count",
+          "type": "integer"
+        },
+        "sample_count": {
+          "minimum": 1,
+          "title": "Sample Count",
+          "type": "integer"
+        },
+        "std": {
+          "minimum": 0,
+          "title": "Std",
+          "type": "number"
+        }
+      },
+      "required": [
+        "sample_count",
+        "mean",
+        "std",
+        "minimum",
+        "maximum",
+        "failure_rate",
+        "outlier_count"
+      ],
+      "title": "ReliabilitySummary",
+      "type": "object"
+    },
+    "UsageRecord": {
+      "additionalProperties": false,
+      "properties": {
+        "duration_ms": {
+          "default": 0,
+          "minimum": 0,
+          "title": "Duration Ms",
+          "type": "integer"
+        },
+        "input_tokens": {
+          "default": 0,
+          "minimum": 0,
+          "title": "Input Tokens",
+          "type": "integer"
+        },
+        "output_tokens": {
+          "default": 0,
+          "minimum": 0,
+          "title": "Output Tokens",
+          "type": "integer"
+        },
+        "token_count_kind": {
+          "default": "unavailable",
+          "enum": [
+            "reported",
+            "estimated",
+            "unavailable"
+          ],
+          "title": "Token Count Kind",
+          "type": "string"
+        },
+        "tool_calls": {
+          "default": 0,
+          "minimum": 0,
+          "title": "Tool Calls",
+          "type": "integer"
+        }
+      },
+      "title": "UsageRecord",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "frozen_plan_hash": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Frozen Plan Hash",
+      "type": "string"
+    },
+    "generated_at": {
+      "format": "date-time",
+      "title": "Generated At",
+      "type": "string"
+    },
+    "pair_summaries": {
+      "items": {
+        "$ref": "#/$defs/FunctionalPairSummary"
+      },
+      "title": "Pair Summaries",
+      "type": "array"
+    },
+    "reliability": {
+      "additionalProperties": {
+        "$ref": "#/$defs/ReliabilitySummary"
+      },
+      "title": "Reliability",
+      "type": "object"
+    },
+    "run_id": {
+      "title": "Run Id",
+      "type": "string"
+    },
+    "schema_version": {
+      "default": "1.0.0",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "scoring_policy_ref": {
+      "title": "Scoring Policy Ref",
+      "type": "string"
+    },
+    "trigger_metrics_ref": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Trigger Metrics Ref"
+    },
+    "trigger_mixed_into_functional": {
+      "const": false,
+      "default": false,
+      "title": "Trigger Mixed Into Functional",
+      "type": "boolean"
+    },
+    "usage": {
+      "additionalProperties": {
+        "$ref": "#/$defs/UsageRecord"
+      },
+      "title": "Usage",
+      "type": "object"
+    }
+  },
+  "required": [
+    "run_id",
+    "frozen_plan_hash",
+    "scoring_policy_ref",
+    "pair_summaries",
+    "reliability",
+    "usage"
+  ],
+  "title": "FunctionalRunSummary",
+  "type": "object"
+}

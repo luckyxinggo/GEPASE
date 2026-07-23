@@ -1,0 +1,67 @@
+{
+  "criterion_grades": [
+    {
+      "criterion_id": "status-hierarchy",
+      "evidence_refs": [
+        "artifacts/runs/r4-slack-gif-creator-evolution/evals/candidate-04b26dff2bc83b82334bf184/train/workspaces/work-9ecf15590215f5ff1128beba/deployment_status.gif",
+        "artifacts/runs/r4-slack-gif-creator-evolution/evals/candidate-04b26dff2bc83b82334bf184/train/derived/work-9ecf15590215f5ff1128beba/contact-sheet.png"
+      ],
+      "rationale_zh": "480×480 方形画面中，顶部流水线标签、主标题 DEPLOY/DONE、彩色状态胶囊、中心状态图形与底部三节点进度条形成稳定的由上至下层级；主信息字号大、对比清楚，在 Slack 消息尺寸下可快速扫读。辅助说明字号相对较小，但不妨碍核心状态识别。",
+      "score": 0.96
+    },
+    {
+      "criterion_id": "status-progression",
+      "evidence_refs": [
+        "artifacts/runs/r4-slack-gif-creator-evolution/evals/candidate-04b26dff2bc83b82334bf184/train/workspaces/work-9ecf15590215f5ff1128beba/deployment_status.gif",
+        "artifacts/runs/r4-slack-gif-creator-evolution/evals/candidate-04b26dff2bc83b82334bf184/train/derived/work-9ecf15590215f5ff1128beba/contact-sheet.png"
+      ],
+      "rationale_zh": "waiting、processing、complete 按顺序完整出现：前两段保持 DEPLOY，完成段切换为 DONE；01/03、02/03、03/03 编号、黄/蓝/绿配色、计时器/服务器/勾选图形以及 WAIT/BUILD/LIVE 节点共同重复编码阶段含义，先后关系几乎无歧义。",
+      "score": 0.98
+    },
+    {
+      "criterion_id": "status-motion",
+      "evidence_refs": [
+        "artifacts/runs/r4-slack-gif-creator-evolution/evals/candidate-04b26dff2bc83b82334bf184/train/derived/work-9ecf15590215f5ff1128beba/contact-sheet.png",
+        "artifacts/runs/r4-slack-gif-creator-evolution/evals/candidate-04b26dff2bc83b82334bf184/train/blind-inspections/blind-d35f182b973e2119cfe99f75.json"
+      ],
+      "rationale_zh": "GIF 共 24 帧、10 fps、总时长 2.4 秒且 24 帧均唯一；抽样帧显示三个阶段各约占三分之一时长，中心图形持续变化，平均相邻帧像素差较低，整体切换连贯且节奏紧凑。每阶段约 0.8 秒，核心大字能够辨认，但辅助信息阅读时间略短；末帧回到首帧的像素差也明显高于平均相邻帧差，循环复位感稍强。",
+      "score": 0.88
+    },
+    {
+      "criterion_id": "status-finish",
+      "evidence_refs": [
+        "artifacts/runs/r4-slack-gif-creator-evolution/evals/candidate-04b26dff2bc83b82334bf184/train/workspaces/work-9ecf15590215f5ff1128beba/deployment_status.gif",
+        "artifacts/runs/r4-slack-gif-creator-evolution/evals/candidate-04b26dff2bc83b82334bf184/train/derived/work-9ecf15590215f5ff1128beba/contact-sheet.png",
+        "artifacts/runs/r4-slack-gif-creator-evolution/evals/candidate-04b26dff2bc83b82334bf184/train/blind-inspections/blind-d35f182b973e2119cfe99f75.json"
+      ],
+      "rationale_zh": "深色卡片、统一圆角与描边、阶段专属强调色、同风格图标和一致网格构成完整视觉系统；480×480、约 87 KB、无限循环的 GIF 适合直接投放团队消息。少量辅助文案偏小，且循环首尾的视觉跳变略削弱最终精修感。",
+      "score": 0.95
+    }
+  ],
+  "factual_claims_zh": [
+    "成品为 480×480 的 GIF，文件大小 87647 字节，共 24 帧，等效帧率 10 fps，总时长 2400 ms，循环次数标记为 0。",
+    "contact sheet 中 waiting 使用黄色并显示 DEPLOY，processing 使用蓝色并显示 DEPLOY，complete 使用绿色并显示 DONE。",
+    "三个阶段分别显示 01/03、02/03、03/03，并配有 WAIT、BUILD、LIVE 底部节点和计时器、服务器、勾选中心图形。",
+    "inspection 记录 24 个唯一帧，平均相邻帧像素差为 1.3678246401972625，首末帧像素差为 12.73783130787037。"
+  ],
+  "feedback_zh": "这是一张完成度很高、可以直接用于 Slack 的部署状态卡：三阶段叙事、文字切换、编号、颜色、图标和底部节点互相印证，核心信息非常清楚。若继续优化，可把每个阶段的停留时间略微拉长，并为 complete 回到 waiting 增加更柔和的循环过渡，同时适当放大辅助文案。总分按权重精确计算为 0.96×0.25 + 0.98×0.30 + 0.88×0.20 + 0.95×0.25 = 0.9475。",
+  "grader_work_id": "grader-work-d4fb7df29c6d42495317e71f",
+  "overall_score": 0.9475,
+  "role_run": {
+    "context_id": "r4_grade_a_message",
+    "finished_at": "2026-07-22T08:51:56Z",
+    "host": "codex",
+    "host_task_id": "/root/r4_grade_a_message",
+    "model": "gpt-5.6-sol",
+    "started_at": "2026-07-22T08:49:00Z",
+    "usage": {
+      "duration_ms": 176000,
+      "input_tokens": 8300,
+      "output_tokens": 1300,
+      "token_count_kind": "estimated",
+      "tool_calls": 8
+    }
+  },
+  "schema_version": "1.0.0",
+  "submission_id": "grader-submission-d4fb7df29c6d42495317e71f"
+}

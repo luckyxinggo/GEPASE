@@ -1,0 +1,69 @@
+{
+  "criterion_grades": [
+    {
+      "criterion_id": "orbit-path",
+      "evidence_refs": [
+        "artifacts/runs/r4-slack-gif-creator-evolution/evals/candidate-04b26dff2bc83b82334bf184/train/workspaces/work-2feaa3a4dbb47f95a5b9aefa/satellite_orbit_ease.gif",
+        "artifacts/runs/r4-slack-gif-creator-evolution/evals/candidate-04b26dff2bc83b82334bf184/train/derived/work-2feaa3a4dbb47f95a5b9aefa/contact-sheet.png"
+      ],
+      "rationale_zh": "卫星从左下方起步，越过行星上方后转向右下方，逐帧位置与姿态共同形成清楚的拱形轨迹；画面中的青色虚线进一步强化弧线辨识度，完全不像直线平移。",
+      "score": 0.98
+    },
+    {
+      "criterion_id": "orbit-easing",
+      "evidence_refs": [
+        "artifacts/runs/r4-slack-gif-creator-evolution/evals/candidate-04b26dff2bc83b82334bf184/train/workspaces/work-2feaa3a4dbb47f95a5b9aefa/satellite_orbit_ease.gif",
+        "artifacts/runs/r4-slack-gif-creator-evolution/evals/candidate-04b26dff2bc83b82334bf184/train/derived/work-2feaa3a4dbb47f95a5b9aefa/contact-sheet.png",
+        "artifacts/runs/r4-slack-gif-creator-evolution/evals/candidate-04b26dff2bc83b82334bf184/train/blind-inspections/blind-39d479662d26a3e7488baca4.json"
+      ],
+      "rationale_zh": "后段采样帧 12、13、15、17、19 显示卫星向停靠点推进时相邻位移持续缩小，视觉上呈现明显且平顺的 ease-out；20 个唯一帧均为 100ms，减速来自空间位移变化而非突然加长单帧，没有突兀刹停。",
+      "score": 0.96
+    },
+    {
+      "criterion_id": "orbit-composition",
+      "evidence_refs": [
+        "artifacts/runs/r4-slack-gif-creator-evolution/evals/candidate-04b26dff2bc83b82334bf184/train/workspaces/work-2feaa3a4dbb47f95a5b9aefa/satellite_orbit_ease.gif",
+        "artifacts/runs/r4-slack-gif-creator-evolution/evals/candidate-04b26dff2bc83b82334bf184/train/derived/work-2feaa3a4dbb47f95a5b9aefa/contact-sheet.png"
+      ],
+      "rationale_zh": "橙色行星稳定占据画面下部中心，青色卫星沿外圈弧线移动，暖冷色与尺度差建立了明确层级；轨迹避开行星主体，星点分布克制，小画布中没有明显拥挤。",
+      "score": 0.95
+    },
+    {
+      "criterion_id": "orbit-craft",
+      "evidence_refs": [
+        "artifacts/runs/r4-slack-gif-creator-evolution/evals/candidate-04b26dff2bc83b82334bf184/train/workspaces/work-2feaa3a4dbb47f95a5b9aefa/satellite_orbit_ease.gif",
+        "artifacts/runs/r4-slack-gif-creator-evolution/evals/candidate-04b26dff2bc83b82334bf184/train/derived/work-2feaa3a4dbb47f95a5b9aefa/contact-sheet.png",
+        "artifacts/runs/r4-slack-gif-creator-evolution/evals/candidate-04b26dff2bc83b82334bf184/train/blind-inspections/blind-39d479662d26a3e7488baca4.json"
+      ],
+      "rationale_zh": "卫星具有舱体、太阳能板、推进粒子与高光，行星包含明暗体积、环形阴影和陨石坑，背景星点补足太空氛围；128×128、2 秒、10fps、无限循环且文件仅 51316 字节，适合作为 Slack 表情。",
+      "score": 0.97
+    }
+  ],
+  "factual_claims_zh": [
+    "产物为 128×128 GIF，共 20 帧，20 帧均唯一。",
+    "每帧时长均为 100ms，总时长 2000ms，有效帧率为 10fps。",
+    "循环次数字段为 0，文件大小为 51316 字节。",
+    "contact sheet 的帧 0、1、3、5、6、8、10、12、13、15、17、19 显示卫星沿拱形路线由左下移动至右侧停靠区域。",
+    "contact sheet 的末段采样帧显示相邻位置差逐步缩小。"
+  ],
+  "feedback_zh": "弧线、ease-out、层级与像素细节均完成度很高，尤其是末段位移递减提供了直接的减速证据。若继续优化，可在循环回到首帧时加入更自然的过渡，以降低首尾跳转的视觉落差。",
+  "grader_work_id": "grader-work-eccf35366358064a6d2bcee8",
+  "overall_score": 0.966,
+  "role_run": {
+    "context_id": "r4_grade_a_easing",
+    "finished_at": "2026-07-22T08:46:34Z",
+    "host": "codex",
+    "host_task_id": "/root/r4_grade_a_easing",
+    "model": "gpt-5.6-sol",
+    "started_at": "2026-07-22T08:38:34Z",
+    "usage": {
+      "duration_ms": 480000,
+      "input_tokens": 9800,
+      "output_tokens": 1700,
+      "token_count_kind": "estimated",
+      "tool_calls": 8
+    }
+  },
+  "schema_version": "1.0.0",
+  "submission_id": "grader-submission-c9fb4f7437c7452384be7917bcf43812"
+}

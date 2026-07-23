@@ -1,0 +1,119 @@
+{
+  "schema_version": "1.0.0",
+  "stage_id": "R2",
+  "valid": true,
+  "audited_at": "2026-07-21T11:10:36Z",
+  "requirements": [
+    {
+      "requirement_id": "R2-A01-upstream-and-worktree",
+      "status": "passed",
+      "detail": "R1 is complete; the dirty worktree was preserved; no reset/clean ran and skills_test remained untouched.",
+      "evidence": [
+        "artifacts/stages/R1/stage_report.json",
+        "artifacts/stages/R2/preflight.json",
+        "artifacts/stages/R2/commands.log"
+      ]
+    },
+    {
+      "requirement_id": "R2-A02-pinned-complete-source",
+      "status": "passed",
+      "detail": "Exact repository commit, subtree, seven Git blobs, file modes, Apache-2.0 attribution, complete PackageSnapshot, and exact dependency lock agree.",
+      "evidence": [
+        "benchmarks/canaries/slack-gif-creator/source-provenance.json",
+        "benchmarks/canaries/slack-gif-creator/upstream-tree.json",
+        "benchmarks/canaries/slack-gif-creator/requirements.lock",
+        "artifacts/stages/R2/evidence/r2-gates.json"
+      ]
+    },
+    {
+      "requirement_id": "R2-A03-package-graph-and-smoke",
+      "status": "passed",
+      "detail": "The complete seven-file Package parses to 370 nodes and 474 edges with zero diagnostics; the original core generated a validator-accepted real 128x128 GIF without source mutation.",
+      "evidence": [
+        "artifacts/runs/r2-slack-gif-creator-evalplan/package/graph.json",
+        "artifacts/stages/R2/evidence/canary-smoke/smoke-report.json",
+        "artifacts/stages/R2/evidence/canary-smoke/slack-gif-creator-smoke.gif"
+      ]
+    },
+    {
+      "requirement_id": "R2-A04-isolated-eval-designer",
+      "status": "passed",
+      "detail": "One isolated Agent-native Eval Designer read all seven required files and returned a typed submission with non-empty context, task, usage, timing, and package-access provenance.",
+      "evidence": [
+        "artifacts/runs/r2-slack-gif-creator-evalplan/designer-work-item.json",
+        "artifacts/runs/r2-slack-gif-creator-evalplan/agent/designer-submission.json",
+        "artifacts/runs/r2-slack-gif-creator-evalplan/designer-submission.json"
+      ]
+    },
+    {
+      "requirement_id": "R2-A05-evalplan-contract",
+      "status": "passed",
+      "detail": "Trigger and Functional channels are separate; 18 Trigger and 8 Functional cases cover the registered families, 5/3 train-validation split, task-native output descriptions, expectations, rubrics, risk, and E2/E3 evidence policies.",
+      "evidence": [
+        "artifacts/runs/r2-slack-gif-creator-evalplan/eval-plan-draft.json",
+        "artifacts/runs/r2-slack-gif-creator-evalplan/frozen-eval-plan.json"
+      ]
+    },
+    {
+      "requirement_id": "R2-A06-core-checks-and-isolation",
+      "status": "passed",
+      "detail": "All 13 automatic checks pass; fixture/split/oracle/evidence checks are auditable, and Functional Executor views expose no rubric, expected answer, candidate identity, or sibling output.",
+      "evidence": [
+        "artifacts/runs/r2-slack-gif-creator-evalplan/automatic-check-report.json",
+        "artifacts/runs/r2-slack-gif-creator-evalplan/post-review-check-report.json",
+        "artifacts/stages/R2/evidence/r2-gates.json"
+      ]
+    },
+    {
+      "requirement_id": "R2-A07-review-freeze-resume",
+      "status": "passed",
+      "detail": "All 26 cases have traceable agent-assisted decisions, zero unresolved decisions, an immutable frozen plan hash, and a same-run execution_ready checkpoint; 19 run artifacts verify with zero missing, mismatch, schema, or unindexed files.",
+      "evidence": [
+        "artifacts/runs/r2-slack-gif-creator-evalplan/review.json",
+        "artifacts/runs/r2-slack-gif-creator-evalplan/review-ledger.jsonl",
+        "artifacts/runs/r2-slack-gif-creator-evalplan/frozen-eval-plan.json",
+        "artifacts/runs/r2-slack-gif-creator-evalplan/checkpoint.json",
+        "artifacts/runs/r2-slack-gif-creator-evalplan/artifact-index.json"
+      ]
+    },
+    {
+      "requirement_id": "R2-A08-offline-review-interface",
+      "status": "passed",
+      "detail": "The self-contained Chinese review HTML passes static and JavaScript checks; the user confirmed offline opening and the registered core interactions. This does not claim user semantic review of the cases.",
+      "evidence": [
+        "artifacts/runs/r2-slack-gif-creator-evalplan/review.html",
+        "artifacts/stages/R2/evidence/review-ui-validation.json",
+        "artifacts/stages/R2/evidence/human-offline-validation.json",
+        "artifacts/stages/R2/external-validation.md"
+      ]
+    },
+    {
+      "requirement_id": "R2-A09-scope-boundary",
+      "status": "passed",
+      "detail": "R2 introduced no private-Skill or production-mock abstraction, no selected/expected-action path, no framework-synthesized business result.json, no external Headless Provider run, and no early R3-R5 effect claim.",
+      "evidence": [
+        "artifacts/stages/R2/evidence/r2-gates.json",
+        "artifacts/stages/R2/commands.log",
+        "state.md"
+      ]
+    },
+    {
+      "requirement_id": "R2-A10-regression-and-stage-evidence",
+      "status": "passed",
+      "detail": "Ruff, Pyright, 132 pytest tests, deterministic schema export, secret/private-path scan, Markdown links, license, diff check, root CLI, Skill validation, and artifact verification pass; the standard R2 stage evidence set is present.",
+      "evidence": [
+        "artifacts/stages/R2/test-results.xml",
+        "artifacts/stages/R2/commands.log",
+        "artifacts/stages/R2/artifact-index.json",
+        "artifacts/stages/R2/stage_report.json"
+      ]
+    }
+  ],
+  "claim_boundary": {
+    "code_implemented": true,
+    "engineering_mechanism_validated": true,
+    "real_skill_optimization_effect_validated": false,
+    "reason": "R2 did not run paired no-skill/original Functional evaluation, TaskScoreVector aggregation, candidate search, or held-out validation."
+  },
+  "next_stage": "R3"
+}

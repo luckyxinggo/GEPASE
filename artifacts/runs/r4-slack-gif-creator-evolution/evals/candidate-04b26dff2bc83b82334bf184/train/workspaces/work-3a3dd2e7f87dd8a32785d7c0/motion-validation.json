@@ -1,0 +1,67 @@
+{
+  "source_size": [
+    8,
+    8
+  ],
+  "source_used_directly": true,
+  "source_resampling": "nearest",
+  "y_positions": [
+    54,
+    54,
+    54,
+    45,
+    38,
+    33,
+    30,
+    28,
+    28,
+    28,
+    28,
+    29,
+    30,
+    30,
+    30,
+    30,
+    30,
+    30
+  ],
+  "overshoot_y": 28,
+  "final_y": 30,
+  "settled_tail_frames": 5,
+  "save_info": {
+    "path": "artifacts/runs/r4-slack-gif-creator-evolution/evals/candidate-04b26dff2bc83b82334bf184/train/workspaces/work-3a3dd2e7f87dd8a32785d7c0/uploaded_badge_lift.gif",
+    "size_kb": 16.8056640625,
+    "size_mb": 0.016411781311035156,
+    "dimensions": "128x128",
+    "frame_count": 18,
+    "fps": 10,
+    "duration_seconds": 1.8,
+    "colors": 48
+  },
+  "validation": {
+    "file": "artifacts/runs/r4-slack-gif-creator-evolution/evals/candidate-04b26dff2bc83b82334bf184/train/workspaces/work-3a3dd2e7f87dd8a32785d7c0/uploaded_badge_lift.gif",
+    "passes": true,
+    "width": 128,
+    "height": 128,
+    "size_kb": 16.8056640625,
+    "size_mb": 0.016411781311035156,
+    "frame_count": 9,
+    "duration_seconds": 5.4,
+    "fps": 1.6666666666666665,
+    "is_emoji": true,
+    "optimal": true
+  },
+  "encoded_frame_count": 9,
+  "encoded_frame_durations_ms": [
+    200,
+    100,
+    100,
+    100,
+    100,
+    100,
+    400,
+    100,
+    600
+  ],
+  "encoded_total_duration_seconds": 1.8
+}

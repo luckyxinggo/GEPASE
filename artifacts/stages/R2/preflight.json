@@ -1,0 +1,52 @@
+{
+  "schema_version": "1.0.0",
+  "stage_id": "R2",
+  "captured_at": "2026-07-21T10:51:03Z",
+  "recording_kind": "consolidated_from_start_checks_and_durable_run_artifacts",
+  "started_from_commit": "ea84ea8983509a91770932b9e21a74cd43235810",
+  "upstream_stage": {
+    "stage_id": "R1",
+    "status": "complete",
+    "report_ref": "artifacts/stages/R1/stage_report.json"
+  },
+  "worktree_policy": {
+    "reset_run": false,
+    "clean_run": false,
+    "private_skill_modified": false,
+    "unknown_dirty_files_overwritten": false,
+    "existing_dirty_worktree_preserved": true
+  },
+  "scope": {
+    "canary": "anthropics/skills:skills/slack-gif-creator",
+    "private_skills_in_scope": false,
+    "production_mock_interfaces_in_scope": false,
+    "paired_functional_execution_in_scope": false,
+    "optimization_effect_in_scope": false,
+    "external_llm_api_allowed": false,
+    "agent_native_eval_designer_allowed": true
+  },
+  "environment": {
+    "python": "3.13.13",
+    "uv": "0.11.14",
+    "agent_host": "codex",
+    "agent_host_available": true,
+    "local_gif_dependencies_resolved": true
+  },
+  "initial_scale": {
+    "source_python_files": 143,
+    "test_python_files": 57,
+    "schemas": 16,
+    "canary_package_files": 7
+  },
+  "source_preflight": {
+    "repository_url": "https://github.com/anthropics/skills",
+    "source_commit": "fa0fa64bdc967915dc8399e803be67759e1e62b8",
+    "source_tree_hash": "c61d2f7bb6334b68a6936ad3f41ebfc7cb76fe2a",
+    "license": "Apache-2.0",
+    "network_note": "Git and dependency retrieval were used only for the pinned public source and local smoke dependencies; no model API was called."
+  },
+  "known_environment_constraints": [
+    "The configured Git proxy was unreachable; the pinned public fetch used per-command direct proxy overrides without changing global configuration.",
+    "The in-app browser security policy blocks file:// navigation, so final offline interaction validation requires one human check."
+  ]
+}

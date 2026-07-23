@@ -1,0 +1,45 @@
+{
+  "comparator_work_id": "candidate-comparator-work-f1927ccd49f8cb192cc337e0",
+  "confidence": 0.95,
+  "criteria": [
+    {
+      "criterion_id": "pulse-legibility",
+      "preference": "left",
+      "rationale_zh": "左侧的白色 GO 字形边缘平滑、笔画连续，在全部收放帧中保持稳定；右侧字形呈明显的块状像素边缘，尤其 G 的横画与 O 的轮廓更粗糙，缩略后完成感较弱。"
+    },
+    {
+      "criterion_id": "pulse-motion",
+      "preference": "left",
+      "rationale_zh": "左侧约 1.96 秒的循环在最小与最大状态附近安排了停顿，并以中间帧完成往返，形成清楚而克制的呼吸节奏；右侧约 0.96 秒且各帧均为 80 毫秒，变化更急、更接近匀速往返，呼吸感和舒缓度较弱。两者首尾像素差均为 0，循环衔接都成立。"
+    },
+    {
+      "criterion_id": "pulse-color",
+      "preference": "tie",
+      "rationale_zh": "两侧都清楚执行了深蓝背景、珊瑚红徽章与白色 GO 文本，前景、描边和背景关系明确，未见足以区分胜负的配色偏差。"
+    },
+    {
+      "criterion_id": "pulse-emoji-ready",
+      "preference": "left",
+      "rationale_zh": "两侧均为 128×128、无限循环且徽章轮廓完整；左侧凭借更平滑的文字渲染和更从容的两秒级警报脉冲，在 Slack 表情尺寸下更显精制且不刺眼，右侧快速循环与像素化字形略降低成品感。"
+    }
+  ],
+  "rationale_zh": "左侧在核心的 GO 可读性和脉冲质感上均明显占优，并以更平滑的字形和更克制的节奏获得更高的 Slack 表情完成度；两侧配色执行相当。综合全部 rubric 及其权重，判定左侧胜出。",
+  "role_run": {
+    "context_id": "ctx-r4-cmp-pulse-ab-f1927ccd49f8cb19",
+    "finished_at": "2026-07-22T10:56:00Z",
+    "host": "codex",
+    "host_task_id": "/root/r4_cmp_m_pulse_ab",
+    "model": "gpt-5.6-sol",
+    "started_at": "2026-07-22T10:48:00Z",
+    "usage": {
+      "duration_ms": 480000,
+      "input_tokens": 30000,
+      "output_tokens": 2200,
+      "token_count_kind": "estimated",
+      "tool_calls": 12
+    }
+  },
+  "schema_version": "1.0.0",
+  "submission_id": "candidate-comparator-submission-f1927ccd49f8cb192cc337e0",
+  "winner": "left"
+}

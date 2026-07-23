@@ -1,0 +1,62 @@
+{
+  "analyzer_context_ids": [
+    "/root/r3_ana_1d8d46",
+    "/root/r3_ana_273dec",
+    "/root/r3_ana_66550a",
+    "/root/r3_ana_9fdb3b",
+    "/root/r3_ana_ca40ae",
+    "/root/r3_ana_ce5ad0",
+    "/root/r3_ana_d73a34",
+    "/root/r3_ana_ee3edc"
+  ],
+  "candidate_identity_findings": [],
+  "comparator_context_ids": [
+    "/root/r3_cmp_0f0f82",
+    "/root/r3_cmp_17a2d8",
+    "/root/r3_cmp_485b95",
+    "/root/r3_cmp_4df48a",
+    "/root/r3_cmp_a1bf38",
+    "/root/r3_cmp_a65764"
+  ],
+  "duplicate_context_ids": [],
+  "executor_context_ids": [
+    "/root/r3_exec_4d807d",
+    "/root/r3_exec_46dec2",
+    "work-229b28b7e4ec64d79ddc725d",
+    "/root/r3_exec_aeaea0",
+    "/root/r3_exec_a90881",
+    "/root/r3_exec_a2e2a2",
+    "work-06e0ca3901e49580a002d129",
+    "/root/r3_exec_02f7b7",
+    "r3-executor-work-b33fad8398ab056166627930",
+    "/root/r3_exec_b836a5",
+    "r3_exec_8b18ac",
+    "work-18b797bfd1094a2c7da4ec6b",
+    "r3_exec_9eea3d",
+    "/root/r3_exec_9a981b",
+    "ctx-r3-work-f659fabc30459ff0d09ad348-r3_exec_f659fa",
+    "codex-r3-executor-ba5bed1fe1f6ee2b5cd0648b-20260721"
+  ],
+  "grader_context_ids": [
+    "/root/r3_grade_0a9c98",
+    "/root/r3_grade_2c8028",
+    "/root/r3_grade_42977c",
+    "/root/r3_grade_6997fe",
+    "/root/r3_grade_6e58be",
+    "/root/r3_grade_7ccc06",
+    "/root/r3_grade_825858",
+    "/root/r3_grade_871f3e",
+    "/root/r3_grade_8f56a6",
+    "/root/r3_grade_998951",
+    "/root/r3_grade_9ac81d",
+    "/root/r3_grade_c5b8cf",
+    "/root/r3_grade_e0aa34",
+    "/root/r3_grade_e974e0",
+    "/root/r3_grade_ec0636",
+    "/root/r3_grade_ed109e"
+  ],
+  "oracle_leakage_findings": [],
+  "schema_version": "1.0.0",
+  "sibling_leakage_findings": [],
+  "valid": true
+}

@@ -1,0 +1,99 @@
+{
+  "failed": 0,
+  "gates": [
+    {
+      "detail": "Verified immutable R3 anchor plus 7 candidate split hits; root artifacts=429.",
+      "evidence": [
+        "reference-evidence-key.json",
+        "reference-cache-audit.json",
+        "evals/"
+      ],
+      "gate_id": "R4-G01-reference-cache",
+      "status": "passed"
+    },
+    {
+      "detail": "Train coverage={'candidate-04b26dff2bc83b82334bf184': 5, 'candidate-edf5f1aa07926ba5415f0442': 5, 'candidate-2dad7a05ce4a6460dd71f470': 5, 'candidate-4b5885d1dd5fe978c8f1dad3': 5}; validation coverage={'candidate-04b26dff2bc83b82334bf184': 3, 'candidate-edf5f1aa07926ba5415f0442': 0, 'candidate-2dad7a05ce4a6460dd71f470': 3, 'candidate-4b5885d1dd5fe978c8f1dad3': 3}; successful E2/E3=28, typed failures=1, E1=0.",
+      "evidence": [
+        "evals/",
+        "scheduler/",
+        "train-admission/"
+      ],
+      "gate_id": "R4-G02-real-candidate-execution",
+      "status": "passed"
+    },
+    {
+      "detail": "Unique role contexts=73; duplicate contexts=0; reconciled validation cases=9.",
+      "evidence": [
+        "evals/*/*/isolation-audit.json",
+        "evals/*/validation/comparator-reconciliation/"
+      ],
+      "gate_id": "R4-G03-role-isolation-and-comparison",
+      "status": "passed"
+    },
+    {
+      "detail": "Independently verified TaskScoreVectors=29; all split verifiers=True.",
+      "evidence": [
+        "evals/*/*/task-score-vectors/",
+        "evals/*/*/score-independent-verification.json"
+      ],
+      "gate_id": "R4-G04-score-recomputation",
+      "status": "passed"
+    },
+    {
+      "detail": "Train admissions=4, held-out candidates=3, deployable=['candidate-04b26dff2bc83b82334bf184'].",
+      "evidence": [
+        "train-admission/",
+        "gate-decisions/",
+        "deployable-frontier.json"
+      ],
+      "gate_id": "R4-G05-strict-admission",
+      "status": "passed"
+    },
+    {
+      "detail": "Mutation branches=3, patches=4, causality valid=True.",
+      "evidence": [
+        "branch-plan.json",
+        "proposal-causality-audit.json",
+        "patches/",
+        "pre-eval-gates/"
+      ],
+      "gate_id": "R4-G06-graph-patch-causality",
+      "status": "passed"
+    },
+    {
+      "detail": "Merge children=['candidate-4b5885d1dd5fe978c8f1dad3'], parents=['candidate-04b26dff2bc83b82334bf184', 'candidate-2dad7a05ce4a6460dd71f470'], unresolved conflicts=0.",
+      "evidence": [
+        "merge/build-record.json",
+        "merge/contribution-map.json",
+        "merge/conflict-report.json"
+      ],
+      "gate_id": "R4-G07-same-package-merge",
+      "status": "passed"
+    },
+    {
+      "detail": "Agent calls=77; cache hits=8; exhausted axes=['wall_clock']; reflections={'candidate-04b26dff2bc83b82334bf184': 0, 'candidate-2dad7a05ce4a6460dd71f470': 0, 'candidate-4b5885d1dd5fe978c8f1dad3': 0, 'candidate-edf5f1aa07926ba5415f0442': 1}.",
+      "evidence": [
+        "scheduler/runtime-report.json",
+        "r4-audit.json",
+        "evolution-state.json"
+      ],
+      "gate_id": "R4-G08-runtime-and-resume-audit",
+      "status": "passed"
+    }
+  ],
+  "metrics": {
+    "candidate_count": 4,
+    "deployable_candidates": [
+      "candidate-04b26dff2bc83b82334bf184"
+    ],
+    "fresh_evaluation_calls": 73,
+    "merge_children": 1,
+    "mutation_branches": 3,
+    "task_score_vectors": 29,
+    "typed_failures": 1
+  },
+  "passed": 8,
+  "schema_version": "1.0.0",
+  "stage_id": "R4",
+  "valid": true
+}

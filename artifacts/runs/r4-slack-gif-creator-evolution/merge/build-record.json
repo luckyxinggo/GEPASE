@@ -1,0 +1,19 @@
+{
+  "application_id": "application-da89180cab97e9b294bda455",
+  "candidate_id": "candidate-4b5885d1dd5fe978c8f1dad3",
+  "cross_package_parent_count": 0,
+  "gate_0_1_passed": true,
+  "gate_0_1_ref": "artifacts/runs/r4-slack-gif-creator-evolution/pre-eval-gates/patch-9c936c744ec54e0b04120d4f.json",
+  "held_out_features_read": 0,
+  "lca_candidate_id": "candidate-21242a10bcbaeb9631f3b2da",
+  "parent_candidate_ids": [
+    "candidate-04b26dff2bc83b82334bf184",
+    "candidate-2dad7a05ce4a6460dd71f470"
+  ],
+  "parent_set_id": "merge-parent-set-872d56c45a560e17a2902340",
+  "patch_id": "patch-9c936c744ec54e0b04120d4f",
+  "same_package": true,
+  "same_snapshot": true,
+  "schema_version": "1.0.0",
+  "status": "materialized"
+}

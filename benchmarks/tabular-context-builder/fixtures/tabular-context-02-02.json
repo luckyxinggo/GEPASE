@@ -1,0 +1,136 @@
+{
+  "tables": [
+    {
+      "columns": [
+        "record_id",
+        "segment",
+        "amount"
+      ],
+      "name": "orders_02_02",
+      "rows": [
+        {
+          "amount": 220,
+          "record_id": "R0202000",
+          "segment": "alpha"
+        },
+        {
+          "amount": 221,
+          "record_id": "R0202001",
+          "segment": "beta"
+        },
+        {
+          "amount": 222,
+          "record_id": "R0202002",
+          "segment": "gamma"
+        },
+        {
+          "amount": 223,
+          "record_id": "R0202003",
+          "segment": "alpha"
+        },
+        {
+          "amount": 224,
+          "record_id": "R0202004",
+          "segment": "beta"
+        },
+        {
+          "amount": 225,
+          "record_id": "R0202005",
+          "segment": "gamma"
+        },
+        {
+          "amount": 226,
+          "record_id": "R0202006",
+          "segment": "alpha"
+        },
+        {
+          "amount": 227,
+          "record_id": "R0202007",
+          "segment": "beta"
+        },
+        {
+          "amount": 228,
+          "record_id": "R0202008",
+          "segment": "gamma"
+        },
+        {
+          "amount": 229,
+          "record_id": "R0202009",
+          "segment": "alpha"
+        },
+        {
+          "amount": 230,
+          "record_id": "R0202010",
+          "segment": "beta"
+        },
+        {
+          "amount": 231,
+          "record_id": "R0202011",
+          "segment": "gamma"
+        },
+        {
+          "amount": 232,
+          "record_id": "R0202012",
+          "segment": "alpha"
+        },
+        {
+          "amount": 233,
+          "record_id": "R0202013",
+          "segment": "beta"
+        },
+        {
+          "amount": 234,
+          "record_id": "R0202014",
+          "segment": "gamma"
+        },
+        {
+          "amount": 235,
+          "record_id": "R0202015",
+          "segment": "alpha"
+        }
+      ]
+    },
+    {
+      "columns": [
+        "segment",
+        "owner"
+      ],
+      "name": "segments_02_02",
+      "rows": [
+        {
+          "owner": "owner-2-2-0",
+          "segment": "segment-0"
+        },
+        {
+          "owner": "owner-2-2-1",
+          "segment": "segment-1"
+        },
+        {
+          "owner": "owner-2-2-2",
+          "segment": "segment-2"
+        },
+        {
+          "owner": "owner-2-2-3",
+          "segment": "segment-3"
+        },
+        {
+          "owner": "owner-2-2-4",
+          "segment": "segment-4"
+        },
+        {
+          "owner": "owner-2-2-5",
+          "segment": "segment-5"
+        },
+        {
+          "owner": "owner-2-2-6",
+          "segment": "segment-6"
+        },
+        {
+          "owner": "owner-2-2-7",
+          "segment": "segment-7"
+        }
+      ]
+    }
+  ],
+  "title": "Operations Context Pack 02-02"
+}

@@ -1,0 +1,119 @@
+{
+  "artifacts": [
+    {
+      "media_type": "application/json",
+      "path": "source-provenance.json",
+      "sha256": "98e0204dc337de5dde2480d97c3eb97ef00a0143d16fa4be4136250553e906d8",
+      "size_bytes": 822
+    },
+    {
+      "media_type": "application/json",
+      "path": "design-brief.json",
+      "sha256": "fde1bf40e61cde5941b283d704526d86d1581bac8c0c033e05aa5deb5598de60",
+      "size_bytes": 1187
+    },
+    {
+      "media_type": "application/json",
+      "path": "package/snapshot.json",
+      "sha256": "56ddcd6e1cece6c5f7c6d3e4ef4d9e713d09df01cfe15ef3c25a984d106f7575",
+      "size_bytes": 2150
+    },
+    {
+      "media_type": "application/json",
+      "path": "package/package-ir.json",
+      "sha256": "76ab1d92d151d3fb05b86715873188321875e07c5c9aa3dd98c11982bdec5417",
+      "size_bytes": 384369
+    },
+    {
+      "media_type": "application/json",
+      "path": "package/graph.json",
+      "sha256": "a05716cc8dc8fb9e181384d8456e39869d014624c10fcb72612f706b95a32822",
+      "size_bytes": 384390
+    },
+    {
+      "media_type": "application/json",
+      "path": "package/diagnostics.json",
+      "sha256": "83dfc9887d81f382111af740369610312e1f01eabae00746d3c703c9cb18ee3c",
+      "size_bytes": 90
+    },
+    {
+      "media_type": "application/json",
+      "path": "designer-work-item.json",
+      "sha256": "0cd0060f362aefbd508f3639070b48bb2003d949982db1f1773b8a10c0ddc28d",
+      "size_bytes": 12617
+    },
+    {
+      "media_type": "application/json",
+      "path": "checkpoint.json",
+      "sha256": "ab5169e4af03f66efe8cc14ef88ba1b1f5ea0c7acc851a4a4038d6773e462a02",
+      "size_bytes": 591
+    },
+    {
+      "media_type": "application/x-ndjson",
+      "path": "onboarding-events.jsonl",
+      "sha256": "68976b3f1acc1a089d607946f0c1a4f33704fe78cb021965ee9f0227d0112b04",
+      "size_bytes": 2399
+    },
+    {
+      "media_type": "application/json",
+      "path": "designer-submission.json",
+      "sha256": "ed96effc6e26b0165b22df339525fa33ed0d07d020830ebe666543a7c35ea90f",
+      "size_bytes": 47717
+    },
+    {
+      "media_type": "application/json",
+      "path": "eval-plan-draft.json",
+      "sha256": "22d9e0b083807b4a55a95e01f7816cc12ab0a1c1d746229ebac53c2806fe4e74",
+      "size_bytes": 46230
+    },
+    {
+      "media_type": "application/json",
+      "path": "automatic-check-report.json",
+      "sha256": "85febfab91ce34e09eb529333663405a8a5dd0522e219c95ed71478d25e7bbd0",
+      "size_bytes": 3136
+    },
+    {
+      "media_type": "text/html",
+      "path": "review.html",
+      "sha256": "3fd5872a3a27fd28f13e992d43669daa3acf6283b255df9ca2f9ab2df76284e2",
+      "size_bytes": 340558
+    },
+    {
+      "media_type": "application/json",
+      "path": "agent/designer-submission.json",
+      "sha256": "957ed7f14177a28dc714cc90423f3299f7b8fc57dea7112ab91830e775c125a0",
+      "size_bytes": 47717
+    },
+    {
+      "media_type": "application/json",
+      "path": "review.json",
+      "sha256": "fc129b863ffd68841cac4181cc2e7c76d3c048555afbf64a2d48a9b0add195c2",
+      "size_bytes": 6262
+    },
+    {
+      "media_type": "application/x-ndjson",
+      "path": "review-ledger.jsonl",
+      "sha256": "2931b4562124dbdf704e7074aa554b5ea4a830ef4e4a75b50c937ccea994b44d",
+      "size_bytes": 5140
+    },
+    {
+      "media_type": "application/json",
+      "path": "post-review-check-report.json",
+      "sha256": "ed9e0ac3b6ffb7f2970fed0385f4afac16367a34c6eb8368ee1214ba5636b9df",
+      "size_bytes": 3136
+    },
+    {
+      "media_type": "application/json",
+      "path": "frozen-eval-plan.json",
+      "sha256": "d526d074ed240ac7766f50b24428f6b0937c905735bce012c47234457a574e91",
+      "size_bytes": 45205
+    },
+    {
+      "media_type": "application/json",
+      "path": "agent/review.json",
+      "sha256": "928a46e5c6ba9cfca72e48d42ae8fd091eb6ecdeeb7e3a6358b1aeec922f3c5f",
+      "size_bytes": 4780
+    }
+  ],
+  "schema_version": "1.0.0"
+}

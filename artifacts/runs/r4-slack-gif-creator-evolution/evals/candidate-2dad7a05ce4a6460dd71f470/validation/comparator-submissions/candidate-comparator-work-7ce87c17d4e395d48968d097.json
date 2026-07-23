@@ -1,0 +1,45 @@
+{
+  "comparator_work_id": "candidate-comparator-work-7ce87c17d4e395d48968d097",
+  "confidence": 0.85,
+  "criteria": [
+    {
+      "criterion_id": "loop-continuity",
+      "preference": "left",
+      "rationale_zh": "左侧首尾像素差为 1.744，低于其平均相邻帧差 1.865；右侧首尾差 1.993，略高于其平均相邻帧差 1.905。接触表中左侧末帧与首帧均处于顶部黄色火花的连续相位，回接更难察觉。"
+    },
+    {
+      "criterion_id": "loop-rhythm",
+      "preference": "left",
+      "rationale_zh": "左侧以 20 个唯一帧依次铺开黄色、青色、粉色火花的增强与消退，过渡帧充分，节奏有呼吸感；右侧虽同样按三点轮换，但 12 帧中的三段峰值更等距、切换更机械。"
+    },
+    {
+      "criterion_id": "loop-stability",
+      "preference": "right",
+      "rationale_zh": "两侧圆环轮廓都保持居中，但右侧圆环的色带与轮廓在各采样帧间更一致。对中心圆环环带的逐帧检查也显示右侧变化明显更小，因此其视觉锚点更稳定。"
+    },
+    {
+      "criterion_id": "loop-visual",
+      "preference": "left",
+      "rationale_zh": "左侧深紫背景、青紫双层圆环和三种带柔光的四芒火花形成更统一、精致的霓虹层次；主体与外围动态分离清楚，在 128×128 下仍醒目。右侧对比鲜明，但粗亮圆环和较规则的三点布局略显直接。"
+    }
+  ],
+  "rationale_zh": "左侧在权重最高的循环连续性上有直接量化优势，并以更多唯一帧提供更自然的三火花淡入淡出；整体视觉也更细腻。右侧的中心圆环稳定性更强，但不足以抵消左侧在连续性、节奏与美感上的综合优势，因此判定左侧获胜。",
+  "role_run": {
+    "context_id": "comparator-context-0e8a3caa-ef84-4bd0-8c4c-85942e736581",
+    "finished_at": "2026-07-22T10:54:48Z",
+    "host": "codex",
+    "host_task_id": "comparator-task-2225a212-1193-4e34-b8b3-ddb2fd140050",
+    "model": "gpt-5.6-sol",
+    "started_at": "2026-07-22T10:48:30Z",
+    "usage": {
+      "duration_ms": 378000,
+      "input_tokens": 8500,
+      "output_tokens": 1800,
+      "token_count_kind": "estimated",
+      "tool_calls": 6
+    }
+  },
+  "schema_version": "1.0.0",
+  "submission_id": "comparator-submission-94830b59-6402-4ea7-b5ce-8b31166a7a93",
+  "winner": "left"
+}

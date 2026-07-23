@@ -1,0 +1,100 @@
+[
+  {
+    "sequence": 0,
+    "action": "inspect_fixture",
+    "target": "benchmarks/canaries/slack-gif-creator/fixtures/emoji-bounce.json",
+    "tool": "read",
+    "outcome": "completed"
+  },
+  {
+    "sequence": 1,
+    "action": "read_skill_instructions",
+    "target": "SKILL.md",
+    "tool": "read",
+    "outcome": "completed"
+  },
+  {
+    "sequence": 2,
+    "action": "inspect_candidate_modules",
+    "target": "core/easing.py, core/frame_composer.py, core/gif_builder.py, core/validators.py",
+    "tool": "read",
+    "outcome": "completed"
+  },
+  {
+    "sequence": 3,
+    "action": "compose_animation_renderer",
+    "target": "artifacts/runs/r4-slack-gif-creator-evolution/evals/candidate-4b5885d1dd5fe978c8f1dad3/train/workspaces/work-cf877f712f0ead4323011d4d/generate_emoji.py",
+    "tool": "apply_patch",
+    "outcome": "completed"
+  },
+  {
+    "sequence": 4,
+    "action": "execute_renderer",
+    "target": "generate_emoji.py",
+    "tool": "system_python",
+    "outcome": "failed: Pillow unavailable"
+  },
+  {
+    "sequence": 5,
+    "action": "execute_renderer",
+    "target": "generate_emoji.py",
+    "tool": "uv_default_cache",
+    "outcome": "failed: isolated host denied cache write"
+  },
+  {
+    "sequence": 6,
+    "action": "execute_candidate_package",
+    "target": "core/easing.py, core/frame_composer.py, core/gif_builder.py, core/validators.py",
+    "tool": "uv_temporary_cache",
+    "outcome": "completed with bytecode writing disabled"
+  },
+  {
+    "sequence": 7,
+    "action": "render_task_artifact",
+    "target": "artifacts/runs/r4-slack-gif-creator-evolution/evals/candidate-4b5885d1dd5fe978c8f1dad3/train/workspaces/work-cf877f712f0ead4323011d4d/emoji_star_bounce.gif",
+    "tool": "GIFBuilder.save",
+    "outcome": "completed"
+  },
+  {
+    "sequence": 8,
+    "action": "validate_slack_metadata",
+    "target": "emoji_star_bounce.gif",
+    "tool": "validate_gif",
+    "outcome": "passed"
+  },
+  {
+    "sequence": 9,
+    "action": "analyze_motion_trajectory",
+    "target": "emoji_star_bounce.gif",
+    "tool": "Pillow and NumPy frame inspection",
+    "outcome": "completed: one rebound and stable landing confirmed"
+  },
+  {
+    "sequence": 10,
+    "action": "inspect_contact_sheet",
+    "target": "emoji_star_bounce.gif",
+    "tool": "visual inspection",
+    "outcome": "identified transparent-shadow compositing defect"
+  },
+  {
+    "sequence": 11,
+    "action": "repair_shadow_compositing",
+    "target": "generate_emoji.py",
+    "tool": "apply_patch",
+    "outcome": "completed"
+  },
+  {
+    "sequence": 12,
+    "action": "rerender_and_validate",
+    "target": "emoji_star_bounce.gif",
+    "tool": "candidate package and visual inspection",
+    "outcome": "completed and passed"
+  },
+  {
+    "sequence": 13,
+    "action": "record_execution_evidence",
+    "target": "transcript.md, package-access.json, observed-trace.json",
+    "tool": "apply_patch",
+    "outcome": "completed"
+  }
+]

@@ -1,0 +1,58 @@
+{
+  "failure_detail": null,
+  "failure_kind": null,
+  "patch": {
+    "base_candidate_id": "candidate-21242a10bcbaeb9631f3b2da",
+    "base_content_hash": "ce42d8a837acf9feda9706a3418fc26a77c497d9615079e616b5fdc6870ef64e",
+    "base_snapshot_hash": "ce42d8a837acf9feda9706a3418fc26a77c497d9615079e616b5fdc6870ef64e",
+    "edit_budget": {
+      "allow_file_topology_edits": false,
+      "allow_script_edits": true,
+      "max_added_files": 0,
+      "max_changed_files": 1,
+      "max_deleted_files": 0,
+      "max_operations": 1,
+      "max_total_replacement_chars": 24000
+    },
+    "evidence_refs": [
+      "artifacts/runs/r3-slack-gif-creator-paired/analyzer-submissions/analyzer-work-9fdb3bdecd6e87afd9f6ad4d.json"
+    ],
+    "operations": [
+      {
+        "evidence_refs": [
+          "artifacts/runs/r3-slack-gif-creator-paired/analyzer-submissions/analyzer-work-9fdb3bdecd6e87afd9f6ad4d.json"
+        ],
+        "expected_benefit": "Makes the ease-out requirement operational and export-verifiable, reducing failures where the motion slows overall but the final rendered displacement increases because of sampling, rounding, or clipping.",
+        "op": "replace_markdown_block",
+        "operation_id": "op-verify-rendered-ease-out-stop",
+        "path": "SKILL.md",
+        "precondition_hash": "07696c8e0fdb5ceb26b94a6625c98211fb31a3a8cd4a58b115bee7c7580e8a84",
+        "rationale": "The cited failure evidence attributes the correctness loss to an increase between the final two rendered displacements despite use of the easing module. Extending the existing instruction with a single continuous progress parameter and post-render tail checks directly addresses that gap without changing easing behavior, public interfaces, or unrelated package guidance.",
+        "regression_risk": "low",
+        "replacement": "- Use `interpolate()` with `easing='ease_out'` for a smooth stop. Drive the entire arc or orbit from one continuous eased path-progress value; do not restart the easing for individual coordinates or path segments.\n  - Before export, validate the rendered frames under the same integer pixel conversion and canvas clipping/cropping used for drawing. Recompute the adjacent-frame displacement along the final approach and confirm that successive tail displacements do not increase beyond the applicable pixel-rounding tolerance.\n  - Confirm that the final rendered frame lands exactly on the intended docking point after integerization and clipping. If either check fails, adjust the path-progress timing or frame sampling, render again, and repeat the checks rather than accepting the unrounded path values alone.\n",
+        "target_node_id": "node-69ea814aac72a6c557485ef0"
+      }
+    ],
+    "patch_id": "patch-109aa9e370eb22e668878393",
+    "proposal_work_id": "proposal-work-e4757dd9d456332c89c7670a",
+    "schema_version": "1.0.0",
+    "selected_node_ids": [
+      "node-69ea814aac72a6c557485ef0"
+    ],
+    "selector": "graph_guided",
+    "summary": "Strengthen the bounded smooth-stop instruction with rendered-frame acceptance checks addressing the evidenced late-tail displacement increase while preserving the existing ease-out guidance."
+  },
+  "provenance": {
+    "duration_ms": 60000,
+    "host": "codex",
+    "host_task_id": "/root/r4_proposal_easing",
+    "model": "gpt-5.6-sol",
+    "token_estimate": 3000
+  },
+  "repair_count": 0,
+  "schema_version": "1.0.0",
+  "status": "completed",
+  "submission_id": "proposal-submission-3bf2ede982c0891bc69f71de",
+  "valid_on_first_attempt": true,
+  "work_id": "proposal-work-e4757dd9d456332c89c7670a"
+}

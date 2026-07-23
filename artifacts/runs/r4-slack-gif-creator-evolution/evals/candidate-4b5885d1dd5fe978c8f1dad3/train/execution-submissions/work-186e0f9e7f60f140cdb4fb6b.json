@@ -1,0 +1,224 @@
+{
+  "artifact_root": "artifacts/runs/r4-slack-gif-creator-evolution/evals/candidate-4b5885d1dd5fe978c8f1dad3/train/workspaces/work-186e0f9e7f60f140cdb4fb6b",
+  "artifacts": [
+    {
+      "media_type": "text/x-python",
+      "path": "generate_badge_gif.py",
+      "sha256": "0022f9f80422df12797d1311652c56fd6e7d079aa11ee3bf4f1bd228a99b0ede",
+      "size_bytes": 6974
+    },
+    {
+      "media_type": "application/json",
+      "path": "observed-trace.json",
+      "sha256": "f7346f9434a093cbb5605aa31f2661d4946eb44ee2a8465dab90ba6682bb3f67",
+      "size_bytes": 2345
+    },
+    {
+      "media_type": "application/json",
+      "path": "package-access.json",
+      "sha256": "8d7599e7597d59476e6ebda7ec51413cbc21bf8c787c94f72b986f3427f656b0",
+      "size_bytes": 1800
+    },
+    {
+      "media_type": "application/json",
+      "path": "render-report.json",
+      "sha256": "5afd2f7ade071d2833e686a6faa091d84a6bbd6232f434462546f911391dffaf",
+      "size_bytes": 1120
+    },
+    {
+      "media_type": "text/markdown",
+      "path": "transcript.md",
+      "sha256": "a6c0c64dfdc5ffc47e07ed95c203e36bbf7cb009c6431c76955e9c5417ce4df8",
+      "size_bytes": 1800
+    },
+    {
+      "media_type": "image/gif",
+      "path": "uploaded_badge_lift.gif",
+      "sha256": "132398ee855ea71ab7307867797f96679f8269e960f0419a537d6020c5bb6ad1",
+      "size_bytes": 57837
+    }
+  ],
+  "context_id": "r4_exec_m_badge",
+  "failure_detail": null,
+  "failure_kind": null,
+  "finished_at": "2026-07-22T09:49:44.045714Z",
+  "host": "codex",
+  "host_task_id": "/root/r4_exec_m_badge",
+  "model": "gpt-5.6-sol",
+  "observed_trace": [
+    {
+      "action": "inspect_work_item",
+      "outcome": "completed",
+      "sequence": 0,
+      "target": "artifacts/runs/r4-slack-gif-creator-evolution/evals/candidate-4b5885d1dd5fe978c8f1dad3/train/executor-work-items/work-186e0f9e7f60f140cdb4fb6b.json",
+      "tool": "read"
+    },
+    {
+      "action": "inspect_fixture_configuration",
+      "outcome": "completed",
+      "sequence": 1,
+      "target": "benchmarks/canaries/slack-gif-creator/fixtures/input-badge.json",
+      "tool": "read"
+    },
+    {
+      "action": "inspect_source_image",
+      "outcome": "confirmed 8x8 PPM with dark border, cyan silhouette, and orange center",
+      "sequence": 2,
+      "target": "benchmarks/canaries/slack-gif-creator/fixtures/input-badge.ppm",
+      "tool": "read"
+    },
+    {
+      "action": "read_candidate_skill_and_modules",
+      "outcome": "completed with byte-accounted package access",
+      "sequence": 3,
+      "target": "SKILL.md and selected core modules",
+      "tool": "read"
+    },
+    {
+      "action": "compose_animation_frames",
+      "outcome": "created 22 direct-asset frames with back_out lift and settlement",
+      "sequence": 4,
+      "target": "uploaded_badge_lift.gif",
+      "tool": "Pillow plus candidate easing and frame composer"
+    },
+    {
+      "action": "encode_candidate_gif",
+      "outcome": "completed; backend timing required correction",
+      "sequence": 5,
+      "target": "uploaded_badge_lift.gif",
+      "tool": "candidate GIFBuilder"
+    },
+    {
+      "action": "correct_frame_timing",
+      "outcome": "repacked candidate-generated frames with explicit 12 fps delay",
+      "sequence": 6,
+      "target": "uploaded_badge_lift.gif",
+      "tool": "Pillow GIF writer"
+    },
+    {
+      "action": "validate_slack_gif",
+      "outcome": "passed: 128x128, 22 frames, 1.76 seconds, 57837 bytes",
+      "sequence": 7,
+      "target": "uploaded_badge_lift.gif",
+      "tool": "candidate core.validators.validate_gif"
+    },
+    {
+      "action": "inspect_key_frames",
+      "outcome": "completed; source silhouette and cyan-orange relationship remain legible throughout motion",
+      "sequence": 8,
+      "target": "uploaded_badge_lift.gif",
+      "tool": "six-frame contact sheet and visual inspection"
+    },
+    {
+      "action": "record_execution_evidence",
+      "outcome": "completed",
+      "sequence": 9,
+      "target": "transcript.md, package-access.json, observed-trace.json, render-report.json",
+      "tool": "write"
+    }
+  ],
+  "package_access": [
+    {
+      "bytes_loaded": 9056,
+      "kind": "read",
+      "node_id": "node-fddc99453114c3a40363b219",
+      "path": "SKILL.md",
+      "sequence": 0,
+      "tokens_loaded": 2264
+    },
+    {
+      "bytes_loaded": 6265,
+      "kind": "read",
+      "node_id": "node-dbf396ac6852bf4706f33ebf",
+      "path": "core/easing.py",
+      "sequence": 1,
+      "tokens_loaded": 1567
+    },
+    {
+      "bytes_loaded": 4548,
+      "kind": "read",
+      "node_id": "node-bd3bececef13aaeef0c22570",
+      "path": "core/frame_composer.py",
+      "sequence": 2,
+      "tokens_loaded": 1137
+    },
+    {
+      "bytes_loaded": 9847,
+      "kind": "read",
+      "node_id": "node-2c61585b9d40c2df7343f499",
+      "path": "core/gif_builder.py",
+      "sequence": 3,
+      "tokens_loaded": 2462
+    },
+    {
+      "bytes_loaded": 3785,
+      "kind": "read",
+      "node_id": "node-0f241aa06504163be33132f8",
+      "path": "core/validators.py",
+      "sequence": 4,
+      "tokens_loaded": 947
+    },
+    {
+      "bytes_loaded": 66,
+      "kind": "read",
+      "node_id": "node-cc27fb4d7208967c86b1a7e8",
+      "path": "requirements.txt",
+      "sequence": 5,
+      "tokens_loaded": 17
+    },
+    {
+      "bytes_loaded": 0,
+      "kind": "executed",
+      "node_id": "node-dbf396ac6852bf4706f33ebf",
+      "path": "core/easing.py",
+      "sequence": 6,
+      "tokens_loaded": 0
+    },
+    {
+      "bytes_loaded": 0,
+      "kind": "executed",
+      "node_id": "node-bd3bececef13aaeef0c22570",
+      "path": "core/frame_composer.py",
+      "sequence": 7,
+      "tokens_loaded": 0
+    },
+    {
+      "bytes_loaded": 0,
+      "kind": "executed",
+      "node_id": "node-2c61585b9d40c2df7343f499",
+      "path": "core/gif_builder.py",
+      "sequence": 8,
+      "tokens_loaded": 0
+    },
+    {
+      "bytes_loaded": 0,
+      "kind": "executed",
+      "node_id": "node-0f241aa06504163be33132f8",
+      "path": "core/validators.py",
+      "sequence": 9,
+      "tokens_loaded": 0
+    }
+  ],
+  "planned_trace": [],
+  "provider_id": "agent-delegated-v1",
+  "proxy_score": null,
+  "proxy_score_method": null,
+  "schema_version": "1.0.0",
+  "started_at": "2026-07-22T09:43:44.045714Z",
+  "submission_id": "submission-8c2aaa3d4808497c58b4e147",
+  "transcript": {
+    "media_type": "text/markdown",
+    "path": "transcript.md",
+    "sha256": "a6c0c64dfdc5ffc47e07ed95c203e36bbf7cb009c6431c76955e9c5417ce4df8",
+    "size_bytes": 1800
+  },
+  "uncertainty": 0.1,
+  "usage": {
+    "duration_ms": 360000,
+    "input_tokens": 18500,
+    "output_tokens": 5200,
+    "token_count_kind": "estimated",
+    "tool_calls": 25
+  },
+  "work_id": "work-186e0f9e7f60f140cdb4fb6b"
+}

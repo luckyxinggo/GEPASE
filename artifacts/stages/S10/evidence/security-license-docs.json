@@ -1,0 +1,14 @@
+{
+  "bilingual_readme": true,
+  "git_diff_check": true,
+  "license_attribution": true,
+  "markdown_links": true,
+  "secret_scan": {
+    "findings": [],
+    "include_generated": true,
+    "scanned_files": 5833,
+    "tracked_skills_test_files": 0,
+    "tracked_skills_test_paths": [],
+    "valid": true
+  }
+}

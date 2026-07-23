@@ -1,0 +1,74 @@
+{
+  "comparator_work_id": "candidate-comparator-work-95156d4bbbfc2add033ced29",
+  "expected_output_zh": "一个文件紧凑但并非低质占位的庆祝动画：勾号清楚，粒子由中心向外扩散并渐隐，满足 480×480、10–16 FPS 与 900KB 上限；具体粒子数量和配色可变化。",
+  "forbidden_inputs": [
+    "variant identity",
+    "candidate identity",
+    "expected winner",
+    "executor conversation",
+    "independent grader score",
+    "deterministic assertion score"
+  ],
+  "left": {
+    "blind_artifact": {
+      "artifact": {
+        "media_type": "image/gif",
+        "path": "compact_check_burst.gif",
+        "sha256": "4647c572d1b5c2e8353b3fb6df8f3b7176514aff25649cded8c87da1c06db590",
+        "size_bytes": 469924
+      },
+      "artifact_root": "artifacts/runs/r3-slack-gif-creator-paired/workspaces/work-06e0ca3901e49580a002d129",
+      "blind_id": "blind-82e8ed2563ad56b040ea114a",
+      "contact_sheet_ref": "artifacts/runs/r3-slack-gif-creator-paired/derived/work-06e0ca3901e49580a002d129/contact-sheet.png",
+      "inspection_ref": "artifacts/runs/r3-slack-gif-creator-paired/blind-inspections/blind-82e8ed2563ad56b040ea114a.json"
+    },
+    "side_id": "left"
+  },
+  "order_label": "AB",
+  "right": {
+    "blind_artifact": {
+      "artifact": {
+        "media_type": "image/gif",
+        "path": "compact_check_burst.gif",
+        "sha256": "49c4f25101ed365165e56d83ccf7eec40412087d167e589bc81248dc849d4268",
+        "size_bytes": 377145
+      },
+      "artifact_root": "artifacts/runs/r4-slack-gif-creator-evolution/evals/candidate-04b26dff2bc83b82334bf184/validation/workspaces/work-c32547dba15da11d0bc47306",
+      "blind_id": "blind-25c4fcc733bf2a24fbf1247c",
+      "contact_sheet_ref": "artifacts/runs/r4-slack-gif-creator-evolution/evals/candidate-04b26dff2bc83b82334bf184/validation/derived/work-c32547dba15da11d0bc47306/contact-sheet.png",
+      "inspection_ref": "artifacts/runs/r4-slack-gif-creator-evolution/evals/candidate-04b26dff2bc83b82334bf184/validation/blind-inspections/blind-25c4fcc733bf2a24fbf1247c.json"
+    },
+    "side_id": "right"
+  },
+  "role": "comparator",
+  "rubric": [
+    {
+      "criterion_id": "efficiency-budget",
+      "description_zh": "在明确体积预算内合理控制帧率、色彩与重复信息。",
+      "label_zh": "压缩效率",
+      "weight": 0.3
+    },
+    {
+      "criterion_id": "efficiency-readability",
+      "description_zh": "中心勾号在粒子和量化影响下仍然醒目、完整。",
+      "label_zh": "勾号可读性",
+      "weight": 0.25
+    },
+    {
+      "criterion_id": "efficiency-motion",
+      "description_zh": "爆发方向、速度与渐隐连贯，有限帧率下仍显顺滑。",
+      "label_zh": "粒子动态",
+      "weight": 0.25
+    },
+    {
+      "criterion_id": "efficiency-balance",
+      "description_zh": "压缩没有造成严重色带、轮廓破碎或难看的节奏跳跃。",
+      "label_zh": "质量权衡",
+      "weight": 0.2
+    }
+  ],
+  "schema_version": "1.0.0",
+  "submission_schema_ref": "schemas/comparator_submission.schema.json",
+  "task_id": "functional-validation-efficiency-007",
+  "task_prompt": "为 Slack 消息制作一个紧凑的庆祝 GIF：480×480 画布中央是清楚的勾号，周围粒子向外爆发后渐隐。请在动作顺滑和轮廓可读的前提下控制帧率、调色板与文件体积，严格遵循随附的体积和帧率预算，并输出指定文件。"
+}

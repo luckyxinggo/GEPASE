@@ -1,0 +1,15 @@
+{
+  "package_access": [
+    {"sequence": 0, "kind": "read", "node_id": "node-fddc99453114c3a40363b219", "path": "SKILL.md", "bytes_loaded": 7841, "tokens_loaded": 1960},
+    {"sequence": 1, "kind": "read", "node_id": "node-7fd627ed0d50ee9e04018c8a", "path": "LICENSE.txt", "bytes_loaded": 11345, "tokens_loaded": 2836},
+    {"sequence": 2, "kind": "read", "node_id": "node-dbf396ac6852bf4706f33ebf", "path": "core/easing.py", "bytes_loaded": 6265, "tokens_loaded": 1566},
+    {"sequence": 3, "kind": "read", "node_id": "node-bd3bececef13aaeef0c22570", "path": "core/frame_composer.py", "bytes_loaded": 4548, "tokens_loaded": 1137},
+    {"sequence": 4, "kind": "read", "node_id": "node-2c61585b9d40c2df7343f499", "path": "core/gif_builder.py", "bytes_loaded": 9847, "tokens_loaded": 2461},
+    {"sequence": 5, "kind": "read", "node_id": "node-0f241aa06504163be33132f8", "path": "core/validators.py", "bytes_loaded": 3785, "tokens_loaded": 946},
+    {"sequence": 6, "kind": "read", "node_id": "node-cc27fb4d7208967c86b1a7e8", "path": "requirements.txt", "bytes_loaded": 66, "tokens_loaded": 16},
+    {"sequence": 7, "kind": "executed", "node_id": "node-dbf396ac6852bf4706f33ebf", "path": "core/easing.py"},
+    {"sequence": 8, "kind": "executed", "node_id": "node-bd3bececef13aaeef0c22570", "path": "core/frame_composer.py"},
+    {"sequence": 9, "kind": "executed", "node_id": "node-0f241aa06504163be33132f8", "path": "core/validators.py"}
+  ]
+}
+

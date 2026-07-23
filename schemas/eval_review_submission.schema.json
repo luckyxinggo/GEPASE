@@ -1,0 +1,115 @@
+{
+  "$defs": {
+    "EvalReviewDecision": {
+      "additionalProperties": false,
+      "properties": {
+        "case_id": {
+          "title": "Case Id",
+          "type": "string"
+        },
+        "case_type": {
+          "enum": [
+            "trigger",
+            "functional"
+          ],
+          "title": "Case Type",
+          "type": "string"
+        },
+        "comment_zh": {
+          "default": "",
+          "title": "Comment Zh",
+          "type": "string"
+        },
+        "decision": {
+          "$ref": "#/$defs/ReviewDecisionKind"
+        },
+        "edited_case": {
+          "anyOf": [
+            {
+              "additionalProperties": true,
+              "type": "object"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Edited Case"
+        }
+      },
+      "required": [
+        "case_id",
+        "case_type",
+        "decision"
+      ],
+      "title": "EvalReviewDecision",
+      "type": "object"
+    },
+    "ReviewDecisionKind": {
+      "enum": [
+        "approve",
+        "edit",
+        "reject",
+        "request_regeneration"
+      ],
+      "title": "ReviewDecisionKind",
+      "type": "string"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "decisions": {
+      "items": {
+        "$ref": "#/$defs/EvalReviewDecision"
+      },
+      "title": "Decisions",
+      "type": "array"
+    },
+    "draft_hash": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Draft Hash",
+      "type": "string"
+    },
+    "plan_id": {
+      "title": "Plan Id",
+      "type": "string"
+    },
+    "review_id": {
+      "title": "Review Id",
+      "type": "string"
+    },
+    "reviewer_id": {
+      "title": "Reviewer Id",
+      "type": "string"
+    },
+    "reviewer_kind": {
+      "enum": [
+        "human",
+        "maintainer",
+        "agent-assisted"
+      ],
+      "title": "Reviewer Kind",
+      "type": "string"
+    },
+    "schema_version": {
+      "default": "1.0.0",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "submitted_at": {
+      "format": "date-time",
+      "title": "Submitted At",
+      "type": "string"
+    }
+  },
+  "required": [
+    "review_id",
+    "plan_id",
+    "draft_hash",
+    "reviewer_id",
+    "reviewer_kind",
+    "decisions"
+  ],
+  "title": "EvalReviewSubmission",
+  "type": "object"
+}

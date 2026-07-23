@@ -1,0 +1,120 @@
+{
+  "artifact_root": "artifacts/runs/r3-slack-gif-creator-paired/workspaces/work-02f7b78398c181ede25632a6",
+  "artifacts": [
+    {
+      "media_type": "text/x-python",
+      "path": "create_gif.py",
+      "sha256": "3466ad13d575e7e20cbb8b297b18741ccc112f0d017af42eca791ef85cf329ca",
+      "size_bytes": 3658
+    },
+    {
+      "media_type": "application/json",
+      "path": "execution-summary.json",
+      "sha256": "665aec7598313b2621dcac3e8c42e4826c51bf4e1258006dff77efedd8b7174d",
+      "size_bytes": 387
+    },
+    {
+      "media_type": "image/gif",
+      "path": "meeting_sync_reminder.gif",
+      "sha256": "1c1dc5df9eea088e7326e16f94e88fe068e68c8e571de550b9ce72b531e0fbd7",
+      "size_bytes": 141587
+    },
+    {
+      "media_type": "application/json",
+      "path": "observed-trace.json",
+      "sha256": "1ed4211494a37941ea793747fdfdf595529cfc27fede052caf9a1d4291009d25",
+      "size_bytes": 1249
+    },
+    {
+      "media_type": "application/json",
+      "path": "package-access.json",
+      "sha256": "a0d41d0c8a799a4c27cfcbe1e85f579d6f1b648530c1c6befc9008563e2096e7",
+      "size_bytes": 24
+    },
+    {
+      "media_type": "text/markdown",
+      "path": "transcript.md",
+      "sha256": "fef41b06240e3531c80b13209c6d830e9778109864aeaf52c81e8e0c0be4f61e",
+      "size_bytes": 838
+    }
+  ],
+  "assertion_results": [],
+  "candidate_snapshot_hash": "20232f3aeb397f28e32d38cc016ce6dbffa2112effd52813b0cbec243c1307ce",
+  "evidence_tier": "E2",
+  "failure_detail": null,
+  "failure_kind": null,
+  "fixture_hash": "2445e241970fad77234404c0ccacc7110e2a42b288982df935ccbd01ad3dc6f3",
+  "host_model_snapshot": "edbfd8f0668f44e333585ee805a6f891a7443402aad61b3e8cfeca5913b1338b",
+  "observed_trace": [
+    {
+      "action": "inspect_work_item",
+      "outcome": "completed",
+      "sequence": 0,
+      "target": "artifacts/runs/r3-slack-gif-creator-paired/executor-work-items/work-02f7b78398c181ede25632a6.json",
+      "tool": "read"
+    },
+    {
+      "action": "inspect_fixture",
+      "outcome": "completed",
+      "sequence": 1,
+      "target": "benchmarks/canaries/slack-gif-creator/fixtures/message-readable.json",
+      "tool": "read"
+    },
+    {
+      "action": "create_animation_script",
+      "outcome": "completed",
+      "sequence": 2,
+      "target": "artifacts/runs/r3-slack-gif-creator-paired/workspaces/work-02f7b78398c181ede25632a6/create_gif.py",
+      "tool": "apply_patch"
+    },
+    {
+      "action": "render_and_decode_validate_gif",
+      "outcome": "completed: 480x480, 20 frames, 2000 ms, loop 0",
+      "sequence": 3,
+      "target": "artifacts/runs/r3-slack-gif-creator-paired/workspaces/work-02f7b78398c181ede25632a6/meeting_sync_reminder.gif",
+      "tool": "python_pillow"
+    },
+    {
+      "action": "visually_inspect_gif",
+      "outcome": "completed: SYNC and 10:30 readable and inside safe area",
+      "sequence": 4,
+      "target": "artifacts/runs/r3-slack-gif-creator-paired/workspaces/work-02f7b78398c181ede25632a6/meeting_sync_reminder.gif",
+      "tool": "view_image"
+    }
+  ],
+  "pair_id": "pair-fd02d838ef78b4c30f351032",
+  "planned_trace": [],
+  "policy_hash": "3b49f46ee66bafaf2bcf1aeac08f1bd7f4c719463b0e655afe40a98a4af6b3ec",
+  "prompt_hash": "ebeaf102708ff30c71001f0baeb78a35c97c12e4268dfd5dc236f3467b5a5717",
+  "provenance": {
+    "context_id": "/root/r3_exec_02f7b7",
+    "generated_at": "2026-07-21T15:34:44.432363Z",
+    "generated_by": "gepase.eval.ingest",
+    "host": "codex",
+    "host_task_id": "/root/r3_exec_02f7b7",
+    "model": "gpt-5.6-sol",
+    "origin": "agent-native",
+    "provider_id": "agent-delegated-v1",
+    "submission_id": "submission-629cb18503a4fbc7f6d03b48"
+  },
+  "provider_snapshot": "agent-delegated-v1",
+  "record_id": "record-34e2c5f088159e646243484f",
+  "schema_version": "1.0.0",
+  "score": null,
+  "seed": 42,
+  "skill_id": "slack-gif-creator",
+  "source_record_refs": [],
+  "task_id": "functional-train-text-readable-004",
+  "task_score_vector": null,
+  "trace_completeness": "complete",
+  "uncertainty": 0.1,
+  "usage": {
+    "duration_ms": 120000,
+    "input_tokens": 3500,
+    "output_tokens": 1200,
+    "token_count_kind": "estimated",
+    "tool_calls": 8
+  },
+  "variant": "no-skill",
+  "work_id": "work-02f7b78398c181ede25632a6"
+}

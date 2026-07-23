@@ -1,0 +1,216 @@
+{
+  "artifact_root": "artifacts/runs/r4-slack-gif-creator-evolution/evals/candidate-04b26dff2bc83b82334bf184/validation/workspaces/work-c32547dba15da11d0bc47306",
+  "artifacts": [
+    {
+      "media_type": "application/json",
+      "path": "artifact-metadata.json",
+      "sha256": "a40c28bb19f7758e91566fd61c65d23cf242f053077d380c64ef9ebcfacb4863",
+      "size_bytes": 755
+    },
+    {
+      "media_type": "image/gif",
+      "path": "compact_check_burst.gif",
+      "sha256": "49c4f25101ed365165e56d83ccf7eec40412087d167e589bc81248dc849d4268",
+      "size_bytes": 377145
+    },
+    {
+      "media_type": "text/x-python",
+      "path": "generate_gif.py",
+      "sha256": "81c4ce9dd6c6c1d38fd17aee8941163d31a1ebf67977fbc0d8d72b8d25edbb8c",
+      "size_bytes": 9100
+    },
+    {
+      "media_type": "application/json",
+      "path": "observed-trace.json",
+      "sha256": "e13d12763c803c384fb57ae3c567d187438bda5618803742a7a62755adc5654e",
+      "size_bytes": 2117
+    },
+    {
+      "media_type": "application/json",
+      "path": "package-access.json",
+      "sha256": "e1ae1b6ecac4056f9b14923b2ad6ea4312c1296679d20319c6e516533ed2d6ad",
+      "size_bytes": 1616
+    },
+    {
+      "media_type": "text/markdown",
+      "path": "transcript.md",
+      "sha256": "23718ce0e9c6da9c992091b1b65102ed7f25b06d8b2cbe93daa658c2da9b1263",
+      "size_bytes": 1419
+    }
+  ],
+  "context_id": "r4_valexec_a_eff",
+  "failure_detail": null,
+  "failure_kind": null,
+  "finished_at": "2026-07-22T10:13:05.773680Z",
+  "host": "codex",
+  "host_task_id": "/root/r4_valexec_a_eff",
+  "model": "gpt-5.6-sol",
+  "observed_trace": [
+    {
+      "action": "inspect_work_item",
+      "outcome": "completed",
+      "sequence": 0,
+      "target": "artifacts/runs/r4-slack-gif-creator-evolution/evals/candidate-04b26dff2bc83b82334bf184/validation/executor-work-items/work-c32547dba15da11d0bc47306.json",
+      "tool": "read"
+    },
+    {
+      "action": "inspect_fixture",
+      "outcome": "completed",
+      "sequence": 1,
+      "target": "benchmarks/canaries/slack-gif-creator/fixtures/efficiency-burst.json",
+      "tool": "read"
+    },
+    {
+      "action": "read_candidate_package",
+      "outcome": "completed",
+      "sequence": 2,
+      "target": "artifacts/runs/r4-slack-gif-creator-evolution/candidate-workspaces/applications/application-1986620ac067029380557187",
+      "tool": "read"
+    },
+    {
+      "action": "author_animation_generator",
+      "outcome": "completed",
+      "sequence": 3,
+      "target": "generate_gif.py",
+      "tool": "write"
+    },
+    {
+      "action": "attempt_system_python_execution",
+      "outcome": "dependency unavailable: Pillow",
+      "sequence": 4,
+      "target": "generate_gif.py",
+      "tool": "python"
+    },
+    {
+      "action": "prepare_managed_dependencies",
+      "outcome": "host cache unavailable; retried with task-scoped temporary cache",
+      "sequence": 5,
+      "target": "requirements.txt",
+      "tool": "uv"
+    },
+    {
+      "action": "execute_candidate_package_and_render",
+      "outcome": "completed: 480x480, 24 frames, 48 colors",
+      "sequence": 6,
+      "target": "compact_check_burst.gif",
+      "tool": "uv/python"
+    },
+    {
+      "action": "validate_artifact_metadata",
+      "outcome": "completed: 377145 bytes, 12.5 FPS; all explicit budgets pass",
+      "sequence": 7,
+      "target": "compact_check_burst.gif",
+      "tool": "core.validators/Pillow"
+    },
+    {
+      "action": "inspect_representative_frames",
+      "outcome": "completed: centered check readable through burst and fade",
+      "sequence": 8,
+      "target": "compact_check_burst.gif",
+      "tool": "image inspection"
+    },
+    {
+      "action": "record_execution_evidence",
+      "outcome": "completed",
+      "sequence": 9,
+      "target": "transcript.md, package-access.json, observed-trace.json",
+      "tool": "write"
+    }
+  ],
+  "package_access": [
+    {
+      "bytes_loaded": 8591,
+      "kind": "read",
+      "node_id": "node-fddc99453114c3a40363b219",
+      "path": "SKILL.md",
+      "sequence": 0,
+      "tokens_loaded": 2148
+    },
+    {
+      "bytes_loaded": 9847,
+      "kind": "read",
+      "node_id": "node-2c61585b9d40c2df7343f499",
+      "path": "core/gif_builder.py",
+      "sequence": 1,
+      "tokens_loaded": 2462
+    },
+    {
+      "bytes_loaded": 3785,
+      "kind": "read",
+      "node_id": "node-0f241aa06504163be33132f8",
+      "path": "core/validators.py",
+      "sequence": 2,
+      "tokens_loaded": 947
+    },
+    {
+      "bytes_loaded": 6265,
+      "kind": "read",
+      "node_id": "node-dbf396ac6852bf4706f33ebf",
+      "path": "core/easing.py",
+      "sequence": 3,
+      "tokens_loaded": 1567
+    },
+    {
+      "bytes_loaded": 4548,
+      "kind": "read",
+      "node_id": "node-bd3bececef13aaeef0c22570",
+      "path": "core/frame_composer.py",
+      "sequence": 4,
+      "tokens_loaded": 1137
+    },
+    {
+      "bytes_loaded": 66,
+      "kind": "read",
+      "node_id": "node-cc27fb4d7208967c86b1a7e8",
+      "path": "requirements.txt",
+      "sequence": 5,
+      "tokens_loaded": 17
+    },
+    {
+      "bytes_loaded": 0,
+      "kind": "executed",
+      "node_id": "node-dbf396ac6852bf4706f33ebf",
+      "path": "core/easing.py",
+      "sequence": 6,
+      "tokens_loaded": 0
+    },
+    {
+      "bytes_loaded": 0,
+      "kind": "executed",
+      "node_id": "node-2c61585b9d40c2df7343f499",
+      "path": "core/gif_builder.py",
+      "sequence": 7,
+      "tokens_loaded": 0
+    },
+    {
+      "bytes_loaded": 0,
+      "kind": "executed",
+      "node_id": "node-0f241aa06504163be33132f8",
+      "path": "core/validators.py",
+      "sequence": 8,
+      "tokens_loaded": 0
+    }
+  ],
+  "planned_trace": [],
+  "provider_id": "agent-delegated-v1",
+  "proxy_score": null,
+  "proxy_score_method": null,
+  "schema_version": "1.0.0",
+  "started_at": "2026-07-22T10:05:25.773680Z",
+  "submission_id": "submission-b2f7758a4eb903b7025f3e2e",
+  "transcript": {
+    "media_type": "text/markdown",
+    "path": "transcript.md",
+    "sha256": "23718ce0e9c6da9c992091b1b65102ed7f25b06d8b2cbe93daa658c2da9b1263",
+    "size_bytes": 1419
+  },
+  "uncertainty": 0.1,
+  "usage": {
+    "duration_ms": 460000,
+    "input_tokens": 18000,
+    "output_tokens": 6000,
+    "token_count_kind": "estimated",
+    "tool_calls": 24
+  },
+  "work_id": "work-c32547dba15da11d0bc47306"
+}

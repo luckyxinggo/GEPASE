@@ -1,0 +1,29 @@
+{
+  "output": "sparkle_ring_loop.gif",
+  "dimensions": [
+    128,
+    128
+  ],
+  "frame_count": 20,
+  "fps": 10,
+  "duration_seconds": 2.0,
+  "loop_count": 0,
+  "slack_validator_passed": true,
+  "file_size_bytes": 47302,
+  "seam_mae": 1.7436,
+  "median_interior_transition_mae": 1.851,
+  "seam_to_median_ratio": 0.9419,
+  "max_transition_mae": 2.5073,
+  "builder": {
+    "frame_count": 20,
+    "duration_seconds": 2.0,
+    "colors": 48
+  },
+  "validator": {
+    "passes": true,
+    "width": 128,
+    "height": 128,
+    "frame_count": 20,
+    "duration_seconds": 2.0
+  }
+}

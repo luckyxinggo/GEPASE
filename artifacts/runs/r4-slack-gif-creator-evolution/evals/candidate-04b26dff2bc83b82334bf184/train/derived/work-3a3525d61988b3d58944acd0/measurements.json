@@ -1,0 +1,125 @@
+{
+  "artifact_sha256": "e84dee15fa22945e3a4b0d4cf8c7544a65deb4266a867b4c24f52f59447de53c",
+  "assertions": [
+    {
+      "assertion_id": "readable-container",
+      "detail": "通过内容/元数据检查",
+      "family": "artifact_metadata",
+      "measurements": {
+        "frame_count": 13,
+        "height": 480,
+        "loop_count": 0,
+        "unique_frame_count": 7,
+        "width": 480
+      },
+      "passed": true,
+      "weight": 0.15
+    },
+    {
+      "assertion_id": "readable-duration",
+      "detail": "通过内容/元数据检查",
+      "family": "artifact_metadata",
+      "measurements": {
+        "maximum_ms": 2200,
+        "minimum_ms": 1800,
+        "non_positive_frames": 0,
+        "total_duration_ms": 2000
+      },
+      "passed": true,
+      "weight": 0.15
+    },
+    {
+      "assertion_id": "readable-ocr",
+      "detail": "未满足已冻结 expectation 的可执行判据",
+      "family": "frame_content",
+      "measurements": {
+        "method": "glyph-template-iou",
+        "recognized_frame_ratio": 0.0
+      },
+      "passed": false,
+      "weight": 0.3
+    },
+    {
+      "assertion_id": "readable-contrast",
+      "detail": "通过内容/元数据检查",
+      "family": "frame_content",
+      "measurements": {
+        "frame_luminance_spread": [
+          194.0,
+          194.0,
+          194.0,
+          194.0,
+          202.66666666666666,
+          202.66666666666666,
+          202.66666666666666,
+          202.66666666666666,
+          202.66666666666666,
+          194.0,
+          194.0,
+          194.0,
+          194.0
+        ],
+        "minimum_required": 105
+      },
+      "passed": true,
+      "weight": 0.25
+    },
+    {
+      "assertion_id": "readable-palette",
+      "detail": "通过内容/元数据检查",
+      "family": "frame_content",
+      "measurements": {
+        "palette_fractions": [
+          0.7917621527777777,
+          0.05974826388888889,
+          0.1239670138888889
+        ]
+      },
+      "passed": true,
+      "weight": 0.15
+    }
+  ],
+  "case_id": "functional-train-text-readable-004",
+  "common": {
+    "adjacent_pixel_deltas": [
+      0.018352141203703702,
+      0.023703703703703703,
+      0.48322916666666665,
+      0.45945167824074074,
+      0.023993055555555556,
+      0.020733506944444445,
+      0.020733506944444445,
+      0.023993055555555556,
+      0.45945167824074074,
+      0.48322916666666665,
+      0.023703703703703703,
+      0.018352141203703702
+    ],
+    "effective_fps": 6.5,
+    "file_size_bytes": 42577,
+    "first_last_pixel_delta": 0.0,
+    "frame_count": 13,
+    "frame_durations_ms": [
+      300,
+      100,
+      100,
+      100,
+      100,
+      100,
+      500,
+      100,
+      100,
+      100,
+      100,
+      100,
+      200
+    ],
+    "height": 480,
+    "loop_count": 0,
+    "mean_adjacent_pixel_delta": 0.17157720871913576,
+    "total_duration_ms": 2000,
+    "unique_frame_count": 7,
+    "width": 480
+  },
+  "schema_version": "1.0.0"
+}

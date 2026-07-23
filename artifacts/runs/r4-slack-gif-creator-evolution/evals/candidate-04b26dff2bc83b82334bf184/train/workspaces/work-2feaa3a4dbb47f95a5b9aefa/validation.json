@@ -1,0 +1,69 @@
+{
+  "output": "satellite_orbit_ease.gif",
+  "build": {
+    "path": "workspaces/work-2feaa3a4dbb47f95a5b9aefa/satellite_orbit_ease.gif",
+    "size_kb": 50.11328125,
+    "size_mb": 0.048938751220703125,
+    "dimensions": "128x128",
+    "frame_count": 20,
+    "fps": 10,
+    "duration_seconds": 2.0,
+    "colors": 48
+  },
+  "validation": {
+    "file": "workspaces/work-2feaa3a4dbb47f95a5b9aefa/satellite_orbit_ease.gif",
+    "passes": true,
+    "width": 128,
+    "height": 128,
+    "size_kb": 50.11328125,
+    "size_mb": 0.048938751220703125,
+    "frame_count": 20,
+    "duration_seconds": 2.0,
+    "fps": 10.0,
+    "is_emoji": true,
+    "optimal": true
+  },
+  "motion": {
+    "easing": "ease_out",
+    "path": "continuous parabolic arc",
+    "start_pixel": [
+      16,
+      101
+    ],
+    "dock_pixel": [
+      98,
+      54
+    ],
+    "adjacent_pixel_displacements": [
+      29.12,
+      23.409,
+      17.889,
+      13.892,
+      9.22,
+      8.062,
+      5.099,
+      6.325,
+      5.0,
+      6.403,
+      5.831,
+      6.403,
+      6.708,
+      5.385,
+      4.472,
+      4.472,
+      3.162,
+      1.414,
+      1.0
+    ],
+    "tail_displacements": [
+      5.385,
+      4.472,
+      4.472,
+      3.162,
+      1.414,
+      1.0
+    ],
+    "tail_non_increasing": true,
+    "dock_exact_after_integerization": true
+  }
+}

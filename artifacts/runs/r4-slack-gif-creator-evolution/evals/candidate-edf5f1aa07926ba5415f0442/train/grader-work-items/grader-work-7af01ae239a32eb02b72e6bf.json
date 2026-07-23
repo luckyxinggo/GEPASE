@@ -1,0 +1,54 @@
+{
+  "blind_artifact": {
+    "artifact": {
+      "media_type": "image/gif",
+      "path": "satellite_orbit_ease.gif",
+      "sha256": "10f0c0a9c2375fc1409f7aaf93bb284eb9bd0afc9e168c1bc89a71505214a5eb",
+      "size_bytes": 19579
+    },
+    "artifact_root": "artifacts/runs/r4-slack-gif-creator-evolution/evals/candidate-edf5f1aa07926ba5415f0442/train/workspaces/work-64bc8b5b5180da4402e479d0",
+    "blind_id": "blind-4cd4428f77de0075a03a7285",
+    "contact_sheet_ref": "artifacts/runs/r4-slack-gif-creator-evolution/evals/candidate-edf5f1aa07926ba5415f0442/train/derived/work-64bc8b5b5180da4402e479d0/contact-sheet.png",
+    "inspection_ref": "artifacts/runs/r4-slack-gif-creator-evolution/evals/candidate-edf5f1aa07926ba5415f0442/train/blind-inspections/blind-4cd4428f77de0075a03a7285.json"
+  },
+  "expected_output_zh": "一个小卫星沿非直线路径接近橙色行星并自然减速停靠的循环 GIF；轨迹、背景星点和造型可以变化，但弧线与 ease-out 必须有可测证据。",
+  "forbidden_inputs": [
+    "variant identity",
+    "candidate identity",
+    "sibling output",
+    "expected winner",
+    "executor conversation"
+  ],
+  "grader_work_id": "grader-work-7af01ae239a32eb02b72e6bf",
+  "role": "independent_grader",
+  "rubric": [
+    {
+      "criterion_id": "orbit-path",
+      "description_zh": "卫星路径具有清楚而自然的空间弧度，不像直线平移。",
+      "label_zh": "弧线辨识度",
+      "weight": 0.3
+    },
+    {
+      "criterion_id": "orbit-easing",
+      "description_zh": "停靠前的速度变化平顺，ease-out 感明显且没有突然刹停。",
+      "label_zh": "减速质感",
+      "weight": 0.3
+    },
+    {
+      "criterion_id": "orbit-composition",
+      "description_zh": "卫星与行星在小画布中层级分明，轨迹不造成拥挤。",
+      "label_zh": "构图清晰度",
+      "weight": 0.2
+    },
+    {
+      "criterion_id": "orbit-craft",
+      "description_zh": "造型、背景和色彩形成完整的太空场景并适合 Slack 表情。",
+      "label_zh": "细节完成度",
+      "weight": 0.2
+    }
+  ],
+  "schema_version": "1.0.0",
+  "submission_schema_ref": "schemas/independent_grader_submission.schema.json",
+  "task_id": "functional-train-easing-orbit-005",
+  "task_prompt": "创作一个 128×128 的 Slack emoji GIF：青色小卫星沿明显的弧线路径绕过橙色行星，并在目标位置平滑减速停靠。请使用非线性的 ease-out 运动，让最后一段位移逐步缩小；构图和星空细节可以自行发挥，输出指定文件。"
+}

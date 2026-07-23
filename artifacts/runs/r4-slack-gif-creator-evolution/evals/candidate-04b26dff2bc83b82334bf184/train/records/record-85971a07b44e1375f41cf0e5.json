@@ -1,0 +1,297 @@
+{
+  "artifact_root": "artifacts/runs/r4-slack-gif-creator-evolution/evals/candidate-04b26dff2bc83b82334bf184/train/workspaces/work-3a3525d61988b3d58944acd0",
+  "artifacts": [
+    {
+      "media_type": "text/x-python",
+      "path": "build_and_validate.py",
+      "sha256": "50f4f92fb8689a4cca79ef6c3db7ec44a7fff9f49017b801ab25e56e61a8e1e6",
+      "size_bytes": 9516
+    },
+    {
+      "media_type": "image/gif",
+      "path": "meeting_sync_reminder.gif",
+      "sha256": "e84dee15fa22945e3a4b0d4cf8c7544a65deb4266a867b4c24f52f59447de53c",
+      "size_bytes": 42577
+    },
+    {
+      "media_type": "application/json",
+      "path": "observed-trace.json",
+      "sha256": "bcb94516535b1b237010b0580c16ac74692d91c27b3eea83e7f7a4f22466db24",
+      "size_bytes": 3781
+    },
+    {
+      "media_type": "application/json",
+      "path": "package-access.json",
+      "sha256": "3521c9841370615c8fdefb18947aafa596e26b40dd0cbdb2fedff337b6c62bd4",
+      "size_bytes": 1625
+    },
+    {
+      "media_type": "text/markdown",
+      "path": "transcript.md",
+      "sha256": "b1f2fa73c59c24be63aede563f5cd707a86957e03b1a9b8e68df61d82563fa24",
+      "size_bytes": 1578
+    },
+    {
+      "media_type": "application/json",
+      "path": "validation.json",
+      "sha256": "b7d0d9486cd0f2ca380fee6abc3242d6a0c05441121d86903dbcfe3f4ead2ba9",
+      "size_bytes": 2226
+    }
+  ],
+  "assertion_results": [
+    {
+      "assertion_id": "readable-container",
+      "detail": "通过内容/元数据检查",
+      "evidence_refs": [
+        "artifacts/runs/r4-slack-gif-creator-evolution/evals/candidate-04b26dff2bc83b82334bf184/train/derived/work-3a3525d61988b3d58944acd0/measurements.json",
+        "artifacts/runs/r4-slack-gif-creator-evolution/evals/candidate-04b26dff2bc83b82334bf184/train/derived/work-3a3525d61988b3d58944acd0/contact-sheet.png"
+      ],
+      "family": "artifact_metadata",
+      "measurements": {
+        "frame_count": 13,
+        "height": 480,
+        "loop_count": 0,
+        "unique_frame_count": 7,
+        "width": 480
+      },
+      "passed": true,
+      "weight": 0.15
+    },
+    {
+      "assertion_id": "readable-duration",
+      "detail": "通过内容/元数据检查",
+      "evidence_refs": [
+        "artifacts/runs/r4-slack-gif-creator-evolution/evals/candidate-04b26dff2bc83b82334bf184/train/derived/work-3a3525d61988b3d58944acd0/measurements.json",
+        "artifacts/runs/r4-slack-gif-creator-evolution/evals/candidate-04b26dff2bc83b82334bf184/train/derived/work-3a3525d61988b3d58944acd0/contact-sheet.png"
+      ],
+      "family": "artifact_metadata",
+      "measurements": {
+        "maximum_ms": 2200,
+        "minimum_ms": 1800,
+        "non_positive_frames": 0,
+        "total_duration_ms": 2000
+      },
+      "passed": true,
+      "weight": 0.15
+    },
+    {
+      "assertion_id": "readable-ocr",
+      "detail": "未满足已冻结 expectation 的可执行判据",
+      "evidence_refs": [
+        "artifacts/runs/r4-slack-gif-creator-evolution/evals/candidate-04b26dff2bc83b82334bf184/train/derived/work-3a3525d61988b3d58944acd0/measurements.json",
+        "artifacts/runs/r4-slack-gif-creator-evolution/evals/candidate-04b26dff2bc83b82334bf184/train/derived/work-3a3525d61988b3d58944acd0/contact-sheet.png"
+      ],
+      "family": "frame_content",
+      "measurements": {
+        "method": "glyph-template-iou",
+        "recognized_frame_ratio": 0.0
+      },
+      "passed": false,
+      "weight": 0.3
+    },
+    {
+      "assertion_id": "readable-contrast",
+      "detail": "通过内容/元数据检查",
+      "evidence_refs": [
+        "artifacts/runs/r4-slack-gif-creator-evolution/evals/candidate-04b26dff2bc83b82334bf184/train/derived/work-3a3525d61988b3d58944acd0/measurements.json",
+        "artifacts/runs/r4-slack-gif-creator-evolution/evals/candidate-04b26dff2bc83b82334bf184/train/derived/work-3a3525d61988b3d58944acd0/contact-sheet.png"
+      ],
+      "family": "frame_content",
+      "measurements": {
+        "frame_luminance_spread": [
+          194.0,
+          194.0,
+          194.0,
+          194.0,
+          202.66666666666666,
+          202.66666666666666,
+          202.66666666666666,
+          202.66666666666666,
+          202.66666666666666,
+          194.0,
+          194.0,
+          194.0,
+          194.0
+        ],
+        "minimum_required": 105
+      },
+      "passed": true,
+      "weight": 0.25
+    },
+    {
+      "assertion_id": "readable-palette",
+      "detail": "通过内容/元数据检查",
+      "evidence_refs": [
+        "artifacts/runs/r4-slack-gif-creator-evolution/evals/candidate-04b26dff2bc83b82334bf184/train/derived/work-3a3525d61988b3d58944acd0/measurements.json",
+        "artifacts/runs/r4-slack-gif-creator-evolution/evals/candidate-04b26dff2bc83b82334bf184/train/derived/work-3a3525d61988b3d58944acd0/contact-sheet.png"
+      ],
+      "family": "frame_content",
+      "measurements": {
+        "palette_fractions": [
+          0.7917621527777777,
+          0.05974826388888889,
+          0.1239670138888889
+        ]
+      },
+      "passed": true,
+      "weight": 0.15
+    }
+  ],
+  "candidate_snapshot_hash": "30b52f2cab481f75926545479d2fff8bd907d716c0fe241e8f4014369e0d867c",
+  "evidence_tier": "E3",
+  "failure_detail": null,
+  "failure_kind": null,
+  "fixture_hash": "2445e241970fad77234404c0ccacc7110e2a42b288982df935ccbd01ad3dc6f3",
+  "host_model_snapshot": "edbfd8f0668f44e333585ee805a6f891a7443402aad61b3e8cfeca5913b1338b",
+  "observed_trace": [
+    {
+      "action": "inspect_work_item",
+      "outcome": "completed",
+      "sequence": 0,
+      "target": "artifacts/runs/r4-slack-gif-creator-evolution/evals/candidate-04b26dff2bc83b82334bf184/train/executor-work-items/work-3a3525d61988b3d58944acd0.json",
+      "tool": "read"
+    },
+    {
+      "action": "read_skill_instructions",
+      "outcome": "completed",
+      "sequence": 1,
+      "target": "artifacts/runs/r4-slack-gif-creator-evolution/candidate-workspaces/applications/application-1986620ac067029380557187/SKILL.md",
+      "tool": "read"
+    },
+    {
+      "action": "inspect_fixture",
+      "outcome": "completed",
+      "sequence": 2,
+      "target": "benchmarks/canaries/slack-gif-creator/fixtures/message-readable.json",
+      "tool": "read"
+    },
+    {
+      "action": "resolve_package_nodes",
+      "outcome": "completed",
+      "sequence": 3,
+      "target": "artifacts/runs/r4-slack-gif-creator-evolution/candidates/candidate-04b26dff2bc83b82334bf184/graph.json",
+      "tool": "jq"
+    },
+    {
+      "action": "read_package_modules",
+      "outcome": "completed",
+      "sequence": 4,
+      "target": "artifacts/runs/r4-slack-gif-creator-evolution/candidate-workspaces/applications/application-1986620ac067029380557187/core",
+      "tool": "read"
+    },
+    {
+      "action": "execute_package_smoke_test",
+      "outcome": "completed",
+      "sequence": 5,
+      "target": "artifacts/runs/r4-slack-gif-creator-evolution/candidate-workspaces/applications/application-1986620ac067029380557187/core",
+      "tool": "python"
+    },
+    {
+      "action": "author_generation_and_validation_script",
+      "outcome": "completed",
+      "sequence": 6,
+      "target": "artifacts/runs/r4-slack-gif-creator-evolution/evals/candidate-04b26dff2bc83b82334bf184/train/workspaces/work-3a3525d61988b3d58944acd0/build_and_validate.py",
+      "tool": "apply_patch"
+    },
+    {
+      "action": "execute_initial_generation",
+      "outcome": "failed: named TrueType resource unavailable",
+      "sequence": 7,
+      "target": "artifacts/runs/r4-slack-gif-creator-evolution/evals/candidate-04b26dff2bc83b82334bf184/train/workspaces/work-3a3525d61988b3d58944acd0/build_and_validate.py",
+      "tool": "python"
+    },
+    {
+      "action": "add_embedded_font_fallback",
+      "outcome": "completed",
+      "sequence": 8,
+      "target": "artifacts/runs/r4-slack-gif-creator-evolution/evals/candidate-04b26dff2bc83b82334bf184/train/workspaces/work-3a3525d61988b3d58944acd0/build_and_validate.py",
+      "tool": "apply_patch"
+    },
+    {
+      "action": "execute_generation",
+      "outcome": "completed",
+      "sequence": 9,
+      "target": "artifacts/runs/r4-slack-gif-creator-evolution/evals/candidate-04b26dff2bc83b82334bf184/train/workspaces/work-3a3525d61988b3d58944acd0/meeting_sync_reminder.gif",
+      "tool": "python"
+    },
+    {
+      "action": "validate_gif_and_frame_content",
+      "outcome": "completed",
+      "sequence": 10,
+      "target": "artifacts/runs/r4-slack-gif-creator-evolution/evals/candidate-04b26dff2bc83b82334bf184/train/workspaces/work-3a3525d61988b3d58944acd0/validation.json",
+      "tool": "python"
+    },
+    {
+      "action": "inspect_rendered_output",
+      "outcome": "completed",
+      "sequence": 11,
+      "target": "artifacts/runs/r4-slack-gif-creator-evolution/evals/candidate-04b26dff2bc83b82334bf184/train/workspaces/work-3a3525d61988b3d58944acd0/meeting_sync_reminder.gif",
+      "tool": "view_image"
+    },
+    {
+      "action": "write_execution_evidence",
+      "outcome": "completed",
+      "sequence": 12,
+      "target": "artifacts/runs/r4-slack-gif-creator-evolution/evals/candidate-04b26dff2bc83b82334bf184/train/workspaces/work-3a3525d61988b3d58944acd0",
+      "tool": "apply_patch"
+    }
+  ],
+  "pair_id": "pair-73e0f4d07df794a766f4a9f6",
+  "planned_trace": [],
+  "policy_hash": "3b49f46ee66bafaf2bcf1aeac08f1bd7f4c719463b0e655afe40a98a4af6b3ec",
+  "prompt_hash": "ebeaf102708ff30c71001f0baeb78a35c97c12e4268dfd5dc236f3467b5a5717",
+  "provenance": {
+    "context_id": null,
+    "generated_at": "2026-07-22T08:32:37.389115Z",
+    "generated_by": "FunctionalAssertionProvider.evaluate",
+    "host": "codex",
+    "host_task_id": "/root/r4_exec_text_a",
+    "model": "gpt-5.6-sol",
+    "origin": "assertion",
+    "provider_id": "functional-assertion-v1",
+    "submission_id": "submission-8787adb84c0719f51555b39a"
+  },
+  "provider_snapshot": "functional-assertion-v1:9ccb487705abdfa91ff82437cc028f139a3af419ee16baac869aaddee75920fa",
+  "record_id": "record-85971a07b44e1375f41cf0e5",
+  "schema_version": "1.0.0",
+  "score": 0.7,
+  "seed": 42,
+  "skill_id": "slack-gif-creator",
+  "source_record_refs": [
+    "record-fb7c8a585aff3e01aeacc483"
+  ],
+  "task_id": "functional-train-text-readable-004",
+  "task_score_vector": {
+    "candidate_snapshot_hash": "30b52f2cab481f75926545479d2fff8bd907d716c0fe241e8f4014369e0d867c",
+    "efficiency": 0.40227883333333336,
+    "evidence_refs": [
+      "artifacts/runs/r4-slack-gif-creator-evolution/evals/candidate-04b26dff2bc83b82334bf184/train/records/record-fb7c8a585aff3e01aeacc483.json",
+      "artifacts/runs/r4-slack-gif-creator-evolution/evals/candidate-04b26dff2bc83b82334bf184/train/records/record-85971a07b44e1375f41cf0e5.json",
+      "artifacts/runs/r4-slack-gif-creator-evolution/evals/candidate-04b26dff2bc83b82334bf184/train/deterministic/work-3a3525d61988b3d58944acd0.json",
+      "artifacts/runs/r4-slack-gif-creator-evolution/evals/candidate-04b26dff2bc83b82334bf184/train/grader-submissions/grader-work-dc4cce41b5e3d08ab62adaa9.json",
+      "artifacts/runs/r4-slack-gif-creator-evolution/evals/candidate-04b26dff2bc83b82334bf184/train/e0-package-record.json",
+      "artifacts/runs/r3-slack-gif-creator-paired/task-score-vectors/work-229b28b7e4ec64d79ddc725d.json"
+    ],
+    "output_quality": 0.9595,
+    "package_quality": 1.0,
+    "pair_id": "pair-73e0f4d07df794a766f4a9f6",
+    "reliability": 0.9,
+    "schema_version": "1.0.0",
+    "scoring_policy_ref": "configs/canaries/slack-gif-creator-r3-scoring.json",
+    "skill_gain": 0.005399999999999939,
+    "task_correctness": 0.7,
+    "task_id": "functional-train-text-readable-004",
+    "variant": "candidate"
+  },
+  "trace_completeness": "complete",
+  "uncertainty": 0.0,
+  "usage": {
+    "duration_ms": 480000,
+    "input_tokens": 28000,
+    "output_tokens": 6500,
+    "token_count_kind": "estimated",
+    "tool_calls": 18
+  },
+  "variant": "candidate",
+  "work_id": "work-3a3525d61988b3d58944acd0-assertions"
+}

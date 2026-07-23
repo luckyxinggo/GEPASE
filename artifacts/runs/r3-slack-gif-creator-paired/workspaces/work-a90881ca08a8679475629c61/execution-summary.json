@@ -1,0 +1,28 @@
+{
+  "schema_version": "1.0.0",
+  "work_id": "work-a90881ca08a8679475629c61",
+  "task_id": "functional-validation-loop-sparkles-006",
+  "status": "completed",
+  "output": {
+    "path": "sparkle_ring_loop.gif",
+    "media_type": "image/gif",
+    "bytes": 219252
+  },
+  "verification": {
+    "dimensions": [128, 128],
+    "frame_count": 32,
+    "frame_duration_ms": 60,
+    "total_duration_ms": 1920,
+    "loop": 0,
+    "central_ring_stable": true,
+    "three_sparkles_present": true,
+    "periodic_sparkle_motion": true,
+    "seam_mse": 103.7430419921875,
+    "adjacent_mse_min": 28.58005714416504,
+    "adjacent_mse_max": 149.54835510253906,
+    "adjacent_mse_mean": 100.19756311178207,
+    "ring_temporal_mean_std": 0.0,
+    "seam_assessment": "last-to-first change is within the normal adjacent-frame change range"
+  },
+  "package_access_count": 0
+}

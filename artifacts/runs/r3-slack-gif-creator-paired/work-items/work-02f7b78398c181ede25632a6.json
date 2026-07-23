@@ -1,0 +1,43 @@
+{
+  "candidate_snapshot_hash": "20232f3aeb397f28e32d38cc016ce6dbffa2112effd52813b0cbec243c1307ce",
+  "case_contract_hash": "d3e7f31867ee83e201b8e5f65223228c8c05660cc213d4e2db08fc77293d0329",
+  "created_at": "2026-07-21T15:28:27.783936Z",
+  "evidence_tier": "E2",
+  "fixture_ref": "benchmarks/canaries/slack-gif-creator/fixtures/message-readable.json",
+  "fixture_refs": [
+    "benchmarks/canaries/slack-gif-creator/fixtures/message-readable.json"
+  ],
+  "frozen_plan_hash": "1893ad9a08978f2a8f107981a9a032c7581d08082926ee52276bd5feba2df950",
+  "package_graph_ref": null,
+  "package_node_map": {},
+  "pair_id": "pair-fd02d838ef78b4c30f351032",
+  "pairing": {
+    "fixture_hash": "2445e241970fad77234404c0ccacc7110e2a42b288982df935ccbd01ad3dc6f3",
+    "host_model_snapshot": "edbfd8f0668f44e333585ee805a6f891a7443402aad61b3e8cfeca5913b1338b",
+    "policy_hash": "3b49f46ee66bafaf2bcf1aeac08f1bd7f4c719463b0e655afe40a98a4af6b3ec",
+    "prompt_hash": "ebeaf102708ff30c71001f0baeb78a35c97c12e4268dfd5dc236f3467b5a5717",
+    "provider_snapshot": "agent-delegated-v1",
+    "seed": 42
+  },
+  "prompt": "设计一张温暖、友好的 Slack 会议提醒 GIF。按照配置在 480×480 画布上同时清晰呈现 SYNC 与 10:30，使用给定的米白、深棕黑和砖红配色；动画可以让标题或时间获得轻微强调，但不能牺牲阅读时间或把文字移出安全区。输出指定 GIF。",
+  "provider_id": "agent-delegated-v1",
+  "requested_output": {
+    "description_zh": "480×480、突出 SYNC 与 10:30 可读性的会议提醒 GIF。",
+    "filename": "meeting_sync_reminder.gif",
+    "media_type": "image/gif"
+  },
+  "required_capabilities": [
+    "text_layout",
+    "contrast_management",
+    "message_gif_animation",
+    "frame_content_analysis"
+  ],
+  "schema_version": "1.0.0",
+  "skill_id": "slack-gif-creator",
+  "skill_ref": null,
+  "split": "train",
+  "task_id": "functional-train-text-readable-004",
+  "timeout_seconds": 600,
+  "variant": "no-skill",
+  "work_id": "work-02f7b78398c181ede25632a6"
+}

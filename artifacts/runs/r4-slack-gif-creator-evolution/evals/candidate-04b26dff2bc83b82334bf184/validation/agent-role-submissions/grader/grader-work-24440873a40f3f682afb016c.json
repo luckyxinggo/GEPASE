@@ -1,0 +1,68 @@
+{
+  "schema_version": "1.0.0",
+  "submission_id": "grader-submission-r4-valgrade-a-text-24440873a40f3f682afb016c",
+  "grader_work_id": "grader-work-24440873a40f3f682afb016c",
+  "role_run": {
+    "host": "codex",
+    "model": "gpt-5.6-sol",
+    "context_id": "r4_valgrade_a_text",
+    "host_task_id": "/root/r4_valgrade_a_text",
+    "usage": {
+      "input_tokens": 10500,
+      "output_tokens": 2200,
+      "tool_calls": 10,
+      "duration_ms": 58000,
+      "token_count_kind": "estimated"
+    },
+    "started_at": "2026-07-22T10:32:30Z",
+    "finished_at": "2026-07-22T10:33:28Z"
+  },
+  "criterion_grades": [
+    {
+      "criterion_id": "pulse-legibility",
+      "score": 0.94,
+      "evidence_refs": [
+        "artifacts/runs/r4-slack-gif-creator-evolution/evals/candidate-04b26dff2bc83b82334bf184/validation/derived/work-ed3b4c130252b4a37e48a32c/contact-sheet.png",
+        "artifacts/runs/r4-slack-gif-creator-evolution/evals/candidate-04b26dff2bc83b82334bf184/validation/workspaces/work-ed3b4c130252b4a37e48a32c/go_alert_pulse.gif"
+      ],
+      "rationale_zh": "抽样帧中白色 GO 始终居中，粗笔画和深色描边在徽章收缩与放大两端都保持清楚；最小状态仍可直接辨认为 GO。仅因极小缩略尺寸下字母内外描边的余量会进一步压缩而保留少量扣分。"
+    },
+    {
+      "criterion_id": "pulse-motion",
+      "score": 0.91,
+      "evidence_refs": [
+        "artifacts/runs/r4-slack-gif-creator-evolution/evals/candidate-04b26dff2bc83b82334bf184/validation/blind-inspections/blind-50a45dc3f57fefa132e93473.json",
+        "artifacts/runs/r4-slack-gif-creator-evolution/evals/candidate-04b26dff2bc83b82334bf184/validation/derived/work-ed3b4c130252b4a37e48a32c/contact-sheet.png",
+        "artifacts/runs/r4-slack-gif-creator-evolution/evals/candidate-04b26dff2bc83b82334bf184/validation/workspaces/work-ed3b4c130252b4a37e48a32c/go_alert_pulse.gif"
+      ],
+      "rationale_zh": "32 帧以统一 80ms 节奏完成一次 2560ms 周期，抽样序列呈连续的扩张、峰值和回落，首尾像素差仅 0.575，循环衔接良好。12.5fps 与 17 个独立帧足以形成自然呼吸感，但运动细腻度仍略低于更高帧率实现。"
+    },
+    {
+      "criterion_id": "pulse-color",
+      "score": 0.97,
+      "evidence_refs": [
+        "artifacts/runs/r4-slack-gif-creator-evolution/evals/candidate-04b26dff2bc83b82334bf184/validation/derived/work-ed3b4c130252b4a37e48a32c/contact-sheet.png",
+        "artifacts/runs/r4-slack-gif-creator-evolution/evals/candidate-04b26dff2bc83b82334bf184/validation/workspaces/work-ed3b4c130252b4a37e48a32c/go_alert_pulse.gif"
+      ],
+      "rationale_zh": "深蓝背景、珊瑚红徽章与白色文字三层关系明确；白字外缘的深色描边进一步稳固了全过程对比，整体醒目而不刺眼。"
+    },
+    {
+      "criterion_id": "pulse-emoji-ready",
+      "score": 0.9,
+      "evidence_refs": [
+        "artifacts/runs/r4-slack-gif-creator-evolution/evals/candidate-04b26dff2bc83b82334bf184/validation/derived/work-ed3b4c130252b4a37e48a32c/contact-sheet.png",
+        "artifacts/runs/r4-slack-gif-creator-evolution/evals/candidate-04b26dff2bc83b82334bf184/validation/blind-inspections/blind-50a45dc3f57fefa132e93473.json",
+        "artifacts/runs/r4-slack-gif-creator-evolution/evals/candidate-04b26dff2bc83b82334bf184/validation/workspaces/work-ed3b4c130252b4a37e48a32c/go_alert_pulse.gif"
+      ],
+      "rationale_zh": "128×128 构图集中、语义直接，2.56 秒无限循环适合 Slack 表情持续播放，118503 字节体积也较轻。多边形徽章和外圈细线提供了完成度，但外圈细节在极小显示尺寸下可能弱化。"
+    }
+  ],
+  "overall_score": 0.931,
+  "factual_claims_zh": [
+    "交付物为 128×128 GIF，文件大小 118503 字节，SHA-256 与 work item 声明的 e85db341809859081de0338200ff9a389fda9ac126c81fa2ecb4aca81b6542be 一致。",
+    "盲检记录显示共 32 帧，每帧 80ms，总时长 2560ms，有效帧率 12.5fps，loop_count 为 0。",
+    "盲检记录显示独立帧数为 17，平均相邻像素差为 3.14992925172211，首尾像素差为 0.5750935872395834。",
+    "contact sheet 的抽样帧显示白色 GO 文本在徽章缩放全过程中保持居中，深蓝背景、珊瑚红徽章和白字关系稳定。"
+  ],
+  "feedback_zh": "作品已经达到较高完成度：GO 文字强可读，配色执行准确，脉冲幅度清楚且循环闭合。若继续优化，可提升运动采样细腻度，并在 24–32px 实际显示尺寸下微调或简化外圈细线，以进一步增强 Slack 表情的小尺寸稳定性。"
+}

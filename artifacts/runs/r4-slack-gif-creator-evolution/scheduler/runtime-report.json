@@ -1,0 +1,103 @@
+{
+  "budget": {
+    "max_agent_calls": 80,
+    "max_candidates": 5,
+    "max_concurrency": 3,
+    "max_estimated_tokens": 2000000,
+    "max_proposals": 4,
+    "max_repair_attempts_per_work": 1,
+    "max_wall_clock_seconds": 7200,
+    "role_timeout_seconds": {
+      "comparator": 300,
+      "executor": 600,
+      "independent_grader": 420,
+      "proposal": 600,
+      "reflection": 600
+    },
+    "stop_semantics": "finish already ingested atomic operation, persist checkpoint, export no new work"
+  },
+  "completed_at": "2026-07-22T11:01:48.649789+00:00",
+  "cumulative_agent_duration_ms": 27449000,
+  "dependency_barriers": [
+    "executor",
+    "independent_grader",
+    "comparator"
+  ],
+  "evaluation_calls": 73,
+  "evaluation_failures": 1,
+  "exhausted_axes": [
+    "wall_clock"
+  ],
+  "max_concurrency": 3,
+  "parallelism_saved_wall_clock_is_not_usage_reduction": true,
+  "proposal_and_reflection_calls": 4,
+  "queue_wait_ms": 0,
+  "queue_wait_note": "Agent Host did not expose enqueue timestamps; no estimate was invented.",
+  "queue_wait_observed": false,
+  "reference_cache": {
+    "fresh_candidate_only": true,
+    "hits": 8,
+    "misses": 0,
+    "reused_reference_agent_calls": 0
+  },
+  "roles": {
+    "analyzer": {
+      "calls": 0,
+      "duration_ms": 0,
+      "failures": 0,
+      "input_tokens": 0,
+      "output_tokens": 0,
+      "tool_calls": 0
+    },
+    "comparator": {
+      "calls": 16,
+      "duration_ms": 5969000,
+      "failures": 0,
+      "input_tokens": 187530,
+      "output_tokens": 21900,
+      "tool_calls": 180
+    },
+    "executor": {
+      "calls": 29,
+      "duration_ms": 12615000,
+      "failures": 1,
+      "input_tokens": 857900,
+      "output_tokens": 198200,
+      "tool_calls": 583
+    },
+    "independent_grader": {
+      "calls": 28,
+      "duration_ms": 7875000,
+      "failures": 0,
+      "input_tokens": 293090,
+      "output_tokens": 54250,
+      "tool_calls": 290
+    }
+  },
+  "schema_version": "1.0.0",
+  "start_time_source": "resolved-config.json filesystem mtime",
+  "started_at": "2026-07-22T08:09:57.597452+00:00",
+  "stop_semantics": "finish already ingested atomic operation, persist checkpoint, export no new work",
+  "usage": {
+    "agent_calls": 77,
+    "cache_hits": 8,
+    "cache_misses": 0,
+    "candidates": 4,
+    "cumulative_agent_duration_ms": 27449000,
+    "estimated_tokens": 1649370,
+    "proposals": 3,
+    "queue_wait_ms": 0,
+    "repairs": 1,
+    "wall_clock_duration_ms": 10311052
+  },
+  "usage_report_refs": [
+    "artifacts/runs/r4-slack-gif-creator-evolution/evals/candidate-04b26dff2bc83b82334bf184/train/usage-report.json",
+    "artifacts/runs/r4-slack-gif-creator-evolution/evals/candidate-04b26dff2bc83b82334bf184/validation/usage-report.json",
+    "artifacts/runs/r4-slack-gif-creator-evolution/evals/candidate-2dad7a05ce4a6460dd71f470/train/usage-report.json",
+    "artifacts/runs/r4-slack-gif-creator-evolution/evals/candidate-2dad7a05ce4a6460dd71f470/validation/usage-report.json",
+    "artifacts/runs/r4-slack-gif-creator-evolution/evals/candidate-4b5885d1dd5fe978c8f1dad3/train/usage-report.json",
+    "artifacts/runs/r4-slack-gif-creator-evolution/evals/candidate-4b5885d1dd5fe978c8f1dad3/validation/usage-report.json",
+    "artifacts/runs/r4-slack-gif-creator-evolution/evals/candidate-edf5f1aa07926ba5415f0442/train/usage-report.json"
+  ],
+  "wall_clock_duration_ms": 10311052
+}

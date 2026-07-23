@@ -1,0 +1,204 @@
+{
+  "$defs": {
+    "ArtifactRef": {
+      "additionalProperties": false,
+      "properties": {
+        "media_type": {
+          "default": "application/json",
+          "title": "Media Type",
+          "type": "string"
+        },
+        "path": {
+          "title": "Path",
+          "type": "string"
+        },
+        "sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Sha256",
+          "type": "string"
+        },
+        "size_bytes": {
+          "minimum": 0,
+          "title": "Size Bytes",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "path",
+        "sha256",
+        "size_bytes"
+      ],
+      "title": "ArtifactRef",
+      "type": "object"
+    },
+    "BlindArtifact": {
+      "additionalProperties": false,
+      "properties": {
+        "artifact": {
+          "$ref": "#/$defs/ArtifactRef"
+        },
+        "artifact_root": {
+          "title": "Artifact Root",
+          "type": "string"
+        },
+        "blind_id": {
+          "title": "Blind Id",
+          "type": "string"
+        },
+        "contact_sheet_ref": {
+          "title": "Contact Sheet Ref",
+          "type": "string"
+        },
+        "inspection_ref": {
+          "title": "Inspection Ref",
+          "type": "string"
+        }
+      },
+      "required": [
+        "blind_id",
+        "artifact_root",
+        "artifact",
+        "contact_sheet_ref",
+        "inspection_ref"
+      ],
+      "title": "BlindArtifact",
+      "type": "object"
+    },
+    "ComparatorSide": {
+      "additionalProperties": false,
+      "properties": {
+        "blind_artifact": {
+          "$ref": "#/$defs/BlindArtifact"
+        },
+        "side_id": {
+          "enum": [
+            "left",
+            "right"
+          ],
+          "title": "Side Id",
+          "type": "string"
+        }
+      },
+      "required": [
+        "side_id",
+        "blind_artifact"
+      ],
+      "title": "ComparatorSide",
+      "type": "object"
+    },
+    "RubricCriterion": {
+      "additionalProperties": false,
+      "properties": {
+        "criterion_id": {
+          "title": "Criterion Id",
+          "type": "string"
+        },
+        "description_zh": {
+          "title": "Description Zh",
+          "type": "string"
+        },
+        "label_zh": {
+          "title": "Label Zh",
+          "type": "string"
+        },
+        "weight": {
+          "exclusiveMinimum": 0,
+          "maximum": 1,
+          "title": "Weight",
+          "type": "number"
+        }
+      },
+      "required": [
+        "criterion_id",
+        "label_zh",
+        "description_zh",
+        "weight"
+      ],
+      "title": "RubricCriterion",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "comparator_work_id": {
+      "title": "Comparator Work Id",
+      "type": "string"
+    },
+    "expected_output_zh": {
+      "title": "Expected Output Zh",
+      "type": "string"
+    },
+    "forbidden_inputs": {
+      "default": [
+        "variant identity",
+        "candidate identity",
+        "expected winner",
+        "executor conversation",
+        "independent grader score",
+        "deterministic assertion score"
+      ],
+      "items": {
+        "type": "string"
+      },
+      "title": "Forbidden Inputs",
+      "type": "array"
+    },
+    "left": {
+      "$ref": "#/$defs/ComparatorSide"
+    },
+    "order_label": {
+      "enum": [
+        "AB",
+        "BA"
+      ],
+      "title": "Order Label",
+      "type": "string"
+    },
+    "right": {
+      "$ref": "#/$defs/ComparatorSide"
+    },
+    "role": {
+      "const": "comparator",
+      "default": "comparator",
+      "title": "Role",
+      "type": "string"
+    },
+    "rubric": {
+      "items": {
+        "$ref": "#/$defs/RubricCriterion"
+      },
+      "title": "Rubric",
+      "type": "array"
+    },
+    "schema_version": {
+      "default": "1.0.0",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "submission_schema_ref": {
+      "title": "Submission Schema Ref",
+      "type": "string"
+    },
+    "task_id": {
+      "title": "Task Id",
+      "type": "string"
+    },
+    "task_prompt": {
+      "title": "Task Prompt",
+      "type": "string"
+    }
+  },
+  "required": [
+    "comparator_work_id",
+    "task_id",
+    "task_prompt",
+    "expected_output_zh",
+    "rubric",
+    "left",
+    "right",
+    "order_label",
+    "submission_schema_ref"
+  ],
+  "title": "ComparatorWorkItem",
+  "type": "object"
+}

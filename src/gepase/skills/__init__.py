@@ -1,0 +1,2 @@
+"""Skill package source inventory."""
+

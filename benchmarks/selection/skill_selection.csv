@@ -1,0 +1,6 @@
+private_alias,public_equivalent,real_value,public_safety,deterministic_oracle,evidence_tier_coverage,decision
+local-skill-001,structured-report-builder,5,5,5,5,selected
+local-skill-002,policy-evidence-evaluator,5,5,5,5,selected
+local-skill-003,none,4,1,1,2,private external service; local-real only
+local-skill-004,none,4,3,3,3,subjective judge share too high for v1
+local-skill-005,tabular-context-builder,5,5,5,5,selected

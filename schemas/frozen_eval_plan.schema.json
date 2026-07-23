@@ -1,0 +1,438 @@
+{
+  "$defs": {
+    "EvidenceTier": {
+      "enum": [
+        "E0",
+        "E1",
+        "E2",
+        "E3"
+      ],
+      "title": "EvidenceTier",
+      "type": "string"
+    },
+    "FixtureBinding": {
+      "additionalProperties": false,
+      "properties": {
+        "license": {
+          "title": "License",
+          "type": "string"
+        },
+        "media_type": {
+          "title": "Media Type",
+          "type": "string"
+        },
+        "purpose_zh": {
+          "title": "Purpose Zh",
+          "type": "string"
+        },
+        "ref": {
+          "title": "Ref",
+          "type": "string"
+        },
+        "sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Sha256",
+          "type": "string"
+        }
+      },
+      "required": [
+        "ref",
+        "sha256",
+        "media_type",
+        "license",
+        "purpose_zh"
+      ],
+      "title": "FixtureBinding",
+      "type": "object"
+    },
+    "FunctionalEvalCase": {
+      "additionalProperties": false,
+      "properties": {
+        "case_family": {
+          "title": "Case Family",
+          "type": "string"
+        },
+        "case_id": {
+          "title": "Case Id",
+          "type": "string"
+        },
+        "case_type": {
+          "const": "functional",
+          "default": "functional",
+          "title": "Case Type",
+          "type": "string"
+        },
+        "difficulty": {
+          "enum": [
+            "easy",
+            "medium",
+            "hard"
+          ],
+          "title": "Difficulty",
+          "type": "string"
+        },
+        "evidence_policy": {
+          "$ref": "#/$defs/FunctionalEvidencePolicy"
+        },
+        "expectations": {
+          "items": {
+            "$ref": "#/$defs/FunctionalExpectation"
+          },
+          "title": "Expectations",
+          "type": "array"
+        },
+        "expected_output_zh": {
+          "title": "Expected Output Zh",
+          "type": "string"
+        },
+        "fixtures": {
+          "items": {
+            "$ref": "#/$defs/FixtureBinding"
+          },
+          "title": "Fixtures",
+          "type": "array"
+        },
+        "leakage_group": {
+          "title": "Leakage Group",
+          "type": "string"
+        },
+        "prompt": {
+          "title": "Prompt",
+          "type": "string"
+        },
+        "requested_output": {
+          "$ref": "#/$defs/RequestedOutput"
+        },
+        "required_capabilities": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Required Capabilities",
+          "type": "array"
+        },
+        "risk": {
+          "enum": [
+            "low",
+            "medium",
+            "high"
+          ],
+          "title": "Risk",
+          "type": "string"
+        },
+        "rubric": {
+          "items": {
+            "$ref": "#/$defs/RubricCriterion"
+          },
+          "title": "Rubric",
+          "type": "array"
+        },
+        "split": {
+          "enum": [
+            "train",
+            "validation"
+          ],
+          "title": "Split",
+          "type": "string"
+        }
+      },
+      "required": [
+        "case_id",
+        "case_family",
+        "prompt",
+        "fixtures",
+        "requested_output",
+        "expected_output_zh",
+        "expectations",
+        "rubric",
+        "required_capabilities",
+        "difficulty",
+        "risk",
+        "leakage_group",
+        "split"
+      ],
+      "title": "FunctionalEvalCase",
+      "type": "object"
+    },
+    "FunctionalEvidencePolicy": {
+      "additionalProperties": false,
+      "properties": {
+        "deterministic_tier": {
+          "$ref": "#/$defs/EvidenceTier",
+          "default": "E3"
+        },
+        "enable_e1": {
+          "default": false,
+          "title": "Enable E1",
+          "type": "boolean"
+        },
+        "minimum_tier": {
+          "$ref": "#/$defs/EvidenceTier",
+          "default": "E2"
+        }
+      },
+      "title": "FunctionalEvidencePolicy",
+      "type": "object"
+    },
+    "FunctionalExpectation": {
+      "additionalProperties": false,
+      "properties": {
+        "category": {
+          "enum": [
+            "content",
+            "technical",
+            "temporal",
+            "safety",
+            "efficiency"
+          ],
+          "title": "Category",
+          "type": "string"
+        },
+        "deterministic": {
+          "title": "Deterministic",
+          "type": "boolean"
+        },
+        "evidence_kind": {
+          "enum": [
+            "file_presence",
+            "artifact_metadata",
+            "frame_content",
+            "temporal_sequence",
+            "visual_inspection",
+            "usage_record"
+          ],
+          "title": "Evidence Kind",
+          "type": "string"
+        },
+        "expectation_id": {
+          "title": "Expectation Id",
+          "type": "string"
+        },
+        "statement_zh": {
+          "title": "Statement Zh",
+          "type": "string"
+        },
+        "weight": {
+          "exclusiveMinimum": 0,
+          "title": "Weight",
+          "type": "number"
+        }
+      },
+      "required": [
+        "expectation_id",
+        "category",
+        "statement_zh",
+        "evidence_kind",
+        "deterministic",
+        "weight"
+      ],
+      "title": "FunctionalExpectation",
+      "type": "object"
+    },
+    "RequestedOutput": {
+      "additionalProperties": false,
+      "properties": {
+        "description_zh": {
+          "title": "Description Zh",
+          "type": "string"
+        },
+        "filename": {
+          "title": "Filename",
+          "type": "string"
+        },
+        "media_type": {
+          "title": "Media Type",
+          "type": "string"
+        }
+      },
+      "required": [
+        "filename",
+        "media_type",
+        "description_zh"
+      ],
+      "title": "RequestedOutput",
+      "type": "object"
+    },
+    "RubricCriterion": {
+      "additionalProperties": false,
+      "properties": {
+        "criterion_id": {
+          "title": "Criterion Id",
+          "type": "string"
+        },
+        "description_zh": {
+          "title": "Description Zh",
+          "type": "string"
+        },
+        "label_zh": {
+          "title": "Label Zh",
+          "type": "string"
+        },
+        "weight": {
+          "exclusiveMinimum": 0,
+          "maximum": 1,
+          "title": "Weight",
+          "type": "number"
+        }
+      },
+      "required": [
+        "criterion_id",
+        "label_zh",
+        "description_zh",
+        "weight"
+      ],
+      "title": "RubricCriterion",
+      "type": "object"
+    },
+    "TriggerCaseKind": {
+      "enum": [
+        "positive",
+        "negative",
+        "near_boundary"
+      ],
+      "title": "TriggerCaseKind",
+      "type": "string"
+    },
+    "TriggerEvalCase": {
+      "additionalProperties": false,
+      "properties": {
+        "case_id": {
+          "title": "Case Id",
+          "type": "string"
+        },
+        "case_type": {
+          "const": "trigger",
+          "default": "trigger",
+          "title": "Case Type",
+          "type": "string"
+        },
+        "expected_trigger": {
+          "title": "Expected Trigger",
+          "type": "boolean"
+        },
+        "kind": {
+          "$ref": "#/$defs/TriggerCaseKind"
+        },
+        "query": {
+          "title": "Query",
+          "type": "string"
+        },
+        "rationale_zh": {
+          "title": "Rationale Zh",
+          "type": "string"
+        },
+        "risk": {
+          "enum": [
+            "low",
+            "medium",
+            "high"
+          ],
+          "title": "Risk",
+          "type": "string"
+        },
+        "split": {
+          "enum": [
+            "train",
+            "validation"
+          ],
+          "title": "Split",
+          "type": "string"
+        }
+      },
+      "required": [
+        "case_id",
+        "query",
+        "kind",
+        "expected_trigger",
+        "rationale_zh",
+        "split",
+        "risk"
+      ],
+      "title": "TriggerEvalCase",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "draft_hash": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Draft Hash",
+      "type": "string"
+    },
+    "frozen_at": {
+      "format": "date-time",
+      "title": "Frozen At",
+      "type": "string"
+    },
+    "functional_cases": {
+      "items": {
+        "$ref": "#/$defs/FunctionalEvalCase"
+      },
+      "title": "Functional Cases",
+      "type": "array"
+    },
+    "package_id": {
+      "title": "Package Id",
+      "type": "string"
+    },
+    "package_snapshot_hash": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Package Snapshot Hash",
+      "type": "string"
+    },
+    "plan_hash": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Plan Hash",
+      "type": "string"
+    },
+    "plan_id": {
+      "title": "Plan Id",
+      "type": "string"
+    },
+    "review_hash": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Review Hash",
+      "type": "string"
+    },
+    "review_id": {
+      "title": "Review Id",
+      "type": "string"
+    },
+    "revision": {
+      "minimum": 1,
+      "title": "Revision",
+      "type": "integer"
+    },
+    "schema_version": {
+      "default": "1.0.0",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "source_commit": {
+      "pattern": "^[0-9a-f]{40}$",
+      "title": "Source Commit",
+      "type": "string"
+    },
+    "trigger_cases": {
+      "items": {
+        "$ref": "#/$defs/TriggerEvalCase"
+      },
+      "title": "Trigger Cases",
+      "type": "array"
+    }
+  },
+  "required": [
+    "plan_id",
+    "revision",
+    "plan_hash",
+    "package_id",
+    "package_snapshot_hash",
+    "source_commit",
+    "draft_hash",
+    "review_id",
+    "review_hash",
+    "trigger_cases",
+    "functional_cases"
+  ],
+  "title": "FrozenEvalPlan",
+  "type": "object"
+}

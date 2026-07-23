@@ -1,0 +1,17 @@
+{
+  "captured_at": "2026-07-23T03:16:52.471824+00:00",
+  "dirty_entries_observed": 4060,
+  "schema_version": "1.0.0",
+  "scope": {
+    "agent_native_roles_allowed": false,
+    "candidate_search_allowed": false,
+    "headless_provider_calls_allowed": false,
+    "private_skills_in_scope": false,
+    "r3_rerun_allowed": false,
+    "r4_rerun_allowed": false,
+    "sealed_r2_r5_evidence_only": true
+  },
+  "source_tree_hash": "1bd8c7f65ef353b588e96af837c4c9874fbd3b74436d8c8804c5042246dc6505",
+  "stage_id": "S10",
+  "started_from_commit": "ea84ea8983509a91770932b9e21a74cd43235810"
+}

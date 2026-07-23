@@ -1,0 +1,298 @@
+{
+  "artifact_root": "artifacts/runs/r3-slack-gif-creator-paired/workspaces/work-18b797bfd1094a2c7da4ec6b",
+  "artifacts": [
+    {
+      "media_type": "image/gif",
+      "path": "compact_check_burst.gif",
+      "sha256": "527cb4850496383dca16d09cfa041baa2b806c8be5441e4aa7d24797e756a00c",
+      "size_bytes": 139597
+    },
+    {
+      "media_type": "application/json",
+      "path": "execution-summary.json",
+      "sha256": "b0c5e90ce8456b8b49c329a53835ecb18e39d5a2192e0d8f69c53f11c0959417",
+      "size_bytes": 732
+    },
+    {
+      "media_type": "text/x-python",
+      "path": "generate_gif.py",
+      "sha256": "697a6c8a936f55f310425fd0259eacea17129cdac8b73a01437700b8540eeed3",
+      "size_bytes": 3779
+    },
+    {
+      "media_type": "application/json",
+      "path": "observed-trace.json",
+      "sha256": "8598cfa5e5329fcd65d1ec8b37e99eedf4a045160657902daf2ae86c3e7a8960",
+      "size_bytes": 1521
+    },
+    {
+      "media_type": "application/json",
+      "path": "package-access.json",
+      "sha256": "638f22295f6fda1430e483e3f9c16ca7a3e90ffb8b1b519ca15369841dd8b447",
+      "size_bytes": 28
+    },
+    {
+      "media_type": "image/png",
+      "path": "review_contact_sheet.png",
+      "sha256": "2ef99cadda5471e144e2b8fe07a7cc79a6bd65312abe18f602fb77094a3c013a",
+      "size_bytes": 54633
+    },
+    {
+      "media_type": "text/markdown",
+      "path": "transcript.md",
+      "sha256": "f86401264d88bc0987b86348dfd46685727a232f0c8a70fa1e2f41a995b3fc8c",
+      "size_bytes": 656
+    }
+  ],
+  "assertion_results": [
+    {
+      "assertion_id": "efficiency-container",
+      "detail": "通过内容/元数据检查",
+      "evidence_refs": [
+        "artifacts/runs/r3-slack-gif-creator-paired/derived/work-18b797bfd1094a2c7da4ec6b/measurements.json",
+        "artifacts/runs/r3-slack-gif-creator-paired/derived/work-18b797bfd1094a2c7da4ec6b/contact-sheet.png"
+      ],
+      "family": "artifact_metadata",
+      "measurements": {
+        "frame_count": 18,
+        "height": 480,
+        "loop_count": 0,
+        "unique_frame_count": 18,
+        "width": 480
+      },
+      "passed": true,
+      "weight": 0.15
+    },
+    {
+      "assertion_id": "efficiency-size",
+      "detail": "通过内容/元数据检查",
+      "evidence_refs": [
+        "artifacts/runs/r3-slack-gif-creator-paired/derived/work-18b797bfd1094a2c7da4ec6b/measurements.json",
+        "artifacts/runs/r3-slack-gif-creator-paired/derived/work-18b797bfd1094a2c7da4ec6b/contact-sheet.png"
+      ],
+      "family": "artifact_metadata",
+      "measurements": {
+        "file_size_bytes": 139597,
+        "maximum_bytes": 921600
+      },
+      "passed": true,
+      "weight": 0.25
+    },
+    {
+      "assertion_id": "efficiency-fps",
+      "detail": "通过内容/元数据检查",
+      "evidence_refs": [
+        "artifacts/runs/r3-slack-gif-creator-paired/derived/work-18b797bfd1094a2c7da4ec6b/measurements.json",
+        "artifacts/runs/r3-slack-gif-creator-paired/derived/work-18b797bfd1094a2c7da4ec6b/contact-sheet.png"
+      ],
+      "family": "artifact_metadata",
+      "measurements": {
+        "allowed": [
+          10,
+          16
+        ],
+        "effective_fps": 12.5
+      },
+      "passed": true,
+      "weight": 0.15
+    },
+    {
+      "assertion_id": "efficiency-duration",
+      "detail": "通过内容/元数据检查",
+      "evidence_refs": [
+        "artifacts/runs/r3-slack-gif-creator-paired/derived/work-18b797bfd1094a2c7da4ec6b/measurements.json",
+        "artifacts/runs/r3-slack-gif-creator-paired/derived/work-18b797bfd1094a2c7da4ec6b/contact-sheet.png"
+      ],
+      "family": "artifact_metadata",
+      "measurements": {
+        "max_frame_share": 0.05555555555555555,
+        "maximum_ms": 3000,
+        "minimum_ms": 1400,
+        "non_positive_frames": 0,
+        "total_duration_ms": 1440
+      },
+      "passed": true,
+      "weight": 0.15
+    },
+    {
+      "assertion_id": "efficiency-check",
+      "detail": "通过内容/元数据检查",
+      "evidence_refs": [
+        "artifacts/runs/r3-slack-gif-creator-paired/derived/work-18b797bfd1094a2c7da4ec6b/measurements.json",
+        "artifacts/runs/r3-slack-gif-creator-paired/derived/work-18b797bfd1094a2c7da4ec6b/contact-sheet.png"
+      ],
+      "family": "frame_content",
+      "measurements": {
+        "central_high_contrast_fraction": [
+          0.014405864197530864,
+          0.015949074074074074,
+          0.021998456790123456,
+          0.04304783950617284,
+          0.04364197530864197,
+          0.04056327160493827,
+          0.03449074074074074,
+          0.03236111111111111,
+          0.02763888888888889,
+          0.02070216049382716,
+          0.014405864197530864,
+          0.014405864197530864,
+          0.014405864197530864,
+          0.014405864197530864,
+          0.014405864197530864,
+          0.014405864197530864,
+          0.014405864197530864,
+          0.014405864197530864
+        ]
+      },
+      "passed": true,
+      "weight": 0.15
+    },
+    {
+      "assertion_id": "efficiency-burst",
+      "detail": "未满足已冻结 expectation 的可执行判据",
+      "evidence_refs": [
+        "artifacts/runs/r3-slack-gif-creator-paired/derived/work-18b797bfd1094a2c7da4ec6b/measurements.json",
+        "artifacts/runs/r3-slack-gif-creator-paired/derived/work-18b797bfd1094a2c7da4ec6b/contact-sheet.png"
+      ],
+      "family": "temporal_sequence",
+      "measurements": {
+        "particle_median_radius": [
+          68.95650765100973,
+          72.94518489934754,
+          75.66372975210778,
+          77.38862965578342,
+          74.68600939935136,
+          74.0,
+          73.7360156233031,
+          73.40980860893181,
+          73.00684899377592,
+          72.53275122315436,
+          72.02777242147643,
+          69.31810730249349,
+          68.95650765100973,
+          68.95650765100973,
+          68.95650765100973,
+          68.95650765100973,
+          68.95650765100973,
+          68.95650765100973
+        ],
+        "visible_area": [
+          0.03782986111111111,
+          0.0525,
+          0.06327256944444444,
+          0.07069444444444445,
+          0.06034288194444445,
+          0.05747395833333333,
+          0.05636284722222222,
+          0.05525173611111111,
+          0.0536328125,
+          0.05180121527777778,
+          0.04960503472222222,
+          0.03924045138888889,
+          0.03782986111111111,
+          0.03782986111111111,
+          0.03782986111111111,
+          0.03782986111111111,
+          0.03782986111111111,
+          0.03782986111111111
+        ]
+      },
+      "passed": false,
+      "weight": 0.15
+    }
+  ],
+  "candidate_snapshot_hash": "20232f3aeb397f28e32d38cc016ce6dbffa2112effd52813b0cbec243c1307ce",
+  "evidence_tier": "E3",
+  "failure_detail": null,
+  "failure_kind": null,
+  "fixture_hash": "1a90ea1ed8c3e71d7b7e05d2ab619af471da1f00232abde98eebd36045142956",
+  "host_model_snapshot": "edbfd8f0668f44e333585ee805a6f891a7443402aad61b3e8cfeca5913b1338b",
+  "observed_trace": [
+    {
+      "action": "read_work_item",
+      "outcome": "Loaded prompt, requested output, and fixture reference.",
+      "sequence": 1,
+      "target": "work-18b797bfd1094a2c7da4ec6b.json",
+      "tool": "shell"
+    },
+    {
+      "action": "read_fixture",
+      "outcome": "Loaded 480x480 canvas, 900KB maximum, and 10-16 FPS constraint.",
+      "sequence": 2,
+      "target": "efficiency-burst.json",
+      "tool": "shell"
+    },
+    {
+      "action": "create_generator",
+      "outcome": "Created deterministic 18-frame Pillow animation generator.",
+      "sequence": 3,
+      "target": "generate_gif.py",
+      "tool": "apply_patch"
+    },
+    {
+      "action": "generate_artifact",
+      "outcome": "Generated an optimized 64-color-source-palette looping GIF.",
+      "sequence": 4,
+      "target": "compact_check_burst.gif",
+      "tool": "uv/Pillow"
+    },
+    {
+      "action": "open_artifact",
+      "outcome": "Confirmed the central check badge is sharp and centered.",
+      "sequence": 5,
+      "target": "compact_check_burst.gif",
+      "tool": "image viewer"
+    },
+    {
+      "action": "inspect_animation_samples",
+      "outcome": "Confirmed outward particle motion, progressive fade, readable silhouette, and no clipping across sampled frames.",
+      "sequence": 6,
+      "target": "review_contact_sheet.png",
+      "tool": "Pillow and image viewer"
+    },
+    {
+      "action": "verify_metadata",
+      "outcome": "Verified 480x480, 18 frames, 80ms each, 12.5 FPS, infinite loop, and 139597 bytes.",
+      "sequence": 7,
+      "target": "compact_check_burst.gif",
+      "tool": "Pillow"
+    }
+  ],
+  "pair_id": "pair-d45dc9a03ac7844ef21a97e7",
+  "planned_trace": [],
+  "policy_hash": "3b49f46ee66bafaf2bcf1aeac08f1bd7f4c719463b0e655afe40a98a4af6b3ec",
+  "prompt_hash": "8833a216382e0090a3adf585b8639a2d8979555856866f91ab690b8886921969",
+  "provenance": {
+    "context_id": null,
+    "generated_at": "2026-07-21T15:34:47.956037Z",
+    "generated_by": "FunctionalAssertionProvider.evaluate",
+    "host": "codex",
+    "host_task_id": "/root/r3_exec_18b797",
+    "model": "gpt-5.6-sol",
+    "origin": "assertion",
+    "provider_id": "functional-assertion-v1",
+    "submission_id": "submission-ba25e02b8424f4ed5bb4f96e"
+  },
+  "provider_snapshot": "functional-assertion-v1:108de89e9bf6e3213a8c925ac1ad530b28b8dc53468dafb4e9f02fcec830d72f",
+  "record_id": "record-f99a9e049dc9a2f612df77cc",
+  "schema_version": "1.0.0",
+  "score": 0.85,
+  "seed": 42,
+  "skill_id": "slack-gif-creator",
+  "source_record_refs": [
+    "record-98d7627b1e837b4daa44c097"
+  ],
+  "task_id": "functional-validation-efficiency-007",
+  "task_score_vector": null,
+  "trace_completeness": "complete",
+  "uncertainty": 0.0,
+  "usage": {
+    "duration_ms": 120000,
+    "input_tokens": 3500,
+    "output_tokens": 1200,
+    "token_count_kind": "estimated",
+    "tool_calls": 8
+  },
+  "variant": "no-skill",
+  "work_id": "work-18b797bfd1094a2c7da4ec6b-assertions"
+}

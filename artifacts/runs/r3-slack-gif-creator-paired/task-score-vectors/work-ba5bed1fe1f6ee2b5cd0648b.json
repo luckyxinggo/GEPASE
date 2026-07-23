@@ -1,0 +1,21 @@
+{
+  "candidate_snapshot_hash": "20232f3aeb397f28e32d38cc016ce6dbffa2112effd52813b0cbec243c1307ce",
+  "efficiency": 0.8347435833333333,
+  "evidence_refs": [
+    "artifacts/runs/r3-slack-gif-creator-paired/records/record-7c860f2a7745c0f3f0eaefe2.json",
+    "artifacts/runs/r3-slack-gif-creator-paired/records/record-49a48fffda1790e993f041ec.json",
+    "artifacts/runs/r3-slack-gif-creator-paired/deterministic/work-ba5bed1fe1f6ee2b5cd0648b.json",
+    "artifacts/runs/r3-slack-gif-creator-paired/grader-submissions/grader-work-7ccc066c17938357a8a56748.json",
+    "artifacts/runs/r3-slack-gif-creator-paired/e0-package-record.json"
+  ],
+  "output_quality": 0.9359999999999999,
+  "package_quality": 1.0,
+  "pair_id": "pair-b45bddd2be22dd318d8d737b",
+  "reliability": 0.9,
+  "schema_version": "1.0.0",
+  "scoring_policy_ref": "configs/canaries/slack-gif-creator-r3-scoring.json",
+  "skill_gain": 0.0,
+  "task_correctness": 1.0,
+  "task_id": "functional-train-easing-orbit-005",
+  "variant": "no-skill"
+}

@@ -1,0 +1,71 @@
+{
+  "artifacts": [
+    {
+      "media_type": "text/plain",
+      "path": "commands.log",
+      "sha256": "faa78741c5eabc46abb265f9d087032e5226ac688aac16bdbdcfaaa5355d6c54",
+      "size_bytes": 1031
+    },
+    {
+      "media_type": "application/json",
+      "path": "evidence/completion-audit.json",
+      "sha256": "103005946e484081fa8313de403de1c267d3ec320f164477b46aa9606efc2879",
+      "size_bytes": 2868
+    },
+    {
+      "media_type": "application/json",
+      "path": "evidence/r5-gates.json",
+      "sha256": "70e7c549a3b838e0570b490d50b52ee1184abb4008ae1037f2cf735dd37078b2",
+      "size_bytes": 2607
+    },
+    {
+      "media_type": "application/json",
+      "path": "evidence/ui-static-audit.json",
+      "sha256": "2e7f9b126f19415bbdd4d05f3e7dac5c76ac013e4cbda64a6ed3cb1c6ce84d58",
+      "size_bytes": 976
+    },
+    {
+      "media_type": "application/json",
+      "path": "evidence/visual-validation.json",
+      "sha256": "01f9cae33794ed937a70a83f6eb532051ac37c3a48ca6f7d3362aa4a039bf988",
+      "size_bytes": 1047
+    },
+    {
+      "media_type": "text/markdown",
+      "path": "external-validation.md",
+      "sha256": "519fed67b432aadf6427d63e8d55ec518f593371b25c990702c332c11081a17f",
+      "size_bytes": 1112
+    },
+    {
+      "media_type": "application/json",
+      "path": "preflight.json",
+      "sha256": "de920f1496c5a7e0163b4ad8b477523f2b8d4f05e11b5636ae09d3567ec34f5f",
+      "size_bytes": 1541
+    },
+    {
+      "media_type": "application/json",
+      "path": "resolved-config.json",
+      "sha256": "9536b3fd3cdea955ef35f9fbffab6690626b60e3b12dff28e51561689f0339fa",
+      "size_bytes": 866
+    },
+    {
+      "media_type": "text/markdown",
+      "path": "stage-summary.md",
+      "sha256": "d8ba4be98f443a611a51f28dde61cacfe70980988b53738cc48697d75df2db57",
+      "size_bytes": 2094
+    },
+    {
+      "media_type": "application/json",
+      "path": "stage_report.json",
+      "sha256": "f39cd936b78d68eac7dabbaedaa0459a6d9f22f6d5455e170d572930d0f26abd",
+      "size_bytes": 7720
+    },
+    {
+      "media_type": "application/xml",
+      "path": "test-results.xml",
+      "sha256": "3ba38573da3856881a58cc1e90a508a314eb80296f8d2af77c739080ef5b60c8",
+      "size_bytes": 19874
+    }
+  ],
+  "schema_version": "1.0.0"
+}

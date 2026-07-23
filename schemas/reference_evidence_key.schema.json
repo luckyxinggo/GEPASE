@@ -1,0 +1,136 @@
+{
+  "additionalProperties": false,
+  "properties": {
+    "bound_artifact_hashes": {
+      "additionalProperties": {
+        "type": "string"
+      },
+      "title": "Bound Artifact Hashes",
+      "type": "object"
+    },
+    "case_contract_hashes": {
+      "additionalProperties": {
+        "type": "string"
+      },
+      "title": "Case Contract Hashes",
+      "type": "object"
+    },
+    "fixture_hashes": {
+      "additionalProperties": {
+        "type": "string"
+      },
+      "title": "Fixture Hashes",
+      "type": "object"
+    },
+    "frozen_plan_artifact_hash": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Frozen Plan Artifact Hash",
+      "type": "string"
+    },
+    "frozen_plan_hash": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Frozen Plan Hash",
+      "type": "string"
+    },
+    "host": {
+      "title": "Host",
+      "type": "string"
+    },
+    "host_model_snapshot": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Host Model Snapshot",
+      "type": "string"
+    },
+    "host_policy": {
+      "title": "Host Policy",
+      "type": "string"
+    },
+    "model": {
+      "title": "Model",
+      "type": "string"
+    },
+    "provider_snapshot": {
+      "title": "Provider Snapshot",
+      "type": "string"
+    },
+    "reference_package_content_hash": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Reference Package Content Hash",
+      "type": "string"
+    },
+    "reference_package_snapshot_hash": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Reference Package Snapshot Hash",
+      "type": "string"
+    },
+    "reference_run_ref": {
+      "title": "Reference Run Ref",
+      "type": "string"
+    },
+    "reference_variant": {
+      "enum": [
+        "original",
+        "candidate"
+      ],
+      "title": "Reference Variant",
+      "type": "string"
+    },
+    "runtime_environment_fingerprint": {
+      "title": "Runtime Environment Fingerprint",
+      "type": "string"
+    },
+    "schema_version": {
+      "const": "1.0.0",
+      "default": "1.0.0",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "scoring_policy_hash": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Scoring Policy Hash",
+      "type": "string"
+    },
+    "seed": {
+      "title": "Seed",
+      "type": "integer"
+    },
+    "source_run_artifact_index_hash": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Source Run Artifact Index Hash",
+      "type": "string"
+    },
+    "timeout_seconds": {
+      "minimum": 1,
+      "title": "Timeout Seconds",
+      "type": "integer"
+    },
+    "tool_policy_fingerprint": {
+      "title": "Tool Policy Fingerprint",
+      "type": "string"
+    }
+  },
+  "required": [
+    "reference_run_ref",
+    "reference_variant",
+    "reference_package_snapshot_hash",
+    "reference_package_content_hash",
+    "frozen_plan_hash",
+    "frozen_plan_artifact_hash",
+    "case_contract_hashes",
+    "fixture_hashes",
+    "scoring_policy_hash",
+    "provider_snapshot",
+    "host",
+    "model",
+    "host_model_snapshot",
+    "runtime_environment_fingerprint",
+    "tool_policy_fingerprint",
+    "seed",
+    "timeout_seconds",
+    "host_policy",
+    "source_run_artifact_index_hash",
+    "bound_artifact_hashes"
+  ],
+  "title": "ReferenceEvidenceKey",
+  "type": "object"
+}

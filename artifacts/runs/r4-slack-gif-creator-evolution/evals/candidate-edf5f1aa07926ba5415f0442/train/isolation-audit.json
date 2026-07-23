@@ -1,0 +1,24 @@
+{
+  "analyzer_context_ids": [],
+  "candidate_identity_findings": [],
+  "comparator_context_ids": [],
+  "duplicate_context_ids": [],
+  "executor_context_ids": [
+    "r4_exec_badge_b",
+    "r4_exec_message_b",
+    "r4_exec_text_b",
+    "r4_exec_easing_b",
+    "r4_exec_emoji_b"
+  ],
+  "grader_context_ids": [
+    "r4_grade_b_badge",
+    "r4_grade_b_text",
+    "r4_grade_b_message",
+    "r4_grade_b_emoji",
+    "r4_grade_b_easing"
+  ],
+  "oracle_leakage_findings": [],
+  "schema_version": "1.0.0",
+  "sibling_leakage_findings": [],
+  "valid": true
+}

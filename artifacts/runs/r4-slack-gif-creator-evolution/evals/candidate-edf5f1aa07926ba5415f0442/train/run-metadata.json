@@ -1,0 +1,29 @@
+{
+  "candidate_content_hash": "2dab36108748cfb6cb7e3f53372aaf4c78c51d3995c04160d10105244d3c37b2",
+  "candidate_id": "candidate-edf5f1aa07926ba5415f0442",
+  "candidate_ref": "artifacts/runs/r4-slack-gif-creator-evolution/candidate-workspaces/applications/application-b75f0a0da538fa167f904c8a",
+  "frozen_plan_hash": "1893ad9a08978f2a8f107981a9a032c7581d08082926ee52276bd5feba2df950",
+  "frozen_plan_ref": "artifacts/runs/r2-slack-gif-creator-evalplan/frozen-eval-plan.json",
+  "host": "codex",
+  "mode": "frozen-candidate",
+  "model": "gpt-5.6-sol",
+  "oracle_sha256": "9ccb487705abdfa91ff82437cc028f139a3af419ee16baac869aaddee75920fa",
+  "package_graph_ref": "artifacts/runs/r4-slack-gif-creator-evolution/candidates/candidate-edf5f1aa07926ba5415f0442/graph.json",
+  "reference_key_hash": "426e75b8f1b9f211e1b3d9ee16c52c464ebe1e41125f9e2bcbacbc05923d7179",
+  "reference_key_ref": "artifacts/runs/r4-slack-gif-creator-evolution/reference-evidence-key.json",
+  "reference_run_ref": "artifacts/runs/r3-slack-gif-creator-paired",
+  "reference_variant": "original",
+  "schema_version": "1.0.0",
+  "scoring_policy_hash": "3b49f46ee66bafaf2bcf1aeac08f1bd7f4c719463b0e655afe40a98a4af6b3ec",
+  "scoring_policy_ref": "configs/canaries/slack-gif-creator-r3-scoring.json",
+  "seed": 42,
+  "selected_case_ids": [
+    "functional-train-emoji-bounce-001",
+    "functional-train-message-status-002",
+    "functional-train-input-badge-003",
+    "functional-train-text-readable-004",
+    "functional-train-easing-orbit-005"
+  ],
+  "split": "train",
+  "timeout_seconds": 600
+}

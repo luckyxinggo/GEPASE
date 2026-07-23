@@ -1,0 +1,32 @@
+# Local credentials
+.env
+.env.*
+!.env.example
+
+# Private/local Skill corpus. Sanitized publishable copies belong in benchmarks/skills/.
+/skills_test/
+
+# Python/runtime caches
+.venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+.gepase-cache/
+
+# Local raw/replay evidence can contain private prompts or large agent traces.
+/artifacts/local/
+/results/
+/artifacts/runs/s7-5-local-real/
+/artifacts/runs/s7-5-repaired-loop/
+/artifacts/runs/s7-5-repaired-loop/private/
+/artifacts/runs/s7-5-no-headroom/
+/artifacts/manual_external_validation/
+
+# OS/editor files
+.DS_Store
+.idea/
+.vscode/

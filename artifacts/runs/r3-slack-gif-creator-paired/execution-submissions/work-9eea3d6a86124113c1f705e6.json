@@ -1,0 +1,121 @@
+{
+  "artifact_root": "artifacts/runs/r3-slack-gif-creator-paired/workspaces/work-9eea3d6a86124113c1f705e6",
+  "artifacts": [
+    {
+      "media_type": "application/json",
+      "path": "execution-summary.json",
+      "sha256": "1cc69f14feac6114daf58b0085ebcc07b6fdf72052e35d6ddab081530805fd9e",
+      "size_bytes": 722
+    },
+    {
+      "media_type": "text/x-python",
+      "path": "generate_gif.py",
+      "sha256": "d68c0dded291ab90002b43c2eabc4a60531d8b4811a12419e9b26ae746bd591f",
+      "size_bytes": 3942
+    },
+    {
+      "media_type": "image/gif",
+      "path": "go_alert_pulse.gif",
+      "sha256": "488e2a2d79e2fd68c269f52ed44a183bd2acdf336ec46d9a5bc55bcb7ddfccc9",
+      "size_bytes": 232054
+    },
+    {
+      "media_type": "application/json",
+      "path": "observed-trace.json",
+      "sha256": "bf3c56d71860b69ad1ff703aeebb8b086a1cf4f47920d6cff62a55a1e970d941",
+      "size_bytes": 1289
+    },
+    {
+      "media_type": "application/json",
+      "path": "package-access.json",
+      "sha256": "558cae6e654690f429912440d059c2c100a356395d19ea8ef12c9af47344f54e",
+      "size_bytes": 23
+    },
+    {
+      "media_type": "text/markdown",
+      "path": "transcript.md",
+      "sha256": "8a96d99b17cd1668af2fb5c10b03d5d08cbc4ef507b65d01b95b963163abf36a",
+      "size_bytes": 946
+    },
+    {
+      "media_type": "application/json",
+      "path": "verification.json",
+      "sha256": "b001c31e0e663c6fff97431b8252f8b2af37ea913698124650245e2c5e816a1f",
+      "size_bytes": 657
+    }
+  ],
+  "context_id": "r3_exec_9eea3d",
+  "failure_detail": null,
+  "failure_kind": null,
+  "finished_at": "2026-07-21T15:49:11.923299Z",
+  "host": "codex",
+  "host_task_id": "/root/r3_exec_9eea3d",
+  "model": "gpt-5.6-sol",
+  "observed_trace": [
+    {
+      "action": "inspect_work_item",
+      "outcome": "completed",
+      "sequence": 0,
+      "target": "executor-work-items/work-9eea3d6a86124113c1f705e6.json",
+      "tool": "read"
+    },
+    {
+      "action": "inspect_fixture",
+      "outcome": "completed",
+      "sequence": 1,
+      "target": "benchmarks/canaries/slack-gif-creator/fixtures/emoji-pulse-text.json",
+      "tool": "read"
+    },
+    {
+      "action": "check_runtime_dependencies",
+      "outcome": "completed",
+      "sequence": 2,
+      "target": ".venv",
+      "tool": ".venv/bin/python -B"
+    },
+    {
+      "action": "generate_animation",
+      "outcome": "completed",
+      "sequence": 3,
+      "target": "workspaces/work-9eea3d6a86124113c1f705e6/go_alert_pulse.gif",
+      "tool": ".venv/bin/python -B with Pillow/imageio/numpy"
+    },
+    {
+      "action": "reopen_and_verify_animation",
+      "outcome": "completed",
+      "sequence": 4,
+      "target": "workspaces/work-9eea3d6a86124113c1f705e6/go_alert_pulse.gif",
+      "tool": "Pillow/numpy"
+    },
+    {
+      "action": "visually_inspect_native_render",
+      "outcome": "completed",
+      "sequence": 5,
+      "target": "workspaces/work-9eea3d6a86124113c1f705e6/go_alert_pulse.gif",
+      "tool": "image viewer"
+    }
+  ],
+  "package_access": [],
+  "planned_trace": [],
+  "provider_id": "agent-delegated-v1",
+  "proxy_score": null,
+  "proxy_score_method": null,
+  "schema_version": "1.0.0",
+  "started_at": "2026-07-21T15:46:41.923299Z",
+  "submission_id": "submission-c6f826e757635bf1f8bee835",
+  "transcript": {
+    "media_type": "text/markdown",
+    "path": "transcript.md",
+    "sha256": "8a96d99b17cd1668af2fb5c10b03d5d08cbc4ef507b65d01b95b963163abf36a",
+    "size_bytes": 946
+  },
+  "uncertainty": 0.1,
+  "usage": {
+    "duration_ms": 150000,
+    "input_tokens": 3500,
+    "output_tokens": 1200,
+    "token_count_kind": "estimated",
+    "tool_calls": 8
+  },
+  "work_id": "work-9eea3d6a86124113c1f705e6"
+}

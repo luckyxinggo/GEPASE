@@ -1,0 +1,137 @@
+{
+  "artifact_sha256": "db92d0e6a702b35763cf797d0ed99a65c184109b88f4f665747a0990cbf7f811",
+  "assertions": [
+    {
+      "assertion_id": "status-container",
+      "detail": "通过内容/元数据检查",
+      "family": "artifact_metadata",
+      "measurements": {
+        "frame_count": 24,
+        "height": 480,
+        "loop_count": 0,
+        "unique_frame_count": 23,
+        "width": 480
+      },
+      "passed": true,
+      "weight": 0.2
+    },
+    {
+      "assertion_id": "status-duration",
+      "detail": "通过内容/元数据检查",
+      "family": "artifact_metadata",
+      "measurements": {
+        "max_frame_share": 0.041666666666666664,
+        "maximum_ms": 2600,
+        "minimum_ms": 2200,
+        "non_positive_frames": 0,
+        "total_duration_ms": 2400
+      },
+      "passed": true,
+      "weight": 0.2
+    },
+    {
+      "assertion_id": "status-text",
+      "detail": "通过内容/元数据检查",
+      "family": "frame_content",
+      "measurements": {
+        "deploy_glyph_similarity": 0.24732620320855614,
+        "done_glyph_similarity": 0.279039070749736
+      },
+      "passed": true,
+      "weight": 0.2
+    },
+    {
+      "assertion_id": "status-phases",
+      "detail": "通过内容/元数据检查",
+      "family": "temporal_sequence",
+      "measurements": {
+        "frames_per_phase_floor": 8,
+        "representative_phase_deltas": [
+          10.653466435185186,
+          10.653466435185186
+        ]
+      },
+      "passed": true,
+      "weight": 0.2
+    },
+    {
+      "assertion_id": "status-state-change",
+      "detail": "通过内容/元数据检查",
+      "family": "frame_content",
+      "measurements": {
+        "frames_per_phase_floor": 8,
+        "representative_phase_deltas": [
+          10.653466435185186,
+          10.653466435185186
+        ]
+      },
+      "passed": true,
+      "weight": 0.2
+    }
+  ],
+  "case_id": "functional-train-message-status-002",
+  "common": {
+    "adjacent_pixel_deltas": [
+      1.0454094328703705,
+      1.1022858796296295,
+      1.0376258680555555,
+      0.8989785879629629,
+      3.7843388310185184,
+      5.768472222222222,
+      6.060363136574074,
+      5.085818865740741,
+      2.062728587962963,
+      2.171372974537037,
+      2.1487355324074073,
+      2.1197815393518518,
+      2.1099913194444446,
+      4.474373553240741,
+      4.302734375,
+      4.512204861111111,
+      6.826173321759259,
+      0.7857277199074074,
+      0.9319126157407407,
+      0.8725824652777778,
+      6.025870949074074,
+      9.357350983796296,
+      9.996688368055555
+    ],
+    "effective_fps": 10.0,
+    "file_size_bytes": 441157,
+    "first_last_pixel_delta": 0.0,
+    "frame_count": 24,
+    "frame_durations_ms": [
+      100,
+      100,
+      100,
+      100,
+      100,
+      100,
+      100,
+      100,
+      100,
+      100,
+      100,
+      100,
+      100,
+      100,
+      100,
+      100,
+      100,
+      100,
+      100,
+      100,
+      100,
+      100,
+      100,
+      100
+    ],
+    "height": 480,
+    "loop_count": 0,
+    "mean_adjacent_pixel_delta": 3.6296313909017717,
+    "total_duration_ms": 2400,
+    "unique_frame_count": 23,
+    "width": 480
+  },
+  "schema_version": "1.0.0"
+}

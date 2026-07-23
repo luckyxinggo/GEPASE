@@ -1,0 +1,54 @@
+{
+  "behavioral_executable_target_excluded": 0,
+  "causal_path_missing": 0,
+  "expected_affected_metrics_missing": 0,
+  "operations": 2,
+  "proposals": 2,
+  "rows": [
+    {
+      "bindings": [
+        {
+          "causal_path_node_ids": [
+            "node-69ea814aac72a6c557485ef0"
+          ],
+          "executable_target": false,
+          "expected_affected_assertions": [],
+          "expected_affected_metrics": [
+            "task_correctness",
+            "output_quality",
+            "skill_gain"
+          ],
+          "failure_evidence_id": "artifacts/runs/r3-slack-gif-creator-paired/analyzer-submissions/analyzer-work-9fdb3bdecd6e87afd9f6ad4d.json",
+          "operation_id": "op-verify-rendered-ease-out-stop",
+          "target_node_id": "node-69ea814aac72a6c557485ef0"
+        }
+      ],
+      "valid": true,
+      "work_id": "proposal-work-e4757dd9d456332c89c7670a"
+    },
+    {
+      "bindings": [
+        {
+          "causal_path_node_ids": [
+            "node-46d940221fa8caf3b6c22d2c"
+          ],
+          "executable_target": false,
+          "expected_affected_assertions": [],
+          "expected_affected_metrics": [
+            "task_correctness",
+            "output_quality",
+            "skill_gain"
+          ],
+          "failure_evidence_id": "artifacts/runs/r3-slack-gif-creator-paired/analyzer-submissions/analyzer-work-66550acf708dcf7d83b689cb.json",
+          "operation_id": "op-46d940221fa8caf3b6c22d2c",
+          "target_node_id": "node-46d940221fa8caf3b6c22d2c"
+        }
+      ],
+      "valid": true,
+      "work_id": "proposal-work-ab7f56118676006487a9edc3"
+    }
+  ],
+  "schema_version": "1.0.0",
+  "scope_errors": 0,
+  "valid": true
+}

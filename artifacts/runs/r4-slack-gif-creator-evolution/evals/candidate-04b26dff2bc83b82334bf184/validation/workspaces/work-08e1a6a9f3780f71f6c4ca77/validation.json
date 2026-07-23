@@ -1,0 +1,40 @@
+{
+  "design": {
+    "cycle_sampling": "phase=i/N; endpoint is not duplicated",
+    "frame_count": 20,
+    "fps": 10,
+    "duration_seconds": 2.0,
+    "ring_motion": "stable",
+    "sparkle_envelopes": "three periodic cosine envelopes, phase-shifted by one third cycle"
+  },
+  "build": {
+    "path": "sparkle_ring_loop.gif",
+    "size_kb": 46.986328125,
+    "size_mb": 0.04588508605957031,
+    "dimensions": "128x128",
+    "frame_count": 20,
+    "fps": 10,
+    "duration_seconds": 2.0,
+    "colors": 48
+  },
+  "validation": {
+    "file": "sparkle_ring_loop.gif",
+    "passes": true,
+    "width": 128,
+    "height": 128,
+    "size_kb": 46.986328125,
+    "size_mb": 0.04588508605957031,
+    "frame_count": 20,
+    "duration_seconds": 2.0,
+    "fps": 10.0,
+    "is_emoji": true,
+    "optimal": true
+  },
+  "slack_ready": true,
+  "loop_seam": {
+    "last_to_first_mae": 0.27252197265625,
+    "max_adjacent_mae": 2.234130859375,
+    "mean_adjacent_mae": 1.2931233723958333,
+    "seam_not_abrupt": true
+  }
+}

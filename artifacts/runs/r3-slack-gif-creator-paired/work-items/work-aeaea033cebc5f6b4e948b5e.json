@@ -1,0 +1,51 @@
+{
+  "candidate_snapshot_hash": "ce42d8a837acf9feda9706a3418fc26a77c497d9615079e616b5fdc6870ef64e",
+  "case_contract_hash": "509601a0626aad9dbd08ea76256d3ae1052f0a8ac2fe60f2473582f0e61099f5",
+  "created_at": "2026-07-21T15:28:27.778647Z",
+  "evidence_tier": "E2",
+  "fixture_ref": "benchmarks/canaries/slack-gif-creator/fixtures/emoji-bounce.json",
+  "fixture_refs": [
+    "benchmarks/canaries/slack-gif-creator/fixtures/emoji-bounce.json"
+  ],
+  "frozen_plan_hash": "1893ad9a08978f2a8f107981a9a032c7581d08082926ee52276bd5feba2df950",
+  "package_graph_ref": "artifacts/runs/r2-slack-gif-creator-evalplan/package/graph.json",
+  "package_node_map": {
+    "LICENSE.txt": "node-7fd627ed0d50ee9e04018c8a",
+    "SKILL.md": "node-fddc99453114c3a40363b219",
+    "core/easing.py": "node-dbf396ac6852bf4706f33ebf",
+    "core/frame_composer.py": "node-bd3bececef13aaeef0c22570",
+    "core/gif_builder.py": "node-2c61585b9d40c2df7343f499",
+    "core/validators.py": "node-0f241aa06504163be33132f8",
+    "requirements.txt": "node-cc27fb4d7208967c86b1a7e8"
+  },
+  "pair_id": "pair-06eaafe5031550bf100734fc",
+  "pairing": {
+    "fixture_hash": "ac126ade51006a4111f9d866b742b9846250c209af1d5c5e5589a3626d1fea5c",
+    "host_model_snapshot": "edbfd8f0668f44e333585ee805a6f891a7443402aad61b3e8cfeca5913b1338b",
+    "policy_hash": "3b49f46ee66bafaf2bcf1aeac08f1bd7f4c719463b0e655afe40a98a4af6b3ec",
+    "prompt_hash": "a85d82ed8c230a75f2f1a773eb1805769c4f73e7d2d69d4b11719d46b5d39450",
+    "provider_snapshot": "agent-delegated-v1",
+    "seed": 42
+  },
+  "prompt": "请依据随附配置从空白画布创作一个 Slack 表情 GIF：一颗带粗描边和小高光的黄色五角星从上方落下，只反弹一次后稳稳停住；背景使用深海军蓝到靛蓝渐变。成品应可直接作为 Slack emoji 上传，并保存为指定 GIF。",
+  "provider_id": "agent-delegated-v1",
+  "requested_output": {
+    "description_zh": "128×128、单次反弹并可循环的 Slack 星星表情 GIF。",
+    "filename": "emoji_star_bounce.gif",
+    "media_type": "image/gif"
+  },
+  "required_capabilities": [
+    "programmatic_frame_drawing",
+    "emoji_gif_optimization",
+    "temporal_motion_analysis",
+    "gif_metadata_validation"
+  ],
+  "schema_version": "1.0.0",
+  "skill_id": "slack-gif-creator",
+  "skill_ref": "benchmarks/canaries/slack-gif-creator/package",
+  "split": "train",
+  "task_id": "functional-train-emoji-bounce-001",
+  "timeout_seconds": 600,
+  "variant": "original",
+  "work_id": "work-aeaea033cebc5f6b4e948b5e"
+}

@@ -1,0 +1,137 @@
+{
+  "rows": [
+    {
+      "assertion_recomputed": {
+        "no-skill": 1.0,
+        "original": 0.75
+      },
+      "grader_recomputed": {
+        "no-skill": 0.9359999999999999,
+        "original": 0.958
+      },
+      "paired_basis_delta": -0.1276,
+      "quality_after_comparator": {
+        "no-skill": 0.9359999999999999,
+        "original": 0.958
+      },
+      "task_id": "functional-train-easing-orbit-005"
+    },
+    {
+      "assertion_recomputed": {
+        "no-skill": 0.8,
+        "original": 1.0
+      },
+      "grader_recomputed": {
+        "no-skill": 0.9315,
+        "original": 0.8495
+      },
+      "paired_basis_delta": 0.0731,
+      "quality_after_comparator": {
+        "no-skill": 0.9315,
+        "original": 0.8495
+      },
+      "task_id": "functional-train-emoji-bounce-001"
+    },
+    {
+      "assertion_recomputed": {
+        "no-skill": 1.0,
+        "original": 1.0
+      },
+      "grader_recomputed": {
+        "no-skill": 0.9404999999999999,
+        "original": 0.849
+      },
+      "paired_basis_delta": -0.04117499999999996,
+      "quality_after_comparator": {
+        "no-skill": 0.9404999999999999,
+        "original": 0.849
+      },
+      "task_id": "functional-train-input-badge-003"
+    },
+    {
+      "assertion_recomputed": {
+        "no-skill": 1.0,
+        "original": 1.0
+      },
+      "grader_recomputed": {
+        "no-skill": 0.9349999999999999,
+        "original": 0.9355
+      },
+      "paired_basis_delta": 0.00022500000000002517,
+      "quality_after_comparator": {
+        "no-skill": 0.9349999999999999,
+        "original": 0.9355
+      },
+      "task_id": "functional-train-message-status-002"
+    },
+    {
+      "assertion_recomputed": {
+        "no-skill": 0.7,
+        "original": 0.7
+      },
+      "grader_recomputed": {
+        "no-skill": 0.9475,
+        "original": 0.962
+      },
+      "paired_basis_delta": 0.006524999999999981,
+      "quality_after_comparator": {
+        "no-skill": 0.9475,
+        "original": 0.962
+      },
+      "task_id": "functional-train-text-readable-004"
+    },
+    {
+      "assertion_recomputed": {
+        "no-skill": 0.85,
+        "original": 0.85
+      },
+      "grader_recomputed": {
+        "no-skill": 0.971,
+        "original": 0.9744999999999999
+      },
+      "paired_basis_delta": 0.0012599999999999612,
+      "quality_after_comparator": {
+        "no-skill": 0.8768,
+        "original": 0.8795999999999999
+      },
+      "task_id": "functional-validation-efficiency-007"
+    },
+    {
+      "assertion_recomputed": {
+        "no-skill": 0.75,
+        "original": 0.75
+      },
+      "grader_recomputed": {
+        "no-skill": 0.968,
+        "original": 0.9645
+      },
+      "paired_basis_delta": -0.09125999999999994,
+      "quality_after_comparator": {
+        "no-skill": 0.9743999999999999,
+        "original": 0.7716000000000001
+      },
+      "task_id": "functional-validation-loop-sparkles-006"
+    },
+    {
+      "assertion_recomputed": {
+        "no-skill": 1.0,
+        "original": 0.85
+      },
+      "grader_recomputed": {
+        "no-skill": 0.9694999999999999,
+        "original": 0.935
+      },
+      "paired_basis_delta": -0.18491999999999997,
+      "quality_after_comparator": {
+        "no-skill": 0.9756,
+        "original": 0.7480000000000001
+      },
+      "task_id": "functional-validation-pulse-text-008"
+    }
+  ],
+  "schema_version": "1.0.0",
+  "source": "raw E2/E3, rubric grades, comparator reconciliation, and E0",
+  "trigger_mixed": false,
+  "valid": true,
+  "vector_count": 16
+}

@@ -1,0 +1,193 @@
+{
+  "agent_calls": 0,
+  "copied_outputs": [
+    {
+      "media_type": "image/gif",
+      "path": "assets/gifs/functional-validation-loop-sparkles-006/no-skill.gif",
+      "sha256": "837f2c78446005b8b86a2702319b5fcfef53a9d1a2438ef4ca6c4bcfb58073a6",
+      "size_bytes": 219252,
+      "source_ref": "artifacts/runs/r3-slack-gif-creator-paired/workspaces/work-a90881ca08a8679475629c61/sparkle_ring_loop.gif",
+      "source_sha256": "837f2c78446005b8b86a2702319b5fcfef53a9d1a2438ef4ca6c4bcfb58073a6"
+    },
+    {
+      "media_type": "image/gif",
+      "path": "assets/gifs/functional-validation-loop-sparkles-006/original.gif",
+      "sha256": "30a021068221a8826bc702862f626ae84b90c90bacdc5b454a1461b14cddc59e",
+      "size_bytes": 27745,
+      "source_ref": "artifacts/runs/r3-slack-gif-creator-paired/workspaces/work-b33fad8398ab056166627930/sparkle_ring_loop.gif",
+      "source_sha256": "30a021068221a8826bc702862f626ae84b90c90bacdc5b454a1461b14cddc59e"
+    },
+    {
+      "media_type": "image/gif",
+      "path": "assets/gifs/functional-validation-loop-sparkles-006/candidate.gif",
+      "sha256": "242eb7f0702ff9b2a7972dba24f35f4cbcf35df85db94bd08e09198ee6633ffc",
+      "size_bytes": 48114,
+      "source_ref": "artifacts/runs/r4-slack-gif-creator-evolution/evals/candidate-04b26dff2bc83b82334bf184/validation/workspaces/work-08e1a6a9f3780f71f6c4ca77/sparkle_ring_loop.gif",
+      "source_sha256": "242eb7f0702ff9b2a7972dba24f35f4cbcf35df85db94bd08e09198ee6633ffc"
+    },
+    {
+      "media_type": "image/gif",
+      "path": "assets/gifs/functional-validation-efficiency-007/no-skill.gif",
+      "sha256": "527cb4850496383dca16d09cfa041baa2b806c8be5441e4aa7d24797e756a00c",
+      "size_bytes": 139597,
+      "source_ref": "artifacts/runs/r3-slack-gif-creator-paired/workspaces/work-18b797bfd1094a2c7da4ec6b/compact_check_burst.gif",
+      "source_sha256": "527cb4850496383dca16d09cfa041baa2b806c8be5441e4aa7d24797e756a00c"
+    },
+    {
+      "media_type": "image/gif",
+      "path": "assets/gifs/functional-validation-efficiency-007/original.gif",
+      "sha256": "4647c572d1b5c2e8353b3fb6df8f3b7176514aff25649cded8c87da1c06db590",
+      "size_bytes": 469924,
+      "source_ref": "artifacts/runs/r3-slack-gif-creator-paired/workspaces/work-06e0ca3901e49580a002d129/compact_check_burst.gif",
+      "source_sha256": "4647c572d1b5c2e8353b3fb6df8f3b7176514aff25649cded8c87da1c06db590"
+    },
+    {
+      "media_type": "image/gif",
+      "path": "assets/gifs/functional-validation-efficiency-007/candidate.gif",
+      "sha256": "49c4f25101ed365165e56d83ccf7eec40412087d167e589bc81248dc849d4268",
+      "size_bytes": 377145,
+      "source_ref": "artifacts/runs/r4-slack-gif-creator-evolution/evals/candidate-04b26dff2bc83b82334bf184/validation/workspaces/work-c32547dba15da11d0bc47306/compact_check_burst.gif",
+      "source_sha256": "49c4f25101ed365165e56d83ccf7eec40412087d167e589bc81248dc849d4268"
+    },
+    {
+      "media_type": "image/gif",
+      "path": "assets/gifs/functional-validation-pulse-text-008/no-skill.gif",
+      "sha256": "488e2a2d79e2fd68c269f52ed44a183bd2acdf336ec46d9a5bc55bcb7ddfccc9",
+      "size_bytes": 232054,
+      "source_ref": "artifacts/runs/r3-slack-gif-creator-paired/workspaces/work-9eea3d6a86124113c1f705e6/go_alert_pulse.gif",
+      "source_sha256": "488e2a2d79e2fd68c269f52ed44a183bd2acdf336ec46d9a5bc55bcb7ddfccc9"
+    },
+    {
+      "media_type": "image/gif",
+      "path": "assets/gifs/functional-validation-pulse-text-008/original.gif",
+      "sha256": "a767b71a7d4d1d0a5cb47fb2df7c780a488fe97ed2a6b0260112b9fe140f5d27",
+      "size_bytes": 11097,
+      "source_ref": "artifacts/runs/r3-slack-gif-creator-paired/workspaces/work-f659fabc30459ff0d09ad348/go_alert_pulse.gif",
+      "source_sha256": "a767b71a7d4d1d0a5cb47fb2df7c780a488fe97ed2a6b0260112b9fe140f5d27"
+    },
+    {
+      "media_type": "image/gif",
+      "path": "assets/gifs/functional-validation-pulse-text-008/candidate.gif",
+      "sha256": "e85db341809859081de0338200ff9a389fda9ac126c81fa2ecb4aca81b6542be",
+      "size_bytes": 118503,
+      "source_ref": "artifacts/runs/r4-slack-gif-creator-evolution/evals/candidate-04b26dff2bc83b82334bf184/validation/workspaces/work-ed3b4c130252b4a37e48a32c/go_alert_pulse.gif",
+      "source_sha256": "e85db341809859081de0338200ff9a389fda9ac126c81fa2ecb4aca81b6542be"
+    },
+    {
+      "media_type": "application/zip",
+      "path": "deployable/slack-gif-creator-candidate-04b26dff2bc83b82334bf184.zip",
+      "sha256": "86b6e044e02c0fb1565262c7bf96392842da190ef8b5d420d5bf6ab377be9352",
+      "size_bytes": 15955,
+      "source_ref": "artifacts/runs/r4-slack-gif-creator-evolution/candidate-workspaces/applications/application-1986620ac067029380557187",
+      "source_sha256": "86b6e044e02c0fb1565262c7bf96392842da190ef8b5d420d5bf6ab377be9352"
+    },
+    {
+      "media_type": "text/plain",
+      "path": "deployable/package/LICENSE.txt",
+      "sha256": "bc6b3af2f331cbc7fb0da1344efb2cbe5877a31498b4d70dbc7000f3405a1362",
+      "size_bytes": 11345,
+      "source_ref": "artifacts/runs/r4-slack-gif-creator-evolution/candidate-workspaces/applications/application-1986620ac067029380557187/LICENSE.txt",
+      "source_sha256": "bc6b3af2f331cbc7fb0da1344efb2cbe5877a31498b4d70dbc7000f3405a1362"
+    },
+    {
+      "media_type": "text/markdown",
+      "path": "deployable/package/SKILL.md",
+      "sha256": "a7536d30f92228d4b2c359bea795702ba79279d2f8ebca6a1d7076c7c785f0c3",
+      "size_bytes": 8591,
+      "source_ref": "artifacts/runs/r4-slack-gif-creator-evolution/candidate-workspaces/applications/application-1986620ac067029380557187/SKILL.md",
+      "source_sha256": "a7536d30f92228d4b2c359bea795702ba79279d2f8ebca6a1d7076c7c785f0c3"
+    },
+    {
+      "media_type": "text/x-python",
+      "path": "deployable/package/core/easing.py",
+      "sha256": "60bc943449802541f0f0881a874faa7ef408aaaf0b758fde756664ada7740452",
+      "size_bytes": 6265,
+      "source_ref": "artifacts/runs/r4-slack-gif-creator-evolution/candidate-workspaces/applications/application-1986620ac067029380557187/core/easing.py",
+      "source_sha256": "60bc943449802541f0f0881a874faa7ef408aaaf0b758fde756664ada7740452"
+    },
+    {
+      "media_type": "text/x-python",
+      "path": "deployable/package/core/frame_composer.py",
+      "sha256": "a127ea8f2a58893ea10a5c7b5cab4e2010af6515adc538676eb0cc14f5a03985",
+      "size_bytes": 4548,
+      "source_ref": "artifacts/runs/r4-slack-gif-creator-evolution/candidate-workspaces/applications/application-1986620ac067029380557187/core/frame_composer.py",
+      "source_sha256": "a127ea8f2a58893ea10a5c7b5cab4e2010af6515adc538676eb0cc14f5a03985"
+    },
+    {
+      "media_type": "text/x-python",
+      "path": "deployable/package/core/gif_builder.py",
+      "sha256": "b6f50d738c491ee0438a2e86e897f71cdab9792494ba4605f140befb0bddbf89",
+      "size_bytes": 9847,
+      "source_ref": "artifacts/runs/r4-slack-gif-creator-evolution/candidate-workspaces/applications/application-1986620ac067029380557187/core/gif_builder.py",
+      "source_sha256": "b6f50d738c491ee0438a2e86e897f71cdab9792494ba4605f140befb0bddbf89"
+    },
+    {
+      "media_type": "text/x-python",
+      "path": "deployable/package/core/validators.py",
+      "sha256": "56bd19e3aae05f8387d78ec8185d6098b3dc909d1fa041211753da37212528a3",
+      "size_bytes": 3785,
+      "source_ref": "artifacts/runs/r4-slack-gif-creator-evolution/candidate-workspaces/applications/application-1986620ac067029380557187/core/validators.py",
+      "source_sha256": "56bd19e3aae05f8387d78ec8185d6098b3dc909d1fa041211753da37212528a3"
+    },
+    {
+      "media_type": "text/plain",
+      "path": "deployable/package/requirements.txt",
+      "sha256": "edc7108a0c6b56183566c71ee96830f6dc791e3b41952112d9cb56b33a6bd757",
+      "size_bytes": 66,
+      "source_ref": "artifacts/runs/r4-slack-gif-creator-evolution/candidate-workspaces/applications/application-1986620ac067029380557187/requirements.txt",
+      "source_sha256": "edc7108a0c6b56183566c71ee96830f6dc791e3b41952112d9cb56b33a6bd757"
+    }
+  ],
+  "headless_provider_calls": 0,
+  "read_only_inputs": true,
+  "report_data_sha256": "69d5d72ccfc5c7d3034a98ca932bceaec52e303eeb5262d5d49eaabef3a5286f",
+  "report_id": "r5-slack-gif-creator-report",
+  "schema_version": "1.0.0",
+  "upstream_stages": {
+    "R2": {
+      "machine_gates": 10,
+      "run_seal": {
+        "artifact_index_sha256": "13575d25fd40ab8325accff161c76b1c21d23057e17c3486f1969d8d90404bba",
+        "checked": 19,
+        "hash_mismatch": 0,
+        "missing": 0,
+        "schema_errors": 0,
+        "unindexed_files": 0,
+        "valid": true
+      },
+      "source_tree_hash": "6ad89be3040de7616f7a03d1c81362a3916e9974d7fc6532c74d61ea8ec37b2b",
+      "stage_report_ref": "artifacts/stages/R2/stage_report.json",
+      "stage_report_sha256": "a797ebcc890260495abbf1f233e516238eba9109299c35ca0da7bb900fa1f837"
+    },
+    "R3": {
+      "machine_gates": 8,
+      "run_seal": {
+        "artifact_index_sha256": "09a959e759eadfb5e8b6ebd5b8e0c7d7c99886baf9d4784427905db1d776c648",
+        "checked": 429,
+        "hash_mismatch": 0,
+        "missing": 0,
+        "schema_errors": 0,
+        "unindexed_files": 0,
+        "valid": true
+      },
+      "source_tree_hash": "c2e77787feb4e94e2846e565d22fed53c2aee2ada55345ca22210db34ec4a250",
+      "stage_report_ref": "artifacts/stages/R3/stage_report.json",
+      "stage_report_sha256": "8e405bbe3d8c47de76fd8cafa67601edf326c622c266a7643410d82503adbfe1"
+    },
+    "R4": {
+      "machine_gates": 8,
+      "run_seal": {
+        "artifact_index_sha256": "61bb6ede5757d8afe3b6ab9ea5ea5ee272d34dd74ff68a3571ee6dfa365e7d36",
+        "checked": 877,
+        "hash_mismatch": 0,
+        "missing": 0,
+        "schema_errors": 0,
+        "unindexed_files": 0,
+        "valid": true
+      },
+      "source_tree_hash": "864987c18577a9a2efcd32805aa4d0119b0fea9887ba1525df492e46575356cd",
+      "stage_report_ref": "artifacts/stages/R4/stage_report.json",
+      "stage_report_sha256": "2063da07da794ba950cdc38670a1678cb572130314b995984af38c0de28661e3"
+    }
+  }
+}

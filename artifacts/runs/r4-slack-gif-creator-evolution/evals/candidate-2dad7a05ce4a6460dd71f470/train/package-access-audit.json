@@ -1,0 +1,161 @@
+{
+  "items": [
+    {
+      "available_node_ids": [
+        "node-0f241aa06504163be33132f8",
+        "node-2c61585b9d40c2df7343f499",
+        "node-7fd627ed0d50ee9e04018c8a",
+        "node-bd3bececef13aaeef0c22570",
+        "node-cc27fb4d7208967c86b1a7e8",
+        "node-dbf396ac6852bf4706f33ebf",
+        "node-fddc99453114c3a40363b219"
+      ],
+      "bytes_loaded": 32751,
+      "executed_node_ids": [
+        "node-0f241aa06504163be33132f8",
+        "node-2c61585b9d40c2df7343f499",
+        "node-bd3bececef13aaeef0c22570",
+        "node-dbf396ac6852bf4706f33ebf"
+      ],
+      "problems": [],
+      "read_node_ids": [
+        "node-0f241aa06504163be33132f8",
+        "node-2c61585b9d40c2df7343f499",
+        "node-bd3bececef13aaeef0c22570",
+        "node-dbf396ac6852bf4706f33ebf",
+        "node-fddc99453114c3a40363b219"
+      ],
+      "tokens_loaded": 8190,
+      "unresolved_paths": [],
+      "valid": true,
+      "variant": "candidate",
+      "work_id": "work-39e35e699ecb6bd467c783c9"
+    },
+    {
+      "available_node_ids": [
+        "node-0f241aa06504163be33132f8",
+        "node-2c61585b9d40c2df7343f499",
+        "node-7fd627ed0d50ee9e04018c8a",
+        "node-bd3bececef13aaeef0c22570",
+        "node-cc27fb4d7208967c86b1a7e8",
+        "node-dbf396ac6852bf4706f33ebf",
+        "node-fddc99453114c3a40363b219"
+      ],
+      "bytes_loaded": 57262,
+      "executed_node_ids": [
+        "node-0f241aa06504163be33132f8",
+        "node-2c61585b9d40c2df7343f499",
+        "node-bd3bececef13aaeef0c22570",
+        "node-dbf396ac6852bf4706f33ebf"
+      ],
+      "problems": [],
+      "read_node_ids": [
+        "node-0f241aa06504163be33132f8",
+        "node-2c61585b9d40c2df7343f499",
+        "node-bd3bececef13aaeef0c22570",
+        "node-cc27fb4d7208967c86b1a7e8",
+        "node-dbf396ac6852bf4706f33ebf",
+        "node-fddc99453114c3a40363b219"
+      ],
+      "tokens_loaded": 14320,
+      "unresolved_paths": [],
+      "valid": true,
+      "variant": "candidate",
+      "work_id": "work-478e69ea53372e0edb2e0123"
+    },
+    {
+      "available_node_ids": [
+        "node-0f241aa06504163be33132f8",
+        "node-2c61585b9d40c2df7343f499",
+        "node-7fd627ed0d50ee9e04018c8a",
+        "node-bd3bececef13aaeef0c22570",
+        "node-cc27fb4d7208967c86b1a7e8",
+        "node-dbf396ac6852bf4706f33ebf",
+        "node-fddc99453114c3a40363b219"
+      ],
+      "bytes_loaded": 57262,
+      "executed_node_ids": [
+        "node-0f241aa06504163be33132f8",
+        "node-2c61585b9d40c2df7343f499",
+        "node-bd3bececef13aaeef0c22570",
+        "node-dbf396ac6852bf4706f33ebf"
+      ],
+      "problems": [],
+      "read_node_ids": [
+        "node-0f241aa06504163be33132f8",
+        "node-2c61585b9d40c2df7343f499",
+        "node-bd3bececef13aaeef0c22570",
+        "node-cc27fb4d7208967c86b1a7e8",
+        "node-dbf396ac6852bf4706f33ebf",
+        "node-fddc99453114c3a40363b219"
+      ],
+      "tokens_loaded": 14320,
+      "unresolved_paths": [],
+      "valid": true,
+      "variant": "candidate",
+      "work_id": "work-60eaba3feb92a47166f14645"
+    },
+    {
+      "available_node_ids": [
+        "node-0f241aa06504163be33132f8",
+        "node-2c61585b9d40c2df7343f499",
+        "node-7fd627ed0d50ee9e04018c8a",
+        "node-bd3bececef13aaeef0c22570",
+        "node-cc27fb4d7208967c86b1a7e8",
+        "node-dbf396ac6852bf4706f33ebf",
+        "node-fddc99453114c3a40363b219"
+      ],
+      "bytes_loaded": 48100,
+      "executed_node_ids": [
+        "node-0f241aa06504163be33132f8",
+        "node-2c61585b9d40c2df7343f499",
+        "node-dbf396ac6852bf4706f33ebf"
+      ],
+      "problems": [],
+      "read_node_ids": [
+        "node-0f241aa06504163be33132f8",
+        "node-2c61585b9d40c2df7343f499",
+        "node-dbf396ac6852bf4706f33ebf",
+        "node-fddc99453114c3a40363b219"
+      ],
+      "tokens_loaded": 12029,
+      "unresolved_paths": [],
+      "valid": true,
+      "variant": "candidate",
+      "work_id": "work-692901e392962f5b5393520d"
+    },
+    {
+      "available_node_ids": [
+        "node-0f241aa06504163be33132f8",
+        "node-2c61585b9d40c2df7343f499",
+        "node-7fd627ed0d50ee9e04018c8a",
+        "node-bd3bececef13aaeef0c22570",
+        "node-cc27fb4d7208967c86b1a7e8",
+        "node-dbf396ac6852bf4706f33ebf",
+        "node-fddc99453114c3a40363b219"
+      ],
+      "bytes_loaded": 57196,
+      "executed_node_ids": [
+        "node-0f241aa06504163be33132f8",
+        "node-2c61585b9d40c2df7343f499",
+        "node-bd3bececef13aaeef0c22570",
+        "node-dbf396ac6852bf4706f33ebf"
+      ],
+      "problems": [],
+      "read_node_ids": [
+        "node-0f241aa06504163be33132f8",
+        "node-2c61585b9d40c2df7343f499",
+        "node-bd3bececef13aaeef0c22570",
+        "node-dbf396ac6852bf4706f33ebf",
+        "node-fddc99453114c3a40363b219"
+      ],
+      "tokens_loaded": 8190,
+      "unresolved_paths": [],
+      "valid": true,
+      "variant": "candidate",
+      "work_id": "work-a577fbd89f0d6020522f6512"
+    }
+  ],
+  "schema_version": "1.0.0",
+  "valid": true
+}

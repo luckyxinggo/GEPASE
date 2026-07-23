@@ -1,0 +1,57 @@
+{
+  "candidate_content_hash": "ce42d8a837acf9feda9706a3418fc26a77c497d9615079e616b5fdc6870ef64e",
+  "candidate_id": "candidate-21242a10bcbaeb9631f3b2da",
+  "content_hash_equal": true,
+  "destination_ref": "artifacts/runs/r4-slack-gif-creator-evolution/gate-parent/candidate-21242a10bcbaeb9631f3b2da/package",
+  "file_set_equal": true,
+  "files": [
+    {
+      "mode": 420,
+      "modified": false,
+      "path": "LICENSE.txt",
+      "sha256": "bc6b3af2f331cbc7fb0da1344efb2cbe5877a31498b4d70dbc7000f3405a1362"
+    },
+    {
+      "mode": 420,
+      "modified": false,
+      "path": "SKILL.md",
+      "sha256": "2efca615ce55a3edd8fc05c779068a8085816617991987e446606403cd3abb22"
+    },
+    {
+      "mode": 493,
+      "modified": false,
+      "path": "core/easing.py",
+      "sha256": "60bc943449802541f0f0881a874faa7ef408aaaf0b758fde756664ada7740452"
+    },
+    {
+      "mode": 493,
+      "modified": false,
+      "path": "core/frame_composer.py",
+      "sha256": "a127ea8f2a58893ea10a5c7b5cab4e2010af6515adc538676eb0cc14f5a03985"
+    },
+    {
+      "mode": 493,
+      "modified": false,
+      "path": "core/gif_builder.py",
+      "sha256": "b6f50d738c491ee0438a2e86e897f71cdab9792494ba4605f140befb0bddbf89"
+    },
+    {
+      "mode": 493,
+      "modified": false,
+      "path": "core/validators.py",
+      "sha256": "56bd19e3aae05f8387d78ec8185d6098b3dc909d1fa041211753da37212528a3"
+    },
+    {
+      "mode": 420,
+      "modified": false,
+      "path": "requirements.txt",
+      "sha256": "edc7108a0c6b56183566c71ee96830f6dc791e3b41952112d9cb56b33a6bd757"
+    }
+  ],
+  "materialized_snapshot_hash": "ce42d8a837acf9feda9706a3418fc26a77c497d9615079e616b5fdc6870ef64e",
+  "permission_policy_equal": true,
+  "schema_version": "1.0.0",
+  "source_file_set_equal": true,
+  "source_package_ref": "benchmarks/canaries/slack-gif-creator/package",
+  "source_snapshot_hash": "ce42d8a837acf9feda9706a3418fc26a77c497d9615079e616b5fdc6870ef64e"
+}

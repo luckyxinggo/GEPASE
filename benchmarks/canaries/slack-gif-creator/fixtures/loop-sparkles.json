@@ -1,0 +1,6 @@
+{
+  "canvas": [128, 128],
+  "duration_seconds_max": 2.2,
+  "loop_requirement": "first and last visual states must transition without a visible jump",
+  "subject": "three sparkles appearing around a central ring"
+}

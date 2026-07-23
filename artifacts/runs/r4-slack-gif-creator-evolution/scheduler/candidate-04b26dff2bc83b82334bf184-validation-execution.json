@@ -1,0 +1,9 @@
+{
+  "barrier": "candidate-04b26dff2bc83b82334bf184:validation:execution",
+  "fresh_candidate_only": true,
+  "max_concurrency": 3,
+  "reference_cache_hit": true,
+  "role": "executor",
+  "schema_version": "1.0.0",
+  "work_items": 3
+}

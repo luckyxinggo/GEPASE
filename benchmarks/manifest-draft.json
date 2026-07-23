@@ -1,0 +1,42 @@
+{
+  "created_by": "scripts/build_benchmark_draft.py@1.0.0",
+  "name": "GEPASE Public Skill Package Benchmark",
+  "packages": [
+    {
+      "benchmark_card_ref": "benchmarks/structured-report-builder/benchmark_card.md",
+      "capability_manifest_ref": "benchmarks/skills/structured-report-builder/capability-manifest.json",
+      "case_count": 50,
+      "dataset_path": "benchmarks/structured-report-builder/dataset.jsonl",
+      "license": "Apache-2.0",
+      "provenance_ref": "benchmarks/skills/structured-report-builder/provenance.json",
+      "skill_id": "structured-report-builder",
+      "skill_path": "benchmarks/skills/structured-report-builder"
+    },
+    {
+      "benchmark_card_ref": "benchmarks/tabular-context-builder/benchmark_card.md",
+      "capability_manifest_ref": "benchmarks/skills/tabular-context-builder/capability-manifest.json",
+      "case_count": 50,
+      "dataset_path": "benchmarks/tabular-context-builder/dataset.jsonl",
+      "license": "Apache-2.0",
+      "provenance_ref": "benchmarks/skills/tabular-context-builder/provenance.json",
+      "skill_id": "tabular-context-builder",
+      "skill_path": "benchmarks/skills/tabular-context-builder"
+    },
+    {
+      "benchmark_card_ref": "benchmarks/policy-evidence-evaluator/benchmark_card.md",
+      "capability_manifest_ref": "benchmarks/skills/policy-evidence-evaluator/capability-manifest.json",
+      "case_count": 50,
+      "dataset_path": "benchmarks/policy-evidence-evaluator/dataset.jsonl",
+      "license": "Apache-2.0",
+      "provenance_ref": "benchmarks/skills/policy-evidence-evaluator/provenance.json",
+      "skill_id": "policy-evidence-evaluator",
+      "skill_path": "benchmarks/skills/policy-evidence-evaluator"
+    }
+  ],
+  "rubric_refs": [
+    "benchmarks/rubrics/blind-quality-v1.json"
+  ],
+  "schema_version": "1.0.0",
+  "split_manifest_ref": "benchmarks/splits/draft-v1.json",
+  "version": "draft-v1"
+}

@@ -1,0 +1,112 @@
+{
+  "direction": "gte",
+  "policy_id": "policy-07-03",
+  "records": [
+    {
+      "id": "P0703000",
+      "score": 83,
+      "segment": "new"
+    },
+    {
+      "id": "P0703001",
+      "score": 34,
+      "segment": "returning"
+    },
+    {
+      "id": "P0703002",
+      "score": 45,
+      "segment": "priority"
+    },
+    {
+      "id": "P0703003",
+      "score": 56,
+      "segment": "new"
+    },
+    {
+      "id": "P0703004",
+      "score": 67,
+      "segment": "returning"
+    },
+    {
+      "id": "P0703005",
+      "score": 78,
+      "segment": "priority"
+    },
+    {
+      "id": "P0703006",
+      "score": 29,
+      "segment": "new"
+    },
+    {
+      "id": "P0703007",
+      "score": 40,
+      "segment": "returning"
+    },
+    {
+      "id": "P0703008",
+      "score": 51,
+      "segment": "priority"
+    },
+    {
+      "id": "P0703009",
+      "score": 62,
+      "segment": "new"
+    },
+    {
+      "id": "P0703010",
+      "score": 73,
+      "segment": "returning"
+    },
+    {
+      "id": "P0703011",
+      "score": 84,
+      "segment": "priority"
+    },
+    {
+      "id": "P0703012",
+      "score": 35,
+      "segment": "new"
+    },
+    {
+      "id": "P0703013",
+      "score": 46,
+      "segment": "returning"
+    },
+    {
+      "id": "P0703014",
+      "score": 57,
+      "segment": "priority"
+    },
+    {
+      "id": "P0703015",
+      "score": 68,
+      "segment": "new"
+    },
+    {
+      "id": "P0703016",
+      "score": 79,
+      "segment": "returning"
+    },
+    {
+      "id": "P0703017",
+      "score": 30,
+      "segment": "priority"
+    },
+    {
+      "id": "P0703018",
+      "score": 41,
+      "segment": "new"
+    },
+    {
+      "id": "P0703019",
+      "score": 52,
+      "segment": "returning"
+    },
+    {
+      "id": "P0703020",
+      "score": 63,
+      "segment": "priority"
+    }
+  ],
+  "threshold": 55
+}

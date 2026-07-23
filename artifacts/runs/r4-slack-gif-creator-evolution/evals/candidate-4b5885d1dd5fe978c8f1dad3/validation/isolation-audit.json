@@ -1,0 +1,27 @@
+{
+  "analyzer_context_ids": [],
+  "candidate_identity_findings": [],
+  "comparator_context_ids": [
+    "codex-context-r4-cmp-m-pulse-ba-2bfe179d6e2d55d05baec122",
+    "codex-r4-cmp-m-loop-ab-5b7016d3e8cae54e439876a6",
+    "comparator-context-f1c8762d-d68a-49f1-bf03-92f90742c7c0",
+    "ctx-r4-cmp-m-loop-ba-9e520f7c6d55bffddc61dcce",
+    "ctx-r4-comparator-efficiency-ba-de4d470908944899747c5316",
+    "ctx-r4-cmp-pulse-ab-f1927ccd49f8cb19"
+  ],
+  "duplicate_context_ids": [],
+  "executor_context_ids": [
+    "r4_valexec_m_eff",
+    "r4_valexec_m_loop",
+    "r4_valexec_m_text"
+  ],
+  "grader_context_ids": [
+    "r4_valgrade_m_text",
+    "r4_valgrade_m_loop",
+    "r4_valgrade_m_eff"
+  ],
+  "oracle_leakage_findings": [],
+  "schema_version": "1.0.0",
+  "sibling_leakage_findings": [],
+  "valid": true
+}

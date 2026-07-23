@@ -1,0 +1,51 @@
+{
+  "candidate_snapshot_hash": "cf3c66eb21afcbcfc3518927b5572624075866213c16717d03010ccc25074525",
+  "case_contract_hash": "8861c3481a3a62e08ff55c7d9d07b1b1a79cb272329f8765148c3125aee1a602",
+  "created_at": "2026-07-22T09:15:35.848192Z",
+  "evidence_tier": "E2",
+  "fixture_ref": "benchmarks/canaries/slack-gif-creator/fixtures/message-status.json",
+  "fixture_refs": [
+    "benchmarks/canaries/slack-gif-creator/fixtures/message-status.json"
+  ],
+  "frozen_plan_hash": "1893ad9a08978f2a8f107981a9a032c7581d08082926ee52276bd5feba2df950",
+  "package_graph_ref": "artifacts/runs/r4-slack-gif-creator-evolution/candidates/candidate-2dad7a05ce4a6460dd71f470/graph.json",
+  "package_node_map": {
+    "LICENSE.txt": "node-7fd627ed0d50ee9e04018c8a",
+    "SKILL.md": "node-fddc99453114c3a40363b219",
+    "core/easing.py": "node-dbf396ac6852bf4706f33ebf",
+    "core/frame_composer.py": "node-bd3bececef13aaeef0c22570",
+    "core/gif_builder.py": "node-2c61585b9d40c2df7343f499",
+    "core/validators.py": "node-0f241aa06504163be33132f8",
+    "requirements.txt": "node-cc27fb4d7208967c86b1a7e8"
+  },
+  "pair_id": "pair-3e9e3c7b5d3685343ee17f83",
+  "pairing": {
+    "fixture_hash": "6a75c4a4734a9832e53985c6d89f6401f58fde6861355a3ce1963792fed7dc2a",
+    "host_model_snapshot": "edbfd8f0668f44e333585ee805a6f891a7443402aad61b3e8cfeca5913b1338b",
+    "policy_hash": "3b49f46ee66bafaf2bcf1aeac08f1bd7f4c719463b0e655afe40a98a4af6b3ec",
+    "prompt_hash": "62ff6eb217f01c1d75fb489a3e3a42d6e4bca43d1949a1b89b1794bac03e99fd",
+    "provider_snapshot": "agent-delegated-v1",
+    "seed": 42
+  },
+  "prompt": "制作一张适合发在 Slack 消息里的方形部署状态卡 GIF。按随附配置依次呈现 waiting、processing、complete 三个阶段：前两阶段保留 DEPLOY 标识，完成阶段清楚显示 DONE；用图形和颜色变化帮助读者一眼理解状态推进。请输出指定文件。",
+  "provider_id": "agent-delegated-v1",
+  "requested_output": {
+    "description_zh": "480×480、三阶段推进的 Slack 部署状态消息 GIF。",
+    "filename": "deployment_status.gif",
+    "media_type": "image/gif"
+  },
+  "required_capabilities": [
+    "message_gif_composition",
+    "text_rendering",
+    "multi_phase_animation",
+    "gif_metadata_validation"
+  ],
+  "schema_version": "1.0.0",
+  "skill_id": "slack-gif-creator",
+  "skill_ref": "artifacts/runs/r4-slack-gif-creator-evolution/candidate-workspaces/applications/application-20ada438d49e648f1bb86749",
+  "split": "train",
+  "task_id": "functional-train-message-status-002",
+  "timeout_seconds": 600,
+  "variant": "candidate",
+  "work_id": "work-a577fbd89f0d6020522f6512"
+}

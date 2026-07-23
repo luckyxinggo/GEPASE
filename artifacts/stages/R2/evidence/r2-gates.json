@@ -1,0 +1,115 @@
+{
+  "gates": [
+    {
+      "detail": "Pinned commit/tree, seven upstream Git blobs, complete Package, Apache-2.0 attribution, PackageSnapshot hash, and exact dependency pins agree.",
+      "evidence": [
+        "benchmarks/canaries/slack-gif-creator/source-provenance.json",
+        "benchmarks/canaries/slack-gif-creator/upstream-tree.json",
+        "benchmarks/canaries/slack-gif-creator/requirements.lock"
+      ],
+      "gate_id": "R2-G01-pinned-source",
+      "status": "passed"
+    },
+    {
+      "detail": "Pinned core imported and produced a validator-accepted real 128x128 GIF without mutating the source Package.",
+      "evidence": [
+        "evidence/canary-smoke/smoke-report.json"
+      ],
+      "gate_id": "R2-G02-real-local-smoke",
+      "status": "passed"
+    },
+    {
+      "detail": "Parsed 7 files into 370 nodes/474 edges with 0 diagnostics.",
+      "evidence": [
+        "artifacts/runs/r2-slack-gif-creator-evalplan/package/graph.json"
+      ],
+      "gate_id": "R2-G03-package-graph",
+      "status": "passed"
+    },
+    {
+      "detail": "Typed Agent-native Designer submission records 7 Package reads, non-empty usage, and isolated context/task provenance.",
+      "evidence": [
+        "artifacts/runs/r2-slack-gif-creator-evalplan/designer-submission.json"
+      ],
+      "gate_id": "R2-G04-isolated-eval-designer",
+      "status": "passed"
+    },
+    {
+      "detail": "13/13 schema, coverage, fixture, license, split, nontrivial-oracle, isolation, evidence, and source checks passed.",
+      "evidence": [
+        "artifacts/runs/r2-slack-gif-creator-evalplan/automatic-check-report.json"
+      ],
+      "gate_id": "R2-G05-evalplan-automatic-checks",
+      "status": "passed"
+    },
+    {
+      "detail": "Frozen plan keeps 18 Trigger and 8 Functional cases separate; all Functional Executor views exclude oracle/sibling/candidate fields and use E2/E3 with E1 off.",
+      "evidence": [
+        "artifacts/runs/r2-slack-gif-creator-evalplan/frozen-eval-plan.json"
+      ],
+      "gate_id": "R2-G06-channel-and-executor-isolation",
+      "status": "passed"
+    },
+    {
+      "detail": "All 26 cases have traceable decisions; Core rechecked and froze the immutable plan, resumed the same run to execution_ready, and verified every run artifact.",
+      "evidence": [
+        "artifacts/runs/r2-slack-gif-creator-evalplan/review.json",
+        "artifacts/runs/r2-slack-gif-creator-evalplan/checkpoint.json",
+        "artifacts/runs/r2-slack-gif-creator-evalplan/artifact-index.json"
+      ],
+      "gate_id": "R2-G07-review-freeze-resume",
+      "status": "passed"
+    },
+    {
+      "detail": "Self-contained Chinese HTML contains search/filter/edit/batch/review/export/graph handlers with no external resources; inline JavaScript syntax is valid.",
+      "evidence": [
+        "artifacts/runs/r2-slack-gif-creator-evalplan/review.html"
+      ],
+      "gate_id": "R2-G08-offline-review-static-contract",
+      "status": "passed"
+    },
+    {
+      "detail": "A human confirmed that the self-contained file opens offline and its core interactions work.",
+      "evidence": [
+        "artifacts/stages/R2/evidence/human-offline-validation.json"
+      ],
+      "gate_id": "R2-G09-offline-browser-human-validation",
+      "status": "passed"
+    },
+    {
+      "detail": "R2 onboarding Core adds no private-Skill, production-mock, selected-action, or expected-action interface.",
+      "evidence": [
+        "src/gepase/evals/onboarding.py",
+        "src/gepase/evals/eval_plan.py"
+      ],
+      "gate_id": "R2-G10-scope-boundary",
+      "status": "passed"
+    }
+  ],
+  "metrics": {
+    "automatic_checks": 13,
+    "frozen_plan_hash": "1893ad9a08978f2a8f107981a9a032c7581d08082926ee52276bd5feba2df950",
+    "functional_cases": 8,
+    "package_diagnostics": 0,
+    "package_files": 7,
+    "package_graph_edges": 474,
+    "package_graph_nodes": 370,
+    "real_skill_effect_validated": false,
+    "review_decisions": 26,
+    "run_artifact_verification": {
+      "checked": 19,
+      "hash_mismatch": 0,
+      "missing": 0,
+      "schema_errors": 0,
+      "unindexed_files": 0,
+      "valid": true
+    },
+    "trigger_cases": 18,
+    "unresolved_review_decisions": 0
+  },
+  "passed": 10,
+  "schema_version": "1.0.0",
+  "stage_id": "R2",
+  "total": 10,
+  "valid": true
+}

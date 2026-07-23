@@ -1,0 +1,26 @@
+{
+  "fixture_refs": [
+    "benchmarks/canaries/slack-gif-creator/fixtures/loop-sparkles.json"
+  ],
+  "package_graph_ref": null,
+  "package_node_map": {},
+  "prompt": "制作一个无缝循环的 128×128 Slack emoji GIF：中央圆环保持稳定，三颗火花在它周围按节奏出现、增强、消退。请设计周期运动而不是简单复制静止首尾帧，使最后一帧接回第一帧时没有明显跳变；总时长遵循随附配置，输出指定 GIF。",
+  "requested_output": {
+    "description_zh": "三颗火花围绕中央圆环周期变化的无缝循环 Slack GIF。",
+    "filename": "sparkle_ring_loop.gif",
+    "media_type": "image/gif"
+  },
+  "required_capabilities": [
+    "cyclic_animation_design",
+    "loop_seam_analysis",
+    "frame_timing_control",
+    "emoji_gif_export"
+  ],
+  "role": "executor",
+  "schema_version": "1.0.0",
+  "skill_ref": null,
+  "submission_schema_ref": "schemas/execution_bundle.schema.json",
+  "task_id": "functional-validation-loop-sparkles-006",
+  "timeout_seconds": 600,
+  "work_id": "work-a90881ca08a8679475629c61"
+}

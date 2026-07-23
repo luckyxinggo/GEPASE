@@ -1,0 +1,74 @@
+[
+  {
+    "sequence": 0,
+    "kind": "read",
+    "path": "SKILL.md",
+    "node_id": "node-fddc99453114c3a40363b219",
+    "bytes_loaded": 8457,
+    "tokens_loaded": 2115
+  },
+  {
+    "sequence": 1,
+    "kind": "read",
+    "path": "core/easing.py",
+    "node_id": "node-dbf396ac6852bf4706f33ebf",
+    "bytes_loaded": 6265,
+    "tokens_loaded": 1567
+  },
+  {
+    "sequence": 2,
+    "kind": "read",
+    "path": "core/frame_composer.py",
+    "node_id": "node-bd3bececef13aaeef0c22570",
+    "bytes_loaded": 4548,
+    "tokens_loaded": 1137
+  },
+  {
+    "sequence": 3,
+    "kind": "read",
+    "path": "core/gif_builder.py",
+    "node_id": "node-2c61585b9d40c2df7343f499",
+    "bytes_loaded": 9847,
+    "tokens_loaded": 2462
+  },
+  {
+    "sequence": 4,
+    "kind": "read",
+    "path": "core/validators.py",
+    "node_id": "node-0f241aa06504163be33132f8",
+    "bytes_loaded": 3785,
+    "tokens_loaded": 947
+  },
+  {
+    "sequence": 5,
+    "kind": "read",
+    "path": "requirements.txt",
+    "node_id": "node-cc27fb4d7208967c86b1a7e8",
+    "bytes_loaded": 66,
+    "tokens_loaded": 17
+  },
+  {
+    "sequence": 6,
+    "kind": "executed",
+    "path": "core/easing.py",
+    "node_id": "node-dbf396ac6852bf4706f33ebf",
+    "bytes_loaded": 6265,
+    "tokens_loaded": 1567
+  },
+  {
+    "sequence": 7,
+    "kind": "executed",
+    "path": "core/gif_builder.py",
+    "node_id": "node-2c61585b9d40c2df7343f499",
+    "bytes_loaded": 9847,
+    "tokens_loaded": 2462
+  },
+  {
+    "sequence": 8,
+    "kind": "executed",
+    "path": "core/validators.py",
+    "node_id": "node-0f241aa06504163be33132f8",
+    "bytes_loaded": 3785,
+    "tokens_loaded": 947
+  }
+]

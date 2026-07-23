@@ -1,0 +1,65 @@
+{
+  "criterion_grades": [
+    {
+      "criterion_id": "readable-legibility",
+      "evidence_refs": [
+        "artifacts/runs/r4-slack-gif-creator-evolution/evals/candidate-4b5885d1dd5fe978c8f1dad3/train/workspaces/work-20765ea1183bbc8e3e2c09f0/meeting_sync_reminder.gif",
+        "artifacts/runs/r4-slack-gif-creator-evolution/evals/candidate-4b5885d1dd5fe978c8f1dad3/train/derived/work-20765ea1183bbc8e3e2c09f0/contact-sheet.png"
+      ],
+      "rationale_zh": "SYNC 使用大号深色字，10:30 使用更大的米白字置于砖红色块中；接触表的全部抽样帧里两者始终同时完整呈现，在缩略尺寸下仍可迅速且无歧义地读出。",
+      "score": 0.99
+    },
+    {
+      "criterion_id": "readable-layout",
+      "evidence_refs": [
+        "artifacts/runs/r4-slack-gif-creator-evolution/evals/candidate-4b5885d1dd5fe978c8f1dad3/train/derived/work-20765ea1183bbc8e3e2c09f0/contact-sheet.png"
+      ],
+      "rationale_zh": "标题与时间沿中轴分层，时间卡形成清晰主焦点；装饰仅占边角和文字间隙，四周留白及圆角外框内的安全边距充足，抽样帧中没有拥挤或越界。",
+      "score": 0.98
+    },
+    {
+      "criterion_id": "readable-emphasis",
+      "evidence_refs": [
+        "artifacts/runs/r4-slack-gif-creator-evolution/evals/candidate-4b5885d1dd5fe978c8f1dad3/train/derived/work-20765ea1183bbc8e3e2c09f0/contact-sheet.png",
+        "artifacts/runs/r4-slack-gif-creator-evolution/evals/candidate-4b5885d1dd5fe978c8f1dad3/train/blind-inspections/blind-4aabb1a43e3cf69ef65229f9.json"
+      ],
+      "rationale_zh": "时间卡的细描边脉冲与右上角时钟变化提供轻微强调，而 SYNC 和 10:30 的位置、尺寸与可见性保持稳定。20 帧覆盖 2000 毫秒且各帧均为 100 毫秒，节奏连续、不打断阅读。",
+      "score": 0.96
+    },
+    {
+      "criterion_id": "readable-tone",
+      "evidence_refs": [
+        "artifacts/runs/r4-slack-gif-creator-evolution/evals/candidate-4b5885d1dd5fe978c8f1dad3/train/workspaces/work-20765ea1183bbc8e3e2c09f0/meeting_sync_reminder.gif",
+        "artifacts/runs/r4-slack-gif-creator-evolution/evals/candidate-4b5885d1dd5fe978c8f1dad3/train/derived/work-20765ea1183bbc8e3e2c09f0/contact-sheet.png"
+      ],
+      "rationale_zh": "米白底、深棕黑文字与砖红强调准确形成温暖而稳重的配色；圆角卡片、克制星形装饰和简洁时钟图标兼顾友好感与会议提醒所需的专业感。",
+      "score": 0.98
+    }
+  ],
+  "factual_claims_zh": [
+    "GIF 画布为 480×480，文件大小为 65193 字节。",
+    "动画共 20 个唯一帧，每帧持续 100 毫秒，总时长为 2000 毫秒，有效帧率为 10 FPS。",
+    "接触表中的所有抽样帧均同时完整显示 SYNC 与 10:30，且两行主文字未移出圆角外框的安全区域。",
+    "整体采用米白背景、深棕黑文字和砖红强调色。"
+  ],
+  "feedback_zh": "成品对任务核心要求的完成度很高：两行关键信息在整段动画及缩略视图中持续清晰，版式层级明确，配色温暖专业，轻微的时间卡描边和时钟变化也没有牺牲阅读时间。若继续精修，可进一步统一极细装饰线在不同帧中的视觉强度，但当前差异并不影响主要信息读取。",
+  "grader_work_id": "grader-work-46e154ac2b41c9aee6dec3c4",
+  "overall_score": 0.98,
+  "role_run": {
+    "context_id": "r4_grade_m_text",
+    "finished_at": "2026-07-22T10:01:14Z",
+    "host": "codex",
+    "host_task_id": "/root/r4_grade_m_text",
+    "model": "gpt-5.6-sol",
+    "started_at": "2026-07-22T09:58:45Z",
+    "usage": {
+      "duration_ms": 149000,
+      "input_tokens": 8140,
+      "output_tokens": 1550,
+      "token_count_kind": "estimated",
+      "tool_calls": 9
+    }
+  },
+  "schema_version": "1.0.0",
+  "submission_id": "grader-submission-46e154ac2b41c9aee6dec3c4-r4-grade-m-text"
+}

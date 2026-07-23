@@ -1,0 +1,1127 @@
+{
+  "design_notes_zh": [
+    "触发集严格包含 positive、negative、near_boundary 各 6 个案例；边界案例特意交叉平台、静态媒介、隐式 GIF 意图和仅咨询规范等信号。",
+    "功能集严格为 5 个 train 与 3 个 validation，覆盖 emoji_animation、message_gif、input_image_animation、text_readability、easing_motion、looping_timing、quality_efficiency 全部七个 family。",
+    "8 个功能案例的 leakage_group 全部唯一，train 与 validation 不共享主题—动作组合；各 prompt 的主体、信息任务、运动机制或优化目标均不同，避免近重复。",
+    "每个 fixture 只绑定到一个功能案例；input_image_animation 同时绑定 input-badge.json 与 input-badge.ppm，且要求直接使用本地 PPM 而非重绘替代。",
+    "所有功能输出均为 image/gif，minimum_tier 为 E2、deterministic_tier 为 E3；确定性检查覆盖解码与尺寸、逐帧时长、帧内容、运动轨迹、循环接缝和实际文件字节数，不以文件存在作为唯一证据。",
+    "rubric 均使用中文标签与中文描述，单案权重之和严格为 1；评价保留构图、细节和运动风格的创作空间，不把固定像素模板视为唯一答案。"
+  ],
+  "functional_cases": [
+    {
+      "case_family": "emoji_animation",
+      "case_id": "functional-train-emoji-bounce-001",
+      "case_type": "functional",
+      "difficulty": "medium",
+      "evidence_policy": {
+        "deterministic_tier": "E3",
+        "enable_e1": false,
+        "minimum_tier": "E2"
+      },
+      "expectations": [
+        {
+          "category": "technical",
+          "deterministic": true,
+          "evidence_kind": "artifact_metadata",
+          "expectation_id": "emoji-bounce-container",
+          "statement_zh": "产物必须可按 GIF 解码，逻辑画布严格为 128×128，至少包含 6 个非完全相同的有效帧。",
+          "weight": 0.2
+        },
+        {
+          "category": "temporal",
+          "deterministic": true,
+          "evidence_kind": "artifact_metadata",
+          "expectation_id": "emoji-bounce-duration",
+          "statement_zh": "按逐帧 duration 求和后的总时长不超过 2.4 秒，且所有帧 duration 均为正数。",
+          "weight": 0.2
+        },
+        {
+          "category": "content",
+          "deterministic": true,
+          "evidence_kind": "frame_content",
+          "expectation_id": "emoji-bounce-subject",
+          "statement_zh": "多数帧中应能分离出高对比黄色五角星主体，星形具有五个外尖角，并存在深色描边与局部亮色高光。",
+          "weight": 0.2
+        },
+        {
+          "category": "temporal",
+          "deterministic": true,
+          "evidence_kind": "temporal_sequence",
+          "expectation_id": "emoji-bounce-motion",
+          "statement_zh": "按黄色主体质心的纵向轨迹检查，序列应先下降、仅出现一次反向上升、再回落并在末段收敛，不得持续匀速穿过画布。",
+          "weight": 0.2
+        },
+        {
+          "category": "technical",
+          "deterministic": true,
+          "evidence_kind": "temporal_sequence",
+          "expectation_id": "emoji-bounce-loop",
+          "statement_zh": "GIF 必须声明无限循环，且末帧到首帧的转场不得产生整画布闪白或主体消失。",
+          "weight": 0.2
+        }
+      ],
+      "expected_output_zh": "一个高对比、轮廓清楚的黄色星星落地反弹动画，尺寸、时长与循环元数据适合 Slack emoji，同时允许具体光影和反弹幅度存在创作差异。",
+      "fixtures": [
+        {
+          "license": "Apache-2.0",
+          "media_type": "application/json",
+          "purpose_zh": "规定星星反弹表情的画布、节奏、主体与视觉风格。",
+          "ref": "benchmarks/canaries/slack-gif-creator/fixtures/emoji-bounce.json",
+          "sha256": "57c01af677ab7bb389e937551b7d986f0b473b61784bf88c9d83d07e3918d8a6"
+        }
+      ],
+      "leakage_group": "train-star-impact-motion-v1",
+      "prompt": "请依据随附配置从空白画布创作一个 Slack 表情 GIF：一颗带粗描边和小高光的黄色五角星从上方落下，只反弹一次后稳稳停住；背景使用深海军蓝到靛蓝渐变。成品应可直接作为 Slack emoji 上传，并保存为指定 GIF。",
+      "requested_output": {
+        "description_zh": "128×128、单次反弹并可循环的 Slack 星星表情 GIF。",
+        "filename": "emoji_star_bounce.gif",
+        "media_type": "image/gif"
+      },
+      "required_capabilities": [
+        "programmatic_frame_drawing",
+        "emoji_gif_optimization",
+        "temporal_motion_analysis",
+        "gif_metadata_validation"
+      ],
+      "risk": "medium",
+      "rubric": [
+        {
+          "criterion_id": "emoji-bounce-clarity",
+          "description_zh": "星星在小尺寸下轮廓鲜明，描边、高光和背景对比支持快速识别。",
+          "label_zh": "主体清晰度",
+          "weight": 0.25
+        },
+        {
+          "criterion_id": "emoji-bounce-dynamics",
+          "description_zh": "落下、触地、一次反弹和收稳的节奏自然，具有重量感。",
+          "label_zh": "反弹表现",
+          "weight": 0.3
+        },
+        {
+          "criterion_id": "emoji-bounce-polish",
+          "description_zh": "渐变、配色与细节形成完整设计，而非占位图形。",
+          "label_zh": "视觉完成度",
+          "weight": 0.25
+        },
+        {
+          "criterion_id": "emoji-bounce-slack",
+          "description_zh": "循环、尺寸与播放节奏适合在 Slack 表情场景中反复观看。",
+          "label_zh": "Slack 适用性",
+          "weight": 0.2
+        }
+      ],
+      "split": "train"
+    },
+    {
+      "case_family": "message_gif",
+      "case_id": "functional-train-message-status-002",
+      "case_type": "functional",
+      "difficulty": "medium",
+      "evidence_policy": {
+        "deterministic_tier": "E3",
+        "enable_e1": false,
+        "minimum_tier": "E2"
+      },
+      "expectations": [
+        {
+          "category": "technical",
+          "deterministic": true,
+          "evidence_kind": "artifact_metadata",
+          "expectation_id": "status-container",
+          "statement_zh": "产物必须是可解码的多帧 GIF，逻辑画布严格为 480×480，并声明无限循环。",
+          "weight": 0.2
+        },
+        {
+          "category": "temporal",
+          "deterministic": true,
+          "evidence_kind": "artifact_metadata",
+          "expectation_id": "status-duration",
+          "statement_zh": "逐帧时长之和应在 2.2 至 2.6 秒之间，任何单帧停留不得超过总时长的 60%。",
+          "weight": 0.2
+        },
+        {
+          "category": "content",
+          "deterministic": true,
+          "evidence_kind": "frame_content",
+          "expectation_id": "status-text",
+          "statement_zh": "OCR 或等价帧内容检查必须在前两个阶段识别到 DEPLOY，并在完成阶段识别到 DONE；两词均不得越出画布。",
+          "weight": 0.2
+        },
+        {
+          "category": "temporal",
+          "deterministic": true,
+          "evidence_kind": "temporal_sequence",
+          "expectation_id": "status-phases",
+          "statement_zh": "基于文本、主图标或主色的帧聚类必须得到按 waiting→processing→complete 排列的三个连续区段，每段至少占两帧。",
+          "weight": 0.2
+        },
+        {
+          "category": "content",
+          "deterministic": true,
+          "evidence_kind": "frame_content",
+          "expectation_id": "status-state-change",
+          "statement_zh": "三个阶段之间必须存在可量化的视觉状态变化，任意相邻阶段代表帧的平均像素差不得为零，且完成态应含明确的完成符号或成功色区域。",
+          "weight": 0.2
+        }
+      ],
+      "expected_output_zh": "一个可循环的部署状态卡，waiting、processing、complete 依序且易于区分，DEPLOY 与 DONE 文本可读；允许图标、过渡方式和版式存在创作差异。",
+      "fixtures": [
+        {
+          "license": "Apache-2.0",
+          "media_type": "application/json",
+          "purpose_zh": "定义部署状态卡的画布、时长、阶段顺序和必要文本。",
+          "ref": "benchmarks/canaries/slack-gif-creator/fixtures/message-status.json",
+          "sha256": "25e442b5072f59ad7ace599542bb22bb3a7b86e4fe1eaee70df76f1cd41c3637"
+        }
+      ],
+      "leakage_group": "train-deploy-state-card-v1",
+      "prompt": "制作一张适合发在 Slack 消息里的方形部署状态卡 GIF。按随附配置依次呈现 waiting、processing、complete 三个阶段：前两阶段保留 DEPLOY 标识，完成阶段清楚显示 DONE；用图形和颜色变化帮助读者一眼理解状态推进。请输出指定文件。",
+      "requested_output": {
+        "description_zh": "480×480、三阶段推进的 Slack 部署状态消息 GIF。",
+        "filename": "deployment_status.gif",
+        "media_type": "image/gif"
+      },
+      "required_capabilities": [
+        "message_gif_composition",
+        "text_rendering",
+        "multi_phase_animation",
+        "gif_metadata_validation"
+      ],
+      "risk": "medium",
+      "rubric": [
+        {
+          "criterion_id": "status-hierarchy",
+          "description_zh": "标题、状态和辅助图形组织清楚，在 Slack 消息尺寸下易扫读。",
+          "label_zh": "信息层级",
+          "weight": 0.25
+        },
+        {
+          "criterion_id": "status-progression",
+          "description_zh": "三个阶段的先后和含义明确，过渡不混淆。",
+          "label_zh": "状态叙事",
+          "weight": 0.3
+        },
+        {
+          "criterion_id": "status-motion",
+          "description_zh": "各阶段停留足够辨认，切换自然且整体节奏紧凑。",
+          "label_zh": "动态节奏",
+          "weight": 0.2
+        },
+        {
+          "criterion_id": "status-finish",
+          "description_zh": "色彩、图标和版式具有一致性，成品可直接用于团队沟通。",
+          "label_zh": "视觉完成度",
+          "weight": 0.25
+        }
+      ],
+      "split": "train"
+    },
+    {
+      "case_family": "input_image_animation",
+      "case_id": "functional-train-input-badge-003",
+      "case_type": "functional",
+      "difficulty": "hard",
+      "evidence_policy": {
+        "deterministic_tier": "E3",
+        "enable_e1": false,
+        "minimum_tier": "E2"
+      },
+      "expectations": [
+        {
+          "category": "content",
+          "deterministic": true,
+          "evidence_kind": "frame_content",
+          "expectation_id": "badge-source-use",
+          "statement_zh": "至少一个稳定可见帧中，主体必须保留源 PPM 的深色外场、青色对称徽章轮廓和中心橙色 2×2 核心的相对拓扑；不得以无关重绘图形替代。",
+          "weight": 0.25
+        },
+        {
+          "category": "technical",
+          "deterministic": true,
+          "evidence_kind": "artifact_metadata",
+          "expectation_id": "badge-container",
+          "statement_zh": "输出必须是可解码的多帧 GIF，逻辑画布严格为 128×128，并声明无限循环。",
+          "weight": 0.15
+        },
+        {
+          "category": "temporal",
+          "deterministic": true,
+          "evidence_kind": "artifact_metadata",
+          "expectation_id": "badge-duration",
+          "statement_zh": "所有帧 duration 求和后的总时长不超过 2.5 秒，且至少包含 6 个非完全相同的帧。",
+          "weight": 0.15
+        },
+        {
+          "category": "content",
+          "deterministic": true,
+          "evidence_kind": "frame_content",
+          "expectation_id": "badge-palette",
+          "statement_zh": "在主体可见帧中应持续存在接近源图 (42,203,190) 的青色与 (255,143,82) 的橙色像素簇，两者空间关系保持橙色位于青色轮廓内部。",
+          "weight": 0.2
+        },
+        {
+          "category": "temporal",
+          "deterministic": true,
+          "evidence_kind": "temporal_sequence",
+          "expectation_id": "badge-overshoot",
+          "statement_zh": "依据徽章主体质心的纵向序列，主体应从较低位置上浮、至少一次越过最终稳定高度，再反向回落；末三帧质心纵向跨度不超过 3 像素。",
+          "weight": 0.25
+        }
+      ],
+      "expected_output_zh": "一个确实由随附 PPM 徽章派生的 Slack 表情动画，原始青色轮廓与橙色核心可追溯，上浮后轻微越位再稳定；允许缩放算法、背景和装饰存在差异。",
+      "fixtures": [
+        {
+          "license": "Apache-2.0",
+          "media_type": "application/json",
+          "purpose_zh": "给出输入徽章的资源引用、画布、时长、运动和保真要求。",
+          "ref": "benchmarks/canaries/slack-gif-creator/fixtures/input-badge.json",
+          "sha256": "a6d7afe88943685e6884c24b3ece9867127e6651dcd0b210cc242a621349a739"
+        },
+        {
+          "license": "Apache-2.0",
+          "media_type": "image/x-portable-pixmap",
+          "purpose_zh": "作为必须直接载入并动画化的本地 8×8 青橙徽章源图像。",
+          "ref": "benchmarks/canaries/slack-gif-creator/fixtures/input-badge.ppm",
+          "sha256": "0beed967b5066970ea232001a4b495e04860541a02b502e91f23a5741102cfdd"
+        }
+      ],
+      "leakage_group": "train-uploaded-badge-lift-v1",
+      "prompt": "请直接使用随附 PPM 徽章图像作为动画主体，而不是重新画一个替代品。依照配置将它放入 128×128 的 Slack emoji：徽章先上浮，略微越过最终高度，再回落稳定；保留原图的徽章轮廓以及青色、橙色关系，可增加不遮挡主体的背景或光效。输出指定 GIF。",
+      "requested_output": {
+        "description_zh": "保留本地输入徽章特征、带上浮越位回稳动作的 128×128 GIF。",
+        "filename": "uploaded_badge_lift.gif",
+        "media_type": "image/gif"
+      },
+      "required_capabilities": [
+        "local_image_loading",
+        "input_asset_preservation",
+        "overshoot_easing",
+        "emoji_gif_export"
+      ],
+      "risk": "high",
+      "rubric": [
+        {
+          "criterion_id": "badge-fidelity",
+          "description_zh": "源徽章轮廓、核心结构和青橙配色在动画中保持可辨认。",
+          "label_zh": "输入保真",
+          "weight": 0.35
+        },
+        {
+          "criterion_id": "badge-motion",
+          "description_zh": "上浮、轻微越位与回落稳定的动作连贯，并具有合适的缓动感。",
+          "label_zh": "越位回稳",
+          "weight": 0.3
+        },
+        {
+          "criterion_id": "badge-integration",
+          "description_zh": "背景和光效服务于输入主体，不遮挡或篡改关键特征。",
+          "label_zh": "画面融合",
+          "weight": 0.2
+        },
+        {
+          "criterion_id": "badge-emoji-ready",
+          "description_zh": "小尺寸下主体清晰，节奏和循环适合 Slack emoji。",
+          "label_zh": "表情可用性",
+          "weight": 0.15
+        }
+      ],
+      "split": "train"
+    },
+    {
+      "case_family": "text_readability",
+      "case_id": "functional-train-text-readable-004",
+      "case_type": "functional",
+      "difficulty": "hard",
+      "evidence_policy": {
+        "deterministic_tier": "E3",
+        "enable_e1": false,
+        "minimum_tier": "E2"
+      },
+      "expectations": [
+        {
+          "category": "technical",
+          "deterministic": true,
+          "evidence_kind": "artifact_metadata",
+          "expectation_id": "readable-container",
+          "statement_zh": "输出必须为可解码的 480×480 多帧 GIF，并带有无限循环标记。",
+          "weight": 0.15
+        },
+        {
+          "category": "temporal",
+          "deterministic": true,
+          "evidence_kind": "artifact_metadata",
+          "expectation_id": "readable-duration",
+          "statement_zh": "逐帧时长之和应在 1.8 至 2.2 秒之间。",
+          "weight": 0.15
+        },
+        {
+          "category": "content",
+          "deterministic": true,
+          "evidence_kind": "frame_content",
+          "expectation_id": "readable-ocr",
+          "statement_zh": "OCR 或等价字形检查应在不少于 70% 的帧中同时识别出完整的 SYNC 和 10:30，且文字包围盒距画布边缘至少 16 像素。",
+          "weight": 0.3
+        },
+        {
+          "category": "content",
+          "deterministic": true,
+          "evidence_kind": "frame_content",
+          "expectation_id": "readable-contrast",
+          "statement_zh": "对文字主体与其紧邻背景采样所得的最小对比度应达到 4.5:1；不得以运动模糊或透明度动画使关键文字低于该阈值。",
+          "weight": 0.25
+        },
+        {
+          "category": "content",
+          "deterministic": true,
+          "evidence_kind": "frame_content",
+          "expectation_id": "readable-palette",
+          "statement_zh": "代表帧中应存在接近 #f7f1e8、#25221f、#b54c2f 的三个主要色簇，允许量化误差但不得整体换成无关配色。",
+          "weight": 0.15
+        }
+      ],
+      "expected_output_zh": "一个约两秒的会议提醒动画，SYNC 和 10:30 在大部分播放时间中同时清晰、完整且高对比；具体排版、装饰和轻微强调动画可自由设计。",
+      "fixtures": [
+        {
+          "license": "Apache-2.0",
+          "media_type": "application/json",
+          "purpose_zh": "定义会议提醒的画布、目标时长、指定文案与配色。",
+          "ref": "benchmarks/canaries/slack-gif-creator/fixtures/message-readable.json",
+          "sha256": "bb0bb0f0eab68c53e50f1e888d3f076821f39fccb5786284a8f3c4ef437da9fb"
+        }
+      ],
+      "leakage_group": "train-meeting-typography-v1",
+      "prompt": "设计一张温暖、友好的 Slack 会议提醒 GIF。按照配置在 480×480 画布上同时清晰呈现 SYNC 与 10:30，使用给定的米白、深棕黑和砖红配色；动画可以让标题或时间获得轻微强调，但不能牺牲阅读时间或把文字移出安全区。输出指定 GIF。",
+      "requested_output": {
+        "description_zh": "480×480、突出 SYNC 与 10:30 可读性的会议提醒 GIF。",
+        "filename": "meeting_sync_reminder.gif",
+        "media_type": "image/gif"
+      },
+      "required_capabilities": [
+        "text_layout",
+        "contrast_management",
+        "message_gif_animation",
+        "frame_content_analysis"
+      ],
+      "risk": "high",
+      "rubric": [
+        {
+          "criterion_id": "readable-legibility",
+          "description_zh": "SYNC 与 10:30 在正常播放和缩略显示时都能迅速、无歧义地读出。",
+          "label_zh": "文字可读性",
+          "weight": 0.4
+        },
+        {
+          "criterion_id": "readable-layout",
+          "description_zh": "标题、时间和装饰之间主次明确，留白与安全边距合理。",
+          "label_zh": "版式层级",
+          "weight": 0.25
+        },
+        {
+          "criterion_id": "readable-emphasis",
+          "description_zh": "动态强调克制有效，不造成阅读中断或视觉疲劳。",
+          "label_zh": "强调动画",
+          "weight": 0.2
+        },
+        {
+          "criterion_id": "readable-tone",
+          "description_zh": "给定配色和细节共同营造温暖、专业的提醒语气。",
+          "label_zh": "友好氛围",
+          "weight": 0.15
+        }
+      ],
+      "split": "train"
+    },
+    {
+      "case_family": "easing_motion",
+      "case_id": "functional-train-easing-orbit-005",
+      "case_type": "functional",
+      "difficulty": "hard",
+      "evidence_policy": {
+        "deterministic_tier": "E3",
+        "enable_e1": false,
+        "minimum_tier": "E2"
+      },
+      "expectations": [
+        {
+          "category": "technical",
+          "deterministic": true,
+          "evidence_kind": "artifact_metadata",
+          "expectation_id": "orbit-container",
+          "statement_zh": "产物必须为可解码的 128×128 多帧 GIF，至少有 8 个非完全相同的有效帧，并声明无限循环。",
+          "weight": 0.15
+        },
+        {
+          "category": "temporal",
+          "deterministic": true,
+          "evidence_kind": "artifact_metadata",
+          "expectation_id": "orbit-duration",
+          "statement_zh": "逐帧时长之和不超过 2.7 秒，所有帧均具有正 duration。",
+          "weight": 0.15
+        },
+        {
+          "category": "content",
+          "deterministic": true,
+          "evidence_kind": "frame_content",
+          "expectation_id": "orbit-subjects",
+          "statement_zh": "帧内容应能分离出一个持续存在的橙色较大行星区域与一个随时间移动的青色较小卫星区域，两者在面积和运动性上可区分。",
+          "weight": 0.2
+        },
+        {
+          "category": "temporal",
+          "deterministic": true,
+          "evidence_kind": "temporal_sequence",
+          "expectation_id": "orbit-arc",
+          "statement_zh": "青色卫星质心轨迹相对起终点连线必须有显著中段偏离：最大垂距至少为画布宽度的 8%，且最大偏离出现在轨迹中间 20% 至 80% 区间。",
+          "weight": 0.25
+        },
+        {
+          "category": "temporal",
+          "deterministic": true,
+          "evidence_kind": "temporal_sequence",
+          "expectation_id": "orbit-ease-out",
+          "statement_zh": "在停靠前最后 40% 的运动采样中，连续质心位移的线性回归斜率必须为负，且末次位移不高于该区段首次位移的 50%。",
+          "weight": 0.25
+        }
+      ],
+      "expected_output_zh": "一个小卫星沿非直线路径接近橙色行星并自然减速停靠的循环 GIF；轨迹、背景星点和造型可以变化，但弧线与 ease-out 必须有可测证据。",
+      "fixtures": [
+        {
+          "license": "Apache-2.0",
+          "media_type": "application/json",
+          "purpose_zh": "规定卫星与行星主体、弧线运动、减速停靠和最长时长。",
+          "ref": "benchmarks/canaries/slack-gif-creator/fixtures/easing-orbit.json",
+          "sha256": "1d67672637a2b951bcc54dd8ba0a986e548686328a11a4f710125df17bb1fbdf"
+        }
+      ],
+      "leakage_group": "train-orbital-easing-v1",
+      "prompt": "创作一个 128×128 的 Slack emoji GIF：青色小卫星沿明显的弧线路径绕过橙色行星，并在目标位置平滑减速停靠。请使用非线性的 ease-out 运动，让最后一段位移逐步缩小；构图和星空细节可以自行发挥，输出指定文件。",
+      "requested_output": {
+        "description_zh": "青色卫星沿弧线运动并 ease-out 停靠的 128×128 Slack GIF。",
+        "filename": "satellite_orbit_ease.gif",
+        "media_type": "image/gif"
+      },
+      "required_capabilities": [
+        "arc_motion_generation",
+        "easing_function_application",
+        "color_subject_tracking",
+        "emoji_gif_export"
+      ],
+      "risk": "high",
+      "rubric": [
+        {
+          "criterion_id": "orbit-path",
+          "description_zh": "卫星路径具有清楚而自然的空间弧度，不像直线平移。",
+          "label_zh": "弧线辨识度",
+          "weight": 0.3
+        },
+        {
+          "criterion_id": "orbit-easing",
+          "description_zh": "停靠前的速度变化平顺，ease-out 感明显且没有突然刹停。",
+          "label_zh": "减速质感",
+          "weight": 0.3
+        },
+        {
+          "criterion_id": "orbit-composition",
+          "description_zh": "卫星与行星在小画布中层级分明，轨迹不造成拥挤。",
+          "label_zh": "构图清晰度",
+          "weight": 0.2
+        },
+        {
+          "criterion_id": "orbit-craft",
+          "description_zh": "造型、背景和色彩形成完整的太空场景并适合 Slack 表情。",
+          "label_zh": "细节完成度",
+          "weight": 0.2
+        }
+      ],
+      "split": "train"
+    },
+    {
+      "case_family": "looping_timing",
+      "case_id": "functional-validation-loop-sparkles-006",
+      "case_type": "functional",
+      "difficulty": "hard",
+      "evidence_policy": {
+        "deterministic_tier": "E3",
+        "enable_e1": false,
+        "minimum_tier": "E2"
+      },
+      "expectations": [
+        {
+          "category": "technical",
+          "deterministic": true,
+          "evidence_kind": "artifact_metadata",
+          "expectation_id": "loop-container",
+          "statement_zh": "输出必须是可解码的 128×128 多帧 GIF，声明无限循环，且至少包含 8 个非完全相同的有效帧。",
+          "weight": 0.15
+        },
+        {
+          "category": "temporal",
+          "deterministic": true,
+          "evidence_kind": "artifact_metadata",
+          "expectation_id": "loop-duration",
+          "statement_zh": "逐帧 duration 求和后的总时长不超过 2.2 秒，所有帧 duration 均为正数。",
+          "weight": 0.15
+        },
+        {
+          "category": "content",
+          "deterministic": true,
+          "evidence_kind": "frame_content",
+          "expectation_id": "loop-ring",
+          "statement_zh": "中央区域应在全部帧中保有位置稳定的圆环；圆环质心跨帧最大漂移不超过 3 像素。",
+          "weight": 0.2
+        },
+        {
+          "category": "temporal",
+          "deterministic": true,
+          "evidence_kind": "temporal_sequence",
+          "expectation_id": "loop-three-sparkles",
+          "statement_zh": "圆环外围应能追踪到三个不同角位置的火花区域，每个火花在一个周期内都至少经历一次亮度或面积的明显上升与下降。",
+          "weight": 0.25
+        },
+        {
+          "category": "temporal",
+          "deterministic": true,
+          "evidence_kind": "temporal_sequence",
+          "expectation_id": "loop-seam",
+          "statement_zh": "末帧到首帧的平均绝对像素差不得超过相邻帧差分第 95 百分位的 1.25 倍，同时不得超过 15 个 8-bit 强度单位。",
+          "weight": 0.25
+        }
+      ],
+      "expected_output_zh": "一个中央圆环稳定、三颗火花依次明灭且循环接缝平滑的表情 GIF；火花形态、颜色和具体相位可以创作，但循环连续性必须可测。",
+      "fixtures": [
+        {
+          "license": "Apache-2.0",
+          "media_type": "application/json",
+          "purpose_zh": "定义三颗火花、中央圆环、最长时长和首尾连续要求。",
+          "ref": "benchmarks/canaries/slack-gif-creator/fixtures/loop-sparkles.json",
+          "sha256": "05cede5c3d137d501ed3d40acf00a6081482dc72affb208a08bcf3cdaef080db"
+        }
+      ],
+      "leakage_group": "validation-sparkle-loop-v1",
+      "prompt": "制作一个无缝循环的 128×128 Slack emoji GIF：中央圆环保持稳定，三颗火花在它周围按节奏出现、增强、消退。请设计周期运动而不是简单复制静止首尾帧，使最后一帧接回第一帧时没有明显跳变；总时长遵循随附配置，输出指定 GIF。",
+      "requested_output": {
+        "description_zh": "三颗火花围绕中央圆环周期变化的无缝循环 Slack GIF。",
+        "filename": "sparkle_ring_loop.gif",
+        "media_type": "image/gif"
+      },
+      "required_capabilities": [
+        "cyclic_animation_design",
+        "loop_seam_analysis",
+        "frame_timing_control",
+        "emoji_gif_export"
+      ],
+      "risk": "high",
+      "rubric": [
+        {
+          "criterion_id": "loop-continuity",
+          "description_zh": "接缝难以察觉，反复播放时节奏和状态自然衔接。",
+          "label_zh": "循环连续性",
+          "weight": 0.4
+        },
+        {
+          "criterion_id": "loop-rhythm",
+          "description_zh": "三颗火花的出现与消退有组织，既不杂乱也不过于机械。",
+          "label_zh": "火花节奏",
+          "weight": 0.25
+        },
+        {
+          "criterion_id": "loop-stability",
+          "description_zh": "圆环作为视觉锚点保持清楚稳定，支持外围动态。",
+          "label_zh": "中心稳定性",
+          "weight": 0.15
+        },
+        {
+          "criterion_id": "loop-visual",
+          "description_zh": "配色、火花形态和构图在小尺寸下精致而醒目。",
+          "label_zh": "整体美感",
+          "weight": 0.2
+        }
+      ],
+      "split": "validation"
+    },
+    {
+      "case_family": "quality_efficiency",
+      "case_id": "functional-validation-efficiency-007",
+      "case_type": "functional",
+      "difficulty": "hard",
+      "evidence_policy": {
+        "deterministic_tier": "E3",
+        "enable_e1": false,
+        "minimum_tier": "E2"
+      },
+      "expectations": [
+        {
+          "category": "technical",
+          "deterministic": true,
+          "evidence_kind": "artifact_metadata",
+          "expectation_id": "efficiency-container",
+          "statement_zh": "产物必须为可解码的 480×480 多帧 GIF，并声明无限循环。",
+          "weight": 0.15
+        },
+        {
+          "category": "efficiency",
+          "deterministic": true,
+          "evidence_kind": "artifact_metadata",
+          "expectation_id": "efficiency-size",
+          "statement_zh": "文件实际字节数不得超过 921600 字节（900 KiB），该证据必须独立于文件是否存在。",
+          "weight": 0.25
+        },
+        {
+          "category": "temporal",
+          "deterministic": true,
+          "evidence_kind": "artifact_metadata",
+          "expectation_id": "efficiency-fps",
+          "statement_zh": "由帧数和逐帧 duration 计算的有效平均帧率应在 10 至 16 FPS 之间。",
+          "weight": 0.15
+        },
+        {
+          "category": "temporal",
+          "deterministic": true,
+          "evidence_kind": "artifact_metadata",
+          "expectation_id": "efficiency-duration",
+          "statement_zh": "逐帧 duration 求和后的总时长应在 1.4 至 3.0 秒之间，且不存在占总时长 50% 以上的冻结帧。",
+          "weight": 0.15
+        },
+        {
+          "category": "content",
+          "deterministic": true,
+          "evidence_kind": "frame_content",
+          "expectation_id": "efficiency-check",
+          "statement_zh": "中央勾号应在至少 60% 的帧中形成连续、高对比的可见区域，包围盒不得触碰画布边缘。",
+          "weight": 0.15
+        },
+        {
+          "category": "temporal",
+          "deterministic": true,
+          "evidence_kind": "temporal_sequence",
+          "expectation_id": "efficiency-burst",
+          "statement_zh": "被追踪粒子相对勾号中心的距离中位数应先增大，随后可见粒子总面积或平均亮度下降，证明存在向外爆发并渐隐的序列。",
+          "weight": 0.15
+        }
+      ],
+      "expected_output_zh": "一个文件紧凑但并非低质占位的庆祝动画：勾号清楚，粒子由中心向外扩散并渐隐，满足 480×480、10–16 FPS 与 900KB 上限；具体粒子数量和配色可变化。",
+      "fixtures": [
+        {
+          "license": "Apache-2.0",
+          "media_type": "application/json",
+          "purpose_zh": "规定庆祝粒子主题、480 画布、900KB 体积上限、帧率范围与质量权衡。",
+          "ref": "benchmarks/canaries/slack-gif-creator/fixtures/efficiency-burst.json",
+          "sha256": "85d5bbd1ec3228efd5574c6b4766cc2d69a909c0bcdd46c1690eca28885538fb"
+        }
+      ],
+      "leakage_group": "validation-particle-budget-v1",
+      "prompt": "为 Slack 消息制作一个紧凑的庆祝 GIF：480×480 画布中央是清楚的勾号，周围粒子向外爆发后渐隐。请在动作顺滑和轮廓可读的前提下控制帧率、调色板与文件体积，严格遵循随附的体积和帧率预算，并输出指定文件。",
+      "requested_output": {
+        "description_zh": "在 900KB 预算内保留清晰勾号和顺滑粒子爆发的 480×480 GIF。",
+        "filename": "compact_check_burst.gif",
+        "media_type": "image/gif"
+      },
+      "required_capabilities": [
+        "message_gif_composition",
+        "particle_animation",
+        "gif_size_optimization",
+        "artifact_metadata_analysis"
+      ],
+      "risk": "high",
+      "rubric": [
+        {
+          "criterion_id": "efficiency-budget",
+          "description_zh": "在明确体积预算内合理控制帧率、色彩与重复信息。",
+          "label_zh": "压缩效率",
+          "weight": 0.3
+        },
+        {
+          "criterion_id": "efficiency-readability",
+          "description_zh": "中心勾号在粒子和量化影响下仍然醒目、完整。",
+          "label_zh": "勾号可读性",
+          "weight": 0.25
+        },
+        {
+          "criterion_id": "efficiency-motion",
+          "description_zh": "爆发方向、速度与渐隐连贯，有限帧率下仍显顺滑。",
+          "label_zh": "粒子动态",
+          "weight": 0.25
+        },
+        {
+          "criterion_id": "efficiency-balance",
+          "description_zh": "压缩没有造成严重色带、轮廓破碎或难看的节奏跳跃。",
+          "label_zh": "质量权衡",
+          "weight": 0.2
+        }
+      ],
+      "split": "validation"
+    },
+    {
+      "case_family": "emoji_animation",
+      "case_id": "functional-validation-pulse-text-008",
+      "case_type": "functional",
+      "difficulty": "medium",
+      "evidence_policy": {
+        "deterministic_tier": "E3",
+        "enable_e1": false,
+        "minimum_tier": "E2"
+      },
+      "expectations": [
+        {
+          "category": "technical",
+          "deterministic": true,
+          "evidence_kind": "artifact_metadata",
+          "expectation_id": "pulse-container",
+          "statement_zh": "输出必须是可解码的 128×128 多帧 GIF，并声明无限循环。",
+          "weight": 0.15
+        },
+        {
+          "category": "temporal",
+          "deterministic": true,
+          "evidence_kind": "artifact_metadata",
+          "expectation_id": "pulse-duration",
+          "statement_zh": "逐帧 duration 求和后的总时长不超过 2.8 秒。",
+          "weight": 0.15
+        },
+        {
+          "category": "temporal",
+          "deterministic": true,
+          "evidence_kind": "artifact_metadata",
+          "expectation_id": "pulse-fps",
+          "statement_zh": "根据帧数与总时长计算的有效平均帧率应在 10 至 14 FPS 之间，并至少包含 8 个非完全相同的帧。",
+          "weight": 0.15
+        },
+        {
+          "category": "content",
+          "deterministic": true,
+          "evidence_kind": "frame_content",
+          "expectation_id": "pulse-text",
+          "statement_zh": "OCR 或等价字形检查必须在不少于 75% 的帧中识别出完整 GO，文字包围盒始终位于徽章内部且不触碰画布边缘。",
+          "weight": 0.25
+        },
+        {
+          "category": "content",
+          "deterministic": true,
+          "evidence_kind": "frame_content",
+          "expectation_id": "pulse-palette",
+          "statement_zh": "代表帧应含接近 #17213a、#ff6b6b 与 #ffffff 的三个主要色簇，白色文字与相邻珊瑚红区域保持明显亮度差。",
+          "weight": 0.15
+        },
+        {
+          "category": "temporal",
+          "deterministic": true,
+          "evidence_kind": "temporal_sequence",
+          "expectation_id": "pulse-cycle",
+          "statement_zh": "按珊瑚红徽章面积或包围盒尺度追踪，一个循环内必须至少出现一次扩大和一次缩小，且末帧到首帧的尺度差不超过该周期总尺度振幅的 15%。",
+          "weight": 0.15
+        }
+      ],
+      "expected_output_zh": "一个可循环的 GO 警报徽章，脉冲具有清楚但不刺眼的收放，白色文字在全过程保持可读；可自由设计徽章细节和脉冲曲线。",
+      "fixtures": [
+        {
+          "license": "Apache-2.0",
+          "media_type": "application/json",
+          "purpose_zh": "定义 GO 脉冲警报表情的画布、目标帧率、最长时长和三色调色板。",
+          "ref": "benchmarks/canaries/slack-gif-creator/fixtures/emoji-pulse-text.json",
+          "sha256": "a9f3b9f6998a4f58b11313ebfe48d46923edfe2e830960f4af56f6b7b4b3aaba"
+        }
+      ],
+      "leakage_group": "validation-alert-pulse-v1",
+      "prompt": "创建一个 128×128 的 Slack 警报表情 GIF。依据随附配置制作深蓝底、珊瑚红徽章和白色 GO 文本；徽章进行有呼吸感的周期脉冲，文字在缩略尺寸下始终容易辨认。请保持给定配色与时长预算，输出指定 GIF。",
+      "requested_output": {
+        "description_zh": "深蓝、珊瑚红和白色构成的 GO 循环脉冲 Slack 表情 GIF。",
+        "filename": "go_alert_pulse.gif",
+        "media_type": "image/gif"
+      },
+      "required_capabilities": [
+        "text_rendering",
+        "pulse_animation",
+        "palette_preservation",
+        "emoji_gif_export"
+      ],
+      "risk": "medium",
+      "rubric": [
+        {
+          "criterion_id": "pulse-legibility",
+          "description_zh": "文字在脉冲全过程和缩略尺寸下仍清楚、稳定。",
+          "label_zh": "GO 可读性",
+          "weight": 0.35
+        },
+        {
+          "criterion_id": "pulse-motion",
+          "description_zh": "收放曲线有呼吸感，速度变化自然且循环顺畅。",
+          "label_zh": "脉冲质感",
+          "weight": 0.3
+        },
+        {
+          "criterion_id": "pulse-color",
+          "description_zh": "深蓝、珊瑚红和白色关系明确，既醒目又保持对比。",
+          "label_zh": "配色执行",
+          "weight": 0.2
+        },
+        {
+          "criterion_id": "pulse-emoji-ready",
+          "description_zh": "徽章造型、细节和节奏适合作为 Slack 自定义表情使用。",
+          "label_zh": "表情完成度",
+          "weight": 0.15
+        }
+      ],
+      "split": "validation"
+    }
+  ],
+  "package_access": [
+    {
+      "bytes_loaded": 11345,
+      "kind": "read",
+      "node_id": null,
+      "path": "LICENSE.txt",
+      "sequence": 0,
+      "tokens_loaded": 2837
+    },
+    {
+      "bytes_loaded": 7841,
+      "kind": "read",
+      "node_id": null,
+      "path": "SKILL.md",
+      "sequence": 1,
+      "tokens_loaded": 1961
+    },
+    {
+      "bytes_loaded": 6265,
+      "kind": "read",
+      "node_id": null,
+      "path": "core/easing.py",
+      "sequence": 2,
+      "tokens_loaded": 1567
+    },
+    {
+      "bytes_loaded": 4548,
+      "kind": "read",
+      "node_id": null,
+      "path": "core/frame_composer.py",
+      "sequence": 3,
+      "tokens_loaded": 1137
+    },
+    {
+      "bytes_loaded": 9847,
+      "kind": "read",
+      "node_id": null,
+      "path": "core/gif_builder.py",
+      "sequence": 4,
+      "tokens_loaded": 2462
+    },
+    {
+      "bytes_loaded": 3785,
+      "kind": "read",
+      "node_id": null,
+      "path": "core/validators.py",
+      "sequence": 5,
+      "tokens_loaded": 947
+    },
+    {
+      "bytes_loaded": 66,
+      "kind": "read",
+      "node_id": null,
+      "path": "requirements.txt",
+      "sequence": 6,
+      "tokens_loaded": 17
+    }
+  ],
+  "package_snapshot_hash": "ce42d8a837acf9feda9706a3418fc26a77c497d9615079e616b5fdc6870ef64e",
+  "role_run": {
+    "context_id": "/root/r2_eval_designer",
+    "finished_at": "2026-07-21T10:28:21Z",
+    "host": "codex",
+    "host_task_id": "/root/r2_eval_designer",
+    "model": "gpt-5.6-sol",
+    "started_at": "2026-07-21T10:25:51Z",
+    "usage": {
+      "duration_ms": 150000,
+      "input_tokens": 34000,
+      "output_tokens": 15000,
+      "token_count_kind": "estimated",
+      "tool_calls": 14
+    }
+  },
+  "schema_version": "1.0.0",
+  "skill_id": "slack-gif-creator",
+  "submission_id": "eval-designer-slack-gif-creator-r2-001",
+  "trigger_cases": [
+    {
+      "case_id": "trigger-positive-001",
+      "case_type": "trigger",
+      "expected_trigger": true,
+      "kind": "positive",
+      "query": "给 Slack 做一个 128×128 的动态表情：黄色星星落下、弹一下再停住，导出循环 GIF。",
+      "rationale_zh": "明确要求为 Slack 创作动画表情 GIF，直接命中技能用途与尺寸约束。",
+      "risk": "low",
+      "split": "train"
+    },
+    {
+      "case_id": "trigger-positive-002",
+      "case_type": "trigger",
+      "expected_trigger": true,
+      "kind": "positive",
+      "query": "把我上传的徽章图片做成会轻轻上浮并回落的 Slack reaction GIF，颜色别改。",
+      "rationale_zh": "同时包含用户图片动画化、Slack 场景与 GIF 输出，属于核心能力。",
+      "risk": "low",
+      "split": "train"
+    },
+    {
+      "case_id": "trigger-positive-003",
+      "case_type": "trigger",
+      "expected_trigger": true,
+      "kind": "positive",
+      "query": "制作一张 480×480 的 Slack 消息 GIF，用 waiting、processing、complete 三段展示发布状态。",
+      "rationale_zh": "明确是 Slack message GIF，并需要多阶段动画编排。",
+      "risk": "low",
+      "split": "train"
+    },
+    {
+      "case_id": "trigger-positive-004",
+      "case_type": "trigger",
+      "expected_trigger": true,
+      "kind": "positive",
+      "query": "我有一段太大的动图，请压到适合 Slack emoji 上传的体积，同时保留顺滑循环。",
+      "rationale_zh": "Slack 动图优化、体积控制与循环质量均由该技能覆盖。",
+      "risk": "medium",
+      "split": "train"
+    },
+    {
+      "case_id": "trigger-positive-005",
+      "case_type": "trigger",
+      "expected_trigger": true,
+      "kind": "positive",
+      "query": "帮我做一个 Slack 用的 GO 警报动态 emoji，文字脉冲两次后自然接回开头。",
+      "rationale_zh": "请求包含 Slack、动态 emoji、文本和循环时序，触发信号充分。",
+      "risk": "low",
+      "split": "validation"
+    },
+    {
+      "case_id": "trigger-positive-006",
+      "case_type": "trigger",
+      "expected_trigger": true,
+      "kind": "positive",
+      "query": "为 Slack 频道生成一个小巧的庆祝 GIF：勾号周围粒子炸开，播放完自动循环。",
+      "rationale_zh": "明确要求面向 Slack 生成并优化循环动画 GIF。",
+      "risk": "low",
+      "split": "validation"
+    },
+    {
+      "case_id": "trigger-negative-001",
+      "case_type": "trigger",
+      "expected_trigger": false,
+      "kind": "negative",
+      "query": "给 Slack 工作区画一个静态频道图标，输出透明背景 PNG。",
+      "rationale_zh": "虽然提到 Slack，但任务明确是静态 PNG，不涉及动画 GIF。",
+      "risk": "low",
+      "split": "train"
+    },
+    {
+      "case_id": "trigger-negative-002",
+      "case_type": "trigger",
+      "expected_trigger": false,
+      "kind": "negative",
+      "query": "剪一条 9:16 的新品宣传短视频，配音乐后导出 MP4 发到 Instagram。",
+      "rationale_zh": "这是社交媒体视频剪辑与 MP4 输出，平台和媒介均不匹配。",
+      "risk": "low",
+      "split": "train"
+    },
+    {
+      "case_id": "trigger-negative-003",
+      "case_type": "trigger",
+      "expected_trigger": false,
+      "kind": "negative",
+      "query": "写一个纯 CSS 的网页加载动画，不能使用图片资源。",
+      "rationale_zh": "目标是网页代码动画而非 GIF 文件，更非 Slack 素材。",
+      "risk": "low",
+      "split": "train"
+    },
+    {
+      "case_id": "trigger-negative-004",
+      "case_type": "trigger",
+      "expected_trigger": false,
+      "kind": "negative",
+      "query": "把这组插画打包成 Telegram 的动态 WEBP 贴纸集。",
+      "rationale_zh": "输出为 Telegram WEBP 贴纸包，不属于 Slack GIF 创作。",
+      "risk": "low",
+      "split": "train"
+    },
+    {
+      "case_id": "trigger-negative-005",
+      "case_type": "trigger",
+      "expected_trigger": false,
+      "kind": "negative",
+      "query": "替我写一封说明本周部署进度的团队公告邮件。",
+      "rationale_zh": "纯文本写作任务，没有图像、动画或 Slack GIF 需求。",
+      "risk": "low",
+      "split": "validation"
+    },
+    {
+      "case_id": "trigger-negative-006",
+      "case_type": "trigger",
+      "expected_trigger": false,
+      "kind": "negative",
+      "query": "根据季度数据制作一张可打印的静态柱状图 PDF。",
+      "rationale_zh": "这是静态数据可视化与 PDF 交付，不需 GIF 动画能力。",
+      "risk": "low",
+      "split": "validation"
+    },
+    {
+      "case_id": "trigger-boundary-001",
+      "case_type": "trigger",
+      "expected_trigger": false,
+      "kind": "near_boundary",
+      "query": "做一个可循环的聊天表情 GIF，供公司内部群聊使用，暂时没有指定平台。",
+      "rationale_zh": "虽是聊天 GIF，但缺少 Slack 目标；该技能的触发边界应保留平台特异性。",
+      "risk": "high",
+      "split": "train"
+    },
+    {
+      "case_id": "trigger-boundary-002",
+      "case_type": "trigger",
+      "expected_trigger": true,
+      "kind": "near_boundary",
+      "query": "想要一个会旋转后停住的 reaction，最后直接发进 Slack，格式请你选最合适的。",
+      "rationale_zh": "未明说 GIF，但 Slack reaction 与动画交付强烈指向本技能可提供的原生输出。",
+      "risk": "high",
+      "split": "train"
+    },
+    {
+      "case_id": "trigger-boundary-003",
+      "case_type": "trigger",
+      "expected_trigger": false,
+      "kind": "near_boundary",
+      "query": "为 Slack 做一张写着 ON CALL 的方形贴图，只要一帧，导出 PNG。",
+      "rationale_zh": "Slack 与方形素材是弱信号，但一帧 PNG 明确排除了动画 GIF。",
+      "risk": "high",
+      "split": "train"
+    },
+    {
+      "case_id": "trigger-boundary-004",
+      "case_type": "trigger",
+      "expected_trigger": true,
+      "kind": "near_boundary",
+      "query": "Slack 的动态 emoji 应该用多大尺寸、多少帧和多长时间？先给我制作建议。",
+      "rationale_zh": "尚未要求生成文件，但问题直接询问 Slack 动态 emoji 的专属规范与动画设计知识。",
+      "risk": "medium",
+      "split": "train"
+    },
+    {
+      "case_id": "trigger-boundary-005",
+      "case_type": "trigger",
+      "expected_trigger": false,
+      "kind": "near_boundary",
+      "query": "把现有 GIF 压缩到 Discord 表情限制内，动画内容不要变化。",
+      "rationale_zh": "GIF 优化能力相关，但目标平台明确为 Discord，超出 Slack 专属触发范围。",
+      "risk": "high",
+      "split": "validation"
+    },
+    {
+      "case_id": "trigger-boundary-006",
+      "case_type": "trigger",
+      "expected_trigger": true,
+      "kind": "near_boundary",
+      "query": "把附件里的 logo 做成轻微呼吸效果，能作为 Slack 自定义表情直接上传。",
+      "rationale_zh": "虽未写出 GIF 字样，但附件动画化和 Slack 自定义表情交付共同构成充分触发信号。",
+      "risk": "high",
+      "split": "validation"
+    }
+  ],
+  "work_id": "eval-design-35fdb136ceda9ec147eda7c3"
+}

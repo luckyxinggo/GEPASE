@@ -1,0 +1,32 @@
+{
+  "schema_version": "1.0.0",
+  "stage_id": "R5",
+  "status": "passed",
+  "confirmed_at": "2026-07-22T14:36:58Z",
+  "reviewer_kind": "human-user",
+  "confirmation_text": "正常",
+  "report_ref": "artifacts/runs/r5-slack-gif-creator-report/index.html",
+  "observed_scheme": "file",
+  "observed_report_ref": "artifacts/runs/r5-slack-gif-creator-report/index.html",
+  "checks": [
+    {
+      "check": "page_layout_has_no_obvious_misalignment",
+      "status": "passed"
+    },
+    {
+      "check": "three_validation_gif_case_groups_switch",
+      "status": "passed"
+    },
+    {
+      "check": "package_graph_version_and_fine_grained_controls_work",
+      "status": "passed"
+    },
+    {
+      "check": "score_case_selector_switches",
+      "status": "passed"
+    }
+  ],
+  "scope_note": "This confirms local layout and the requested core interactions only. It does not independently regrade GIF quality or broaden the single-canary algorithm claim.",
+  "automated_file_navigation": "blocked_by_host_policy",
+  "policy_workaround_attempted": false
+}

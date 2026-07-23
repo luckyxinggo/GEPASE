@@ -1,0 +1,101 @@
+{
+  "artifact_root": "artifacts/runs/r3-slack-gif-creator-paired/workspaces/work-b836a5a0009428cefa51ce4f",
+  "artifacts": [
+    {
+      "media_type": "application/json",
+      "path": "execution-summary.json",
+      "sha256": "37195652fcfdc9d63d839cec28522f7ed43009bda19070124a995e9cab57c859",
+      "size_bytes": 1310
+    },
+    {
+      "media_type": "text/x-python",
+      "path": "generate_gif.py",
+      "sha256": "1b61d11f84696a480f5f6a34d6c26a80d642348e89780ef3d310bb45584bcd1c",
+      "size_bytes": 2578
+    },
+    {
+      "media_type": "application/json",
+      "path": "observed-trace.json",
+      "sha256": "20a7d029c75714705584a6d33ace5ca8c6732b0f543cad54dd8b8663d82984cb",
+      "size_bytes": 806
+    },
+    {
+      "media_type": "application/json",
+      "path": "package-access.json",
+      "sha256": "d9659a5c0dbc933de9f2104d72daa770c19d23a7304e943e0d807dd0e577bae5",
+      "size_bytes": 22
+    },
+    {
+      "media_type": "text/markdown",
+      "path": "transcript.md",
+      "sha256": "6af6dcc3ffd2637f86d0475e078aba7a4cc412ab849d416ec4baf00d1bf3a72f",
+      "size_bytes": 1039
+    },
+    {
+      "media_type": "image/gif",
+      "path": "uploaded_badge_lift.gif",
+      "sha256": "b5e20218142be2ad6ab56e9637651874957fd635c716d3afa8487a8d8de13664",
+      "size_bytes": 99878
+    }
+  ],
+  "context_id": "/root/r3_exec_b836a5",
+  "failure_detail": null,
+  "failure_kind": null,
+  "finished_at": "2026-07-21T15:54:37.324863Z",
+  "host": "codex",
+  "host_task_id": "/root/r3_exec_b836a5",
+  "model": "gpt-5.6-sol",
+  "observed_trace": [
+    {
+      "action": "inspect_fixture_config",
+      "outcome": "completed",
+      "sequence": 0,
+      "target": "benchmarks/canaries/slack-gif-creator/fixtures/input-badge.json",
+      "tool": "read"
+    },
+    {
+      "action": "load_input_image",
+      "outcome": "completed",
+      "sequence": 1,
+      "target": "benchmarks/canaries/slack-gif-creator/fixtures/input-badge.ppm",
+      "tool": "Pillow"
+    },
+    {
+      "action": "generate_animated_gif",
+      "outcome": "completed",
+      "sequence": 2,
+      "target": "uploaded_badge_lift.gif",
+      "tool": "Pillow/imageio/numpy"
+    },
+    {
+      "action": "reopen_and_verify_gif",
+      "outcome": "completed",
+      "sequence": 3,
+      "target": "uploaded_badge_lift.gif",
+      "tool": "Pillow/numpy"
+    }
+  ],
+  "package_access": [],
+  "planned_trace": [],
+  "provider_id": "agent-delegated-v1",
+  "proxy_score": null,
+  "proxy_score_method": null,
+  "schema_version": "1.0.0",
+  "started_at": "2026-07-21T15:52:07.324863Z",
+  "submission_id": "submission-78418b72fd2f9522e8778dd7",
+  "transcript": {
+    "media_type": "text/markdown",
+    "path": "transcript.md",
+    "sha256": "6af6dcc3ffd2637f86d0475e078aba7a4cc412ab849d416ec4baf00d1bf3a72f",
+    "size_bytes": 1039
+  },
+  "uncertainty": 0.1,
+  "usage": {
+    "duration_ms": 150000,
+    "input_tokens": 3500,
+    "output_tokens": 1200,
+    "token_count_kind": "estimated",
+    "tool_calls": 8
+  },
+  "work_id": "work-b836a5a0009428cefa51ce4f"
+}

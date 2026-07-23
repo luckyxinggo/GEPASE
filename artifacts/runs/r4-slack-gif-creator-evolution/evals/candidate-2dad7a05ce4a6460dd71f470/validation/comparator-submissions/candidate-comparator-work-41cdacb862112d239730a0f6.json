@@ -1,0 +1,45 @@
+{
+  "comparator_work_id": "candidate-comparator-work-41cdacb862112d239730a0f6",
+  "confidence": 0.9,
+  "criteria": [
+    {
+      "criterion_id": "loop-continuity",
+      "preference": "right",
+      "rationale_zh": "两侧都为无限循环且每帧均唯一，但右侧首尾像素差为 1.744，低于其相邻帧平均差 1.865；左侧首尾差 1.993，略高于相邻帧平均差 1.905。右侧接缝因此更接近日常帧间变化，视觉上由末帧正在增强的顶部火花自然接回首帧峰值。"
+    },
+    {
+      "criterion_id": "loop-rhythm",
+      "preference": "right",
+      "rationale_zh": "右侧在 20 帧中把顶部、右下、左下三颗火花分成清楚的依次增强与消退段，并在周期末重新引入顶部火花，节奏辨识度高且不过度拥挤。左侧 12 帧的三处火花常同时可见、相位切换更紧促，顺序感稍弱。"
+    },
+    {
+      "criterion_id": "loop-stability",
+      "preference": "right",
+      "rationale_zh": "右侧圆环的位置、轮廓和尺度在抽样帧中保持一致，青紫双层边缘始终构成清楚的中心锚点，外围火花变化不会干扰环内区域。左侧圆环同样稳定，但环内移动的白色亮点引入了额外中心运动，视觉锚定略弱。"
+    },
+    {
+      "criterion_id": "loop-visual",
+      "preference": "right",
+      "rationale_zh": "右侧使用统一的青紫圆环、黄青粉三色火花和克制的彩色光晕，小尺寸下主体分离清楚、层次精致。左侧也醒目，但多颗常驻小亮点与更密集的中心细节使画面略显繁杂。"
+    }
+  ],
+  "rationale_zh": "综合四项 rubric，右侧在可测接缝连续性、三颗火花的分阶段节奏、中心锚点纯净度以及小尺寸视觉层次上均略优。两侧都完成了有效循环，因此结论不是压倒性差距；但右侧优势跨越全部评价维度且有首尾差数据与抽样帧共同支持，故判定 right，置信度 0.90。",
+  "role_run": {
+    "context_id": "ctx-r4-cmp-loop-ab-41cdacb862112d239730a0f6",
+    "finished_at": "2026-07-22T10:53:22Z",
+    "host": "codex",
+    "host_task_id": "task-r4-cmp-loop-ab-41cdacb862112d239730a0f6",
+    "model": "gpt-5.6-sol",
+    "started_at": "2026-07-22T10:45:22Z",
+    "usage": {
+      "duration_ms": 480000,
+      "input_tokens": 7000,
+      "output_tokens": 1200,
+      "token_count_kind": "estimated",
+      "tool_calls": 9
+    }
+  },
+  "schema_version": "1.0.0",
+  "submission_id": "candidate-comparator-submission-41cdacb862112d239730a0f6-ab",
+  "winner": "right"
+}

@@ -1,0 +1,79 @@
+{
+  "reference_cache_hit": true,
+  "rows": [
+    {
+      "candidate_correctness": 1.0,
+      "candidate_grader_score": 0.956,
+      "candidate_score": 0.9802,
+      "paired_delta": 0.13659999999999994,
+      "quality_after_comparator": {
+        "candidate": 0.956,
+        "reference": 0.958
+      },
+      "reference_correctness": 0.75,
+      "reference_grader_score": 0.958,
+      "reference_score": 0.8436,
+      "task_id": "functional-train-easing-orbit-005"
+    },
+    {
+      "candidate_correctness": 1.0,
+      "candidate_grader_score": 0.9564999999999999,
+      "candidate_score": 0.980425,
+      "paired_delta": 0.048149999999999915,
+      "quality_after_comparator": {
+        "candidate": 0.9564999999999999,
+        "reference": 0.8495
+      },
+      "reference_correctness": 1.0,
+      "reference_grader_score": 0.8495,
+      "reference_score": 0.9322750000000001,
+      "task_id": "functional-train-emoji-bounce-001"
+    },
+    {
+      "candidate_correctness": 1.0,
+      "candidate_grader_score": 0.886,
+      "candidate_score": 0.9487000000000001,
+      "paired_delta": 0.016650000000000054,
+      "quality_after_comparator": {
+        "candidate": 0.886,
+        "reference": 0.849
+      },
+      "reference_correctness": 1.0,
+      "reference_grader_score": 0.849,
+      "reference_score": 0.93205,
+      "task_id": "functional-train-input-badge-003"
+    },
+    {
+      "candidate_correctness": 1.0,
+      "candidate_grader_score": 0.962,
+      "candidate_score": 0.9829000000000001,
+      "paired_delta": 0.011925000000000074,
+      "quality_after_comparator": {
+        "candidate": 0.962,
+        "reference": 0.9355
+      },
+      "reference_correctness": 1.0,
+      "reference_grader_score": 0.9355,
+      "reference_score": 0.970975,
+      "task_id": "functional-train-message-status-002"
+    },
+    {
+      "candidate_correctness": 1.0,
+      "candidate_grader_score": 0.9705,
+      "candidate_score": 0.9867250000000001,
+      "paired_delta": 0.168825,
+      "quality_after_comparator": {
+        "candidate": 0.9705,
+        "reference": 0.962
+      },
+      "reference_correctness": 0.7,
+      "reference_grader_score": 0.962,
+      "reference_score": 0.8179000000000001,
+      "task_id": "functional-train-text-readable-004"
+    }
+  ],
+  "schema_version": "1.0.0",
+  "trigger_mixed": false,
+  "valid": true,
+  "vector_count": 5
+}

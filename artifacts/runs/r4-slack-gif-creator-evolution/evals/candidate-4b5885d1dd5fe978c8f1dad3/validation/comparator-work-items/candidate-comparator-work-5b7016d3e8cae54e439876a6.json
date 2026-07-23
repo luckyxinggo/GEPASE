@@ -1,0 +1,74 @@
+{
+  "comparator_work_id": "candidate-comparator-work-5b7016d3e8cae54e439876a6",
+  "expected_output_zh": "一个中央圆环稳定、三颗火花依次明灭且循环接缝平滑的表情 GIF；火花形态、颜色和具体相位可以创作，但循环连续性必须可测。",
+  "forbidden_inputs": [
+    "variant identity",
+    "candidate identity",
+    "expected winner",
+    "executor conversation",
+    "independent grader score",
+    "deterministic assertion score"
+  ],
+  "left": {
+    "blind_artifact": {
+      "artifact": {
+        "media_type": "image/gif",
+        "path": "sparkle_ring_loop.gif",
+        "sha256": "30a021068221a8826bc702862f626ae84b90c90bacdc5b454a1461b14cddc59e",
+        "size_bytes": 27745
+      },
+      "artifact_root": "artifacts/runs/r3-slack-gif-creator-paired/workspaces/work-b33fad8398ab056166627930",
+      "blind_id": "blind-0267dfc91e4ee53fd44d4fa6",
+      "contact_sheet_ref": "artifacts/runs/r3-slack-gif-creator-paired/derived/work-b33fad8398ab056166627930/contact-sheet.png",
+      "inspection_ref": "artifacts/runs/r3-slack-gif-creator-paired/blind-inspections/blind-0267dfc91e4ee53fd44d4fa6.json"
+    },
+    "side_id": "left"
+  },
+  "order_label": "AB",
+  "right": {
+    "blind_artifact": {
+      "artifact": {
+        "media_type": "image/gif",
+        "path": "sparkle_ring_loop.gif",
+        "sha256": "a07e510bdf8bd2f61ffd5d897844c4b6368d01a930e691d1d5a838a815b27d9c",
+        "size_bytes": 50669
+      },
+      "artifact_root": "artifacts/runs/r4-slack-gif-creator-evolution/evals/candidate-4b5885d1dd5fe978c8f1dad3/validation/workspaces/work-ce464862bf66ba59d87f290f",
+      "blind_id": "blind-805c9a86963cb310d545e946",
+      "contact_sheet_ref": "artifacts/runs/r4-slack-gif-creator-evolution/evals/candidate-4b5885d1dd5fe978c8f1dad3/validation/derived/work-ce464862bf66ba59d87f290f/contact-sheet.png",
+      "inspection_ref": "artifacts/runs/r4-slack-gif-creator-evolution/evals/candidate-4b5885d1dd5fe978c8f1dad3/validation/blind-inspections/blind-805c9a86963cb310d545e946.json"
+    },
+    "side_id": "right"
+  },
+  "role": "comparator",
+  "rubric": [
+    {
+      "criterion_id": "loop-continuity",
+      "description_zh": "接缝难以察觉，反复播放时节奏和状态自然衔接。",
+      "label_zh": "循环连续性",
+      "weight": 0.4
+    },
+    {
+      "criterion_id": "loop-rhythm",
+      "description_zh": "三颗火花的出现与消退有组织，既不杂乱也不过于机械。",
+      "label_zh": "火花节奏",
+      "weight": 0.25
+    },
+    {
+      "criterion_id": "loop-stability",
+      "description_zh": "圆环作为视觉锚点保持清楚稳定，支持外围动态。",
+      "label_zh": "中心稳定性",
+      "weight": 0.15
+    },
+    {
+      "criterion_id": "loop-visual",
+      "description_zh": "配色、火花形态和构图在小尺寸下精致而醒目。",
+      "label_zh": "整体美感",
+      "weight": 0.2
+    }
+  ],
+  "schema_version": "1.0.0",
+  "submission_schema_ref": "schemas/comparator_submission.schema.json",
+  "task_id": "functional-validation-loop-sparkles-006",
+  "task_prompt": "制作一个无缝循环的 128×128 Slack emoji GIF：中央圆环保持稳定，三颗火花在它周围按节奏出现、增强、消退。请设计周期运动而不是简单复制静止首尾帧，使最后一帧接回第一帧时没有明显跳变；总时长遵循随附配置，输出指定 GIF。"
+}

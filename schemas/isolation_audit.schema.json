@@ -1,0 +1,83 @@
+{
+  "additionalProperties": false,
+  "properties": {
+    "analyzer_context_ids": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Analyzer Context Ids",
+      "type": "array"
+    },
+    "candidate_identity_findings": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Candidate Identity Findings",
+      "type": "array"
+    },
+    "comparator_context_ids": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Comparator Context Ids",
+      "type": "array"
+    },
+    "duplicate_context_ids": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Duplicate Context Ids",
+      "type": "array"
+    },
+    "executor_context_ids": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Executor Context Ids",
+      "type": "array"
+    },
+    "grader_context_ids": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Grader Context Ids",
+      "type": "array"
+    },
+    "oracle_leakage_findings": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Oracle Leakage Findings",
+      "type": "array"
+    },
+    "schema_version": {
+      "default": "1.0.0",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "sibling_leakage_findings": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Sibling Leakage Findings",
+      "type": "array"
+    },
+    "valid": {
+      "title": "Valid",
+      "type": "boolean"
+    }
+  },
+  "required": [
+    "valid",
+    "executor_context_ids",
+    "grader_context_ids",
+    "comparator_context_ids",
+    "analyzer_context_ids",
+    "duplicate_context_ids",
+    "oracle_leakage_findings",
+    "sibling_leakage_findings",
+    "candidate_identity_findings"
+  ],
+  "title": "IsolationAudit",
+  "type": "object"
+}

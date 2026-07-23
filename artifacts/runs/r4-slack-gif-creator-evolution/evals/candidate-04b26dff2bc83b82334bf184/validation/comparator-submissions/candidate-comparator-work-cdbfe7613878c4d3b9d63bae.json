@@ -1,0 +1,45 @@
+{
+  "comparator_work_id": "candidate-comparator-work-cdbfe7613878c4d3b9d63bae",
+  "confidence": 0.84,
+  "criteria": [
+    {
+      "criterion_id": "efficiency-budget",
+      "preference": "left",
+      "rationale_zh": "两侧均为 480×480、12.5 FPS 且远低于 900KB；左侧为 377145 字节，小于右侧的 469924 字节，同时保留 24 个唯一帧和更长的 1.92 秒时长，单位体积承载的信息更充分。"
+    },
+    {
+      "criterion_id": "efficiency-readability",
+      "preference": "right",
+      "rationale_zh": "右侧勾号从首帧即完整出现，白色粗线与绿色圆章对比强、尺寸大，粒子扩散期间也始终清楚；左侧勾号虽最终醒目，但前段经历绘制过程且主体略小。"
+    },
+    {
+      "criterion_id": "efficiency-motion",
+      "preference": "left",
+      "rationale_zh": "左侧 24 帧均为 80ms，接触表呈现由中心生成、向外扩散再逐步淡出的连续阶段，平均相邻像素变化 3.638，也低于右侧的 4.961；右侧运动方向明确，但帧间变化相对更跳。"
+    },
+    {
+      "criterion_id": "efficiency-balance",
+      "preference": "right",
+      "rationale_zh": "右侧采用更简洁的扁平色块和粗轮廓，接触表中勾号、圆章与粒子边缘持续完整，未见明显色带或轮廓破碎；左侧细密光晕、同心线与微小粒子在低色彩 GIF 中更容易显出抖动纹理。"
+    }
+  ],
+  "rationale_zh": "左侧在权重最高的压缩效率上以更小体积保留更多唯一帧，并在粒子扩散与渐隐的连续性上占优；右侧的勾号更即时、扁平轮廓更洁净。按四项权重综合，左侧的体积与动态优势略高于右侧的可读性与洁净度优势，因此判定左侧胜出。",
+  "role_run": {
+    "context_id": "ctx-r4-cmp-a-eff-ba-cdbfe7613878c4d3b9d63bae",
+    "finished_at": "2026-07-22T10:49:33Z",
+    "host": "codex",
+    "host_task_id": "/root/r4_cmp_a_eff_ba",
+    "model": "gpt-5.6-sol",
+    "started_at": "2026-07-22T10:48:31Z",
+    "usage": {
+      "duration_ms": 62000,
+      "input_tokens": 8200,
+      "output_tokens": 920,
+      "token_count_kind": "estimated",
+      "tool_calls": 9
+    }
+  },
+  "schema_version": "1.0.0",
+  "submission_id": "candidate-comparator-submission-cdbfe7613878c4d3b9d63bae-codex-ba",
+  "winner": "left"
+}

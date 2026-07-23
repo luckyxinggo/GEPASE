@@ -1,0 +1,89 @@
+{
+  "artifacts": [
+    {
+      "media_type": "application/json",
+      "path": "evidence/r2-gates.json",
+      "sha256": "dd580862a0756eb75ab062de7967bf26280a1bc0dcd2b5577aecfd4051706c31",
+      "size_bytes": 4291
+    },
+    {
+      "media_type": "application/json",
+      "path": "resolved-config.json",
+      "sha256": "bd17a20ccdf152269f4c9925b81ee16d7d2fb28c959207ee3d405c82f9e75c16",
+      "size_bytes": 895
+    },
+    {
+      "media_type": "text/plain",
+      "path": "commands.log",
+      "sha256": "1605906a4f01f797b2eeeda152055cb6bb8fedbb9345fc7b728385d364c3d1eb",
+      "size_bytes": 3801
+    },
+    {
+      "media_type": "application/xml",
+      "path": "test-results.xml",
+      "sha256": "1dedb697ee5043d74301095b3b26531876983a665ed2f170bee13689090b5a88",
+      "size_bytes": 18030
+    },
+    {
+      "media_type": "text/markdown",
+      "path": "external-validation.md",
+      "sha256": "79a9568c0c07b0f9915c054d733c80afbeb8d51d7ff1e3a1eabc72caf3bf7f41",
+      "size_bytes": 1001
+    },
+    {
+      "media_type": "application/json",
+      "path": "preflight.json",
+      "sha256": "e86f22e99ab326d5e5995dfbab096641f46a4f13668aa5772fcdf4efb2dbeeba",
+      "size_bytes": 1968
+    },
+    {
+      "media_type": "application/json",
+      "path": "stage_report.json",
+      "sha256": "a797ebcc890260495abbf1f233e516238eba9109299c35ca0da7bb900fa1f837",
+      "size_bytes": 10303
+    },
+    {
+      "media_type": "application/json",
+      "path": "evidence/review-ui-validation.json",
+      "sha256": "aae2533ec31102e8af8f62d521f66e9e973e03343c545e13a393e1bb26955849",
+      "size_bytes": 1002
+    },
+    {
+      "media_type": "application/json",
+      "path": "evidence/onboarding-summary.json",
+      "sha256": "13f7c9a441ca137bb09f470711ec8038a9dbbe3dbaef746bd6791946056efb4e",
+      "size_bytes": 1631
+    },
+    {
+      "media_type": "image/gif",
+      "path": "evidence/canary-smoke/slack-gif-creator-smoke.gif",
+      "sha256": "443debec7eebed82ff7f4ff14a85d173028e30ab03453e23d5e4ccefb06375ae",
+      "size_bytes": 16000
+    },
+    {
+      "media_type": "application/json",
+      "path": "evidence/canary-smoke/smoke-report.json",
+      "sha256": "e86e5262c575747d586efcdd0601d21894d8ee8a71f77fbf5760e125bbd2c0a1",
+      "size_bytes": 1023
+    },
+    {
+      "media_type": "application/json",
+      "path": "evidence/canary-smoke/artifact-index.json",
+      "sha256": "f1322bfc2929a8095229bebfa8209acea9256d25b681ff5a7ac174973cc5ce9e",
+      "size_bytes": 451
+    },
+    {
+      "media_type": "application/json",
+      "path": "evidence/completion-audit.json",
+      "sha256": "998756aca7ea4730c1b6dbe256b49b2ba87eba3888607881c4a3393726424351",
+      "size_bytes": 5980
+    },
+    {
+      "media_type": "application/json",
+      "path": "evidence/human-offline-validation.json",
+      "sha256": "948a925fa70853db1433a098f884922080d6d47f2a86d2a55e4872e94dc02701",
+      "size_bytes": 745
+    }
+  ],
+  "schema_version": "1.0.0"
+}

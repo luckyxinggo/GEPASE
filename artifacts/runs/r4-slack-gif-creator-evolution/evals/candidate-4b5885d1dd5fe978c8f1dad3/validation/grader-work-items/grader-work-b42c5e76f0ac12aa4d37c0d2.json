@@ -1,0 +1,54 @@
+{
+  "blind_artifact": {
+    "artifact": {
+      "media_type": "image/gif",
+      "path": "compact_check_burst.gif",
+      "sha256": "8b252889f50e94b14d98368af6e5b61cfa1182076171ab9050f59d0124c14c4d",
+      "size_bytes": 330202
+    },
+    "artifact_root": "artifacts/runs/r4-slack-gif-creator-evolution/evals/candidate-4b5885d1dd5fe978c8f1dad3/validation/workspaces/work-96e4bf561b46c20bb344924d",
+    "blind_id": "blind-ef7e51100f50efe80cc643eb",
+    "contact_sheet_ref": "artifacts/runs/r4-slack-gif-creator-evolution/evals/candidate-4b5885d1dd5fe978c8f1dad3/validation/derived/work-96e4bf561b46c20bb344924d/contact-sheet.png",
+    "inspection_ref": "artifacts/runs/r4-slack-gif-creator-evolution/evals/candidate-4b5885d1dd5fe978c8f1dad3/validation/blind-inspections/blind-ef7e51100f50efe80cc643eb.json"
+  },
+  "expected_output_zh": "一个文件紧凑但并非低质占位的庆祝动画：勾号清楚，粒子由中心向外扩散并渐隐，满足 480×480、10–16 FPS 与 900KB 上限；具体粒子数量和配色可变化。",
+  "forbidden_inputs": [
+    "variant identity",
+    "candidate identity",
+    "sibling output",
+    "expected winner",
+    "executor conversation"
+  ],
+  "grader_work_id": "grader-work-b42c5e76f0ac12aa4d37c0d2",
+  "role": "independent_grader",
+  "rubric": [
+    {
+      "criterion_id": "efficiency-budget",
+      "description_zh": "在明确体积预算内合理控制帧率、色彩与重复信息。",
+      "label_zh": "压缩效率",
+      "weight": 0.3
+    },
+    {
+      "criterion_id": "efficiency-readability",
+      "description_zh": "中心勾号在粒子和量化影响下仍然醒目、完整。",
+      "label_zh": "勾号可读性",
+      "weight": 0.25
+    },
+    {
+      "criterion_id": "efficiency-motion",
+      "description_zh": "爆发方向、速度与渐隐连贯，有限帧率下仍显顺滑。",
+      "label_zh": "粒子动态",
+      "weight": 0.25
+    },
+    {
+      "criterion_id": "efficiency-balance",
+      "description_zh": "压缩没有造成严重色带、轮廓破碎或难看的节奏跳跃。",
+      "label_zh": "质量权衡",
+      "weight": 0.2
+    }
+  ],
+  "schema_version": "1.0.0",
+  "submission_schema_ref": "schemas/independent_grader_submission.schema.json",
+  "task_id": "functional-validation-efficiency-007",
+  "task_prompt": "为 Slack 消息制作一个紧凑的庆祝 GIF：480×480 画布中央是清楚的勾号，周围粒子向外爆发后渐隐。请在动作顺滑和轮廓可读的前提下控制帧率、调色板与文件体积，严格遵循随附的体积和帧率预算，并输出指定文件。"
+}

@@ -1,0 +1,359 @@
+{
+  "$defs": {
+    "Diagnostic": {
+      "additionalProperties": false,
+      "properties": {
+        "diagnostic_id": {
+          "title": "Diagnostic Id",
+          "type": "string"
+        },
+        "kind": {
+          "title": "Kind",
+          "type": "string"
+        },
+        "message": {
+          "title": "Message",
+          "type": "string"
+        },
+        "metadata": {
+          "additionalProperties": true,
+          "title": "Metadata",
+          "type": "object"
+        },
+        "path": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Path"
+        },
+        "related_node_ids": {
+          "default": [],
+          "items": {
+            "type": "string"
+          },
+          "title": "Related Node Ids",
+          "type": "array"
+        },
+        "severity": {
+          "enum": [
+            "info",
+            "warning",
+            "error"
+          ],
+          "title": "Severity",
+          "type": "string"
+        }
+      },
+      "required": [
+        "diagnostic_id",
+        "kind",
+        "severity",
+        "message"
+      ],
+      "title": "Diagnostic",
+      "type": "object"
+    },
+    "EdgeKind": {
+      "enum": [
+        "contains",
+        "references",
+        "imports",
+        "calls",
+        "executes",
+        "tests",
+        "reads",
+        "produces",
+        "requires_host",
+        "uses_tool",
+        "calls_external_service",
+        "requires_secret",
+        "unknown",
+        "planned_read",
+        "planned_execute",
+        "planned_produce",
+        "observed_read",
+        "observed_execute",
+        "observed_produce",
+        "failed_at"
+      ],
+      "title": "EdgeKind",
+      "type": "string"
+    },
+    "GraphEdge": {
+      "additionalProperties": false,
+      "properties": {
+        "confidence": {
+          "default": 1.0,
+          "maximum": 1,
+          "minimum": 0,
+          "title": "Confidence",
+          "type": "number"
+        },
+        "count": {
+          "default": 1,
+          "minimum": 1,
+          "title": "Count",
+          "type": "integer"
+        },
+        "edge_id": {
+          "title": "Edge Id",
+          "type": "string"
+        },
+        "evaluation_id": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Evaluation Id"
+        },
+        "evidence_tier": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Evidence Tier"
+        },
+        "kind": {
+          "$ref": "#/$defs/EdgeKind"
+        },
+        "layer": {
+          "default": "static",
+          "enum": [
+            "static",
+            "planned",
+            "observed"
+          ],
+          "title": "Layer",
+          "type": "string"
+        },
+        "metadata": {
+          "additionalProperties": true,
+          "title": "Metadata",
+          "type": "object"
+        },
+        "provider": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Provider"
+        },
+        "source": {
+          "title": "Source",
+          "type": "string"
+        },
+        "target": {
+          "title": "Target",
+          "type": "string"
+        },
+        "task_id": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Task Id"
+        },
+        "trace_completeness": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Trace Completeness"
+        }
+      },
+      "required": [
+        "edge_id",
+        "source",
+        "target",
+        "kind"
+      ],
+      "title": "GraphEdge",
+      "type": "object"
+    },
+    "IRNode": {
+      "additionalProperties": false,
+      "properties": {
+        "content_hash": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Content Hash",
+          "type": "string"
+        },
+        "kind": {
+          "$ref": "#/$defs/NodeKind"
+        },
+        "label": {
+          "title": "Label",
+          "type": "string"
+        },
+        "locator": {
+          "title": "Locator",
+          "type": "string"
+        },
+        "metadata": {
+          "additionalProperties": true,
+          "title": "Metadata",
+          "type": "object"
+        },
+        "mutable": {
+          "default": true,
+          "title": "Mutable",
+          "type": "boolean"
+        },
+        "node_id": {
+          "title": "Node Id",
+          "type": "string"
+        },
+        "path": {
+          "title": "Path",
+          "type": "string"
+        },
+        "span": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/SourceSpan"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        }
+      },
+      "required": [
+        "node_id",
+        "kind",
+        "path",
+        "locator",
+        "label",
+        "content_hash"
+      ],
+      "title": "IRNode",
+      "type": "object"
+    },
+    "NodeKind": {
+      "enum": [
+        "package",
+        "file",
+        "frontmatter",
+        "section",
+        "instruction",
+        "reference_chunk",
+        "python_module",
+        "import",
+        "function",
+        "class",
+        "call",
+        "entrypoint",
+        "shell_command",
+        "binary",
+        "capability",
+        "dependency",
+        "external",
+        "unknown",
+        "error",
+        "evidence",
+        "artifact"
+      ],
+      "title": "NodeKind",
+      "type": "string"
+    },
+    "SourceSpan": {
+      "additionalProperties": false,
+      "properties": {
+        "end_line": {
+          "minimum": 1,
+          "title": "End Line",
+          "type": "integer"
+        },
+        "start_line": {
+          "minimum": 1,
+          "title": "Start Line",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "start_line",
+        "end_line"
+      ],
+      "title": "SourceSpan",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "diagnostics": {
+      "default": [],
+      "items": {
+        "$ref": "#/$defs/Diagnostic"
+      },
+      "title": "Diagnostics",
+      "type": "array"
+    },
+    "edges": {
+      "items": {
+        "$ref": "#/$defs/GraphEdge"
+      },
+      "title": "Edges",
+      "type": "array"
+    },
+    "nodes": {
+      "items": {
+        "$ref": "#/$defs/IRNode"
+      },
+      "title": "Nodes",
+      "type": "array"
+    },
+    "package_id": {
+      "title": "Package Id",
+      "type": "string"
+    },
+    "schema_version": {
+      "default": "1.0.0",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "snapshot_hash": {
+      "title": "Snapshot Hash",
+      "type": "string"
+    }
+  },
+  "required": [
+    "package_id",
+    "snapshot_hash",
+    "nodes",
+    "edges"
+  ],
+  "title": "PackageGraph",
+  "type": "object"
+}

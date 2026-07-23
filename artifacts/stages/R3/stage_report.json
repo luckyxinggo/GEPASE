@@ -1,0 +1,186 @@
+{
+  "schema_version": "1.0.0",
+  "stage_id": "R3",
+  "status": "complete",
+  "started_from_commit": "ea84ea8983509a91770932b9e21a74cd43235810",
+  "finished_commit": "ea84ea8983509a91770932b9e21a74cd43235810",
+  "completed_at": "2026-07-21T17:22:25Z",
+  "source_tree_hash": "c2e77787feb4e94e2846e565d22fed53c2aee2ada55345ca22210db34ec4a250",
+  "source_tree_hash_scope": "sha256 over sorted src/tests/scripts/configs/schemas/orchestrator/canary-oracle/docs plus state.md and README.md in the preserved dirty worktree",
+  "resolved_config_ref": "resolved-config.json",
+  "input_artifacts": [
+    {
+      "path": "artifacts/stages/R2/stage_report.json",
+      "role": "completed upstream stage",
+      "sha256": "a797ebcc890260495abbf1f233e516238eba9109299c35ca0da7bb900fa1f837"
+    },
+    {
+      "path": "artifacts/runs/r2-slack-gif-creator-evalplan/frozen-eval-plan.json",
+      "plan_hash": "1893ad9a08978f2a8f107981a9a032c7581d08082926ee52276bd5feba2df950",
+      "sha256": "d526d074ed240ac7766f50b24428f6b0937c905735bce012c47234457a574e91"
+    },
+    {
+      "path": "benchmarks/canaries/slack-gif-creator/package",
+      "package_snapshot_hash": "ce42d8a837acf9feda9706a3418fc26a77c497d9615079e616b5fdc6870ef64e"
+    },
+    {
+      "path": "configs/canaries/slack-gif-creator-r3-scoring.json",
+      "role": "frozen R3 functional scoring policy",
+      "sha256": "1c5c7d33bf27a4e04f1016a0100ae8745f511a3bbd984ae000cfcc8a99f4fcec"
+    },
+    {
+      "path": "artifacts/runs/r2-slack-gif-creator-evalplan/package/graph.json",
+      "role": "frozen Package Graph",
+      "sha256": "a05716cc8dc8fb9e181384d8456e39869d014624c10fcb72612f706b95a32822"
+    }
+  ],
+  "output_artifacts": [
+    {
+      "path": "preflight.json",
+      "sha256": "bf33ffbe98590a731b954f65bf97faa756ddf200abb5dc2cf50cf6baafc0b849",
+      "media_type": "application/json",
+      "size_bytes": 1304
+    },
+    {
+      "path": "resolved-config.json",
+      "sha256": "6308bc56027e805ba4985f6b374ca208b3b77bbf747b5398b4cb552ebeb1acb6",
+      "media_type": "application/json",
+      "size_bytes": 890
+    },
+    {
+      "path": "evidence/completion-audit.json",
+      "sha256": "0f0a3bcb7b7c3ec8e0b9eec7ccfa40f444dd457140379cb9424c367d9690ae74",
+      "media_type": "application/json",
+      "size_bytes": 1614
+    },
+    {
+      "path": "evidence/r3-gates.json",
+      "sha256": "e6108c8b66e2c0c52435d26881eb9b9c35be836fac3bae0f6ed7c283df2082f3",
+      "media_type": "application/json",
+      "size_bytes": 3257
+    },
+    {
+      "path": "test-results.xml",
+      "sha256": "bf2a8f0bf5d8236b5bf9658b557746956364cd50d1c231de95d94db1ddefc2cb",
+      "media_type": "application/xml",
+      "size_bytes": 18302
+    },
+    {
+      "path": "commands.log",
+      "sha256": "71ea54aa51daa1352a6eef7000ac0fda0a24d663277e6886f95ce13c2bed5370",
+      "media_type": "text/plain",
+      "size_bytes": 1967
+    },
+    {
+      "path": "external-validation.md",
+      "sha256": "df962d1ccd434f280f74af8b7ce182bae87f20c53ad076868f1d27a90e8b34d3",
+      "media_type": "text/markdown",
+      "size_bytes": 614
+    }
+  ],
+  "run_artifacts": [
+    {
+      "path": "run-metadata.json",
+      "sha256": "2e7ef532f717aa822d74427426c3a2d2badc4f557a7ba626b5a2bbbaa6f26ca2",
+      "size_bytes": 1213
+    },
+    {
+      "path": "functional-run-summary.json",
+      "sha256": "e92ed58af107d883076464843fbc2ae3aa1a4269a0dc03d11764fc60fdc6b6d1",
+      "size_bytes": 6592
+    },
+    {
+      "path": "score-independent-verification.json",
+      "sha256": "655afaf86cc69a271263f4fb6002274e78bfe039bdac79dbed25c4c73a356486",
+      "size_bytes": 123
+    },
+    {
+      "path": "isolation-audit.json",
+      "sha256": "35bdc69afa7d62c955f3aca320a1b4fa82eb3648656aa6244665362ee1309423",
+      "size_bytes": 1700
+    },
+    {
+      "path": "package-access-audit.json",
+      "sha256": "f8b2f506171c68644d2bf99a2168fe62fb5a1009a3ce07623c32da4da5373697",
+      "size_bytes": 10313
+    },
+    {
+      "path": "usage-report.json",
+      "sha256": "c3db716580ac11b01635cffe0fdfb18768159a1d5dd5c0b9a5b1c291fb3e5bd1",
+      "size_bytes": 1068
+    },
+    {
+      "path": "asi-dataset.json",
+      "sha256": "7629f34602e0ebca299303453d3b8d344f529496cc5ec686054d50d1b6cc4c6f",
+      "size_bytes": 42871
+    },
+    {
+      "path": "artifact-index.json",
+      "sha256": "09a959e759eadfb5e8b6ebd5b8e0c7d7c99886baf9d4784427905db1d776c648",
+      "size_bytes": 100806
+    },
+    {
+      "path": "replay-superseded-e3.json",
+      "sha256": "43ea9a3a07c7fe11b7953e55f961da512dc6b5c97e79b87355569447d4fea85b",
+      "size_bytes": 2089
+    }
+  ],
+  "gate_results": [
+    {"gate_id": "R3-G01-paired-configuration", "status": "passed"},
+    {"gate_id": "R3-G02-real-e2-execution", "status": "passed"},
+    {"gate_id": "R3-G03-no-framework-business-output", "status": "passed"},
+    {"gate_id": "R3-G04-content-level-e3", "status": "passed"},
+    {"gate_id": "R3-G05-role-isolation", "status": "passed"},
+    {"gate_id": "R3-G06-graph-traceability", "status": "passed"},
+    {"gate_id": "R3-G07-raw-score-recomputation", "status": "passed"},
+    {"gate_id": "R3-G08-usage-and-durable-outputs", "status": "passed"}
+  ],
+  "real_agent_runs": 46,
+  "headless_provider_runs": 0,
+  "metrics": {
+    "functional_cases": 8,
+    "paired_executions": 8,
+    "real_e2_outputs": 16,
+    "content_level_e3_records": 16,
+    "independent_grades": 16,
+    "ab_ba_comparisons": 6,
+    "analyzer_runs": 8,
+    "task_score_vectors": 16,
+    "mean_skill_gain": -0.045480625,
+    "score_recompute_mismatches": 0,
+    "e3_replay_mismatches": 0,
+    "superseded_e3_history": 10,
+    "unclassified_record_files": 0,
+    "role_context_leaks": 0,
+    "machine_gates_passed": 8,
+    "machine_gates_total": 8,
+    "pytest_passed": 134,
+    "pyright_errors": 0,
+    "secret_scan_files": 5126,
+    "secret_scan_findings": 0,
+    "run_artifacts_checked": 429,
+    "run_artifact_failures": 0,
+    "optimization_effect_validated": false
+  },
+  "usage": {
+    "token_count_kind": "estimated",
+    "executor": {"calls": 16, "input_tokens": 64000, "output_tokens": 21600, "duration_ms": 2340000, "tool_calls": 136, "failures": 0},
+    "independent_grader": {"calls": 16, "input_tokens": 188470, "output_tokens": 32000, "duration_ms": 3170011, "tool_calls": 171, "failures": 0},
+    "comparator": {"calls": 6, "input_tokens": 163700, "output_tokens": 13800, "duration_ms": 759000, "tool_calls": 62, "failures": 0},
+    "analyzer": {"calls": 8, "input_tokens": 239600, "output_tokens": 21600, "duration_ms": 3137000, "tool_calls": 100, "failures": 0}
+  },
+  "known_issues": [
+    "The original Package has negative mean skill gain versus no-skill in this single paired run; this is R4 optimization headroom, not an optimization result.",
+    "One validation comparator pair was order-inconsistent and is conservatively reconciled to margin zero.",
+    "Agent Host token telemetry was unavailable; all token counts are explicitly estimated.",
+    "GEPA mutation, candidate admission, PackagePatch, multi-parent merge, and held-out candidate improvement remain unvalidated until R4/R5."
+  ],
+  "design_decisions": [
+    "Extend the single MultiFidelityEvalEngine and keep the GIF oracle canary-specific rather than introducing a parallel evaluator.",
+    "Expose oracle-free Executor and blind Grader/Comparator work items, and allow Analyzer condition visibility only after evaluation evidence is frozen.",
+    "Treat deterministic assertions as one correctness channel and reconstruct the six-dimensional TaskScoreVector from raw evidence through a verifier that does not call the production _pair_scores path.",
+    "Keep E1 disabled and reject framework-created business outputs or uniform result.json artifacts.",
+    "Retain the negative original-vs-no-skill result unchanged as the grounded input to R4."
+  ],
+  "unlocks": ["R4"]
+}

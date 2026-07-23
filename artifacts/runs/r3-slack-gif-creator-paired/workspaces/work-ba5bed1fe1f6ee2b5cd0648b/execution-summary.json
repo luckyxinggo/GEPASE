@@ -1,0 +1,33 @@
+{
+  "schema_version": "1.0.0",
+  "work_id": "work-ba5bed1fe1f6ee2b5cd0648b",
+  "task_id": "functional-train-easing-orbit-005",
+  "status": "completed",
+  "context": {
+    "host": "codex",
+    "host_task_id": "/root/r3_exec_ba5bed",
+    "context_id": "codex-r3-executor-ba5bed1fe1f6ee2b5cd0648b-20260721",
+    "unique": true
+  },
+  "completed_at": "2026-07-21T15:56:53Z",
+  "output": {
+    "path": "satellite_orbit_ease.gif",
+    "media_type": "image/gif",
+    "bytes": 21226
+  },
+  "verification": {
+    "reopened": true,
+    "format": "GIF",
+    "size": [128, 128],
+    "frame_count": 24,
+    "duration_ms": 2400,
+    "frame_duration_ms": 100,
+    "loop": 0,
+    "cyan_subject_detected": true,
+    "orange_planet_detected": true,
+    "visible_arc_path": true,
+    "nonlinear_ease_out": true,
+    "late_displacements_px": [4.36, 4.24, 3.61, 2.83, 2.25, 1.0, 1.41]
+  },
+  "package_access": []
+}

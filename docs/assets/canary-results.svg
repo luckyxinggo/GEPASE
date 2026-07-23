@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="520" viewBox="0 0 1400 520" role="img" aria-labelledby="title desc">
+  <title id="title">GEPASE sealed slack-gif-creator canary result</title>
+  <desc id="desc">The accepted candidate improved frozen validation by 0.12427 with three wins, while the Gate funnel reduced four proposed candidates to one deployable candidate.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#0f172a"/><stop offset="1" stop-color="#1e1b4b"/></linearGradient>
+    <style>
+      .title{font:700 29px ui-sans-serif,system-ui;fill:#f8fafc}.sub{font:500 15px ui-sans-serif,system-ui;fill:#cbd5e1}.metric{font:750 38px ui-sans-serif,system-ui;fill:#a7f3d0}.label{font:600 15px ui-sans-serif,system-ui;fill:#e2e8f0}.tiny{font:500 13px ui-sans-serif,system-ui;fill:#94a3b8}.card{fill:#ffffff0d;stroke:#ffffff24;stroke-width:1.5;rx:18}.bar{fill:#818cf8}.bar2{fill:#34d399}
+    </style>
+  </defs>
+  <rect width="1400" height="520" rx="28" fill="url(#bg)"/>
+  <text x="65" y="65" class="title">Sealed application result · slack-gif-creator</text>
+  <text x="65" y="94" class="sub">One frozen EvalPlan · one model snapshot · one search run · held-out E2/E3 validation</text>
+
+  <rect x="65" y="130" width="280" height="125" class="card"/>
+  <text x="90" y="183" class="metric">+0.12427</text><text x="90" y="218" class="label">mean held-out delta</text>
+  <rect x="365" y="130" width="280" height="125" class="card"/>
+  <text x="390" y="183" class="metric">3 / 3</text><text x="390" y="218" class="label">validation wins</text>
+  <rect x="665" y="130" width="280" height="125" class="card"/>
+  <text x="690" y="183" class="metric">+0.04190</text><text x="690" y="218" class="label">train mean delta</text>
+  <rect x="965" y="130" width="370" height="125" class="card"/>
+  <text x="990" y="183" class="metric">1</text><text x="1030" y="183" class="label">deployable candidate</text>
+  <text x="990" y="218" class="tiny">95% bootstrap CI [0.08928, 0.17106]</text>
+
+  <text x="65" y="310" class="label">Strict Gate funnel</text>
+  <text x="65" y="343" class="tiny">proposed</text><rect x="170" y="326" width="640" height="24" rx="12" class="bar"/><text x="825" y="344" class="label">4</text>
+  <text x="65" y="382" class="tiny">Gate 0/1</text><rect x="170" y="365" width="640" height="24" rx="12" class="bar"/><text x="825" y="383" class="label">4</text>
+  <text x="65" y="421" class="tiny">train admitted</text><rect x="170" y="404" width="480" height="24" rx="12" class="bar"/><text x="665" y="422" class="label">3</text>
+  <text x="65" y="460" class="tiny">held-out accepted</text><rect x="170" y="443" width="160" height="24" rx="12" class="bar2"/><text x="345" y="461" class="label">1</text>
+
+  <rect x="910" y="302" width="425" height="166" class="card"/>
+  <text x="935" y="337" class="label">Evidence boundary</text>
+  <text x="935" y="368" class="tiny">✓ Real task-native GIFs and isolated role traces</text>
+  <text x="935" y="396" class="tiny">✓ Multi-parent merge executed and honestly rejected</text>
+  <text x="935" y="424" class="tiny">△ Accepted edit changed one SKILL.md instruction node</text>
+  <text x="935" y="452" class="tiny">△ Not a cross-Skill, cross-model or multi-seed claim</text>
+</svg>

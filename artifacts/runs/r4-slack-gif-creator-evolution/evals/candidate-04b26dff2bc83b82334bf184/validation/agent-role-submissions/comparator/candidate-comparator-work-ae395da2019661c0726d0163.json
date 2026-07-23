@@ -1,0 +1,45 @@
+{
+  "schema_version": "1.0.0",
+  "submission_id": "comparator-submission-0daccee1-b04b-47ba-9ad9-969f46865f8b",
+  "comparator_work_id": "candidate-comparator-work-ae395da2019661c0726d0163",
+  "role_run": {
+    "host": "codex",
+    "model": "gpt-5.6-sol",
+    "context_id": "r4_cmp_a_loop_ab",
+    "host_task_id": "/root/r4_cmp_a_loop_ab",
+    "usage": {
+      "input_tokens": 16500,
+      "output_tokens": 1300,
+      "tool_calls": 16,
+      "duration_ms": 394000,
+      "token_count_kind": "estimated"
+    },
+    "started_at": "2026-07-22T10:38:30Z",
+    "finished_at": "2026-07-22T10:45:04Z"
+  },
+  "winner": "right",
+  "confidence": 0.91,
+  "criteria": [
+    {
+      "criterion_id": "loop-continuity",
+      "preference": "right",
+      "rationale_zh": "两侧都采用等时长帧并声明无限循环，但右侧首尾像素差为 1.605，低于左侧的 1.993；相对于各自平均相邻帧变化，右侧接缝也更平缓。完整相位在接回黄色火花峰值前留有自然过渡，反复播放时更难察觉边界。"
+    },
+    {
+      "criterion_id": "loop-rhythm",
+      "preference": "right",
+      "rationale_zh": "右侧用 20 个唯一帧展开黄、青、粉三颗火花的依次增强与消退，亮度包络和相位交接更细腻；左侧 12 帧中的三段脉冲同样清楚有序，但每颗火花约按四帧成组切换，节奏更短促、略显机械。"
+    },
+    {
+      "criterion_id": "loop-stability",
+      "preference": "tie",
+      "rationale_zh": "两侧的中央圆环在整段序列中都保持清楚、位置稳定且轮廓一致，能够承担外围动画的视觉锚点。左侧的环内高光移动与右侧的固定高光风格不同，但没有造成足以区分优劣的晃动或变形。"
+    },
+    {
+      "criterion_id": "loop-visual",
+      "preference": "right",
+      "rationale_zh": "右侧较粗的紫色双层圆环、三色火花及柔和辉光形成更统一的层级，缩小后主体与火花仍醒目；左侧像素风配色清晰，但环线和过渡火花更细小，整体精致度与小尺寸辨识度略逊。"
+    }
+  ],
+  "rationale_zh": "综合全部 rubric，右侧获胜。它在权重最高的循环连续性上具有更低且相对更温和的首尾变化，并借助更多唯一帧形成更顺滑的三火花节奏；中央圆环稳定性两侧相当，而右侧的层级、辉光和缩小后的辨识度更佳。差距在接缝与节奏证据上较明确，因此给出较高但非绝对的置信度。"
+}

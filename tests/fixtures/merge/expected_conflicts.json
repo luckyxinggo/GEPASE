@@ -1,0 +1,11 @@
+{
+  "schema_version": "1.0.0",
+  "expected_conflicts": [
+    "same_node_different_content",
+    "path_collision",
+    "interface_signature_conflict",
+    "delete_modify_conflict",
+    "frontmatter_conflict",
+    "incompatible_dependency"
+  ]
+}

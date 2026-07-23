@@ -1,0 +1,71 @@
+{
+  "analyses": [
+    {
+      "analysis_id": "analysis-original-ease-out-tail-regression",
+      "confidence": 0.98,
+      "evidence_refs": [
+        "artifacts/runs/r3-slack-gif-creator-paired/deterministic/work-8b18ac4a317bfa0522d70aca.json",
+        "artifacts/runs/r3-slack-gif-creator-paired/records/record-d5bfa5f36fcac7c8962ed958.json",
+        "artifacts/runs/r3-slack-gif-creator-paired/grader-submissions/grader-work-6997feabf51cc30174fb8656.json",
+        "artifacts/runs/r3-slack-gif-creator-paired/package-access/work-8b18ac4a317bfa0522d70aca.json",
+        "artifacts/runs/r2-slack-gif-creator-evalplan/package/graph.json"
+      ],
+      "issue_zh": "original 成品的整体减速在盲评中可辨识，但未满足冻结的末段 ease-out 判据：E3 的最后两段相邻位移由约 1.575 像素反增到约 3.898 像素，导致 orbit-ease-out 失败并把 deterministic correctness 降至 0.75。E2 只记录 Slack 约束验证通过，未显示对渲染后尾段位移单调性的检查；original 又确实读取了 SKILL.md 并执行了 easing 模块，因此这是与 Package 的 ease-out 使用/验收指引直接相关的可归因缺口，而不是动画完全没有减速。",
+      "recommendation_zh": "在 Easing Functions 示例及 smooth-stop 指引的有限范围内补充弧线停靠的验收约束：用同一个 eased path-progress 参数生成整条路径，在与实际绘制相同的整数化/裁切条件下复算末段相邻位移，并在导出前确认其在容差内不反增且最终帧精确落在停靠点。该建议只强化用法与验证，不要求改写 easing 实现。",
+      "target_node_ids": [
+        "node-e57ae2a699a373f3228a5ff0",
+        "node-1df0f46ff9f534ba3af39670",
+        "node-69ea814aac72a6c557485ef0"
+      ],
+      "variant": "original"
+    },
+    {
+      "analysis_id": "analysis-original-loop-reset-discontinuity",
+      "confidence": 0.94,
+      "evidence_refs": [
+        "artifacts/runs/r3-slack-gif-creator-paired/deterministic/work-8b18ac4a317bfa0522d70aca.json",
+        "artifacts/runs/r3-slack-gif-creator-paired/grader-submissions/grader-work-6997feabf51cc30174fb8656.json",
+        "artifacts/runs/r3-slack-gif-creator-paired/package-access/work-8b18ac4a317bfa0522d70aca.json",
+        "artifacts/runs/r2-slack-gif-creator-evalplan/package/graph.json"
+      ],
+      "issue_zh": "original 的无限循环在停靠末帧后直接回到起始位置，盲评明确指出循环重启跳变；E3 的首末帧像素差为 6.319，高于平均相邻帧差 3.661，约为其 1.73 倍。当前 Package 图中 Core Workflow 与 GIFBuilder 指引覆盖帧组装和 Slack 优化，但现有证据未显示在“停靠”与无限循环并存时执行首尾连续性验收。",
+      "recommendation_zh": "在 Core Workflow/GIFBuilder 使用说明中加入有界的循环闭合检查：对于需要停靠又设置无限循环的动画，明确选择短暂停留后回程、过渡帧或视觉可衔接的首尾设计之一，并在重新打开导出 GIF 后比较首末帧及循环边界，避免仅验证尺寸、时长和 loop 标记。",
+      "target_node_ids": [
+        "node-d6b82162668345e012dc6a34",
+        "node-dfb8719a1ab35fab6111e36b"
+      ],
+      "variant": "original"
+    },
+    {
+      "analysis_id": "analysis-no-skill-right-edge-clipping",
+      "confidence": 0.97,
+      "evidence_refs": [
+        "artifacts/runs/r3-slack-gif-creator-paired/deterministic/work-ba5bed1fe1f6ee2b5cd0648b.json",
+        "artifacts/runs/r3-slack-gif-creator-paired/grader-submissions/grader-work-7ccc066c17938357a8a56748.json"
+      ],
+      "issue_zh": "no-skill 虽通过全部 deterministic assertions，但盲评的构图项仅为 0.85，并明确记录卫星经过最右侧时贴边且局部被裁切；这解释了其 output quality 为 0.936 而非满分。该问题来自本次无 Package 执行的轨迹布局，现有证据不足以归因到任何 Package 节点。",
+      "recommendation_zh": "生成弧线前按卫星完整外接框而非中心点计算安全边距，适当内收轨道中心或半径；导出前用逐帧接触表确认运动主体在所有帧中均未触碰画布边界。",
+      "target_node_ids": [],
+      "variant": "no-skill"
+    }
+  ],
+  "analyzer_work_id": "analyzer-work-9fdb3bdecd6e87afd9f6ad4d",
+  "role_run": {
+    "context_id": "/root/r3_ana_9fdb3b",
+    "finished_at": "2026-07-21T16:42:00Z",
+    "host": "codex",
+    "host_task_id": "/root/r3_ana_9fdb3b",
+    "model": "gpt-5.6-sol",
+    "started_at": "2026-07-21T16:32:00Z",
+    "usage": {
+      "duration_ms": 600000,
+      "input_tokens": 48000,
+      "output_tokens": 3600,
+      "token_count_kind": "estimated",
+      "tool_calls": 15
+    }
+  },
+  "schema_version": "1.0.0",
+  "submission_id": "analyzer-submission-9fdb3bdecd6e87afd9f6ad4d",
+  "summary_zh": "paired 证据显示明显的取舍：no-skill 的 deterministic correctness 为 1.0，而 original 因末段最后一步位移反增使 orbit-ease-out 失败、correctness 为 0.75；但 original 的盲评质量更高（0.958 对 0.936），尤其避免了 no-skill 的右侧裁切并保持较完整的像素太空造型。最优先的 Package 改进方向是让 ease-out 指引覆盖渲染后尾段的严格验收，其次是在停靠型无限循环中加入首尾闭合检查。work item 未提供 Comparator reconciliation，因此没有据此推断额外的偏好结论。"
+}

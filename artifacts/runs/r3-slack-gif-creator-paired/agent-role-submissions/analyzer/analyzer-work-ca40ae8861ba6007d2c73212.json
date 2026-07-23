@@ -1,0 +1,57 @@
+{
+  "schema_version": "1.0.0",
+  "submission_id": "analyzer-submission-ca40ae8861ba6007d2c73212",
+  "analyzer_work_id": "analyzer-work-ca40ae8861ba6007d2c73212",
+  "role_run": {
+    "host": "codex",
+    "model": "gpt-5.6-sol",
+    "context_id": "/root/r3_ana_ca40ae",
+    "host_task_id": "/root/r3_ana_ca40ae",
+    "usage": {
+      "duration_ms": 522000,
+      "input_tokens": 48000,
+      "output_tokens": 2600,
+      "tool_calls": 14,
+      "token_count_kind": "estimated"
+    },
+    "started_at": "2026-07-21T16:41:29Z",
+    "finished_at": "2026-07-21T16:50:11Z"
+  },
+  "analyses": [
+    {
+      "analysis_id": "original-pulse-temporal-sampling",
+      "variant": "original",
+      "issue_zh": "original 输出的容器、时长、文字、配色和循环判据均通过，首尾像素差也为 0；但 1.96 秒动画只有 13 帧、7 个唯一帧，有效帧率仅 6.6327 fps，因而唯一失败 pulse-fps。盲评相应将脉冲运动降至 0.88，指出中间步进偏快、细腻度受限；AB/BA Comparator 又一致判 original 落后。E2 与 package access 表明 SKILL.md 及四个 core 模块均被读取、相关模块均被执行，因此更像是现有脉冲说明只规定正弦与缩放范围，却没有把时长、采样密度、唯一帧数和导出后有效帧率串成可验证约束，而非工具未加载或执行失败。",
+      "evidence_refs": [
+        "artifacts/runs/r3-slack-gif-creator-paired/deterministic/work-f659fabc30459ff0d09ad348.json",
+        "artifacts/runs/r3-slack-gif-creator-paired/records/record-352034e41881bd4a49656c49.json",
+        "artifacts/runs/r3-slack-gif-creator-paired/grader-submissions/grader-work-0a9c988adb669b9df5d9d1b8.json",
+        "artifacts/runs/r3-slack-gif-creator-paired/package-access/work-f659fabc30459ff0d09ad348.json",
+        "artifacts/runs/r3-slack-gif-creator-paired/comparator-reconciliation/functional-validation-pulse-text-008.json",
+        "artifacts/runs/r2-slack-gif-creator-evalplan/package/graph.json"
+      ],
+      "target_node_ids": [
+        "node-d02d108593bae9344b40fbdb",
+        "node-fd31bcd35904a27e0f989d7a",
+        "node-55c01d64b61cb27a6bcd8626",
+        "node-46d940221fa8caf3b6c22d2c"
+      ],
+      "confidence": 0.98,
+      "recommendation_zh": "有界修改上述 SKILL.md 节点：在 Pulse/Heartbeat 段把平滑正弦示例补成“先按时长与目标帧率计算 frame_count（至少 ceil(duration_s × target_fps)），周期相位用 i/frame_count 避免重复首尾帧，再检查中间半径具有足够多的不同取值”；在 GIFBuilder/Validators 示例中补一项导出后复开验证，明确核对 effective_fps 与 unique_frame_count，而不只核对画布、时长和 loop。修复时保留 original 已有的固定字号/位置 GO 文本与零接缝优势，不扩大到 core 实现重写。"
+    },
+    {
+      "analysis_id": "no-skill-text-layer-coupling",
+      "variant": "no-skill",
+      "issue_zh": "no-skill 已通过全部确定性判据，并在 Comparator 中稳定优于 original；剩余轻微质量缺口来自白色 GO 会随徽章一起缩放，使“文字稳定、徽章呼吸”的层次略弱。该观察来自盲评且没有 Package 访问，不能归因到任何 Package 节点。",
+      "evidence_refs": [
+        "artifacts/runs/r3-slack-gif-creator-paired/deterministic/work-9eea3d6a86124113c1f705e6.json",
+        "artifacts/runs/r3-slack-gif-creator-paired/grader-submissions/grader-work-998951e67fa8cc8247ea4843.json",
+        "artifacts/runs/r3-slack-gif-creator-paired/comparator-reconciliation/functional-validation-pulse-text-008.json"
+      ],
+      "target_node_ids": [],
+      "confidence": 0.9,
+      "recommendation_zh": "仅作为跨变体设计参考：将徽章主体/外圈的脉冲幅度与文字层解耦，文字保持固定字号，或把文字缩放幅度显著限制在徽章幅度之内；由于 no-skill 没有 Package 访问，本条不指定 Package 修改目标。"
+    }
+  ],
+  "summary_zh": "original 的关键退化是脉冲时间采样不足：它以 6.6327 fps 和 7 个唯一帧未通过 pulse-fps，并在双向盲比中一致落后；其配色、GO 可读性、时长和无缝循环均应保留。建议只增强 SKILL.md 的脉冲采样与导出后验证说明，不改写 core 实现。no-skill 的唯一可见精修点是减少文字随徽章缩放，但该观察不作 Package 归因。"
+}

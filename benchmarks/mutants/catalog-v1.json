@@ -1,0 +1,45 @@
+{
+  "recipes": [
+    {
+      "description": "remove output file",
+      "family": "file_exists",
+      "id": "file-missing"
+    },
+    {
+      "description": "truncate output file",
+      "family": "file_exists",
+      "id": "file-empty"
+    },
+    {
+      "description": "remove one required literal",
+      "family": "file_contains",
+      "id": "required-value-missing"
+    },
+    {
+      "description": "replace with unrelated content",
+      "family": "file_contains",
+      "id": "unrelated-content"
+    },
+    {
+      "description": "change value",
+      "family": "json_equals",
+      "id": "json-wrong-value"
+    },
+    {
+      "description": "change type",
+      "family": "json_equals",
+      "id": "json-wrong-type"
+    },
+    {
+      "description": "remove required table node",
+      "family": "html_contract",
+      "id": "html-missing-contract-node"
+    },
+    {
+      "description": "inject prohibited remote asset",
+      "family": "html_contract",
+      "id": "html-remote-asset"
+    }
+  ],
+  "schema_version": "1.0.0"
+}

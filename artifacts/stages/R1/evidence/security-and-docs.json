@@ -1,0 +1,24 @@
+{
+  "schema_version": "1.0.0",
+  "secret_private_path_scan": {
+    "valid": true,
+    "scanned_files": 4652,
+    "findings": 0,
+    "tracked_skills_test_files": 0
+  },
+  "markdown_links": {
+    "valid": true,
+    "result": "markdown links: ok"
+  },
+  "license_policy": {
+    "valid": true,
+    "result": "license policy: ok"
+  },
+  "git_diff_check": {
+    "valid": true
+  },
+  "private_skill_status": {
+    "valid": true,
+    "status_lines": 0
+  }
+}

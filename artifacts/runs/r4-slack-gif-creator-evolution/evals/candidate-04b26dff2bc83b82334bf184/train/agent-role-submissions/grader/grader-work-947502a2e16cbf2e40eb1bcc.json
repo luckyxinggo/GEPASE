@@ -1,0 +1,69 @@
+{
+  "schema_version": "1.0.0",
+  "submission_id": "grader-submission-6f3c4fc0-66d2-44e5-b060-ac772dac4b2e",
+  "grader_work_id": "grader-work-947502a2e16cbf2e40eb1bcc",
+  "role_run": {
+    "host": "codex",
+    "model": "gpt-5.6-sol",
+    "context_id": "r4_grade_a_badge",
+    "host_task_id": "/root/r4_grade_a_badge",
+    "usage": {
+      "duration_ms": 360000,
+      "input_tokens": 9000,
+      "output_tokens": 1800,
+      "token_count_kind": "estimated",
+      "tool_calls": 8
+    },
+    "started_at": "2026-07-22T08:39:54Z",
+    "finished_at": "2026-07-22T08:45:54Z"
+  },
+  "criterion_grades": [
+    {
+      "criterion_id": "badge-fidelity",
+      "score": 0.93,
+      "evidence_refs": [
+        "artifacts/runs/r4-slack-gif-creator-evolution/evals/candidate-04b26dff2bc83b82334bf184/train/workspaces/work-3a3dd2e7f87dd8a32785d7c0/uploaded_badge_lift.gif",
+        "artifacts/runs/r4-slack-gif-creator-evolution/evals/candidate-04b26dff2bc83b82334bf184/train/derived/work-3a3dd2e7f87dd8a32785d7c0/contact-sheet.png"
+      ],
+      "rationale_zh": "九帧中像素化徽章的青色外轮廓、侧向凸起和橙色核心始终清楚且结构一致，主体辨识度很高；在缺少源图并排证据的盲评条件下保留少量不确定性。"
+    },
+    {
+      "criterion_id": "badge-motion",
+      "score": 0.88,
+      "evidence_refs": [
+        "artifacts/runs/r4-slack-gif-creator-evolution/evals/candidate-04b26dff2bc83b82334bf184/train/workspaces/work-3a3dd2e7f87dd8a32785d7c0/uploaded_badge_lift.gif",
+        "artifacts/runs/r4-slack-gif-creator-evolution/evals/candidate-04b26dff2bc83b82334bf184/train/derived/work-3a3dd2e7f87dd8a32785d7c0/contact-sheet.png",
+        "artifacts/runs/r4-slack-gif-creator-evolution/evals/candidate-04b26dff2bc83b82334bf184/train/blind-inspections/blind-b488c60ddfecd59cd3f68952.json"
+      ],
+      "rationale_zh": "序列明确呈现上浮到高点、回落越过稳定位置、再以幅度递减的上下调整完成稳定，缓动意图充分；但总共九帧且有效帧率为 5 fps，位移仍略有阶梯感。"
+    },
+    {
+      "criterion_id": "badge-integration",
+      "score": 0.95,
+      "evidence_refs": [
+        "artifacts/runs/r4-slack-gif-creator-evolution/evals/candidate-04b26dff2bc83b82334bf184/train/workspaces/work-3a3dd2e7f87dd8a32785d7c0/uploaded_badge_lift.gif",
+        "artifacts/runs/r4-slack-gif-creator-evolution/evals/candidate-04b26dff2bc83b82334bf184/train/derived/work-3a3dd2e7f87dd8a32785d7c0/contact-sheet.png"
+      ],
+      "rationale_zh": "深色背景、细线轨道与小型光点均退居主体之后，既强化青橙对比又没有覆盖徽章轮廓或核心；装饰密度克制，画面融合完成度高。"
+    },
+    {
+      "criterion_id": "badge-emoji-ready",
+      "score": 0.8,
+      "evidence_refs": [
+        "artifacts/runs/r4-slack-gif-creator-evolution/evals/candidate-04b26dff2bc83b82334bf184/train/workspaces/work-3a3dd2e7f87dd8a32785d7c0/uploaded_badge_lift.gif",
+        "artifacts/runs/r4-slack-gif-creator-evolution/evals/candidate-04b26dff2bc83b82334bf184/train/derived/work-3a3dd2e7f87dd8a32785d7c0/contact-sheet.png",
+        "artifacts/runs/r4-slack-gif-creator-evolution/evals/candidate-04b26dff2bc83b82334bf184/train/blind-inspections/blind-b488c60ddfecd59cd3f68952.json"
+      ],
+      "rationale_zh": "128×128、17,209 字节、1.8 秒且无限循环，主体在小画布上醒目，停顿节奏也适合表情使用；不过首尾像素差 23.132 明显高于相邻帧均值 4.272，循环重启存在可见跳回，同时较低帧率限制了流畅度。"
+    }
+  ],
+  "overall_score": 0.8995,
+  "factual_claims_zh": [
+    "GIF 尺寸为 128×128，文件大小为 17,209 字节。",
+    "动画包含 9 帧且 9 帧均唯一，总时长为 1,800 毫秒，循环次数字段为 0。",
+    "接触表中主体从较低位置上浮至高点，随后回落并以较小幅度调整到稳定位置。",
+    "青色徽章轮廓和橙色核心在全部接触表帧中均未被背景轨道与光点遮挡。",
+    "首尾像素差为 23.132303873697918，相邻帧平均像素差为 4.27221934000651。"
+  ],
+  "feedback_zh": "主体保真、越位回稳和背景融合均表现扎实，已经具备良好的 Slack emoji 可读性。若增加若干过渡帧，并让末帧自然衔接回起始帧或设计闭环回落，可显著减轻当前循环跳变并提升成品感。"
+}

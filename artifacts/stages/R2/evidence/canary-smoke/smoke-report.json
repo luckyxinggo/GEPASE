@@ -1,0 +1,37 @@
+{
+  "build_info": {
+    "colors": 48,
+    "dimensions": "128x128",
+    "duration_seconds": 0.9166666666666666,
+    "fps": 12,
+    "frame_count": 11,
+    "path": "slack-gif-creator-smoke.gif",
+    "size_kb": 15.625,
+    "size_mb": 0.0152587890625
+  },
+  "core_imported": true,
+  "dependencies": {
+    "imageio": "2.37.4",
+    "imageio-ffmpeg": "0.6.0",
+    "numpy": "2.5.1",
+    "pillow": "12.3.0"
+  },
+  "gif_sha256": "443debec7eebed82ff7f4ff14a85d173028e30ab03453e23d5e4ccefb06375ae",
+  "package_snapshot_after": "ce42d8a837acf9feda9706a3418fc26a77c497d9615079e616b5fdc6870ef64e",
+  "package_snapshot_before": "ce42d8a837acf9feda9706a3418fc26a77c497d9615079e616b5fdc6870ef64e",
+  "source_package_unchanged": true,
+  "valid": true,
+  "validation": {
+    "duration_seconds": 0.88,
+    "file": "slack-gif-creator-smoke.gif",
+    "fps": 12.5,
+    "frame_count": 11,
+    "height": 128,
+    "is_emoji": true,
+    "optimal": true,
+    "passes": true,
+    "size_kb": 15.625,
+    "size_mb": 0.0152587890625,
+    "width": 128
+  }
+}

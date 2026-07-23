@@ -1,0 +1,28 @@
+{
+  "degradation_reasons": [],
+  "fixture_strategy": "synthetic record and threshold fixtures",
+  "labels": [
+    "contains_python",
+    "policy_analysis",
+    "structured_output"
+  ],
+  "replay_strategy": "analysis JSON and assertion replay",
+  "required_secrets": [],
+  "required_services": [],
+  "required_tools": [
+    "python",
+    "filesystem"
+  ],
+  "schema_version": "1.0.0",
+  "side_effects": [
+    "writes_analysis"
+  ],
+  "skill_id": "policy-evidence-evaluator",
+  "source_manifest_ref": "benchmarks/skills/policy-evidence-evaluator/provenance.json",
+  "supported_evidence_tiers": [
+    "E0",
+    "E1",
+    "E2",
+    "E3"
+  ]
+}

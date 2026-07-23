@@ -1,0 +1,168 @@
+{
+  "artifact_root": "artifacts/runs/r3-slack-gif-creator-paired/workspaces/work-a90881ca08a8679475629c61",
+  "artifacts": [
+    {
+      "media_type": "application/json",
+      "path": "execution-summary.json",
+      "sha256": "6a10f2dab454b218823efb749bd475df3cd0ca78901525d6e4e1b63da2b73f93",
+      "size_bytes": 851
+    },
+    {
+      "media_type": "text/x-python",
+      "path": "generate_gif.py",
+      "sha256": "b08de62c05a09a4c9e2777acc2f7d36cf0c41a8ed91b792abd7b1abdce508002",
+      "size_bytes": 3854
+    },
+    {
+      "media_type": "application/json",
+      "path": "observed-trace.json",
+      "sha256": "a4b816b01bf4f50f81c0799a54b2bc38b22e4a45924a4677d7d77580616a2c57",
+      "size_bytes": 2008
+    },
+    {
+      "media_type": "application/json",
+      "path": "package-access.json",
+      "sha256": "d82faa5c3e477de6735649c1d47a2fac4ac74279114ebee3a321e1113c251164",
+      "size_bytes": 23
+    },
+    {
+      "media_type": "image/gif",
+      "path": "sparkle_ring_loop.gif",
+      "sha256": "837f2c78446005b8b86a2702319b5fcfef53a9d1a2438ef4ca6c4bcfb58073a6",
+      "size_bytes": 219252
+    },
+    {
+      "media_type": "text/markdown",
+      "path": "transcript.md",
+      "sha256": "15356e01a246877357e45a65566121eefb6a9221d64ce6a63955cfa4f73c25ce",
+      "size_bytes": 1761
+    },
+    {
+      "media_type": "text/x-python",
+      "path": "verify_gif.py",
+      "sha256": "044acd37c0cdd4c7009dc7d81757791910e4bdfc7f450ede9bc5ad4b9de085e4",
+      "size_bytes": 1113
+    }
+  ],
+  "assertion_results": [],
+  "candidate_snapshot_hash": "20232f3aeb397f28e32d38cc016ce6dbffa2112effd52813b0cbec243c1307ce",
+  "evidence_tier": "E2",
+  "failure_detail": null,
+  "failure_kind": null,
+  "fixture_hash": "c1fcf5b5894f3e7fcb8442d64b69311924f959b6f0244d8a397d3f146ba992e1",
+  "host_model_snapshot": "edbfd8f0668f44e333585ee805a6f891a7443402aad61b3e8cfeca5913b1338b",
+  "observed_trace": [
+    {
+      "action": "inspect_work_item",
+      "outcome": "completed",
+      "sequence": 0,
+      "target": "executor-work-items/work-a90881ca08a8679475629c61.json",
+      "tool": "read"
+    },
+    {
+      "action": "inspect_fixture",
+      "outcome": "completed",
+      "sequence": 1,
+      "target": "benchmarks/canaries/slack-gif-creator/fixtures/loop-sparkles.json",
+      "tool": "read"
+    },
+    {
+      "action": "author_generator",
+      "outcome": "completed",
+      "sequence": 2,
+      "target": "workspaces/work-a90881ca08a8679475629c61/generate_gif.py",
+      "tool": "apply_patch"
+    },
+    {
+      "action": "generate_animation",
+      "outcome": "completed",
+      "sequence": 3,
+      "target": "workspaces/work-a90881ca08a8679475629c61/sparkle_ring_loop.gif",
+      "tool": ".venv/bin/python -B"
+    },
+    {
+      "action": "author_verifier",
+      "outcome": "completed",
+      "sequence": 4,
+      "target": "workspaces/work-a90881ca08a8679475629c61/verify_gif.py",
+      "tool": "apply_patch"
+    },
+    {
+      "action": "reopen_verify_timing",
+      "outcome": "failed_missing_duration_metadata",
+      "sequence": 5,
+      "target": "workspaces/work-a90881ca08a8679475629c61/sparkle_ring_loop.gif",
+      "tool": ".venv/bin/python -B"
+    },
+    {
+      "action": "correct_export_timing",
+      "outcome": "completed",
+      "sequence": 6,
+      "target": "workspaces/work-a90881ca08a8679475629c61/generate_gif.py",
+      "tool": "apply_patch"
+    },
+    {
+      "action": "regenerate_animation",
+      "outcome": "completed",
+      "sequence": 7,
+      "target": "workspaces/work-a90881ca08a8679475629c61/sparkle_ring_loop.gif",
+      "tool": ".venv/bin/python -B"
+    },
+    {
+      "action": "reopen_verify_dimensions_frames_duration_loop_seam",
+      "outcome": "completed",
+      "sequence": 8,
+      "target": "workspaces/work-a90881ca08a8679475629c61/sparkle_ring_loop.gif",
+      "tool": ".venv/bin/python -B"
+    },
+    {
+      "action": "visual_verify_ring_and_sparkles",
+      "outcome": "completed",
+      "sequence": 9,
+      "target": "workspaces/work-a90881ca08a8679475629c61/sparkle_ring_loop.gif",
+      "tool": "view_image"
+    },
+    {
+      "action": "write_execution_records",
+      "outcome": "completed",
+      "sequence": 10,
+      "target": "workspaces/work-a90881ca08a8679475629c61",
+      "tool": "apply_patch"
+    }
+  ],
+  "pair_id": "pair-3c61dd0ee9d0c3845a03d9ad",
+  "planned_trace": [],
+  "policy_hash": "3b49f46ee66bafaf2bcf1aeac08f1bd7f4c719463b0e655afe40a98a4af6b3ec",
+  "prompt_hash": "b1b46698a6fdcc4825b52a71521ea887e8b0e73a8d0a28ddb6ed6d790c62f5ca",
+  "provenance": {
+    "context_id": "/root/r3_exec_a90881",
+    "generated_at": "2026-07-21T15:50:58.951346Z",
+    "generated_by": "gepase.eval.ingest",
+    "host": "codex",
+    "host_task_id": "/root/r3_exec_a90881",
+    "model": "gpt-5.6-sol",
+    "origin": "agent-native",
+    "provider_id": "agent-delegated-v1",
+    "submission_id": "submission-459a6146afb2b5a5d7630277"
+  },
+  "provider_snapshot": "agent-delegated-v1",
+  "record_id": "record-7203e81ffaef3f3dc31fdeb1",
+  "schema_version": "1.0.0",
+  "score": null,
+  "seed": 42,
+  "skill_id": "slack-gif-creator",
+  "source_record_refs": [],
+  "task_id": "functional-validation-loop-sparkles-006",
+  "task_score_vector": null,
+  "trace_completeness": "complete",
+  "uncertainty": 0.1,
+  "usage": {
+    "duration_ms": 150000,
+    "input_tokens": 3500,
+    "output_tokens": 1200,
+    "token_count_kind": "estimated",
+    "tool_calls": 8
+  },
+  "variant": "no-skill",
+  "work_id": "work-a90881ca08a8679475629c61"
+}

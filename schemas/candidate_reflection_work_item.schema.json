@@ -1,0 +1,138 @@
+{
+  "$defs": {
+    "CandidateTaskReflection": {
+      "additionalProperties": false,
+      "properties": {
+        "evidence_refs": {
+          "items": {
+            "type": "string"
+          },
+          "minItems": 1,
+          "title": "Evidence Refs",
+          "type": "array"
+        },
+        "failed_expectation_ids": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Failed Expectation Ids",
+          "type": "array"
+        },
+        "grader_feedback_zh": {
+          "title": "Grader Feedback Zh",
+          "type": "string"
+        },
+        "paired_delta": {
+          "maximum": 1,
+          "minimum": -1,
+          "title": "Paired Delta",
+          "type": "number"
+        },
+        "task_id": {
+          "title": "Task Id",
+          "type": "string"
+        }
+      },
+      "required": [
+        "task_id",
+        "paired_delta",
+        "evidence_refs",
+        "failed_expectation_ids",
+        "grader_feedback_zh"
+      ],
+      "title": "CandidateTaskReflection",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "candidate_id": {
+      "title": "Candidate Id",
+      "type": "string"
+    },
+    "forbidden_inputs": {
+      "default": [
+        "held-out expected answer",
+        "sibling candidate output",
+        "future candidate",
+        "deployable frontier identity"
+      ],
+      "items": {
+        "type": "string"
+      },
+      "title": "Forbidden Inputs",
+      "type": "array"
+    },
+    "graph_diff": {
+      "additionalProperties": true,
+      "title": "Graph Diff",
+      "type": "object"
+    },
+    "graph_ref": {
+      "title": "Graph Ref",
+      "type": "string"
+    },
+    "node_hints": {
+      "items": {
+        "additionalProperties": {
+          "type": "string"
+        },
+        "type": "object"
+      },
+      "title": "Node Hints",
+      "type": "array"
+    },
+    "parent_candidate_ids": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Parent Candidate Ids",
+      "type": "array"
+    },
+    "patch_ref": {
+      "title": "Patch Ref",
+      "type": "string"
+    },
+    "role": {
+      "const": "reflection",
+      "default": "reflection",
+      "title": "Role",
+      "type": "string"
+    },
+    "schema_version": {
+      "const": "1.0.0",
+      "default": "1.0.0",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "submission_schema_ref": {
+      "default": "schemas/candidate_reflection_submission.schema.json",
+      "title": "Submission Schema Ref",
+      "type": "string"
+    },
+    "task_feedback": {
+      "items": {
+        "$ref": "#/$defs/CandidateTaskReflection"
+      },
+      "minItems": 1,
+      "title": "Task Feedback",
+      "type": "array"
+    },
+    "work_id": {
+      "title": "Work Id",
+      "type": "string"
+    }
+  },
+  "required": [
+    "work_id",
+    "candidate_id",
+    "parent_candidate_ids",
+    "patch_ref",
+    "graph_ref",
+    "graph_diff",
+    "task_feedback",
+    "node_hints"
+  ],
+  "title": "CandidateReflectionWorkItem",
+  "type": "object"
+}

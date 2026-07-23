@@ -1,0 +1,242 @@
+{
+  "$defs": {
+    "AssertionSpec": {
+      "additionalProperties": false,
+      "properties": {
+        "assertion_id": {
+          "title": "Assertion Id",
+          "type": "string"
+        },
+        "family": {
+          "enum": [
+            "file_exists",
+            "file_contains",
+            "json_equals",
+            "json_range",
+            "forbidden_text",
+            "html_contract"
+          ],
+          "title": "Family",
+          "type": "string"
+        },
+        "parameters": {
+          "additionalProperties": true,
+          "title": "Parameters",
+          "type": "object"
+        },
+        "weight": {
+          "default": 1.0,
+          "exclusiveMinimum": 0,
+          "title": "Weight",
+          "type": "number"
+        }
+      },
+      "required": [
+        "assertion_id",
+        "family",
+        "parameters"
+      ],
+      "title": "AssertionSpec",
+      "type": "object"
+    },
+    "CaseProvenance": {
+      "additionalProperties": false,
+      "properties": {
+        "generator_version": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Generator Version"
+        },
+        "kind": {
+          "enum": [
+            "handcrafted",
+            "synthetic",
+            "public",
+            "historical"
+          ],
+          "title": "Kind",
+          "type": "string"
+        },
+        "license": {
+          "title": "License",
+          "type": "string"
+        },
+        "reference": {
+          "title": "Reference",
+          "type": "string"
+        }
+      },
+      "required": [
+        "kind",
+        "reference",
+        "license"
+      ],
+      "title": "CaseProvenance",
+      "type": "object"
+    },
+    "EvidenceTier": {
+      "enum": [
+        "E0",
+        "E1",
+        "E2",
+        "E3"
+      ],
+      "title": "EvidenceTier",
+      "type": "string"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "allowed_evidence_tiers": {
+      "items": {
+        "$ref": "#/$defs/EvidenceTier"
+      },
+      "title": "Allowed Evidence Tiers",
+      "type": "array"
+    },
+    "assertions": {
+      "items": {
+        "$ref": "#/$defs/AssertionSpec"
+      },
+      "title": "Assertions",
+      "type": "array"
+    },
+    "capability_manifest_ref": {
+      "title": "Capability Manifest Ref",
+      "type": "string"
+    },
+    "category": {
+      "title": "Category",
+      "type": "string"
+    },
+    "deterministic_weight": {
+      "maximum": 1,
+      "minimum": 0,
+      "title": "Deterministic Weight",
+      "type": "number"
+    },
+    "difficulty": {
+      "enum": [
+        "easy",
+        "medium",
+        "hard"
+      ],
+      "title": "Difficulty",
+      "type": "string"
+    },
+    "fixture_ref": {
+      "title": "Fixture Ref",
+      "type": "string"
+    },
+    "fixture_sha256": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Fixture Sha256",
+      "type": "string"
+    },
+    "id": {
+      "title": "Id",
+      "type": "string"
+    },
+    "input": {
+      "additionalProperties": true,
+      "title": "Input",
+      "type": "object"
+    },
+    "judge_rubric_ref": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Judge Rubric Ref"
+    },
+    "judge_weight": {
+      "maximum": 1,
+      "minimum": 0,
+      "title": "Judge Weight",
+      "type": "number"
+    },
+    "leakage_group": {
+      "title": "Leakage Group",
+      "type": "string"
+    },
+    "minimum_acceptance_tier": {
+      "$ref": "#/$defs/EvidenceTier"
+    },
+    "prompt": {
+      "title": "Prompt",
+      "type": "string"
+    },
+    "provenance": {
+      "$ref": "#/$defs/CaseProvenance"
+    },
+    "required_capability": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Required Capability",
+      "type": "array"
+    },
+    "risk_level": {
+      "enum": [
+        "low",
+        "medium",
+        "high"
+      ],
+      "title": "Risk Level",
+      "type": "string"
+    },
+    "schema_version": {
+      "default": "1.0.0",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "skill_id": {
+      "title": "Skill Id",
+      "type": "string"
+    },
+    "split": {
+      "enum": [
+        "train",
+        "validation",
+        "test"
+      ],
+      "title": "Split",
+      "type": "string"
+    }
+  },
+  "required": [
+    "id",
+    "skill_id",
+    "capability_manifest_ref",
+    "prompt",
+    "input",
+    "fixture_ref",
+    "fixture_sha256",
+    "allowed_evidence_tiers",
+    "minimum_acceptance_tier",
+    "assertions",
+    "category",
+    "difficulty",
+    "risk_level",
+    "required_capability",
+    "leakage_group",
+    "split",
+    "deterministic_weight",
+    "judge_weight",
+    "provenance"
+  ],
+  "title": "TaskCase",
+  "type": "object"
+}

@@ -1,0 +1,65 @@
+{
+  "criterion_grades": [
+    {
+      "criterion_id": "status-hierarchy",
+      "evidence_refs": [
+        "artifacts/runs/r4-slack-gif-creator-evolution/evals/candidate-4b5885d1dd5fe978c8f1dad3/train/derived/work-c255c4e00d54ef54a67078ed/contact-sheet.png"
+      ],
+      "rationale_zh": "方形卡片把顶部部署标签与状态胶囊、中央状态图形、主标题及底部三段进度线分成稳定层级；DEPLOY 与 DONE 在缩略帧中仍醒目，辅助说明和进度节点也保持可扫读。顶部小标签与底部微型文字相对偏小，因此保留少量扣分。",
+      "score": 0.95
+    },
+    {
+      "criterion_id": "status-progression",
+      "evidence_refs": [
+        "artifacts/runs/r4-slack-gif-creator-evolution/evals/candidate-4b5885d1dd5fe978c8f1dad3/train/derived/work-c255c4e00d54ef54a67078ed/contact-sheet.png"
+      ],
+      "rationale_zh": "contact sheet 按帧清楚呈现 WAITING、PROCESSING、COMPLETE，前两阶段保持 DEPLOY、完成阶段切为 DONE；琥珀、青、绿色变化与 WAIT/BUILD/LIVE 进度节点同步推进，阶段先后和语义几乎没有歧义。",
+      "score": 0.98
+    },
+    {
+      "criterion_id": "status-motion",
+      "evidence_refs": [
+        "artifacts/runs/r4-slack-gif-creator-evolution/evals/candidate-4b5885d1dd5fe978c8f1dad3/train/blind-inspections/blind-dcb7e4b474032429ae482d28.json",
+        "artifacts/runs/r4-slack-gif-creator-evolution/evals/candidate-4b5885d1dd5fe978c8f1dad3/train/derived/work-c255c4e00d54ef54a67078ed/contact-sheet.png"
+      ],
+      "rationale_zh": "24 帧均为 100 ms、总时长 2400 ms、有效帧率 10 fps，23 个独特帧说明动画并非静态重复；代表帧显示等待弧线、处理中旋转环和完成勾选具有连贯变化。三个阶段约各占 0.8 秒，节奏紧凑且可辨认，但在快速扫读的 Slack 场景中停留余量有限。",
+      "score": 0.9
+    },
+    {
+      "criterion_id": "status-finish",
+      "evidence_refs": [
+        "artifacts/runs/r4-slack-gif-creator-evolution/evals/candidate-4b5885d1dd5fe978c8f1dad3/train/workspaces/work-c255c4e00d54ef54a67078ed/deployment_status.gif",
+        "artifacts/runs/r4-slack-gif-creator-evolution/evals/candidate-4b5885d1dd5fe978c8f1dad3/train/derived/work-c255c4e00d54ef54a67078ed/contact-sheet.png"
+      ],
+      "rationale_zh": "深色圆角双描边卡片、统一的状态胶囊与进度线、对应阶段的图标和强调色形成一致视觉系统；主文字对比度高，完成态勾选与 DONE 明确，整体具备可直接用于团队沟通的成品感。",
+      "score": 0.97
+    }
+  ],
+  "factual_claims_zh": [
+    "交付物是 480×480 的 GIF，文件大小为 357023 字节，文件哈希与 work item 中声明的 eb61f217159673b76bbd11827aaaf53f8cae056f26f7d0f171f50b81e4a7d94f 一致。",
+    "盲检记录包含 24 帧、23 个独特帧、10.0 fps、每帧 100 ms、总时长 2400 ms，并记录 loop_count 为 0。",
+    "contact sheet 依次展示 WAITING、PROCESSING、COMPLETE；前两阶段主标题为 DEPLOY，完成阶段主标题为 DONE。",
+    "三个阶段分别使用琥珀色等待图形、青色处理环与绿色完成勾选，底部 WAIT、BUILD、LIVE 进度节点随阶段推进。",
+    "总分按冻结权重精确计算为 0.25×0.95 + 0.30×0.98 + 0.20×0.90 + 0.25×0.97 = 0.954。"
+  ],
+  "feedback_zh": "状态叙事、主文案与阶段配色非常清楚，版式一致且已经达到 Slack 团队沟通可直接使用的完成度。若继续优化，可将每个阶段的停留时间略微延长，或为阶段切换与循环回到 waiting 增加更柔和的过渡，让快速扫读时更从容。",
+  "grader_work_id": "grader-work-08b24d68742c0ea61ea1c261",
+  "overall_score": 0.954,
+  "role_run": {
+    "context_id": "r4_grade_m_message",
+    "finished_at": "2026-07-22T09:58:48Z",
+    "host": "codex",
+    "host_task_id": "/root/r4_grade_m_message",
+    "model": "gpt-5.6-sol",
+    "started_at": "2026-07-22T09:58:03Z",
+    "usage": {
+      "duration_ms": 45000,
+      "input_tokens": 9500,
+      "output_tokens": 1400,
+      "token_count_kind": "estimated",
+      "tool_calls": 13
+    }
+  },
+  "schema_version": "1.0.0",
+  "submission_id": "grader-submission-3e9a8095f58b40b4b4b4efd388e93a14"
+}

@@ -1,0 +1,68 @@
+{
+  "schema_version": "1.0.0",
+  "submission_id": "grade-submission-7ccc066c17938357a8a56748",
+  "grader_work_id": "grader-work-7ccc066c17938357a8a56748",
+  "role_run": {
+    "host": "codex",
+    "model": "gpt-5.6-sol",
+    "context_id": "/root/r3_grade_7ccc06",
+    "host_task_id": "/root/r3_grade_7ccc06",
+    "usage": {
+      "input_tokens": 6420,
+      "output_tokens": 1180,
+      "tool_calls": 6,
+      "duration_ms": 176000,
+      "token_count_kind": "estimated"
+    },
+    "started_at": "2026-07-22T11:41:00+08:00",
+    "finished_at": "2026-07-22T11:43:56+08:00"
+  },
+  "criterion_grades": [
+    {
+      "criterion_id": "orbit-path",
+      "score": 0.98,
+      "evidence_refs": [
+        "artifacts/runs/r3-slack-gif-creator-paired/workspaces/work-ba5bed1fe1f6ee2b5cd0648b/satellite_orbit_ease.gif",
+        "artifacts/runs/r3-slack-gif-creator-paired/derived/work-ba5bed1fe1f6ee2b5cd0648b/contact-sheet.png"
+      ],
+      "rationale_zh": "卫星从行星左侧下弯，沿底部转向右侧再上扬至停靠点，连续帧中的横纵位移同时变化，弧线清楚且不呈直线平移。"
+    },
+    {
+      "criterion_id": "orbit-easing",
+      "score": 0.96,
+      "evidence_refs": [
+        "artifacts/runs/r3-slack-gif-creator-paired/workspaces/work-ba5bed1fe1f6ee2b5cd0648b/satellite_orbit_ease.gif",
+        "artifacts/runs/r3-slack-gif-creator-paired/derived/work-ba5bed1fe1f6ee2b5cd0648b/contact-sheet.png",
+        "artifacts/runs/r3-slack-gif-creator-paired/blind-inspections/blind-22384929eca79fcedc49edc4.json"
+      ],
+      "rationale_zh": "实看动画与逐帧位置均显示前段位移较大、接近右上停靠点时位移逐步缩小，减速连续且 ease-out 明显；末两帧仍有轻微步长波动，但没有突兀刹停。"
+    },
+    {
+      "criterion_id": "orbit-composition",
+      "score": 0.85,
+      "evidence_refs": [
+        "artifacts/runs/r3-slack-gif-creator-paired/workspaces/work-ba5bed1fe1f6ee2b5cd0648b/satellite_orbit_ease.gif",
+        "artifacts/runs/r3-slack-gif-creator-paired/derived/work-ba5bed1fe1f6ee2b5cd0648b/contact-sheet.png"
+      ],
+      "rationale_zh": "橙色行星是稳定视觉中心，青色卫星和虚线轨道具有清楚层级；但卫星经过最右侧时贴近画布边缘并出现局部裁切，削弱了小画布中的留白与完整性。"
+    },
+    {
+      "criterion_id": "orbit-craft",
+      "score": 0.92,
+      "evidence_refs": [
+        "artifacts/runs/r3-slack-gif-creator-paired/workspaces/work-ba5bed1fe1f6ee2b5cd0648b/satellite_orbit_ease.gif",
+        "artifacts/runs/r3-slack-gif-creator-paired/derived/work-ba5bed1fe1f6ee2b5cd0648b/contact-sheet.png",
+        "artifacts/runs/r3-slack-gif-creator-paired/blind-inspections/blind-22384929eca79fcedc49edc4.json"
+      ],
+      "rationale_zh": "卫星、带高光与环带细节的行星、星点背景及轨道虚线共同形成完整统一的像素太空场景；128×128、24 帧和清晰高对比配色适合 Slack 表情，但循环首尾位置跳变并非无缝回环。"
+    }
+  ],
+  "overall_score": 0.936,
+  "factual_claims_zh": [
+    "盲检记录显示成品尺寸为 128×128，共 24 个唯一帧，帧率 10 fps，总时长 2400 ms，循环次数字段为 0。",
+    "接触表显示卫星沿行星下方至右上方的弧形轨迹运动，并在最后数帧聚集于右上停靠点。",
+    "卫星经过画布最右侧的若干帧时局部贴边或被边界裁切。",
+    "动画首帧卫星位于左侧、末帧位于右上方，因此循环重启存在可见的位置跳变。"
+  ],
+  "feedback_zh": "弧线路径、末段渐减位移和像素太空造型完成度都很高，任务的核心运动要求表达明确。建议将轨迹整体向内收少量像素，避免右侧经过时裁切；若希望成品更像自然循环，可增加短暂停靠与过渡段，或设计首尾能衔接的回程，使循环重启不发生大幅跳位。"
+}

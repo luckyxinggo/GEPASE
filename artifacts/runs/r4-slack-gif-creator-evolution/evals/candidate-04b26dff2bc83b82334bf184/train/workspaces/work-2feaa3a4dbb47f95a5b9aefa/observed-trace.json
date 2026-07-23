@@ -1,0 +1,81 @@
+{
+  "observed_trace": [
+    {
+      "sequence": 0,
+      "action": "inspect_work_item",
+      "target": "artifacts/runs/r4-slack-gif-creator-evolution/evals/candidate-04b26dff2bc83b82334bf184/train/executor-work-items/work-2feaa3a4dbb47f95a5b9aefa.json",
+      "tool": "read",
+      "outcome": "completed"
+    },
+    {
+      "sequence": 1,
+      "action": "inspect_fixture",
+      "target": "benchmarks/canaries/slack-gif-creator/fixtures/easing-orbit.json",
+      "tool": "read",
+      "outcome": "completed"
+    },
+    {
+      "sequence": 2,
+      "action": "inspect_package_graph",
+      "target": "artifacts/runs/r4-slack-gif-creator-evolution/candidates/candidate-04b26dff2bc83b82334bf184/graph.json",
+      "tool": "read",
+      "outcome": "completed"
+    },
+    {
+      "sequence": 3,
+      "action": "read_skill_instructions",
+      "target": "SKILL.md",
+      "tool": "read",
+      "outcome": "completed"
+    },
+    {
+      "sequence": 4,
+      "action": "read_package_modules",
+      "target": "core/easing.py, core/frame_composer.py, core/gif_builder.py, core/validators.py",
+      "tool": "read",
+      "outcome": "completed"
+    },
+    {
+      "sequence": 5,
+      "action": "preflight_integer_motion",
+      "target": "ease_out arc centers and final six adjacent-frame displacements",
+      "tool": "core.easing",
+      "outcome": "completed"
+    },
+    {
+      "sequence": 6,
+      "action": "render_animation_frames",
+      "target": "workspaces/work-2feaa3a4dbb47f95a5b9aefa/generate_satellite_gif.py",
+      "tool": "Pillow and core.frame_composer",
+      "outcome": "completed"
+    },
+    {
+      "sequence": 7,
+      "action": "export_task_native_gif",
+      "target": "workspaces/work-2feaa3a4dbb47f95a5b9aefa/satellite_orbit_ease.gif",
+      "tool": "core.gif_builder",
+      "outcome": "completed"
+    },
+    {
+      "sequence": 8,
+      "action": "validate_slack_gif",
+      "target": "workspaces/work-2feaa3a4dbb47f95a5b9aefa/satellite_orbit_ease.gif",
+      "tool": "core.validators",
+      "outcome": "completed"
+    },
+    {
+      "sequence": 9,
+      "action": "inspect_visual_contact_sheet",
+      "target": "workspaces/work-2feaa3a4dbb47f95a5b9aefa/satellite_orbit_ease_preview.png",
+      "tool": "view_image",
+      "outcome": "completed"
+    },
+    {
+      "sequence": 10,
+      "action": "record_execution_evidence",
+      "target": "workspaces/work-2feaa3a4dbb47f95a5b9aefa",
+      "tool": "write",
+      "outcome": "completed"
+    }
+  ]
+}

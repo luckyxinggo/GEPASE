@@ -1,0 +1,22 @@
+project: gepase-s0
+provider:
+  kind: mock
+  name: deterministic-mock
+eval_policy:
+  allowed_tiers: [E0]
+  minimum_acceptance_tier: E0
+  paired: true
+  max_attempts: 1
+dataset:
+  manifest: examples/mock_project/tasks.json
+  split: train
+optimizer:
+  name: none
+  seed: 42
+budget:
+  max_work_items: 2
+  max_high_fidelity_items: 0
+report:
+  formats: [json]
+  redact: true
+

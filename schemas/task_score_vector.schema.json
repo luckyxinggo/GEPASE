@@ -1,0 +1,99 @@
+{
+  "additionalProperties": false,
+  "properties": {
+    "candidate_snapshot_hash": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Candidate Snapshot Hash",
+      "type": "string"
+    },
+    "efficiency": {
+      "maximum": 1.0,
+      "minimum": 0.0,
+      "title": "Efficiency",
+      "type": "number"
+    },
+    "evidence_refs": {
+      "items": {
+        "type": "string"
+      },
+      "minItems": 1,
+      "title": "Evidence Refs",
+      "type": "array"
+    },
+    "output_quality": {
+      "maximum": 1.0,
+      "minimum": 0.0,
+      "title": "Output Quality",
+      "type": "number"
+    },
+    "package_quality": {
+      "maximum": 1.0,
+      "minimum": 0.0,
+      "title": "Package Quality",
+      "type": "number"
+    },
+    "pair_id": {
+      "minLength": 1,
+      "title": "Pair Id",
+      "type": "string"
+    },
+    "reliability": {
+      "maximum": 1.0,
+      "minimum": 0.0,
+      "title": "Reliability",
+      "type": "number"
+    },
+    "schema_version": {
+      "default": "1.0.0",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "scoring_policy_ref": {
+      "minLength": 1,
+      "title": "Scoring Policy Ref",
+      "type": "string"
+    },
+    "skill_gain": {
+      "maximum": 1.0,
+      "minimum": -1.0,
+      "title": "Skill Gain",
+      "type": "number"
+    },
+    "task_correctness": {
+      "maximum": 1.0,
+      "minimum": 0.0,
+      "title": "Task Correctness",
+      "type": "number"
+    },
+    "task_id": {
+      "minLength": 1,
+      "title": "Task Id",
+      "type": "string"
+    },
+    "variant": {
+      "enum": [
+        "no-skill",
+        "original",
+        "candidate"
+      ],
+      "title": "Variant",
+      "type": "string"
+    }
+  },
+  "required": [
+    "task_id",
+    "pair_id",
+    "variant",
+    "candidate_snapshot_hash",
+    "task_correctness",
+    "output_quality",
+    "skill_gain",
+    "reliability",
+    "efficiency",
+    "package_quality",
+    "evidence_refs",
+    "scoring_policy_ref"
+  ],
+  "title": "TaskScoreVector",
+  "type": "object"
+}

@@ -1,0 +1,45 @@
+{
+  "comparator_work_id": "candidate-comparator-work-729fe9516110d7a7356f1629",
+  "confidence": 0.9,
+  "criteria": [
+    {
+      "criterion_id": "pulse-legibility",
+      "preference": "left",
+      "rationale_zh": "左侧白色 GO 带深蓝描边，采样帧中无论徽章收缩或放大，字形边界都稳定清楚；右侧纯白字虽可读，但在珊瑚红底上的边缘分离度与缩小阶段的稳健性略弱。"
+    },
+    {
+      "criterion_id": "pulse-motion",
+      "preference": "left",
+      "rationale_zh": "左侧以 32 帧、17 个唯一帧和统一 80ms 帧时长完成渐进收放，平均相邻像素变化为 3.15，接缝差异仅 0.58，呼吸过渡细腻。右侧只有 7 个唯一帧，并出现 330ms、580ms、250ms 的长停顿及更大的相邻变化 7.81，节奏更显停顿和跳阶。"
+    },
+    {
+      "criterion_id": "pulse-color",
+      "preference": "left",
+      "rationale_zh": "两侧都呈现深蓝、珊瑚红与白色三色关系；左侧额外用深蓝描边隔开白字与红底，并以珊瑚红外线强化警报轮廓，层级和对比更明确，因此小幅领先。"
+    },
+    {
+      "criterion_id": "pulse-emoji-ready",
+      "preference": "left",
+      "rationale_zh": "左侧八边形警报徽章辨识度更高，GO 描边、留白和轮廓在各采样尺寸中保持完整，且较密的动画采样更适合 Slack 表情循环。右侧圆形更简洁，但造型较通用，动画跳阶也削弱完成感。"
+    }
+  ],
+  "rationale_zh": "左侧在四项标准中均领先：文字描边让缩略可读性更稳，32 帧的均匀采样带来明显更顺滑的呼吸脉冲，三色层级与警报徽章辨识度也更完整。它的首尾像素仍有极小差异，但幅度远低于单帧平均变化，不足以抵消整体优势，因此判定 left 胜出。",
+  "role_run": {
+    "context_id": "codex-r4-cmp-pulse-ba-729fe9516110d7a7356f1629",
+    "finished_at": "2026-07-22T10:51:03Z",
+    "host": "codex",
+    "host_task_id": "r4_cmp_a_pulse_ba-729fe9516110d7a7356f1629",
+    "model": "gpt-5.6-sol",
+    "started_at": "2026-07-22T10:44:00Z",
+    "usage": {
+      "duration_ms": 423000,
+      "input_tokens": 11000,
+      "output_tokens": 1100,
+      "token_count_kind": "estimated",
+      "tool_calls": 15
+    }
+  },
+  "schema_version": "1.0.0",
+  "submission_id": "candidate-comparator-submission-fd762a64a75e4bbd8cd2265a",
+  "winner": "left"
+}

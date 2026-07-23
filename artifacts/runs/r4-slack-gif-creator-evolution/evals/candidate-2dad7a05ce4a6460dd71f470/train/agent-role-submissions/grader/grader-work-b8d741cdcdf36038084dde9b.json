@@ -1,0 +1,66 @@
+{
+  "schema_version": "1.0.0",
+  "submission_id": "grader-submission-b8d741cdcdf36038084dde9b",
+  "grader_work_id": "grader-work-b8d741cdcdf36038084dde9b",
+  "role_run": {
+    "host": "codex",
+    "model": "gpt-5.6-sol",
+    "context_id": "r4_grade_c_badge",
+    "host_task_id": "/root/r4_grade_c_badge",
+    "usage": {
+      "input_tokens": 8500,
+      "output_tokens": 1700,
+      "tool_calls": 10,
+      "duration_ms": 207000,
+      "token_count_kind": "estimated"
+    },
+    "started_at": "2026-07-22T09:29:00Z",
+    "finished_at": "2026-07-22T09:32:27Z"
+  },
+  "criterion_grades": [
+    {
+      "criterion_id": "badge-fidelity",
+      "score": 0.9,
+      "evidence_refs": [
+        "artifacts/runs/r4-slack-gif-creator-evolution/evals/candidate-2dad7a05ce4a6460dd71f470/train/workspaces/work-692901e392962f5b5393520d/uploaded_badge_lift.gif",
+        "artifacts/runs/r4-slack-gif-creator-evolution/evals/candidate-2dad7a05ce4a6460dd71f470/train/derived/work-692901e392962f5b5393520d/contact-sheet.png"
+      ],
+      "rationale_zh": "逐帧可见主体始终保持块状徽章轮廓、外围青色结构与居中的橙色核心，缩放和位移过程中关键配色关系清楚且没有明显形变或丢失。"
+    },
+    {
+      "criterion_id": "badge-motion",
+      "score": 0.88,
+      "evidence_refs": [
+        "artifacts/runs/r4-slack-gif-creator-evolution/evals/candidate-2dad7a05ce4a6460dd71f470/train/derived/work-692901e392962f5b5393520d/contact-sheet.png",
+        "artifacts/runs/r4-slack-gif-creator-evolution/evals/candidate-2dad7a05ce4a6460dd71f470/train/blind-inspections/blind-1be0be898243aea580be24ac.json"
+      ],
+      "rationale_zh": "接触表显示徽章从较低位置连续上浮，在中段略越过最终高度后小幅回落并稳定；18 帧均唯一且相邻帧平均变化较小，动作阶段完整、缓动观感较顺，但幅度较克制。"
+    },
+    {
+      "criterion_id": "badge-integration",
+      "score": 0.95,
+      "evidence_refs": [
+        "artifacts/runs/r4-slack-gif-creator-evolution/evals/candidate-2dad7a05ce4a6460dd71f470/train/workspaces/work-692901e392962f5b5393520d/uploaded_badge_lift.gif",
+        "artifacts/runs/r4-slack-gif-creator-evolution/evals/candidate-2dad7a05ce4a6460dd71f470/train/derived/work-692901e392962f5b5393520d/contact-sheet.png"
+      ],
+      "rationale_zh": "深色背景、稀疏青色刻线、橙色星点和下方柔和阴影共同衬托主体，装饰与徽章留有间距，没有遮挡青色轮廓或橙色核心。"
+    },
+    {
+      "criterion_id": "badge-emoji-ready",
+      "score": 0.78,
+      "evidence_refs": [
+        "artifacts/runs/r4-slack-gif-creator-evolution/evals/candidate-2dad7a05ce4a6460dd71f470/train/derived/work-692901e392962f5b5393520d/contact-sheet.png",
+        "artifacts/runs/r4-slack-gif-creator-evolution/evals/candidate-2dad7a05ce4a6460dd71f470/train/blind-inspections/blind-1be0be898243aea580be24ac.json"
+      ],
+      "rationale_zh": "成品为 128×128、1.8 秒、10 fps、无限循环，主体居中且在小尺寸下仍有高对比度；但首尾像素差 19.8576，显著高于平均相邻帧差 2.9350，循环从稳定末帧返回较低首帧时会产生明显跳变。"
+    }
+  ],
+  "overall_score": 0.886,
+  "factual_claims_zh": [
+    "GIF 尺寸为 128×128，共 18 帧且 18 帧均唯一。",
+    "每帧时长均为 100 毫秒，总时长为 1800 毫秒，有效帧率为 10 fps。",
+    "循环次数记录为 0，表示无限循环。",
+    "首尾像素差为 19.857564290364582，平均相邻帧像素差为 2.934987984451593。"
+  ],
+  "feedback_zh": "徽章的青色轮廓与橙色核心保留清楚，上浮、轻微越位和回稳定格完整，背景光效也没有抢占主体。建议让末段自然回到起始位置，或加入短暂回落过渡，以消除无限循环时明显的首尾跳变；其余画面与节奏已较适合 Slack emoji。"
+}

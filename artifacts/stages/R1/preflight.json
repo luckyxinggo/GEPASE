@@ -1,0 +1,65 @@
+{
+  "schema_version": "1.0.0",
+  "stage_id": "R1",
+  "captured_at": "2026-07-21T09:07:01Z",
+  "started_from_commit": "ea84ea8983509a91770932b9e21a74cd43235810",
+  "worktree_policy": {
+    "reset_run": false,
+    "clean_run": false,
+    "private_skill_modified": false,
+    "unknown_dirty_files_overwritten": false
+  },
+  "initial_scale": {
+    "source_python_files": 174,
+    "test_python_files": 84,
+    "scripts": 16,
+    "configs": 10,
+    "schemas": 8
+  },
+  "initial_regression": {
+    "ruff": "passed",
+    "pytest": "151 passed",
+    "pyright": "6 pre-existing errors in tests/optimizer/merge/test_deterministic.py"
+  },
+  "initial_modified_paths": [
+    ".agents/skills/gepase-orchestrator/SKILL.md",
+    ".agents/skills/gepase-orchestrator/references/work-submission.md",
+    ".gitignore",
+    "docs/benchmark.md",
+    "scripts/check_secrets.py",
+    "src/gepase/baselines/client.py",
+    "src/gepase/cli/app.py",
+    "src/gepase/cli/benchmark.py",
+    "src/gepase/cli/eval.py",
+    "src/gepase/cli/optimize.py",
+    "src/gepase/optimizer/candidate.py",
+    "src/gepase/optimizer/materialize.py",
+    "src/gepase/package/diagnostics.py",
+    "src/gepase/package/loader.py",
+    "src/gepase/package/markdown_ir.py",
+    "src/gepase/runtime.py",
+    "src/gepase/store/candidates.py",
+    "state.md"
+  ],
+  "initial_untracked_roots": [
+    "artifacts/runs/s6-graph-guided-agent-native/",
+    "artifacts/runs/s7-validation-gated-agent-native/",
+    "artifacts/runs/s8-fixture-work/",
+    "artifacts/stages/S6/",
+    "artifacts/stages/S7/",
+    "benchmarks/evolution-v1/",
+    "prompts/",
+    "schemas/evolution_search.schema.json",
+    "schemas/merge_parent_set.schema.json",
+    "schemas/package_patch.schema.json",
+    "src/gepase/mutation/",
+    "src/gepase/optimizer/acceptance/",
+    "src/gepase/optimizer/evolution/",
+    "src/gepase/optimizer/merge/",
+    "tests/acceptance/",
+    "tests/evolution/",
+    "tests/mutation/",
+    "tests/optimizer/merge/"
+  ],
+  "note": "Initial status was recorded before deletion. Existing S6-S8 algorithm files and artifacts were untracked; R1 preserved reusable contracts and historical artifacts while deleting only conflicting controllers and isolated routes."
+}

@@ -1,0 +1,193 @@
+{
+  "$defs": {
+    "CandidateFile": {
+      "additionalProperties": false,
+      "properties": {
+        "binary": {
+          "title": "Binary",
+          "type": "boolean"
+        },
+        "kind": {
+          "$ref": "#/$defs/FileKind"
+        },
+        "mode": {
+          "maximum": 4095,
+          "minimum": 0,
+          "title": "Mode",
+          "type": "integer"
+        },
+        "mutable": {
+          "title": "Mutable",
+          "type": "boolean"
+        },
+        "path": {
+          "title": "Path",
+          "type": "string"
+        },
+        "sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Sha256",
+          "type": "string"
+        }
+      },
+      "required": [
+        "path",
+        "kind",
+        "sha256",
+        "binary",
+        "mutable",
+        "mode"
+      ],
+      "title": "CandidateFile",
+      "type": "object"
+    },
+    "ComponentKind": {
+      "enum": [
+        "skill_instructions",
+        "reference_chunk",
+        "script_unit",
+        "routing_metadata"
+      ],
+      "title": "ComponentKind",
+      "type": "string"
+    },
+    "FileKind": {
+      "enum": [
+        "skill",
+        "reference",
+        "script",
+        "asset",
+        "test",
+        "agent_config",
+        "metadata",
+        "license",
+        "unknown"
+      ],
+      "title": "FileKind",
+      "type": "string"
+    },
+    "PackageComponent": {
+      "additionalProperties": false,
+      "properties": {
+        "component_id": {
+          "title": "Component Id",
+          "type": "string"
+        },
+        "content": {
+          "title": "Content",
+          "type": "string"
+        },
+        "content_hash": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Content Hash",
+          "type": "string"
+        },
+        "kind": {
+          "$ref": "#/$defs/ComponentKind"
+        },
+        "locator": {
+          "default": "file",
+          "title": "Locator",
+          "type": "string"
+        },
+        "path": {
+          "title": "Path",
+          "type": "string"
+        },
+        "source_node_id": {
+          "title": "Source Node Id",
+          "type": "string"
+        }
+      },
+      "required": [
+        "component_id",
+        "source_node_id",
+        "kind",
+        "path",
+        "content",
+        "content_hash"
+      ],
+      "title": "PackageComponent",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "candidate_id": {
+      "title": "Candidate Id",
+      "type": "string"
+    },
+    "components": {
+      "items": {
+        "$ref": "#/$defs/PackageComponent"
+      },
+      "title": "Components",
+      "type": "array"
+    },
+    "content_hash": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Content Hash",
+      "type": "string"
+    },
+    "created_from_run": {
+      "title": "Created From Run",
+      "type": "string"
+    },
+    "files": {
+      "items": {
+        "$ref": "#/$defs/CandidateFile"
+      },
+      "title": "Files",
+      "type": "array"
+    },
+    "generation": {
+      "minimum": 0,
+      "title": "Generation",
+      "type": "integer"
+    },
+    "operator": {
+      "title": "Operator",
+      "type": "string"
+    },
+    "package_id": {
+      "title": "Package Id",
+      "type": "string"
+    },
+    "parent_ids": {
+      "default": [],
+      "items": {
+        "type": "string"
+      },
+      "title": "Parent Ids",
+      "type": "array"
+    },
+    "schema_version": {
+      "default": "1.0.0",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "snapshot_hash": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Snapshot Hash",
+      "type": "string"
+    },
+    "source_package_ref": {
+      "title": "Source Package Ref",
+      "type": "string"
+    }
+  },
+  "required": [
+    "candidate_id",
+    "package_id",
+    "source_package_ref",
+    "snapshot_hash",
+    "content_hash",
+    "components",
+    "files",
+    "operator",
+    "generation",
+    "created_from_run"
+  ],
+  "title": "PackageCandidate",
+  "type": "object"
+}

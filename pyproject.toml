@@ -1,0 +1,77 @@
+[build-system]
+requires = ["hatchling>=1.27"]
+build-backend = "hatchling.build"
+
+[project]
+name = "gepase"
+version = "0.1.0"
+description = "Graph-enhanced, package-aware evolution for agent skills"
+readme = "README.md"
+requires-python = ">=3.11"
+license = { file = "LICENSE" }
+authors = [{ name = "GEPASE Contributors" }]
+classifiers = [
+  "Development Status :: 3 - Alpha",
+  "License :: OSI Approved :: Apache Software License",
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Programming Language :: Python :: 3.13",
+]
+dependencies = [
+  "gepa==0.1.4",
+  "jsonschema>=4.23",
+  "markdown-it-py>=4.0",
+  "pydantic>=2.10",
+  "pyyaml>=6.0.2",
+  "typer>=0.15",
+]
+
+[project.optional-dependencies]
+dev = [
+  "pre-commit>=4.1",
+  "pyright>=1.1.395",
+  "pytest>=8.3",
+  "pytest-cov>=6.0",
+  "ruff>=0.9",
+]
+gif-eval = [
+  "imageio==2.37.4",
+  "imageio-ffmpeg==0.6.0",
+  "numpy==2.4.6; python_version < '3.12'",
+  "numpy==2.5.1; python_version >= '3.12'",
+  "pillow==12.3.0",
+]
+
+[project.scripts]
+gepase = "gepase.cli.app:app"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/gepase"]
+
+[tool.hatch.build.targets.sdist]
+include = [
+  "/src/gepase",
+  "/LICENSE",
+  "/README.md",
+  "/README_zh.md",
+  "/pyproject.toml",
+]
+
+[tool.pytest.ini_options]
+addopts = "-ra --strict-markers"
+testpaths = ["tests"]
+
+[tool.ruff]
+target-version = "py311"
+line-length = 100
+exclude = ["skills_test", "artifacts", "results", "benchmarks/canaries/*/package"]
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "B", "UP", "RUF"]
+
+[tool.pyright]
+include = ["src", "scripts"]
+exclude = ["skills_test", "artifacts", "results"]
+typeCheckingMode = "standard"
+pythonVersion = "3.11"

@@ -1,0 +1,230 @@
+{
+  "assertion_results": [
+    {
+      "assertion_id": "efficiency-container",
+      "detail": "通过内容/元数据检查",
+      "evidence_refs": [
+        "artifacts/runs/r4-slack-gif-creator-evolution/evals/candidate-4b5885d1dd5fe978c8f1dad3/validation/derived/work-96e4bf561b46c20bb344924d/measurements.json",
+        "artifacts/runs/r4-slack-gif-creator-evolution/evals/candidate-4b5885d1dd5fe978c8f1dad3/validation/derived/work-96e4bf561b46c20bb344924d/contact-sheet.png"
+      ],
+      "family": "artifact_metadata",
+      "measurements": {
+        "frame_count": 24,
+        "height": 480,
+        "loop_count": 0,
+        "unique_frame_count": 24,
+        "width": 480
+      },
+      "passed": true,
+      "weight": 0.15
+    },
+    {
+      "assertion_id": "efficiency-size",
+      "detail": "通过内容/元数据检查",
+      "evidence_refs": [
+        "artifacts/runs/r4-slack-gif-creator-evolution/evals/candidate-4b5885d1dd5fe978c8f1dad3/validation/derived/work-96e4bf561b46c20bb344924d/measurements.json",
+        "artifacts/runs/r4-slack-gif-creator-evolution/evals/candidate-4b5885d1dd5fe978c8f1dad3/validation/derived/work-96e4bf561b46c20bb344924d/contact-sheet.png"
+      ],
+      "family": "artifact_metadata",
+      "measurements": {
+        "file_size_bytes": 330202,
+        "maximum_bytes": 921600
+      },
+      "passed": true,
+      "weight": 0.25
+    },
+    {
+      "assertion_id": "efficiency-fps",
+      "detail": "通过内容/元数据检查",
+      "evidence_refs": [
+        "artifacts/runs/r4-slack-gif-creator-evolution/evals/candidate-4b5885d1dd5fe978c8f1dad3/validation/derived/work-96e4bf561b46c20bb344924d/measurements.json",
+        "artifacts/runs/r4-slack-gif-creator-evolution/evals/candidate-4b5885d1dd5fe978c8f1dad3/validation/derived/work-96e4bf561b46c20bb344924d/contact-sheet.png"
+      ],
+      "family": "artifact_metadata",
+      "measurements": {
+        "allowed": [
+          10,
+          16
+        ],
+        "effective_fps": 12.5
+      },
+      "passed": true,
+      "weight": 0.15
+    },
+    {
+      "assertion_id": "efficiency-duration",
+      "detail": "通过内容/元数据检查",
+      "evidence_refs": [
+        "artifacts/runs/r4-slack-gif-creator-evolution/evals/candidate-4b5885d1dd5fe978c8f1dad3/validation/derived/work-96e4bf561b46c20bb344924d/measurements.json",
+        "artifacts/runs/r4-slack-gif-creator-evolution/evals/candidate-4b5885d1dd5fe978c8f1dad3/validation/derived/work-96e4bf561b46c20bb344924d/contact-sheet.png"
+      ],
+      "family": "artifact_metadata",
+      "measurements": {
+        "max_frame_share": 0.041666666666666664,
+        "maximum_ms": 3000,
+        "minimum_ms": 1400,
+        "non_positive_frames": 0,
+        "total_duration_ms": 1920
+      },
+      "passed": true,
+      "weight": 0.15
+    },
+    {
+      "assertion_id": "efficiency-check",
+      "detail": "通过内容/元数据检查",
+      "evidence_refs": [
+        "artifacts/runs/r4-slack-gif-creator-evolution/evals/candidate-4b5885d1dd5fe978c8f1dad3/validation/derived/work-96e4bf561b46c20bb344924d/measurements.json",
+        "artifacts/runs/r4-slack-gif-creator-evolution/evals/candidate-4b5885d1dd5fe978c8f1dad3/validation/derived/work-96e4bf561b46c20bb344924d/contact-sheet.png"
+      ],
+      "family": "frame_content",
+      "measurements": {
+        "central_high_contrast_fraction": [
+          0.010354938271604937,
+          0.01033179012345679,
+          0.011064814814814816,
+          0.015864197530864196,
+          0.024544753086419752,
+          0.03628858024691358,
+          0.04392746913580247,
+          0.043472222222222225,
+          0.03930555555555556,
+          0.033101851851851855,
+          0.02595679012345679,
+          0.01959104938271605,
+          0.01462962962962963,
+          0.01150462962962963,
+          0.010478395061728395,
+          0.01015432098765432,
+          0.010023148148148147,
+          0.009899691358024692,
+          0.009660493827160494,
+          0.009413580246913581,
+          0.009405864197530865,
+          0.009675925925925926,
+          0.009899691358024692,
+          0.01015432098765432
+        ]
+      },
+      "passed": true,
+      "weight": 0.15
+    },
+    {
+      "assertion_id": "efficiency-burst",
+      "detail": "通过内容/元数据检查",
+      "evidence_refs": [
+        "artifacts/runs/r4-slack-gif-creator-evolution/evals/candidate-4b5885d1dd5fe978c8f1dad3/validation/derived/work-96e4bf561b46c20bb344924d/measurements.json",
+        "artifacts/runs/r4-slack-gif-creator-evolution/evals/candidate-4b5885d1dd5fe978c8f1dad3/validation/derived/work-96e4bf561b46c20bb344924d/contact-sheet.png"
+      ],
+      "family": "temporal_sequence",
+      "measurements": {
+        "particle_median_radius": [
+          79.40403012442127,
+          79.64923100695951,
+          80.15609770940699,
+          83.5224520712844,
+          85.15867542417507,
+          87.00574693662483,
+          88.45903006477066,
+          89.37561188601732,
+          89.81091247727082,
+          90.27181176868004,
+          90.60353193998566,
+          90.68627239003708,
+          90.2551937563706,
+          89.55445270895244,
+          88.79188866469333,
+          85.30826208042447,
+          82.0,
+          80.52949770115296,
+          79.62411694957753,
+          78.86380608085463,
+          78.44743462982075,
+          78.7210264160726,
+          79.30952023559341,
+          80.00624975587844
+        ],
+        "visible_area": [
+          0.07943142361111111,
+          0.07844618055555555,
+          0.07853732638888888,
+          0.0934375,
+          0.10059895833333334,
+          0.10898871527777777,
+          0.11475694444444444,
+          0.11578125,
+          0.11471788194444445,
+          0.11577690972222222,
+          0.11672743055555555,
+          0.11697916666666666,
+          0.1150998263888889,
+          0.11169270833333333,
+          0.10796875,
+          0.09223958333333333,
+          0.07812934027777778,
+          0.07228298611111111,
+          0.06851128472222222,
+          0.06552951388888889,
+          0.06392795138888889,
+          0.06483072916666667,
+          0.06736545138888889,
+          0.06993055555555555
+        ]
+      },
+      "passed": true,
+      "weight": 0.15
+    }
+  ],
+  "bundle_id": "deterministic-fef04f3b3f251061cdda0647",
+  "e3_record_id": "record-fef04f3b3f251061cdda0647",
+  "generated_at": "2026-07-22T10:28:00.390785Z",
+  "inspection": {
+    "artifact_ref": "artifacts/runs/r4-slack-gif-creator-evolution/evals/candidate-4b5885d1dd5fe978c8f1dad3/validation/workspaces/work-96e4bf561b46c20bb344924d/compact_check_burst.gif",
+    "artifact_sha256": "8b252889f50e94b14d98368af6e5b61cfa1182076171ab9050f59d0124c14c4d",
+    "contact_sheet_ref": "artifacts/runs/r4-slack-gif-creator-evolution/evals/candidate-4b5885d1dd5fe978c8f1dad3/validation/derived/work-96e4bf561b46c20bb344924d/contact-sheet.png",
+    "effective_fps": 12.5,
+    "file_size_bytes": 330202,
+    "first_last_pixel_delta": 5.152442129629629,
+    "frame_count": 24,
+    "frame_durations_ms": [
+      80,
+      80,
+      80,
+      80,
+      80,
+      80,
+      80,
+      80,
+      80,
+      80,
+      80,
+      80,
+      80,
+      80,
+      80,
+      80,
+      80,
+      80,
+      80,
+      80,
+      80,
+      80,
+      80,
+      80
+    ],
+    "height": 480,
+    "loop_count": 0,
+    "mean_adjacent_pixel_delta": 2.613774657809984,
+    "measurements_ref": "artifacts/runs/r4-slack-gif-creator-evolution/evals/candidate-4b5885d1dd5fe978c8f1dad3/validation/derived/work-96e4bf561b46c20bb344924d/measurements.json",
+    "total_duration_ms": 1920,
+    "unique_frame_count": 24,
+    "width": 480
+  },
+  "oracle_ref": "benchmarks/canaries/slack-gif-creator/oracles/gif_oracle.py:evaluate",
+  "oracle_sha256": "9ccb487705abdfa91ff82437cc028f139a3af419ee16baac869aaddee75920fa",
+  "pair_id": "pair-061ca407be66d6970b347bc5",
+  "schema_version": "1.0.0",
+  "source_record_id": "record-2907cb63fd7ce26efdeea544",
+  "task_id": "functional-validation-efficiency-007",
+  "variant": "candidate",
+  "weighted_score": 1.0
+}

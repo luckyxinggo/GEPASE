@@ -1,0 +1,27 @@
+{
+  "schema_version": "1.0.0",
+  "valid": true,
+  "config_hash": "ede75f27e8bce7dbe9bd4aec3548998ef371a053e5ba2a1632bbc9957a6ce5a8",
+  "source": "configs/canaries/slack-gif-creator-r2.yaml",
+  "resolved": {
+    "project": "gepase-r2-slack-gif-creator",
+    "provider": {
+      "kind": "agent_native",
+      "name": "codex-isolated-eval-designer",
+      "model": "gpt-5.6-sol"
+    },
+    "eval_policy": {
+      "allowed_tiers": ["E0", "E2", "E3"],
+      "minimum_acceptance_tier": "E2",
+      "paired": false,
+      "max_attempts": 1
+    },
+    "dataset": {
+      "manifest": "benchmarks/canaries/slack-gif-creator/design-brief.json",
+      "split": "train+validation"
+    },
+    "optimizer": {"name": "none-r2-onboarding-only", "seed": 42},
+    "budget": {"max_work_items": 1, "max_high_fidelity_items": 0, "max_tokens": 50000},
+    "report": {"formats": ["json", "html"], "redact": true}
+  }
+}

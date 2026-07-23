@@ -1,0 +1,60 @@
+{
+  "failure_detail": null,
+  "failure_kind": null,
+  "patch": {
+    "base_candidate_id": "candidate-21242a10bcbaeb9631f3b2da",
+    "base_content_hash": "ce42d8a837acf9feda9706a3418fc26a77c497d9615079e616b5fdc6870ef64e",
+    "base_snapshot_hash": "ce42d8a837acf9feda9706a3418fc26a77c497d9615079e616b5fdc6870ef64e",
+    "edit_budget": {
+      "allow_file_topology_edits": false,
+      "allow_script_edits": true,
+      "max_added_files": 0,
+      "max_changed_files": 1,
+      "max_deleted_files": 0,
+      "max_operations": 1,
+      "max_total_replacement_chars": 24000
+    },
+    "evidence_refs": [
+      "artifacts/runs/r4-slack-gif-creator-evolution/reflection-submissions/reflection-work-ece74a14e2ca67757504c20b.json",
+      "artifacts/runs/r4-slack-gif-creator-evolution/train-admission/candidate-edf5f1aa07926ba5415f0442.json"
+    ],
+    "operations": [
+      {
+        "evidence_refs": [
+          "artifacts/runs/r4-slack-gif-creator-evolution/reflection-submissions/reflection-work-ece74a14e2ca67757504c20b.json",
+          "artifacts/runs/r4-slack-gif-creator-evolution/train-admission/candidate-edf5f1aa07926ba5415f0442.json"
+        ],
+        "expected_benefit": "Reduce validation overhead and attention displacement while preserving task correctness and output quality through one existing-validator pass plus, only when applicable, one bounded seam inspection.",
+        "op": "replace_markdown_block",
+        "operation_id": "op-task-first-bounded-validation",
+        "path": "SKILL.md",
+        "precondition_hash": "951bd4e2b513b7780d40bda28c1ccf3e51c2945e2375f6a21a665517af6803f7",
+        "rationale": "The rejected candidate regressed on four of five train tasks, with efficiency declining consistently while reliability and package quality stayed unchanged and correctness moved inconsistently. A conditional one-time seam check is materially narrower than the rejected always-on loop workflow and follows the reflection recommendation without claiming unsupported causality.",
+        "regression_risk": "low",
+        "replacement": "First satisfy the task's explicit content, motion, readability, and delivery constraints. Then choose one validation mode for the final export:\n\n```python\nfrom core.validators import validate_gif, is_slack_ready\n\n# Detailed validation\npasses, info = validate_gif('my.gif', is_emoji=True, verbose=True)\n\n# Or use the quick readiness check when detailed diagnostics are unnecessary\nif is_slack_ready('my.gif'):\n    print(\"Ready!\")\n```\n\nOnly if the finished animation actually contains cyclic motion, inspect the exported GIF once at the end-to-start boundary for a visible seam. Otherwise skip seam checking. Do not require a two-cycle preview, automatic re-export, or repeated revalidation.",
+        "target_node_id": "node-46d940221fa8caf3b6c22d2c"
+      }
+    ],
+    "patch_id": "patch-f020633b73a3b4b14d5d5321",
+    "proposal_work_id": "proposal-work-5a40b7944f1aeb8225714c6e",
+    "schema_version": "1.0.0",
+    "selected_node_ids": [
+      "node-46d940221fa8caf3b6c22d2c"
+    ],
+    "selector": "graph_guided",
+    "summary": "Narrow the validators guidance to a task-first, single-pass final check, with one conditional seam inspection only for animations that actually contain cyclic motion. This addresses the evidence-linked efficiency regression without treating the available aggregate evidence as causal proof."
+  },
+  "provenance": {
+    "duration_ms": 90000,
+    "host": "codex",
+    "host_task_id": "/root/r4_proposal_recovery",
+    "model": "gpt-5.6-sol",
+    "token_estimate": 3500
+  },
+  "repair_count": 0,
+  "schema_version": "1.0.0",
+  "status": "completed",
+  "submission_id": "proposal-submission-98637e9e6a57f4cacf27e6a0",
+  "valid_on_first_attempt": true,
+  "work_id": "proposal-work-5a40b7944f1aeb8225714c6e"
+}

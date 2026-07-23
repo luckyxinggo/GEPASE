@@ -1,0 +1,66 @@
+{
+  "schema_version": "1.0.0",
+  "submission_id": "independent-grade-grader-work-2d78241c22afb73edf17566b-r4-grade-b-text",
+  "grader_work_id": "grader-work-2d78241c22afb73edf17566b",
+  "role_run": {
+    "host": "codex",
+    "model": "gpt-5.6-sol",
+    "context_id": "r4_grade_b_text",
+    "host_task_id": "/root/r4_grade_b_text",
+    "usage": {
+      "duration_ms": 240000,
+      "input_tokens": 7600,
+      "output_tokens": 1200,
+      "tool_calls": 9,
+      "token_count_kind": "estimated"
+    },
+    "started_at": "2026-07-22T08:54:08Z",
+    "finished_at": "2026-07-22T08:58:08Z"
+  },
+  "criterion_grades": [
+    {
+      "criterion_id": "readable-legibility",
+      "score": 0.99,
+      "evidence_refs": [
+        "artifacts/runs/r4-slack-gif-creator-evolution/evals/candidate-edf5f1aa07926ba5415f0442/train/workspaces/work-78a7f2375b445898bca057e7/meeting_sync_reminder.gif",
+        "artifacts/runs/r4-slack-gif-creator-evolution/evals/candidate-edf5f1aa07926ba5415f0442/train/derived/work-78a7f2375b445898bca057e7/contact-sheet.png"
+      ],
+      "rationale_zh": "SYNC 使用大号深色字，10:30 使用深底白字，两者在所有抽样帧中均完整、固定且对比强；缩略接触表中也能立即、无歧义地读出。"
+    },
+    {
+      "criterion_id": "readable-layout",
+      "score": 0.98,
+      "evidence_refs": [
+        "artifacts/runs/r4-slack-gif-creator-evolution/evals/candidate-edf5f1aa07926ba5415f0442/train/derived/work-78a7f2375b445898bca057e7/contact-sheet.png",
+        "artifacts/runs/r4-slack-gif-creator-evolution/evals/candidate-edf5f1aa07926ba5415f0442/train/workspaces/work-78a7f2375b445898bca057e7/meeting_sync_reminder.gif"
+      ],
+      "rationale_zh": "顶部 MEETING 标签、中央 SYNC、深色时间卡和底部 LOCAL TIME 形成清晰的纵向层级；圆角外框、装饰点和主体之间留白均衡，所有文字与边框保持充足安全边距。"
+    },
+    {
+      "criterion_id": "readable-emphasis",
+      "score": 0.97,
+      "evidence_refs": [
+        "artifacts/runs/r4-slack-gif-creator-evolution/evals/candidate-edf5f1aa07926ba5415f0442/train/derived/work-78a7f2375b445898bca057e7/contact-sheet.png",
+        "artifacts/runs/r4-slack-gif-creator-evolution/evals/candidate-edf5f1aa07926ba5415f0442/train/blind-inspections/blind-126f8fd29420ff283d59cf39.json"
+      ],
+      "rationale_zh": "两秒循环中变化主要是标题两侧星点的轻微放大与收回，核心文字始终不移动、不闪烁也不被遮挡；15 帧中仅 8 个独特帧且相邻像素变化很低，强调克制、节奏舒缓。"
+    },
+    {
+      "criterion_id": "readable-tone",
+      "score": 0.99,
+      "evidence_refs": [
+        "artifacts/runs/r4-slack-gif-creator-evolution/evals/candidate-edf5f1aa07926ba5415f0442/train/derived/work-78a7f2375b445898bca057e7/contact-sheet.png",
+        "artifacts/runs/r4-slack-gif-creator-evolution/evals/candidate-edf5f1aa07926ba5415f0442/train/workspaces/work-78a7f2375b445898bca057e7/meeting_sync_reminder.gif"
+      ],
+      "rationale_zh": "米白底、深棕黑主体和砖红标签与点缀准确形成温暖而稳重的配色；圆角卡片、细线边框与小星点兼具友好感和会议提醒所需的专业感。"
+    }
+  ],
+  "overall_score": 0.9835,
+  "factual_claims_zh": [
+    "交付物是 480×480 的 GIF，文件大小为 26404 字节，哈希与 work item 声明一致。",
+    "动画包含 15 帧、8 个独特帧，总时长 2000 毫秒，有效帧率为 7.5 FPS，循环计数为 0。",
+    "接触表所示抽样帧中，SYNC 与 10:30 均同时出现且未移出卡片安全区。",
+    "首尾帧像素差为 0.0，循环衔接保持一致。"
+  ],
+  "feedback_zh": "成品高度满足会议提醒的可读性目标：SYNC 与 10:30 全程稳定、高对比，纵向信息层级明确，配色温暖专业。轻量星点脉冲不会打断阅读；若继续精修，可让装饰强调与标题或时间产生稍更明确但仍克制的节奏关联。"
+}

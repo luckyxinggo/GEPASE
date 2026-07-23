@@ -1,0 +1,17 @@
+{
+  "work_id": "work-aeaea033cebc5f6b4e948b5e",
+  "status": "completed",
+  "output": "emoji_star_bounce.gif",
+  "media_type": "image/gif",
+  "verification": {
+    "width": 128,
+    "height": 128,
+    "frame_count": 24,
+    "frame_duration_ms": 80,
+    "total_duration_ms": 1920,
+    "loop": 0,
+    "single_bounce": true,
+    "slack_validator_passed": true,
+    "size_bytes": 53258
+  }
+}

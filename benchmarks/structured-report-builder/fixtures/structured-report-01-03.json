@@ -1,0 +1,54 @@
+{
+  "metrics": [
+    {
+      "label": "Revenue",
+      "unit": " USD",
+      "value": 1424
+    },
+    {
+      "label": "Orders",
+      "unit": "",
+      "value": 46
+    },
+    {
+      "label": "Conversion",
+      "unit": "",
+      "value": 0.125
+    }
+  ],
+  "provenance": {
+    "source": "synthetic-report-01-03"
+  },
+  "sections": [
+    {
+      "heading": "Regional detail Central",
+      "summary": "Synthetic evidence slice 1-3.",
+      "table": {
+        "columns": [
+          "Region",
+          "Orders",
+          "Revenue"
+        ],
+        "rows": [
+          {
+            "Orders": 46,
+            "Region": "Central",
+            "Revenue": 1424
+          },
+          {
+            "Orders": 43,
+            "Region": "Reference-A",
+            "Revenue": 1334
+          },
+          {
+            "Orders": 48,
+            "Region": "Reference-B",
+            "Revenue": 1469
+          }
+        ]
+      }
+    }
+  ],
+  "subtitle": "Auditable synthetic operating summary",
+  "title": "Central Performance Review Q2 Scenario 01-03"
+}

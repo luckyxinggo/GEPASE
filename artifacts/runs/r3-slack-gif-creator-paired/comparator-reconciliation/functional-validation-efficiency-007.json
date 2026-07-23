@@ -1,0 +1,11 @@
+{
+  "ab_original_outcome": "win",
+  "ab_submission_ref": "artifacts/runs/r3-slack-gif-creator-paired/comparator-submissions/comparator-work-17a2d879d5aa74690d415af6.json",
+  "ba_original_outcome": "loss",
+  "ba_submission_ref": "artifacts/runs/r3-slack-gif-creator-paired/comparator-submissions/comparator-work-a1bf38303e698821b62829bd.json",
+  "consistent": false,
+  "original_margin": 0.0,
+  "pair_id": "pair-d45dc9a03ac7844ef21a97e7",
+  "schema_version": "1.0.0",
+  "task_id": "functional-validation-efficiency-007"
+}

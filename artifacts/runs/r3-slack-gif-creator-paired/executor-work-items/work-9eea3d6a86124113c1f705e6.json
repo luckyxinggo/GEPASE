@@ -1,0 +1,26 @@
+{
+  "fixture_refs": [
+    "benchmarks/canaries/slack-gif-creator/fixtures/emoji-pulse-text.json"
+  ],
+  "package_graph_ref": null,
+  "package_node_map": {},
+  "prompt": "创建一个 128×128 的 Slack 警报表情 GIF。依据随附配置制作深蓝底、珊瑚红徽章和白色 GO 文本；徽章进行有呼吸感的周期脉冲，文字在缩略尺寸下始终容易辨认。请保持给定配色与时长预算，输出指定 GIF。",
+  "requested_output": {
+    "description_zh": "深蓝、珊瑚红和白色构成的 GO 循环脉冲 Slack 表情 GIF。",
+    "filename": "go_alert_pulse.gif",
+    "media_type": "image/gif"
+  },
+  "required_capabilities": [
+    "text_rendering",
+    "pulse_animation",
+    "palette_preservation",
+    "emoji_gif_export"
+  ],
+  "role": "executor",
+  "schema_version": "1.0.0",
+  "skill_ref": null,
+  "submission_schema_ref": "schemas/execution_bundle.schema.json",
+  "task_id": "functional-validation-pulse-text-008",
+  "timeout_seconds": 600,
+  "work_id": "work-9eea3d6a86124113c1f705e6"
+}

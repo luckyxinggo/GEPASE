@@ -1,0 +1,148 @@
+{
+  "artifact_root": "artifacts/runs/r3-slack-gif-creator-paired/workspaces/work-9a981b04ae2ac3fb91d31911",
+  "artifacts": [
+    {
+      "media_type": "text/x-python",
+      "path": "create_gif.py",
+      "sha256": "18062f44749d7ee76a25997ad08b90014b02dbcd21a25a73c73da64788313098",
+      "size_bytes": 5195
+    },
+    {
+      "media_type": "image/gif",
+      "path": "deployment_status.gif",
+      "sha256": "c1ce302bed7ca3062062b1cf609f47fcdd0bb00a8bbea62fd21b125a2789995c",
+      "size_bytes": 364399
+    },
+    {
+      "media_type": "application/json",
+      "path": "execution-summary.json",
+      "sha256": "49435d9129faca2b3fed3208728aafb514cea6ba46d0f63b15e8aa9da85e3d3d",
+      "size_bytes": 665
+    },
+    {
+      "media_type": "application/json",
+      "path": "observed-trace.json",
+      "sha256": "f2c7288c1e1551c21c2a6abc83311404b2a69a26a0857573738a96c24f7dad59",
+      "size_bytes": 1839
+    },
+    {
+      "media_type": "application/json",
+      "path": "package-access.json",
+      "sha256": "6ec0ad0ac658a85fad8091e5b15ee0a98d3cc30a7c89eeed8ebf3593bf94b847",
+      "size_bytes": 1216
+    },
+    {
+      "media_type": "text/markdown",
+      "path": "transcript.md",
+      "sha256": "3852c53f5b4817476b07911abc509cfdffd5a8e44fad4d58184f10b5bfd3f635",
+      "size_bytes": 801
+    }
+  ],
+  "assertion_results": [],
+  "candidate_snapshot_hash": "ce42d8a837acf9feda9706a3418fc26a77c497d9615079e616b5fdc6870ef64e",
+  "evidence_tier": "E2",
+  "failure_detail": null,
+  "failure_kind": null,
+  "fixture_hash": "6a75c4a4734a9832e53985c6d89f6401f58fde6861355a3ce1963792fed7dc2a",
+  "host_model_snapshot": "edbfd8f0668f44e333585ee805a6f891a7443402aad61b3e8cfeca5913b1338b",
+  "observed_trace": [
+    {
+      "action": "inspect_work_item",
+      "outcome": "completed",
+      "sequence": 0,
+      "target": "artifacts/runs/r3-slack-gif-creator-paired/executor-work-items/work-9a981b04ae2ac3fb91d31911.json",
+      "tool": "read"
+    },
+    {
+      "action": "inspect_fixture",
+      "outcome": "completed",
+      "sequence": 1,
+      "target": "benchmarks/canaries/slack-gif-creator/fixtures/message-status.json",
+      "tool": "read"
+    },
+    {
+      "action": "inspect_skill_instructions",
+      "outcome": "completed",
+      "sequence": 2,
+      "target": "benchmarks/canaries/slack-gif-creator/package/SKILL.md",
+      "tool": "read"
+    },
+    {
+      "action": "inspect_package_core",
+      "outcome": "completed",
+      "sequence": 3,
+      "target": "benchmarks/canaries/slack-gif-creator/package/core",
+      "tool": "read"
+    },
+    {
+      "action": "compose_animation_source",
+      "outcome": "completed",
+      "sequence": 4,
+      "target": "artifacts/runs/r3-slack-gif-creator-paired/workspaces/work-9a981b04ae2ac3fb91d31911/create_gif.py",
+      "tool": "apply_patch"
+    },
+    {
+      "action": "execute_package_animation",
+      "outcome": "completed",
+      "sequence": 5,
+      "target": "artifacts/runs/r3-slack-gif-creator-paired/workspaces/work-9a981b04ae2ac3fb91d31911/deployment_status.gif",
+      "tool": ".venv/bin/python -B"
+    },
+    {
+      "action": "validate_with_package_validator",
+      "outcome": "completed",
+      "sequence": 6,
+      "target": "artifacts/runs/r3-slack-gif-creator-paired/workspaces/work-9a981b04ae2ac3fb91d31911/deployment_status.gif",
+      "tool": ".venv/bin/python -B"
+    },
+    {
+      "action": "reopen_and_verify_gif_metadata",
+      "outcome": "completed",
+      "sequence": 7,
+      "target": "artifacts/runs/r3-slack-gif-creator-paired/workspaces/work-9a981b04ae2ac3fb91d31911/deployment_status.gif",
+      "tool": ".venv/bin/python -B"
+    },
+    {
+      "action": "visually_inspect_output",
+      "outcome": "completed",
+      "sequence": 8,
+      "target": "artifacts/runs/r3-slack-gif-creator-paired/workspaces/work-9a981b04ae2ac3fb91d31911/deployment_status.gif",
+      "tool": "view_image"
+    }
+  ],
+  "pair_id": "pair-c99631e8bbb8ecc1465efcc2",
+  "planned_trace": [],
+  "policy_hash": "3b49f46ee66bafaf2bcf1aeac08f1bd7f4c719463b0e655afe40a98a4af6b3ec",
+  "prompt_hash": "62ff6eb217f01c1d75fb489a3e3a42d6e4bca43d1949a1b89b1794bac03e99fd",
+  "provenance": {
+    "context_id": "/root/r3_exec_9a981b",
+    "generated_at": "2026-07-21T15:50:57.945745Z",
+    "generated_by": "gepase.eval.ingest",
+    "host": "codex",
+    "host_task_id": "/root/r3_exec_9a981b",
+    "model": "gpt-5.6-sol",
+    "origin": "agent-native",
+    "provider_id": "agent-delegated-v1",
+    "submission_id": "submission-d80b862131a919026c7b596d"
+  },
+  "provider_snapshot": "agent-delegated-v1",
+  "record_id": "record-813bda120b03d345d046e2ee",
+  "schema_version": "1.0.0",
+  "score": null,
+  "seed": 42,
+  "skill_id": "slack-gif-creator",
+  "source_record_refs": [],
+  "task_id": "functional-train-message-status-002",
+  "task_score_vector": null,
+  "trace_completeness": "complete",
+  "uncertainty": 0.1,
+  "usage": {
+    "duration_ms": 150000,
+    "input_tokens": 4500,
+    "output_tokens": 1500,
+    "token_count_kind": "estimated",
+    "tool_calls": 9
+  },
+  "variant": "original",
+  "work_id": "work-9a981b04ae2ac3fb91d31911"
+}

@@ -1,0 +1,45 @@
+{
+  "comparator_work_id": "candidate-comparator-work-0886605c6f24f1683687e7a2",
+  "confidence": 0.84,
+  "criteria": [
+    {
+      "criterion_id": "pulse-legibility",
+      "preference": "left",
+      "rationale_zh": "左侧的白色 GO 字形完整、边缘清楚，在徽章最小与最大状态都保持稳定；右侧字形持续带有珊瑚色横向切分效果，缩略后辨识余量较小。"
+    },
+    {
+      "criterion_id": "pulse-motion",
+      "preference": "right",
+      "rationale_zh": "右侧 24 帧均为唯一帧且统一为 80 ms，平均相邻像素变化约 4.71，收放过渡细密、节奏连续；左侧只有 7 个唯一帧，并包含 330/580/250 ms 的长停留，过渡更有台阶感。右侧首尾差异很小，循环仍近乎无缝。"
+    },
+    {
+      "criterion_id": "pulse-color",
+      "preference": "left",
+      "rationale_zh": "两侧都执行了深蓝、珊瑚红和白色，但左侧把三者分区得更干净，白字对珊瑚底的对比始终明确；右侧珊瑚色切入白色字形，削弱了文字区域的色彩对比。"
+    },
+    {
+      "criterion_id": "pulse-emoji-ready",
+      "preference": "left",
+      "rationale_zh": "左侧以简洁的双环徽章和大号 GO 为视觉中心，缩略尺寸下轮廓与含义都能立即读出。右侧的轨道弧线和小粒子增加动效细节，但缩略后容易变成噪点，且字形装饰影响告警表情的即时识别。"
+    }
+  ],
+  "rationale_zh": "左侧凭借更稳定清楚的 GO 字形、干净的三色对比和更适合缩略显示的简洁徽章，在三个合计权重 0.70 的维度占优。右侧的 24 个等时唯一帧带来更顺滑自然的脉冲，是明确的运动优势，但不足以抵消高权重可读性与表情完成度的差距，因此总体选择左侧。",
+  "role_run": {
+    "context_id": "ctx-codex-r4-cmp-c-pulse-ab-0886605c6f24f1683687e7a2",
+    "finished_at": "2026-07-22T10:52:23Z",
+    "host": "codex",
+    "host_task_id": "/root/r4_cmp_c_pulse_ab",
+    "model": "gpt-5.6-sol",
+    "started_at": "2026-07-22T10:44:00Z",
+    "usage": {
+      "duration_ms": 503000,
+      "input_tokens": 7130,
+      "output_tokens": 1380,
+      "token_count_kind": "estimated",
+      "tool_calls": 9
+    }
+  },
+  "schema_version": "1.0.0",
+  "submission_id": "candidate-comparator-submission-0886605c6f24f1683687e7a2",
+  "winner": "left"
+}

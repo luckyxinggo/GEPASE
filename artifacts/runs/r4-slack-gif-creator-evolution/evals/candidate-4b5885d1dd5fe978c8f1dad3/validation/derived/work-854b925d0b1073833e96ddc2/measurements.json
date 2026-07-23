@@ -1,0 +1,147 @@
+{
+  "artifact_sha256": "ca187648c5fba1ef4462b34eb563572449b9fed4f70505b1bd45bbc5f37d959a",
+  "assertions": [
+    {
+      "assertion_id": "pulse-container",
+      "detail": "通过内容/元数据检查",
+      "family": "artifact_metadata",
+      "measurements": {
+        "frame_count": 12,
+        "height": 128,
+        "loop_count": 0,
+        "unique_frame_count": 7,
+        "width": 128
+      },
+      "passed": true,
+      "weight": 0.15
+    },
+    {
+      "assertion_id": "pulse-duration",
+      "detail": "通过内容/元数据检查",
+      "family": "artifact_metadata",
+      "measurements": {
+        "maximum_ms": 2800,
+        "minimum_ms": 1,
+        "non_positive_frames": 0,
+        "total_duration_ms": 960
+      },
+      "passed": true,
+      "weight": 0.15
+    },
+    {
+      "assertion_id": "pulse-fps",
+      "detail": "未满足已冻结 expectation 的可执行判据",
+      "family": "artifact_metadata",
+      "measurements": {
+        "effective_fps": 12.5,
+        "unique_frames": 7
+      },
+      "passed": false,
+      "weight": 0.15
+    },
+    {
+      "assertion_id": "pulse-text",
+      "detail": "通过内容/元数据检查",
+      "family": "frame_content",
+      "measurements": {
+        "glyph_similarity": [
+          0.282938026013772,
+          0.282938026013772,
+          0.282938026013772,
+          0.282938026013772,
+          0.282938026013772,
+          0.282938026013772,
+          0.282938026013772,
+          0.282938026013772,
+          0.282938026013772,
+          0.282938026013772,
+          0.282938026013772,
+          0.282938026013772
+        ],
+        "method": "white-glyph-template-iou"
+      },
+      "passed": true,
+      "weight": 0.25
+    },
+    {
+      "assertion_id": "pulse-palette",
+      "detail": "通过内容/元数据检查",
+      "family": "frame_content",
+      "measurements": {
+        "palette_fractions": [
+          0.52947998046875,
+          0.4134521484375,
+          0.05706787109375
+        ]
+      },
+      "passed": true,
+      "weight": 0.15
+    },
+    {
+      "assertion_id": "pulse-cycle",
+      "detail": "通过内容/元数据检查",
+      "family": "temporal_sequence",
+      "measurements": {
+        "amplitude": 0.141845703125,
+        "coral_area": [
+          0.2908935546875,
+          0.3082275390625,
+          0.3399658203125,
+          0.3780517578125,
+          0.4134521484375,
+          0.4327392578125,
+          0.4134521484375,
+          0.3780517578125,
+          0.3399658203125,
+          0.3231201171875,
+          0.3082275390625,
+          0.2908935546875
+        ],
+        "seam": 0.0
+      },
+      "passed": true,
+      "weight": 0.15
+    }
+  ],
+  "case_id": "functional-validation-pulse-text-008",
+  "common": {
+    "adjacent_pixel_deltas": [
+      5.691324869791667,
+      11.844889322916666,
+      12.538248697916666,
+      12.971598307291666,
+      6.731363932291667,
+      6.731363932291667,
+      12.971598307291666,
+      12.538248697916666,
+      5.922444661458333,
+      5.922444661458333,
+      5.691324869791667
+    ],
+    "effective_fps": 12.5,
+    "file_size_bytes": 9148,
+    "first_last_pixel_delta": 0.0,
+    "frame_count": 12,
+    "frame_durations_ms": [
+      80,
+      80,
+      80,
+      80,
+      80,
+      80,
+      80,
+      80,
+      80,
+      80,
+      80,
+      80
+    ],
+    "height": 128,
+    "loop_count": 0,
+    "mean_adjacent_pixel_delta": 9.05044093276515,
+    "total_duration_ms": 960,
+    "unique_frame_count": 7,
+    "width": 128
+  },
+  "schema_version": "1.0.0"
+}

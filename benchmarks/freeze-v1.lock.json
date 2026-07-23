@@ -1,0 +1,21 @@
+{
+  "files": {
+    "benchmarks/manifest-v1.json": "cfaefaea15e42979d3e9540c25dbcac17a0bc44707a8554d6eb2a39cf9f77a36",
+    "benchmarks/policy-evidence-evaluator/dataset.jsonl": "0d423b8f554b3af03851c4d1d37670e1428e49ac3e187f9d7eac0cc9a7ab43ac",
+    "benchmarks/rubrics/blind-quality-v1.json": "b5a4f5efea99e0b66edbd6632a5f4d2d333e9bf56a37046665a41df2078073c8",
+    "benchmarks/skills/policy-evidence-evaluator/provenance.json": "7497f58feded2afadc175308e727b710645d7d0ef9114ef29175bde7b1484886",
+    "benchmarks/skills/structured-report-builder/provenance.json": "eb9b1108ec9eea9537890d6f38c5cce536617f01898437b685427a2c46481649",
+    "benchmarks/skills/tabular-context-builder/provenance.json": "4fbd9b9f09795cbbc6054144103d2098bad5f2ac596e1714663e320c46798f89",
+    "benchmarks/splits/v1.json": "9ae858e35c90efed8fd110fb26461259a771c7b27512f9517e44c75e1f2e4314",
+    "benchmarks/structured-report-builder/dataset.jsonl": "1c95659bac1505cb5ea136551f975c61bd166908ae7ab63bababe068c50cc937",
+    "benchmarks/tabular-context-builder/dataset.jsonl": "b4d33762a49193946abfb17bb3380df73a230f90d48fa739635580774622793d"
+  },
+  "manifest": "benchmarks/manifest-v1.json",
+  "manifest_sha256": "cfaefaea15e42979d3e9540c25dbcac17a0bc44707a8554d6eb2a39cf9f77a36",
+  "schema_version": "1.0.0",
+  "split_manifest": "benchmarks/splits/v1.json",
+  "split_sha256": "9ae858e35c90efed8fd110fb26461259a771c7b27512f9517e44c75e1f2e4314",
+  "test_access_policy": "isolated-read-only",
+  "test_access_violations": [],
+  "version": "v1"
+}

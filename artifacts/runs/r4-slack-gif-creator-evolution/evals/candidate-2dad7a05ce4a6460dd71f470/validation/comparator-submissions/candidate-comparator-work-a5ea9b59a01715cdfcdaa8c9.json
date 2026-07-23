@@ -1,0 +1,45 @@
+{
+  "comparator_work_id": "candidate-comparator-work-a5ea9b59a01715cdfcdaa8c9",
+  "confidence": 0.89,
+  "criteria": [
+    {
+      "criterion_id": "pulse-legibility",
+      "preference": "right",
+      "rationale_zh": "两侧的白色 GO 在代表帧与缩略尺寸下都保持可辨。右侧采用更简洁、较大的无衬线字形，笔画和字腔在缩略图中更稳定；左侧文字同样清楚，但徽章收缩时字形更紧，周边双环和装饰点带来少量视觉拥挤。"
+    },
+    {
+      "criterion_id": "pulse-motion",
+      "preference": "left",
+      "rationale_zh": "左侧 24 帧全部唯一且统一为 80ms，首尾像素差仅 0.368，contact sheet 中收放幅度连续，呈现自然呼吸感。右侧 13 帧只有 7 个唯一帧，并出现 330ms、580ms 和 250ms 的长停顿，收放更像分段跳变；因此左侧在速度变化与循环顺滑度上明显更好。"
+    },
+    {
+      "criterion_id": "pulse-color",
+      "preference": "tie",
+      "rationale_zh": "两侧都准确建立深蓝背景、珊瑚红徽章和白色文字的层级，白字对珊瑚红均有清楚对比，外圈对深蓝也足够醒目。左侧层次更丰富、右侧更简洁，但没有一侧在配色准确性或可辨性上形成实质优势。"
+    },
+    {
+      "criterion_id": "pulse-emoji-ready",
+      "preference": "left",
+      "rationale_zh": "左侧以双环、顶部内弧和绕行装饰点强化警报徽章语义，在 128×128 与缩略视图中仍能辨认，并由平滑的完整周期提升动态完成度。右侧轮廓干净、缩略表现可靠，但造型较基础，且长时间停帧削弱了作为动态 Slack 表情的活力。"
+    }
+  ],
+  "rationale_zh": "右侧在 GO 字形的简洁可读性上小胜，两侧配色执行相当；左侧则在权重较高的脉冲质感上具有明确且可量化的优势，并在徽章细节与动态完成度上更完整。综合四项 rubric，选择 left。",
+  "role_run": {
+    "context_id": "codex-context-becb55da-b48a-4939-b606-5e5042866c07",
+    "finished_at": "2026-07-22T10:52:27Z",
+    "host": "codex",
+    "host_task_id": "codex-task-b0ecb28d-e164-402b-a0ff-04b4cb88f41e",
+    "model": "gpt-5.6-sol",
+    "started_at": "2026-07-22T10:44:27Z",
+    "usage": {
+      "duration_ms": 480000,
+      "input_tokens": 11000,
+      "output_tokens": 1100,
+      "token_count_kind": "estimated",
+      "tool_calls": 13
+    }
+  },
+  "schema_version": "1.0.0",
+  "submission_id": "comparator-submission-b64b83abf2264c3ea11f84fdc52653fe",
+  "winner": "left"
+}

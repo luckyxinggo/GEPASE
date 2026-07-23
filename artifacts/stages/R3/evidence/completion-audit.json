@@ -1,0 +1,59 @@
+{
+  "schema_version": "1.0.0",
+  "stage_id": "R3",
+  "valid": true,
+  "frozen_plan_hash": "1893ad9a08978f2a8f107981a9a032c7581d08082926ee52276bd5feba2df950",
+  "execution": {
+    "pairs": 8,
+    "executor_contexts": 16,
+    "successful_e2": 16,
+    "real_multiframe_gifs": 16,
+    "content_level_e3": 16,
+    "e1_records": 0,
+    "framework_business_outputs": 0,
+    "uniform_business_result_json": 0,
+    "e3_replay_sources": 16,
+    "e3_replay_mismatches": 0,
+    "superseded_e3_history": 10,
+    "unclassified_record_files": 0
+  },
+  "roles": {
+    "independent_graders": 16,
+    "comparators": 6,
+    "analyzers": 8,
+    "unique_contexts": 46,
+    "duplicate_contexts": 0,
+    "role_failures": 0,
+    "external_headless_calls": 0
+  },
+  "scoring": {
+    "task_score_vectors": 16,
+    "independently_recomputed": 16,
+    "recompute_mismatches": 0,
+    "trigger_mixed": false,
+    "mean_skill_gain": -0.045480625,
+    "positive_cases": 4,
+    "negative_cases": 4,
+    "consistent_original_losses_on_validation": 2,
+    "order_inconsistent_validation_cases": 1
+  },
+  "graph": {
+    "package_access_audit_valid": true,
+    "no_skill_access_events": 0,
+    "original_access_resolves_to_frozen_nodes": true,
+    "analyzer_targets_resolve_to_frozen_nodes": true
+  },
+  "artifact_seal": {
+    "checked": 429,
+    "missing": 0,
+    "hash_mismatch": 0,
+    "schema_errors": 0,
+    "unindexed_files": 0
+  },
+  "effect_boundary": {
+    "paired_original_vs_no_skill_measured": true,
+    "candidate_mutation_run": false,
+    "strict_candidate_improvement_validated": false,
+    "optimization_effect_validated": false
+  }
+}

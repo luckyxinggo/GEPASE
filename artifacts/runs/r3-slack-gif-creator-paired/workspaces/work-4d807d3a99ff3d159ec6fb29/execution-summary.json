@@ -1,0 +1,31 @@
+{
+  "schema_version": "1.0.0",
+  "work_id": "work-4d807d3a99ff3d159ec6fb29",
+  "task_id": "functional-train-input-badge-003",
+  "context_id": "/root/r3_exec_4d807d",
+  "output": {
+    "path": "artifacts/runs/r3-slack-gif-creator-paired/workspaces/work-4d807d3a99ff3d159ec6fb29/uploaded_badge_lift.gif",
+    "media_type": "image/gif",
+    "size_bytes": 52626
+  },
+  "verification": {
+    "reopened": true,
+    "width": 128,
+    "height": 128,
+    "stored_frame_count": 16,
+    "frame_durations_ms": [60, 60, 60, 60, 60, 60, 60, 60, 60, 120, 60, 60, 60, 60, 60, 120],
+    "total_duration_ms": 1080,
+    "loop": 0,
+    "validator_passed": true,
+    "input_asset_used": true,
+    "input_asset_method": "supplied PPM loaded with Pillow, nearest-neighbor scaled, and composited into every source frame",
+    "cyan_pixels_per_stored_frame": 2268,
+    "orange_pixels_per_stored_frame": 324,
+    "feature_top_y_sequence": [65, 58, 53, 47, 43, 39, 36, 34, 32, 31, 32, 36, 39, 40, 39, 38],
+    "motion_verified": "feature rises from y=65 to overshoot y=31, then settles at y=38-40",
+    "visual_content_verified": "dark outlined cyan badge with orange center remains visible; glow and shadow stay behind the subject"
+  },
+  "package_access_file": "artifacts/runs/r3-slack-gif-creator-paired/workspaces/work-4d807d3a99ff3d159ec6fb29/package-access.json",
+  "observed_trace_file": "artifacts/runs/r3-slack-gif-creator-paired/workspaces/work-4d807d3a99ff3d159ec6fb29/observed-trace.json",
+  "transcript_file": "artifacts/runs/r3-slack-gif-creator-paired/workspaces/work-4d807d3a99ff3d159ec6fb29/transcript.md"
+}

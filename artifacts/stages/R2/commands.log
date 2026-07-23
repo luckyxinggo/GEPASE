@@ -1,0 +1,66 @@
+R2 command log (Asia/Shanghai, 2026-07-21)
+
+[preflight and source pin]
+git status --short
+git rev-parse HEAD
+git -c http.proxy= -c https.proxy= fetch/clone anthropics/skills
+git ls-tree / git rev-parse for commit fa0fa64bdc967915dc8399e803be67759e1e62b8
+verify upstream-tree.json against all seven Git blob SHA-1 values and executable modes
+uv pip compile/install pinned Pillow, imageio, imageio-ffmpeg, and NumPy in an isolated environment
+uv run gepase config validate configs/canaries/slack-gif-creator-r2.yaml --format json
+
+[canary technical smoke]
+uv run --offline --with pillow==12.3.0 --with imageio==2.37.4 \
+  --with imageio-ffmpeg==0.6.0 --with numpy==2.5.1 \
+  python scripts/run_r2_canary_smoke.py \
+  --package benchmarks/canaries/slack-gif-creator/package \
+  --output-dir artifacts/stages/R2/evidence/canary-smoke
+result: core import, real GIF build, upstream validator, source-before/after hash passed
+note: first attempt exposed generated __pycache__; the script now disables bytecode and the exact
+      source snapshot was restored from the already-pinned upstream copy before the passing rerun
+
+[EvalPlan onboarding]
+uv run gepase eval onboarding-start --run-dir artifacts/runs/r2-slack-gif-creator-evalplan ...
+isolated Agent-native Eval Designer /root/r2_eval_designer wrote agent/designer-submission.json
+uv run gepase eval submit-design --run-dir artifacts/runs/r2-slack-gif-creator-evalplan \
+  --submission artifacts/runs/r2-slack-gif-creator-evalplan/agent/designer-submission.json
+result: 13/13 automatic checks passed; run entered awaiting_review
+uv run gepase eval review --run-dir artifacts/runs/r2-slack-gif-creator-evalplan
+agent-assisted maintainer audit created 26 explicit decisions
+uv run gepase eval import-review --run-dir artifacts/runs/r2-slack-gif-creator-evalplan \
+  --review artifacts/runs/r2-slack-gif-creator-evalplan/agent/review.json
+uv run gepase eval resume --run-dir artifacts/runs/r2-slack-gif-creator-evalplan
+result: plan 1893ad9a08978f2a8f107981a9a032c7581d08082926ee52276bd5feba2df950;
+        state execution_ready; artifact verification 19 checked/0 failures/0 unindexed
+
+[review UI validation]
+in-app browser file:// navigation attempt -> blocked by browser URL policy
+no alternate browser or localhost workaround attempted
+node --check on executable inline JavaScript -> passed after fixing newline escaping
+user opened the self-contained review.html offline and confirmed the registered core interactions
+python scripts/run_r2_gates.py --external-validation \
+  artifacts/stages/R2/evidence/human-offline-validation.json
+result: 10/10 passed; interaction confirmation does not rewrite agent-assisted case review
+
+[regression]
+uv run --no-sync ruff check .
+uv run --no-sync pyright src tests scripts
+uv run --no-sync pytest -q --junitxml=artifacts/stages/R2/test-results.xml
+uv run --no-sync python scripts/export_core_schemas.py (twice; hashes identical)
+uv run --no-sync python scripts/check_secrets.py --format json
+uv run --no-sync python scripts/check_markdown_links.py
+uv run --no-sync python scripts/check_license.py
+git diff --check
+git status --short -- skills_test
+python skill-creator/scripts/quick_validate.py .agents/skills/gepase-orchestrator
+uv run --no-sync gepase --help
+uv run --no-sync gepase artifact verify artifacts/runs/r2-slack-gif-creator-evalplan --format json
+uv run --no-sync gepase eval onboarding-status \
+  --run-dir artifacts/runs/r2-slack-gif-creator-evalplan --format json
+
+[prohibited actions]
+git reset / git clean                            -> not run
+skills_test modification                         -> none
+external LLM API / Headless Provider             -> not used
+no-skill/original paired functional execution    -> not run (R3)
+old S9/action-label/unified result.json recovery  -> not performed

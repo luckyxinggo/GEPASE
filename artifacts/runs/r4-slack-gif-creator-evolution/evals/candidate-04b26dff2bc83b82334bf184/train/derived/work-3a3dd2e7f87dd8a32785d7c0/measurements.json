@@ -1,0 +1,142 @@
+{
+  "artifact_sha256": "8ab97744f44f378fe6fcb2f153c3f7e0e4a2db34951ae55dde117b4aa9c8daff",
+  "assertions": [
+    {
+      "assertion_id": "badge-source-use",
+      "detail": "通过内容/元数据检查",
+      "family": "frame_content",
+      "measurements": {
+        "cyan_fraction": [
+          0.138427734375,
+          0.138427734375,
+          0.138427734375,
+          0.138427734375,
+          0.138427734375,
+          0.138427734375,
+          0.138427734375,
+          0.138427734375,
+          0.138427734375
+        ],
+        "orange_fraction": [
+          0.019775390625,
+          0.019775390625,
+          0.019775390625,
+          0.019775390625,
+          0.019775390625,
+          0.019775390625,
+          0.019775390625,
+          0.019775390625,
+          0.019775390625
+        ]
+      },
+      "passed": true,
+      "weight": 0.25
+    },
+    {
+      "assertion_id": "badge-container",
+      "detail": "通过内容/元数据检查",
+      "family": "artifact_metadata",
+      "measurements": {
+        "frame_count": 9,
+        "height": 128,
+        "loop_count": 0,
+        "unique_frame_count": 9,
+        "width": 128
+      },
+      "passed": true,
+      "weight": 0.15
+    },
+    {
+      "assertion_id": "badge-duration",
+      "detail": "通过内容/元数据检查",
+      "family": "artifact_metadata",
+      "measurements": {
+        "maximum_ms": 2500,
+        "minimum_ms": 1,
+        "non_positive_frames": 0,
+        "total_duration_ms": 1800,
+        "unique_frame_count": 9
+      },
+      "passed": true,
+      "weight": 0.15
+    },
+    {
+      "assertion_id": "badge-palette",
+      "detail": "通过内容/元数据检查",
+      "family": "frame_content",
+      "measurements": {
+        "centroid_distances": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "paired_visible_frames": 9
+      },
+      "passed": true,
+      "weight": 0.2
+    },
+    {
+      "assertion_id": "badge-overshoot",
+      "detail": "通过内容/元数据检查",
+      "family": "temporal_sequence",
+      "measurements": {
+        "centroid_y": [
+          89.5,
+          89.5,
+          80.5,
+          73.5,
+          68.5,
+          65.5,
+          63.5,
+          64.5,
+          65.5
+        ],
+        "direction_changes": 1,
+        "tail_span": 2.0
+      },
+      "passed": true,
+      "weight": 0.25
+    }
+  ],
+  "case_id": "functional-train-input-badge-003",
+  "common": {
+    "adjacent_pixel_deltas": [
+      0.055013020833333336,
+      10.05767822265625,
+      7.988728841145833,
+      5.932637532552083,
+      3.88116455078125,
+      2.7554931640625,
+      1.74725341796875,
+      1.7597859700520833
+    ],
+    "effective_fps": 5.0,
+    "file_size_bytes": 17209,
+    "first_last_pixel_delta": 23.132303873697918,
+    "frame_count": 9,
+    "frame_durations_ms": [
+      200,
+      100,
+      100,
+      100,
+      100,
+      100,
+      400,
+      100,
+      600
+    ],
+    "height": 128,
+    "loop_count": 0,
+    "mean_adjacent_pixel_delta": 4.27221934000651,
+    "total_duration_ms": 1800,
+    "unique_frame_count": 9,
+    "width": 128
+  },
+  "schema_version": "1.0.0"
+}

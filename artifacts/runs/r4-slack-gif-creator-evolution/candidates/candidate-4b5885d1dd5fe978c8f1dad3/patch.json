@@ -1,0 +1,75 @@
+{
+  "base_candidate_id": "candidate-21242a10bcbaeb9631f3b2da",
+  "base_content_hash": "ce42d8a837acf9feda9706a3418fc26a77c497d9615079e616b5fdc6870ef64e",
+  "base_snapshot_hash": "ce42d8a837acf9feda9706a3418fc26a77c497d9615079e616b5fdc6870ef64e",
+  "edit_budget": {
+    "allow_file_topology_edits": true,
+    "allow_script_edits": true,
+    "max_added_files": 0,
+    "max_changed_files": 1,
+    "max_deleted_files": 0,
+    "max_operations": 2,
+    "max_total_replacement_chars": 1502
+  },
+  "evidence_refs": [
+    "artifacts/runs/r3-slack-gif-creator-paired/analyzer-submissions/analyzer-work-9fdb3bdecd6e87afd9f6ad4d.json",
+    "artifacts/runs/r3-slack-gif-creator-paired/task-score-vectors/work-229b28b7e4ec64d79ddc725d.json",
+    "artifacts/runs/r3-slack-gif-creator-paired/task-score-vectors/work-4d807d3a99ff3d159ec6fb29.json",
+    "artifacts/runs/r3-slack-gif-creator-paired/task-score-vectors/work-8b18ac4a317bfa0522d70aca.json",
+    "artifacts/runs/r3-slack-gif-creator-paired/task-score-vectors/work-9a981b04ae2ac3fb91d31911.json",
+    "artifacts/runs/r3-slack-gif-creator-paired/task-score-vectors/work-aeaea033cebc5f6b4e948b5e.json",
+    "artifacts/runs/r4-slack-gif-creator-evolution/evals/candidate-04b26dff2bc83b82334bf184/train/task-score-vectors/work-2feaa3a4dbb47f95a5b9aefa.json",
+    "artifacts/runs/r4-slack-gif-creator-evolution/evals/candidate-04b26dff2bc83b82334bf184/train/task-score-vectors/work-3a3525d61988b3d58944acd0.json",
+    "artifacts/runs/r4-slack-gif-creator-evolution/evals/candidate-04b26dff2bc83b82334bf184/train/task-score-vectors/work-3a3dd2e7f87dd8a32785d7c0.json",
+    "artifacts/runs/r4-slack-gif-creator-evolution/evals/candidate-04b26dff2bc83b82334bf184/train/task-score-vectors/work-9ecf15590215f5ff1128beba.json",
+    "artifacts/runs/r4-slack-gif-creator-evolution/evals/candidate-04b26dff2bc83b82334bf184/train/task-score-vectors/work-c0ff710d24f738bfb0ae36c6.json",
+    "artifacts/runs/r4-slack-gif-creator-evolution/evals/candidate-2dad7a05ce4a6460dd71f470/train/task-score-vectors/work-39e35e699ecb6bd467c783c9.json",
+    "artifacts/runs/r4-slack-gif-creator-evolution/evals/candidate-2dad7a05ce4a6460dd71f470/train/task-score-vectors/work-478e69ea53372e0edb2e0123.json",
+    "artifacts/runs/r4-slack-gif-creator-evolution/evals/candidate-2dad7a05ce4a6460dd71f470/train/task-score-vectors/work-60eaba3feb92a47166f14645.json",
+    "artifacts/runs/r4-slack-gif-creator-evolution/evals/candidate-2dad7a05ce4a6460dd71f470/train/task-score-vectors/work-692901e392962f5b5393520d.json",
+    "artifacts/runs/r4-slack-gif-creator-evolution/evals/candidate-2dad7a05ce4a6460dd71f470/train/task-score-vectors/work-a577fbd89f0d6020522f6512.json",
+    "artifacts/runs/r4-slack-gif-creator-evolution/reflection-submissions/reflection-work-ece74a14e2ca67757504c20b.json",
+    "artifacts/runs/r4-slack-gif-creator-evolution/train-admission/candidate-edf5f1aa07926ba5415f0442.json",
+    "parent-set:merge-parent-set-872d56c45a560e17a2902340"
+  ],
+  "operations": [
+    {
+      "evidence_refs": [
+        "artifacts/runs/r4-slack-gif-creator-evolution/reflection-submissions/reflection-work-ece74a14e2ca67757504c20b.json",
+        "artifacts/runs/r4-slack-gif-creator-evolution/train-admission/candidate-edf5f1aa07926ba5415f0442.json"
+      ],
+      "expected_benefit": "Reduce validation overhead and attention displacement while preserving task correctness and output quality through one existing-validator pass plus, only when applicable, one bounded seam inspection.",
+      "op": "replace_markdown_block",
+      "operation_id": "op-merge-001",
+      "path": "SKILL.md",
+      "precondition_hash": "951bd4e2b513b7780d40bda28c1ccf3e51c2945e2375f6a21a665517af6803f7",
+      "rationale": "The rejected candidate regressed on four of five train tasks, with efficiency declining consistently while reliability and package quality stayed unchanged and correctness moved inconsistently. A conditional one-time seam check is materially narrower than the rejected always-on loop workflow and follows the reflection recommendation without claiming unsupported causality.",
+      "regression_risk": "low",
+      "replacement": "First satisfy the task's explicit content, motion, readability, and delivery constraints. Then choose one validation mode for the final export:\n\n```python\nfrom core.validators import validate_gif, is_slack_ready\n\n# Detailed validation\npasses, info = validate_gif('my.gif', is_emoji=True, verbose=True)\n\n# Or use the quick readiness check when detailed diagnostics are unnecessary\nif is_slack_ready('my.gif'):\n    print(\"Ready!\")\n```\n\nOnly if the finished animation actually contains cyclic motion, inspect the exported GIF once at the end-to-start boundary for a visible seam. Otherwise skip seam checking. Do not require a two-cycle preview, automatic re-export, or repeated revalidation.",
+      "target_node_id": "node-46d940221fa8caf3b6c22d2c"
+    },
+    {
+      "evidence_refs": [
+        "artifacts/runs/r3-slack-gif-creator-paired/analyzer-submissions/analyzer-work-9fdb3bdecd6e87afd9f6ad4d.json"
+      ],
+      "expected_benefit": "Makes the ease-out requirement operational and export-verifiable, reducing failures where the motion slows overall but the final rendered displacement increases because of sampling, rounding, or clipping.",
+      "op": "replace_markdown_block",
+      "operation_id": "op-merge-002",
+      "path": "SKILL.md",
+      "precondition_hash": "07696c8e0fdb5ceb26b94a6625c98211fb31a3a8cd4a58b115bee7c7580e8a84",
+      "rationale": "The cited failure evidence attributes the correctness loss to an increase between the final two rendered displacements despite use of the easing module. Extending the existing instruction with a single continuous progress parameter and post-render tail checks directly addresses that gap without changing easing behavior, public interfaces, or unrelated package guidance.",
+      "regression_risk": "low",
+      "replacement": "- Use `interpolate()` with `easing='ease_out'` for a smooth stop. Drive the entire arc or orbit from one continuous eased path-progress value; do not restart the easing for individual coordinates or path segments.\n  - Before export, validate the rendered frames under the same integer pixel conversion and canvas clipping/cropping used for drawing. Recompute the adjacent-frame displacement along the final approach and confirm that successive tail displacements do not increase beyond the applicable pixel-rounding tolerance.\n  - Confirm that the final rendered frame lands exactly on the intended docking point after integerization and clipping. If either check fails, adjust the path-progress timing or frame sampling, render again, and repeat the checks rather than accepting the unrounded path values alone.\n",
+      "target_node_id": "node-69ea814aac72a6c557485ef0"
+    }
+  ],
+  "patch_id": "patch-9c936c744ec54e0b04120d4f",
+  "proposal_work_id": "merge-union-merge-parent-set-872d56c45a560e17a2902340",
+  "schema_version": "1.0.0",
+  "selected_node_ids": [
+    "node-46d940221fa8caf3b6c22d2c",
+    "node-69ea814aac72a6c557485ef0"
+  ],
+  "selector": "package_aware_pareto_dependency_closed_union",
+  "summary": "Dependency-closed deterministic union of 2 independent branches from merge-parent-set-872d56c45a560e17a2902340."
+}

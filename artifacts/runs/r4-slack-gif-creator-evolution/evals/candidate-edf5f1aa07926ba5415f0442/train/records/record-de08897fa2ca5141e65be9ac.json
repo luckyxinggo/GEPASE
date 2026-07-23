@@ -1,0 +1,164 @@
+{
+  "artifact_root": "artifacts/runs/r4-slack-gif-creator-evolution/evals/candidate-edf5f1aa07926ba5415f0442/train/workspaces/work-64bc8b5b5180da4402e479d0",
+  "artifacts": [
+    {
+      "media_type": "application/json",
+      "path": "observed-trace.json",
+      "sha256": "3764afc7a385a588c787bd832f48f4074818d07fd8100b981dcff6b20dfd5a87",
+      "size_bytes": 3580
+    },
+    {
+      "media_type": "application/json",
+      "path": "package-access.json",
+      "sha256": "9d72a2ea0c3177450ac2d04fec2d6978aaee2c6c8f78a3d2b32560c7c517b610",
+      "size_bytes": 1648
+    },
+    {
+      "media_type": "image/gif",
+      "path": "satellite_orbit_ease.gif",
+      "sha256": "10f0c0a9c2375fc1409f7aaf93bb284eb9bd0afc9e168c1bc89a71505214a5eb",
+      "size_bytes": 19579
+    },
+    {
+      "media_type": "text/markdown",
+      "path": "transcript.md",
+      "sha256": "43da03f8f43587b6b6495a6d531ec772d4051bd483202123bc0fb9c33a3b6216",
+      "size_bytes": 1922
+    }
+  ],
+  "assertion_results": [],
+  "candidate_snapshot_hash": "2dab36108748cfb6cb7e3f53372aaf4c78c51d3995c04160d10105244d3c37b2",
+  "evidence_tier": "E2",
+  "failure_detail": null,
+  "failure_kind": null,
+  "fixture_hash": "380768a9e82d25d1c4740bce912fc57bb2264dcaaff0cd7de5ce97690cf3facb",
+  "host_model_snapshot": "edbfd8f0668f44e333585ee805a6f891a7443402aad61b3e8cfeca5913b1338b",
+  "observed_trace": [
+    {
+      "action": "inspect_work_item",
+      "outcome": "completed",
+      "sequence": 0,
+      "target": "artifacts/runs/r4-slack-gif-creator-evolution/evals/candidate-edf5f1aa07926ba5415f0442/train/executor-work-items/work-64bc8b5b5180da4402e479d0.json",
+      "tool": "read"
+    },
+    {
+      "action": "read_skill_instructions",
+      "outcome": "completed",
+      "sequence": 1,
+      "target": "artifacts/runs/r4-slack-gif-creator-evolution/candidate-workspaces/applications/application-b75f0a0da538fa167f904c8a/SKILL.md",
+      "tool": "read"
+    },
+    {
+      "action": "inspect_fixture",
+      "outcome": "completed",
+      "sequence": 2,
+      "target": "benchmarks/canaries/slack-gif-creator/fixtures/easing-orbit.json",
+      "tool": "read"
+    },
+    {
+      "action": "resolve_package_nodes",
+      "outcome": "completed",
+      "sequence": 3,
+      "target": "artifacts/runs/r4-slack-gif-creator-evolution/candidates/candidate-edf5f1aa07926ba5415f0442/graph.json",
+      "tool": "jq"
+    },
+    {
+      "action": "read_easing_module",
+      "outcome": "completed",
+      "sequence": 4,
+      "target": "artifacts/runs/r4-slack-gif-creator-evolution/candidate-workspaces/applications/application-b75f0a0da538fa167f904c8a/core/easing.py",
+      "tool": "read"
+    },
+    {
+      "action": "read_gif_builder_module",
+      "outcome": "completed",
+      "sequence": 5,
+      "target": "artifacts/runs/r4-slack-gif-creator-evolution/candidate-workspaces/applications/application-b75f0a0da538fa167f904c8a/core/gif_builder.py",
+      "tool": "read"
+    },
+    {
+      "action": "read_validator_module",
+      "outcome": "completed",
+      "sequence": 6,
+      "target": "artifacts/runs/r4-slack-gif-creator-evolution/candidate-workspaces/applications/application-b75f0a0da538fa167f904c8a/core/validators.py",
+      "tool": "read"
+    },
+    {
+      "action": "read_frame_composer_module",
+      "outcome": "completed",
+      "sequence": 7,
+      "target": "artifacts/runs/r4-slack-gif-creator-evolution/candidate-workspaces/applications/application-b75f0a0da538fa167f904c8a/core/frame_composer.py",
+      "tool": "read"
+    },
+    {
+      "action": "generate_eased_orbit_animation",
+      "outcome": "completed",
+      "sequence": 8,
+      "target": "artifacts/runs/r4-slack-gif-creator-evolution/evals/candidate-edf5f1aa07926ba5415f0442/train/workspaces/work-64bc8b5b5180da4402e479d0/satellite_orbit_ease.gif",
+      "tool": "python_package_execution"
+    },
+    {
+      "action": "validate_slack_gif",
+      "outcome": "completed",
+      "sequence": 9,
+      "target": "artifacts/runs/r4-slack-gif-creator-evolution/evals/candidate-edf5f1aa07926ba5415f0442/train/workspaces/work-64bc8b5b5180da4402e479d0/satellite_orbit_ease.gif",
+      "tool": "core.validators"
+    },
+    {
+      "action": "inspect_animation_frames",
+      "outcome": "completed",
+      "sequence": 10,
+      "target": "artifacts/runs/r4-slack-gif-creator-evolution/evals/candidate-edf5f1aa07926ba5415f0442/train/workspaces/work-64bc8b5b5180da4402e479d0/satellite_orbit_ease.gif",
+      "tool": "pillow_and_visual_inspection"
+    },
+    {
+      "action": "refine_docking_hold",
+      "outcome": "completed",
+      "sequence": 11,
+      "target": "artifacts/runs/r4-slack-gif-creator-evolution/evals/candidate-edf5f1aa07926ba5415f0442/train/workspaces/work-64bc8b5b5180da4402e479d0/satellite_orbit_ease.gif",
+      "tool": "python_package_execution"
+    },
+    {
+      "action": "verify_final_animation_metadata",
+      "outcome": "completed",
+      "sequence": 12,
+      "target": "artifacts/runs/r4-slack-gif-creator-evolution/evals/candidate-edf5f1aa07926ba5415f0442/train/workspaces/work-64bc8b5b5180da4402e479d0/satellite_orbit_ease.gif",
+      "tool": "pillow"
+    }
+  ],
+  "pair_id": "pair-851662b37d33af41c90dee4a",
+  "planned_trace": [],
+  "policy_hash": "3b49f46ee66bafaf2bcf1aeac08f1bd7f4c719463b0e655afe40a98a4af6b3ec",
+  "prompt_hash": "13c580a58310f14e8d7174a2e07c39b564dd1cdd214c47ef7fb932a61d2576c2",
+  "provenance": {
+    "context_id": "r4_exec_easing_b",
+    "generated_at": "2026-07-22T08:32:36.537871Z",
+    "generated_by": "gepase.eval.ingest",
+    "host": "codex",
+    "host_task_id": "/root/r4_exec_easing_b",
+    "model": "gpt-5.6-sol",
+    "origin": "agent-native",
+    "provider_id": "agent-delegated-v1",
+    "submission_id": "submission-aaad7c0a79a53d512ca25324"
+  },
+  "provider_snapshot": "agent-delegated-v1",
+  "record_id": "record-de08897fa2ca5141e65be9ac",
+  "schema_version": "1.0.0",
+  "score": null,
+  "seed": 42,
+  "skill_id": "slack-gif-creator",
+  "source_record_refs": [],
+  "task_id": "functional-train-easing-orbit-005",
+  "task_score_vector": null,
+  "trace_completeness": "complete",
+  "uncertainty": 0.1,
+  "usage": {
+    "duration_ms": 420000,
+    "input_tokens": 32000,
+    "output_tokens": 8000,
+    "token_count_kind": "estimated",
+    "tool_calls": 20
+  },
+  "variant": "candidate",
+  "work_id": "work-64bc8b5b5180da4402e479d0"
+}

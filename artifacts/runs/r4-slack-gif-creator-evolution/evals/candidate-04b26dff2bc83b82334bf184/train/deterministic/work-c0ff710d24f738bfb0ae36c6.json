@@ -1,0 +1,174 @@
+{
+  "assertion_results": [
+    {
+      "assertion_id": "emoji-bounce-container",
+      "detail": "通过内容/元数据检查",
+      "evidence_refs": [
+        "artifacts/runs/r4-slack-gif-creator-evolution/evals/candidate-04b26dff2bc83b82334bf184/train/derived/work-c0ff710d24f738bfb0ae36c6/measurements.json",
+        "artifacts/runs/r4-slack-gif-creator-evolution/evals/candidate-04b26dff2bc83b82334bf184/train/derived/work-c0ff710d24f738bfb0ae36c6/contact-sheet.png"
+      ],
+      "family": "artifact_metadata",
+      "measurements": {
+        "frame_count": 21,
+        "height": 128,
+        "loop_count": 0,
+        "unique_frame_count": 21,
+        "width": 128
+      },
+      "passed": true,
+      "weight": 0.2
+    },
+    {
+      "assertion_id": "emoji-bounce-duration",
+      "detail": "通过内容/元数据检查",
+      "evidence_refs": [
+        "artifacts/runs/r4-slack-gif-creator-evolution/evals/candidate-04b26dff2bc83b82334bf184/train/derived/work-c0ff710d24f738bfb0ae36c6/measurements.json",
+        "artifacts/runs/r4-slack-gif-creator-evolution/evals/candidate-04b26dff2bc83b82334bf184/train/derived/work-c0ff710d24f738bfb0ae36c6/contact-sheet.png"
+      ],
+      "family": "artifact_metadata",
+      "measurements": {
+        "maximum_ms": 2400,
+        "minimum_ms": 1,
+        "non_positive_frames": 0,
+        "total_duration_ms": 1760
+      },
+      "passed": true,
+      "weight": 0.2
+    },
+    {
+      "assertion_id": "emoji-bounce-subject",
+      "detail": "通过内容/元数据检查",
+      "evidence_refs": [
+        "artifacts/runs/r4-slack-gif-creator-evolution/evals/candidate-04b26dff2bc83b82334bf184/train/derived/work-c0ff710d24f738bfb0ae36c6/measurements.json",
+        "artifacts/runs/r4-slack-gif-creator-evolution/evals/candidate-04b26dff2bc83b82334bf184/train/derived/work-c0ff710d24f738bfb0ae36c6/contact-sheet.png"
+      ],
+      "family": "frame_content",
+      "measurements": {
+        "highlight_peak": 0.00201416015625,
+        "yellow_fraction_by_frame": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.00115966796875,
+          0.015869140625,
+          0.0196533203125,
+          0.0196533203125,
+          0.01959228515625,
+          0.0194091796875,
+          0.0185546875,
+          0.0194091796875,
+          0.01953125,
+          0.0194091796875,
+          0.01947021484375,
+          0.01934814453125,
+          0.0194091796875,
+          0.01953125,
+          0.01959228515625,
+          0.01898193359375,
+          0.01959228515625
+        ]
+      },
+      "passed": true,
+      "weight": 0.2
+    },
+    {
+      "assertion_id": "emoji-bounce-motion",
+      "detail": "通过内容/元数据检查",
+      "evidence_refs": [
+        "artifacts/runs/r4-slack-gif-creator-evolution/evals/candidate-04b26dff2bc83b82334bf184/train/derived/work-c0ff710d24f738bfb0ae36c6/measurements.json",
+        "artifacts/runs/r4-slack-gif-creator-evolution/evals/candidate-04b26dff2bc83b82334bf184/train/derived/work-c0ff710d24f738bfb0ae36c6/contact-sheet.png"
+      ],
+      "family": "temporal_sequence",
+      "measurements": {
+        "centroid_y": [
+          1.1111111111111112,
+          6.35546875,
+          21.43217665615142,
+          41.330128205128204,
+          64.63987138263666,
+          90.7741935483871,
+          95.83164983164983,
+          89.03215434083602,
+          79.27795527156549,
+          73.62857142857143,
+          72.03205128205128,
+          73.70739549839229,
+          75.63375796178345,
+          81.38977635782747,
+          90.63694267515923,
+          92.9042904290429,
+          90.60634920634921
+        ],
+        "direction_changes": 3
+      },
+      "passed": true,
+      "weight": 0.2
+    },
+    {
+      "assertion_id": "emoji-bounce-loop",
+      "detail": "通过内容/元数据检查",
+      "evidence_refs": [
+        "artifacts/runs/r4-slack-gif-creator-evolution/evals/candidate-04b26dff2bc83b82334bf184/train/derived/work-c0ff710d24f738bfb0ae36c6/measurements.json",
+        "artifacts/runs/r4-slack-gif-creator-evolution/evals/candidate-04b26dff2bc83b82334bf184/train/derived/work-c0ff710d24f738bfb0ae36c6/contact-sheet.png"
+      ],
+      "family": "temporal_sequence",
+      "measurements": {
+        "first_last_delta": 6.3299560546875,
+        "threshold": 15.0
+      },
+      "passed": true,
+      "weight": 0.2
+    }
+  ],
+  "bundle_id": "deterministic-2cb2108dbc108d3623c9778f",
+  "e3_record_id": "record-2cb2108dbc108d3623c9778f",
+  "generated_at": "2026-07-22T08:39:07.624473Z",
+  "inspection": {
+    "artifact_ref": "artifacts/runs/r4-slack-gif-creator-evolution/evals/candidate-04b26dff2bc83b82334bf184/train/workspaces/work-c0ff710d24f738bfb0ae36c6/emoji_star_bounce.gif",
+    "artifact_sha256": "aec6c7a53990316b97461ee4078db0d3dee59d3c0dfde80d338ed516e3d0c675",
+    "contact_sheet_ref": "artifacts/runs/r4-slack-gif-creator-evolution/evals/candidate-04b26dff2bc83b82334bf184/train/derived/work-c0ff710d24f738bfb0ae36c6/contact-sheet.png",
+    "effective_fps": 11.931818181818182,
+    "file_size_bytes": 56422,
+    "first_last_pixel_delta": 6.3299560546875,
+    "frame_count": 21,
+    "frame_durations_ms": [
+      80,
+      80,
+      80,
+      80,
+      80,
+      80,
+      80,
+      80,
+      80,
+      80,
+      80,
+      80,
+      80,
+      80,
+      80,
+      80,
+      80,
+      80,
+      80,
+      80,
+      160
+    ],
+    "height": 128,
+    "loop_count": 0,
+    "mean_adjacent_pixel_delta": 4.014168294270833,
+    "measurements_ref": "artifacts/runs/r4-slack-gif-creator-evolution/evals/candidate-04b26dff2bc83b82334bf184/train/derived/work-c0ff710d24f738bfb0ae36c6/measurements.json",
+    "total_duration_ms": 1760,
+    "unique_frame_count": 21,
+    "width": 128
+  },
+  "oracle_ref": "benchmarks/canaries/slack-gif-creator/oracles/gif_oracle.py:evaluate",
+  "oracle_sha256": "9ccb487705abdfa91ff82437cc028f139a3af419ee16baac869aaddee75920fa",
+  "pair_id": "pair-a8a394af4e5e0da240bff05d",
+  "schema_version": "1.0.0",
+  "source_record_id": "record-1c0c794049730b65635b7351",
+  "task_id": "functional-train-emoji-bounce-001",
+  "variant": "candidate",
+  "weighted_score": 1.0
+}

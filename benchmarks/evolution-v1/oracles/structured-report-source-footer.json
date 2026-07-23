@@ -1,0 +1,24 @@
+{
+  "schema_version": "1.0.0",
+  "oracle_id": "structured-report-source-footer-v1",
+  "sources": [
+    "benchmarks/skills/structured-report-builder/references/report-contract.md",
+    "benchmarks/structured-report-builder/dataset.jsonl"
+  ],
+  "distinguishes_no_skill": true,
+  "distinguishes_original": true,
+  "distinguishes_fault": true,
+  "assertions": [
+    {
+      "id": "source-footer-present",
+      "family": "file_contains",
+      "value": "Source:"
+    },
+    {
+      "id": "source-value-preserved",
+      "family": "fixture-derived-literal"
+    }
+  ],
+  "production_external_calls": 0,
+  "test_access_count": 0
+}

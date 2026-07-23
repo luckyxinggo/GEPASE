@@ -1,0 +1,51 @@
+{
+  "candidate_snapshot_hash": "30b52f2cab481f75926545479d2fff8bd907d716c0fe241e8f4014369e0d867c",
+  "case_contract_hash": "584f1914a202c38ad8b99cdde72f3d369bff5adc945f30b1e47aab9d073de6f3",
+  "created_at": "2026-07-22T10:06:12.895372Z",
+  "evidence_tier": "E2",
+  "fixture_ref": "benchmarks/canaries/slack-gif-creator/fixtures/emoji-pulse-text.json",
+  "fixture_refs": [
+    "benchmarks/canaries/slack-gif-creator/fixtures/emoji-pulse-text.json"
+  ],
+  "frozen_plan_hash": "1893ad9a08978f2a8f107981a9a032c7581d08082926ee52276bd5feba2df950",
+  "package_graph_ref": "artifacts/runs/r4-slack-gif-creator-evolution/candidates/candidate-04b26dff2bc83b82334bf184/graph.json",
+  "package_node_map": {
+    "LICENSE.txt": "node-7fd627ed0d50ee9e04018c8a",
+    "SKILL.md": "node-fddc99453114c3a40363b219",
+    "core/easing.py": "node-dbf396ac6852bf4706f33ebf",
+    "core/frame_composer.py": "node-bd3bececef13aaeef0c22570",
+    "core/gif_builder.py": "node-2c61585b9d40c2df7343f499",
+    "core/validators.py": "node-0f241aa06504163be33132f8",
+    "requirements.txt": "node-cc27fb4d7208967c86b1a7e8"
+  },
+  "pair_id": "pair-e8356ab1f18344250959a6a9",
+  "pairing": {
+    "fixture_hash": "0ff0448593018eb3dd0bcaea625302d2b8ef766dd2a021e8502e78fef28b66ea",
+    "host_model_snapshot": "edbfd8f0668f44e333585ee805a6f891a7443402aad61b3e8cfeca5913b1338b",
+    "policy_hash": "3b49f46ee66bafaf2bcf1aeac08f1bd7f4c719463b0e655afe40a98a4af6b3ec",
+    "prompt_hash": "327fef7c91b86c7fc779051410132874c557bf0e434800bccbbcc2d10bdc090c",
+    "provider_snapshot": "agent-delegated-v1",
+    "seed": 42
+  },
+  "prompt": "创建一个 128×128 的 Slack 警报表情 GIF。依据随附配置制作深蓝底、珊瑚红徽章和白色 GO 文本；徽章进行有呼吸感的周期脉冲，文字在缩略尺寸下始终容易辨认。请保持给定配色与时长预算，输出指定 GIF。",
+  "provider_id": "agent-delegated-v1",
+  "requested_output": {
+    "description_zh": "深蓝、珊瑚红和白色构成的 GO 循环脉冲 Slack 表情 GIF。",
+    "filename": "go_alert_pulse.gif",
+    "media_type": "image/gif"
+  },
+  "required_capabilities": [
+    "text_rendering",
+    "pulse_animation",
+    "palette_preservation",
+    "emoji_gif_export"
+  ],
+  "schema_version": "1.0.0",
+  "skill_id": "slack-gif-creator",
+  "skill_ref": "artifacts/runs/r4-slack-gif-creator-evolution/candidate-workspaces/applications/application-1986620ac067029380557187",
+  "split": "validation",
+  "task_id": "functional-validation-pulse-text-008",
+  "timeout_seconds": 600,
+  "variant": "candidate",
+  "work_id": "work-ed3b4c130252b4a37e48a32c"
+}

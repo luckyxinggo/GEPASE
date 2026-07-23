@@ -1,0 +1,28 @@
+{
+  "blind_id": "blind-6f20f16531ea4ebbe8a95939",
+  "effective_fps": 12.5,
+  "file_size_bytes": 26567,
+  "first_last_pixel_delta": 4.614542643229167,
+  "frame_count": 12,
+  "frame_durations_ms": [
+    80,
+    80,
+    80,
+    80,
+    80,
+    80,
+    80,
+    80,
+    80,
+    80,
+    80,
+    80
+  ],
+  "height": 128,
+  "loop_count": 0,
+  "mean_adjacent_pixel_delta": 3.9805316347064403,
+  "schema_version": "1.0.0",
+  "total_duration_ms": 960,
+  "unique_frame_count": 12,
+  "width": 128
+}

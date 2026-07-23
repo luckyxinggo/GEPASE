@@ -1,0 +1,44 @@
+{
+  "schema_version": "1.0.0",
+  "stage_id": "R1",
+  "status": "converged_components_integration_pending",
+  "authoritative_models": {
+    "eval_work_item": "gepase.evals.work_items.EvalWorkItem",
+    "execution_bundle": "gepase.evals.work_items.ExecutionBundle",
+    "package_candidate": "gepase.optimizer.candidate.PackageCandidate",
+    "package_patch": "gepase.mutation.schema.PackagePatch",
+    "package_graph": "gepase.package.ir.PackageGraph",
+    "task_score_vector": "gepase.evals.scores.TaskScoreVector",
+    "gate_decision": "gepase.optimizer.acceptance.models.GateDecision",
+    "evolution_pool": "gepase.store.evolution_pool.EvolutionPoolEntry",
+    "merge_contract": "gepase.optimizer.evolution.models.MergeParentSetSnapshot"
+  },
+  "entrypoints": {
+    "cli": "gepase.cli.app:app",
+    "evaluation": "gepase.evals.engine.MultiFidelityEvalEngine",
+    "python_api": "gepase.__all__",
+    "agent_adapter": ".agents/skills/gepase-orchestrator/"
+  },
+  "flow": [
+    ["cli_or_api", "MultiFidelityEvalEngine"],
+    ["MultiFidelityEvalEngine", "EvalWorkItem"],
+    ["EvalWorkItem", "isolated_agent_host"],
+    ["isolated_agent_host", "ExecutionBundle"],
+    ["ExecutionBundle", "ledger_and_EvaluationRecord"],
+    ["ledger_and_EvaluationRecord", "TaskScoreVector"],
+    ["TaskScoreVector", "GEPA_adapter_and_ASI"],
+    ["GEPA_adapter_and_ASI", "PackageGraph_selector"],
+    ["PackageGraph_selector", "PackagePatch"],
+    ["PackagePatch", "atomic_apply_and_rollback"],
+    ["atomic_apply_and_rollback", "GateDecision"],
+    ["GateDecision", "EvolutionPool_and_deployable_frontier"],
+    ["EvolutionPool_and_deployable_frontier", "same_package_merge_contract"],
+    ["same_package_merge_contract", "MultiFidelityEvalEngine"]
+  ],
+  "not_yet_integrated": [
+    "R3 role-isolated grading and TaskScoreVector aggregation",
+    "R4 single evolution state machine",
+    "R5 final Chinese HTML report"
+  ],
+  "effect_claim": false
+}

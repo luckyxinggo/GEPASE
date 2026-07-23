@@ -1,0 +1,22 @@
+{
+  "candidate_snapshot_hash": "20232f3aeb397f28e32d38cc016ce6dbffa2112effd52813b0cbec243c1307ce",
+  "efficiency": 0.8275150833333333,
+  "evidence_refs": [
+    "artifacts/runs/r3-slack-gif-creator-paired/records/record-98d7627b1e837b4daa44c097.json",
+    "artifacts/runs/r3-slack-gif-creator-paired/records/record-610e1b89b623050a749b6b8a.json",
+    "artifacts/runs/r3-slack-gif-creator-paired/deterministic/work-18b797bfd1094a2c7da4ec6b.json",
+    "artifacts/runs/r3-slack-gif-creator-paired/grader-submissions/grader-work-42977cdcf4fd672f597014be.json",
+    "artifacts/runs/r3-slack-gif-creator-paired/e0-package-record.json",
+    "artifacts/runs/r3-slack-gif-creator-paired/comparator-reconciliation/functional-validation-efficiency-007.json"
+  ],
+  "output_quality": 0.8768,
+  "package_quality": 1.0,
+  "pair_id": "pair-d45dc9a03ac7844ef21a97e7",
+  "reliability": 0.9,
+  "schema_version": "1.0.0",
+  "scoring_policy_ref": "configs/canaries/slack-gif-creator-r3-scoring.json",
+  "skill_gain": 0.0,
+  "task_correctness": 0.85,
+  "task_id": "functional-validation-efficiency-007",
+  "variant": "no-skill"
+}

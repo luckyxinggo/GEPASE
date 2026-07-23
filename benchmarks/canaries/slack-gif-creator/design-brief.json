@@ -1,0 +1,32 @@
+{
+  "brief_id": "slack-gif-creator-r2-v1",
+  "coverage_notes_zh": [
+    "分别覆盖 128×128 Slack emoji 与 480×480 message GIF。",
+    "至少一个 case 必须使用本地输入图片，而不是只从空白画布生成。",
+    "文字可读性、缓动表现、循环连续性、时长和文件体积必须有独立证据。",
+    "功能任务应允许创作差异，不能把固定像素模板当作唯一正确答案。"
+  ],
+  "forbidden_design_shortcuts": [
+    "不得用 selected_action/expected_action 代替 GIF 任务执行。",
+    "不得让 Executor 看到 expectations、rubric、expected answer 或 sibling output。",
+    "不得只以文件存在作为确定性正确性证据。",
+    "不得把 trigger 指标混入 functional score。"
+  ],
+  "language": "zh-CN",
+  "minimum_functional_cases": 8,
+  "minimum_train_cases": 5,
+  "minimum_trigger_cases_per_kind": 6,
+  "minimum_validation_cases": 3,
+  "required_functional_families": [
+    "emoji_animation",
+    "message_gif",
+    "input_image_animation",
+    "text_readability",
+    "easing_motion",
+    "looping_timing",
+    "quality_efficiency"
+  ],
+  "required_output_media_types": [
+    "image/gif"
+  ]
+}

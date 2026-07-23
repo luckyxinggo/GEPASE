@@ -1,0 +1,193 @@
+{
+  "decisions": [
+    {
+      "case_id": "trigger-positive-001",
+      "case_type": "trigger",
+      "comment_zh": "明确覆盖 128×128 Slack 动态表情核心请求。",
+      "decision": "approve",
+      "edited_case": null
+    },
+    {
+      "case_id": "trigger-positive-002",
+      "case_type": "trigger",
+      "comment_zh": "覆盖输入图像动画化与 Slack reaction 场景。",
+      "decision": "approve",
+      "edited_case": null
+    },
+    {
+      "case_id": "trigger-positive-003",
+      "case_type": "trigger",
+      "comment_zh": "覆盖 480×480 Slack 消息状态动画。",
+      "decision": "approve",
+      "edited_case": null
+    },
+    {
+      "case_id": "trigger-positive-004",
+      "case_type": "trigger",
+      "comment_zh": "覆盖 Slack GIF 体积和循环质量优化。",
+      "decision": "approve",
+      "edited_case": null
+    },
+    {
+      "case_id": "trigger-positive-005",
+      "case_type": "trigger",
+      "comment_zh": "覆盖文字脉冲与循环衔接请求。",
+      "decision": "approve",
+      "edited_case": null
+    },
+    {
+      "case_id": "trigger-positive-006",
+      "case_type": "trigger",
+      "comment_zh": "覆盖 Slack 消息庆祝粒子 GIF。",
+      "decision": "approve",
+      "edited_case": null
+    },
+    {
+      "case_id": "trigger-negative-001",
+      "case_type": "trigger",
+      "comment_zh": "静态 PNG 明确排除动画 GIF。",
+      "decision": "approve",
+      "edited_case": null
+    },
+    {
+      "case_id": "trigger-negative-002",
+      "case_type": "trigger",
+      "comment_zh": "MP4 视频剪辑不属于本 Skill。",
+      "decision": "approve",
+      "edited_case": null
+    },
+    {
+      "case_id": "trigger-negative-003",
+      "case_type": "trigger",
+      "comment_zh": "CSS 网页动画不产出 GIF。",
+      "decision": "approve",
+      "edited_case": null
+    },
+    {
+      "case_id": "trigger-negative-004",
+      "case_type": "trigger",
+      "comment_zh": "Telegram WEBP 贴纸平台和媒介均不匹配。",
+      "decision": "approve",
+      "edited_case": null
+    },
+    {
+      "case_id": "trigger-negative-005",
+      "case_type": "trigger",
+      "comment_zh": "纯文本邮件任务不需要动画能力。",
+      "decision": "approve",
+      "edited_case": null
+    },
+    {
+      "case_id": "trigger-negative-006",
+      "case_type": "trigger",
+      "comment_zh": "静态 PDF 数据图不属于 GIF 创作。",
+      "decision": "approve",
+      "edited_case": null
+    },
+    {
+      "case_id": "trigger-boundary-001",
+      "case_type": "trigger",
+      "comment_zh": "将未指定 Slack 的通用聊天 GIF 保留为高风险负边界，便于检验平台特异性。",
+      "decision": "approve",
+      "edited_case": null
+    },
+    {
+      "case_id": "trigger-boundary-002",
+      "case_type": "trigger",
+      "comment_zh": "虽未明说 GIF，但 Slack reaction 动画交付足以触发。",
+      "decision": "approve",
+      "edited_case": null
+    },
+    {
+      "case_id": "trigger-boundary-003",
+      "case_type": "trigger",
+      "comment_zh": "单帧 PNG 明确形成 Slack 相关但功能不匹配的边界。",
+      "decision": "approve",
+      "edited_case": null
+    },
+    {
+      "case_id": "trigger-boundary-004",
+      "case_type": "trigger",
+      "comment_zh": "Slack 动态 emoji 专属设计知识应触发。",
+      "decision": "approve",
+      "edited_case": null
+    },
+    {
+      "case_id": "trigger-boundary-005",
+      "case_type": "trigger",
+      "comment_zh": "Discord 体积限制构成平台相邻但不触发的验证边界。",
+      "decision": "approve",
+      "edited_case": null
+    },
+    {
+      "case_id": "trigger-boundary-006",
+      "case_type": "trigger",
+      "comment_zh": "输入附件动画化和 Slack 上传目标构成充分触发信号。",
+      "decision": "approve",
+      "edited_case": null
+    },
+    {
+      "case_id": "functional-train-emoji-bounce-001",
+      "case_type": "functional",
+      "comment_zh": "任务、fixture、技术证据、动作轨迹和主观 rubric 相互一致。",
+      "decision": "approve",
+      "edited_case": null
+    },
+    {
+      "case_id": "functional-train-message-status-002",
+      "case_type": "functional",
+      "comment_zh": "覆盖 480 消息 GIF、阶段顺序、OCR 可读性和状态叙事。",
+      "decision": "approve",
+      "edited_case": null
+    },
+    {
+      "case_id": "functional-train-input-badge-003",
+      "case_type": "functional",
+      "comment_zh": "真实 PPM 输入与拓扑、配色、越位回稳证据形成闭环。",
+      "decision": "approve",
+      "edited_case": null
+    },
+    {
+      "case_id": "functional-train-text-readable-004",
+      "case_type": "functional",
+      "comment_zh": "覆盖文本存在、可读时间、对比度、安全区和视觉层级。",
+      "decision": "approve",
+      "edited_case": null
+    },
+    {
+      "case_id": "functional-train-easing-orbit-005",
+      "case_type": "functional",
+      "comment_zh": "弧线偏离和末段位移下降为 easing 提供可量化证据。",
+      "decision": "approve",
+      "edited_case": null
+    },
+    {
+      "case_id": "functional-validation-loop-sparkles-006",
+      "case_type": "functional",
+      "comment_zh": "validation 覆盖循环接缝、周期节奏与稳定视觉锚点。",
+      "decision": "approve",
+      "edited_case": null
+    },
+    {
+      "case_id": "functional-validation-efficiency-007",
+      "case_type": "functional",
+      "comment_zh": "validation 独立覆盖体积、帧率、时长与视觉质量权衡。",
+      "decision": "approve",
+      "edited_case": null
+    },
+    {
+      "case_id": "functional-validation-pulse-text-008",
+      "case_type": "functional",
+      "comment_zh": "validation 覆盖小尺寸文字、指定配色、周期脉冲和循环衔接。",
+      "decision": "approve",
+      "edited_case": null
+    }
+  ],
+  "draft_hash": "8f249005e7f9ce57ed0bb0c5212cbc392d79e6710997e2651f4598fdd087128b",
+  "plan_id": "evalplan-slack-gif-creator-r1",
+  "review_id": "review-r2-agent-assisted-20260721",
+  "reviewer_id": "codex-r2-maintainer-review",
+  "reviewer_kind": "agent-assisted",
+  "schema_version": "1.0.0",
+  "submitted_at": "2026-07-21T10:42:43Z"
+}

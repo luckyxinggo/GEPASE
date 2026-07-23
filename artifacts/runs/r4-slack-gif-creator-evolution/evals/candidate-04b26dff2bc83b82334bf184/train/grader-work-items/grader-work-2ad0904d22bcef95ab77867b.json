@@ -1,0 +1,54 @@
+{
+  "blind_artifact": {
+    "artifact": {
+      "media_type": "image/gif",
+      "path": "emoji_star_bounce.gif",
+      "sha256": "aec6c7a53990316b97461ee4078db0d3dee59d3c0dfde80d338ed516e3d0c675",
+      "size_bytes": 56422
+    },
+    "artifact_root": "artifacts/runs/r4-slack-gif-creator-evolution/evals/candidate-04b26dff2bc83b82334bf184/train/workspaces/work-c0ff710d24f738bfb0ae36c6",
+    "blind_id": "blind-fda0d3cd24bcd20c73f4a87e",
+    "contact_sheet_ref": "artifacts/runs/r4-slack-gif-creator-evolution/evals/candidate-04b26dff2bc83b82334bf184/train/derived/work-c0ff710d24f738bfb0ae36c6/contact-sheet.png",
+    "inspection_ref": "artifacts/runs/r4-slack-gif-creator-evolution/evals/candidate-04b26dff2bc83b82334bf184/train/blind-inspections/blind-fda0d3cd24bcd20c73f4a87e.json"
+  },
+  "expected_output_zh": "一个高对比、轮廓清楚的黄色星星落地反弹动画，尺寸、时长与循环元数据适合 Slack emoji，同时允许具体光影和反弹幅度存在创作差异。",
+  "forbidden_inputs": [
+    "variant identity",
+    "candidate identity",
+    "sibling output",
+    "expected winner",
+    "executor conversation"
+  ],
+  "grader_work_id": "grader-work-2ad0904d22bcef95ab77867b",
+  "role": "independent_grader",
+  "rubric": [
+    {
+      "criterion_id": "emoji-bounce-clarity",
+      "description_zh": "星星在小尺寸下轮廓鲜明，描边、高光和背景对比支持快速识别。",
+      "label_zh": "主体清晰度",
+      "weight": 0.25
+    },
+    {
+      "criterion_id": "emoji-bounce-dynamics",
+      "description_zh": "落下、触地、一次反弹和收稳的节奏自然，具有重量感。",
+      "label_zh": "反弹表现",
+      "weight": 0.3
+    },
+    {
+      "criterion_id": "emoji-bounce-polish",
+      "description_zh": "渐变、配色与细节形成完整设计，而非占位图形。",
+      "label_zh": "视觉完成度",
+      "weight": 0.25
+    },
+    {
+      "criterion_id": "emoji-bounce-slack",
+      "description_zh": "循环、尺寸与播放节奏适合在 Slack 表情场景中反复观看。",
+      "label_zh": "Slack 适用性",
+      "weight": 0.2
+    }
+  ],
+  "schema_version": "1.0.0",
+  "submission_schema_ref": "schemas/independent_grader_submission.schema.json",
+  "task_id": "functional-train-emoji-bounce-001",
+  "task_prompt": "请依据随附配置从空白画布创作一个 Slack 表情 GIF：一颗带粗描边和小高光的黄色五角星从上方落下，只反弹一次后稳稳停住；背景使用深海军蓝到靛蓝渐变。成品应可直接作为 Slack emoji 上传，并保存为指定 GIF。"
+}

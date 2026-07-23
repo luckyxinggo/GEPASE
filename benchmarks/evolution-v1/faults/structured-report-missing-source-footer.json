@@ -1,0 +1,17 @@
+{
+  "schema_version": "1.0.0",
+  "fault_id": "structured-report-missing-source-footer",
+  "family": "behavioral_contract_omission",
+  "base_path": "scripts/render_report.py",
+  "target_locator": "function/render",
+  "transformation": "replace provenance footer with an empty string",
+  "expected_failed_assertions": [
+    "source-footer-present",
+    "source-value-preserved"
+  ],
+  "allowed_splits": [
+    "train",
+    "validation"
+  ],
+  "test_access_count": 0
+}

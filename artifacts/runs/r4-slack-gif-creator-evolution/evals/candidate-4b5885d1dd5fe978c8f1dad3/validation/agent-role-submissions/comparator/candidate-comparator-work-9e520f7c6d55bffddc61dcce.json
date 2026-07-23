@@ -1,0 +1,45 @@
+{
+  "schema_version": "1.0.0",
+  "submission_id": "candidate-comparator-submission-9e520f7c6d55bffddc61dcce-ba",
+  "comparator_work_id": "candidate-comparator-work-9e520f7c6d55bffddc61dcce",
+  "role_run": {
+    "host": "codex",
+    "model": "gpt-5.6-sol",
+    "context_id": "ctx-r4-cmp-m-loop-ba-9e520f7c6d55bffddc61dcce",
+    "host_task_id": "/root/r4_cmp_m_loop_ba",
+    "usage": {
+      "input_tokens": 9200,
+      "output_tokens": 1300,
+      "tool_calls": 10,
+      "duration_ms": 322000,
+      "token_count_kind": "estimated"
+    },
+    "started_at": "2026-07-22T10:52:30Z",
+    "finished_at": "2026-07-22T10:57:52Z"
+  },
+  "winner": "left",
+  "confidence": 0.94,
+  "criteria": [
+    {
+      "criterion_id": "loop-continuity",
+      "preference": "left",
+      "rationale_zh": "左侧首尾像素差为 1.552，低于自身平均相邻帧差 1.675，接缝变化落在正常运动幅度内；右侧首尾差为 1.993，略高于自身平均相邻帧差 1.905。接触表中左侧末段火花状态也能自然回接开头，因此接缝更难察觉。"
+    },
+    {
+      "criterion_id": "loop-rhythm",
+      "preference": "left",
+      "rationale_zh": "左侧在 18 个唯一帧中让左、上、右三颗火花依次增强、达到峰值并消退，峰值之间有适度交叠，节奏连贯而不僵硬；右侧虽也按三段依次闪烁，但仅 12 个唯一帧，亮度起落更陡，序列感更机械。"
+    },
+    {
+      "criterion_id": "loop-stability",
+      "preference": "left",
+      "rationale_zh": "左侧圆环在各抽样帧中轮廓、位置与尺度保持清楚一致，内部留白干净，外围火花不会破坏视觉锚点。右侧圆环主体同样稳定，但环内移动的白色亮点增加了中心区域的动态干扰，因此左侧更符合中央圆环稳定的要求。"
+    },
+    {
+      "criterion_id": "loop-visual",
+      "preference": "left",
+      "rationale_zh": "左侧以紫蓝圆环配合粉、金、青三色火花，渐变、辉光和抗锯齿层次细腻，暗色背景下醒目且构图均衡；右侧对比度强，但像素阶梯与粗颗粒辉光更明显，中心白点也稍显突兀，整体精致度不及左侧。"
+    }
+  ],
+  "rationale_zh": "左侧在四项标准上均占优。量化盲检显示其循环接缝变化低于正常相邻帧变化，并以更多唯一帧呈现更渐进的三火花相位；视觉证据同时显示其圆环锚点更纯净、配色与辉光更精致。右侧满足基本尺寸、帧时长与无限循环要求，但接缝相对更突出、节奏更机械，且环内移动亮点削弱了中心稳定感。"
+}

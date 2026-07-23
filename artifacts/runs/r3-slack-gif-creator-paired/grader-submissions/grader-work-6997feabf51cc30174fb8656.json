@@ -1,0 +1,67 @@
+{
+  "criterion_grades": [
+    {
+      "criterion_id": "orbit-path",
+      "evidence_refs": [
+        "artifacts/runs/r3-slack-gif-creator-paired/workspaces/work-8b18ac4a317bfa0522d70aca/satellite_orbit_ease.gif",
+        "artifacts/runs/r3-slack-gif-creator-paired/derived/work-8b18ac4a317bfa0522d70aca/contact-sheet.png"
+      ],
+      "rationale_zh": "逐帧可见卫星从左下方上升，沿画面上缘拱形轨迹绕行后落向行星右侧；横纵坐标同时持续变化，弧线轮廓明确，不像直线平移。",
+      "score": 0.98
+    },
+    {
+      "criterion_id": "orbit-easing",
+      "evidence_refs": [
+        "artifacts/runs/r3-slack-gif-creator-paired/workspaces/work-8b18ac4a317bfa0522d70aca/satellite_orbit_ease.gif",
+        "artifacts/runs/r3-slack-gif-creator-paired/derived/work-8b18ac4a317bfa0522d70aca/contact-sheet.png",
+        "artifacts/runs/r3-slack-gif-creator-paired/blind-inspections/blind-f7fa2f051621efc97b762a3b.json"
+      ],
+      "rationale_zh": "20 个等时长独立帧中，末段相邻画面的卫星位移明显逐步缩小，并在右侧目标处平顺收敛；减速连续、无单帧突停。循环回到起点时存在位置跳转，但不影响停靠段的 ease-out 判定。",
+      "score": 0.94
+    },
+    {
+      "criterion_id": "orbit-composition",
+      "evidence_refs": [
+        "artifacts/runs/r3-slack-gif-creator-paired/workspaces/work-8b18ac4a317bfa0522d70aca/satellite_orbit_ease.gif",
+        "artifacts/runs/r3-slack-gif-creator-paired/derived/work-8b18ac4a317bfa0522d70aca/contact-sheet.png"
+      ],
+      "rationale_zh": "橙色行星稳居中心并形成强主视觉，青色卫星在外围轨道上保持清楚辨识；轨迹主要利用画面上半部留白，停靠区域没有与行星主体拥挤重叠。",
+      "score": 0.95
+    },
+    {
+      "criterion_id": "orbit-craft",
+      "evidence_refs": [
+        "artifacts/runs/r3-slack-gif-creator-paired/workspaces/work-8b18ac4a317bfa0522d70aca/satellite_orbit_ease.gif",
+        "artifacts/runs/r3-slack-gif-creator-paired/derived/work-8b18ac4a317bfa0522d70aca/contact-sheet.png",
+        "artifacts/runs/r3-slack-gif-creator-paired/blind-inspections/blind-f7fa2f051621efc97b762a3b.json"
+      ],
+      "rationale_zh": "青橙对比鲜明，卫星、带光晕与环带的行星、轨迹线和疏密有致的星点共同构成完整太空场景；128×128 尺寸、2 秒循环和清晰轮廓适合 Slack 表情使用。",
+      "score": 0.96
+    }
+  ],
+  "factual_claims_zh": [
+    "盲检记录显示画布为 128×128，共 20 个唯一帧，帧时长均为 100 毫秒，总时长 2000 毫秒，并设置循环播放。",
+    "接触表中卫星从左下方沿上拱弧线移动至行星右侧，最后若干等时长采样帧的位移逐步缩小。",
+    "画面包含居中的橙色带环行星、青色小卫星、蓝色弧形轨迹和星空背景。"
+  ],
+  "feedback_zh": "成品对弧线路径与末段 ease-out 的表达都很强，构图和像素风细节也已达到完整可用水平。若要进一步优化循环观感，可设计回程或过渡帧，减弱停靠末帧直接跳回起始位置的突变。",
+  "grader_work_id": "grader-work-6997feabf51cc30174fb8656",
+  "overall_score": 0.958,
+  "role_run": {
+    "context_id": "/root/r3_grade_6997fe",
+    "finished_at": "2026-07-21T16:05:24Z",
+    "host": "codex",
+    "host_task_id": "/root/r3_grade_6997fe",
+    "model": "gpt-5.6-sol",
+    "started_at": "2026-07-21T16:01:19Z",
+    "usage": {
+      "duration_ms": 245000,
+      "input_tokens": 9200,
+      "output_tokens": 1800,
+      "token_count_kind": "estimated",
+      "tool_calls": 7
+    }
+  },
+  "schema_version": "1.0.0",
+  "submission_id": "grade-submission-6997feabf51cc30174fb8656"
+}

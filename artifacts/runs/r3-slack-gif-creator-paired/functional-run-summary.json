@@ -1,0 +1,159 @@
+{
+  "frozen_plan_hash": "1893ad9a08978f2a8f107981a9a032c7581d08082926ee52276bd5feba2df950",
+  "generated_at": "2026-07-21T16:51:13.746071Z",
+  "pair_summaries": [
+    {
+      "comparator_consistent": null,
+      "comparator_margin": null,
+      "correctness_delta": -0.25,
+      "no_skill_vector_ref": "artifacts/runs/r3-slack-gif-creator-paired/task-score-vectors/work-ba5bed1fe1f6ee2b5cd0648b.json",
+      "original_vector_ref": "artifacts/runs/r3-slack-gif-creator-paired/task-score-vectors/work-8b18ac4a317bfa0522d70aca.json",
+      "pair_id": "pair-b45bddd2be22dd318d8d737b",
+      "paired_basis_delta": -0.1276,
+      "quality_delta": 0.02200000000000002,
+      "schema_version": "1.0.0",
+      "skill_gain": -0.1276,
+      "split": "train",
+      "task_id": "functional-train-easing-orbit-005"
+    },
+    {
+      "comparator_consistent": null,
+      "comparator_margin": null,
+      "correctness_delta": 0.19999999999999996,
+      "no_skill_vector_ref": "artifacts/runs/r3-slack-gif-creator-paired/task-score-vectors/work-46dec20be705aa5122c31a80.json",
+      "original_vector_ref": "artifacts/runs/r3-slack-gif-creator-paired/task-score-vectors/work-aeaea033cebc5f6b4e948b5e.json",
+      "pair_id": "pair-06eaafe5031550bf100734fc",
+      "paired_basis_delta": 0.0731,
+      "quality_delta": -0.08199999999999996,
+      "schema_version": "1.0.0",
+      "skill_gain": 0.0731,
+      "split": "train",
+      "task_id": "functional-train-emoji-bounce-001"
+    },
+    {
+      "comparator_consistent": null,
+      "comparator_margin": null,
+      "correctness_delta": 0.0,
+      "no_skill_vector_ref": "artifacts/runs/r3-slack-gif-creator-paired/task-score-vectors/work-b836a5a0009428cefa51ce4f.json",
+      "original_vector_ref": "artifacts/runs/r3-slack-gif-creator-paired/task-score-vectors/work-4d807d3a99ff3d159ec6fb29.json",
+      "pair_id": "pair-ccbb5f6bb581d628f7d2016b",
+      "paired_basis_delta": -0.04117499999999996,
+      "quality_delta": -0.09149999999999991,
+      "schema_version": "1.0.0",
+      "skill_gain": -0.04117499999999996,
+      "split": "train",
+      "task_id": "functional-train-input-badge-003"
+    },
+    {
+      "comparator_consistent": null,
+      "comparator_margin": null,
+      "correctness_delta": 0.0,
+      "no_skill_vector_ref": "artifacts/runs/r3-slack-gif-creator-paired/task-score-vectors/work-a2e2a2aedb4cf5049c623860.json",
+      "original_vector_ref": "artifacts/runs/r3-slack-gif-creator-paired/task-score-vectors/work-9a981b04ae2ac3fb91d31911.json",
+      "pair_id": "pair-c99631e8bbb8ecc1465efcc2",
+      "paired_basis_delta": 0.00022500000000002517,
+      "quality_delta": 0.000500000000000056,
+      "schema_version": "1.0.0",
+      "skill_gain": 0.00022500000000002517,
+      "split": "train",
+      "task_id": "functional-train-message-status-002"
+    },
+    {
+      "comparator_consistent": null,
+      "comparator_margin": null,
+      "correctness_delta": 0.0,
+      "no_skill_vector_ref": "artifacts/runs/r3-slack-gif-creator-paired/task-score-vectors/work-02f7b78398c181ede25632a6.json",
+      "original_vector_ref": "artifacts/runs/r3-slack-gif-creator-paired/task-score-vectors/work-229b28b7e4ec64d79ddc725d.json",
+      "pair_id": "pair-fd02d838ef78b4c30f351032",
+      "paired_basis_delta": 0.006524999999999981,
+      "quality_delta": 0.014499999999999957,
+      "schema_version": "1.0.0",
+      "skill_gain": 0.006524999999999981,
+      "split": "train",
+      "task_id": "functional-train-text-readable-004"
+    },
+    {
+      "comparator_consistent": false,
+      "comparator_margin": 0.0,
+      "correctness_delta": 0.0,
+      "no_skill_vector_ref": "artifacts/runs/r3-slack-gif-creator-paired/task-score-vectors/work-18b797bfd1094a2c7da4ec6b.json",
+      "original_vector_ref": "artifacts/runs/r3-slack-gif-creator-paired/task-score-vectors/work-06e0ca3901e49580a002d129.json",
+      "pair_id": "pair-d45dc9a03ac7844ef21a97e7",
+      "paired_basis_delta": 0.0012599999999999612,
+      "quality_delta": 0.0027999999999999137,
+      "schema_version": "1.0.0",
+      "skill_gain": 0.0012599999999999612,
+      "split": "validation",
+      "task_id": "functional-validation-efficiency-007"
+    },
+    {
+      "comparator_consistent": true,
+      "comparator_margin": -1.0,
+      "correctness_delta": 0.0,
+      "no_skill_vector_ref": "artifacts/runs/r3-slack-gif-creator-paired/task-score-vectors/work-a90881ca08a8679475629c61.json",
+      "original_vector_ref": "artifacts/runs/r3-slack-gif-creator-paired/task-score-vectors/work-b33fad8398ab056166627930.json",
+      "pair_id": "pair-3c61dd0ee9d0c3845a03d9ad",
+      "paired_basis_delta": -0.09125999999999994,
+      "quality_delta": -0.20279999999999987,
+      "schema_version": "1.0.0",
+      "skill_gain": -0.09125999999999994,
+      "split": "validation",
+      "task_id": "functional-validation-loop-sparkles-006"
+    },
+    {
+      "comparator_consistent": true,
+      "comparator_margin": -1.0,
+      "correctness_delta": -0.15000000000000002,
+      "no_skill_vector_ref": "artifacts/runs/r3-slack-gif-creator-paired/task-score-vectors/work-9eea3d6a86124113c1f705e6.json",
+      "original_vector_ref": "artifacts/runs/r3-slack-gif-creator-paired/task-score-vectors/work-f659fabc30459ff0d09ad348.json",
+      "pair_id": "pair-f301d441ade059631d4c229e",
+      "paired_basis_delta": -0.18491999999999997,
+      "quality_delta": -0.2275999999999999,
+      "schema_version": "1.0.0",
+      "skill_gain": -0.18491999999999997,
+      "split": "validation",
+      "task_id": "functional-validation-pulse-text-008"
+    }
+  ],
+  "reliability": {
+    "no-skill": {
+      "failure_rate": 0.0,
+      "maximum": 0.9,
+      "mean": 0.9,
+      "minimum": 0.9,
+      "outlier_count": 0,
+      "sample_count": 8,
+      "std": 0.0
+    },
+    "original": {
+      "failure_rate": 0.0,
+      "maximum": 0.9,
+      "mean": 0.9,
+      "minimum": 0.9,
+      "outlier_count": 0,
+      "sample_count": 8,
+      "std": 0.0
+    }
+  },
+  "run_id": "r3-slack-gif-creator-paired",
+  "schema_version": "1.0.0",
+  "scoring_policy_ref": "configs/canaries/slack-gif-creator-r3-scoring.json",
+  "trigger_metrics_ref": "artifacts/runs/r3-slack-gif-creator-paired/trigger-eval-separation.json",
+  "trigger_mixed_into_functional": false,
+  "usage": {
+    "no-skill": {
+      "duration_ms": 1110000,
+      "input_tokens": 28000,
+      "output_tokens": 9600,
+      "token_count_kind": "estimated",
+      "tool_calls": 64
+    },
+    "original": {
+      "duration_ms": 1230000,
+      "input_tokens": 36000,
+      "output_tokens": 12000,
+      "token_count_kind": "estimated",
+      "tool_calls": 72
+    }
+  }
+}

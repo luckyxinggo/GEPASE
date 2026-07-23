@@ -1,0 +1,54 @@
+{
+  "blind_artifact": {
+    "artifact": {
+      "media_type": "image/gif",
+      "path": "uploaded_badge_lift.gif",
+      "sha256": "132398ee855ea71ab7307867797f96679f8269e960f0419a537d6020c5bb6ad1",
+      "size_bytes": 57837
+    },
+    "artifact_root": "artifacts/runs/r4-slack-gif-creator-evolution/evals/candidate-4b5885d1dd5fe978c8f1dad3/train/workspaces/work-186e0f9e7f60f140cdb4fb6b",
+    "blind_id": "blind-87b12b10bad43aae7d4a65d1",
+    "contact_sheet_ref": "artifacts/runs/r4-slack-gif-creator-evolution/evals/candidate-4b5885d1dd5fe978c8f1dad3/train/derived/work-186e0f9e7f60f140cdb4fb6b/contact-sheet.png",
+    "inspection_ref": "artifacts/runs/r4-slack-gif-creator-evolution/evals/candidate-4b5885d1dd5fe978c8f1dad3/train/blind-inspections/blind-87b12b10bad43aae7d4a65d1.json"
+  },
+  "expected_output_zh": "一个确实由随附 PPM 徽章派生的 Slack 表情动画，原始青色轮廓与橙色核心可追溯，上浮后轻微越位再稳定；允许缩放算法、背景和装饰存在差异。",
+  "forbidden_inputs": [
+    "variant identity",
+    "candidate identity",
+    "sibling output",
+    "expected winner",
+    "executor conversation"
+  ],
+  "grader_work_id": "grader-work-304708329d082d2f4fe8c87c",
+  "role": "independent_grader",
+  "rubric": [
+    {
+      "criterion_id": "badge-fidelity",
+      "description_zh": "源徽章轮廓、核心结构和青橙配色在动画中保持可辨认。",
+      "label_zh": "输入保真",
+      "weight": 0.35
+    },
+    {
+      "criterion_id": "badge-motion",
+      "description_zh": "上浮、轻微越位与回落稳定的动作连贯，并具有合适的缓动感。",
+      "label_zh": "越位回稳",
+      "weight": 0.3
+    },
+    {
+      "criterion_id": "badge-integration",
+      "description_zh": "背景和光效服务于输入主体，不遮挡或篡改关键特征。",
+      "label_zh": "画面融合",
+      "weight": 0.2
+    },
+    {
+      "criterion_id": "badge-emoji-ready",
+      "description_zh": "小尺寸下主体清晰，节奏和循环适合 Slack emoji。",
+      "label_zh": "表情可用性",
+      "weight": 0.15
+    }
+  ],
+  "schema_version": "1.0.0",
+  "submission_schema_ref": "schemas/independent_grader_submission.schema.json",
+  "task_id": "functional-train-input-badge-003",
+  "task_prompt": "请直接使用随附 PPM 徽章图像作为动画主体，而不是重新画一个替代品。依照配置将它放入 128×128 的 Slack emoji：徽章先上浮，略微越过最终高度，再回落稳定；保留原图的徽章轮廓以及青色、橙色关系，可增加不遮挡主体的背景或光效。输出指定 GIF。"
+}

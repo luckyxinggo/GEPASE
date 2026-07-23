@@ -1,0 +1,206 @@
+{
+  "actionable_side_information": {
+    "causal_contract": {
+      "required": true
+    },
+    "causal_targets": [
+      {
+        "allowed_operation_classes": [
+          "replace_markdown_block"
+        ],
+        "causal_path_node_ids": [
+          "node-46d940221fa8caf3b6c22d2c"
+        ],
+        "executable_target": false,
+        "expected_affected_assertions": [],
+        "expected_affected_metrics": [
+          "task_correctness",
+          "output_quality",
+          "skill_gain"
+        ],
+        "failure_evidence_ids": [
+          "artifacts/runs/r4-slack-gif-creator-evolution/reflection-submissions/reflection-work-ece74a14e2ca67757504c20b.json",
+          "artifacts/runs/r4-slack-gif-creator-evolution/train-admission/candidate-edf5f1aa07926ba5415f0442.json"
+        ],
+        "node_id": "node-46d940221fa8caf3b6c22d2c"
+      }
+    ],
+    "failure_evidence": {
+      "candidate_id": "candidate-edf5f1aa07926ba5415f0442",
+      "diagnosis_zh": "该任务的 skill_gain 从 -0.1276 降至 -0.26645，差值 -0.13885。分解后，task_correctness 从 0.75 降至 0.50，efficiency 从 0.816008 降至 0.415487，而 output_quality 仅从 0.958 微降至 0.955，reliability=0.9、package_quality=1.0 均不变；因此回归主要落在任务正确性与执行效率，不像是整体输出质量或包可用性故障。补丁节点把闭环设计、导出后双周期预览以及失败后的重导出/复检加入验证流程；轨道动画与闭环直接相关，统一出现的效率下降与该额外流程存在合理关联，也可能因注意力转向接缝而挤压任务约束落实。但白名单证据只给出聚合 typed vector，虽其中列出 E3/确定性与独立评分来源，却未提供可核对的逐条轨迹，故不能把正确性下降归因于补丁；这一部分仍可能是单次生成与执行方差。",
+      "kind": "rejected_train_candidate",
+      "paired_delta": -0.13885000000000003,
+      "recommendation_zh": "将该节点收敛为有界、一次性的导出后接缝检查，并明确先满足轨道几何、缓动和交付约束；仅在确有可见首尾跳变时才进入重导出与复检。用同一任务多次独立执行验证效率和正确性差异后，再判断是否保留这段强化指令。",
+      "reflection_summary_zh": "候选在 train 上 4/5 回归、1/5 改进。五个任务的共同信号是 efficiency 全部下降约 0.315 至 0.452，而 reliability 与 package_quality 完全不变；唯一补丁节点新增闭环设计、双周期预览、重导出和复检，因此一致的效率成本与补丁存在可解释关联，但现有聚合 typed vector 不能建立因果。正确性分别出现三降、一平、一升，output_quality 也有升有降，更符合任务实现与单次执行方差：其中 text-readable 的 +0.174675 由正确性 0.7→1.0 和质量 0.962→0.9835 驱动，却与补丁的接缝主题缺少直接机制。建议将补丁改为仅对确有周期运动和可见接缝的任务启用的一次性、有界验收，并通过同任务重复执行验证效率与正确性后再作候选判断。",
+      "task_id": "functional-train-easing-orbit-005"
+    },
+    "graph_slice": {
+      "nodes": [
+        {
+          "distance": 0,
+          "node_id": "node-46d940221fa8caf3b6c22d2c",
+          "rank": 1,
+          "reason": "failure seed",
+          "score": 1.2
+        },
+        {
+          "distance": 1,
+          "node_id": "node-390c19b0fbd4439b006d6a79",
+          "rank": 2,
+          "reason": "reverse contains dependency of node-46d940221fa8caf3b6c22d2c",
+          "score": 0.5
+        },
+        {
+          "distance": 4,
+          "node_id": "node-fddc99453114c3a40363b219",
+          "rank": 3,
+          "reason": "reverse contains dependency of node-ce609b198696eee0ac59fa35",
+          "score": 0.4
+        },
+        {
+          "distance": 2,
+          "node_id": "node-44a9519223abe9c140f2eb20",
+          "rank": 4,
+          "reason": "reverse contains dependency of node-390c19b0fbd4439b006d6a79",
+          "score": 0.333333
+        },
+        {
+          "distance": 3,
+          "node_id": "node-ce609b198696eee0ac59fa35",
+          "rank": 5,
+          "reason": "reverse contains dependency of node-44a9519223abe9c140f2eb20",
+          "score": 0.25
+        },
+        {
+          "distance": 5,
+          "node_id": "node-ad0ec7c5b1cfab9dc320d69b",
+          "rank": 6,
+          "reason": "reverse contains dependency of node-fddc99453114c3a40363b219",
+          "score": 0.166667
+        }
+      ],
+      "omitted_nodes": 0,
+      "package_id": "slack-gif-creator",
+      "schema_version": "1.0.0",
+      "seed_node_ids": [
+        "node-46d940221fa8caf3b6c22d2c"
+      ],
+      "token_estimate": 166
+    },
+    "preserve": [
+      "the rejected edit must not be copied implicitly",
+      "unrelated package behavior",
+      "public interfaces unless explicitly targeted"
+    ]
+  },
+  "allowed_operations": [
+    "replace_markdown_block"
+  ],
+  "edit_budget": {
+    "allow_file_topology_edits": false,
+    "allow_script_edits": true,
+    "max_added_files": 0,
+    "max_changed_files": 1,
+    "max_deleted_files": 0,
+    "max_operations": 1,
+    "max_total_replacement_chars": 24000
+  },
+  "evidence_refs": [
+    "artifacts/runs/r4-slack-gif-creator-evolution/reflection-submissions/reflection-work-ece74a14e2ca67757504c20b.json",
+    "artifacts/runs/r4-slack-gif-creator-evolution/train-admission/candidate-edf5f1aa07926ba5415f0442.json"
+  ],
+  "output_instructions": "Return only one typed, bounded PackagePatch for the exported seed target. Use the rejected-candidate reflection, do not reproduce the rejected edit, do not read held-out evidence, and do not edit files.",
+  "parent_candidate_id": "candidate-21242a10bcbaeb9631f3b2da",
+  "parent_content_hash": "ce42d8a837acf9feda9706a3418fc26a77c497d9615079e616b5fdc6870ef64e",
+  "parent_snapshot_hash": "ce42d8a837acf9feda9706a3418fc26a77c497d9615079e616b5fdc6870ef64e",
+  "rejected_history": [
+    {
+      "candidate_id": "candidate-edf5f1aa07926ba5415f0442",
+      "gate_reason_codes": [
+        "minibatch_regression"
+      ],
+      "mean_delta": -0.024154999999999992,
+      "patch_id": "patch-585677fdc0e6730315f1f1b5"
+    }
+  ],
+  "repair_attempt": 0,
+  "run_id": "r4-slack-gif-creator-evolution",
+  "schema_version": "1.0.0",
+  "selector": "graph_guided",
+  "targets": [
+    {
+      "content": "```python\nfrom core.validators import validate_gif, is_slack_ready\n\n# Detailed validation\npasses, info = validate_gif('my.gif', is_emoji=True, verbose=True)\n\n# Quick check\nif is_slack_ready('my.gif'):\n    print(\"Ready!\")\n```\n",
+      "content_hash": "951bd4e2b513b7780d40bda28c1ccf3e51c2945e2375f6a21a665517af6803f7",
+      "locator": "section/slack-gif-creator#1/available-utilities#1/validators-core-validators#1/block#2",
+      "node_id": "node-46d940221fa8caf3b6c22d2c",
+      "node_kind": "instruction",
+      "path": "SKILL.md",
+      "selection": {
+        "contributions": [
+          {
+            "contribution": 3.0,
+            "feature": "failure_coverage",
+            "raw_value": 1.0,
+            "weight": 3.0
+          },
+          {
+            "contribution": 2.0,
+            "feature": "inverse_distance",
+            "raw_value": 1.0,
+            "weight": 2.0
+          },
+          {
+            "contribution": 0.0,
+            "feature": "dynamic_access",
+            "raw_value": 0.0,
+            "weight": 1.4
+          },
+          {
+            "contribution": 1.2,
+            "feature": "diagnostic_severity",
+            "raw_value": 1.0,
+            "weight": 1.2
+          },
+          {
+            "contribution": 0.4,
+            "feature": "historical_yield",
+            "raw_value": 0.5,
+            "weight": 0.8
+          },
+          {
+            "contribution": 0.6,
+            "feature": "exploration_bonus",
+            "raw_value": 1.0,
+            "weight": 0.6
+          },
+          {
+            "contribution": -0.02941176,
+            "feature": "fan_out_risk",
+            "raw_value": 0.02941176,
+            "weight": -1.0
+          },
+          {
+            "contribution": -0.0,
+            "feature": "historical_regression",
+            "raw_value": 0.0,
+            "weight": -1.5
+          }
+        ],
+        "evidence_refs": [
+          "artifacts/runs/r4-slack-gif-creator-evolution/reflection-submissions/reflection-work-ece74a14e2ca67757504c20b.json",
+          "artifacts/runs/r4-slack-gif-creator-evolution/train-admission/candidate-edf5f1aa07926ba5415f0442.json"
+        ],
+        "high_blast_radius": false,
+        "locator": "section/slack-gif-creator#1/available-utilities#1/validators-core-validators#1/block#2",
+        "node_id": "node-46d940221fa8caf3b6c22d2c",
+        "path": "SKILL.md",
+        "rank": 1,
+        "reason_code": "graph_failure_impact_priority",
+        "score": 7.17058824
+      }
+    }
+  ],
+  "task_id": "functional-train-easing-orbit-005",
+  "work_id": "proposal-work-5a40b7944f1aeb8225714c6e",
+  "work_type": "package_patch_proposal"
+}

@@ -1,0 +1,215 @@
+{
+  "candidate_searches": 0,
+  "design_decisions": [
+    "Publish corrected R2-R5 evidence and R1-R5/S10 stage reports; omit superseded S-stage outputs and old proxy results.",
+    "Keep GitHub evidence separate from the compact Python sdist/wheel.",
+    "Use Agent-native by default and expose only a typed optional Headless routing boundary.",
+    "Do not run Agent roles, Headless APIs, candidate search, R3, or R4 during release verification."
+  ],
+  "finished_commit": "ea84ea8983509a91770932b9e21a74cd43235810",
+  "gate_results": [
+    {
+      "detail": "Legacy paths are absent and only the module entrypoint has zero inbound references.",
+      "gate_id": "S10-G01-targeted-cleanup",
+      "status": "passed"
+    },
+    {
+      "detail": "Bilingual READMEs, visuals, links, commands, and claim boundaries are present.",
+      "gate_id": "S10-G02-bilingual-public-surface",
+      "status": "passed"
+    },
+    {
+      "detail": "R1-R5/R2-R5 hashes, R5 Gates, canary provenance, and licenses verify.",
+      "gate_id": "S10-G03-sealed-evidence-and-attribution",
+      "status": "passed"
+    },
+    {
+      "detail": "Generated schemas are stable and the public/untracked surface has no secret/private-path findings.",
+      "gate_id": "S10-G04-schema-security-privacy",
+      "status": "passed"
+    },
+    {
+      "detail": "Ruff, Pyright, full pytest, compact build, and fresh offline wheel install pass.",
+      "gate_id": "S10-G05-full-regression-and-build",
+      "status": "passed"
+    },
+    {
+      "detail": "Public CLI, both provider configs, offline mock, report verification, and deploy pass.",
+      "gate_id": "S10-G06-cli-resume-report-deploy-smoke",
+      "status": "passed"
+    },
+    {
+      "detail": "README results exactly retain the one-canary and SKILL.md-only accepted-edit limits.",
+      "gate_id": "S10-G07-release-claim-boundary",
+      "status": "passed"
+    }
+  ],
+  "headless_provider_runs": 0,
+  "input_artifacts": [
+    {
+      "checked": 19,
+      "path": "artifacts/runs/r2-slack-gif-creator-evalplan",
+      "valid": true
+    },
+    {
+      "checked": 429,
+      "path": "artifacts/runs/r3-slack-gif-creator-paired",
+      "valid": true
+    },
+    {
+      "checked": 877,
+      "path": "artifacts/runs/r4-slack-gif-creator-evolution",
+      "valid": true
+    },
+    {
+      "checked": 20,
+      "path": "artifacts/runs/r5-slack-gif-creator-report",
+      "valid": true
+    },
+    {
+      "checked": 14,
+      "path": "artifacts/stages/R1",
+      "valid": true
+    },
+    {
+      "checked": 14,
+      "path": "artifacts/stages/R2",
+      "valid": true
+    },
+    {
+      "checked": 8,
+      "path": "artifacts/stages/R3",
+      "valid": true
+    },
+    {
+      "checked": 8,
+      "path": "artifacts/stages/R4",
+      "valid": true
+    },
+    {
+      "checked": 11,
+      "path": "artifacts/stages/R5",
+      "valid": true
+    }
+  ],
+  "known_issues": [
+    "Optimization effect is one Skill, one EvalPlan, one model snapshot, and one search run.",
+    "The accepted candidate changed one bounded SKILL.md node; no positive cross-file edit was observed.",
+    "Role-scoped Headless configuration is a validated interface; v0.1 does not ship a built-in API runtime.",
+    "R4 wall-clock budget overrun remains documented in state/stage evidence and was not rerun in S10."
+  ],
+  "metrics": {
+    "fresh_install_passed": true,
+    "machine_gates_passed": 7,
+    "machine_gates_total": 7,
+    "public_artifact_roots_verified": 9,
+    "public_schemas": 32,
+    "pytest_passed": 151,
+    "secret_scan_files": 5833,
+    "secret_scan_findings": 0,
+    "source_modules": 147,
+    "validation_mean_delta": 0.1242666666666667,
+    "validation_wins": 3
+  },
+  "output_artifacts": [
+    {
+      "media_type": "application/json",
+      "path": "preflight.json",
+      "sha256": "97e4cac99d0c064a709b7f4903f3ceb368748c9ccc071240c8373417b87daae9",
+      "size_bytes": 582
+    },
+    {
+      "media_type": "application/json",
+      "path": "cleanup-manifest.json",
+      "sha256": "676ce6c33ec2b0d56f82e6ebb0824f6313f6452418b7a7a991d3ef1b90b2e4cf",
+      "size_bytes": 1810
+    },
+    {
+      "media_type": "application/xml",
+      "path": "test-results.xml",
+      "sha256": "40fcc56769b7f7ce9fc97f15694ab82ad17298fce8c6a415c5095c0c34d28579",
+      "size_bytes": 20491
+    },
+    {
+      "media_type": "application/json",
+      "path": "release-manifest.json",
+      "sha256": "1a15e4a93656d8bf274946341104af02039b8a3ff88d16eef5b679d351b66486",
+      "size_bytes": 3729
+    },
+    {
+      "media_type": "application/json",
+      "path": "evidence/static-and-schema.json",
+      "sha256": "08992441179b9cd1743c527e50c10ef3326f3649aa545691ea34fdb892508e66",
+      "size_bytes": 360
+    },
+    {
+      "media_type": "application/json",
+      "path": "evidence/security-license-docs.json",
+      "sha256": "243d8e439fd6f30211814d38b8d73ee1f1379a786ebc11f2d31daa9b6cf3e2fa",
+      "size_bytes": 307
+    },
+    {
+      "media_type": "application/json",
+      "path": "evidence/public-artifacts.json",
+      "sha256": "c0d677070a71022146096658e7b835c46f4e4dd35041b6e7350a99dd8e7a3baf",
+      "size_bytes": 4820
+    },
+    {
+      "media_type": "application/json",
+      "path": "evidence/fresh-install.json",
+      "sha256": "dd7a27f323fa8ca63acd12c705b258bafe3a03ff0debc21529b83c55ae6ecd7c",
+      "size_bytes": 139
+    },
+    {
+      "media_type": "application/json",
+      "path": "evidence/reproduction-smoke.json",
+      "sha256": "1fcc164382555b02e100f532d5b0645469b25425394c779f467b7856a14cf70b",
+      "size_bytes": 1013
+    },
+    {
+      "media_type": "application/json",
+      "path": "evidence/s10-gates.json",
+      "sha256": "100486e7a38b19c3fe63d28b27c900f65f218b38013e92548cafaa8d9e4392bd",
+      "size_bytes": 1476
+    },
+    {
+      "media_type": "text/plain",
+      "path": "commands.log",
+      "sha256": "0d11c97c0d9d3fcc3c6bf9ff828617a426f3ebdb1df3319fe5f6aae468a42862",
+      "size_bytes": 434240
+    },
+    {
+      "media_type": "text/markdown",
+      "path": "external-validation.md",
+      "sha256": "ae18fd9cc65ee5be5c6cf3a082dea7065da0ea3df9d73b2bc91bfee8c1dde202",
+      "size_bytes": 355
+    },
+    {
+      "media_type": "text/markdown",
+      "path": "stage-summary.md",
+      "sha256": "b053350765ecdcf802be41dff718299cd273fe004cdb6686cdcc27a00e1cb307",
+      "size_bytes": 282
+    }
+  ],
+  "r3_reruns": 0,
+  "r4_reruns": 0,
+  "real_agent_runs": 0,
+  "schema_version": "1.0.0",
+  "source_tree_hash": "1bd8c7f65ef353b588e96af837c4c9874fbd3b74436d8c8804c5042246dc6505",
+  "source_tree_hash_scope": "current curated dirty worktree; private/ignored content excluded",
+  "stage_id": "S10",
+  "started_from_commit": "ea84ea8983509a91770932b9e21a74cd43235810",
+  "status": "complete",
+  "unlocks": [
+    "GitHub v0.1 release"
+  ],
+  "upstream_r5_machine_gates": {
+    "agent_calls": 0,
+    "deployable_candidate_id": "candidate-04b26dff2bc83b82334bf184",
+    "headless_provider_calls": 0,
+    "passed": 6,
+    "report_artifacts_checked": 20,
+    "total": 6,
+    "validation_mean_delta": 0.1242666666666667
+  }
+}

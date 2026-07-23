@@ -1,0 +1,51 @@
+{
+  "schema_version": "1.0.0",
+  "stage_id": "R4",
+  "captured_at": "2026-07-22T16:10:00+08:00",
+  "started_from_commit": "ea84ea8983509a91770932b9e21a74cd43235810",
+  "upstream_stage": {
+    "stage_id": "R3",
+    "status": "complete",
+    "report_ref": "artifacts/stages/R3/stage_report.json"
+  },
+  "worktree_policy": {
+    "dirty_entries_before_r4_start": 181,
+    "reset_run": false,
+    "clean_run": false,
+    "private_skill_modified": false,
+    "unknown_dirty_files_overwritten": false,
+    "existing_dirty_worktree_preserved": true
+  },
+  "scope": {
+    "canary": "anthropics/skills:skills/slack-gif-creator",
+    "source_package_ref": "benchmarks/canaries/slack-gif-creator/package",
+    "frozen_plan_hash": "1893ad9a08978f2a8f107981a9a032c7581d08082926ee52276bd5feba2df950",
+    "train_cases": 5,
+    "validation_cases": 3,
+    "required_mutation_branches": 2,
+    "required_same_package_merge_child": 1,
+    "evidence_tiers": ["E0", "E2", "E3"],
+    "e1_enabled": false,
+    "private_skills_in_scope": false,
+    "external_llm_api_allowed": false,
+    "agent_native_roles_allowed": true
+  },
+  "baseline_regression": {
+    "command": ".venv/bin/pytest -q tests/acceptance tests/evolution tests/mutation tests/optimizer tests/evals/test_r3_functional.py tests/contracts/test_public_core.py",
+    "passed": 62,
+    "failed": 0
+  },
+  "r4_targeted_regression": {
+    "passed": 64,
+    "failed": 0,
+    "ruff": "passed",
+    "pyright_errors": 0
+  },
+  "reference_cache_preflight": {
+    "key_hash": "426e75b8f1b9f211e1b3d9ee16c52c464ebe1e41125f9e2bcbacbc05923d7179",
+    "verified_artifacts": 429,
+    "hit": true,
+    "partial_match_used": false,
+    "stale_evidence_used": false
+  }
+}

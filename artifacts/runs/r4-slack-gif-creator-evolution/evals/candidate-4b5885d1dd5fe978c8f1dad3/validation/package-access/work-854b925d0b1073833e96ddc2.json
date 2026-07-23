@@ -1,0 +1,32 @@
+{
+  "available_node_ids": [
+    "node-0f241aa06504163be33132f8",
+    "node-2c61585b9d40c2df7343f499",
+    "node-7fd627ed0d50ee9e04018c8a",
+    "node-bd3bececef13aaeef0c22570",
+    "node-cc27fb4d7208967c86b1a7e8",
+    "node-dbf396ac6852bf4706f33ebf",
+    "node-fddc99453114c3a40363b219"
+  ],
+  "bytes_loaded": 33567,
+  "executed_node_ids": [
+    "node-0f241aa06504163be33132f8",
+    "node-2c61585b9d40c2df7343f499",
+    "node-bd3bececef13aaeef0c22570",
+    "node-dbf396ac6852bf4706f33ebf"
+  ],
+  "problems": [],
+  "read_node_ids": [
+    "node-0f241aa06504163be33132f8",
+    "node-2c61585b9d40c2df7343f499",
+    "node-bd3bececef13aaeef0c22570",
+    "node-cc27fb4d7208967c86b1a7e8",
+    "node-dbf396ac6852bf4706f33ebf",
+    "node-fddc99453114c3a40363b219"
+  ],
+  "tokens_loaded": 8394,
+  "unresolved_paths": [],
+  "valid": true,
+  "variant": "candidate",
+  "work_id": "work-854b925d0b1073833e96ddc2"
+}

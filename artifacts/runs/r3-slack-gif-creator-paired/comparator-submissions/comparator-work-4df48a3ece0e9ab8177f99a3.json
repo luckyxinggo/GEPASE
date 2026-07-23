@@ -1,0 +1,45 @@
+{
+  "comparator_work_id": "comparator-work-4df48a3ece0e9ab8177f99a3",
+  "confidence": 0.94,
+  "criteria": [
+    {
+      "criterion_id": "pulse-legibility",
+      "preference": "left",
+      "rationale_zh": "左侧的 GO 字形更大，并以深色描边把白色字面与珊瑚红徽章稳定分开；在最小与最大脉冲帧中轮廓都清楚。右侧白字也易读，但缺少描边，缩小后与亮珊瑚底的边界略弱。"
+    },
+    {
+      "criterion_id": "pulse-motion",
+      "preference": "left",
+      "rationale_zh": "左侧 30 帧在 2.5 秒内连续收放，接续帧变化细、起伏呈对称呼吸感，首尾差异也很小。右侧仅 13 帧且包含 330、580、250 毫秒的长停顿，尺寸变化更像分段跳变，流畅度明显较低。"
+    },
+    {
+      "criterion_id": "pulse-color",
+      "preference": "left",
+      "rationale_zh": "左侧以深蓝背景、珊瑚红主体和白色文字形成清晰层级，深蓝字描边与半透明外圈进一步稳住对比，同时没有造成刺眼闪烁。右侧配色准确简洁，但白字直接落在亮珊瑚色上，层次与局部对比稍逊。"
+    },
+    {
+      "criterion_id": "pulse-emoji-ready",
+      "preference": "left",
+      "rationale_zh": "左侧的内圈、高光与柔和外晕形成完整警报徽章语言，脉冲节奏也更适合循环观看；128×128 下仍有鲜明轮廓。右侧文件更轻巧、造型干净，但细节较基础且停顿式动画削弱了成品感。"
+    }
+  ],
+  "rationale_zh": "左侧在四项标准上都更完整：文字依靠大字形和深色描边持续清楚，30 帧的收放曲线细腻且循环自然，三色层级明确，多层徽章细节也更具 Slack 警报表情的完成度。右侧的优点是简洁、轻量且静态读字直接，但较少的独特帧和不均匀长停顿让脉冲显得突兀，整体表现不及左侧。",
+  "role_run": {
+    "context_id": "/root/r3_cmp_4df48a",
+    "finished_at": "2026-07-21T16:35:02Z",
+    "host": "codex",
+    "host_task_id": "/root/r3_cmp_4df48a",
+    "model": "gpt-5.6-sol",
+    "started_at": "2026-07-21T16:33:57Z",
+    "usage": {
+      "duration_ms": 65000,
+      "input_tokens": 8500,
+      "output_tokens": 900,
+      "token_count_kind": "estimated",
+      "tool_calls": 6
+    }
+  },
+  "schema_version": "1.0.0",
+  "submission_id": "comparator-submission-4df48a3ece0e9ab8177f99a3",
+  "winner": "left"
+}

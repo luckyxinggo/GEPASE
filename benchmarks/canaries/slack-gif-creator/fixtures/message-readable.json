@@ -1,0 +1,7 @@
+{
+  "canvas": [480, 480],
+  "duration_seconds_target": 2.0,
+  "palette": ["#f7f1e8", "#25221f", "#b54c2f"],
+  "subject": "a friendly meeting reminder",
+  "text": ["SYNC", "10:30"]
+}

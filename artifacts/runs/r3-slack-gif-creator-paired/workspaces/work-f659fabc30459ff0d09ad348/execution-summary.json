@@ -1,0 +1,34 @@
+{
+  "schema_version": "1.0.0",
+  "work_id": "work-f659fabc30459ff0d09ad348",
+  "task_id": "functional-validation-pulse-text-008",
+  "status": "completed",
+  "context_id": "ctx-r3-work-f659fabc30459ff0d09ad348-r3_exec_f659fa",
+  "host_task_id": "/root/r3_exec_f659fa",
+  "output": {
+    "path": "go_alert_pulse.gif",
+    "media_type": "image/gif",
+    "sha256": "a767b71a7d4d1d0a5cb47fb2df7c780a488fe97ed2a6b0260112b9fe140f5d27",
+    "size_bytes": 11097
+  },
+  "verification": {
+    "dimensions": [128, 128],
+    "source_frames": 24,
+    "encoded_display_frames": 13,
+    "fps_target": 12,
+    "frame_durations_ms": [330, 80, 80, 80, 80, 80, 580, 80, 80, 80, 80, 80, 250],
+    "total_duration_ms": 1960,
+    "duration_budget_ms": 2800,
+    "loop": 0,
+    "slack_dimension_validation_passed": true,
+    "go_text_visual_check": "centered, high-contrast, readable",
+    "white_pixel_range_per_frame": [663, 663],
+    "coral_pixel_range_per_frame": [5661, 7797],
+    "coral_pixel_delta": 2136,
+    "red_pulse_emphasis_verified": true
+  },
+  "package_access_path": "package-access.json",
+  "observed_trace_path": "observed-trace.json",
+  "transcript_path": "transcript.md",
+  "completed_at": "2026-07-21T15:57:19Z"
+}

@@ -1,0 +1,127 @@
+{
+  "artifact_root": "artifacts/runs/r3-slack-gif-creator-paired/workspaces/work-a2e2a2aedb4cf5049c623860",
+  "artifacts": [
+    {
+      "media_type": "text/x-python",
+      "path": "create_gif.py",
+      "sha256": "fdc8ee55cfe1fe8da443e57462e9e900f0313ed53e15ed0d93b474d90c308d21",
+      "size_bytes": 4439
+    },
+    {
+      "media_type": "image/gif",
+      "path": "deployment_status.gif",
+      "sha256": "105f230b3ad6e22c38f807426158c683cf10b4f0e7a0af4c81125bac8a8ccd92",
+      "size_bytes": 249595
+    },
+    {
+      "media_type": "application/json",
+      "path": "execution-summary.json",
+      "sha256": "b02eff2e8f2e2aa4a7c2d4a8a6a1bfbdacd7c4ecd2f26b232d84a85020e76990",
+      "size_bytes": 749
+    },
+    {
+      "media_type": "application/json",
+      "path": "observed-trace.json",
+      "sha256": "38eb27c9b735aed0fb211ebca74c4cc2a70798789cfcf3bc6ad9029e4aa77e97",
+      "size_bytes": 1324
+    },
+    {
+      "media_type": "application/json",
+      "path": "package-access.json",
+      "sha256": "638f22295f6fda1430e483e3f9c16ca7a3e90ffb8b1b519ca15369841dd8b447",
+      "size_bytes": 28
+    },
+    {
+      "media_type": "text/markdown",
+      "path": "transcript.md",
+      "sha256": "1963ce10704c60acb6036502963db32118e73195eed39c6325ab9dc0f3a3245a",
+      "size_bytes": 843
+    },
+    {
+      "media_type": "image/png",
+      "path": "verification_contact_sheet.png",
+      "sha256": "4a89985fc16f8ff0a271a474992e6058b717794346bd80bbb1f9652af2b1ae5e",
+      "size_bytes": 43898
+    },
+    {
+      "media_type": "text/x-python",
+      "path": "verify_gif.py",
+      "sha256": "2acb245ee22d81f7ea6996508fdd25a64091728d6b1e020f075b2b3ce060ff5f",
+      "size_bytes": 979
+    }
+  ],
+  "context_id": "/root/r3_exec_a2e2a2",
+  "failure_detail": null,
+  "failure_kind": null,
+  "finished_at": "2026-07-21T15:46:51.526224Z",
+  "host": "codex",
+  "host_task_id": "/root/r3_exec_a2e2a2",
+  "model": "gpt-5.6-sol",
+  "observed_trace": [
+    {
+      "action": "inspect_work_item",
+      "outcome": "completed",
+      "sequence": 0,
+      "target": "executor-work-items/work-a2e2a2aedb4cf5049c623860.json",
+      "tool": "read"
+    },
+    {
+      "action": "inspect_fixture",
+      "outcome": "completed",
+      "sequence": 1,
+      "target": "benchmarks/canaries/slack-gif-creator/fixtures/message-status.json",
+      "tool": "read"
+    },
+    {
+      "action": "create_animation_script",
+      "outcome": "completed",
+      "sequence": 2,
+      "target": "create_gif.py",
+      "tool": "apply_patch"
+    },
+    {
+      "action": "render_gif",
+      "outcome": "completed",
+      "sequence": 3,
+      "target": "deployment_status.gif",
+      "tool": ".venv/bin/python -B with Pillow"
+    },
+    {
+      "action": "reopen_and_validate_metadata",
+      "outcome": "passed: GIF, 480x480, 24 frames, 100ms each, 2400ms total, loop 0",
+      "sequence": 4,
+      "target": "deployment_status.gif",
+      "tool": ".venv/bin/python -B with Pillow"
+    },
+    {
+      "action": "inspect_representative_frames",
+      "outcome": "passed: waiting DEPLOY, processing DEPLOY, complete DONE, distinct status graphics and progress track",
+      "sequence": 5,
+      "target": "verification_contact_sheet.png",
+      "tool": "image viewer"
+    }
+  ],
+  "package_access": [],
+  "planned_trace": [],
+  "provider_id": "agent-delegated-v1",
+  "proxy_score": null,
+  "proxy_score_method": null,
+  "schema_version": "1.0.0",
+  "started_at": "2026-07-21T15:44:21.526224Z",
+  "submission_id": "submission-45bbbbcf05ea4d0c3c66999b",
+  "transcript": {
+    "media_type": "text/markdown",
+    "path": "transcript.md",
+    "sha256": "1963ce10704c60acb6036502963db32118e73195eed39c6325ab9dc0f3a3245a",
+    "size_bytes": 843
+  },
+  "uncertainty": 0.1,
+  "usage": {
+    "duration_ms": 150000,
+    "input_tokens": 3500,
+    "output_tokens": 1200,
+    "token_count_kind": "estimated",
+    "tool_calls": 8
+  },
+  "work_id": "work-a2e2a2aedb4cf5049c623860"
+}

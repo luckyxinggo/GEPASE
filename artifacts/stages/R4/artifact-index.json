@@ -1,0 +1,53 @@
+{
+  "schema_version": "1.0.0",
+  "artifacts": [
+    {
+      "path": "commands.log",
+      "sha256": "0da1e149ae5a9dc4c2161c55f20a7f118599fe26734115ad57f9d9d89626e089",
+      "media_type": "text/plain",
+      "size_bytes": 1728
+    },
+    {
+      "path": "evidence/r4-gates.json",
+      "sha256": "d831d2c484fcf42cbc8276e357f4cab844b9e933955e86a88a2d9cf39f7eacfc",
+      "media_type": "application/json",
+      "size_bytes": 3421
+    },
+    {
+      "path": "external-validation.md",
+      "sha256": "ce76ab406ef6f2057fbe21b559e9bf70ce174486c76e394b5545aac529020ca5",
+      "media_type": "text/markdown",
+      "size_bytes": 1109
+    },
+    {
+      "path": "preflight.json",
+      "sha256": "8e0ec6f204d17058efdbf29f4dc1e60b09f0d00495a59629a81af46c7c437496",
+      "media_type": "application/json",
+      "size_bytes": 1695
+    },
+    {
+      "path": "resolved-config.json",
+      "sha256": "d90516714aa71ab91f68b021baaaf49119024ed3ac26c6fffa56cfec5aae201c",
+      "media_type": "application/json",
+      "size_bytes": 1075
+    },
+    {
+      "path": "stage-summary.md",
+      "sha256": "09be294de38e6f1130920bae3a04ca64c3887989faf358083497c1a0aba8ec57",
+      "media_type": "text/markdown",
+      "size_bytes": 1887
+    },
+    {
+      "path": "stage_report.json",
+      "sha256": "2063da07da794ba950cdc38670a1678cb572130314b995984af38c0de28661e3",
+      "media_type": "application/json",
+      "size_bytes": 8231
+    },
+    {
+      "path": "test-results.xml",
+      "sha256": "4868f069f15bf6a3afa2c7df22dac6aad94f1ac1743696f548e8cc76585bfa26",
+      "media_type": "application/xml",
+      "size_bytes": 19229
+    }
+  ]
+}

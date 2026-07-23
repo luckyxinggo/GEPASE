@@ -1,0 +1,54 @@
+{
+  "metrics": [
+    {
+      "label": "Revenue",
+      "unit": " USD",
+      "value": 1611
+    },
+    {
+      "label": "Orders",
+      "unit": "",
+      "value": 49
+    },
+    {
+      "label": "Conversion",
+      "unit": "",
+      "value": 0.135
+    }
+  ],
+  "provenance": {
+    "source": "synthetic-report-03-00"
+  },
+  "sections": [
+    {
+      "heading": "Regional detail West",
+      "summary": "Synthetic evidence slice 3-0.",
+      "table": {
+        "columns": [
+          "Region",
+          "Orders",
+          "Revenue"
+        ],
+        "rows": [
+          {
+            "Orders": 49,
+            "Region": "West",
+            "Revenue": 1611
+          },
+          {
+            "Orders": 46,
+            "Region": "Reference-A",
+            "Revenue": 1521
+          },
+          {
+            "Orders": 51,
+            "Region": "Reference-B",
+            "Revenue": 1656
+          }
+        ]
+      }
+    }
+  ],
+  "subtitle": "Auditable synthetic operating summary",
+  "title": "West Performance Review Q4 Scenario 03-00"
+}

@@ -1,0 +1,464 @@
+{
+  "created_at": "2026-07-21T10:25:50.622895Z",
+  "design_brief": {
+    "brief_id": "slack-gif-creator-r2-v1",
+    "coverage_notes_zh": [
+      "分别覆盖 128×128 Slack emoji 与 480×480 message GIF。",
+      "至少一个 case 必须使用本地输入图片，而不是只从空白画布生成。",
+      "文字可读性、缓动表现、循环连续性、时长和文件体积必须有独立证据。",
+      "功能任务应允许创作差异，不能把固定像素模板当作唯一正确答案。"
+    ],
+    "forbidden_design_shortcuts": [
+      "不得用 selected_action/expected_action 代替 GIF 任务执行。",
+      "不得让 Executor 看到 expectations、rubric、expected answer 或 sibling output。",
+      "不得只以文件存在作为确定性正确性证据。",
+      "不得把 trigger 指标混入 functional score。"
+    ],
+    "language": "zh-CN",
+    "minimum_functional_cases": 8,
+    "minimum_train_cases": 5,
+    "minimum_trigger_cases_per_kind": 6,
+    "minimum_validation_cases": 3,
+    "required_functional_families": [
+      "emoji_animation",
+      "message_gif",
+      "input_image_animation",
+      "text_readability",
+      "easing_motion",
+      "looping_timing",
+      "quality_efficiency"
+    ],
+    "required_output_media_types": [
+      "image/gif"
+    ]
+  },
+  "forbidden_inputs": [
+    "candidate identity",
+    "expected winner",
+    "sibling output",
+    "search feedback"
+  ],
+  "package_diagnostics_ref": "artifacts/runs/r2-slack-gif-creator-evalplan/package/diagnostics.json",
+  "package_graph_ref": "artifacts/runs/r2-slack-gif-creator-evalplan/package/graph.json",
+  "package_hints": [
+    {
+      "kind": "function",
+      "label": "ease_in_cubic",
+      "node_id": "node-0178ad3105c2ba2d49eb67a5",
+      "path": "core/easing.py"
+    },
+    {
+      "kind": "section",
+      "label": "Spin/Rotate",
+      "node_id": "node-01840f171d9bc3982b536fd2",
+      "path": "SKILL.md"
+    },
+    {
+      "kind": "function",
+      "label": "ease_back_in_out",
+      "node_id": "node-06555477d05503bf0fcf5dde",
+      "path": "core/easing.py"
+    },
+    {
+      "kind": "frontmatter",
+      "label": "frontmatter",
+      "node_id": "node-0845c922c9c9b1f43f4a48b9",
+      "path": "SKILL.md"
+    },
+    {
+      "kind": "function",
+      "label": "ease_out_bounce",
+      "node_id": "node-18fa6a93b83ad7a69ee512c9",
+      "path": "core/easing.py"
+    },
+    {
+      "kind": "dependency",
+      "label": "numpy",
+      "node_id": "node-1a755c6073ba75d87adc30e6",
+      "path": "requirements.txt"
+    },
+    {
+      "kind": "function",
+      "label": "get_easing",
+      "node_id": "node-1fa20ca732c7242e14ca77dd",
+      "path": "core/easing.py"
+    },
+    {
+      "kind": "section",
+      "label": "Fade In/Out",
+      "node_id": "node-22c65da75b6b57d2df4166e1",
+      "path": "SKILL.md"
+    },
+    {
+      "kind": "function",
+      "label": "ease_back_in",
+      "node_id": "node-253e2679cfaba6ae2c5e085b",
+      "path": "core/easing.py"
+    },
+    {
+      "kind": "section",
+      "label": "Frame Helpers (`core.frame_composer`)",
+      "node_id": "node-2bdc297f52669b42d134781c",
+      "path": "SKILL.md"
+    },
+    {
+      "kind": "section",
+      "label": "Zoom",
+      "node_id": "node-2dfa703685a461fe6363742e",
+      "path": "SKILL.md"
+    },
+    {
+      "kind": "function",
+      "label": "is_slack_ready",
+      "node_id": "node-33a204a805c015e904408c13",
+      "path": "core/validators.py"
+    },
+    {
+      "kind": "function",
+      "label": "linear",
+      "node_id": "node-343721bfe8c9ae3b0bc3c3d0",
+      "path": "core/easing.py"
+    },
+    {
+      "kind": "section",
+      "label": "Validators (`core.validators`)",
+      "node_id": "node-390c19b0fbd4439b006d6a79",
+      "path": "SKILL.md"
+    },
+    {
+      "kind": "function",
+      "label": "calculate_arc_motion",
+      "node_id": "node-3f3871cf3e604c748ed9d160",
+      "path": "core/easing.py"
+    },
+    {
+      "kind": "function",
+      "label": "apply_squash_stretch",
+      "node_id": "node-40663fb6ef0f6c0b3913b374",
+      "path": "core/easing.py"
+    },
+    {
+      "kind": "python_module",
+      "label": "core/frame_composer.py",
+      "node_id": "node-41a07c49787675fb06d225da",
+      "path": "core/frame_composer.py"
+    },
+    {
+      "kind": "section",
+      "label": "Available Utilities",
+      "node_id": "node-44a9519223abe9c140f2eb20",
+      "path": "SKILL.md"
+    },
+    {
+      "kind": "function",
+      "label": "ease_in_out_cubic",
+      "node_id": "node-45ad5a8f578df7973ed4cf1b",
+      "path": "core/easing.py"
+    },
+    {
+      "kind": "section",
+      "label": "Philosophy",
+      "node_id": "node-57ae7042e319ecf77f0ec86c",
+      "path": "SKILL.md"
+    },
+    {
+      "kind": "python_module",
+      "label": "core/validators.py",
+      "node_id": "node-629ef4d92d30bd40a69a81cf",
+      "path": "core/validators.py"
+    },
+    {
+      "kind": "python_module",
+      "label": "core/easing.py",
+      "node_id": "node-68cb17e830734d13c5d3286a",
+      "path": "core/easing.py"
+    },
+    {
+      "kind": "function",
+      "label": "ease_back_out",
+      "node_id": "node-6a4b33c6dfe8b91fee90db76",
+      "path": "core/easing.py"
+    },
+    {
+      "kind": "function",
+      "label": "ease_in_quad",
+      "node_id": "node-709ead426149d9a42767b85b",
+      "path": "core/easing.py"
+    },
+    {
+      "kind": "function",
+      "label": "clear",
+      "node_id": "node-724e17584fc7e79d98f00811",
+      "path": "core/gif_builder.py"
+    },
+    {
+      "kind": "function",
+      "label": "ease_out_elastic",
+      "node_id": "node-75eae987e822b44af1a5e4bd",
+      "path": "core/easing.py"
+    },
+    {
+      "kind": "function",
+      "label": "validate_gif",
+      "node_id": "node-774bca90618f6a6cbf560caa",
+      "path": "core/validators.py"
+    },
+    {
+      "kind": "python_module",
+      "label": "core/gif_builder.py",
+      "node_id": "node-78a53d4695c55bc496c79095",
+      "path": "core/gif_builder.py"
+    },
+    {
+      "kind": "function",
+      "label": "ease_in_out_quad",
+      "node_id": "node-79f3e66c969f930372e34811",
+      "path": "core/easing.py"
+    },
+    {
+      "kind": "section",
+      "label": "Optimization Strategies",
+      "node_id": "node-7e2721f947eb8353bbe84d7a",
+      "path": "SKILL.md"
+    },
+    {
+      "kind": "section",
+      "label": "Slack Requirements",
+      "node_id": "node-8341c364e540cd419d366e02",
+      "path": "SKILL.md"
+    },
+    {
+      "kind": "function",
+      "label": "ease_out_quad",
+      "node_id": "node-836e1fbf9cc46fd3a73561fb",
+      "path": "core/easing.py"
+    },
+    {
+      "kind": "section",
+      "label": "Drawing from Scratch",
+      "node_id": "node-84bbdf1dec3c5f3b108dde37",
+      "path": "SKILL.md"
+    },
+    {
+      "kind": "function",
+      "label": "ease_in_bounce",
+      "node_id": "node-90bf12262242bc708d124b67",
+      "path": "core/easing.py"
+    },
+    {
+      "kind": "function",
+      "label": "create_blank_frame",
+      "node_id": "node-91311d04bfaa4e767ccd4c3a",
+      "path": "core/frame_composer.py"
+    },
+    {
+      "kind": "function",
+      "label": "deduplicate_frames",
+      "node_id": "node-91ab86970643152b76508f0a",
+      "path": "core/gif_builder.py"
+    },
+    {
+      "kind": "section",
+      "label": "Working with User-Uploaded Images",
+      "node_id": "node-97e4a2d3e9e60ef4bb078b95",
+      "path": "SKILL.md"
+    },
+    {
+      "kind": "function",
+      "label": "__init__",
+      "node_id": "node-9864061e08e328bfe633e694",
+      "path": "core/gif_builder.py"
+    },
+    {
+      "kind": "dependency",
+      "label": "imageio",
+      "node_id": "node-a464c33893d3283bf7b3ea7f",
+      "path": "requirements.txt"
+    },
+    {
+      "kind": "function",
+      "label": "ease_out_cubic",
+      "node_id": "node-a4fd67e68ccc7a51db3c02f4",
+      "path": "core/easing.py"
+    },
+    {
+      "kind": "function",
+      "label": "interpolate",
+      "node_id": "node-a5375881bea889bb73a7b31b",
+      "path": "core/easing.py"
+    },
+    {
+      "kind": "function",
+      "label": "add_frames",
+      "node_id": "node-a74bac1971035ec0c962a84e",
+      "path": "core/gif_builder.py"
+    },
+    {
+      "kind": "section",
+      "label": "Making Graphics Look Good",
+      "node_id": "node-ad47cfa9d2c418b4831753c1",
+      "path": "SKILL.md"
+    },
+    {
+      "kind": "section",
+      "label": "Animation Concepts",
+      "node_id": "node-aeab6f88cd3429a6d5130037",
+      "path": "SKILL.md"
+    },
+    {
+      "kind": "function",
+      "label": "draw_text",
+      "node_id": "node-af8a18ac197002fcc91191ef",
+      "path": "core/frame_composer.py"
+    },
+    {
+      "kind": "function",
+      "label": "ease_in_elastic",
+      "node_id": "node-b4d62f3e8bbd90338bab117e",
+      "path": "core/easing.py"
+    },
+    {
+      "kind": "function",
+      "label": "optimize_colors",
+      "node_id": "node-b9a13a9eef7a6c164439fccf",
+      "path": "core/gif_builder.py"
+    },
+    {
+      "kind": "function",
+      "label": "draw_star",
+      "node_id": "node-ba6cff0f9fe72417dc695353",
+      "path": "core/frame_composer.py"
+    },
+    {
+      "kind": "section",
+      "label": "Dependencies",
+      "node_id": "node-babe829c8f49cc8c697125c2",
+      "path": "SKILL.md"
+    },
+    {
+      "kind": "function",
+      "label": "ease_in_out_elastic",
+      "node_id": "node-c307fb4739b1a4c4b647dc39",
+      "path": "core/easing.py"
+    },
+    {
+      "kind": "function",
+      "label": "add_frame",
+      "node_id": "node-c64570d191a16a4e48bd2c0f",
+      "path": "core/gif_builder.py"
+    },
+    {
+      "kind": "function",
+      "label": "create_gradient_background",
+      "node_id": "node-c96cf51a526858ddd73f1b10",
+      "path": "core/frame_composer.py"
+    },
+    {
+      "kind": "section",
+      "label": "Slack GIF Creator",
+      "node_id": "node-ce609b198696eee0ac59fa35",
+      "path": "SKILL.md"
+    },
+    {
+      "kind": "section",
+      "label": "Pulse/Heartbeat",
+      "node_id": "node-d02d108593bae9344b40fbdb",
+      "path": "SKILL.md"
+    },
+    {
+      "kind": "section",
+      "label": "Explode/Particle Burst",
+      "node_id": "node-d1907cdce8e078a455319610",
+      "path": "SKILL.md"
+    },
+    {
+      "kind": "section",
+      "label": "Slide",
+      "node_id": "node-d2a7a73a7a812652291bae3d",
+      "path": "SKILL.md"
+    },
+    {
+      "kind": "section",
+      "label": "Core Workflow",
+      "node_id": "node-d6b82162668345e012dc6a34",
+      "path": "SKILL.md"
+    },
+    {
+      "kind": "function",
+      "label": "draw_circle",
+      "node_id": "node-d9937d1fa565d8695463b001",
+      "path": "core/frame_composer.py"
+    },
+    {
+      "kind": "section",
+      "label": "GIFBuilder (`core.gif_builder`)",
+      "node_id": "node-dfb8719a1ab35fab6111e36b",
+      "path": "SKILL.md"
+    },
+    {
+      "kind": "section",
+      "label": "Drawing Graphics",
+      "node_id": "node-e16b01f0e3aa77512da3e2fe",
+      "path": "SKILL.md"
+    },
+    {
+      "kind": "function",
+      "label": "ease_in_out_bounce",
+      "node_id": "node-e2443071462e83adf01c0a55",
+      "path": "core/easing.py"
+    },
+    {
+      "kind": "section",
+      "label": "Easing Functions (`core.easing`)",
+      "node_id": "node-e57ae2a699a373f3228a5ff0",
+      "path": "SKILL.md"
+    },
+    {
+      "kind": "dependency",
+      "label": "imageio-ffmpeg",
+      "node_id": "node-e7e0ab93983c3933585605f1",
+      "path": "requirements.txt"
+    },
+    {
+      "kind": "section",
+      "label": "Bounce",
+      "node_id": "node-f261697c2af2929117a965e9",
+      "path": "SKILL.md"
+    },
+    {
+      "kind": "function",
+      "label": "save",
+      "node_id": "node-f592ff3e34f1b63061471b9c",
+      "path": "core/gif_builder.py"
+    },
+    {
+      "kind": "section",
+      "label": "Shake/Vibrate",
+      "node_id": "node-f77e0d1fd13ca3258cba55b1",
+      "path": "SKILL.md"
+    },
+    {
+      "kind": "dependency",
+      "label": "pillow",
+      "node_id": "node-f8e569155a700e2a739804c3",
+      "path": "requirements.txt"
+    }
+  ],
+  "package_snapshot_hash": "ce42d8a837acf9feda9706a3418fc26a77c497d9615079e616b5fdc6870ef64e",
+  "required_package_reads": [
+    "LICENSE.txt",
+    "SKILL.md",
+    "core/easing.py",
+    "core/frame_composer.py",
+    "core/gif_builder.py",
+    "core/validators.py",
+    "requirements.txt"
+  ],
+  "role": "eval_designer",
+  "schema_version": "1.0.0",
+  "skill_id": "slack-gif-creator",
+  "skill_ref": "benchmarks/canaries/slack-gif-creator/package",
+  "source_provenance_ref": "benchmarks/canaries/slack-gif-creator/source-provenance.json",
+  "submission_schema_ref": "schemas/eval_designer_submission.schema.json",
+  "work_id": "eval-design-35fdb136ceda9ec147eda7c3"
+}

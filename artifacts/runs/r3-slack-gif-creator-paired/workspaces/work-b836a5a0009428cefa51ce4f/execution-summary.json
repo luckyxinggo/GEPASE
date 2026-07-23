@@ -1,0 +1,35 @@
+{
+  "work_id": "work-b836a5a0009428cefa51ce4f",
+  "task_id": "functional-train-input-badge-003",
+  "status": "completed",
+  "output": {
+    "path": "uploaded_badge_lift.gif",
+    "media_type": "image/gif",
+    "bytes": 99878
+  },
+  "generation": {
+    "input_asset": "benchmarks/canaries/slack-gif-creator/fixtures/input-badge.ppm",
+    "input_used_directly": true,
+    "source_resampling": "nearest",
+    "canvas": [128, 128],
+    "frame_count": 20,
+    "frame_duration_ms": 100,
+    "total_duration_ms": 2000,
+    "loop": 0
+  },
+  "verification": {
+    "reopened_successfully": true,
+    "dimensions": [128, 128],
+    "frame_count": 20,
+    "frame_durations_ms": [100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100],
+    "total_duration_ms": 2000,
+    "loop": 0,
+    "orange_pixels_per_frame": [324, 324, 324, 324, 324, 324, 324, 324, 324, 324, 324, 324, 324, 324, 324, 324, 324, 324, 324, 324],
+    "cyan_pixels_min": 2320,
+    "cyan_pixels_max": 2320,
+    "orange_centroid_y": [96.5, 93.5, 89.5, 84.5, 79.5, 74.5, 69.5, 65.5, 62.5, 61.5, 62.5, 63.5, 65.5, 66.5, 66.5, 65.5, 65.5, 65.5, 65.5, 65.5],
+    "motion_assessment": "lifted, overshot final height, returned, and stabilized",
+    "palette_and_silhouette_preserved": true
+  },
+  "package_access": []
+}

@@ -1,0 +1,44 @@
+{
+  "schema_version": "1.0.0",
+  "root_cli_import": true,
+  "help_commands": [
+    "config",
+    "artifact",
+    "mock",
+    "benchmark",
+    "skills",
+    "eval",
+    "graph",
+    "candidate",
+    "optimizer",
+    "asi",
+    "mutation",
+    "patch",
+    "selector",
+    "gate",
+    "merge"
+  ],
+  "help_exit_zero": 15,
+  "public_api_import": true,
+  "public_models": [
+    "EvalWorkItem",
+    "EvolutionPoolEntry",
+    "ExecutionBundle",
+    "GateDecision",
+    "MergeParentSetSnapshot",
+    "PackageCandidate",
+    "PackageGraph",
+    "PackagePatch",
+    "TaskScoreVector"
+  ],
+  "removed_stage_commands": [
+    "baseline",
+    "evolution",
+    "optimize",
+    "readiness",
+    "export",
+    "eval headless-calibrate",
+    "mutation propose"
+  ],
+  "valid": true
+}

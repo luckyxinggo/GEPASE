@@ -1,0 +1,58 @@
+{
+  "candidate_content_hash": "cf3c66eb21afcbcfc3518927b5572624075866213c16717d03010ccc25074525",
+  "candidate_id": "candidate-2dad7a05ce4a6460dd71f470",
+  "losses": 1,
+  "mean_paired_delta": -0.19782000000000002,
+  "pair_summaries": [
+    {
+      "candidate_score": 0.0,
+      "candidate_vector_ref": "artifacts/runs/r4-slack-gif-creator-evolution/evals/candidate-2dad7a05ce4a6460dd71f470/validation/task-score-vectors/work-44503d57fdb56b74ea734e06.json",
+      "comparator_consistent": true,
+      "comparator_margin": -1.0,
+      "correctness_delta": -0.85,
+      "pair_id": "pair-061ca407be66d6970b347bc5",
+      "paired_delta": -0.90832,
+      "quality_delta": -0.9796,
+      "reference_score": 0.90832,
+      "reference_vector_ref": "artifacts/runs/r3-slack-gif-creator-paired/task-score-vectors/work-06e0ca3901e49580a002d129.json",
+      "schema_version": "1.0.0",
+      "split": "validation",
+      "task_id": "functional-validation-efficiency-007"
+    },
+    {
+      "candidate_score": 0.9892000000000001,
+      "candidate_vector_ref": "artifacts/runs/r4-slack-gif-creator-evolution/evals/candidate-2dad7a05ce4a6460dd71f470/validation/task-score-vectors/work-406dfa280eb449c889b3e9d6.json",
+      "comparator_consistent": true,
+      "comparator_margin": 1.0,
+      "correctness_delta": 0.25,
+      "pair_id": "pair-fb5346149a7720089b66c832",
+      "paired_delta": 0.22948000000000002,
+      "quality_delta": 0.20439999999999992,
+      "reference_score": 0.7597200000000001,
+      "reference_vector_ref": "artifacts/runs/r3-slack-gif-creator-paired/task-score-vectors/work-b33fad8398ab056166627930.json",
+      "schema_version": "1.0.0",
+      "split": "validation",
+      "task_id": "functional-validation-loop-sparkles-006"
+    },
+    {
+      "candidate_score": 0.93448,
+      "candidate_vector_ref": "artifacts/runs/r4-slack-gif-creator-evolution/evals/candidate-2dad7a05ce4a6460dd71f470/validation/task-score-vectors/work-3b25dfdcb80ef1e9669a0fd2.json",
+      "comparator_consistent": false,
+      "comparator_margin": 0.0,
+      "correctness_delta": 0.15000000000000002,
+      "pair_id": "pair-e8356ab1f18344250959a6a9",
+      "paired_delta": 0.0853799999999999,
+      "quality_delta": 0.00639999999999985,
+      "reference_score": 0.8491000000000001,
+      "reference_vector_ref": "artifacts/runs/r3-slack-gif-creator-paired/task-score-vectors/work-f659fabc30459ff0d09ad348.json",
+      "schema_version": "1.0.0",
+      "split": "validation",
+      "task_id": "functional-validation-pulse-text-008"
+    }
+  ],
+  "reference_key_hash": "426e75b8f1b9f211e1b3d9ee16c52c464ebe1e41125f9e2bcbacbc05923d7179",
+  "schema_version": "1.0.0",
+  "split": "validation",
+  "strict_wins": 2,
+  "ties": 0
+}

@@ -1,0 +1,67 @@
+{
+  "criterion_grades": [
+    {
+      "criterion_id": "emoji-bounce-clarity",
+      "evidence_refs": [
+        "artifacts/runs/r4-slack-gif-creator-evolution/evals/candidate-04b26dff2bc83b82334bf184/train/workspaces/work-c0ff710d24f738bfb0ae36c6/emoji_star_bounce.gif",
+        "artifacts/runs/r4-slack-gif-creator-evolution/evals/candidate-04b26dff2bc83b82334bf184/train/derived/work-c0ff710d24f738bfb0ae36c6/contact-sheet.png"
+      ],
+      "rationale_zh": "亮黄色五角星与深海军蓝—靛蓝背景形成强对比，深色粗描边、白色小高光和落地阴影让主体在 128×128 小尺寸下仍易于快速识别；运动残影存在但没有实质遮蔽轮廓。",
+      "score": 0.96
+    },
+    {
+      "criterion_id": "emoji-bounce-dynamics",
+      "evidence_refs": [
+        "artifacts/runs/r4-slack-gif-creator-evolution/evals/candidate-04b26dff2bc83b82334bf184/train/workspaces/work-c0ff710d24f738bfb0ae36c6/emoji_star_bounce.gif",
+        "artifacts/runs/r4-slack-gif-creator-evolution/evals/candidate-04b26dff2bc83b82334bf184/train/derived/work-c0ff710d24f738bfb0ae36c6/contact-sheet.png",
+        "artifacts/runs/r4-slack-gif-creator-evolution/evals/candidate-04b26dff2bc83b82334bf184/train/blind-inspections/blind-fda0d3cd24bcd20c73f4a87e.json"
+      ],
+      "rationale_zh": "帧序列清楚呈现从上方加速落下、触地横向压缩、一次回弹至较低高度、再次下落并收稳；阴影尺度变化和形变共同提供重量感，21 个唯一帧及约 11.93 fps 的节奏也足够连贯。",
+      "score": 0.96
+    },
+    {
+      "criterion_id": "emoji-bounce-polish",
+      "evidence_refs": [
+        "artifacts/runs/r4-slack-gif-creator-evolution/evals/candidate-04b26dff2bc83b82334bf184/train/workspaces/work-c0ff710d24f738bfb0ae36c6/emoji_star_bounce.gif",
+        "artifacts/runs/r4-slack-gif-creator-evolution/evals/candidate-04b26dff2bc83b82334bf184/train/derived/work-c0ff710d24f738bfb0ae36c6/contact-sheet.png"
+      ],
+      "rationale_zh": "背景渐变、点状星光、主体描边与高光、运动残影以及椭圆投影构成统一的完整设计，触地压缩也经过专门绘制，明显超出占位图形；少量深色残影在个别帧略显拥挤，因此保留轻微扣分。",
+      "score": 0.95
+    },
+    {
+      "criterion_id": "emoji-bounce-slack",
+      "evidence_refs": [
+        "artifacts/runs/r4-slack-gif-creator-evolution/evals/candidate-04b26dff2bc83b82334bf184/train/workspaces/work-c0ff710d24f738bfb0ae36c6/emoji_star_bounce.gif",
+        "artifacts/runs/r4-slack-gif-creator-evolution/evals/candidate-04b26dff2bc83b82334bf184/train/blind-inspections/blind-fda0d3cd24bcd20c73f4a87e.json",
+        "artifacts/runs/r4-slack-gif-creator-evolution/evals/candidate-04b26dff2bc83b82334bf184/train/derived/work-c0ff710d24f738bfb0ae36c6/contact-sheet.png"
+      ],
+      "rationale_zh": "128×128、56,422 字节、1.76 秒与无限循环元数据均适合 Slack emoji，播放长度紧凑，末帧 160 ms 停顿有助于读清收稳状态；但末帧仍保留落地星星，而下一轮首帧为空背景，首尾像素差 6.33，循环重置时会出现可见跳变。",
+      "score": 0.88
+    }
+  ],
+  "factual_claims_zh": [
+    "GIF 画布尺寸为 128×128 像素，文件大小为 56,422 字节。",
+    "GIF 共 21 帧且唯一帧数为 21，总时长为 1,760 毫秒，有效帧率约为 11.93 fps。",
+    "GIF 的 loop_count 为 0，末帧持续 160 毫秒，首尾像素差为 6.3299560546875。"
+  ],
+  "feedback_zh": "成品准确完成了黄色描边高光星星在渐变背景中的单次落地反弹，主体识别、运动形变与视觉细节都达到很高完成度。最值得改进的是循环边界：可在收稳后加入短暂淡出或让首尾状态自然衔接，避免无限循环时星星从地面瞬间消失。加权总分为 0.25×0.96 + 0.30×0.96 + 0.25×0.95 + 0.20×0.88 = 0.9415。",
+  "grader_work_id": "grader-work-2ad0904d22bcef95ab77867b",
+  "overall_score": 0.9415,
+  "role_run": {
+    "context_id": "r4_grade_a_emoji",
+    "finished_at": "2026-07-22T08:51:39Z",
+    "host": "codex",
+    "host_task_id": "/root/r4_grade_a_emoji",
+    "model": "gpt-5.6-sol",
+    "started_at": "2026-07-22T08:46:30Z",
+    "usage": {
+      "duration_ms": 309000,
+      "input_tokens": 6500,
+      "output_tokens": 1200,
+      "token_count_kind": "estimated",
+      "tool_calls": 6
+    }
+  },
+  "schema_version": "1.0.0",
+  "submission_id": "grader-submission-2ad0904d22bcef95ab77867b"
+}

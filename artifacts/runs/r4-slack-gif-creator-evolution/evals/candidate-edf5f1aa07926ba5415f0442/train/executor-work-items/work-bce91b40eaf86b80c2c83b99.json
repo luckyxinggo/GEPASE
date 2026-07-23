@@ -1,0 +1,35 @@
+{
+  "fixture_refs": [
+    "benchmarks/canaries/slack-gif-creator/fixtures/input-badge.json",
+    "benchmarks/canaries/slack-gif-creator/fixtures/input-badge.ppm"
+  ],
+  "package_graph_ref": "artifacts/runs/r4-slack-gif-creator-evolution/candidates/candidate-edf5f1aa07926ba5415f0442/graph.json",
+  "package_node_map": {
+    "LICENSE.txt": "node-7fd627ed0d50ee9e04018c8a",
+    "SKILL.md": "node-fddc99453114c3a40363b219",
+    "core/easing.py": "node-dbf396ac6852bf4706f33ebf",
+    "core/frame_composer.py": "node-bd3bececef13aaeef0c22570",
+    "core/gif_builder.py": "node-2c61585b9d40c2df7343f499",
+    "core/validators.py": "node-0f241aa06504163be33132f8",
+    "requirements.txt": "node-cc27fb4d7208967c86b1a7e8"
+  },
+  "prompt": "请直接使用随附 PPM 徽章图像作为动画主体，而不是重新画一个替代品。依照配置将它放入 128×128 的 Slack emoji：徽章先上浮，略微越过最终高度，再回落稳定；保留原图的徽章轮廓以及青色、橙色关系，可增加不遮挡主体的背景或光效。输出指定 GIF。",
+  "requested_output": {
+    "description_zh": "保留本地输入徽章特征、带上浮越位回稳动作的 128×128 GIF。",
+    "filename": "uploaded_badge_lift.gif",
+    "media_type": "image/gif"
+  },
+  "required_capabilities": [
+    "local_image_loading",
+    "input_asset_preservation",
+    "overshoot_easing",
+    "emoji_gif_export"
+  ],
+  "role": "executor",
+  "schema_version": "1.0.0",
+  "skill_ref": "artifacts/runs/r4-slack-gif-creator-evolution/candidate-workspaces/applications/application-b75f0a0da538fa167f904c8a",
+  "submission_schema_ref": "schemas/execution_bundle.schema.json",
+  "task_id": "functional-train-input-badge-003",
+  "timeout_seconds": 600,
+  "work_id": "work-bce91b40eaf86b80c2c83b99"
+}

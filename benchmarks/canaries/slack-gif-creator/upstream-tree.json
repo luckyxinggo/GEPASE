@@ -1,0 +1,16 @@
+{
+  "schema_version": "1.0.0",
+  "repository_url": "https://github.com/anthropics/skills",
+  "source_commit": "fa0fa64bdc967915dc8399e803be67759e1e62b8",
+  "source_subpath": "skills/slack-gif-creator",
+  "upstream_tree_hash": "c61d2f7bb6334b68a6936ad3f41ebfc7cb76fe2a",
+  "entries": [
+    {"path": "LICENSE.txt", "mode": "100644", "git_blob_sha1": "4f881c52d1f72f4cfb720e339e2d35c3058d01a9"},
+    {"path": "SKILL.md", "mode": "100644", "git_blob_sha1": "16660d8ceb77af47986bba1c9176c2ff3f287a91"},
+    {"path": "core/easing.py", "mode": "100755", "git_blob_sha1": "772fa830235dac37ba995ee66778111f59c2ee31"},
+    {"path": "core/frame_composer.py", "mode": "100755", "git_blob_sha1": "1afe434811bd4a8a1bdb4df7961147f2c9afd130"},
+    {"path": "core/gif_builder.py", "mode": "100755", "git_blob_sha1": "5759f144fe3cef50f3dfd3b8911e612e80099cea"},
+    {"path": "core/validators.py", "mode": "100755", "git_blob_sha1": "a6f5bdf28ddd0a9613f2e076e37d940e03ad997c"},
+    {"path": "requirements.txt", "mode": "100644", "git_blob_sha1": "8bc4493e9163cb513d4be38ab9fe5c1ff763e0d7"}
+  ]
+}

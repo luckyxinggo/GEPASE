@@ -1,0 +1,26 @@
+{
+  "fixture_refs": [
+    "benchmarks/canaries/slack-gif-creator/fixtures/easing-orbit.json"
+  ],
+  "package_graph_ref": null,
+  "package_node_map": {},
+  "prompt": "创作一个 128×128 的 Slack emoji GIF：青色小卫星沿明显的弧线路径绕过橙色行星，并在目标位置平滑减速停靠。请使用非线性的 ease-out 运动，让最后一段位移逐步缩小；构图和星空细节可以自行发挥，输出指定文件。",
+  "requested_output": {
+    "description_zh": "青色卫星沿弧线运动并 ease-out 停靠的 128×128 Slack GIF。",
+    "filename": "satellite_orbit_ease.gif",
+    "media_type": "image/gif"
+  },
+  "required_capabilities": [
+    "arc_motion_generation",
+    "easing_function_application",
+    "color_subject_tracking",
+    "emoji_gif_export"
+  ],
+  "role": "executor",
+  "schema_version": "1.0.0",
+  "skill_ref": null,
+  "submission_schema_ref": "schemas/execution_bundle.schema.json",
+  "task_id": "functional-train-easing-orbit-005",
+  "timeout_seconds": 600,
+  "work_id": "work-ba5bed1fe1f6ee2b5cd0648b"
+}

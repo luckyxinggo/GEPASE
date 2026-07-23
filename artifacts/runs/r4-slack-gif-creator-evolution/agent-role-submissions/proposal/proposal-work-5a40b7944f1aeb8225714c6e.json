@@ -1,0 +1,20 @@
+{
+  "summary": "Narrow the validators guidance to a task-first, single-pass final check, with one conditional seam inspection only for animations that actually contain cyclic motion. This addresses the evidence-linked efficiency regression without treating the available aggregate evidence as causal proof.",
+  "operations": [
+    {
+      "operation_id": "op-task-first-bounded-validation",
+      "op": "replace_markdown_block",
+      "target_node_id": "node-46d940221fa8caf3b6c22d2c",
+      "path": "SKILL.md",
+      "precondition_hash": "951bd4e2b513b7780d40bda28c1ccf3e51c2945e2375f6a21a665517af6803f7",
+      "replacement": "First satisfy the task's explicit content, motion, readability, and delivery constraints. Then choose one validation mode for the final export:\n\n```python\nfrom core.validators import validate_gif, is_slack_ready\n\n# Detailed validation\npasses, info = validate_gif('my.gif', is_emoji=True, verbose=True)\n\n# Or use the quick readiness check when detailed diagnostics are unnecessary\nif is_slack_ready('my.gif'):\n    print(\"Ready!\")\n```\n\nOnly if the finished animation actually contains cyclic motion, inspect the exported GIF once at the end-to-start boundary for a visible seam. Otherwise skip seam checking. Do not require a two-cycle preview, automatic re-export, or repeated revalidation.",
+      "evidence_refs": [
+        "artifacts/runs/r4-slack-gif-creator-evolution/reflection-submissions/reflection-work-ece74a14e2ca67757504c20b.json",
+        "artifacts/runs/r4-slack-gif-creator-evolution/train-admission/candidate-edf5f1aa07926ba5415f0442.json"
+      ],
+      "expected_benefit": "Reduce validation overhead and attention displacement while preserving task correctness and output quality through one existing-validator pass plus, only when applicable, one bounded seam inspection.",
+      "regression_risk": "low",
+      "rationale": "The rejected candidate regressed on four of five train tasks, with efficiency declining consistently while reliability and package quality stayed unchanged and correctness moved inconsistently. A conditional one-time seam check is materially narrower than the rejected always-on loop workflow and follows the reflection recommendation without claiming unsupported causality."
+    }
+  ]
+}

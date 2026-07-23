@@ -1,0 +1,37 @@
+{
+  "build": {
+    "path": "compact_check_burst.gif",
+    "size_kb": 368.3056640625,
+    "size_mb": 0.35967350006103516,
+    "dimensions": "480x480",
+    "frame_count": 24,
+    "fps": 12,
+    "duration_seconds": 2.0,
+    "colors": 48
+  },
+  "validation": {
+    "file": "compact_check_burst.gif",
+    "passes": true,
+    "width": 480,
+    "height": 480,
+    "size_kb": 368.3056640625,
+    "size_mb": 0.35967350006103516,
+    "frame_count": 24,
+    "duration_seconds": 1.92,
+    "fps": 12.5,
+    "is_emoji": false,
+    "optimal": null
+  },
+  "dimension_pass": true,
+  "file_size_budget_kb": 900,
+  "file_size_budget_pass": true,
+  "fps_budget": [
+    10,
+    16
+  ],
+  "measured_fps": 12.5,
+  "fps_budget_pass": true,
+  "frame_durations_ms": [
+    80
+  ]
+}

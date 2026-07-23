@@ -1,0 +1,1328 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="GEPASE 算法学习手册：GEPA、SkillOpt、SkillLens、skill-creator、Darwin-skill、Heuristic Learning 与完整 Skill Package 进化。">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%23e84b31'/%3E%3Ctext x='32' y='43' text-anchor='middle' font-family='Arial' font-size='34' font-weight='700' fill='white'%3EG%3C/text%3E%3C/svg%3E">
+  <title>GEPASE · 算法学习手册</title>
+  <style>
+    :root {
+      --bg: #f4f0e8;
+      --panel: #fffdf8;
+      --panel-2: #eee8dc;
+      --ink: #171815;
+      --muted: #67675f;
+      --line: #d6cfbf;
+      --accent: #e84b31;
+      --accent-2: #176b5b;
+      --accent-3: #e3a72f;
+      --code: #151a19;
+      --code-ink: #e9f4ef;
+      --shadow: 0 18px 60px rgba(46, 39, 27, 0.10);
+      --radius: 18px;
+      --sidebar: 286px;
+    }
+
+    [data-theme="dark"] {
+      --bg: #111512;
+      --panel: #191f1b;
+      --panel-2: #242b26;
+      --ink: #f3f0e6;
+      --muted: #b0b4aa;
+      --line: #364039;
+      --accent: #ff735a;
+      --accent-2: #5fd0b3;
+      --accent-3: #ffc45c;
+      --code: #0b0f0d;
+      --code-ink: #e7f5ed;
+      --shadow: 0 20px 70px rgba(0, 0, 0, 0.30);
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at 8% 4%, color-mix(in srgb, var(--accent-3) 18%, transparent), transparent 28rem),
+        radial-gradient(circle at 92% 12%, color-mix(in srgb, var(--accent-2) 12%, transparent), transparent 31rem),
+        var(--bg);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+      line-height: 1.72;
+    }
+
+    a { color: var(--accent-2); text-underline-offset: 3px; }
+    button, input { font: inherit; }
+    .progress {
+      position: fixed;
+      inset: 0 auto auto 0;
+      z-index: 100;
+      height: 4px;
+      width: 0;
+      background: linear-gradient(90deg, var(--accent), var(--accent-3), var(--accent-2));
+    }
+
+    .shell {
+      display: grid;
+      grid-template-columns: var(--sidebar) minmax(0, 1fr);
+      max-width: 1580px;
+      margin: 0 auto;
+      min-height: 100vh;
+    }
+
+    aside {
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      padding: 28px 22px;
+      border-right: 1px solid var(--line);
+      background: color-mix(in srgb, var(--bg) 88%, transparent);
+      backdrop-filter: blur(18px);
+      overflow-y: auto;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 24px;
+    }
+
+    .mark {
+      display: grid;
+      place-items: center;
+      width: 42px;
+      height: 42px;
+      border-radius: 12px;
+      color: #fff;
+      font-weight: 900;
+      background: linear-gradient(145deg, var(--accent), #a82e22);
+      box-shadow: 0 8px 24px color-mix(in srgb, var(--accent) 30%, transparent);
+    }
+
+    .brand strong { display: block; letter-spacing: .06em; }
+    .brand small { color: var(--muted); }
+
+    .search {
+      width: 100%;
+      padding: 11px 12px;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      color: var(--ink);
+      background: var(--panel);
+      outline: none;
+    }
+
+    .search:focus { border-color: var(--accent-2); box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent-2) 14%, transparent); }
+
+    nav { margin: 22px 0; }
+    nav a {
+      display: block;
+      margin: 4px 0;
+      padding: 8px 10px;
+      border-radius: 10px;
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 14px;
+      transition: .2s ease;
+    }
+
+    nav a:hover, nav a.active {
+      color: var(--ink);
+      background: var(--panel-2);
+      transform: translateX(3px);
+    }
+
+    nav a.active { border-left: 3px solid var(--accent); }
+
+    .side-actions {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+    }
+
+    .soft-btn {
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      padding: 8px 9px;
+      color: var(--ink);
+      background: var(--panel);
+      cursor: pointer;
+    }
+
+    .side-note {
+      margin-top: 20px;
+      padding: 12px;
+      border: 1px dashed var(--line);
+      border-radius: 12px;
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    main {
+      width: min(1100px, calc(100vw - var(--sidebar)));
+      padding: 42px clamp(24px, 5vw, 76px) 100px;
+    }
+
+    section { scroll-margin-top: 22px; margin: 34px 0 78px; }
+    .hero {
+      position: relative;
+      overflow: hidden;
+      margin-top: 0;
+      padding: clamp(32px, 6vw, 68px);
+      border: 1px solid var(--line);
+      border-radius: 28px;
+      background: var(--panel);
+      box-shadow: var(--shadow);
+    }
+
+    .hero::after {
+      content: "";
+      position: absolute;
+      right: -90px;
+      bottom: -110px;
+      width: 320px;
+      height: 320px;
+      border-radius: 50%;
+      border: 58px solid color-mix(in srgb, var(--accent-2) 12%, transparent);
+    }
+
+    .eyebrow {
+      color: var(--accent);
+      font-size: 13px;
+      font-weight: 800;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+    }
+
+    h1, h2, h3, h4 { line-height: 1.25; letter-spacing: -.02em; }
+    h1 { max-width: 820px; margin: 14px 0 18px; font-size: clamp(42px, 7vw, 78px); }
+    h2 { margin: 0 0 12px; font-size: clamp(30px, 4vw, 46px); }
+    h3 { margin-top: 30px; font-size: 24px; }
+    h4 { font-size: 18px; }
+    .lead { max-width: 800px; color: var(--muted); font-size: clamp(17px, 2vw, 21px); }
+
+    .hero-tags, .tag-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 26px;
+    }
+
+    .tag {
+      padding: 6px 10px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      color: var(--muted);
+      background: var(--bg);
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .section-head {
+      display: grid;
+      grid-template-columns: 74px 1fr;
+      gap: 18px;
+      align-items: start;
+      margin-bottom: 26px;
+    }
+
+    .num {
+      display: grid;
+      place-items: center;
+      width: 60px;
+      height: 60px;
+      border: 1px solid var(--line);
+      border-radius: 17px;
+      color: var(--accent);
+      background: var(--panel);
+      font-weight: 900;
+      font-size: 18px;
+      box-shadow: var(--shadow);
+    }
+
+    .subtitle { margin: 0; color: var(--muted); }
+    .grid-2, .grid-3 {
+      display: grid;
+      gap: 16px;
+    }
+
+    .grid-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .grid-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+
+    .card {
+      padding: 22px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: var(--panel);
+      box-shadow: 0 10px 35px rgba(32, 28, 18, .05);
+    }
+
+    .card h3, .card h4 { margin-top: 0; }
+    .card p:last-child { margin-bottom: 0; }
+    .metric {
+      display: flex;
+      align-items: baseline;
+      gap: 9px;
+      margin: 7px 0;
+    }
+    .metric strong { color: var(--accent); font-size: 30px; }
+    .metric span { color: var(--muted); font-size: 13px; }
+
+    .callout {
+      margin: 22px 0;
+      padding: 18px 20px;
+      border-left: 5px solid var(--accent);
+      border-radius: 0 14px 14px 0;
+      background: color-mix(in srgb, var(--accent) 7%, var(--panel));
+    }
+
+    .callout.green {
+      border-color: var(--accent-2);
+      background: color-mix(in srgb, var(--accent-2) 8%, var(--panel));
+    }
+
+    .callout.yellow {
+      border-color: var(--accent-3);
+      background: color-mix(in srgb, var(--accent-3) 11%, var(--panel));
+    }
+
+    .pipeline {
+      display: grid;
+      grid-template-columns: repeat(6, minmax(120px, 1fr));
+      gap: 10px;
+      margin: 24px 0;
+      overflow-x: auto;
+      padding-bottom: 8px;
+    }
+
+    .step {
+      position: relative;
+      min-width: 124px;
+      padding: 16px 14px;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      background: var(--panel);
+      text-align: center;
+    }
+
+    .step:not(:last-child)::after {
+      content: "→";
+      position: absolute;
+      top: 50%;
+      right: -10px;
+      z-index: 2;
+      transform: translate(50%, -50%);
+      color: var(--accent);
+      font-weight: 900;
+    }
+
+    .step b { display: block; margin-bottom: 5px; }
+    .step small { color: var(--muted); }
+
+    .formula {
+      margin: 18px 0;
+      padding: 20px;
+      overflow-x: auto;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      color: var(--accent-2);
+      background: var(--panel-2);
+      font-family: "SFMono-Regular", Consolas, monospace;
+      font-weight: 700;
+      text-align: center;
+    }
+
+    .code-wrap {
+      position: relative;
+      margin: 18px 0;
+      border-radius: 16px;
+      overflow: hidden;
+      background: var(--code);
+      box-shadow: var(--shadow);
+    }
+
+    .code-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 9px 14px;
+      border-bottom: 1px solid #2e3935;
+      color: #a9b9b1;
+      font-size: 12px;
+    }
+
+    .copy {
+      border: 1px solid #42504a;
+      border-radius: 8px;
+      padding: 4px 8px;
+      color: #d4e5dc;
+      background: transparent;
+      cursor: pointer;
+    }
+
+    pre {
+      margin: 0;
+      padding: 20px;
+      overflow-x: auto;
+      color: var(--code-ink);
+      font: 13px/1.7 "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+      tab-size: 2;
+    }
+
+    code .kw { color: #ff9b7f; }
+    code .fn { color: #74d9bd; }
+    code .st { color: #ffd27c; }
+    code .cm { color: #879990; }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 20px 0;
+      border: 1px solid var(--line);
+      background: var(--panel);
+      font-size: 14px;
+    }
+
+    th, td {
+      padding: 12px 13px;
+      border-bottom: 1px solid var(--line);
+      text-align: left;
+      vertical-align: top;
+    }
+
+    th { color: var(--muted); background: var(--panel-2); }
+    tr:last-child td { border-bottom: 0; }
+    .yes { color: var(--accent-2); font-weight: 800; }
+    .no { color: var(--accent); font-weight: 800; }
+    .best { background: color-mix(in srgb, var(--accent-2) 10%, var(--panel)); }
+
+    .tabs {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin: 18px 0 0;
+    }
+
+    .tab-btn {
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      padding: 7px 12px;
+      color: var(--muted);
+      background: var(--panel);
+      cursor: pointer;
+    }
+
+    .tab-btn.active { color: #fff; border-color: var(--accent-2); background: var(--accent-2); }
+    .tab-panel { display: none; margin-top: 14px; }
+    .tab-panel.active { display: block; }
+
+    .graph-demo {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+      align-items: center;
+      margin: 22px 0;
+    }
+
+    .node {
+      min-height: 98px;
+      padding: 15px;
+      border: 2px solid var(--line);
+      border-radius: 16px;
+      background: var(--panel);
+      text-align: center;
+    }
+
+    .node.hot { border-color: var(--accent); box-shadow: 0 0 0 5px color-mix(in srgb, var(--accent) 10%, transparent); }
+    .node.good { border-color: var(--accent-2); }
+    .node small { display: block; margin-top: 5px; color: var(--muted); }
+
+    details {
+      margin: 10px 0;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      background: var(--panel);
+      overflow: hidden;
+    }
+
+    summary {
+      padding: 16px 18px;
+      cursor: pointer;
+      font-weight: 750;
+      list-style: none;
+    }
+
+    summary::-webkit-details-marker { display: none; }
+    summary::after { content: "+"; float: right; color: var(--accent); font-size: 20px; }
+    details[open] summary::after { content: "−"; }
+    details .answer { padding: 0 18px 18px; color: var(--muted); }
+
+    .checklist { padding-left: 0; list-style: none; }
+    .checklist li { position: relative; padding: 6px 0 6px 28px; }
+    .checklist li::before {
+      content: "✓";
+      position: absolute;
+      left: 0;
+      color: var(--accent-2);
+      font-weight: 900;
+    }
+
+    .source-list li { margin: 8px 0; }
+    footer {
+      padding: 28px 0 0;
+      border-top: 1px solid var(--line);
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .hidden-by-search { display: none !important; }
+    .mobile-top { display: none; }
+
+    @media (max-width: 1060px) {
+      :root { --sidebar: 240px; }
+      .grid-3 { grid-template-columns: 1fr 1fr; }
+      .pipeline { grid-template-columns: repeat(3, 1fr); }
+      .step:nth-child(3)::after { display: none; }
+    }
+
+    @media (max-width: 780px) {
+      .shell { display: block; }
+      aside { display: none; }
+      .mobile-top {
+        position: sticky;
+        top: 0;
+        z-index: 90;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 10px 16px;
+        border-bottom: 1px solid var(--line);
+        background: color-mix(in srgb, var(--bg) 90%, transparent);
+        backdrop-filter: blur(16px);
+      }
+      main { width: 100%; padding: 22px 16px 72px; }
+      .grid-2, .grid-3, .graph-demo { grid-template-columns: 1fr; }
+      .section-head { grid-template-columns: 52px 1fr; }
+      .num { width: 46px; height: 46px; border-radius: 13px; }
+      .pipeline { grid-template-columns: 1fr; }
+      .step::after { display: none; }
+      .hero { padding: 30px 22px; }
+      h1 { font-size: 42px; }
+      table { display: block; overflow-x: auto; white-space: nowrap; }
+    }
+
+    @media print {
+      aside, .mobile-top, .progress, .copy, .tabs { display: none !important; }
+      .shell { display: block; }
+      main { width: 100%; padding: 0; }
+      body { background: white; color: black; }
+      .card, .hero, .code-wrap { box-shadow: none; break-inside: avoid; }
+      .tab-panel { display: block !important; }
+      section { break-before: auto; }
+    }
+  </style>
+</head>
+<body>
+  <div class="progress" id="progress"></div>
+  <div class="mobile-top">
+    <strong>GEPASE Learning</strong>
+    <button class="soft-btn theme-toggle" aria-label="切换主题">◐</button>
+  </div>
+
+  <div class="shell">
+    <aside>
+      <div class="brand">
+        <div class="mark">G</div>
+        <div>
+          <strong>GEPASE</strong>
+          <small>Algorithm Field Guide</small>
+        </div>
+      </div>
+
+      <input id="search" class="search" type="search" placeholder="搜索概念，如 Pareto…" aria-label="搜索页面内容">
+
+      <nav id="toc">
+        <a href="#overview">01 · 项目问题</a>
+        <a href="#map">02 · 算法地图</a>
+        <a href="#gepa">03 · GEPA 深入</a>
+        <a href="#skillopt">04 · SkillOpt</a>
+        <a href="#skilllens">05 · SkillLens</a>
+        <a href="#creator">06 · skill-creator</a>
+        <a href="#darwin">07 · Darwin-skill</a>
+        <a href="#hl">08 · Heuristic Learning</a>
+        <a href="#comparison">09 · 横向比较</a>
+        <a href="#gepase">10 · GEPASE 设计</a>
+        <a href="#graph">11 · Package Graph</a>
+        <a href="#eval">12 · Eval 与统计</a>
+        <a href="#interview">13 · 面试问答</a>
+        <a href="#sources">14 · 一手资料</a>
+      </nav>
+
+      <div class="side-actions">
+        <button class="soft-btn theme-toggle">主题</button>
+        <button class="soft-btn" onclick="window.print()">打印</button>
+      </div>
+      <div class="side-note">
+        本页完全离线运行。代码示例包含“可直接参考的接口代码”和“标记为概念性的伪代码”，实现时以锁定版本的官方 API 为准。
+      </div>
+    </aside>
+
+    <main>
+      <section class="hero searchable" id="overview">
+        <div class="eyebrow">Graph-Enhanced Package-Aware Skill Evolution</div>
+        <h1>从“会写 Skill”到“会训练 Skill Package”</h1>
+        <p class="lead">
+          这份手册解释 GEPASE 的理论来源和实现映射。核心问题不是让 LLM 把一份 Markdown 写得更漂亮，而是把完整 Skill Package 视为冻结 Agent 的外部可训练状态，用真实任务、执行轨迹、结构化编辑和独立验证形成可复现的学习闭环。
+        </p>
+        <div class="hero-tags">
+          <span class="tag">GEPA / Pareto Search</span>
+          <span class="tag">SkillOpt / Validation Gate</span>
+          <span class="tag">Package Graph</span>
+          <span class="tag">LLM Reflection</span>
+          <span class="tag">Executable Evals</span>
+          <span class="tag">Open-source Research</span>
+        </div>
+      </section>
+
+      <section class="searchable" id="map">
+        <div class="section-head">
+          <div class="num">02</div>
+          <div>
+            <h2>先建立算法地图</h2>
+            <p class="subtitle">不同工作解决的是闭环中的不同问题，不能把它们简单拼成模块名。</p>
+          </div>
+        </div>
+
+        <div class="grid-3">
+          <article class="card">
+            <div class="eyebrow">Search</div>
+            <h3>GEPA</h3>
+            <p>负责多候选搜索、任务级多样性、反思式变异、候选融合和预算控制。</p>
+          </article>
+          <article class="card">
+            <div class="eyebrow">Stability</div>
+            <h3>SkillOpt</h3>
+            <p>负责有界编辑、验证门控、拒绝编辑记忆和跨 epoch 的稳定更新。</p>
+          </article>
+          <article class="card">
+            <div class="eyebrow">Representation</div>
+            <h3>Package Graph</h3>
+            <p>负责把“改哪个文件”提升为失败归因、影响分析、闭合子图修改和安全融合。</p>
+          </article>
+          <article class="card">
+            <div class="eyebrow">Evaluation</div>
+            <h3>skill-creator</h3>
+            <p>提供 with-skill/no-skill、重复运行、assertion、盲评和成本—质量分析思想。</p>
+          </article>
+          <article class="card">
+            <div class="eyebrow">Evidence</div>
+            <h3>SkillLens</h3>
+            <p>提醒我们 Skill 存在负迁移，生成能力、消费能力和模型规模不能直接等同。</p>
+          </article>
+          <article class="card">
+            <div class="eyebrow">Engineering</div>
+            <h3>Darwin + HL</h3>
+            <p>贡献 Git ratchet、显式记忆、回归测试、失败历史和人在回路的工程方法。</p>
+          </article>
+        </div>
+
+        <div class="callout green">
+          <strong>一句话关系：</strong>
+          GEPA 决定“探索哪些候选”，SkillOpt 决定“一次允许怎样改、什么情况下保留”，Package Graph 决定“失败与哪些组件有关、如何安全地改和合并”，Eval 决定“所谓提升是否可信”。
+        </div>
+      </section>
+
+      <section class="searchable" id="gepa">
+        <div class="section-head">
+          <div class="num">03</div>
+          <div>
+            <h2>GEPA：项目的外层搜索骨架</h2>
+            <p class="subtitle">Reflective evolution 的价值，在于把完整轨迹保留为可推理的学习信号。</p>
+          </div>
+        </div>
+
+        <h3>3.1 GEPA 在优化什么？</h3>
+        <p>
+          设一个 AI 系统由若干可修改文本组件构成，候选记为 Φ。对于任务实例 x，系统执行后产生轨迹 τ、输出 y、数值评分 μ，以及自然语言或结构化反馈 μf。GEPA 的目标不是通过反向传播更新模型权重，而是在有限评测预算内寻找更好的文本候选。
+        </p>
+        <div class="formula">Φ → rollout(x) → { trajectory τ, output y, score μ, actionable feedback μf } → reflect → Φ′</div>
+
+        <div class="grid-2">
+          <article class="card">
+            <h4>标量 reward 丢失了什么？</h4>
+            <p>只知道 0 分，无法知道是触发失败、引用没读、脚本报错、输出格式错误，还是任务知识不足。</p>
+          </article>
+          <article class="card">
+            <h4>ASI 提供了什么？</h4>
+            <p>错误断言、stderr、工具轨迹、实际输出、期望输出、成本、图切片等可操作信息，让 LLM 像工程师一样定位问题。</p>
+          </article>
+        </div>
+
+        <h3>3.2 核心循环</h3>
+        <div class="pipeline" aria-label="GEPA 核心循环">
+          <div class="step"><b>候选选择</b><small>从 frontier 采样父代</small></div>
+          <div class="step"><b>任务采样</b><small>抽取反馈 minibatch</small></div>
+          <div class="step"><b>Rollout</b><small>执行并收集轨迹</small></div>
+          <div class="step"><b>反思变异</b><small>修改一个或多个组件</small></div>
+          <div class="step"><b>快速评测</b><small>判断是否有提升</small></div>
+          <div class="step"><b>全量验证</b><small>更新池与 frontier</small></div>
+        </div>
+
+        <div class="callout">
+          <strong>面试易错点：</strong>
+          GEPA 不是“随机遗传算法 + LLM”。变异不是盲目字符扰动，而是 LLM 阅读轨迹和反馈后的定向诊断；遗传性主要体现在候选继承、变异、融合与多代谱系。
+        </div>
+
+        <h3>3.3 Per-key Pareto Frontier 到底是什么？</h3>
+        <p>
+          当前 GEPA 为每个 frontier key 记录 best-in-class 候选。key 可以是验证样本、显式目标，或者两者组合。候选在多少个 key 上处于最佳，会影响它被选作父代的概率。
+        </p>
+
+        <table>
+          <thead>
+            <tr><th>候选</th><th>任务 T1</th><th>任务 T2</th><th>任务 T3</th><th>任务 T4</th><th>解释</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>P0</td><td class="yes">1.0</td><td>0.2</td><td>0.4</td><td>0.3</td><td>T1 专家</td></tr>
+            <tr><td>P1</td><td>0.7</td><td class="yes">1.0</td><td>0.5</td><td>0.4</td><td>T2 专家</td></tr>
+            <tr><td>P2</td><td>0.4</td><td>0.6</td><td class="yes">1.0</td><td class="yes">0.9</td><td>T3/T4 专家</td></tr>
+            <tr class="best"><td>P3</td><td>0.8</td><td>0.8</td><td>0.8</td><td>0.8</td><td>平均很好，但没有任何 key 第一</td></tr>
+          </tbody>
+        </table>
+
+        <p>
+          在 per-key frontier 下，P0、P1、P2 会被保留，因为它们至少在一个任务上最好；P3 可能落选。可是从严格多目标优化看，P3 未必被任何候选完全支配。因此：
+        </p>
+
+        <ul>
+          <li><strong>instance frontier：</strong>每个验证任务一个 key，适合大量任务。</li>
+          <li><strong>objective frontier：</strong>每个 accuracy、cost、latency 等目标一个 key。</li>
+          <li><strong>hybrid frontier：</strong>同时考虑任务和目标，GEPASE 的初始主设置。</li>
+          <li><strong>true non-dominated selector：</strong>保留全部非支配候选，可加入 crowding distance 避免候选坍缩。</li>
+        </ul>
+
+        <h3>3.4 反思式变异</h3>
+        <div class="tabs" role="tablist" aria-label="GEPA 变异信息">
+          <button class="tab-btn active" data-tab="mutation-input">输入</button>
+          <button class="tab-btn" data-tab="mutation-reason">反思</button>
+          <button class="tab-btn" data-tab="mutation-output">输出</button>
+        </div>
+        <div id="mutation-input" class="tab-panel active card">
+          当前候选组件、任务 Prompt、Agent 输出、工具轨迹、分数、断言、stderr、成功样本中应该保留的行为，以及同类 rejected patches。
+        </div>
+        <div id="mutation-reason" class="tab-panel card">
+          优化模型判断失败是知识缺失、路由错误、脚本缺陷、触发错误、格式不明确还是过度约束，并定位应修改的最小组件。
+        </div>
+        <div id="mutation-output" class="tab-panel card">
+          原始 GEPA 通常输出更新后的文本组件；GEPASE 将其约束为带证据、前置条件和预算的 PackagePatch。
+        </div>
+
+        <h3>3.5 系统感知融合与 DAG</h3>
+        <p>
+          如果父代 A 擅长任务集合 SA，父代 B 擅长 SB，融合希望组合互补组件。由于一个新候选可能有多个父节点，候选谱系天然是 DAG，而不是严格的树。对 Package 来说，直接按文件替换有风险：复制脚本时可能遗漏引用它的说明、测试和依赖。因此 GEPASE 融合的是<strong>依赖闭合子图</strong>。
+        </p>
+
+        <div class="graph-demo">
+          <div class="node good"><b>父代 A</b><small>触发与说明更好</small></div>
+          <div class="node good"><b>父代 B</b><small>脚本与错误处理更好</small></div>
+          <div class="node hot"><b>闭合子图融合</b><small>检查接口与依赖冲突</small></div>
+          <div class="node"><b>子代 C</b><small>重新通过全部 Gate</small></div>
+        </div>
+
+        <h3>3.6 用当前 GEPA API 表达 GEPASE</h3>
+        <div class="code-wrap">
+          <div class="code-head"><span>Python · 概念性集成骨架</span><button class="copy">复制</button></div>
+          <pre><code><span class="kw">from</span> gepa.optimize_anything <span class="kw">import</span> (
+    optimize_anything, GEPAConfig, EngineConfig, ReflectionConfig
+)
+
+seed = {
+    <span class="st">"metadata_and_routing"</span>: load_routing(seed_path),
+    <span class="st">"skill_instructions"</span>: load_skill_md(seed_path),
+    <span class="st">"reference_bundle"</span>: load_references(seed_path),
+    <span class="st">"script_bundle"</span>: load_scripts(seed_path),
+}
+
+config = GEPAConfig(
+    engine=EngineConfig(
+        max_metric_calls=200,
+        candidate_selection_strategy=<span class="st">"pareto"</span>,
+        frontier_type=<span class="st">"hybrid"</span>,
+        acceptance_criterion=ValidationGatedAcceptance(),
+        cache_evaluation=True,
+    ),
+    reflection=ReflectionConfig(
+        reflection_lm=<span class="st">"provider/strong-reflection-model"</span>
+    ),
+)
+
+result = optimize_anything(
+    seed_candidate=seed,
+    evaluator=evaluate_package,
+    dataset=train_tasks,
+    valset=validation_tasks,
+    objective=<span class="st">"Improve task utility while preserving package integrity."</span>,
+    config=config,
+)
+
+export_package(result.best_candidate, output_dir=<span class="st">"best_skill_package"</span>)</code></pre>
+        </div>
+
+        <p class="callout yellow">
+          代码中的 ValidationGatedAcceptance、load_routing 和 evaluate_package 是 GEPASE 需要实现的扩展；接口细节应以项目锁定的 GEPA 版本为准，并通过集成测试防止上游 API 演化导致结果漂移。
+        </p>
+      </section>
+
+      <section class="searchable" id="skillopt">
+        <div class="section-head">
+          <div class="num">04</div>
+          <div>
+            <h2>SkillOpt：让更新过程稳定下来</h2>
+            <p class="subtitle">GEPA 擅长多样性搜索，SkillOpt 强调训练纪律与验证门控。</p>
+          </div>
+        </div>
+
+        <h3>4.1 深度学习类比不是装饰</h3>
+        <table>
+          <thead><tr><th>权重训练</th><th>SkillOpt</th><th>在 GEPASE 中</th></tr></thead>
+          <tbody>
+            <tr><td>模型参数</td><td>单份自然语言 Skill</td><td>完整 PackageSnapshot</td></tr>
+            <tr><td>Forward</td><td>目标模型 Rollout</td><td>Agent + tools + scripts 的真实执行</td></tr>
+            <tr><td>Gradient signal</td><td>轨迹反思与编辑建议</td><td>ASI + failure subgraph</td></tr>
+            <tr><td>Learning rate</td><td>每步文本编辑预算</td><td>Patch 数量 + graph edit budget</td></tr>
+            <tr><td>Validation</td><td>held-out selection gate</td><td>结构硬 Gate + 完整 validation</td></tr>
+            <tr><td>Momentum / slow state</td><td>slow/meta update</td><td>后续扩展的跨 epoch optimizer memory</td></tr>
+          </tbody>
+        </table>
+
+        <h3>4.2 为什么 full rewrite 容易退化？</h3>
+        <div class="grid-3">
+          <article class="card"><h4>归因困难</h4><p>一次改十处，分数变化无法归因，也无法学习哪些编辑真正有效。</p></article>
+          <article class="card"><h4>灾难性遗忘</h4><p>修复新失败时覆盖已经有效的规则、格式或工具使用习惯。</p></article>
+          <article class="card"><h4>局部过拟合</h4><p>把 minibatch 的具体实体、路径或答案写进 Skill，validation 立即暴露。</p></article>
+        </div>
+
+        <h3>4.3 GEPASE 的结构化 Patch</h3>
+        <div class="code-wrap">
+          <div class="code-head"><span>JSON · PackagePatch 示例</span><button class="copy">复制</button></div>
+          <pre><code>{
+  <span class="st">"parent_snapshot"</span>: <span class="st">"sha256:8cc..."</span>,
+  <span class="st">"edit_budget"</span>: 2,
+  <span class="st">"operations"</span>: [
+    {
+      <span class="st">"op"</span>: <span class="st">"move_node"</span>,
+      <span class="st">"node_id"</span>: <span class="st">"section:common-domain-rules"</span>,
+      <span class="st">"to"</span>: <span class="st">"references/domain.md#rules"</span>,
+      <span class="st">"evidence_eval_ids"</span>: [<span class="st">"E17"</span>, <span class="st">"E24"</span>],
+      <span class="st">"expected_benefit"</span>: <span class="st">"Reduce always-loaded context."</span>
+    },
+    {
+      <span class="st">"op"</span>: <span class="st">"patch_script"</span>,
+      <span class="st">"path"</span>: <span class="st">"scripts/parse.py"</span>,
+      <span class="st">"target"</span>: <span class="st">"function:parse_rows"</span>,
+      <span class="st">"reason"</span>: <span class="st">"Empty rows fail deterministic assertions."</span>
+    }
+  ]
+}</code></pre>
+        </div>
+
+        <div class="callout green">
+          SkillOpt 最重要的启发不是“把训练术语搬到 Prompt”，而是：每次更新保持足够小、证据足够清楚、失败编辑能被记住，并由独立的 held-out 数据决定是否保留。
+        </div>
+      </section>
+
+      <section class="searchable" id="skilllens">
+        <div class="section-head">
+          <div class="num">05</div>
+          <div>
+            <h2>SkillLens：Skill 有用，不代表总是有用</h2>
+            <p class="subtitle">模型生成 Skill 的效用需要在完整生命周期中验证。</p>
+          </div>
+        </div>
+
+        <div class="grid-2">
+          <article class="card">
+            <h3>负迁移</h3>
+            <p>Skill 可能把 Agent 约束到错误流程、引入过时知识、造成过度工具调用，最终比 no-skill 更差。</p>
+          </article>
+          <article class="card">
+            <h3>Producer ≠ Consumer</h3>
+            <p>一个模型很会从经验提炼 Skill，不代表它最会使用 Skill；模型规模和 baseline 强弱也不能直接预测收益。</p>
+          </article>
+        </div>
+
+        <h3>在 GEPASE 里的落地</h3>
+        <ul class="checklist">
+          <li>任何效果结论都包含 no-skill、seed skill 和 optimized skill。</li>
+          <li>单独报告 negative transfer rate，而不是让平均分掩盖退化类别。</li>
+          <li>在预算允许时做 cross-model 或 cross-harness transfer。</li>
+          <li>结构 rubric 只作为 gate 和诊断，不能替代真实任务 utility。</li>
+          <li>记录优化模型、目标模型和 Judge 模型三个角色，防止概念混淆。</li>
+        </ul>
+      </section>
+
+      <section class="searchable" id="creator">
+        <div class="section-head">
+          <div class="num">06</div>
+          <div>
+            <h2>Anthropic skill-creator：Eval 基础设施</h2>
+            <p class="subtitle">它最值得学习的不是写作模板，而是比较与分析工作流。</p>
+          </div>
+        </div>
+
+        <div class="grid-2">
+          <article class="card">
+            <h3>渐进披露</h3>
+            <p>metadata 始终可见；SKILL.md 在触发后进入上下文；references、scripts 和 assets 按需读取或执行。</p>
+          </article>
+          <article class="card">
+            <h3>Benchmark</h3>
+            <p>同一 Prompt 运行 with-skill 和 baseline，多次重复，统计 pass rate、duration、tokens 及方差。</p>
+          </article>
+          <article class="card">
+            <h3>Blind comparison</h3>
+            <p>比较器不知道 A/B 哪个是新版本，降低“新版本应该更好”的期待偏差。</p>
+          </article>
+          <article class="card">
+            <h3>Analyzer</h3>
+            <p>识别永远通过的无区分度 assertion、高方差 case，以及效果提升与成本增长的权衡。</p>
+          </article>
+        </div>
+
+        <div class="callout yellow">
+          GEPASE 必须对 assertion 做“反例测试”：把明显错误的输出喂给断言，如果仍能通过，说明评测本身正在被优化器钻漏洞。
+        </div>
+      </section>
+
+      <section class="searchable" id="darwin">
+        <div class="section-head">
+          <div class="num">07</div>
+          <div>
+            <h2>Darwin-skill：工程 Ratchet</h2>
+            <p class="subtitle">它强调“只保留测得的提升”，但自动化实验需要比 rubric 更严格。</p>
+          </div>
+        </div>
+
+        <div class="pipeline">
+          <div class="step"><b>设计 Prompt</b><small>先定义测试再优化</small></div>
+          <div class="step"><b>Baseline</b><small>结构 + 真实效果</small></div>
+          <div class="step"><b>诊断最低维度</b><small>一次聚焦问题</small></div>
+          <div class="step"><b>Git Commit</b><small>保留完整 diff</small></div>
+          <div class="step"><b>独立复评</b><small>避免自评自改</small></div>
+          <div class="step"><b>Keep / Revert</b><small>形成单向 ratchet</small></div>
+        </div>
+
+        <h3>GEPASE 吸收与舍弃</h3>
+        <table>
+          <thead><tr><th>吸收</th><th>增强</th><th>不采用为主结果</th></tr></thead>
+          <tbody>
+            <tr><td>候选 diff 与完整历史</td><td>内容寻址 snapshot + 多父 DAG</td><td>仅看 Git 最新分支</td></tr>
+            <tr><td>独立 Judge</td><td>deterministic assertion 为主，Judge 为辅</td><td>同一上下文自评自改</td></tr>
+            <tr><td>失败回滚</td><td>rejected edit 继续作为负反馈</td><td>回滚后忘记失败方向</td></tr>
+            <tr><td>边际收益停止</td><td>预算、无提升和统计不确定性共同停止</td><td>固定三轮即结束</td></tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section class="searchable" id="hl">
+        <div class="section-head">
+          <div class="num">08</div>
+          <div>
+            <h2>Heuristic Learning：方法论坐标</h2>
+            <p class="subtitle">更新对象从神经网络参数变成可读、可执行、可测试的软件结构。</p>
+          </div>
+        </div>
+
+        <table>
+          <thead><tr><th>维度</th><th>Deep RL</th><th>HL</th><th>GEPASE</th></tr></thead>
+          <tbody>
+            <tr><td>Policy</td><td>神经网络参数</td><td>代码、规则、状态机</td><td>Skill Package</td></tr>
+            <tr><td>State</td><td>环境观测</td><td>显式变量与检测器</td><td>Package Graph + Candidate State</td></tr>
+            <tr><td>Action</td><td>模型 forward</td><td>执行程序逻辑</td><td>Agent 按 Skill 调用工具与脚本</td></tr>
+            <tr><td>Feedback</td><td>主要是 reward</td><td>测试、日志、回放</td><td>Score + ASI + assertions + graph slice</td></tr>
+            <tr><td>Update</td><td>梯度更新</td><td>Coding Agent 改代码</td><td>LLM 生成结构化 PackagePatch</td></tr>
+            <tr><td>Memory</td><td>参数或 replay buffer</td><td>trial、diff、失败历史</td><td>Candidate DAG + rejected-edit memory</td></tr>
+          </tbody>
+        </table>
+
+        <div class="callout">
+          HL 不自动解决灾难性遗忘。一个新规则仍可能修复当前失败却破坏历史能力。它只是把“防遗忘”转化为更工程化的问题：回归测试、golden trace、显式失败记忆、结构压缩和接口稳定性。
+        </div>
+      </section>
+
+      <section class="searchable" id="comparison">
+        <div class="section-head">
+          <div class="num">09</div>
+          <div>
+            <h2>横向比较：谁优化什么？</h2>
+            <p class="subtitle">避免把定位不同的项目放在同一维度上简单排名。</p>
+          </div>
+        </div>
+
+        <table>
+          <thead>
+            <tr><th>方法</th><th>优化对象</th><th>搜索</th><th>验证门控</th><th>Package 结构</th><th>真实 Rollout</th><th>主要局限</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>skill-creator</td><td>Skill 文档与描述</td><td>人工迭代</td><td>人工审阅</td><td>规范指导</td><td class="yes">支持</td><td>不是自动优化算法</td></tr>
+            <tr><td>Darwin-skill</td><td>主要是 SKILL.md</td><td>hill climbing</td><td>rubric + 人审</td><td>有限</td><td>部分</td><td>评分主观、搜索较局部</td></tr>
+            <tr><td>GEPA</td><td>多文本参数</td><td class="yes">Pareto evolution</td><td>可配置</td><td>需自定义</td><td class="yes">支持</td><td>默认不理解 Package 语义</td></tr>
+            <tr><td>gskill</td><td>仓库专属 Skill</td><td class="yes">GEPA</td><td>held-out eval</td><td>当前以 Skill 文件为主</td><td class="yes">SWE 任务</td><td>领域与优化对象较窄</td></tr>
+            <tr><td>SkillOpt</td><td>单 Skill 文档</td><td>有界迭代</td><td class="yes">严格 gate</td><td>未作为核心对象</td><td class="yes">支持</td><td>不联合优化完整 Package</td></tr>
+            <tr class="best"><td>GEPASE</td><td>完整 Skill Package</td><td class="yes">GEPA + graph-guided</td><td class="yes">多级 gate</td><td class="yes">核心表示</td><td class="yes">E0-E3 多保真</td><td>需要验证代理证据与真实结果的一致性</td></tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section class="searchable" id="gepase">
+        <div class="section-head">
+          <div class="num">10</div>
+          <div>
+            <h2>GEPASE：算法如何拼成闭环</h2>
+            <p class="subtitle">外层负责探索，内层负责稳定，图负责结构信用分配，Eval 负责真相。</p>
+          </div>
+        </div>
+
+        <h3>10.1 一轮完整优化</h3>
+        <ol>
+          <li>从 hybrid Pareto pool 选择父代 PackageCandidate。</li>
+          <li>采样一组失败、退化或高不确定性的训练任务。</li>
+          <li>先执行 E0 静态检查与 E1 推演式 paired rollout；只让有希望或高不确定候选晋级 E2 子智能体 Forward Test 和 E3 可执行断言。</li>
+          <li>严格区分 E1 planned edge 与 E2/E3 observed edge，再与静态 Package Graph 合并生成 fidelity-aware failure subgraph。</li>
+          <li>GraphGuidedSelector 在编辑预算内选择 mutation scope。</li>
+          <li>LLM 读取相关候选片段、ASI、成功行为和 rejected history，提出 PackagePatch。</li>
+          <li>Patch Engine 在临时 snapshot 应用 Patch。</li>
+          <li>运行 schema、引用、语法、测试、安全等廉价 Gate。</li>
+          <li>运行 minibatch 前后对照；无希望则拒绝。</li>
+          <li>运行完整 held-out validation；满足接受规则才加入池。</li>
+          <li>更新 per-task / per-objective frontier、候选 DAG、成本和负反馈记忆。</li>
+        </ol>
+
+        <h3>10.2 候选接受伪代码</h3>
+        <div class="code-wrap">
+          <div class="code-head"><span>Python · 概念性伪代码</span><button class="copy">复制</button></div>
+          <pre><code><span class="kw">def</span> <span class="fn">should_accept</span>(parent, proposal, state):
+    candidate = patch_engine.apply(parent, proposal.patch)
+
+    <span class="cm"># 廉价硬门控先执行，避免浪费 LLM 调用</span>
+    hard = validators.run_all(candidate)
+    <span class="kw">if not</span> hard.ok:
+        rejected_store.add(proposal, reason=hard.failures)
+        <span class="kw">return False</span>
+
+    mini = paired_eval(parent, candidate, proposal.minibatch, tiers=[<span class="st">"E0"</span>, <span class="st">"E1"</span>])
+    <span class="kw">if not</span> mini.promising:
+        rejected_store.add(proposal, reason=mini.delta)
+        <span class="kw">return False</span>
+
+    <span class="cm"># 功能接受必须由预注册的 E2/E3 证据决定</span>
+    val = full_validation(candidate, minimum_tier=<span class="st">"E2"</span>)
+    <span class="kw">if</span> val.breaks_regression_floor:
+        rejected_store.add(proposal, reason=val.regressions)
+        <span class="kw">return False</span>
+
+    <span class="kw">return</span> val.is_epsilon_non_dominated_and_useful()</code></pre>
+        </div>
+
+        <h3>10.3 为什么它不是简单套壳？</h3>
+        <ul class="checklist">
+          <li>GEPA 不原生理解 Skill Package 的文件语义、依赖闭包和脚本副作用。</li>
+          <li>SkillOpt 不负责多父代 Pareto 探索，也不联合训练完整目录。</li>
+          <li>Package Graph 不只是报告，它改变 component selection、edit budget、validation intensity 和 merge。</li>
+          <li>独立 Python Core 管理 Evidence、候选、图、Pareto 与 Gate；Agent Orchestrator Skill 只负责领取任务、委派子智能体和回写结果。</li>
+          <li>MultiFidelityEvalEngine 把 E0 静态、E1 推演、E2 子智能体和 E3 可执行证据统一到同一 schema，同时禁止 planned/observed 混淆。</li>
+          <li>项目贡献能通过等预算消融验证，而不是依靠架构图叙事。</li>
+        </ul>
+      </section>
+
+      <section class="searchable" id="graph">
+        <div class="section-head">
+          <div class="num">11</div>
+          <div>
+            <h2>Package Graph：什么时候真正有用？</h2>
+            <p class="subtitle">图是结构化中间表示，重点是可解释的 slicing、closure 和 impact analysis。</p>
+          </div>
+        </div>
+
+        <h3>11.1 节点与边</h3>
+        <div class="grid-2">
+          <article class="card">
+            <h4>节点</h4>
+            <p>frontmatter 字段、SKILL 章节、instruction block、reference chunk、script module/function、asset、eval case、output artifact。</p>
+          </article>
+          <article class="card">
+            <h4>边</h4>
+            <p>contains、references、imports、calls、declares、produces、reads、executes、covers、fails_at、contributes_to。</p>
+          </article>
+        </div>
+
+        <h3>11.2 失败切片示例</h3>
+        <div class="graph-demo">
+          <div class="node hot"><b>Eval E17 失败</b><small>空行解析 assertion</small></div>
+          <div class="node hot"><b>parse_rows()</b><small>动态 executes + stack frame</small></div>
+          <div class="node hot"><b>脚本调用说明</b><small>SKILL.md references</small></div>
+          <div class="node"><b>无关领域文档</b><small>未访问，不进入 scope</small></div>
+        </div>
+
+        <p>
+          从失败 assertion 反向沿 produces、calls、references、executes 等边扩展，得到最小相关子图。LLM 只看到相关函数、调用说明、对应测试和必要邻居，而不是整个 Package。这同时降低上下文成本和无关修改概率。
+        </p>
+
+        <h3>11.3 Graph-guided selector</h3>
+        <div class="formula">priority(v) = failure_coverage × expected_impact × uncertainty_bonus ÷ (1 + mutation_risk + historical_regression)</div>
+        <p>
+          这个公式是可替换的启发式，不应包装成未经验证的理论定理。真正的证据来自等预算消融：random、round-robin、trace-only 与 graph-guided 在 accepted improvement、metric calls、回归率和最终 test utility 上谁更好。
+        </p>
+
+        <div class="callout">
+          <strong>为什么第一版不用 GNN？</strong>
+          单个 Skill Package 图规模小，监督样本也少。GNN 会增加训练数据需求和解释成本，却未必优于透明规则。只有积累大量跨 Skill 的 graph—patch—outcome 数据后，学习式 selector 才合理。
+        </div>
+      </section>
+
+      <section class="searchable" id="eval">
+        <div class="section-head">
+          <div class="num">12</div>
+          <div>
+            <h2>Eval 与统计：项目可信度的核心</h2>
+            <p class="subtitle">优化器可以很朴素，评测不能含糊。</p>
+          </div>
+        </div>
+
+        <h3>12.1 三段数据为什么必须隔离？</h3>
+        <div class="grid-3">
+          <article class="card"><h4>Train</h4><p>可以进入反思上下文，用来发现失败模式和产生 Patch。</p></article>
+          <article class="card"><h4>Validation</h4><p>决定候选是否接受和哪一个是 best candidate，但不直接告诉 proposer 正确答案。</p></article>
+          <article class="card"><h4>Test</h4><p>优化冻结后才运行，只用于最终结论，不能反复查看后继续调系统。</p></article>
+        </div>
+
+        <h3>12.2 多目标指标</h3>
+        <table>
+          <thead><tr><th>类别</th><th>主要指标</th><th>用途</th></tr></thead>
+          <tbody>
+            <tr><td>Task utility</td><td>pass rate、task-specific score</td><td>主要效果结论</td></tr>
+            <tr><td>Trigger</td><td>precision、recall、F1</td><td>判断 Skill 是否在正确场景生效</td></tr>
+            <tr><td>Efficiency</td><td>token、cost、latency、tool calls</td><td>避免用无限成本换准确率</td></tr>
+            <tr><td>Structure</td><td>broken links、orphans、tests、complexity</td><td>门控与维护性</td></tr>
+            <tr><td>Continual</td><td>regression、negative transfer、accepted yield</td><td>衡量持续优化稳定性</td></tr>
+          </tbody>
+        </table>
+
+        <h3>12.3 统计最小要求</h3>
+        <ul class="checklist">
+          <li>同一任务、同一环境、同一模型配置的 paired before/after。</li>
+          <li>二元结果报告 paired bootstrap 95% CI，必要时使用 McNemar。</li>
+          <li>至少三个独立优化种子，报告平均值与方差。</li>
+          <li>报告总 metric calls、LLM calls、token、美元成本和时间。</li>
+          <li>主表展示所有 Skill，不只展示最好案例。</li>
+          <li>失败候选和不显著结果也进入公开 artifact。</li>
+        </ul>
+
+        <h3>12.4 什么才算项目成功？</h3>
+        <p>
+          不是“LLM 生成了一个新版本”，而是：在未见 test 上，GEPASE 相对 seed skill 有稳定正向提升；在等预算下相对 vanilla GEPA 或随机 selector 更高效或更少回归；所有最终 Package 仍然结构合法、可执行、可审计。若图引导没有收益，诚实的负结果和原因分析仍有价值，但不能继续宣称图算法有效。
+        </p>
+      </section>
+
+      <section class="searchable" id="interview">
+        <div class="section-head">
+          <div class="num">13</div>
+          <div>
+            <h2>面试思考问答</h2>
+            <p class="subtitle">回答要围绕问题定义、设计取舍、实验依据和局限，不要堆术语。</p>
+          </div>
+        </div>
+
+        <details>
+          <summary>1. Skill 优化和 Prompt 优化有什么本质区别？</summary>
+          <div class="answer">Skill 的核心仍包含上下文文本，所以与 Prompt 优化同源；区别在于 Skill 是可复用、可触发、可包含脚本和资源的程序化 Package。优化对象不只是指令措辞，还包括加载路由、工具策略、参考知识、可执行代码和依赖一致性，因此更接近外部可训练 Agent policy。</div>
+        </details>
+        <details>
+          <summary>2. 为什么以 GEPA 为主体，而不是直接使用 SkillOpt？</summary>
+          <div class="answer">SkillOpt 对单文档的局部稳定更新很强，但 GEPASE 还需要保留在不同任务上具有互补优势的多个候选，并进行多父代融合。GEPA 的候选池、per-key frontier、反思变异和 merge 更适合作为外层搜索；SkillOpt 的有界编辑和 validation gate 用于增强其稳定性。</div>
+        </details>
+        <details>
+          <summary>3. GEPA 为什么可能比只优化最高平均分候选更好？</summary>
+          <div class="answer">平均分会掩盖专长。某候选可能只修好了少数困难类别，平均提升不大，但这些局部能力可以在后续融合或继续变异中转化为更强系统。per-key frontier 为这些候选保留进化机会，减少贪心搜索过早收敛。</div>
+        </details>
+        <details>
+          <summary>4. GEPA 的 Pareto 是严格的非支配前沿吗？</summary>
+          <div class="answer">默认不完全是。当前 GEPA 的 per-key frontier 保存至少在某个验证样本或目标上达到 best-in-class 的候选。一个各方面都不错但从未单项第一的非支配候选可能被遗漏。GEPASE 会比较 hybrid per-key 与 true non-dominated selector，并考虑 crowding distance。</div>
+        </details>
+        <details>
+          <summary>5. 图算法为什么不是为了包装项目？</summary>
+          <div class="answer">图直接影响四个决策：失败相关组件选择、Patch 的依赖闭包、公共接口修改的验证强度、多个父代的子图融合。如果移除图只影响可视化，那它就是装饰；因此必须通过 random、trace-only 和 graph-guided 等预算消融验证。</div>
+        </details>
+        <details>
+          <summary>6. 为什么不用 GNN？</summary>
+          <div class="answer">单包图小、跨 Skill 标注数据少，透明启发式更便于调试与归因。GNN 只有在积累足够多 graph—patch—outcome 历史后才可能优于手工 selector。第一版引入 GNN 会增加复杂度但缺乏可信训练信号。</div>
+        </details>
+        <details>
+          <summary>7. 如何防止 LLM 通过修改 Skill 钻 Eval 漏洞？</summary>
+          <div class="answer">严格隔离 test；对 assertion 做反例和 mutation testing；不把验证答案直接提供给 proposer；监控候选是否写入任务实体；使用多样任务和分组切分；对 suspicious shortcut 设置规则；保留独立 Judge 和人工抽查。</div>
+        </details>
+        <details>
+          <summary>8. 为什么不能只用 LLM-as-a-Judge？</summary>
+          <div class="answer">Judge 会受措辞、长度、顺序和自我偏好影响，还可能与 proposer 共享模型偏差。可执行任务应优先使用脚本、文件和 assertion 验证；Judge 仅评价难以程序化的质量，并尽量盲化候选身份、使用独立上下文和校准样例。</div>
+        </details>
+        <details>
+          <summary>9. 有界 Patch 如何对应 SkillOpt 的 textual learning rate？</summary>
+          <div class="answer">学习率不再是连续数值，而是一次允许的操作数、修改节点数、图边变化数、token diff 和公共接口风险。早期可以较大，后期逐渐收缩；高风险或高 fan-out 节点自动降低预算并提高验证强度。</div>
+        </details>
+        <details>
+          <summary>10. 如何衡量图引导带来的样本效率？</summary>
+          <div class="answer">在相同 target/optimizer 模型、任务、proposal 次数和 metric-call 预算下，比较达到相同 validation score 所需调用数、accepted-improvement yield、无效 Patch 比例、回归率和最终 test utility。不能只比较墙钟时间，因为并发配置可能不同。</div>
+        </details>
+        <details>
+          <summary>11. 如何避免灾难性遗忘？</summary>
+          <div class="answer">把历史能力固化为 regression tasks 和 golden traces；使用小步编辑；完整 validation 检查旧类别；对公共节点提高验证覆盖；记录 rejected edits；定期提出 compression 而不是只追加规则。它不能保证零遗忘，但能将遗忘变成可检测和可回滚的问题。</div>
+        </details>
+        <details>
+          <summary>12. Package merge 最大的技术风险是什么？</summary>
+          <div class="answer">组件之间存在隐式接口。只复制一个脚本可能遗漏调用说明、依赖和测试；只复制文档可能引用不存在的文件。GEPASE 因此融合依赖闭合子图，先做静态冲突检测，再对冲突部分生成结构化 resolution patch，最后重新通过全部 Gate。</div>
+        </details>
+        <details>
+          <summary>13. 如果图引导实验没有显著提升怎么办？</summary>
+          <div class="answer">不修改结论迎合设计。分析图解析误差、动态 trace 覆盖、任务规模和 selector 公式；报告图在结构合法性或解释性上是否仍有收益。若任务中 Package 组件耦合弱，图没有效果本身也是合理结论，应简化主算法而不是继续堆复杂度。</div>
+        </details>
+        <details>
+          <summary>14. 为什么项目定位为离线优化，而不是在线无限自进化？</summary>
+          <div class="answer">在线自动采用更新涉及数据漂移、密钥与隐私、回滚、安全、用户影响和不可重复模型行为。离线候选搜索、held-out gate 和显式 adopt 才适合第一版开源研究系统。未来可以接入生产日志，但仍应默认 staging，而不是无条件替换。</div>
+        </details>
+        <details>
+          <summary>15. 这个项目的算法贡献与工程贡献分别是什么？</summary>
+          <div class="answer">算法贡献是多保真证据调度、Package Graph 上的失败信用分配、图引导有界 mutation、依赖闭合 merge 与验证门控的 GEPA 混合搜索；工程贡献是独立 Python Core、EvidenceProvider 协议、任务级 Eval、候选 DAG、断点恢复和开源报告。Agent Skill 只是薄编排适配层，不承载算法状态。</div>
+        </details>
+        <details>
+          <summary>16. 如何控制 API 成本？</summary>
+          <div class="answer">候选和任务结果缓存；E0/E1 在前筛选，只有晋级候选执行 E2/E3；记录高保真 work item、token、时延和可选 API 成本；Agent-native 使用宿主 Agent 能力而不要求额外 API，headless 模式再设置 API cost ceiling。</div>
+        </details>
+        <details>
+          <summary>17. 为什么需要 no-skill baseline？</summary>
+          <div class="answer">原 Skill 可能本身造成负迁移。只比较优化前后无法知道优化版本是否真正优于不使用 Skill。no-skill、seed skill、optimized skill 三者同时存在，才能区分恢复损害、真实增益和模型自身能力。</div>
+        </details>
+        <details>
+          <summary>18. 最终如何证明“真实可用”？</summary>
+          <div class="answer">至少三个非 toy Skill、公开任务与 fixtures、真实 Agent 与 API Rollout、严格 train/validation/test、多个基线、多个优化种子、成本统计、置信区间、可部署 Package、完整失败记录和外部用户可复现命令。没有这些，只能称为可运行 Demo。</div>
+        </details>
+      </section>
+
+      <section class="searchable" id="sources">
+        <div class="section-head">
+          <div class="num">14</div>
+          <div>
+            <h2>一手资料与阅读顺序</h2>
+            <p class="subtitle">优先阅读论文、官方仓库和官方文档；博客用于建立直觉。</p>
+          </div>
+        </div>
+
+        <ol class="source-list">
+          <li><a href="https://arxiv.org/abs/2507.19457" target="_blank" rel="noreferrer">GEPA: Reflective Prompt Evolution Can Outperform Reinforcement Learning</a> — 先理解原始算法。</li>
+          <li><a href="https://github.com/gepa-ai/gepa" target="_blank" rel="noreferrer">gepa-ai/gepa</a> — 再看当前实现，因为接口已经扩展。</li>
+          <li><a href="https://gepa-ai.github.io/gepa/guides/candidate-selection/" target="_blank" rel="noreferrer">GEPA Candidate Selection Strategies</a> — 弄清 per-key frontier 与严格 Pareto 的差别。</li>
+          <li><a href="https://gepa-ai.github.io/gepa/guides/acceptance-criterion/" target="_blank" rel="noreferrer">GEPA Acceptance Criterion</a> — 理解默认接受规则与可扩展点。</li>
+          <li><a href="https://gepa-ai.github.io/gepa/guides/adapters/" target="_blank" rel="noreferrer">GEPA Creating Adapters</a> — GEPASE 接入的关键接口。</li>
+          <li><a href="https://gepa-ai.github.io/gepa/blog/2026/02/18/automatically-learning-skills-for-coding-agents/" target="_blank" rel="noreferrer">Automatically Learning Skills for Coding Agents</a> — gskill 的任务生成与 Skill 优化案例。</li>
+          <li><a href="https://arxiv.org/abs/2605.23904" target="_blank" rel="noreferrer">SkillOpt</a> — 有界编辑、验证门控和 rejected buffer。</li>
+          <li><a href="https://github.com/microsoft/SkillOpt" target="_blank" rel="noreferrer">microsoft/SkillOpt</a> — 训练循环、benchmark adapter 和部署产物。</li>
+          <li><a href="https://arxiv.org/abs/2605.23899" target="_blank" rel="noreferrer">SkillLens</a> — Skill 生命周期、负迁移与 utility-grounded 评测。</li>
+          <li><a href="https://github.com/anthropics/skills/blob/main/skills/skill-creator/SKILL.md" target="_blank" rel="noreferrer">Anthropic skill-creator</a> — Skill 规范、benchmark、blind comparison。</li>
+          <li><a href="https://github.com/alchaincyf/darwin-skill" target="_blank" rel="noreferrer">darwin-skill</a> — Git ratchet 与人在回路。</li>
+          <li><a href="https://trinkle23897.github.io/learning-beyond-gradients/" target="_blank" rel="noreferrer">Learning Beyond Gradients</a> — Heuristic Learning 方法论。</li>
+        </ol>
+
+        <div class="callout green">
+          <strong>建议学习方法：</strong>
+          每读一篇，不只记“它提出了什么”，还要写下优化对象、反馈信号、候选表示、更新算子、接受规则、验证 split、成本口径、失败模式，以及 GEPASE 是复用、修改还是明确不采用。
+        </div>
+      </section>
+
+      <footer>
+        <p><strong>GEPASE Algorithm Field Guide</strong> · 初版 2026-07-15</p>
+        <p>本页是项目学习材料，不代表 GEPASE 已经获得实验提升。任何结果结论应以仓库中锁定版本、原始 task-level 数据和最终实验报告为准。</p>
+      </footer>
+    </main>
+  </div>
+
+  <script>
+    (function () {
+      var root = document.documentElement;
+      var toggles = document.querySelectorAll(".theme-toggle");
+      var storedTheme = localStorage.getItem("gepase-theme");
+      if (storedTheme) root.setAttribute("data-theme", storedTheme);
+
+      toggles.forEach(function (button) {
+        button.addEventListener("click", function () {
+          var current = root.getAttribute("data-theme");
+          var next = current === "dark" ? "light" : "dark";
+          root.setAttribute("data-theme", next);
+          localStorage.setItem("gepase-theme", next);
+        });
+      });
+
+      var progress = document.getElementById("progress");
+      function updateProgress() {
+        var max = document.documentElement.scrollHeight - window.innerHeight;
+        var percent = max > 0 ? (window.scrollY / max) * 100 : 0;
+        progress.style.width = Math.min(100, percent) + "%";
+      }
+      window.addEventListener("scroll", updateProgress, { passive: true });
+      updateProgress();
+
+      var links = Array.prototype.slice.call(document.querySelectorAll("#toc a"));
+      var sections = Array.prototype.slice.call(document.querySelectorAll("main section[id]"));
+      var observer = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          if (!entry.isIntersecting) return;
+          links.forEach(function (link) {
+            link.classList.toggle("active", link.getAttribute("href") === "#" + entry.target.id);
+          });
+        });
+      }, { rootMargin: "-20% 0px -68% 0px" });
+      sections.forEach(function (section) { observer.observe(section); });
+
+      var search = document.getElementById("search");
+      search.addEventListener("input", function () {
+        var query = search.value.trim().toLowerCase();
+        document.querySelectorAll(".searchable").forEach(function (section) {
+          var hit = !query || section.textContent.toLowerCase().indexOf(query) >= 0;
+          section.classList.toggle("hidden-by-search", !hit);
+        });
+        links.forEach(function (link) {
+          var target = document.querySelector(link.getAttribute("href"));
+          var visible = target && !target.classList.contains("hidden-by-search");
+          link.classList.toggle("hidden-by-search", !visible);
+        });
+      });
+
+      document.querySelectorAll(".copy").forEach(function (button) {
+        button.addEventListener("click", function () {
+          var text = button.closest(".code-wrap").querySelector("code").innerText;
+          navigator.clipboard.writeText(text).then(function () {
+            var old = button.textContent;
+            button.textContent = "已复制";
+            setTimeout(function () { button.textContent = old; }, 1200);
+          }).catch(function () {
+            button.textContent = "请手动复制";
+          });
+        });
+      });
+
+      document.querySelectorAll(".tab-btn").forEach(function (button) {
+        button.addEventListener("click", function () {
+          document.querySelectorAll(".tab-btn").forEach(function (item) {
+            item.classList.remove("active");
+          });
+          document.querySelectorAll(".tab-panel").forEach(function (panel) {
+            panel.classList.remove("active");
+          });
+          button.classList.add("active");
+          document.getElementById(button.getAttribute("data-tab")).classList.add("active");
+        });
+      });
+    }());
+  </script>
+</body>
+</html>

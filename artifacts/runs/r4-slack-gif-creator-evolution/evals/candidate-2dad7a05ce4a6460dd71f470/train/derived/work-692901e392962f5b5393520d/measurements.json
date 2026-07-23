@@ -1,0 +1,196 @@
+{
+  "artifact_sha256": "6b8b91a49cfbdcd03a03a976d168599493485edaf2e267ff58f478e2e988b7c0",
+  "assertions": [
+    {
+      "assertion_id": "badge-source-use",
+      "detail": "通过内容/元数据检查",
+      "family": "frame_content",
+      "measurements": {
+        "cyan_fraction": [
+          0.109375,
+          0.109375,
+          0.109375,
+          0.109375,
+          0.109375,
+          0.109375,
+          0.109375,
+          0.109375,
+          0.109375,
+          0.109375,
+          0.109375,
+          0.109375,
+          0.109375,
+          0.109375,
+          0.109375,
+          0.109375,
+          0.109375,
+          0.109375
+        ],
+        "orange_fraction": [
+          0.015625,
+          0.015625,
+          0.015625,
+          0.015625,
+          0.015625,
+          0.015625,
+          0.015625,
+          0.015625,
+          0.015625,
+          0.015625,
+          0.015625,
+          0.015625,
+          0.015625,
+          0.015625,
+          0.015625,
+          0.015625,
+          0.015625,
+          0.015625
+        ]
+      },
+      "passed": true,
+      "weight": 0.25
+    },
+    {
+      "assertion_id": "badge-container",
+      "detail": "通过内容/元数据检查",
+      "family": "artifact_metadata",
+      "measurements": {
+        "frame_count": 18,
+        "height": 128,
+        "loop_count": 0,
+        "unique_frame_count": 18,
+        "width": 128
+      },
+      "passed": true,
+      "weight": 0.15
+    },
+    {
+      "assertion_id": "badge-duration",
+      "detail": "通过内容/元数据检查",
+      "family": "artifact_metadata",
+      "measurements": {
+        "maximum_ms": 2500,
+        "minimum_ms": 1,
+        "non_positive_frames": 0,
+        "total_duration_ms": 1800,
+        "unique_frame_count": 18
+      },
+      "passed": true,
+      "weight": 0.15
+    },
+    {
+      "assertion_id": "badge-palette",
+      "detail": "通过内容/元数据检查",
+      "family": "frame_content",
+      "measurements": {
+        "centroid_distances": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "paired_visible_frames": 18
+      },
+      "passed": true,
+      "weight": 0.2
+    },
+    {
+      "assertion_id": "badge-overshoot",
+      "detail": "通过内容/元数据检查",
+      "family": "temporal_sequence",
+      "measurements": {
+        "centroid_y": [
+          91.5,
+          83.5,
+          77.5,
+          72.5,
+          69.5,
+          66.5,
+          65.5,
+          64.5,
+          64.5,
+          64.5,
+          64.5,
+          65.5,
+          65.5,
+          66.5,
+          66.5,
+          66.5,
+          66.5,
+          66.5
+        ],
+        "direction_changes": 1,
+        "tail_span": 0.0
+      },
+      "passed": true,
+      "weight": 0.25
+    }
+  ],
+  "case_id": "functional-train-input-badge-003",
+  "common": {
+    "adjacent_pixel_deltas": [
+      8.558492024739584,
+      6.867838541666667,
+      5.980631510416667,
+      4.211018880208333,
+      3.8743489583333335,
+      2.4441121419270835,
+      2.4301350911458335,
+      1.5885416666666667,
+      1.489990234375,
+      1.4660237630208333,
+      2.2320963541666665,
+      1.3128458658854167,
+      2.2610270182291665,
+      1.2904459635416667,
+      1.2283935546875,
+      1.395751953125,
+      1.2631022135416667
+    ],
+    "effective_fps": 10.0,
+    "file_size_bytes": 58462,
+    "first_last_pixel_delta": 19.857564290364582,
+    "frame_count": 18,
+    "frame_durations_ms": [
+      100,
+      100,
+      100,
+      100,
+      100,
+      100,
+      100,
+      100,
+      100,
+      100,
+      100,
+      100,
+      100,
+      100,
+      100,
+      100,
+      100,
+      100
+    ],
+    "height": 128,
+    "loop_count": 0,
+    "mean_adjacent_pixel_delta": 2.934987984451593,
+    "total_duration_ms": 1800,
+    "unique_frame_count": 18,
+    "width": 128
+  },
+  "schema_version": "1.0.0"
+}

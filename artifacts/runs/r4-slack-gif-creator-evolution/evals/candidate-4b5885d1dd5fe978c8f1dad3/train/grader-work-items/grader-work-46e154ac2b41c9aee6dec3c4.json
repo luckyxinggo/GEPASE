@@ -1,0 +1,54 @@
+{
+  "blind_artifact": {
+    "artifact": {
+      "media_type": "image/gif",
+      "path": "meeting_sync_reminder.gif",
+      "sha256": "f8989c4b6fd38f75b102956e1ee018325b5be8338d7c750951131fd2ecd678fd",
+      "size_bytes": 65193
+    },
+    "artifact_root": "artifacts/runs/r4-slack-gif-creator-evolution/evals/candidate-4b5885d1dd5fe978c8f1dad3/train/workspaces/work-20765ea1183bbc8e3e2c09f0",
+    "blind_id": "blind-4aabb1a43e3cf69ef65229f9",
+    "contact_sheet_ref": "artifacts/runs/r4-slack-gif-creator-evolution/evals/candidate-4b5885d1dd5fe978c8f1dad3/train/derived/work-20765ea1183bbc8e3e2c09f0/contact-sheet.png",
+    "inspection_ref": "artifacts/runs/r4-slack-gif-creator-evolution/evals/candidate-4b5885d1dd5fe978c8f1dad3/train/blind-inspections/blind-4aabb1a43e3cf69ef65229f9.json"
+  },
+  "expected_output_zh": "一个约两秒的会议提醒动画，SYNC 和 10:30 在大部分播放时间中同时清晰、完整且高对比；具体排版、装饰和轻微强调动画可自由设计。",
+  "forbidden_inputs": [
+    "variant identity",
+    "candidate identity",
+    "sibling output",
+    "expected winner",
+    "executor conversation"
+  ],
+  "grader_work_id": "grader-work-46e154ac2b41c9aee6dec3c4",
+  "role": "independent_grader",
+  "rubric": [
+    {
+      "criterion_id": "readable-legibility",
+      "description_zh": "SYNC 与 10:30 在正常播放和缩略显示时都能迅速、无歧义地读出。",
+      "label_zh": "文字可读性",
+      "weight": 0.4
+    },
+    {
+      "criterion_id": "readable-layout",
+      "description_zh": "标题、时间和装饰之间主次明确，留白与安全边距合理。",
+      "label_zh": "版式层级",
+      "weight": 0.25
+    },
+    {
+      "criterion_id": "readable-emphasis",
+      "description_zh": "动态强调克制有效，不造成阅读中断或视觉疲劳。",
+      "label_zh": "强调动画",
+      "weight": 0.2
+    },
+    {
+      "criterion_id": "readable-tone",
+      "description_zh": "给定配色和细节共同营造温暖、专业的提醒语气。",
+      "label_zh": "友好氛围",
+      "weight": 0.15
+    }
+  ],
+  "schema_version": "1.0.0",
+  "submission_schema_ref": "schemas/independent_grader_submission.schema.json",
+  "task_id": "functional-train-text-readable-004",
+  "task_prompt": "设计一张温暖、友好的 Slack 会议提醒 GIF。按照配置在 480×480 画布上同时清晰呈现 SYNC 与 10:30，使用给定的米白、深棕黑和砖红配色；动画可以让标题或时间获得轻微强调，但不能牺牲阅读时间或把文字移出安全区。输出指定 GIF。"
+}

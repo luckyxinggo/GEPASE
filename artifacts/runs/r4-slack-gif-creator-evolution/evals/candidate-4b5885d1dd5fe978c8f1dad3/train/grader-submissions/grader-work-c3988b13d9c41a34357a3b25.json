@@ -1,0 +1,64 @@
+{
+  "criterion_grades": [
+    {
+      "criterion_id": "orbit-path",
+      "evidence_refs": [
+        "artifacts/runs/r4-slack-gif-creator-evolution/evals/candidate-4b5885d1dd5fe978c8f1dad3/train/derived/work-9a804e41d41b1789aca8bf8f/contact-sheet.png"
+      ],
+      "rationale_zh": "采样帧中青色卫星中心从约 (15.228, 102.228) 经 (75.228, 34.228) 移至 (105.228, 51.228)，纵坐标先减后增且路径围绕行星弯折；画面中的点状轨迹也清楚强化了非直线空间弧线。",
+      "score": 1.0
+    },
+    {
+      "criterion_id": "orbit-easing",
+      "evidence_refs": [
+        "artifacts/runs/r4-slack-gif-creator-evolution/evals/candidate-4b5885d1dd5fe978c8f1dad3/train/derived/work-9a804e41d41b1789aca8bf8f/contact-sheet.png",
+        "artifacts/runs/r4-slack-gif-creator-evolution/evals/candidate-4b5885d1dd5fe978c8f1dad3/train/blind-inspections/blind-27d9d9b5ee90a921f3c06546.json"
+      ],
+      "rationale_zh": "全部帧时长均为 100 ms，因此等间隔采样位移可直接比较；卫星中心的相邻采样位移由 38.471、26.401、17.205、12.369、10.198、8.944、7.810、5.657、2.828 像素单调缩小到 0，停靠前减速连续且末段保留静止帧，没有突然刹停。",
+      "score": 1.0
+    },
+    {
+      "criterion_id": "orbit-composition",
+      "evidence_refs": [
+        "artifacts/runs/r4-slack-gif-creator-evolution/evals/candidate-4b5885d1dd5fe978c8f1dad3/train/derived/work-9a804e41d41b1789aca8bf8f/contact-sheet.png"
+      ],
+      "rationale_zh": "橙色行星稳定占据中央主视觉，青色卫星沿左下至右上的弧线进入右上目标环，主体色彩和尺度层级明确；轨迹点与星点保持细小，没有遮挡主体或造成明显拥挤。",
+      "score": 0.98
+    },
+    {
+      "criterion_id": "orbit-craft",
+      "evidence_refs": [
+        "artifacts/runs/r4-slack-gif-creator-evolution/evals/candidate-4b5885d1dd5fe978c8f1dad3/train/derived/work-9a804e41d41b1789aca8bf8f/contact-sheet.png",
+        "artifacts/runs/r4-slack-gif-creator-evolution/evals/candidate-4b5885d1dd5fe978c8f1dad3/train/blind-inspections/blind-27d9d9b5ee90a921f3c06546.json"
+      ],
+      "rationale_zh": "128×128 画布中的卫星、太阳能板、带环行星、星空与目标光环形成统一而清晰的像素风场景；24 帧均唯一且设置无限循环。末首帧像素差 5.056 高于平均相邻帧差 2.516，停靠后回到起点的循环重启仍略显明显。",
+      "score": 0.94
+    }
+  ],
+  "factual_claims_zh": [
+    "GIF 尺寸为 128×128，共 24 帧，每帧 100 ms，总时长 2400 ms，有效帧率 10 fps，24 帧均唯一，loop_count 为 0。",
+    "GIF 文件大小为 35585 字节，SHA-256 为 b900fc960e02aeed46f1146437b35617c29a0e70f817325ca3fdc422b516905e，与 work item 声明一致。",
+    "contact sheet 的等时间采样中，卫星中心位移从 38.471 像素逐步降至 2.828 像素并最终为 0，且中心纵坐标先从 102.228 降至 34.228、再升至 51.228。",
+    "首末帧像素差为 5.056，平均相邻帧像素差为 2.516。"
+  ],
+  "feedback_zh": "作品对核心要求完成得非常扎实：卫星轨迹弧度清楚，等时采样位移严格递减，ease-out 既自然又有可测证据；橙色行星、青色卫星和点状轨迹在 128×128 画布中辨识度很高。若继续打磨，可在停靠后的重启处增加回程过渡、淡出或更长停顿，以减弱末帧直接跳回起点的循环接缝。",
+  "grader_work_id": "grader-work-c3988b13d9c41a34357a3b25",
+  "overall_score": 0.984,
+  "role_run": {
+    "context_id": "r4_grade_m_easing",
+    "finished_at": "2026-07-22T09:59:04Z",
+    "host": "codex",
+    "host_task_id": "/root/r4_grade_m_easing",
+    "model": "gpt-5.6-sol",
+    "started_at": "2026-07-22T09:57:06Z",
+    "usage": {
+      "duration_ms": 118000,
+      "input_tokens": 11000,
+      "output_tokens": 2600,
+      "token_count_kind": "estimated",
+      "tool_calls": 13
+    }
+  },
+  "schema_version": "1.0.0",
+  "submission_id": "independent-grade-059a4d5e-f3a3-4537-8eaf-8bfdb1a66039"
+}

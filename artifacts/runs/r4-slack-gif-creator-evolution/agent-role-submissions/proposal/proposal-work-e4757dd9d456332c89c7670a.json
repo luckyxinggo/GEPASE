@@ -1,0 +1,19 @@
+{
+  "summary": "Strengthen the bounded smooth-stop instruction with rendered-frame acceptance checks addressing the evidenced late-tail displacement increase while preserving the existing ease-out guidance.",
+  "operations": [
+    {
+      "operation_id": "op-verify-rendered-ease-out-stop",
+      "op": "replace_markdown_block",
+      "target_node_id": "node-69ea814aac72a6c557485ef0",
+      "path": "SKILL.md",
+      "precondition_hash": "07696c8e0fdb5ceb26b94a6625c98211fb31a3a8cd4a58b115bee7c7580e8a84",
+      "replacement": "- Use `interpolate()` with `easing='ease_out'` for a smooth stop. Drive the entire arc or orbit from one continuous eased path-progress value; do not restart the easing for individual coordinates or path segments.\n  - Before export, validate the rendered frames under the same integer pixel conversion and canvas clipping/cropping used for drawing. Recompute the adjacent-frame displacement along the final approach and confirm that successive tail displacements do not increase beyond the applicable pixel-rounding tolerance.\n  - Confirm that the final rendered frame lands exactly on the intended docking point after integerization and clipping. If either check fails, adjust the path-progress timing or frame sampling, render again, and repeat the checks rather than accepting the unrounded path values alone.\n",
+      "evidence_refs": [
+        "artifacts/runs/r3-slack-gif-creator-paired/analyzer-submissions/analyzer-work-9fdb3bdecd6e87afd9f6ad4d.json"
+      ],
+      "expected_benefit": "Makes the ease-out requirement operational and export-verifiable, reducing failures where the motion slows overall but the final rendered displacement increases because of sampling, rounding, or clipping.",
+      "regression_risk": "low",
+      "rationale": "The cited failure evidence attributes the correctness loss to an increase between the final two rendered displacements despite use of the easing module. Extending the existing instruction with a single continuous progress parameter and post-render tail checks directly addresses that gap without changing easing behavior, public interfaces, or unrelated package guidance."
+    }
+  ]
+}

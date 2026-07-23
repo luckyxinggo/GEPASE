@@ -1,0 +1,130 @@
+{
+  "artifact_sha256": "ac7f3bdd85e9a68a23e9eec4934c65d19f06d005a1d78f8b30f92905d7db81f7",
+  "assertions": [
+    {
+      "assertion_id": "emoji-bounce-container",
+      "detail": "通过内容/元数据检查",
+      "family": "artifact_metadata",
+      "measurements": {
+        "frame_count": 12,
+        "height": 128,
+        "loop_count": 0,
+        "unique_frame_count": 12,
+        "width": 128
+      },
+      "passed": true,
+      "weight": 0.2
+    },
+    {
+      "assertion_id": "emoji-bounce-duration",
+      "detail": "通过内容/元数据检查",
+      "family": "artifact_metadata",
+      "measurements": {
+        "maximum_ms": 2400,
+        "minimum_ms": 1,
+        "non_positive_frames": 0,
+        "total_duration_ms": 960
+      },
+      "passed": true,
+      "weight": 0.2
+    },
+    {
+      "assertion_id": "emoji-bounce-subject",
+      "detail": "通过内容/元数据检查",
+      "family": "frame_content",
+      "measurements": {
+        "highlight_peak": 0.0020751953125,
+        "yellow_fraction_by_frame": [
+          0.0,
+          0.0,
+          0.002197265625,
+          0.0162353515625,
+          0.01617431640625,
+          0.0157470703125,
+          0.016357421875,
+          0.01611328125,
+          0.0162353515625,
+          0.01605224609375,
+          0.015869140625,
+          0.01605224609375
+        ]
+      },
+      "passed": true,
+      "weight": 0.2
+    },
+    {
+      "assertion_id": "emoji-bounce-motion",
+      "detail": "通过内容/元数据检查",
+      "family": "temporal_sequence",
+      "measurements": {
+        "centroid_y": [
+          1.0857142857142856,
+          16.73308270676692,
+          49.11698113207547,
+          90.18992248062015,
+          78.40225563909775,
+          74.4280303030303,
+          76.09469696969697,
+          81.44866920152091,
+          90.35,
+          90.44866920152091
+        ],
+        "direction_changes": 2
+      },
+      "passed": true,
+      "weight": 0.2
+    },
+    {
+      "assertion_id": "emoji-bounce-loop",
+      "detail": "通过内容/元数据检查",
+      "family": "temporal_sequence",
+      "measurements": {
+        "first_last_delta": 4.614542643229167,
+        "threshold": 15.0
+      },
+      "passed": true,
+      "weight": 0.2
+    }
+  ],
+  "case_id": "functional-train-emoji-bounce-001",
+  "common": {
+    "adjacent_pixel_deltas": [
+      0.15384928385416666,
+      1.3188883463541667,
+      4.830118815104167,
+      8.820882161458334,
+      8.722798665364584,
+      5.713968912760417,
+      2.8695271809895835,
+      2.029541015625,
+      3.3739217122395835,
+      4.751485188802083,
+      1.20086669921875
+    ],
+    "effective_fps": 12.5,
+    "file_size_bytes": 26567,
+    "first_last_pixel_delta": 4.614542643229167,
+    "frame_count": 12,
+    "frame_durations_ms": [
+      80,
+      80,
+      80,
+      80,
+      80,
+      80,
+      80,
+      80,
+      80,
+      80,
+      80,
+      80
+    ],
+    "height": 128,
+    "loop_count": 0,
+    "mean_adjacent_pixel_delta": 3.9805316347064403,
+    "total_duration_ms": 960,
+    "unique_frame_count": 12,
+    "width": 128
+  },
+  "schema_version": "1.0.0"
+}

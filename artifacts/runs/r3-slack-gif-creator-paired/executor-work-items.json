@@ -1,0 +1,488 @@
+{
+  "count": 16,
+  "schema_version": "1.0.0",
+  "work_items": [
+    {
+      "fixture_refs": [
+        "benchmarks/canaries/slack-gif-creator/fixtures/message-readable.json"
+      ],
+      "package_graph_ref": null,
+      "package_node_map": {},
+      "prompt": "设计一张温暖、友好的 Slack 会议提醒 GIF。按照配置在 480×480 画布上同时清晰呈现 SYNC 与 10:30，使用给定的米白、深棕黑和砖红配色；动画可以让标题或时间获得轻微强调，但不能牺牲阅读时间或把文字移出安全区。输出指定 GIF。",
+      "requested_output": {
+        "description_zh": "480×480、突出 SYNC 与 10:30 可读性的会议提醒 GIF。",
+        "filename": "meeting_sync_reminder.gif",
+        "media_type": "image/gif"
+      },
+      "required_capabilities": [
+        "text_layout",
+        "contrast_management",
+        "message_gif_animation",
+        "frame_content_analysis"
+      ],
+      "role": "executor",
+      "schema_version": "1.0.0",
+      "skill_ref": null,
+      "submission_schema_ref": "schemas/execution_bundle.schema.json",
+      "task_id": "functional-train-text-readable-004",
+      "timeout_seconds": 600,
+      "work_id": "work-02f7b78398c181ede25632a6"
+    },
+    {
+      "fixture_refs": [
+        "benchmarks/canaries/slack-gif-creator/fixtures/efficiency-burst.json"
+      ],
+      "package_graph_ref": "artifacts/runs/r2-slack-gif-creator-evalplan/package/graph.json",
+      "package_node_map": {
+        "LICENSE.txt": "node-7fd627ed0d50ee9e04018c8a",
+        "SKILL.md": "node-fddc99453114c3a40363b219",
+        "core/easing.py": "node-dbf396ac6852bf4706f33ebf",
+        "core/frame_composer.py": "node-bd3bececef13aaeef0c22570",
+        "core/gif_builder.py": "node-2c61585b9d40c2df7343f499",
+        "core/validators.py": "node-0f241aa06504163be33132f8",
+        "requirements.txt": "node-cc27fb4d7208967c86b1a7e8"
+      },
+      "prompt": "为 Slack 消息制作一个紧凑的庆祝 GIF：480×480 画布中央是清楚的勾号，周围粒子向外爆发后渐隐。请在动作顺滑和轮廓可读的前提下控制帧率、调色板与文件体积，严格遵循随附的体积和帧率预算，并输出指定文件。",
+      "requested_output": {
+        "description_zh": "在 900KB 预算内保留清晰勾号和顺滑粒子爆发的 480×480 GIF。",
+        "filename": "compact_check_burst.gif",
+        "media_type": "image/gif"
+      },
+      "required_capabilities": [
+        "message_gif_composition",
+        "particle_animation",
+        "gif_size_optimization",
+        "artifact_metadata_analysis"
+      ],
+      "role": "executor",
+      "schema_version": "1.0.0",
+      "skill_ref": "benchmarks/canaries/slack-gif-creator/package",
+      "submission_schema_ref": "schemas/execution_bundle.schema.json",
+      "task_id": "functional-validation-efficiency-007",
+      "timeout_seconds": 600,
+      "work_id": "work-06e0ca3901e49580a002d129"
+    },
+    {
+      "fixture_refs": [
+        "benchmarks/canaries/slack-gif-creator/fixtures/efficiency-burst.json"
+      ],
+      "package_graph_ref": null,
+      "package_node_map": {},
+      "prompt": "为 Slack 消息制作一个紧凑的庆祝 GIF：480×480 画布中央是清楚的勾号，周围粒子向外爆发后渐隐。请在动作顺滑和轮廓可读的前提下控制帧率、调色板与文件体积，严格遵循随附的体积和帧率预算，并输出指定文件。",
+      "requested_output": {
+        "description_zh": "在 900KB 预算内保留清晰勾号和顺滑粒子爆发的 480×480 GIF。",
+        "filename": "compact_check_burst.gif",
+        "media_type": "image/gif"
+      },
+      "required_capabilities": [
+        "message_gif_composition",
+        "particle_animation",
+        "gif_size_optimization",
+        "artifact_metadata_analysis"
+      ],
+      "role": "executor",
+      "schema_version": "1.0.0",
+      "skill_ref": null,
+      "submission_schema_ref": "schemas/execution_bundle.schema.json",
+      "task_id": "functional-validation-efficiency-007",
+      "timeout_seconds": 600,
+      "work_id": "work-18b797bfd1094a2c7da4ec6b"
+    },
+    {
+      "fixture_refs": [
+        "benchmarks/canaries/slack-gif-creator/fixtures/message-readable.json"
+      ],
+      "package_graph_ref": "artifacts/runs/r2-slack-gif-creator-evalplan/package/graph.json",
+      "package_node_map": {
+        "LICENSE.txt": "node-7fd627ed0d50ee9e04018c8a",
+        "SKILL.md": "node-fddc99453114c3a40363b219",
+        "core/easing.py": "node-dbf396ac6852bf4706f33ebf",
+        "core/frame_composer.py": "node-bd3bececef13aaeef0c22570",
+        "core/gif_builder.py": "node-2c61585b9d40c2df7343f499",
+        "core/validators.py": "node-0f241aa06504163be33132f8",
+        "requirements.txt": "node-cc27fb4d7208967c86b1a7e8"
+      },
+      "prompt": "设计一张温暖、友好的 Slack 会议提醒 GIF。按照配置在 480×480 画布上同时清晰呈现 SYNC 与 10:30，使用给定的米白、深棕黑和砖红配色；动画可以让标题或时间获得轻微强调，但不能牺牲阅读时间或把文字移出安全区。输出指定 GIF。",
+      "requested_output": {
+        "description_zh": "480×480、突出 SYNC 与 10:30 可读性的会议提醒 GIF。",
+        "filename": "meeting_sync_reminder.gif",
+        "media_type": "image/gif"
+      },
+      "required_capabilities": [
+        "text_layout",
+        "contrast_management",
+        "message_gif_animation",
+        "frame_content_analysis"
+      ],
+      "role": "executor",
+      "schema_version": "1.0.0",
+      "skill_ref": "benchmarks/canaries/slack-gif-creator/package",
+      "submission_schema_ref": "schemas/execution_bundle.schema.json",
+      "task_id": "functional-train-text-readable-004",
+      "timeout_seconds": 600,
+      "work_id": "work-229b28b7e4ec64d79ddc725d"
+    },
+    {
+      "fixture_refs": [
+        "benchmarks/canaries/slack-gif-creator/fixtures/emoji-bounce.json"
+      ],
+      "package_graph_ref": null,
+      "package_node_map": {},
+      "prompt": "请依据随附配置从空白画布创作一个 Slack 表情 GIF：一颗带粗描边和小高光的黄色五角星从上方落下，只反弹一次后稳稳停住；背景使用深海军蓝到靛蓝渐变。成品应可直接作为 Slack emoji 上传，并保存为指定 GIF。",
+      "requested_output": {
+        "description_zh": "128×128、单次反弹并可循环的 Slack 星星表情 GIF。",
+        "filename": "emoji_star_bounce.gif",
+        "media_type": "image/gif"
+      },
+      "required_capabilities": [
+        "programmatic_frame_drawing",
+        "emoji_gif_optimization",
+        "temporal_motion_analysis",
+        "gif_metadata_validation"
+      ],
+      "role": "executor",
+      "schema_version": "1.0.0",
+      "skill_ref": null,
+      "submission_schema_ref": "schemas/execution_bundle.schema.json",
+      "task_id": "functional-train-emoji-bounce-001",
+      "timeout_seconds": 600,
+      "work_id": "work-46dec20be705aa5122c31a80"
+    },
+    {
+      "fixture_refs": [
+        "benchmarks/canaries/slack-gif-creator/fixtures/input-badge.json",
+        "benchmarks/canaries/slack-gif-creator/fixtures/input-badge.ppm"
+      ],
+      "package_graph_ref": "artifacts/runs/r2-slack-gif-creator-evalplan/package/graph.json",
+      "package_node_map": {
+        "LICENSE.txt": "node-7fd627ed0d50ee9e04018c8a",
+        "SKILL.md": "node-fddc99453114c3a40363b219",
+        "core/easing.py": "node-dbf396ac6852bf4706f33ebf",
+        "core/frame_composer.py": "node-bd3bececef13aaeef0c22570",
+        "core/gif_builder.py": "node-2c61585b9d40c2df7343f499",
+        "core/validators.py": "node-0f241aa06504163be33132f8",
+        "requirements.txt": "node-cc27fb4d7208967c86b1a7e8"
+      },
+      "prompt": "请直接使用随附 PPM 徽章图像作为动画主体，而不是重新画一个替代品。依照配置将它放入 128×128 的 Slack emoji：徽章先上浮，略微越过最终高度，再回落稳定；保留原图的徽章轮廓以及青色、橙色关系，可增加不遮挡主体的背景或光效。输出指定 GIF。",
+      "requested_output": {
+        "description_zh": "保留本地输入徽章特征、带上浮越位回稳动作的 128×128 GIF。",
+        "filename": "uploaded_badge_lift.gif",
+        "media_type": "image/gif"
+      },
+      "required_capabilities": [
+        "local_image_loading",
+        "input_asset_preservation",
+        "overshoot_easing",
+        "emoji_gif_export"
+      ],
+      "role": "executor",
+      "schema_version": "1.0.0",
+      "skill_ref": "benchmarks/canaries/slack-gif-creator/package",
+      "submission_schema_ref": "schemas/execution_bundle.schema.json",
+      "task_id": "functional-train-input-badge-003",
+      "timeout_seconds": 600,
+      "work_id": "work-4d807d3a99ff3d159ec6fb29"
+    },
+    {
+      "fixture_refs": [
+        "benchmarks/canaries/slack-gif-creator/fixtures/easing-orbit.json"
+      ],
+      "package_graph_ref": "artifacts/runs/r2-slack-gif-creator-evalplan/package/graph.json",
+      "package_node_map": {
+        "LICENSE.txt": "node-7fd627ed0d50ee9e04018c8a",
+        "SKILL.md": "node-fddc99453114c3a40363b219",
+        "core/easing.py": "node-dbf396ac6852bf4706f33ebf",
+        "core/frame_composer.py": "node-bd3bececef13aaeef0c22570",
+        "core/gif_builder.py": "node-2c61585b9d40c2df7343f499",
+        "core/validators.py": "node-0f241aa06504163be33132f8",
+        "requirements.txt": "node-cc27fb4d7208967c86b1a7e8"
+      },
+      "prompt": "创作一个 128×128 的 Slack emoji GIF：青色小卫星沿明显的弧线路径绕过橙色行星，并在目标位置平滑减速停靠。请使用非线性的 ease-out 运动，让最后一段位移逐步缩小；构图和星空细节可以自行发挥，输出指定文件。",
+      "requested_output": {
+        "description_zh": "青色卫星沿弧线运动并 ease-out 停靠的 128×128 Slack GIF。",
+        "filename": "satellite_orbit_ease.gif",
+        "media_type": "image/gif"
+      },
+      "required_capabilities": [
+        "arc_motion_generation",
+        "easing_function_application",
+        "color_subject_tracking",
+        "emoji_gif_export"
+      ],
+      "role": "executor",
+      "schema_version": "1.0.0",
+      "skill_ref": "benchmarks/canaries/slack-gif-creator/package",
+      "submission_schema_ref": "schemas/execution_bundle.schema.json",
+      "task_id": "functional-train-easing-orbit-005",
+      "timeout_seconds": 600,
+      "work_id": "work-8b18ac4a317bfa0522d70aca"
+    },
+    {
+      "fixture_refs": [
+        "benchmarks/canaries/slack-gif-creator/fixtures/message-status.json"
+      ],
+      "package_graph_ref": "artifacts/runs/r2-slack-gif-creator-evalplan/package/graph.json",
+      "package_node_map": {
+        "LICENSE.txt": "node-7fd627ed0d50ee9e04018c8a",
+        "SKILL.md": "node-fddc99453114c3a40363b219",
+        "core/easing.py": "node-dbf396ac6852bf4706f33ebf",
+        "core/frame_composer.py": "node-bd3bececef13aaeef0c22570",
+        "core/gif_builder.py": "node-2c61585b9d40c2df7343f499",
+        "core/validators.py": "node-0f241aa06504163be33132f8",
+        "requirements.txt": "node-cc27fb4d7208967c86b1a7e8"
+      },
+      "prompt": "制作一张适合发在 Slack 消息里的方形部署状态卡 GIF。按随附配置依次呈现 waiting、processing、complete 三个阶段：前两阶段保留 DEPLOY 标识，完成阶段清楚显示 DONE；用图形和颜色变化帮助读者一眼理解状态推进。请输出指定文件。",
+      "requested_output": {
+        "description_zh": "480×480、三阶段推进的 Slack 部署状态消息 GIF。",
+        "filename": "deployment_status.gif",
+        "media_type": "image/gif"
+      },
+      "required_capabilities": [
+        "message_gif_composition",
+        "text_rendering",
+        "multi_phase_animation",
+        "gif_metadata_validation"
+      ],
+      "role": "executor",
+      "schema_version": "1.0.0",
+      "skill_ref": "benchmarks/canaries/slack-gif-creator/package",
+      "submission_schema_ref": "schemas/execution_bundle.schema.json",
+      "task_id": "functional-train-message-status-002",
+      "timeout_seconds": 600,
+      "work_id": "work-9a981b04ae2ac3fb91d31911"
+    },
+    {
+      "fixture_refs": [
+        "benchmarks/canaries/slack-gif-creator/fixtures/emoji-pulse-text.json"
+      ],
+      "package_graph_ref": null,
+      "package_node_map": {},
+      "prompt": "创建一个 128×128 的 Slack 警报表情 GIF。依据随附配置制作深蓝底、珊瑚红徽章和白色 GO 文本；徽章进行有呼吸感的周期脉冲，文字在缩略尺寸下始终容易辨认。请保持给定配色与时长预算，输出指定 GIF。",
+      "requested_output": {
+        "description_zh": "深蓝、珊瑚红和白色构成的 GO 循环脉冲 Slack 表情 GIF。",
+        "filename": "go_alert_pulse.gif",
+        "media_type": "image/gif"
+      },
+      "required_capabilities": [
+        "text_rendering",
+        "pulse_animation",
+        "palette_preservation",
+        "emoji_gif_export"
+      ],
+      "role": "executor",
+      "schema_version": "1.0.0",
+      "skill_ref": null,
+      "submission_schema_ref": "schemas/execution_bundle.schema.json",
+      "task_id": "functional-validation-pulse-text-008",
+      "timeout_seconds": 600,
+      "work_id": "work-9eea3d6a86124113c1f705e6"
+    },
+    {
+      "fixture_refs": [
+        "benchmarks/canaries/slack-gif-creator/fixtures/message-status.json"
+      ],
+      "package_graph_ref": null,
+      "package_node_map": {},
+      "prompt": "制作一张适合发在 Slack 消息里的方形部署状态卡 GIF。按随附配置依次呈现 waiting、processing、complete 三个阶段：前两阶段保留 DEPLOY 标识，完成阶段清楚显示 DONE；用图形和颜色变化帮助读者一眼理解状态推进。请输出指定文件。",
+      "requested_output": {
+        "description_zh": "480×480、三阶段推进的 Slack 部署状态消息 GIF。",
+        "filename": "deployment_status.gif",
+        "media_type": "image/gif"
+      },
+      "required_capabilities": [
+        "message_gif_composition",
+        "text_rendering",
+        "multi_phase_animation",
+        "gif_metadata_validation"
+      ],
+      "role": "executor",
+      "schema_version": "1.0.0",
+      "skill_ref": null,
+      "submission_schema_ref": "schemas/execution_bundle.schema.json",
+      "task_id": "functional-train-message-status-002",
+      "timeout_seconds": 600,
+      "work_id": "work-a2e2a2aedb4cf5049c623860"
+    },
+    {
+      "fixture_refs": [
+        "benchmarks/canaries/slack-gif-creator/fixtures/loop-sparkles.json"
+      ],
+      "package_graph_ref": null,
+      "package_node_map": {},
+      "prompt": "制作一个无缝循环的 128×128 Slack emoji GIF：中央圆环保持稳定，三颗火花在它周围按节奏出现、增强、消退。请设计周期运动而不是简单复制静止首尾帧，使最后一帧接回第一帧时没有明显跳变；总时长遵循随附配置，输出指定 GIF。",
+      "requested_output": {
+        "description_zh": "三颗火花围绕中央圆环周期变化的无缝循环 Slack GIF。",
+        "filename": "sparkle_ring_loop.gif",
+        "media_type": "image/gif"
+      },
+      "required_capabilities": [
+        "cyclic_animation_design",
+        "loop_seam_analysis",
+        "frame_timing_control",
+        "emoji_gif_export"
+      ],
+      "role": "executor",
+      "schema_version": "1.0.0",
+      "skill_ref": null,
+      "submission_schema_ref": "schemas/execution_bundle.schema.json",
+      "task_id": "functional-validation-loop-sparkles-006",
+      "timeout_seconds": 600,
+      "work_id": "work-a90881ca08a8679475629c61"
+    },
+    {
+      "fixture_refs": [
+        "benchmarks/canaries/slack-gif-creator/fixtures/emoji-bounce.json"
+      ],
+      "package_graph_ref": "artifacts/runs/r2-slack-gif-creator-evalplan/package/graph.json",
+      "package_node_map": {
+        "LICENSE.txt": "node-7fd627ed0d50ee9e04018c8a",
+        "SKILL.md": "node-fddc99453114c3a40363b219",
+        "core/easing.py": "node-dbf396ac6852bf4706f33ebf",
+        "core/frame_composer.py": "node-bd3bececef13aaeef0c22570",
+        "core/gif_builder.py": "node-2c61585b9d40c2df7343f499",
+        "core/validators.py": "node-0f241aa06504163be33132f8",
+        "requirements.txt": "node-cc27fb4d7208967c86b1a7e8"
+      },
+      "prompt": "请依据随附配置从空白画布创作一个 Slack 表情 GIF：一颗带粗描边和小高光的黄色五角星从上方落下，只反弹一次后稳稳停住；背景使用深海军蓝到靛蓝渐变。成品应可直接作为 Slack emoji 上传，并保存为指定 GIF。",
+      "requested_output": {
+        "description_zh": "128×128、单次反弹并可循环的 Slack 星星表情 GIF。",
+        "filename": "emoji_star_bounce.gif",
+        "media_type": "image/gif"
+      },
+      "required_capabilities": [
+        "programmatic_frame_drawing",
+        "emoji_gif_optimization",
+        "temporal_motion_analysis",
+        "gif_metadata_validation"
+      ],
+      "role": "executor",
+      "schema_version": "1.0.0",
+      "skill_ref": "benchmarks/canaries/slack-gif-creator/package",
+      "submission_schema_ref": "schemas/execution_bundle.schema.json",
+      "task_id": "functional-train-emoji-bounce-001",
+      "timeout_seconds": 600,
+      "work_id": "work-aeaea033cebc5f6b4e948b5e"
+    },
+    {
+      "fixture_refs": [
+        "benchmarks/canaries/slack-gif-creator/fixtures/loop-sparkles.json"
+      ],
+      "package_graph_ref": "artifacts/runs/r2-slack-gif-creator-evalplan/package/graph.json",
+      "package_node_map": {
+        "LICENSE.txt": "node-7fd627ed0d50ee9e04018c8a",
+        "SKILL.md": "node-fddc99453114c3a40363b219",
+        "core/easing.py": "node-dbf396ac6852bf4706f33ebf",
+        "core/frame_composer.py": "node-bd3bececef13aaeef0c22570",
+        "core/gif_builder.py": "node-2c61585b9d40c2df7343f499",
+        "core/validators.py": "node-0f241aa06504163be33132f8",
+        "requirements.txt": "node-cc27fb4d7208967c86b1a7e8"
+      },
+      "prompt": "制作一个无缝循环的 128×128 Slack emoji GIF：中央圆环保持稳定，三颗火花在它周围按节奏出现、增强、消退。请设计周期运动而不是简单复制静止首尾帧，使最后一帧接回第一帧时没有明显跳变；总时长遵循随附配置，输出指定 GIF。",
+      "requested_output": {
+        "description_zh": "三颗火花围绕中央圆环周期变化的无缝循环 Slack GIF。",
+        "filename": "sparkle_ring_loop.gif",
+        "media_type": "image/gif"
+      },
+      "required_capabilities": [
+        "cyclic_animation_design",
+        "loop_seam_analysis",
+        "frame_timing_control",
+        "emoji_gif_export"
+      ],
+      "role": "executor",
+      "schema_version": "1.0.0",
+      "skill_ref": "benchmarks/canaries/slack-gif-creator/package",
+      "submission_schema_ref": "schemas/execution_bundle.schema.json",
+      "task_id": "functional-validation-loop-sparkles-006",
+      "timeout_seconds": 600,
+      "work_id": "work-b33fad8398ab056166627930"
+    },
+    {
+      "fixture_refs": [
+        "benchmarks/canaries/slack-gif-creator/fixtures/input-badge.json",
+        "benchmarks/canaries/slack-gif-creator/fixtures/input-badge.ppm"
+      ],
+      "package_graph_ref": null,
+      "package_node_map": {},
+      "prompt": "请直接使用随附 PPM 徽章图像作为动画主体，而不是重新画一个替代品。依照配置将它放入 128×128 的 Slack emoji：徽章先上浮，略微越过最终高度，再回落稳定；保留原图的徽章轮廓以及青色、橙色关系，可增加不遮挡主体的背景或光效。输出指定 GIF。",
+      "requested_output": {
+        "description_zh": "保留本地输入徽章特征、带上浮越位回稳动作的 128×128 GIF。",
+        "filename": "uploaded_badge_lift.gif",
+        "media_type": "image/gif"
+      },
+      "required_capabilities": [
+        "local_image_loading",
+        "input_asset_preservation",
+        "overshoot_easing",
+        "emoji_gif_export"
+      ],
+      "role": "executor",
+      "schema_version": "1.0.0",
+      "skill_ref": null,
+      "submission_schema_ref": "schemas/execution_bundle.schema.json",
+      "task_id": "functional-train-input-badge-003",
+      "timeout_seconds": 600,
+      "work_id": "work-b836a5a0009428cefa51ce4f"
+    },
+    {
+      "fixture_refs": [
+        "benchmarks/canaries/slack-gif-creator/fixtures/easing-orbit.json"
+      ],
+      "package_graph_ref": null,
+      "package_node_map": {},
+      "prompt": "创作一个 128×128 的 Slack emoji GIF：青色小卫星沿明显的弧线路径绕过橙色行星，并在目标位置平滑减速停靠。请使用非线性的 ease-out 运动，让最后一段位移逐步缩小；构图和星空细节可以自行发挥，输出指定文件。",
+      "requested_output": {
+        "description_zh": "青色卫星沿弧线运动并 ease-out 停靠的 128×128 Slack GIF。",
+        "filename": "satellite_orbit_ease.gif",
+        "media_type": "image/gif"
+      },
+      "required_capabilities": [
+        "arc_motion_generation",
+        "easing_function_application",
+        "color_subject_tracking",
+        "emoji_gif_export"
+      ],
+      "role": "executor",
+      "schema_version": "1.0.0",
+      "skill_ref": null,
+      "submission_schema_ref": "schemas/execution_bundle.schema.json",
+      "task_id": "functional-train-easing-orbit-005",
+      "timeout_seconds": 600,
+      "work_id": "work-ba5bed1fe1f6ee2b5cd0648b"
+    },
+    {
+      "fixture_refs": [
+        "benchmarks/canaries/slack-gif-creator/fixtures/emoji-pulse-text.json"
+      ],
+      "package_graph_ref": "artifacts/runs/r2-slack-gif-creator-evalplan/package/graph.json",
+      "package_node_map": {
+        "LICENSE.txt": "node-7fd627ed0d50ee9e04018c8a",
+        "SKILL.md": "node-fddc99453114c3a40363b219",
+        "core/easing.py": "node-dbf396ac6852bf4706f33ebf",
+        "core/frame_composer.py": "node-bd3bececef13aaeef0c22570",
+        "core/gif_builder.py": "node-2c61585b9d40c2df7343f499",
+        "core/validators.py": "node-0f241aa06504163be33132f8",
+        "requirements.txt": "node-cc27fb4d7208967c86b1a7e8"
+      },
+      "prompt": "创建一个 128×128 的 Slack 警报表情 GIF。依据随附配置制作深蓝底、珊瑚红徽章和白色 GO 文本；徽章进行有呼吸感的周期脉冲，文字在缩略尺寸下始终容易辨认。请保持给定配色与时长预算，输出指定 GIF。",
+      "requested_output": {
+        "description_zh": "深蓝、珊瑚红和白色构成的 GO 循环脉冲 Slack 表情 GIF。",
+        "filename": "go_alert_pulse.gif",
+        "media_type": "image/gif"
+      },
+      "required_capabilities": [
+        "text_rendering",
+        "pulse_animation",
+        "palette_preservation",
+        "emoji_gif_export"
+      ],
+      "role": "executor",
+      "schema_version": "1.0.0",
+      "skill_ref": "benchmarks/canaries/slack-gif-creator/package",
+      "submission_schema_ref": "schemas/execution_bundle.schema.json",
+      "task_id": "functional-validation-pulse-text-008",
+      "timeout_seconds": 600,
+      "work_id": "work-f659fabc30459ff0d09ad348"
+    }
+  ]
+}

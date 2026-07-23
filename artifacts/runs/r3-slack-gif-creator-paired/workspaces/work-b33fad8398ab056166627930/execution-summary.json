@@ -1,0 +1,32 @@
+{
+  "schema_version": "1.0.0",
+  "work_id": "work-b33fad8398ab056166627930",
+  "task_id": "functional-validation-loop-sparkles-006",
+  "context_id": "r3-executor-work-b33fad8398ab056166627930",
+  "status": "completed",
+  "output": {
+    "path": "sparkle_ring_loop.gif",
+    "media_type": "image/gif",
+    "size_bytes": 27745
+  },
+  "execution": {
+    "python": ".venv/bin/python -B",
+    "package_bytecode_disabled": true,
+    "dependency_installation": false
+  },
+  "verification": {
+    "dimensions": [128, 128],
+    "frame_count": 12,
+    "frame_durations_ms": [100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100],
+    "total_duration_ms": 1200,
+    "loop": 0,
+    "slack_validator_passes": true,
+    "central_ring_stable": true,
+    "sparkle_count": 3,
+    "cyclic_design": "periodic phase functions with one-third-cycle offsets; no duplicated terminal frame",
+    "seam_mean_abs_diff": 1.9934,
+    "neighbor_mean_abs_diff": 1.905,
+    "seam_to_neighbor_mean_ratio": 1.0464,
+    "visual_inspection": "stable cyan ring and three colored rhythmic sparkles visible"
+  }
+}

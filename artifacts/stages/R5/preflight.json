@@ -1,0 +1,46 @@
+{
+  "schema_version": "1.0.0",
+  "stage_id": "R5",
+  "captured_at": "2026-07-22T14:31:55Z",
+  "started_from_commit": "ea84ea8983509a91770932b9e21a74cd43235810",
+  "upstream_stages": [
+    {
+      "stage_id": "R2",
+      "status": "complete",
+      "report_ref": "artifacts/stages/R2/stage_report.json",
+      "sha256": "a797ebcc890260495abbf1f233e516238eba9109299c35ca0da7bb900fa1f837"
+    },
+    {
+      "stage_id": "R3",
+      "status": "complete",
+      "report_ref": "artifacts/stages/R3/stage_report.json",
+      "sha256": "8e405bbe3d8c47de76fd8cafa67601edf326c622c266a7643410d82503adbfe1"
+    },
+    {
+      "stage_id": "R4",
+      "status": "complete",
+      "report_ref": "artifacts/stages/R4/stage_report.json",
+      "sha256": "2063da07da794ba950cdc38670a1678cb572130314b995984af38c0de28661e3"
+    }
+  ],
+  "worktree_policy": {
+    "dirty_entries_observed_during_r5": 194,
+    "reset_run": false,
+    "clean_run": false,
+    "private_skill_modified": false,
+    "unknown_dirty_files_overwritten": false,
+    "existing_dirty_worktree_preserved": true
+  },
+  "scope": {
+    "config_ref": "configs/canaries/slack-gif-creator-r5.json",
+    "config_sha256": "3f0951cd5d7cf065c063cf53ad01a9c7992064f868fe4fbe3c364abe8b64e023",
+    "upstream_evidence_mode": "sealed-read-only",
+    "selected_split": "validation",
+    "r3_rerun_allowed": false,
+    "r4_rerun_allowed": false,
+    "candidate_search_allowed": false,
+    "agent_native_roles_allowed": false,
+    "external_llm_api_allowed": false,
+    "private_skills_in_scope": false
+  }
+}

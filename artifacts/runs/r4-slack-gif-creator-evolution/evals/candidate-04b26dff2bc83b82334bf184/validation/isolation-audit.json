@@ -1,0 +1,27 @@
+{
+  "analyzer_context_ids": [],
+  "candidate_identity_findings": [],
+  "comparator_context_ids": [
+    "r4_cmp_a_loop_ba",
+    "codex-r4-cmp-pulse-ba-729fe9516110d7a7356f1629",
+    "r4_cmp_a_eff_ab",
+    "r4_cmp_a_loop_ab",
+    "ctx-r4-cmp-a-eff-ba-cdbfe7613878c4d3b9d63bae",
+    "ctx-r4-cmp-a-pulse-ab-eb7b44b59ab4daf63ad99daf"
+  ],
+  "duplicate_context_ids": [],
+  "executor_context_ids": [
+    "r4_valexec_a_text",
+    "r4_valexec_a_eff",
+    "r4_valexec_a_loop"
+  ],
+  "grader_context_ids": [
+    "r4_valgrade_a_loop",
+    "r4_valgrade_a_text",
+    "r4_valgrade_a_eff"
+  ],
+  "oracle_leakage_findings": [],
+  "schema_version": "1.0.0",
+  "sibling_leakage_findings": [],
+  "valid": true
+}

@@ -1,0 +1,60 @@
+{
+  "package_access": [
+    {
+      "sequence": 1,
+      "kind": "read",
+      "node_id": "node-fddc99453114c3a40363b219",
+      "path": "SKILL.md",
+      "bytes_loaded": 7841,
+      "tokens_loaded": 1960
+    },
+    {
+      "sequence": 2,
+      "kind": "read",
+      "node_id": "node-2c61585b9d40c2df7343f499",
+      "path": "core/gif_builder.py",
+      "bytes_loaded": 9847,
+      "tokens_loaded": 2461
+    },
+    {
+      "sequence": 3,
+      "kind": "read",
+      "node_id": "node-dbf396ac6852bf4706f33ebf",
+      "path": "core/easing.py",
+      "bytes_loaded": 6265,
+      "tokens_loaded": 1566
+    },
+    {
+      "sequence": 4,
+      "kind": "read",
+      "node_id": "node-bd3bececef13aaeef0c22570",
+      "path": "core/frame_composer.py",
+      "bytes_loaded": 4548,
+      "tokens_loaded": 1137
+    },
+    {
+      "sequence": 5,
+      "kind": "executed",
+      "node_id": "node-dbf396ac6852bf4706f33ebf",
+      "path": "core/easing.py",
+      "bytes_loaded": 0,
+      "tokens_loaded": 0
+    },
+    {
+      "sequence": 6,
+      "kind": "executed",
+      "node_id": "node-bd3bececef13aaeef0c22570",
+      "path": "core/frame_composer.py",
+      "bytes_loaded": 0,
+      "tokens_loaded": 0
+    },
+    {
+      "sequence": 7,
+      "kind": "executed",
+      "node_id": "node-2c61585b9d40c2df7343f499",
+      "path": "core/gif_builder.py",
+      "bytes_loaded": 0,
+      "tokens_loaded": 0
+    }
+  ]
+}

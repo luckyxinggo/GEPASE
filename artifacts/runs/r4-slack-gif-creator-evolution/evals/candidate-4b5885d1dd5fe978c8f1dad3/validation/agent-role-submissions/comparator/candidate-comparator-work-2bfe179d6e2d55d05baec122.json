@@ -1,0 +1,45 @@
+{
+  "schema_version": "1.0.0",
+  "submission_id": "candidate-comparator-submission-2bfe179d6e2d55d05baec122-ba",
+  "comparator_work_id": "candidate-comparator-work-2bfe179d6e2d55d05baec122",
+  "role_run": {
+    "host": "codex",
+    "model": "gpt-5.6-sol",
+    "context_id": "codex-context-r4-cmp-m-pulse-ba-2bfe179d6e2d55d05baec122",
+    "host_task_id": "/root/r4_cmp_m_pulse_ba",
+    "usage": {
+      "input_tokens": 0,
+      "output_tokens": 0,
+      "tool_calls": 12,
+      "duration_ms": 370000,
+      "token_count_kind": "unavailable"
+    },
+    "started_at": "2026-07-22T10:50:00Z",
+    "finished_at": "2026-07-22T10:56:10Z"
+  },
+  "winner": "right",
+  "confidence": 0.96,
+  "criteria": [
+    {
+      "criterion_id": "pulse-legibility",
+      "preference": "right",
+      "rationale_zh": "右侧 GO 使用更大、更规整的高对比白色字形，在最小与最大脉冲帧中都保持清晰；左侧的像素化字形更小，边缘较碎，缩略后辨识稳定性稍弱。"
+    },
+    {
+      "criterion_id": "pulse-motion",
+      "preference": "right",
+      "rationale_zh": "右侧以对称的 7 个独特尺度完成收放，并在两端设置停顿，约 1.96 秒的周期呈现较自然的吸气、停留和呼气节奏；首末帧相同，循环边界连续。左侧虽有更均匀的 80 毫秒帧步进，但约 0.96 秒的匀速往返更急促、机械。"
+    },
+    {
+      "criterion_id": "pulse-color",
+      "preference": "right",
+      "rationale_zh": "两侧都执行了深蓝底与珊瑚红徽章，但右侧白字更纯净醒目，红、蓝、白三层关系更明确；左侧文字呈偏粉白的观感，和徽章的分离度略低。"
+    },
+    {
+      "criterion_id": "pulse-emoji-ready",
+      "preference": "right",
+      "rationale_zh": "右侧的徽章占比、双线轮廓、居中文字和约两秒节奏更适合 Slack 缩略表情：轮廓完整、信息聚焦且不会显得躁动。左侧构图可用，但像素字与较快周期使完成度稍逊。"
+    }
+  ],
+  "rationale_zh": "右侧在四项标准上均占优，尤其是缩略尺寸下的 GO 可读性与带端点停顿的呼吸式节奏。两侧文件均为 128×128、无限循环且首末帧一致，但右侧用更清楚的白字、更稳定的层级和更舒展的约两秒周期，整体更符合可直接用于 Slack 的警报表情目标。"
+}

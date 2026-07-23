@@ -1,0 +1,22 @@
+{
+  "schema_version": "1.0.0",
+  "confirmed": true,
+  "offline_opened": true,
+  "core_interactions_checked": true,
+  "reviewer_kind": "human",
+  "semantic_review_confirmed": false,
+  "confirmation_source": "user_message",
+  "confirmed_at": "2026-07-21T11:10:36Z",
+  "artifact": "artifacts/runs/r2-slack-gif-creator-evalplan/review.html",
+  "artifact_sha256": "3fd5872a3a27fd28f13e992d43669daa3acf6283b255df9ca2f9ab2df76284e2",
+  "confirmed_interactions": [
+    "offline_open",
+    "search_and_filters",
+    "case_editing",
+    "batch_low_risk_train_review",
+    "approve_reject_request_regeneration",
+    "package_graph_view",
+    "review_json_export"
+  ],
+  "semantic_review_scope": "not claimed; frozen plan decisions remain agent-assisted"
+}

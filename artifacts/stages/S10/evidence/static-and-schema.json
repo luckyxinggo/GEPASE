@@ -1,0 +1,19 @@
+{
+  "module_audit": {
+    "allowed_entrypoints": [
+      "gepase.__main__"
+    ],
+    "parse_errors": [],
+    "source_modules": 147,
+    "unexplained_zero_inbound": [],
+    "valid": true,
+    "zero_inbound": [
+      "gepase.__main__"
+    ]
+  },
+  "pyright": true,
+  "ruff": true,
+  "schema_count": 32,
+  "schema_export": true,
+  "schema_hashes_stable": true
+}

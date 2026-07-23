@@ -1,0 +1,67 @@
+{
+  "criterion_grades": [
+    {
+      "criterion_id": "badge-fidelity",
+      "evidence_refs": [
+        "artifacts/runs/r3-slack-gif-creator-paired/workspaces/work-4d807d3a99ff3d159ec6fb29/uploaded_badge_lift.gif",
+        "artifacts/runs/r3-slack-gif-creator-paired/derived/work-4d807d3a99ff3d159ec6fb29/contact-sheet.png"
+      ],
+      "rationale_zh": "各抽样帧均清楚保留像素化青色外轮廓、深色内衬和居中的橙色核心，结构与青橙关系稳定可辨；主体虽经简洁像素化呈现，但未见关键构成丢失。",
+      "score": 0.9
+    },
+    {
+      "criterion_id": "badge-motion",
+      "evidence_refs": [
+        "artifacts/runs/r3-slack-gif-creator-paired/workspaces/work-4d807d3a99ff3d159ec6fb29/uploaded_badge_lift.gif",
+        "artifacts/runs/r3-slack-gif-creator-paired/derived/work-4d807d3a99ff3d159ec6fb29/contact-sheet.png",
+        "artifacts/runs/r3-slack-gif-creator-paired/blind-inspections/blind-be37f343f38f52648b6ed86d.json"
+      ],
+      "rationale_zh": "联系表可见主体由较低位置连续上浮，在高点附近略微越位后回落至中上部并稳定，位移节奏总体顺畅；16 帧、约 1.08 秒的动画表达完整，但首尾画面差异较明显，循环重启时会产生一次可察觉的位置跳变。",
+      "score": 0.82
+    },
+    {
+      "criterion_id": "badge-integration",
+      "evidence_refs": [
+        "artifacts/runs/r3-slack-gif-creator-paired/workspaces/work-4d807d3a99ff3d159ec6fb29/uploaded_badge_lift.gif",
+        "artifacts/runs/r3-slack-gif-creator-paired/derived/work-4d807d3a99ff3d159ec6fb29/contact-sheet.png"
+      ],
+      "rationale_zh": "深青背景、暗色方形承托和柔和青色光晕均保持在主体外围，强化层次且未遮挡青色轮廓或橙色核心；背景亮度克制，主体始终是视觉焦点。",
+      "score": 0.9
+    },
+    {
+      "criterion_id": "badge-emoji-ready",
+      "evidence_refs": [
+        "artifacts/runs/r3-slack-gif-creator-paired/workspaces/work-4d807d3a99ff3d159ec6fb29/uploaded_badge_lift.gif",
+        "artifacts/runs/r3-slack-gif-creator-paired/derived/work-4d807d3a99ff3d159ec6fb29/contact-sheet.png",
+        "artifacts/runs/r3-slack-gif-creator-paired/blind-inspections/blind-be37f343f38f52648b6ed86d.json"
+      ],
+      "rationale_zh": "128×128 画布中主体轮廓粗、色差高，小尺寸识别性良好，约 14.8 fps 与 1.08 秒时长也适合快速表情动作；但无限循环下首尾像素差较大，稳定态之后跳回低位会削弱无缝循环感。",
+      "score": 0.72
+    }
+  ],
+  "factual_claims_zh": [
+    "动画尺寸为 128×128，共 16 帧，总时长 1080 毫秒，有效帧率约 14.81 fps。",
+    "动画设置为无限循环，首尾帧像素差为 24.15106201171875。",
+    "画面主体在所有抽样帧中均呈青色外形与橙色中心的组合。"
+  ],
+  "feedback_zh": "主体保真、上浮越位回稳和背景融合均完成得较好，作为 Slack 小表情也有清晰轮廓与紧凑节奏。主要改进点是补足稳定态到起始低位之间的回程或过渡帧，降低首尾跳变，使无限循环更自然。",
+  "grader_work_id": "grader-work-2c8028d145484e7e5af04b94",
+  "overall_score": 0.849,
+  "role_run": {
+    "context_id": "/root/r3_grade_2c8028",
+    "finished_at": "2026-07-21T16:03:05Z",
+    "host": "codex",
+    "host_task_id": "/root/r3_grade_2c8028",
+    "model": "gpt-5.6-sol",
+    "started_at": "2026-07-21T16:00:00Z",
+    "usage": {
+      "duration_ms": 185000,
+      "input_tokens": 5200,
+      "output_tokens": 920,
+      "token_count_kind": "estimated",
+      "tool_calls": 5
+    }
+  },
+  "schema_version": "1.0.0",
+  "submission_id": "grade-submission-2c8028d145484e7e5af04b94"
+}

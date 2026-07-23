@@ -1,0 +1,23 @@
+project: gepase-r3-slack-gif-creator
+mode: agent-native
+frozen_eval_plan: artifacts/runs/r2-slack-gif-creator-evalplan/frozen-eval-plan.json
+scoring_policy: configs/canaries/slack-gif-creator-r3-scoring.json
+skill_ref: benchmarks/canaries/slack-gif-creator/package
+package_graph_ref: artifacts/runs/r2-slack-gif-creator-evalplan/package/graph.json
+eval_policy:
+  enabled_tiers: [E0, E2, E3]
+  enable_e1: false
+  variants: [no-skill, original]
+  splits: [train, validation]
+  seed: 42
+  timeout_seconds: 600
+isolation:
+  host: codex
+  model: gpt-5.6-sol
+  fresh_context_per_role_work_item: true
+  share_role_conversation_history: false
+headless_provider:
+  enabled: false
+reporting:
+  record_api_cost: false
+  record_usage_tokens_timing_tools_failures: true

@@ -1,0 +1,11 @@
+{
+  "ab_candidate_outcome": "win",
+  "ab_submission_ref": "artifacts/runs/r4-slack-gif-creator-evolution/evals/candidate-04b26dff2bc83b82334bf184/validation/comparator-submissions/candidate-comparator-work-ae395da2019661c0726d0163.json",
+  "ba_candidate_outcome": "win",
+  "ba_submission_ref": "artifacts/runs/r4-slack-gif-creator-evolution/evals/candidate-04b26dff2bc83b82334bf184/validation/comparator-submissions/candidate-comparator-work-469ddd22272646ee7b2550d8.json",
+  "candidate_margin": 1.0,
+  "consistent": true,
+  "pair_id": "pair-fb5346149a7720089b66c832",
+  "schema_version": "1.0.0",
+  "task_id": "functional-validation-loop-sparkles-006"
+}

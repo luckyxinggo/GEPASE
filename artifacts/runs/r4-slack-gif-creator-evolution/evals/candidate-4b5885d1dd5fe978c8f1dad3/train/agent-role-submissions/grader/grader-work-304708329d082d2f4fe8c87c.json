@@ -1,0 +1,67 @@
+{
+  "submission_id": "grader-submission-304708329d082d2f4fe8c87c",
+  "grader_work_id": "grader-work-304708329d082d2f4fe8c87c",
+  "role_run": {
+    "host": "codex",
+    "model": "gpt-5.6-sol",
+    "context_id": "r4_grade_m_badge",
+    "host_task_id": "/root/r4_grade_m_badge",
+    "usage": {
+      "input_tokens": 11800,
+      "output_tokens": 2200,
+      "tool_calls": 12,
+      "duration_ms": 480000,
+      "token_count_kind": "estimated"
+    },
+    "started_at": "2026-07-22T09:50:33Z",
+    "finished_at": "2026-07-22T09:58:33Z"
+  },
+  "criterion_grades": [
+    {
+      "criterion_id": "badge-fidelity",
+      "score": 0.92,
+      "evidence_refs": [
+        "artifacts/runs/r4-slack-gif-creator-evolution/evals/candidate-4b5885d1dd5fe978c8f1dad3/train/workspaces/work-186e0f9e7f60f140cdb4fb6b/uploaded_badge_lift.gif",
+        "artifacts/runs/r4-slack-gif-creator-evolution/evals/candidate-4b5885d1dd5fe978c8f1dad3/train/derived/work-186e0f9e7f60f140cdb4fb6b/contact-sheet.png"
+      ],
+      "rationale_zh": "各阶段均能辨认青色徽章轮廓和居中的橙色核心，主体的像素化边缘与青橙关系保持稳定；外圈变化没有取代核心结构。"
+    },
+    {
+      "criterion_id": "badge-motion",
+      "score": 0.94,
+      "evidence_refs": [
+        "artifacts/runs/r4-slack-gif-creator-evolution/evals/candidate-4b5885d1dd5fe978c8f1dad3/train/workspaces/work-186e0f9e7f60f140cdb4fb6b/uploaded_badge_lift.gif",
+        "artifacts/runs/r4-slack-gif-creator-evolution/evals/candidate-4b5885d1dd5fe978c8f1dad3/train/derived/work-186e0f9e7f60f140cdb4fb6b/contact-sheet.png",
+        "artifacts/runs/r4-slack-gif-creator-evolution/evals/candidate-4b5885d1dd5fe978c8f1dad3/train/blind-inspections/blind-87b12b10bad43aae7d4a65d1.json"
+      ],
+      "rationale_zh": "主体从低位连贯上浮，在中后段略高于最终稳定位置后小幅回落；22 个唯一帧以统一 80ms 时长播放，越位和回稳清楚且缓动自然。"
+    },
+    {
+      "criterion_id": "badge-integration",
+      "score": 0.96,
+      "evidence_refs": [
+        "artifacts/runs/r4-slack-gif-creator-evolution/evals/candidate-4b5885d1dd5fe978c8f1dad3/train/workspaces/work-186e0f9e7f60f140cdb4fb6b/uploaded_badge_lift.gif",
+        "artifacts/runs/r4-slack-gif-creator-evolution/evals/candidate-4b5885d1dd5fe978c8f1dad3/train/derived/work-186e0f9e7f60f140cdb4fb6b/contact-sheet.png"
+      ],
+      "rationale_zh": "深色背景、稀疏粒子和下方椭圆光环有效衬托主体，装饰与徽章保持空间分离，没有遮挡青色轮廓或橙色核心。"
+    },
+    {
+      "criterion_id": "badge-emoji-ready",
+      "score": 0.76,
+      "evidence_refs": [
+        "artifacts/runs/r4-slack-gif-creator-evolution/evals/candidate-4b5885d1dd5fe978c8f1dad3/train/workspaces/work-186e0f9e7f60f140cdb4fb6b/uploaded_badge_lift.gif",
+        "artifacts/runs/r4-slack-gif-creator-evolution/evals/candidate-4b5885d1dd5fe978c8f1dad3/train/derived/work-186e0f9e7f60f140cdb4fb6b/contact-sheet.png",
+        "artifacts/runs/r4-slack-gif-creator-evolution/evals/candidate-4b5885d1dd5fe978c8f1dad3/train/blind-inspections/blind-87b12b10bad43aae7d4a65d1.json"
+      ],
+      "rationale_zh": "128×128 下主体大而清晰，1.76 秒节奏紧凑且配置为无限循环；但最终稳定高位与起始低位差异很大，首末帧像素差 30.91，循环重置会产生明显跳变。"
+    }
+  ],
+  "overall_score": 0.91,
+  "factual_claims_zh": [
+    "盲检记录显示 GIF 为 128×128，共 22 个唯一帧，每帧 80ms，总时长 1760ms，有效帧率 12.5fps，循环次数字段为 0。",
+    "接触表中青色轮廓与橙色核心从首帧到末帧持续可辨，主体由低位上浮、轻微越过最终位置后回落稳定。",
+    "深色背景上的粒子和下方椭圆光环未覆盖徽章核心。",
+    "盲检记录的首末帧像素差为 30.910481770833332，实际循环在高位稳定画面后重置到低位画面。"
+  ],
+  "feedback_zh": "动画较完整地保留了青色轮廓与橙色核心，上浮—越位—回稳的动作明确，背景和光效也服务于主体。若要提升 Slack emoji 的循环观感，建议在结尾加入回到起始低位的过渡，或将起止帧设计为同一稳定姿态，消除当前明显的首末跳变。"
+}

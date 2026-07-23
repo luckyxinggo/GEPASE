@@ -1,0 +1,12 @@
+{
+  "candidate_content_hash": "2dab36108748cfb6cb7e3f53372aaf4c78c51d3995c04160d10105244d3c37b2",
+  "candidate_id": "candidate-edf5f1aa07926ba5415f0442",
+  "diagnostics": [],
+  "file_count": 7,
+  "graph_edges": 474,
+  "graph_nodes": 370,
+  "package_id": "slack-gif-creator",
+  "package_quality": 1.0,
+  "schema_version": "1.0.0",
+  "valid": true
+}

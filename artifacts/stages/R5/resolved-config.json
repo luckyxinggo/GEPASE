@@ -1,0 +1,20 @@
+{
+  "schema_version": "1.0.0",
+  "report_id": "r5-slack-gif-creator-report",
+  "title_zh": "slack-gif-creator 完整 Package 进化报告",
+  "package_id": "slack-gif-creator",
+  "r2_run_ref": "artifacts/runs/r2-slack-gif-creator-evalplan",
+  "r3_run_ref": "artifacts/runs/r3-slack-gif-creator-paired",
+  "r4_run_ref": "artifacts/runs/r4-slack-gif-creator-evolution",
+  "r2_stage_report_ref": "artifacts/stages/R2/stage_report.json",
+  "r3_stage_report_ref": "artifacts/stages/R3/stage_report.json",
+  "r4_stage_report_ref": "artifacts/stages/R4/stage_report.json",
+  "scoring_policy_ref": "configs/canaries/slack-gif-creator-r3-scoring.json",
+  "include_split": "validation",
+  "selected_candidate_id": "candidate-04b26dff2bc83b82334bf184",
+  "agent_calls": 0,
+  "headless_provider_calls": 0,
+  "rerun_r3": false,
+  "rerun_r4": false,
+  "candidate_search": false
+}

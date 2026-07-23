@@ -1,0 +1,39 @@
+project: gepase-headless-role-routing
+provider:
+  kind: agent_native
+  name: host-agent
+role_providers:
+  default:
+    kind: agent_native
+    name: host-agent
+  roles:
+    executor:
+      kind: headless
+      name: openai-compatible-executor
+      model: replace-with-provider-model
+      endpoint: https://provider.example/v1
+      credential_env: GEPASE_PROVIDER_API_KEY
+    independent_grader:
+      kind: headless
+      name: openai-compatible-grader
+      model: replace-with-provider-model
+      endpoint: https://provider.example/v1
+      credential_env: GEPASE_PROVIDER_API_KEY
+dataset:
+  manifest: benchmarks/manifest-v1.json
+  split: validation
+eval_policy:
+  allowed_tiers: [E0, E2, E3]
+  minimum_acceptance_tier: E2
+  paired: true
+  max_attempts: 2
+optimizer:
+  name: gepase
+  seed: 42
+budget:
+  max_work_items: 100
+  max_high_fidelity_items: 32
+  max_tokens: 1000000
+report:
+  formats: [json, html]
+  redact: true

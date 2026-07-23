@@ -1,0 +1,7 @@
+{
+  "asset_ref": "benchmarks/canaries/slack-gif-creator/fixtures/input-badge.ppm",
+  "canvas": [128, 128],
+  "duration_seconds_max": 2.5,
+  "motion": "lift, slight overshoot, then settle",
+  "preserve": "the badge silhouette and cyan-orange palette"
+}

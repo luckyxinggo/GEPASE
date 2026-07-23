@@ -1,0 +1,67 @@
+{
+  "submission_id": "grader-submission-f723a1725e3a027e49a24ff3-r4-valgrade-c-loop",
+  "grader_work_id": "grader-work-f723a1725e3a027e49a24ff3",
+  "role_run": {
+    "host": "codex",
+    "model": "gpt-5.6-sol",
+    "context_id": "r4_valgrade_c_loop",
+    "host_task_id": "/root/r4_valgrade_c_loop",
+    "usage": {
+      "duration_ms": 480000,
+      "input_tokens": 16000,
+      "output_tokens": 3500,
+      "token_count_kind": "estimated",
+      "tool_calls": 14
+    },
+    "started_at": "2026-07-22T10:28:11Z",
+    "finished_at": "2026-07-22T10:36:11Z"
+  },
+  "criterion_grades": [
+    {
+      "criterion_id": "loop-continuity",
+      "score": 0.98,
+      "evidence_refs": [
+        "artifacts/runs/r4-slack-gif-creator-evolution/evals/candidate-2dad7a05ce4a6460dd71f470/validation/blind-inspections/blind-edab266e4d5558b957c9f596.json",
+        "artifacts/runs/r4-slack-gif-creator-evolution/evals/candidate-2dad7a05ce4a6460dd71f470/validation/derived/work-406dfa280eb449c889b3e9d6/contact-sheet.png",
+        "artifacts/runs/r4-slack-gif-creator-evolution/evals/candidate-2dad7a05ce4a6460dd71f470/validation/workspaces/work-406dfa280eb449c889b3e9d6/sparkle_ring_loop.gif"
+      ],
+      "rationale_zh": "20 帧全部唯一且均为 100 ms，首尾像素差 1.7436 低于平均相邻帧差 1.8651；接触表中第 19 帧的顶部黄色火花自然过渡到第 0 帧的峰值状态，未靠复制静止首尾帧制造接缝。"
+    },
+    {
+      "criterion_id": "loop-rhythm",
+      "score": 0.95,
+      "evidence_refs": [
+        "artifacts/runs/r4-slack-gif-creator-evolution/evals/candidate-2dad7a05ce4a6460dd71f470/validation/derived/work-406dfa280eb449c889b3e9d6/contact-sheet.png",
+        "artifacts/runs/r4-slack-gif-creator-evolution/evals/candidate-2dad7a05ce4a6460dd71f470/validation/workspaces/work-406dfa280eb449c889b3e9d6/sparkle_ring_loop.gif"
+      ],
+      "rationale_zh": "黄色、青色、粉色火花按顶部、右下、左下的顺序分段增强和消退，并在相邻阶段保留轻微交叠；节奏清楚、平滑且不杂乱，规则性较强但由不同颜色与辉光缓动减轻了机械感。"
+    },
+    {
+      "criterion_id": "loop-stability",
+      "score": 0.99,
+      "evidence_refs": [
+        "artifacts/runs/r4-slack-gif-creator-evolution/evals/candidate-2dad7a05ce4a6460dd71f470/validation/derived/work-406dfa280eb449c889b3e9d6/contact-sheet.png",
+        "artifacts/runs/r4-slack-gif-creator-evolution/evals/candidate-2dad7a05ce4a6460dd71f470/validation/workspaces/work-406dfa280eb449c889b3e9d6/sparkle_ring_loop.gif"
+      ],
+      "rationale_zh": "中央青紫圆环在全部抽样帧中保持位置、轮廓和亮度层次稳定，始终作为清晰锚点承托外围火花，不出现可见漂移或形变。"
+    },
+    {
+      "criterion_id": "loop-visual",
+      "score": 0.96,
+      "evidence_refs": [
+        "artifacts/runs/r4-slack-gif-creator-evolution/evals/candidate-2dad7a05ce4a6460dd71f470/validation/derived/work-406dfa280eb449c889b3e9d6/contact-sheet.png",
+        "artifacts/runs/r4-slack-gif-creator-evolution/evals/candidate-2dad7a05ce4a6460dd71f470/validation/workspaces/work-406dfa280eb449c889b3e9d6/sparkle_ring_loop.gif"
+      ],
+      "rationale_zh": "深色底上的青紫圆环与黄、青、粉三色火花对比鲜明，三角式外围布局均衡，火花十字形态与柔和辉光在 128×128 尺寸下仍清楚精致。"
+    }
+  ],
+  "overall_score": 0.97,
+  "factual_claims_zh": [
+    "GIF 尺寸为 128×128，共 20 帧，所有帧均唯一。",
+    "每帧时长均为 100 ms，总时长为 2000 ms，有效帧率为 10 fps，循环次数字段为 0。",
+    "首尾像素差为 1.7435506184895833，低于平均相邻帧像素差 1.8650941012198465。",
+    "接触表显示黄色、青色、粉色三颗火花依次增强和消退，中央圆环在抽样帧中保持稳定。"
+  ],
+  "feedback_zh": "成品已高质量满足无缝循环目标：接缝变化低于一般帧间变化，三颗火花的阶段关系清楚，中央圆环稳定且小尺寸辨识度好。若继续精修，可稍微打破三段节拍的均匀感，让峰值持续时间或交叠程度产生更细微差异。总分严格按冻结权重计算：0.98×0.40 + 0.95×0.25 + 0.99×0.15 + 0.96×0.20 = 0.9700。",
+  "schema_version": "1.0.0"
+}

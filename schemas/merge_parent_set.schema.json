@@ -1,0 +1,436 @@
+{
+  "$defs": {
+    "EvolutionCandidateIdentity": {
+      "additionalProperties": false,
+      "description": "Explicit candidate family and branch identity; never inferred from scores.",
+      "properties": {
+        "branch_id": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Branch Id"
+        },
+        "branch_root_candidate_id": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Branch Root Candidate Id"
+        },
+        "candidate_id": {
+          "minLength": 1,
+          "title": "Candidate Id",
+          "type": "string"
+        },
+        "content_hash": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Content Hash",
+          "type": "string"
+        },
+        "failure_cluster_ids": {
+          "default": [],
+          "items": {
+            "type": "string"
+          },
+          "title": "Failure Cluster Ids",
+          "type": "array"
+        },
+        "generation": {
+          "minimum": 0,
+          "title": "Generation",
+          "type": "integer"
+        },
+        "lineage_root_candidate_id": {
+          "minLength": 1,
+          "title": "Lineage Root Candidate Id",
+          "type": "string"
+        },
+        "operator": {
+          "minLength": 1,
+          "title": "Operator",
+          "type": "string"
+        },
+        "package_id": {
+          "minLength": 1,
+          "title": "Package Id",
+          "type": "string"
+        },
+        "parent_ids": {
+          "default": [],
+          "items": {
+            "type": "string"
+          },
+          "title": "Parent Ids",
+          "type": "array"
+        },
+        "schema_version": {
+          "default": "2.0.0",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "source_package_ref": {
+          "minLength": 1,
+          "title": "Source Package Ref",
+          "type": "string"
+        },
+        "source_snapshot_hash": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Source Snapshot Hash",
+          "type": "string"
+        }
+      },
+      "required": [
+        "candidate_id",
+        "package_id",
+        "source_package_ref",
+        "source_snapshot_hash",
+        "lineage_root_candidate_id",
+        "generation",
+        "operator",
+        "content_hash"
+      ],
+      "title": "EvolutionCandidateIdentity",
+      "type": "object"
+    },
+    "ExclusiveContribution": {
+      "additionalProperties": false,
+      "description": "Train-only local wins; diversity does not itself imply merge compatibility.",
+      "properties": {
+        "closure_ids": {
+          "default": [],
+          "items": {
+            "type": "string"
+          },
+          "title": "Closure Ids",
+          "type": "array"
+        },
+        "component_ids": {
+          "default": [],
+          "items": {
+            "type": "string"
+          },
+          "title": "Component Ids",
+          "type": "array"
+        },
+        "objective_keys": {
+          "default": [],
+          "items": {
+            "type": "string"
+          },
+          "title": "Objective Keys",
+          "type": "array"
+        },
+        "task_keys": {
+          "default": [],
+          "items": {
+            "type": "string"
+          },
+          "title": "Task Keys",
+          "type": "array"
+        }
+      },
+      "title": "ExclusiveContribution",
+      "type": "object"
+    },
+    "MergeCompatibilityReason": {
+      "enum": [
+        "compatible",
+        "insufficient_parents",
+        "legacy_identity_unknown",
+        "merge_eligibility_not_ready",
+        "cross_package",
+        "different_source_package",
+        "different_snapshot",
+        "different_lineage_root",
+        "missing_lineage_node",
+        "lca_missing",
+        "ancestor_descendant",
+        "same_branch",
+        "duplicate_candidate",
+        "duplicate_content",
+        "empty_contribution",
+        "duplicate_contribution",
+        "held_out_evidence",
+        "structural_gate_failed",
+        "train_floor_failed",
+        "claimed_ancestry_mismatch"
+      ],
+      "title": "MergeCompatibilityReason",
+      "type": "string"
+    },
+    "MergeCompatibilityReport": {
+      "additionalProperties": false,
+      "properties": {
+        "ancestor_relation": {
+          "title": "Ancestor Relation",
+          "type": "boolean"
+        },
+        "consumer_contract_version": {
+          "default": "1.0.0",
+          "title": "Consumer Contract Version",
+          "type": "string"
+        },
+        "contribution_distinct": {
+          "title": "Contribution Distinct",
+          "type": "boolean"
+        },
+        "different_branches": {
+          "title": "Different Branches",
+          "type": "boolean"
+        },
+        "distinct_content": {
+          "title": "Distinct Content",
+          "type": "boolean"
+        },
+        "exclusive_contribution_nonempty": {
+          "title": "Exclusive Contribution Nonempty",
+          "type": "boolean"
+        },
+        "first_divergent_child_ids": {
+          "default": [],
+          "items": {
+            "type": "string"
+          },
+          "title": "First Divergent Child Ids",
+          "type": "array"
+        },
+        "lca_candidate_id": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Lca Candidate Id"
+        },
+        "lca_exists": {
+          "title": "Lca Exists",
+          "type": "boolean"
+        },
+        "merge_input_compatible": {
+          "title": "Merge Input Compatible",
+          "type": "boolean"
+        },
+        "parent_candidate_ids": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Parent Candidate Ids",
+          "type": "array"
+        },
+        "reason_codes": {
+          "items": {
+            "$ref": "#/$defs/MergeCompatibilityReason"
+          },
+          "title": "Reason Codes",
+          "type": "array"
+        },
+        "same_lineage_root": {
+          "title": "Same Lineage Root",
+          "type": "boolean"
+        },
+        "same_package": {
+          "title": "Same Package",
+          "type": "boolean"
+        },
+        "same_snapshot": {
+          "title": "Same Snapshot",
+          "type": "boolean"
+        },
+        "same_source_package": {
+          "title": "Same Source Package",
+          "type": "boolean"
+        },
+        "schema_version": {
+          "default": "2.0.0",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "structural_gates_passed": {
+          "title": "Structural Gates Passed",
+          "type": "boolean"
+        },
+        "train_floor_satisfied": {
+          "title": "Train Floor Satisfied",
+          "type": "boolean"
+        },
+        "train_only_evidence": {
+          "title": "Train Only Evidence",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "parent_candidate_ids",
+        "merge_input_compatible",
+        "reason_codes",
+        "same_package",
+        "same_source_package",
+        "same_snapshot",
+        "same_lineage_root",
+        "lca_exists",
+        "ancestor_relation",
+        "different_branches",
+        "distinct_content",
+        "exclusive_contribution_nonempty",
+        "contribution_distinct",
+        "train_only_evidence",
+        "structural_gates_passed",
+        "train_floor_satisfied"
+      ],
+      "title": "MergeCompatibilityReport",
+      "type": "object"
+    },
+    "MergeEligibility": {
+      "description": "Whether one pool row has sufficient explicit identity for merge selection.",
+      "enum": [
+        "unknown_legacy",
+        "pending_contract",
+        "eligible",
+        "ineligible"
+      ],
+      "title": "MergeEligibility",
+      "type": "string"
+    },
+    "MergeParentCandidate": {
+      "additionalProperties": false,
+      "description": "Pool candidate plus the train-only facts consumed by the S8 input validator.",
+      "properties": {
+        "ancestor_chain": {
+          "items": {
+            "type": "string"
+          },
+          "minItems": 1,
+          "title": "Ancestor Chain",
+          "type": "array"
+        },
+        "contribution": {
+          "$ref": "#/$defs/ExclusiveContribution"
+        },
+        "gate_0_1_passed": {
+          "title": "Gate 0 1 Passed",
+          "type": "boolean"
+        },
+        "identity": {
+          "$ref": "#/$defs/EvolutionCandidateIdentity"
+        },
+        "merge_eligibility": {
+          "$ref": "#/$defs/MergeEligibility",
+          "default": "eligible"
+        },
+        "not_deployable": {
+          "default": true,
+          "title": "Not Deployable",
+          "type": "boolean"
+        },
+        "patch_id": {
+          "minLength": 1,
+          "title": "Patch Id",
+          "type": "string"
+        },
+        "train_evidence_refs": {
+          "items": {
+            "type": "string"
+          },
+          "minItems": 1,
+          "title": "Train Evidence Refs",
+          "type": "array"
+        },
+        "train_floor_satisfied": {
+          "title": "Train Floor Satisfied",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "identity",
+        "patch_id",
+        "ancestor_chain",
+        "contribution",
+        "train_evidence_refs",
+        "gate_0_1_passed",
+        "train_floor_satisfied"
+      ],
+      "title": "MergeParentCandidate",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "compatibility_report": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/MergeCompatibilityReport"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null
+    },
+    "consumer_contract_version": {
+      "default": "1.0.0",
+      "title": "Consumer Contract Version",
+      "type": "string"
+    },
+    "lineage": {
+      "items": {
+        "$ref": "#/$defs/EvolutionCandidateIdentity"
+      },
+      "minItems": 1,
+      "title": "Lineage",
+      "type": "array"
+    },
+    "parent_set_id": {
+      "minLength": 1,
+      "title": "Parent Set Id",
+      "type": "string"
+    },
+    "parents": {
+      "items": {
+        "$ref": "#/$defs/MergeParentCandidate"
+      },
+      "title": "Parents",
+      "type": "array"
+    },
+    "schema_version": {
+      "default": "2.0.0",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "selection_config_hash": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Selection Config Hash",
+      "type": "string"
+    },
+    "train_selection_evidence_refs": {
+      "items": {
+        "type": "string"
+      },
+      "minItems": 1,
+      "title": "Train Selection Evidence Refs",
+      "type": "array"
+    }
+  },
+  "required": [
+    "parent_set_id",
+    "parents",
+    "lineage",
+    "selection_config_hash",
+    "train_selection_evidence_refs"
+  ],
+  "title": "MergeParentSetSnapshot",
+  "type": "object"
+}

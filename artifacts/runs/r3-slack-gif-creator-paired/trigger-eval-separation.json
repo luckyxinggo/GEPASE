@@ -1,0 +1,6 @@
+{
+  "frozen_trigger_cases": 18,
+  "functional_run_includes_trigger_scores": false,
+  "note_zh": "R3 功能评分不执行或混入 Trigger Eval. Trigger Eval 保持独立口径。",
+  "schema_version": "1.0.0"
+}

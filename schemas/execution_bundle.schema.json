@@ -1,0 +1,385 @@
+{
+  "$defs": {
+    "ArtifactRef": {
+      "additionalProperties": false,
+      "properties": {
+        "media_type": {
+          "default": "application/json",
+          "title": "Media Type",
+          "type": "string"
+        },
+        "path": {
+          "title": "Path",
+          "type": "string"
+        },
+        "sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Sha256",
+          "type": "string"
+        },
+        "size_bytes": {
+          "minimum": 0,
+          "title": "Size Bytes",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "path",
+        "sha256",
+        "size_bytes"
+      ],
+      "title": "ArtifactRef",
+      "type": "object"
+    },
+    "PackageAccessEvent": {
+      "additionalProperties": false,
+      "properties": {
+        "bytes_loaded": {
+          "default": 0,
+          "minimum": 0,
+          "title": "Bytes Loaded",
+          "type": "integer"
+        },
+        "kind": {
+          "$ref": "#/$defs/PackageAccessKind"
+        },
+        "node_id": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Node Id"
+        },
+        "path": {
+          "title": "Path",
+          "type": "string"
+        },
+        "sequence": {
+          "minimum": 0,
+          "title": "Sequence",
+          "type": "integer"
+        },
+        "tokens_loaded": {
+          "default": 0,
+          "minimum": 0,
+          "title": "Tokens Loaded",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "sequence",
+        "kind",
+        "path"
+      ],
+      "title": "PackageAccessEvent",
+      "type": "object"
+    },
+    "PackageAccessKind": {
+      "enum": [
+        "available",
+        "read",
+        "executed"
+      ],
+      "title": "PackageAccessKind",
+      "type": "string"
+    },
+    "ProviderFailureKind": {
+      "enum": [
+        "invalid_submission",
+        "duplicate",
+        "timeout",
+        "partial_artifact",
+        "interrupted",
+        "unsupported_capability",
+        "task_failure",
+        "environment_unavailable"
+      ],
+      "title": "ProviderFailureKind",
+      "type": "string"
+    },
+    "TraceStep": {
+      "additionalProperties": false,
+      "properties": {
+        "action": {
+          "title": "Action",
+          "type": "string"
+        },
+        "outcome": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Outcome"
+        },
+        "sequence": {
+          "minimum": 0,
+          "title": "Sequence",
+          "type": "integer"
+        },
+        "target": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Target"
+        },
+        "tool": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Tool"
+        }
+      },
+      "required": [
+        "sequence",
+        "action"
+      ],
+      "title": "TraceStep",
+      "type": "object"
+    },
+    "UsageRecord": {
+      "additionalProperties": false,
+      "properties": {
+        "duration_ms": {
+          "default": 0,
+          "minimum": 0,
+          "title": "Duration Ms",
+          "type": "integer"
+        },
+        "input_tokens": {
+          "default": 0,
+          "minimum": 0,
+          "title": "Input Tokens",
+          "type": "integer"
+        },
+        "output_tokens": {
+          "default": 0,
+          "minimum": 0,
+          "title": "Output Tokens",
+          "type": "integer"
+        },
+        "token_count_kind": {
+          "default": "unavailable",
+          "enum": [
+            "reported",
+            "estimated",
+            "unavailable"
+          ],
+          "title": "Token Count Kind",
+          "type": "string"
+        },
+        "tool_calls": {
+          "default": 0,
+          "minimum": 0,
+          "title": "Tool Calls",
+          "type": "integer"
+        }
+      },
+      "title": "UsageRecord",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "description": "Task-native Agent execution evidence submitted to the Core ledger.",
+  "properties": {
+    "artifact_root": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Artifact Root"
+    },
+    "artifacts": {
+      "default": [],
+      "items": {
+        "$ref": "#/$defs/ArtifactRef"
+      },
+      "title": "Artifacts",
+      "type": "array"
+    },
+    "context_id": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Context Id"
+    },
+    "failure_detail": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Failure Detail"
+    },
+    "failure_kind": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/ProviderFailureKind"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null
+    },
+    "finished_at": {
+      "format": "date-time",
+      "title": "Finished At",
+      "type": "string"
+    },
+    "host": {
+      "title": "Host",
+      "type": "string"
+    },
+    "host_task_id": {
+      "title": "Host Task Id",
+      "type": "string"
+    },
+    "model": {
+      "title": "Model",
+      "type": "string"
+    },
+    "observed_trace": {
+      "default": [],
+      "items": {
+        "$ref": "#/$defs/TraceStep"
+      },
+      "title": "Observed Trace",
+      "type": "array"
+    },
+    "package_access": {
+      "default": [],
+      "items": {
+        "$ref": "#/$defs/PackageAccessEvent"
+      },
+      "title": "Package Access",
+      "type": "array"
+    },
+    "planned_trace": {
+      "default": [],
+      "items": {
+        "$ref": "#/$defs/TraceStep"
+      },
+      "title": "Planned Trace",
+      "type": "array"
+    },
+    "provider_id": {
+      "title": "Provider Id",
+      "type": "string"
+    },
+    "proxy_score": {
+      "anyOf": [
+        {
+          "maximum": 1,
+          "minimum": 0,
+          "type": "number"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Proxy Score"
+    },
+    "proxy_score_method": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Proxy Score Method"
+    },
+    "schema_version": {
+      "default": "1.0.0",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "started_at": {
+      "format": "date-time",
+      "title": "Started At",
+      "type": "string"
+    },
+    "submission_id": {
+      "title": "Submission Id",
+      "type": "string"
+    },
+    "transcript": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/ArtifactRef"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null
+    },
+    "uncertainty": {
+      "default": 0,
+      "maximum": 1,
+      "minimum": 0,
+      "title": "Uncertainty",
+      "type": "number"
+    },
+    "usage": {
+      "$ref": "#/$defs/UsageRecord"
+    },
+    "work_id": {
+      "title": "Work Id",
+      "type": "string"
+    }
+  },
+  "required": [
+    "submission_id",
+    "work_id",
+    "provider_id",
+    "host",
+    "model",
+    "host_task_id",
+    "usage",
+    "started_at",
+    "finished_at"
+  ],
+  "title": "ExecutionBundle",
+  "type": "object"
+}

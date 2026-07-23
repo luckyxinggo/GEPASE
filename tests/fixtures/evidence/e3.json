@@ -1,0 +1,70 @@
+{
+  "artifact_root": "tests/fixtures/evidence/artifacts/e2",
+  "artifacts": [
+    {
+      "media_type": "text/plain",
+      "path": "output.txt",
+      "sha256": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+      "size_bytes": 10
+    }
+  ],
+  "assertion_results": [
+    {
+      "assertion_id": "fixture-assertion",
+      "detail": "",
+      "family": "file_exists",
+      "passed": true,
+      "weight": 1.0
+    }
+  ],
+  "candidate_snapshot_hash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+  "evidence_tier": "E3",
+  "failure_detail": null,
+  "failure_kind": null,
+  "fixture_hash": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+  "host_model_snapshot": "host-model",
+  "observed_trace": [
+    {
+      "action": "write",
+      "outcome": "completed",
+      "sequence": 0,
+      "target": "output.txt",
+      "tool": null
+    }
+  ],
+  "pair_id": "pair-E3",
+  "planned_trace": [],
+  "policy_hash": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+  "prompt_hash": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+  "provenance": {
+    "generated_at": "2026-07-15T13:40:56.869620Z",
+    "generated_by": "build_s2_fixtures",
+    "host": "fixture-host",
+    "host_task_id": "fixture-e2",
+    "model": "fixture-model",
+    "origin": "assertion",
+    "provider_id": "assertion-v1",
+    "submission_id": "fixture-submission-e2"
+  },
+  "provider_snapshot": "provider-E3",
+  "record_id": "e3",
+  "schema_version": "1.0.0",
+  "score": 1.0,
+  "seed": 42,
+  "skill_id": "fixture-skill",
+  "source_record_refs": [
+    "e2"
+  ],
+  "task_id": "fixture-task",
+  "trace_completeness": "complete",
+  "uncertainty": 0.0,
+  "usage": {
+    "duration_ms": 100,
+    "input_tokens": 20,
+    "output_tokens": 30,
+    "token_count_kind": "reported",
+    "tool_calls": 1
+  },
+  "variant": "original",
+  "work_id": "work-e3"
+}

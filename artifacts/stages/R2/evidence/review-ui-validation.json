@@ -1,0 +1,32 @@
+{
+  "schema_version": "1.0.0",
+  "artifact": "artifacts/runs/r2-slack-gif-creator-evalplan/review.html",
+  "self_contained": true,
+  "external_script_count": 0,
+  "external_stylesheet_count": 0,
+  "inline_javascript_syntax": "passed",
+  "required_controls": {
+    "search": true,
+    "type_filter": true,
+    "split_filter": true,
+    "risk_filter": true,
+    "full_case_json_edit": true,
+    "batch_low_risk_train": true,
+    "approve_reject_regenerate": true,
+    "package_graph": true,
+    "review_json_export": true
+  },
+  "core_review_import_contract": "passed_by_unit_and_real_run",
+  "automated_browser_attempt": {
+    "status": "blocked_by_browser_url_policy",
+    "target_scheme": "file",
+    "workaround_attempted": false
+  },
+  "human_offline_browser_validation": {
+    "status": "passed",
+    "confirmed_at": "2026-07-21T11:10:36Z",
+    "confirmation_source": "user_message",
+    "scope": "offline opening and core review-page interactions",
+    "semantic_case_review_claimed": false
+  }
+}

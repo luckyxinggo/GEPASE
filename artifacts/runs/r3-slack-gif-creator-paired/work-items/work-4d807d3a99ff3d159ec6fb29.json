@@ -1,0 +1,52 @@
+{
+  "candidate_snapshot_hash": "ce42d8a837acf9feda9706a3418fc26a77c497d9615079e616b5fdc6870ef64e",
+  "case_contract_hash": "1fa233ac96cb8b5821a97891351701e3a1fab626c3d027eac53c4845ff505142",
+  "created_at": "2026-07-21T15:28:27.782962Z",
+  "evidence_tier": "E2",
+  "fixture_ref": "benchmarks/canaries/slack-gif-creator/fixtures/input-badge.json",
+  "fixture_refs": [
+    "benchmarks/canaries/slack-gif-creator/fixtures/input-badge.json",
+    "benchmarks/canaries/slack-gif-creator/fixtures/input-badge.ppm"
+  ],
+  "frozen_plan_hash": "1893ad9a08978f2a8f107981a9a032c7581d08082926ee52276bd5feba2df950",
+  "package_graph_ref": "artifacts/runs/r2-slack-gif-creator-evalplan/package/graph.json",
+  "package_node_map": {
+    "LICENSE.txt": "node-7fd627ed0d50ee9e04018c8a",
+    "SKILL.md": "node-fddc99453114c3a40363b219",
+    "core/easing.py": "node-dbf396ac6852bf4706f33ebf",
+    "core/frame_composer.py": "node-bd3bececef13aaeef0c22570",
+    "core/gif_builder.py": "node-2c61585b9d40c2df7343f499",
+    "core/validators.py": "node-0f241aa06504163be33132f8",
+    "requirements.txt": "node-cc27fb4d7208967c86b1a7e8"
+  },
+  "pair_id": "pair-ccbb5f6bb581d628f7d2016b",
+  "pairing": {
+    "fixture_hash": "3896656870f277b0a7d6466ac303c760c7884561a73dcda7aef97d7edf2197a7",
+    "host_model_snapshot": "edbfd8f0668f44e333585ee805a6f891a7443402aad61b3e8cfeca5913b1338b",
+    "policy_hash": "3b49f46ee66bafaf2bcf1aeac08f1bd7f4c719463b0e655afe40a98a4af6b3ec",
+    "prompt_hash": "5557660815bcf3cc1a5c16ed99f24a4d9e966aa543fb408c2219361b98ccd0e7",
+    "provider_snapshot": "agent-delegated-v1",
+    "seed": 42
+  },
+  "prompt": "请直接使用随附 PPM 徽章图像作为动画主体，而不是重新画一个替代品。依照配置将它放入 128×128 的 Slack emoji：徽章先上浮，略微越过最终高度，再回落稳定；保留原图的徽章轮廓以及青色、橙色关系，可增加不遮挡主体的背景或光效。输出指定 GIF。",
+  "provider_id": "agent-delegated-v1",
+  "requested_output": {
+    "description_zh": "保留本地输入徽章特征、带上浮越位回稳动作的 128×128 GIF。",
+    "filename": "uploaded_badge_lift.gif",
+    "media_type": "image/gif"
+  },
+  "required_capabilities": [
+    "local_image_loading",
+    "input_asset_preservation",
+    "overshoot_easing",
+    "emoji_gif_export"
+  ],
+  "schema_version": "1.0.0",
+  "skill_id": "slack-gif-creator",
+  "skill_ref": "benchmarks/canaries/slack-gif-creator/package",
+  "split": "train",
+  "task_id": "functional-train-input-badge-003",
+  "timeout_seconds": 600,
+  "variant": "original",
+  "work_id": "work-4d807d3a99ff3d159ec6fb29"
+}

@@ -1,0 +1,20 @@
+{
+  "schema_version": "1.0.0",
+  "export_command": "uv run python scripts/export_core_schemas.py",
+  "schema_count": 11,
+  "idempotent": true,
+  "schemas": {
+    "eval_work_item.schema.json": "977882c3b6ad06ef3cc59a54bd9fb36f44f7d1a950bedc8a12b711d9d371ac09",
+    "evaluation_record.schema.json": "45139a891dd537ebcfe99533f2d0790f6c029961bbb62623f4df2e418a64c2f3",
+    "evolution_pool_entry.schema.json": "84a14754392a9e21c3d148ff95374d8ae65a2022d5ca01f7789a82b4fb48b2cd",
+    "execution_bundle.schema.json": "27606ba87af015322087c9f92c8141e5f286aeebceb1150b66bd96a2e9954010",
+    "gate_decision.schema.json": "a098cc313be9b9a4b5236efb6f50ed94c87f071ac7368bdb72046bbd90bc205b",
+    "merge_parent_set.schema.json": "4d920fad49e11d5d3f7655493ddc703637560fbe41413b0a0a7e2c08e12776d1",
+    "package_candidate.schema.json": "08e01e4d23cee6a6bc782917c80e1395ff2cd2997c21508b05c95275d2fe03cd",
+    "package_graph.schema.json": "40d0cd3d29f3deba44e5d01b168f40814c56ea7a6a553b135ef9e69fc68eb62d",
+    "package_patch.schema.json": "ff59cb6b9262904b50989ce641c636d69befa4666907882ce3cc537ce69d4306",
+    "task_case.schema.json": "fb9eeb7a3671916b12d6183761d5e3c6fd0292e6594834bd56d6d8ac4bf97ed5",
+    "task_score_vector.schema.json": "ad1a250ddb27d5bbf1e8fc6882a9edb1cb866f7ea684289659b6d608dbd2fb6c"
+  },
+  "valid": true
+}

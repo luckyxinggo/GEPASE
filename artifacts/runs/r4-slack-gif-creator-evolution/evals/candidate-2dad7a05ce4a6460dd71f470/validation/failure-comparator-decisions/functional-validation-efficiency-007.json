@@ -1,0 +1,8 @@
+{
+  "agent_comparator_calls": 0,
+  "candidate_failure_kind": "timeout",
+  "candidate_margin": -1.0,
+  "candidate_record_ref": "artifacts/runs/r4-slack-gif-creator-evolution/evals/candidate-2dad7a05ce4a6460dd71f470/validation/records/record-eac435aace00bbc2599090be.json",
+  "schema_version": "1.0.0",
+  "task_id": "functional-validation-efficiency-007"
+}

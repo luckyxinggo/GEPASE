@@ -1,0 +1,171 @@
+{
+  "schema_version": "1.0.0",
+  "stage_id": "R1",
+  "status": "complete",
+  "started_from_commit": "ea84ea8983509a91770932b9e21a74cd43235810",
+  "finished_commit": "ea84ea8983509a91770932b9e21a74cd43235810",
+  "source_tree_hash": "829a620cb56c745ab923c4834edca685cb58c1f047ddb5ca37d60acb82a0c5c1",
+  "input_artifacts": [],
+  "output_artifacts": [
+    {
+      "path": "preflight.json",
+      "sha256": "f4141d1541b4cee7e6508f89d5860ed72ec5aa8e4f82eccb514626657a9c5929",
+      "media_type": "application/json",
+      "size_bytes": 2212
+    },
+    {
+      "path": "evidence/authoritative-flow.md",
+      "sha256": "12bcc18b596ecbf263c6fd7928ad65385a21e9a5f0afd4aa1190867026ce2260",
+      "media_type": "text/markdown",
+      "size_bytes": 1911
+    },
+    {
+      "path": "evidence/authoritative-flow.json",
+      "sha256": "a6f0cc8c9f5d1d7a190f2a0f5264a5c5b540c61f833617e738cf749a2f2ab4d1",
+      "media_type": "application/json",
+      "size_bytes": 1934
+    },
+    {
+      "path": "evidence/cleanup-manifest.json",
+      "sha256": "51eefaa07717e4926427b32fcf75e295cb893ad109847b80e3bb6d8c6840465f",
+      "media_type": "application/json",
+      "size_bytes": 7682
+    },
+    {
+      "path": "evidence/regression.json",
+      "sha256": "0a2e688835c9549303de132836e99948f4505b0a42621d730f32eb252d0b3886",
+      "media_type": "application/json",
+      "size_bytes": 724
+    },
+    {
+      "path": "evidence/cli-api-audit.json",
+      "sha256": "33424b552d44e13d6595c83510007d5bb99ae0b95d76d04ad656f2490ae98d0c",
+      "media_type": "application/json",
+      "size_bytes": 767
+    },
+    {
+      "path": "evidence/schema-audit.json",
+      "sha256": "8257ddf8d46f3c3ba2b2a532a367bb70b844fcd8b16889579c75541446442e49",
+      "media_type": "application/json",
+      "size_bytes": 1313
+    },
+    {
+      "path": "evidence/static-audit.json",
+      "sha256": "20118937b7f269270838c0f4cdb7c4f29c21777be80ff47b561ca2cb9047c70a",
+      "media_type": "application/json",
+      "size_bytes": 896
+    },
+    {
+      "path": "evidence/security-and-docs.json",
+      "sha256": "f62136441f7b62e1337584b2e1db9f530bed7a5ef6e8d18c05b9bdcba4fe6ad9",
+      "media_type": "application/json",
+      "size_bytes": 450
+    },
+    {
+      "path": "test-results.xml",
+      "sha256": "9ce04a92d4cb35d80a5f587b81e9af676d2a13d47cfb2b66b477a7d3f705fd56",
+      "media_type": "application/xml",
+      "size_bytes": 17344
+    },
+    {
+      "path": "commands.log",
+      "sha256": "55ed9a191b0e4a7e4836c23bfab5041d4d58dc662fd9f61b9c39db3c556d33d0",
+      "media_type": "text/plain",
+      "size_bytes": 1747
+    },
+    {
+      "path": "external-validation.md",
+      "sha256": "4968f0b5548b7bdd1f66761990f8313d14584d6b4706abf2326c2c47432e16f4",
+      "media_type": "text/markdown",
+      "size_bytes": 430
+    }
+  ],
+  "commands": [
+    "uv run pytest -q --junitxml=artifacts/stages/R1/test-results.xml",
+    "uv run ruff check src/gepase tests scripts",
+    "uv run pyright src/gepase tests scripts",
+    "uv run python scripts/export_core_schemas.py",
+    "uv run gepase <retained-command> --help",
+    "uv run python scripts/check_secrets.py --format json",
+    "uv run python scripts/check_markdown_links.py",
+    "uv run python scripts/check_license.py",
+    "git diff --check",
+    "git status --short -- skills_test"
+  ],
+  "gate_results": [
+    {
+      "gate_id": "R1-G01-worktree-protection",
+      "status": "passed",
+      "evidence": ["preflight.json", "evidence/security-and-docs.json"],
+      "detail": "No reset/clean; private skills unchanged; existing dirty worktree preserved."
+    },
+    {
+      "gate_id": "R1-G02-old-route-removal",
+      "status": "passed",
+      "evidence": ["evidence/cleanup-manifest.json", "evidence/static-audit.json"],
+      "detail": "Old S9/action/result, readiness, equal-admission, pricing, and parallel-controller scans are zero."
+    },
+    {
+      "gate_id": "R1-G03-authoritative-models",
+      "status": "passed",
+      "evidence": ["evidence/authoritative-flow.json", "evidence/cli-api-audit.json"],
+      "detail": "Nine public Core boundary models each have one authoritative definition."
+    },
+    {
+      "gate_id": "R1-G04-cli-api",
+      "status": "passed",
+      "evidence": ["evidence/cli-api-audit.json"],
+      "detail": "Root CLI, 15 retained command help surfaces, and public Python API import successfully."
+    },
+    {
+      "gate_id": "R1-G05-regression",
+      "status": "passed",
+      "evidence": ["evidence/regression.json", "test-results.xml"],
+      "detail": "Ruff passed, Pyright has 0 errors, and pytest has 127 passes."
+    },
+    {
+      "gate_id": "R1-G06-schema-security-docs",
+      "status": "passed",
+      "evidence": ["evidence/schema-audit.json", "evidence/security-and-docs.json"],
+      "detail": "Schema export is idempotent; security, private-path, Markdown, license, and diff checks pass."
+    },
+    {
+      "gate_id": "R1-G07-claim-boundary",
+      "status": "passed",
+      "evidence": ["evidence/authoritative-flow.md", "external-validation.md"],
+      "detail": "Deletion and engineering regression are complete; real Skill optimization effect remains explicitly unvalidated."
+    }
+  ],
+  "real_agent_runs": 0,
+  "headless_provider_runs": 0,
+  "metrics": {
+    "source_python_before": 174,
+    "source_python_after": 138,
+    "test_python_before": 84,
+    "test_python_after": 55,
+    "pytest_passed": 127,
+    "pyright_errors": 0,
+    "retained_cli_help_passed": 15,
+    "public_model_definitions": 9,
+    "schemas": 11,
+    "secret_scan_findings": 0,
+    "tracked_private_skill_files": 0,
+    "real_skill_effect_validated": false
+  },
+  "known_issues": [
+    "R3 has not yet enforced transcript, task-native output, package-access, and role-isolation requirements at runtime.",
+    "R4 has not yet connected GEPA, Graph, PackagePatch, Gate, EvolutionPool, and multi-parent merge through one state machine.",
+    "No public canary has been executed and no optimization-effect claim is supported."
+  ],
+  "design_decisions": [
+    "Delete stage-specific controllers instead of choosing one invalid historical controller as the new mainline.",
+    "Keep pure Candidate, Graph, Patch, Gate, pool, lineage, closure, conflict, and merge contracts for later single-controller integration.",
+    "Keep E1 representable but default it off and prohibit it from acceptance.",
+    "Represent Agent execution with ExecutionBundle and functional quality with a non-scalar six-dimensional TaskScoreVector.",
+    "Preserve historical S6-S8 artifacts without reinterpreting their old scores as effect evidence."
+  ],
+  "unlocks": [
+    "R2 slack-gif-creator pinned PackageSnapshot, EvalPlan generation, Chinese review HTML, freeze, and resume"
+  ],
+  "generated_at": "2026-07-21T09:18:45Z"
+}

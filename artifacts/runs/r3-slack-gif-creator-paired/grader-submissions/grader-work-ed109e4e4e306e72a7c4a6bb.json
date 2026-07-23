@@ -1,0 +1,68 @@
+{
+  "criterion_grades": [
+    {
+      "criterion_id": "status-hierarchy",
+      "evidence_refs": [
+        "artifacts/runs/r3-slack-gif-creator-paired/workspaces/work-9a981b04ae2ac3fb91d31911/deployment_status.gif",
+        "artifacts/runs/r3-slack-gif-creator-paired/derived/work-9a981b04ae2ac3fb91d31911/contact-sheet.png"
+      ],
+      "rationale_zh": "DEPLOY/DONE 主文案居中且字号充足，状态副标题紧邻主文案；顶部管线、节点与底部进度构成稳定的三级信息结构。缩小到消息预览尺寸后，主状态仍容易扫读，仅节点小标签和顶栏文字相对细小。",
+      "score": 0.95
+    },
+    {
+      "criterion_id": "status-progression",
+      "evidence_refs": [
+        "artifacts/runs/r3-slack-gif-creator-paired/workspaces/work-9a981b04ae2ac3fb91d31911/deployment_status.gif",
+        "artifacts/runs/r3-slack-gif-creator-paired/derived/work-9a981b04ae2ac3fb91d31911/contact-sheet.png"
+      ],
+      "rationale_zh": "waiting、processing、complete 按顺序明确出现；黄、蓝、绿三种阶段色与 QUEUE/BUILD/LIVE 节点的逐步点亮、勾选相互印证。前两段保留 DEPLOY，完成段改为 DONE，状态含义几乎无需额外解释。",
+      "score": 0.98
+    },
+    {
+      "criterion_id": "status-motion",
+      "evidence_refs": [
+        "artifacts/runs/r3-slack-gif-creator-paired/workspaces/work-9a981b04ae2ac3fb91d31911/deployment_status.gif",
+        "artifacts/runs/r3-slack-gif-creator-paired/derived/work-9a981b04ae2ac3fb91d31911/contact-sheet.png",
+        "artifacts/runs/r3-slack-gif-creator-paired/blind-inspections/blind-df2292e3cafa10f737cd58eb.json"
+      ],
+      "rationale_zh": "24 帧均为 100 ms，总长 2.4 秒，三个阶段约各停留 0.8 秒，整体紧凑且主状态可以辨认。无限循环有效，但首尾像素差 10.1468 明显高于平均相邻帧差 1.3944，complete 回到 waiting 的重置较硬；0.8 秒也使细小辅助信息的阅读略显仓促。",
+      "score": 0.82
+    },
+    {
+      "criterion_id": "status-finish",
+      "evidence_refs": [
+        "artifacts/runs/r3-slack-gif-creator-paired/workspaces/work-9a981b04ae2ac3fb91d31911/deployment_status.gif",
+        "artifacts/runs/r3-slack-gif-creator-paired/derived/work-9a981b04ae2ac3fb91d31911/contact-sheet.png"
+      ],
+      "rationale_zh": "深色圆角卡片、统一线框节点、阶段色和勾选图标形成完整一致的视觉系统；480×480 方形构图适合 Slack 消息，主文字对比度高，作为团队部署播报已具备直接使用的完成度。",
+      "score": 0.96
+    }
+  ],
+  "factual_claims_zh": [
+    "GIF 为 480×480 像素，文件大小 364399 字节。",
+    "动画包含 24 个唯一帧，所有帧时长均为 100 ms，总时长 2400 ms，有效帧率为 10 fps。",
+    "循环计数为 0，表示无限循环。",
+    "waiting 与 processing 阶段显示 DEPLOY，complete 阶段显示 DONE。",
+    "加权总分按 0.95×0.25 + 0.98×0.30 + 0.82×0.20 + 0.96×0.25 = 0.9355 计算。"
+  ],
+  "feedback_zh": "这张状态卡已能直接用于 Slack：三阶段叙事非常清楚，节点、文字和颜色共同表达进度，视觉风格也统一成熟。建议将每个阶段适当延长，并在 DONE 回到 waiting 前加入短暂缓冲或柔和过渡，降低循环接缝的突兀感；若预期经常以更小尺寸展示，可再放大顶部与节点辅助文字。",
+  "grader_work_id": "grader-work-ed109e4e4e306e72a7c4a6bb",
+  "overall_score": 0.9355,
+  "role_run": {
+    "context_id": "/root/r3_grade_ed109e",
+    "finished_at": "2026-07-21T16:26:35Z",
+    "host": "codex",
+    "host_task_id": "/root/r3_grade_ed109e",
+    "model": "gpt-5.6-sol",
+    "started_at": "2026-07-21T16:25:44Z",
+    "usage": {
+      "duration_ms": 51000,
+      "input_tokens": 18000,
+      "output_tokens": 2500,
+      "token_count_kind": "estimated",
+      "tool_calls": 11
+    }
+  },
+  "schema_version": "1.0.0",
+  "submission_id": "grade-submission-ed109e4e4e306e72a7c4a6bb"
+}

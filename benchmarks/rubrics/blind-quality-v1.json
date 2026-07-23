@@ -1,0 +1,25 @@
+{
+  "blind_fields": [
+    "candidate_id",
+    "variant",
+    "parents",
+    "optimizer",
+    "expected_answer"
+  ],
+  "dimensions": [
+    {
+      "name": "instruction_adherence",
+      "weight": 0.5
+    },
+    {
+      "name": "clarity",
+      "weight": 0.3
+    },
+    {
+      "name": "artifact_usability",
+      "weight": 0.2
+    }
+  ],
+  "rubric_id": "blind-quality-v1",
+  "schema_version": "1.0.0"
+}

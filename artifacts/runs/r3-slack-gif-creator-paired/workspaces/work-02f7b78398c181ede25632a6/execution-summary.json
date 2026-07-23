@@ -1,0 +1,13 @@
+{
+  "artifact": "meeting_sync_reminder.gif",
+  "media_type": "image/gif",
+  "width_px": 480,
+  "height_px": 480,
+  "frame_count": 20,
+  "frame_duration_ms": 100,
+  "total_duration_ms": 2000,
+  "loop": 0,
+  "file_size_bytes": 141587,
+  "decode_validation": "passed",
+  "visual_validation": "passed: SYNC and 10:30 are readable, high-contrast, centered, and remain within the safe area"
+}

@@ -1,0 +1,23 @@
+{
+  "work_id": "work-9a981b04ae2ac3fb91d31911",
+  "status": "completed",
+  "output": "deployment_status.gif",
+  "media_type": "image/gif",
+  "validation": {
+    "format": "GIF",
+    "width": 480,
+    "height": 480,
+    "frame_count": 24,
+    "frame_duration_ms": 100,
+    "total_duration_ms": 2400,
+    "loop": 0,
+    "file_bytes": 364399,
+    "slack_message_dimensions_pass": true,
+    "stage_keyframes_distinct": true
+  },
+  "phase_semantics": [
+    {"frames": "0-7", "phase": "waiting", "primary_text": "DEPLOY"},
+    {"frames": "8-15", "phase": "processing", "primary_text": "DEPLOY"},
+    {"frames": "16-23", "phase": "complete", "primary_text": "DONE"}
+  ]
+}

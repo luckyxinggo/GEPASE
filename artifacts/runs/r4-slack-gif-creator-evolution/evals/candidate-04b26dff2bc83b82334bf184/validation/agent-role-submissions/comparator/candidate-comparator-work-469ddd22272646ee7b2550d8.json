@@ -1,0 +1,45 @@
+{
+  "schema_version": "1.0.0",
+  "submission_id": "candidate-comparator-submission-469ddd22272646ee7b2550d8-r4-cmp-a-loop-ba",
+  "comparator_work_id": "candidate-comparator-work-469ddd22272646ee7b2550d8",
+  "role_run": {
+    "host": "codex",
+    "model": "gpt-5.6-sol",
+    "context_id": "r4_cmp_a_loop_ba",
+    "host_task_id": "/root/r4_cmp_a_loop_ba",
+    "usage": {
+      "input_tokens": 21400,
+      "output_tokens": 2600,
+      "tool_calls": 10,
+      "duration_ms": 85000,
+      "token_count_kind": "estimated"
+    },
+    "started_at": "2026-07-22T10:43:52Z",
+    "finished_at": "2026-07-22T10:45:17Z"
+  },
+  "winner": "left",
+  "confidence": 0.86,
+  "criteria": [
+    {
+      "criterion_id": "loop-continuity",
+      "preference": "left",
+      "rationale_zh": "左侧首尾像素差为 1.605，低于其平均相邻帧差 2.054；接触表中末帧与首帧也都处于顶部黄色火花的相近高亮阶段，回环状态一致。右侧首尾像素差 1.993，略高于其平均相邻帧差 1.905，末帧右侧粉色火花接回首帧左下绿色火花时，外围主亮点的位置切换更容易被察觉。"
+    },
+    {
+      "criterion_id": "loop-rhythm",
+      "preference": "left",
+      "rationale_zh": "左侧用 20 个独立帧分配三颗主火花的增强、峰值和消退，黄色、青色、洋红色依次接棒，并以较弱的小火花作为过渡，节奏清楚且层次自然。右侧的三段节拍同样有序，但 12 帧内近似等分轮换，亮点切换更快、更规则，观感略显机械。"
+    },
+    {
+      "criterion_id": "loop-stability",
+      "preference": "right",
+      "rationale_zh": "右侧青色双线圆环的轮廓、位置和亮度在各抽样帧中更一致，外围火花运动时仍能稳固充当视觉锚点。左侧圆环的位置和形状虽保持清楚，但环面高光与亮度变化更明显，中心区域的逐帧变化也更大，因此稳定性略逊。"
+    },
+    {
+      "criterion_id": "loop-visual",
+      "preference": "left",
+      "rationale_zh": "左侧紫色圆环与黄、青、洋红三色火花形成鲜明层级，主火花的四角造型、柔和光晕和充足留白在 128×128 尺寸下仍醒目而精致。右侧像素风配色清爽、轮廓清晰，但多个小亮点与环内移动亮点同时出现，使构图稍显零碎，主次不如左侧集中。"
+    }
+  ],
+  "rationale_zh": "左侧在权重最高的循环连续性上有更可靠的首尾状态对应，并凭更充足的帧数呈现更自然的三火花节奏；其配色、光晕和视觉层级也更完整。右侧的中央圆环确实更稳定，但不足以抵消外围主亮点在接缝处的切换以及较机械的短周期节拍，因此整体选择左侧。"
+}

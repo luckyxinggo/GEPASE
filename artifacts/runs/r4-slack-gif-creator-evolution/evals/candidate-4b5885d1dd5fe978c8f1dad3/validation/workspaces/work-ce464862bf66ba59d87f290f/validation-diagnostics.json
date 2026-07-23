@@ -1,0 +1,40 @@
+{
+  "output": "sparkle_ring_loop.gif",
+  "dimensions": [
+    128,
+    128
+  ],
+  "frame_count": 18,
+  "fps_requested": 10,
+  "duration_seconds": 1.8,
+  "duration_limit_seconds": 2.2,
+  "looping": "infinite",
+  "motion_design": "18 exclusive periodic samples; three phase-offset smooth envelopes",
+  "seam_mean_abs_difference": 1.5517,
+  "median_adjacent_mean_abs_difference": 1.6873,
+  "seam_to_median_adjacent_ratio": 0.9197,
+  "seam_pass": true,
+  "slack_validation_pass": true,
+  "validator": {
+    "file": "artifacts/runs/r4-slack-gif-creator-evolution/evals/candidate-4b5885d1dd5fe978c8f1dad3/validation/workspaces/work-ce464862bf66ba59d87f290f/sparkle_ring_loop.gif",
+    "passes": true,
+    "width": 128,
+    "height": 128,
+    "size_kb": 49.4814453125,
+    "size_mb": 0.04832172393798828,
+    "frame_count": 18,
+    "duration_seconds": 1.8,
+    "fps": 10.0,
+    "is_emoji": true,
+    "optimal": true
+  },
+  "builder": {
+    "size_kb": 49.4814453125,
+    "size_mb": 0.04832172393798828,
+    "dimensions": "128x128",
+    "frame_count": 18,
+    "fps": 10,
+    "duration_seconds": 1.8,
+    "colors": 48
+  }
+}

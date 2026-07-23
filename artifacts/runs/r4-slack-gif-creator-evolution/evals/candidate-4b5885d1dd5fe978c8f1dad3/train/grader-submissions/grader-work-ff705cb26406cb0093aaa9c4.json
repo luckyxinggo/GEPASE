@@ -1,0 +1,66 @@
+{
+  "criterion_grades": [
+    {
+      "criterion_id": "emoji-bounce-clarity",
+      "evidence_refs": [
+        "artifacts/runs/r4-slack-gif-creator-evolution/evals/candidate-4b5885d1dd5fe978c8f1dad3/train/workspaces/work-cf877f712f0ead4323011d4d/emoji_star_bounce.gif",
+        "artifacts/runs/r4-slack-gif-creator-evolution/evals/candidate-4b5885d1dd5fe978c8f1dad3/train/derived/work-cf877f712f0ead4323011d4d/contact-sheet.png"
+      ],
+      "rationale_zh": "黄色主体与深海军蓝—靛蓝背景形成强对比，白色小高光在多数主体帧可辨；但外缘更多表现为偏移的暗红紫残影，而非始终清楚、均匀的粗描边，亮黄色核心的尖角轮廓也略显繁碎，缩小观看时会削弱五角星的即时识别。",
+      "score": 0.82
+    },
+    {
+      "criterion_id": "emoji-bounce-dynamics",
+      "evidence_refs": [
+        "artifacts/runs/r4-slack-gif-creator-evolution/evals/candidate-4b5885d1dd5fe978c8f1dad3/train/derived/work-cf877f712f0ead4323011d4d/contact-sheet.png",
+        "artifacts/runs/r4-slack-gif-creator-evolution/evals/candidate-4b5885d1dd5fe978c8f1dad3/train/blind-inspections/blind-6f20f16531ea4ebbe8a95939.json"
+      ],
+      "rationale_zh": "逐帧画面能够读出从上方进入、首次触地、向上回弹并再次落下的单次反弹，椭圆地影与纵向形变提供了一定重量感；但 12 帧均为独特帧，末段没有静止停留来明确表现“稳稳停住”，960 毫秒内由末帧直接回到空白首帧也使收稳节奏偏急。",
+      "score": 0.7
+    },
+    {
+      "criterion_id": "emoji-bounce-polish",
+      "evidence_refs": [
+        "artifacts/runs/r4-slack-gif-creator-evolution/evals/candidate-4b5885d1dd5fe978c8f1dad3/train/workspaces/work-cf877f712f0ead4323011d4d/emoji_star_bounce.gif",
+        "artifacts/runs/r4-slack-gif-creator-evolution/evals/candidate-4b5885d1dd5fe978c8f1dad3/train/derived/work-cf877f712f0ead4323011d4d/contact-sheet.png"
+      ],
+      "rationale_zh": "背景渐变、稀疏星点、白色高光、接触阴影和运动残影共同形成了完整设计，明显超出占位图形；不足在于亮黄核心的边缘较锯齿化，暗色外层在若干帧偏移较大，视觉层次虽丰富但尚未达到完全干净统一的精修程度。",
+      "score": 0.84
+    },
+    {
+      "criterion_id": "emoji-bounce-slack",
+      "evidence_refs": [
+        "artifacts/runs/r4-slack-gif-creator-evolution/evals/candidate-4b5885d1dd5fe978c8f1dad3/train/workspaces/work-cf877f712f0ead4323011d4d/emoji_star_bounce.gif",
+        "artifacts/runs/r4-slack-gif-creator-evolution/evals/candidate-4b5885d1dd5fe978c8f1dad3/train/blind-inspections/blind-6f20f16531ea4ebbe8a95939.json"
+      ],
+      "rationale_zh": "128×128、26,567 字节、12.5 fps、总时长 960 毫秒且 loop_count 为 0，尺寸、体积和无限循环元数据适合作为 Slack emoji；不过首末帧像素差为 4.614542643229167，结合末帧仍有主体而首帧为空白，循环重置可见，反复观看的连续性因此受损。",
+      "score": 0.82
+    }
+  ],
+  "factual_claims_zh": [
+    "盲检记录显示 GIF 尺寸为 128×128，文件大小为 26,567 字节。",
+    "盲检记录显示动画共有 12 个独特帧，每帧 80 毫秒，总时长 960 毫秒，有效帧率 12.5 fps。",
+    "盲检记录的 loop_count 为 0，首末帧像素差为 4.614542643229167。",
+    "总分按冻结权重精确计算为 0.82×0.25 + 0.70×0.30 + 0.84×0.25 + 0.82×0.20 = 0.789。"
+  ],
+  "feedback_zh": "成品已经具备醒目的黄—蓝对比、可辨的单次反弹和较完整的背景/高光/阴影包装，文件规格也很适合作为 Slack emoji。建议把亮黄主体收敛为更明确的五角星，并使用更连续、均匀的粗描边；动画末尾增加短暂的静止停留，再设计与首帧衔接的重置过渡，可同时改善“稳稳停住”的叙事和循环观感。",
+  "grader_work_id": "grader-work-ff705cb26406cb0093aaa9c4",
+  "overall_score": 0.789,
+  "role_run": {
+    "context_id": "r4_grade_m_emoji",
+    "finished_at": "2026-07-22T10:04:17Z",
+    "host": "codex",
+    "host_task_id": "/root/r4_grade_m_emoji",
+    "model": "gpt-5.6-sol",
+    "started_at": "2026-07-22T10:02:06Z",
+    "usage": {
+      "duration_ms": 131000,
+      "input_tokens": 12000,
+      "output_tokens": 2300,
+      "token_count_kind": "estimated",
+      "tool_calls": 14
+    }
+  },
+  "schema_version": "1.0.0",
+  "submission_id": "grader-submission-ff705cb26406cb0093aaa9c4"
+}

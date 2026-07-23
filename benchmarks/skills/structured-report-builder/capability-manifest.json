@@ -1,0 +1,28 @@
+{
+  "degradation_reasons": [],
+  "fixture_strategy": "JSON report fixtures",
+  "labels": [
+    "artifact_generation",
+    "contains_python",
+    "deterministic_renderer"
+  ],
+  "replay_strategy": "rendered HTML plus deterministic DOM assertions",
+  "required_secrets": [],
+  "required_services": [],
+  "required_tools": [
+    "python",
+    "filesystem"
+  ],
+  "schema_version": "1.0.0",
+  "side_effects": [
+    "writes_html"
+  ],
+  "skill_id": "structured-report-builder",
+  "source_manifest_ref": "benchmarks/skills/structured-report-builder/provenance.json",
+  "supported_evidence_tiers": [
+    "E0",
+    "E1",
+    "E2",
+    "E3"
+  ]
+}

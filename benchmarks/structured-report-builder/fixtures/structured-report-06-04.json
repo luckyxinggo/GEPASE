@@ -1,0 +1,54 @@
+{
+  "metrics": [
+    {
+      "label": "Revenue",
+      "unit": " USD",
+      "value": 2138
+    },
+    {
+      "label": "Orders",
+      "unit": "",
+      "value": 62
+    },
+    {
+      "label": "Conversion",
+      "unit": "",
+      "value": 0.15
+    }
+  ],
+  "provenance": {
+    "source": "synthetic-report-06-04"
+  },
+  "sections": [
+    {
+      "heading": "Regional detail North",
+      "summary": "Synthetic evidence slice 6-4.",
+      "table": {
+        "columns": [
+          "Region",
+          "Orders",
+          "Revenue"
+        ],
+        "rows": [
+          {
+            "Orders": 62,
+            "Region": "North",
+            "Revenue": 2138
+          },
+          {
+            "Orders": 59,
+            "Region": "Reference-A",
+            "Revenue": 2048
+          },
+          {
+            "Orders": 64,
+            "Region": "Reference-B",
+            "Revenue": 2183
+          }
+        ]
+      }
+    }
+  ],
+  "subtitle": "Auditable synthetic operating summary",
+  "title": "North Performance Review Q3 Scenario 06-04"
+}

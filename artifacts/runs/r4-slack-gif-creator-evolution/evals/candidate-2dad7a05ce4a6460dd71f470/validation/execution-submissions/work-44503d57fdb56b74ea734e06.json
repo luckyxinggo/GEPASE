@@ -1,0 +1,30 @@
+{
+  "artifact_root": null,
+  "artifacts": [],
+  "context_id": "r4_valexec_c_eff",
+  "failure_detail": "Execution completed after the frozen 600-second deadline; late artifacts excluded from scoring.",
+  "failure_kind": "timeout",
+  "finished_at": "2026-07-22T10:20:55.738694Z",
+  "host": "codex",
+  "host_task_id": "/root/r4_valexec_c_eff",
+  "model": "gpt-5.6-sol",
+  "observed_trace": [],
+  "package_access": [],
+  "planned_trace": [],
+  "provider_id": "agent-delegated-v1",
+  "proxy_score": null,
+  "proxy_score_method": null,
+  "schema_version": "1.0.0",
+  "started_at": "2026-07-22T10:08:55.738694Z",
+  "submission_id": "submission-cbbbf383bb92db3351a2b991",
+  "transcript": null,
+  "uncertainty": 1.0,
+  "usage": {
+    "duration_ms": 720000,
+    "input_tokens": 18000,
+    "output_tokens": 8000,
+    "token_count_kind": "estimated",
+    "tool_calls": 23
+  },
+  "work_id": "work-44503d57fdb56b74ea734e06"
+}

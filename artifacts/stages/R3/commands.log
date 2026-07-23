@@ -1,0 +1,24 @@
+2026-07-21 R3 command record
+
+uv sync --extra dev --extra gif-eval
+uv run --all-extras gepase eval plan-frozen --run-dir artifacts/runs/r3-slack-gif-creator-paired --frozen-plan artifacts/runs/r2-slack-gif-creator-evalplan/frozen-eval-plan.json --scoring-policy configs/canaries/slack-gif-creator-r3-scoring.json --skill-ref benchmarks/canaries/slack-gif-creator/package --package-graph-ref artifacts/runs/r2-slack-gif-creator-evalplan/package/graph.json
+uv run --all-extras gepase eval submit-work/ingest for 16 isolated Executor submissions
+uv run --all-extras gepase eval replay --run-dir artifacts/runs/r3-slack-gif-creator-paired
+uv run --all-extras gepase eval prepare-grading/submit-grade for 16 isolated Grader submissions
+uv run --all-extras gepase eval prepare-comparison/submit-comparison for 6 isolated AB/BA Comparator submissions
+uv run --all-extras gepase eval prepare-analysis/submit-analysis for 8 isolated Analyzer submissions
+uv run --all-extras gepase eval finalize-functional --run-dir artifacts/runs/r3-slack-gif-creator-paired
+uv run --all-extras gepase eval verify-functional --run-dir artifacts/runs/r3-slack-gif-creator-paired
+uv run --all-extras python scripts/run_r3_gates.py
+uv run --all-extras gepase eval seal-run --run-dir artifacts/runs/r3-slack-gif-creator-paired
+uv run --all-extras python scripts/export_core_schemas.py
+uv run --all-extras ruff check .
+uv run --all-extras pyright src tests scripts
+uv run --all-extras pytest -q --junitxml=artifacts/stages/R3/test-results.xml
+uv run --all-extras python scripts/check_secrets.py --format json
+uv run --all-extras python scripts/check_markdown_links.py
+uv run --all-extras python scripts/check_license.py
+git diff --check
+uv run --all-extras gepase --help
+uv run --all-extras gepase artifact verify artifacts/runs/r3-slack-gif-creator-paired --format json
+uv run --all-extras python ~/.codex/skills/.system/skill-creator/scripts/quick_validate.py .agents/skills/gepase-orchestrator

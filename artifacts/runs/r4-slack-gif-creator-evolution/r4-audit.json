@@ -1,0 +1,172 @@
+{
+  "branch_count": 3,
+  "budget_usage": {
+    "agent_calls": 77,
+    "cache_hits": 8,
+    "cache_misses": 0,
+    "candidates": 4,
+    "cumulative_agent_duration_ms": 27449000,
+    "estimated_tokens": 1649370,
+    "proposals": 3,
+    "queue_wait_ms": 0,
+    "repairs": 1,
+    "wall_clock_duration_ms": 10311052
+  },
+  "candidate_count": 4,
+  "e1_acceptance_calls": 0,
+  "gepa": {
+    "candidate_ids": [
+      "candidate-21242a10bcbaeb9631f3b2da",
+      "candidate-04b26dff2bc83b82334bf184",
+      "candidate-2dad7a05ce4a6460dd71f470"
+    ],
+    "current_best_candidate_id": "candidate-2dad7a05ce4a6460dd71f470",
+    "current_best_index": 2,
+    "frontier_type": "instance",
+    "gepa_version": "0.1.4",
+    "official_state_consistent": true,
+    "pareto_selected_candidate_id": "candidate-2dad7a05ce4a6460dd71f470",
+    "pareto_selected_index": 2,
+    "schema_version": "1.0.0",
+    "task_level_scores_preserved": true
+  },
+  "graph_case_pruning": false,
+  "isolation_valid": true,
+  "merge": {
+    "application_id": "application-da89180cab97e9b294bda455",
+    "candidate_id": "candidate-4b5885d1dd5fe978c8f1dad3",
+    "cross_package_parent_count": 0,
+    "gate_0_1_passed": true,
+    "gate_0_1_ref": "artifacts/runs/r4-slack-gif-creator-evolution/pre-eval-gates/patch-9c936c744ec54e0b04120d4f.json",
+    "held_out_features_read": 0,
+    "lca_candidate_id": "candidate-21242a10bcbaeb9631f3b2da",
+    "parent_candidate_ids": [
+      "candidate-04b26dff2bc83b82334bf184",
+      "candidate-2dad7a05ce4a6460dd71f470"
+    ],
+    "parent_set_id": "merge-parent-set-872d56c45a560e17a2902340",
+    "patch_id": "patch-9c936c744ec54e0b04120d4f",
+    "same_package": true,
+    "same_snapshot": true,
+    "schema_version": "1.0.0",
+    "status": "materialized"
+  },
+  "merge_child_count": 1,
+  "proposal_causality": {
+    "behavioral_executable_target_excluded": 0,
+    "causal_path_missing": 0,
+    "expected_affected_metrics_missing": 0,
+    "operations": 3,
+    "proposals": 3,
+    "rows": [
+      {
+        "bindings": [
+          {
+            "causal_path_node_ids": [
+              "node-69ea814aac72a6c557485ef0"
+            ],
+            "executable_target": false,
+            "expected_affected_assertions": [],
+            "expected_affected_metrics": [
+              "task_correctness",
+              "output_quality",
+              "skill_gain"
+            ],
+            "failure_evidence_id": "artifacts/runs/r3-slack-gif-creator-paired/analyzer-submissions/analyzer-work-9fdb3bdecd6e87afd9f6ad4d.json",
+            "operation_id": "op-verify-rendered-ease-out-stop",
+            "target_node_id": "node-69ea814aac72a6c557485ef0"
+          }
+        ],
+        "valid": true,
+        "work_id": "proposal-work-e4757dd9d456332c89c7670a"
+      },
+      {
+        "bindings": [
+          {
+            "causal_path_node_ids": [
+              "node-46d940221fa8caf3b6c22d2c"
+            ],
+            "executable_target": false,
+            "expected_affected_assertions": [],
+            "expected_affected_metrics": [
+              "task_correctness",
+              "output_quality",
+              "skill_gain"
+            ],
+            "failure_evidence_id": "artifacts/runs/r3-slack-gif-creator-paired/analyzer-submissions/analyzer-work-66550acf708dcf7d83b689cb.json",
+            "operation_id": "op-46d940221fa8caf3b6c22d2c",
+            "target_node_id": "node-46d940221fa8caf3b6c22d2c"
+          }
+        ],
+        "valid": true,
+        "work_id": "proposal-work-ab7f56118676006487a9edc3"
+      },
+      {
+        "bindings": [
+          {
+            "causal_path_node_ids": [
+              "node-46d940221fa8caf3b6c22d2c"
+            ],
+            "executable_target": false,
+            "expected_affected_assertions": [],
+            "expected_affected_metrics": [
+              "task_correctness",
+              "output_quality",
+              "skill_gain"
+            ],
+            "failure_evidence_id": "artifacts/runs/r4-slack-gif-creator-evolution/reflection-submissions/reflection-work-ece74a14e2ca67757504c20b.json",
+            "operation_id": "op-task-first-bounded-validation",
+            "target_node_id": "node-46d940221fa8caf3b6c22d2c"
+          }
+        ],
+        "valid": true,
+        "work_id": "proposal-work-5a40b7944f1aeb8225714c6e"
+      }
+    ],
+    "schema_version": "1.0.0",
+    "scope_errors": 0,
+    "valid": true
+  },
+  "reference_cache_hits": 7,
+  "reference_cache_misses": 0,
+  "reflection_count_by_candidate": {
+    "candidate-04b26dff2bc83b82334bf184": 0,
+    "candidate-2dad7a05ce4a6460dd71f470": 0,
+    "candidate-4b5885d1dd5fe978c8f1dad3": 0,
+    "candidate-edf5f1aa07926ba5415f0442": 1
+  },
+  "runtime_budget": {
+    "max_agent_calls": 80,
+    "max_candidates": 5,
+    "max_concurrency": 3,
+    "max_estimated_tokens": 2000000,
+    "max_proposals": 4,
+    "max_repair_attempts_per_work": 1,
+    "max_wall_clock_seconds": 7200,
+    "role_timeout_seconds": {
+      "comparator": 300,
+      "executor": 600,
+      "independent_grader": 420,
+      "proposal": 600,
+      "reflection": 600
+    },
+    "stop_semantics": "finish already ingested atomic operation, persist checkpoint, export no new work"
+  },
+  "schema_version": "1.0.0",
+  "single_candidate_model": "gepase.optimizer.candidate.PackageCandidate",
+  "single_eval_engine": "gepase.evals.engine.MultiFidelityEvalEngine",
+  "single_patch_model": "gepase.mutation.schema.PackagePatch",
+  "train_executor_coverage": {
+    "candidate-04b26dff2bc83b82334bf184": 5,
+    "candidate-2dad7a05ce4a6460dd71f470": 5,
+    "candidate-4b5885d1dd5fe978c8f1dad3": 5,
+    "candidate-edf5f1aa07926ba5415f0442": 5
+  },
+  "valid": true,
+  "validation_executor_coverage": {
+    "candidate-04b26dff2bc83b82334bf184": 3,
+    "candidate-2dad7a05ce4a6460dd71f470": 3,
+    "candidate-4b5885d1dd5fe978c8f1dad3": 3,
+    "candidate-edf5f1aa07926ba5415f0442": 0
+  }
+}

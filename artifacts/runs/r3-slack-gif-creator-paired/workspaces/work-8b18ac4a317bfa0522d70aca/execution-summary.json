@@ -1,0 +1,23 @@
+{
+  "work_id": "work-8b18ac4a317bfa0522d70aca",
+  "context": "r3_exec_8b18ac",
+  "status": "completed",
+  "requested_output": "satellite_orbit_ease.gif",
+  "artifact": "artifacts/runs/r3-slack-gif-creator-paired/workspaces/work-8b18ac4a317bfa0522d70aca/satellite_orbit_ease.gif",
+  "verification": {
+    "dimensions": [128, 128],
+    "frame_count": 20,
+    "fps": 10,
+    "total_duration_ms": 2000,
+    "loop": 0,
+    "file_size_bytes": 25827,
+    "slack_validator_passed": true,
+    "cyan_subject_tracked_all_frames": true,
+    "arc_peak_y": 11.305215583060303,
+    "endpoint": [103.0, 43.0],
+    "last_six_step_distances": [4.820884919210493, 4.216924173104012, 3.453008133077574, 2.5604854711360585, 1.5742374272997939, 0.5311004142565027],
+    "ease_out_last_steps_strictly_decreasing": true
+  },
+  "access_record": "artifacts/runs/r3-slack-gif-creator-paired/workspaces/work-8b18ac4a317bfa0522d70aca/package-access.json",
+  "trace_record": "artifacts/runs/r3-slack-gif-creator-paired/workspaces/work-8b18ac4a317bfa0522d70aca/observed-trace.json"
+}

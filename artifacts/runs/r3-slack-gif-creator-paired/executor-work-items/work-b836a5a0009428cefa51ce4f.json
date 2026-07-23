@@ -1,0 +1,27 @@
+{
+  "fixture_refs": [
+    "benchmarks/canaries/slack-gif-creator/fixtures/input-badge.json",
+    "benchmarks/canaries/slack-gif-creator/fixtures/input-badge.ppm"
+  ],
+  "package_graph_ref": null,
+  "package_node_map": {},
+  "prompt": "请直接使用随附 PPM 徽章图像作为动画主体，而不是重新画一个替代品。依照配置将它放入 128×128 的 Slack emoji：徽章先上浮，略微越过最终高度，再回落稳定；保留原图的徽章轮廓以及青色、橙色关系，可增加不遮挡主体的背景或光效。输出指定 GIF。",
+  "requested_output": {
+    "description_zh": "保留本地输入徽章特征、带上浮越位回稳动作的 128×128 GIF。",
+    "filename": "uploaded_badge_lift.gif",
+    "media_type": "image/gif"
+  },
+  "required_capabilities": [
+    "local_image_loading",
+    "input_asset_preservation",
+    "overshoot_easing",
+    "emoji_gif_export"
+  ],
+  "role": "executor",
+  "schema_version": "1.0.0",
+  "skill_ref": null,
+  "submission_schema_ref": "schemas/execution_bundle.schema.json",
+  "task_id": "functional-train-input-badge-003",
+  "timeout_seconds": 600,
+  "work_id": "work-b836a5a0009428cefa51ce4f"
+}

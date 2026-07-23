@@ -1,0 +1,28 @@
+{"entity_id": "candidate-21242a10bcbaeb9631f3b2da", "event_id": 1, "event_type": "candidate_added", "payload": {"status": "seed"}}
+{"entity_id": "run", "event_id": 2, "event_type": "run_state_saved", "payload": {}}
+{"entity_id": "run", "event_id": 3, "event_type": "run_state_saved", "payload": {}}
+{"entity_id": "run", "event_id": 4, "event_type": "run_state_saved", "payload": {}}
+{"entity_id": "candidate-04b26dff2bc83b82334bf184", "event_id": 5, "event_type": "candidate_added", "payload": {"status": "proposed"}}
+{"entity_id": "candidate-edf5f1aa07926ba5415f0442", "event_id": 6, "event_type": "candidate_added", "payload": {"status": "proposed"}}
+{"entity_id": "run", "event_id": 7, "event_type": "run_state_saved", "payload": {}}
+{"entity_id": "candidate-edf5f1aa07926ba5415f0442", "event_id": 8, "event_type": "candidate_status", "payload": {"status": "rejected"}}
+{"entity_id": "run", "event_id": 9, "event_type": "run_state_saved", "payload": {}}
+{"entity_id": "run", "event_id": 10, "event_type": "run_state_saved", "payload": {}}
+{"entity_id": "run", "event_id": 11, "event_type": "run_state_saved", "payload": {}}
+{"entity_id": "run", "event_id": 12, "event_type": "run_state_saved", "payload": {}}
+{"entity_id": "candidate-2dad7a05ce4a6460dd71f470", "event_id": 13, "event_type": "candidate_added", "payload": {"status": "proposed"}}
+{"entity_id": "run", "event_id": 14, "event_type": "run_state_saved", "payload": {}}
+{"entity_id": "candidate-4b5885d1dd5fe978c8f1dad3", "event_id": 15, "event_type": "candidate_added", "payload": {"status": "proposed"}}
+{"entity_id": "run", "event_id": 16, "event_type": "run_state_saved", "payload": {}}
+{"entity_id": "candidate-4b5885d1dd5fe978c8f1dad3", "event_id": 17, "event_type": "candidate_status", "payload": {"status": "inconclusive"}}
+{"entity_id": "run", "event_id": 18, "event_type": "run_state_saved", "payload": {}}
+{"entity_id": "candidate-04b26dff2bc83b82334bf184", "event_id": 19, "event_type": "candidate_status", "payload": {"status": "accepted"}}
+{"entity_id": "run", "event_id": 20, "event_type": "run_state_saved", "payload": {}}
+{"entity_id": "run", "event_id": 21, "event_type": "run_state_saved", "payload": {}}
+{"entity_id": "candidate-2dad7a05ce4a6460dd71f470", "event_id": 22, "event_type": "candidate_status", "payload": {"status": "rejected"}}
+{"entity_id": "run", "event_id": 23, "event_type": "run_state_saved", "payload": {}}
+{"entity_id": "run", "event_id": 24, "event_type": "run_state_saved", "payload": {}}
+{"entity_id": "candidate-4b5885d1dd5fe978c8f1dad3", "event_id": 25, "event_type": "candidate_status", "payload": {"status": "rejected"}}
+{"entity_id": "run", "event_id": 26, "event_type": "run_state_saved", "payload": {}}
+{"entity_id": "run", "event_id": 27, "event_type": "run_state_saved", "payload": {}}
+{"entity_id": "run", "event_id": 28, "event_type": "run_state_saved", "payload": {}}

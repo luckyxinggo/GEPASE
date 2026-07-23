@@ -1,0 +1,54 @@
+{
+  "metrics": [
+    {
+      "label": "Revenue",
+      "unit": " USD",
+      "value": 1366
+    },
+    {
+      "label": "Orders",
+      "unit": "",
+      "value": 44
+    },
+    {
+      "label": "Conversion",
+      "unit": "",
+      "value": 0.125
+    }
+  ],
+  "provenance": {
+    "source": "synthetic-report-01-01"
+  },
+  "sections": [
+    {
+      "heading": "Regional detail East",
+      "summary": "Synthetic evidence slice 1-1.",
+      "table": {
+        "columns": [
+          "Region",
+          "Orders",
+          "Revenue"
+        ],
+        "rows": [
+          {
+            "Orders": 44,
+            "Region": "East",
+            "Revenue": 1366
+          },
+          {
+            "Orders": 41,
+            "Region": "Reference-A",
+            "Revenue": 1276
+          },
+          {
+            "Orders": 46,
+            "Region": "Reference-B",
+            "Revenue": 1411
+          }
+        ]
+      }
+    }
+  ],
+  "subtitle": "Auditable synthetic operating summary",
+  "title": "East Performance Review Q2 Scenario 01-01"
+}

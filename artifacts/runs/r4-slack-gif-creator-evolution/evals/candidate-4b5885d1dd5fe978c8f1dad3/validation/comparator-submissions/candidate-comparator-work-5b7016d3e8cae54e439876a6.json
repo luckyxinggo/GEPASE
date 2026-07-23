@@ -1,0 +1,45 @@
+{
+  "comparator_work_id": "candidate-comparator-work-5b7016d3e8cae54e439876a6",
+  "confidence": 0.95,
+  "criteria": [
+    {
+      "criterion_id": "loop-continuity",
+      "preference": "right",
+      "rationale_zh": "右侧首尾帧像素差为 1.552，低于其相邻帧平均差 1.675；左侧首尾差为 1.993，略高于相邻帧平均差 1.905。右侧接缝因此更不突出，且 18 个等时长唯一帧提供了更细的循环过渡。"
+    },
+    {
+      "criterion_id": "loop-rhythm",
+      "preference": "right",
+      "rationale_zh": "两侧都实现了三颗火花依次增强和消退，但右侧用 18 帧形成更充分的淡入、峰值与淡出阶段，三个方向的接力清楚而自然；左侧 12 帧的阶段切换相对更短、更离散。"
+    },
+    {
+      "criterion_id": "loop-stability",
+      "preference": "right",
+      "rationale_zh": "两侧圆环的位置和轮廓都基本稳定。右侧圆环几何更规整、内部更干净，紫色主体与青色高光在各采样帧中持续保持清晰锚点；左侧环内亮点及较活跃的青色边缘使中心视觉略显忙碌。"
+    },
+    {
+      "criterion_id": "loop-visual",
+      "preference": "right",
+      "rationale_zh": "右侧紫青圆环、三色火花与柔和辉光的风格更统一，留白均衡，火花在暗色背景上醒目而不刺眼；左侧对比鲜明，但环体和火花的像素边缘更硬，整体精致度稍逊。"
+    }
+  ],
+  "rationale_zh": "右侧在最高权重的循环连续性上有明确量化优势，接缝变化小于常规相邻帧变化；同时更多唯一帧带来更顺滑、有组织的三火花节奏。两侧中心圆环均可作为稳定锚点，但右侧的中心洁净度、配色统一性与小尺寸构图也略胜，因此综合判定右侧胜出。",
+  "role_run": {
+    "context_id": "codex-r4-cmp-m-loop-ab-5b7016d3e8cae54e439876a6",
+    "finished_at": "2026-07-22T10:58:00Z",
+    "host": "codex",
+    "host_task_id": "/root/r4_cmp_m_loop_ab",
+    "model": "gpt-5.6-sol",
+    "started_at": "2026-07-22T10:50:00Z",
+    "usage": {
+      "duration_ms": 480000,
+      "input_tokens": 9700,
+      "output_tokens": 1250,
+      "token_count_kind": "estimated",
+      "tool_calls": 10
+    }
+  },
+  "schema_version": "1.0.0",
+  "submission_id": "candidate-comparator-submission-5b7016d3e8cae54e439876a6-ab-codex",
+  "winner": "right"
+}

@@ -1,0 +1,74 @@
+{
+  "comparator_work_id": "candidate-comparator-work-eb7b44b59ab4daf63ad99daf",
+  "expected_output_zh": "一个可循环的 GO 警报徽章，脉冲具有清楚但不刺眼的收放，白色文字在全过程保持可读；可自由设计徽章细节和脉冲曲线。",
+  "forbidden_inputs": [
+    "variant identity",
+    "candidate identity",
+    "expected winner",
+    "executor conversation",
+    "independent grader score",
+    "deterministic assertion score"
+  ],
+  "left": {
+    "blind_artifact": {
+      "artifact": {
+        "media_type": "image/gif",
+        "path": "go_alert_pulse.gif",
+        "sha256": "a767b71a7d4d1d0a5cb47fb2df7c780a488fe97ed2a6b0260112b9fe140f5d27",
+        "size_bytes": 11097
+      },
+      "artifact_root": "artifacts/runs/r3-slack-gif-creator-paired/workspaces/work-f659fabc30459ff0d09ad348",
+      "blind_id": "blind-3bb9aadfa62382ab2f2d46c7",
+      "contact_sheet_ref": "artifacts/runs/r3-slack-gif-creator-paired/derived/work-f659fabc30459ff0d09ad348/contact-sheet.png",
+      "inspection_ref": "artifacts/runs/r3-slack-gif-creator-paired/blind-inspections/blind-3bb9aadfa62382ab2f2d46c7.json"
+    },
+    "side_id": "left"
+  },
+  "order_label": "AB",
+  "right": {
+    "blind_artifact": {
+      "artifact": {
+        "media_type": "image/gif",
+        "path": "go_alert_pulse.gif",
+        "sha256": "e85db341809859081de0338200ff9a389fda9ac126c81fa2ecb4aca81b6542be",
+        "size_bytes": 118503
+      },
+      "artifact_root": "artifacts/runs/r4-slack-gif-creator-evolution/evals/candidate-04b26dff2bc83b82334bf184/validation/workspaces/work-ed3b4c130252b4a37e48a32c",
+      "blind_id": "blind-50a45dc3f57fefa132e93473",
+      "contact_sheet_ref": "artifacts/runs/r4-slack-gif-creator-evolution/evals/candidate-04b26dff2bc83b82334bf184/validation/derived/work-ed3b4c130252b4a37e48a32c/contact-sheet.png",
+      "inspection_ref": "artifacts/runs/r4-slack-gif-creator-evolution/evals/candidate-04b26dff2bc83b82334bf184/validation/blind-inspections/blind-50a45dc3f57fefa132e93473.json"
+    },
+    "side_id": "right"
+  },
+  "role": "comparator",
+  "rubric": [
+    {
+      "criterion_id": "pulse-legibility",
+      "description_zh": "文字在脉冲全过程和缩略尺寸下仍清楚、稳定。",
+      "label_zh": "GO 可读性",
+      "weight": 0.35
+    },
+    {
+      "criterion_id": "pulse-motion",
+      "description_zh": "收放曲线有呼吸感，速度变化自然且循环顺畅。",
+      "label_zh": "脉冲质感",
+      "weight": 0.3
+    },
+    {
+      "criterion_id": "pulse-color",
+      "description_zh": "深蓝、珊瑚红和白色关系明确，既醒目又保持对比。",
+      "label_zh": "配色执行",
+      "weight": 0.2
+    },
+    {
+      "criterion_id": "pulse-emoji-ready",
+      "description_zh": "徽章造型、细节和节奏适合作为 Slack 自定义表情使用。",
+      "label_zh": "表情完成度",
+      "weight": 0.15
+    }
+  ],
+  "schema_version": "1.0.0",
+  "submission_schema_ref": "schemas/comparator_submission.schema.json",
+  "task_id": "functional-validation-pulse-text-008",
+  "task_prompt": "创建一个 128×128 的 Slack 警报表情 GIF。依据随附配置制作深蓝底、珊瑚红徽章和白色 GO 文本；徽章进行有呼吸感的周期脉冲，文字在缩略尺寸下始终容易辨认。请保持给定配色与时长预算，输出指定 GIF。"
+}

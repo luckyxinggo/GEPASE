@@ -1,0 +1,108 @@
+{
+  "tables": [
+    {
+      "columns": [
+        "record_id",
+        "segment",
+        "amount"
+      ],
+      "name": "orders_05_00",
+      "rows": [
+        {
+          "amount": 500,
+          "record_id": "R0500000",
+          "segment": "alpha"
+        },
+        {
+          "amount": 501,
+          "record_id": "R0500001",
+          "segment": "beta"
+        },
+        {
+          "amount": 502,
+          "record_id": "R0500002",
+          "segment": "gamma"
+        },
+        {
+          "amount": 503,
+          "record_id": "R0500003",
+          "segment": "alpha"
+        },
+        {
+          "amount": 504,
+          "record_id": "R0500004",
+          "segment": "beta"
+        },
+        {
+          "amount": 505,
+          "record_id": "R0500005",
+          "segment": "gamma"
+        },
+        {
+          "amount": 506,
+          "record_id": "R0500006",
+          "segment": "alpha"
+        },
+        {
+          "amount": 507,
+          "record_id": "R0500007",
+          "segment": "beta"
+        },
+        {
+          "amount": 508,
+          "record_id": "R0500008",
+          "segment": "gamma"
+        },
+        {
+          "amount": 509,
+          "record_id": "R0500009",
+          "segment": "alpha"
+        },
+        {
+          "amount": 510,
+          "record_id": "R0500010",
+          "segment": "beta"
+        },
+        {
+          "amount": 511,
+          "record_id": "R0500011",
+          "segment": "gamma"
+        }
+      ]
+    },
+    {
+      "columns": [
+        "segment",
+        "owner"
+      ],
+      "name": "segments_05_00",
+      "rows": [
+        {
+          "owner": "owner-5-0-0",
+          "segment": "segment-0"
+        },
+        {
+          "owner": "owner-5-0-1",
+          "segment": "segment-1"
+        },
+        {
+          "owner": "owner-5-0-2",
+          "segment": "segment-2"
+        },
+        {
+          "owner": "owner-5-0-3",
+          "segment": "segment-3"
+        },
+        {
+          "owner": "owner-5-0-4",
+          "segment": "segment-4"
+        },
+        {
+          "owner": "owner-5-0-5",
+          "segment": "segment-5"
+        }
+      ]
+    }
+  ],
+  "title": "Operations Context Pack 05-00"
+}

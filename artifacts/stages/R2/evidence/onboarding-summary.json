@@ -1,0 +1,50 @@
+{
+  "schema_version": "1.0.0",
+  "stage_id": "R2",
+  "package": {
+    "package_id": "slack-gif-creator",
+    "source_commit": "fa0fa64bdc967915dc8399e803be67759e1e62b8",
+    "upstream_tree_hash": "c61d2f7bb6334b68a6936ad3f41ebfc7cb76fe2a",
+    "package_snapshot_hash": "ce42d8a837acf9feda9706a3418fc26a77c497d9615079e616b5fdc6870ef64e",
+    "files": 7,
+    "graph_nodes": 370,
+    "graph_edges": 474,
+    "diagnostics": 0
+  },
+  "eval_designer": {
+    "work_id": "eval-design-35fdb136ceda9ec147eda7c3",
+    "host": "codex",
+    "model": "gpt-5.6-sol",
+    "context_id": "/root/r2_eval_designer",
+    "host_task_id": "/root/r2_eval_designer",
+    "package_reads": 7,
+    "usage": {
+      "input_tokens": 34000,
+      "output_tokens": 15000,
+      "tool_calls": 14,
+      "duration_ms": 150000,
+      "token_count_kind": "estimated"
+    }
+  },
+  "plan": {
+    "draft_hash": "8f249005e7f9ce57ed0bb0c5212cbc392d79e6710997e2651f4598fdd087128b",
+    "trigger_cases": 18,
+    "functional_cases": 8,
+    "functional_families": 7,
+    "train_functional_cases": 5,
+    "validation_functional_cases": 3,
+    "automatic_checks_passed": 13,
+    "automatic_checks_total": 13,
+    "reviewer_kind": "agent-assisted",
+    "review_decisions": 26,
+    "unresolved_review_decisions": 0,
+    "frozen_plan_hash": "1893ad9a08978f2a8f107981a9a032c7581d08082926ee52276bd5feba2df950",
+    "final_run_state": "execution_ready"
+  },
+  "claim_boundary": {
+    "real_agent_eval_design_completed": true,
+    "real_local_gif_smoke_completed": true,
+    "no_skill_original_paired_execution_completed": false,
+    "skill_optimization_effect_validated": false
+  }
+}

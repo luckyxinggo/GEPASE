@@ -1,0 +1,21 @@
+{
+  "entries": [
+    {
+      "accepted": true,
+      "candidate_id": "candidate-04b26dff2bc83b82334bf184",
+      "decision_id": "gate-decision-1c29c5655781feb78ce53cfd",
+      "requires_full_s7_for_children": true,
+      "schema_version": "1.0.0",
+      "validation_evidence_refs": [
+        "artifacts/runs/r3-slack-gif-creator-paired/task-score-vectors/work-06e0ca3901e49580a002d129.json",
+        "artifacts/runs/r3-slack-gif-creator-paired/task-score-vectors/work-b33fad8398ab056166627930.json",
+        "artifacts/runs/r3-slack-gif-creator-paired/task-score-vectors/work-f659fabc30459ff0d09ad348.json",
+        "artifacts/runs/r4-slack-gif-creator-evolution/evals/candidate-04b26dff2bc83b82334bf184/validation/task-score-vectors/work-08e1a6a9f3780f71f6c4ca77.json",
+        "artifacts/runs/r4-slack-gif-creator-evolution/evals/candidate-04b26dff2bc83b82334bf184/validation/task-score-vectors/work-c32547dba15da11d0bc47306.json",
+        "artifacts/runs/r4-slack-gif-creator-evolution/evals/candidate-04b26dff2bc83b82334bf184/validation/task-score-vectors/work-ed3b4c130252b4a37e48a32c.json"
+      ]
+    }
+  ],
+  "pool": "deployable_frontier",
+  "schema_version": "1.0.0"
+}

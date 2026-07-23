@@ -1,0 +1,108 @@
+{
+  "artifact_root": "artifacts/runs/r3-slack-gif-creator-paired/workspaces/work-ba5bed1fe1f6ee2b5cd0648b",
+  "artifacts": [
+    {
+      "media_type": "application/json",
+      "path": "execution-summary.json",
+      "sha256": "1ae0330d4c2067c1fd7a61aa55fcea6c318efcd4d672dbb6768ad232801dd3f2",
+      "size_bytes": 894
+    },
+    {
+      "media_type": "text/x-python",
+      "path": "generate_gif.py",
+      "sha256": "78324be9134c90df6488213ce4cabd1fff8815ee7f9c2dbf4f925d4dceeaef5d",
+      "size_bytes": 3409
+    },
+    {
+      "media_type": "application/json",
+      "path": "observed-trace.json",
+      "sha256": "fd1748543647df3b56c3c1ab54897215687e6d1a86cdce6867d9d365f9f678a0",
+      "size_bytes": 1398
+    },
+    {
+      "media_type": "application/json",
+      "path": "package-access.json",
+      "sha256": "c8951b1f7c9518bcf6123541cafafa29379b8648b19a6ff1b8b02ea44cb221c9",
+      "size_bytes": 27
+    },
+    {
+      "media_type": "image/gif",
+      "path": "satellite_orbit_ease.gif",
+      "sha256": "fa1067633cc6deb8232592866821acfc738a3830b9a7ae54befa5fda73e6e949",
+      "size_bytes": 21226
+    },
+    {
+      "media_type": "text/markdown",
+      "path": "transcript.md",
+      "sha256": "ec2547a460750ec6f8789381f1b706468e1d4edecd5256de81ed9becf33d1f62",
+      "size_bytes": 905
+    }
+  ],
+  "context_id": "codex-r3-executor-ba5bed1fe1f6ee2b5cd0648b-20260721",
+  "failure_detail": null,
+  "failure_kind": null,
+  "finished_at": "2026-07-21T15:57:59.952001Z",
+  "host": "codex",
+  "host_task_id": "/root/r3_exec_ba5bed",
+  "model": "gpt-5.6-sol",
+  "observed_trace": [
+    {
+      "action": "inspect_work_item",
+      "outcome": "completed",
+      "sequence": 0,
+      "target": "artifacts/runs/r3-slack-gif-creator-paired/executor-work-items/work-ba5bed1fe1f6ee2b5cd0648b.json",
+      "tool": "read"
+    },
+    {
+      "action": "inspect_fixture",
+      "outcome": "completed",
+      "sequence": 1,
+      "target": "benchmarks/canaries/slack-gif-creator/fixtures/easing-orbit.json",
+      "tool": "read"
+    },
+    {
+      "action": "create_generator",
+      "outcome": "completed",
+      "sequence": 2,
+      "target": "artifacts/runs/r3-slack-gif-creator-paired/workspaces/work-ba5bed1fe1f6ee2b5cd0648b/generate_gif.py",
+      "tool": "apply_patch"
+    },
+    {
+      "action": "generate_gif",
+      "outcome": "completed",
+      "sequence": 3,
+      "target": "artifacts/runs/r3-slack-gif-creator-paired/workspaces/work-ba5bed1fe1f6ee2b5cd0648b/satellite_orbit_ease.gif",
+      "tool": ".venv/bin/python -B"
+    },
+    {
+      "action": "reopen_and_verify_gif",
+      "outcome": "completed: GIF 128x128, 24 frames, 2400 ms, loop=0, cyan subject and orange planet detected, curved orbit and decreasing late displacement verified",
+      "sequence": 4,
+      "target": "artifacts/runs/r3-slack-gif-creator-paired/workspaces/work-ba5bed1fe1f6ee2b5cd0648b/satellite_orbit_ease.gif",
+      "tool": ".venv/bin/python -B with Pillow"
+    }
+  ],
+  "package_access": [],
+  "planned_trace": [],
+  "provider_id": "agent-delegated-v1",
+  "proxy_score": null,
+  "proxy_score_method": null,
+  "schema_version": "1.0.0",
+  "started_at": "2026-07-21T15:55:29.952001Z",
+  "submission_id": "submission-fbab466fa37922cb85ca191d",
+  "transcript": {
+    "media_type": "text/markdown",
+    "path": "transcript.md",
+    "sha256": "ec2547a460750ec6f8789381f1b706468e1d4edecd5256de81ed9becf33d1f62",
+    "size_bytes": 905
+  },
+  "uncertainty": 0.1,
+  "usage": {
+    "duration_ms": 150000,
+    "input_tokens": 3500,
+    "output_tokens": 1200,
+    "token_count_kind": "estimated",
+    "tool_calls": 8
+  },
+  "work_id": "work-ba5bed1fe1f6ee2b5cd0648b"
+}

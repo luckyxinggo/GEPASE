@@ -1,0 +1,148 @@
+{
+  "artifact_root": "artifacts/runs/r4-slack-gif-creator-evolution/evals/candidate-2dad7a05ce4a6460dd71f470/validation/workspaces/work-406dfa280eb449c889b3e9d6",
+  "artifacts": [
+    {
+      "media_type": "text/x-python",
+      "path": "generate_animation.py",
+      "sha256": "5de98c2520b3a161649d2d2bcb66e252bf5181610f576286b60f28e84fdd4592",
+      "size_bytes": 7343
+    },
+    {
+      "media_type": "application/json",
+      "path": "loop-metrics.json",
+      "sha256": "cd4c80da346cbc769808170249b7752143a2c0b1435e37a2872185c1eb503aa6",
+      "size_bytes": 572
+    },
+    {
+      "media_type": "application/json",
+      "path": "observed-trace.json",
+      "sha256": "6747b8c03e4ad127067c362805e55e8324bb8e120ee2ec3d79297ff9dc4dfb46",
+      "size_bytes": 1976
+    },
+    {
+      "media_type": "application/json",
+      "path": "package-access.json",
+      "sha256": "fa437834268bd395c4eb04df1a255274f3e08b43469dd8f41c0061c0951bc0a7",
+      "size_bytes": 1824
+    },
+    {
+      "media_type": "image/gif",
+      "path": "sparkle_ring_loop.gif",
+      "sha256": "37a94a453bd050a1b3df576f4f61cff0832fd9f2849ff190287bfe3658a697d7",
+      "size_bytes": 47302
+    },
+    {
+      "media_type": "text/markdown",
+      "path": "transcript.md",
+      "sha256": "c5f36acd8690e51bf72f1f56d7a2a409125c42797336bb5a1e398545b0ef6022",
+      "size_bytes": 1820
+    }
+  ],
+  "assertion_results": [],
+  "candidate_snapshot_hash": "cf3c66eb21afcbcfc3518927b5572624075866213c16717d03010ccc25074525",
+  "evidence_tier": "E2",
+  "failure_detail": null,
+  "failure_kind": null,
+  "fixture_hash": "c1fcf5b5894f3e7fcb8442d64b69311924f959b6f0244d8a397d3f146ba992e1",
+  "host_model_snapshot": "edbfd8f0668f44e333585ee805a6f891a7443402aad61b3e8cfeca5913b1338b",
+  "observed_trace": [
+    {
+      "action": "read_work_item",
+      "outcome": "completed",
+      "sequence": 0,
+      "target": "validation/executor-work-items/work-406dfa280eb449c889b3e9d6.json",
+      "tool": "read"
+    },
+    {
+      "action": "inspect_fixture",
+      "outcome": "completed",
+      "sequence": 1,
+      "target": "benchmarks/canaries/slack-gif-creator/fixtures/loop-sparkles.json",
+      "tool": "read"
+    },
+    {
+      "action": "load_package_guidance",
+      "outcome": "completed",
+      "sequence": 2,
+      "target": "SKILL.md",
+      "tool": "read"
+    },
+    {
+      "action": "inspect_package_modules",
+      "outcome": "completed",
+      "sequence": 3,
+      "target": "core/easing.py, core/frame_composer.py, core/gif_builder.py, core/validators.py, requirements.txt",
+      "tool": "read"
+    },
+    {
+      "action": "author_cyclic_generator",
+      "outcome": "completed",
+      "sequence": 4,
+      "target": "validation/workspaces/work-406dfa280eb449c889b3e9d6/generate_animation.py",
+      "tool": "apply_patch"
+    },
+    {
+      "action": "attempt_generation",
+      "outcome": "stopped before generation: numpy unavailable",
+      "sequence": 5,
+      "target": "validation/workspaces/work-406dfa280eb449c889b3e9d6/sparkle_ring_loop.gif",
+      "tool": "system_python"
+    },
+    {
+      "action": "execute_package_generation",
+      "outcome": "completed: 20 frames at 10 fps, 2.0 seconds",
+      "sequence": 6,
+      "target": "validation/workspaces/work-406dfa280eb449c889b3e9d6/sparkle_ring_loop.gif",
+      "tool": "uv_python"
+    },
+    {
+      "action": "validate_export",
+      "outcome": "completed: Slack dimensions passed",
+      "sequence": 7,
+      "target": "validation/workspaces/work-406dfa280eb449c889b3e9d6/sparkle_ring_loop.gif",
+      "tool": "core.validators.validate_gif"
+    },
+    {
+      "action": "inspect_loop_seam",
+      "outcome": "completed once: no conspicuous end-to-start jump",
+      "sequence": 8,
+      "target": "validation/workspaces/work-406dfa280eb449c889b3e9d6/sparkle_ring_loop.gif",
+      "tool": "Pillow_and_visual_inspection"
+    }
+  ],
+  "pair_id": "pair-fb5346149a7720089b66c832",
+  "planned_trace": [],
+  "policy_hash": "3b49f46ee66bafaf2bcf1aeac08f1bd7f4c719463b0e655afe40a98a4af6b3ec",
+  "prompt_hash": "b1b46698a6fdcc4825b52a71521ea887e8b0e73a8d0a28ddb6ed6d790c62f5ca",
+  "provenance": {
+    "context_id": "r4_valexec_c_loop",
+    "generated_at": "2026-07-22T10:17:19.166555Z",
+    "generated_by": "gepase.eval.ingest",
+    "host": "codex",
+    "host_task_id": "/root/r4_valexec_c_loop",
+    "model": "gpt-5.6-sol",
+    "origin": "agent-native",
+    "provider_id": "agent-delegated-v1",
+    "submission_id": "submission-b43b3f568bbc489cbbbaf4e1"
+  },
+  "provider_snapshot": "agent-delegated-v1",
+  "record_id": "record-7a11cf3f1c99cd2fa665ccc8",
+  "schema_version": "1.0.0",
+  "score": null,
+  "seed": 42,
+  "skill_id": "slack-gif-creator",
+  "source_record_refs": [],
+  "task_id": "functional-validation-loop-sparkles-006",
+  "task_score_vector": null,
+  "trace_completeness": "complete",
+  "uncertainty": 0.1,
+  "usage": {
+    "duration_ms": 420000,
+    "input_tokens": 18000,
+    "output_tokens": 6000,
+    "token_count_kind": "estimated",
+    "tool_calls": 18
+  },
+  "variant": "candidate",
+  "work_id": "work-406dfa280eb449c889b3e9d6"
+}

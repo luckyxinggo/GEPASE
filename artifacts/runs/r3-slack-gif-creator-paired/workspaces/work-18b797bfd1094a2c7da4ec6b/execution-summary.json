@@ -1,0 +1,23 @@
+{
+  "artifact": "compact_check_burst.gif",
+  "media_type": "image/gif",
+  "width_px": 480,
+  "height_px": 480,
+  "frame_count": 18,
+  "frame_duration_ms": 80,
+  "total_duration_ms": 1440,
+  "fps": 12.5,
+  "loop": 0,
+  "file_size_bytes": 139597,
+  "file_size_kb_decimal": 139.597,
+  "budget_kb_decimal": 900,
+  "max_observed_frame_colors": 48,
+  "sha256": "527cb4850496383dca16d09cfa041baa2b806c8be5441e4aa7d24797e756a00c",
+  "validation": {
+    "dimensions_match": true,
+    "fps_within_range": true,
+    "file_size_within_budget": true,
+    "infinite_loop": true,
+    "visual_review": "Opened the GIF and a seven-frame contact sheet; central check remained readable while particles moved outward and faded without clipping."
+  }
+}

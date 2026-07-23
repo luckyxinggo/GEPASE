@@ -1,0 +1,137 @@
+{
+  "artifact_sha256": "eb61f217159673b76bbd11827aaaf53f8cae056f26f7d0f171f50b81e4a7d94f",
+  "assertions": [
+    {
+      "assertion_id": "status-container",
+      "detail": "通过内容/元数据检查",
+      "family": "artifact_metadata",
+      "measurements": {
+        "frame_count": 24,
+        "height": 480,
+        "loop_count": 0,
+        "unique_frame_count": 23,
+        "width": 480
+      },
+      "passed": true,
+      "weight": 0.2
+    },
+    {
+      "assertion_id": "status-duration",
+      "detail": "通过内容/元数据检查",
+      "family": "artifact_metadata",
+      "measurements": {
+        "max_frame_share": 0.041666666666666664,
+        "maximum_ms": 2600,
+        "minimum_ms": 2200,
+        "non_positive_frames": 0,
+        "total_duration_ms": 2400
+      },
+      "passed": true,
+      "weight": 0.2
+    },
+    {
+      "assertion_id": "status-text",
+      "detail": "未满足已冻结 expectation 的可执行判据",
+      "family": "frame_content",
+      "measurements": {
+        "deploy_glyph_similarity": 0.019838809671419714,
+        "done_glyph_similarity": 0.018983807928531545
+      },
+      "passed": false,
+      "weight": 0.2
+    },
+    {
+      "assertion_id": "status-phases",
+      "detail": "通过内容/元数据检查",
+      "family": "temporal_sequence",
+      "measurements": {
+        "frames_per_phase_floor": 8,
+        "representative_phase_deltas": [
+          10.801536458333333,
+          14.136824363425927
+        ]
+      },
+      "passed": true,
+      "weight": 0.2
+    },
+    {
+      "assertion_id": "status-state-change",
+      "detail": "通过内容/元数据检查",
+      "family": "frame_content",
+      "measurements": {
+        "frames_per_phase_floor": 8,
+        "representative_phase_deltas": [
+          10.801536458333333,
+          14.136824363425927
+        ]
+      },
+      "passed": true,
+      "weight": 0.2
+    }
+  ],
+  "case_id": "functional-train-message-status-002",
+  "common": {
+    "adjacent_pixel_deltas": [
+      0.2429542824074074,
+      0.24989583333333334,
+      0.2914916087962963,
+      0.24546006944444446,
+      0.29843894675925925,
+      0.23495659722222223,
+      0.31328703703703703,
+      10.815121527777778,
+      1.6636950231481482,
+      1.2063093171296295,
+      1.3417679398148148,
+      1.7069111689814815,
+      1.2750549768518518,
+      1.1492491319444444,
+      1.558531539351852,
+      13.428181423611111,
+      5.85359375,
+      1.5196354166666666,
+      1.9519487847222223,
+      1.6407841435185184,
+      1.3923307291666667,
+      0.4242708333333333,
+      1.7910474537037038
+    ],
+    "effective_fps": 10.0,
+    "file_size_bytes": 357023,
+    "first_last_pixel_delta": 18.708502604166668,
+    "frame_count": 24,
+    "frame_durations_ms": [
+      100,
+      100,
+      100,
+      100,
+      100,
+      100,
+      100,
+      100,
+      100,
+      100,
+      100,
+      100,
+      100,
+      100,
+      100,
+      100,
+      100,
+      100,
+      100,
+      100,
+      100,
+      100,
+      100,
+      100
+    ],
+    "height": 480,
+    "loop_count": 0,
+    "mean_adjacent_pixel_delta": 2.199779023248792,
+    "total_duration_ms": 2400,
+    "unique_frame_count": 23,
+    "width": 480
+  },
+  "schema_version": "1.0.0"
+}

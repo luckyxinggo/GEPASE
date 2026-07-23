@@ -1,0 +1,30 @@
+{
+  "schema_version": "1.0.0",
+  "stage_id": "R1",
+  "ruff": {
+    "command": "uv run ruff check src/gepase tests scripts",
+    "valid": true,
+    "result": "All checks passed"
+  },
+  "pyright": {
+    "command": "uv run pyright src/gepase tests scripts",
+    "valid": true,
+    "errors": 0,
+    "warnings": 0
+  },
+  "pytest": {
+    "command": "uv run pytest -q --junitxml=artifacts/stages/R1/test-results.xml",
+    "valid": true,
+    "passed": 127,
+    "failed": 0,
+    "duration_seconds": 4.57
+  },
+  "preflight_comparison": {
+    "pytest_before": 151,
+    "pytest_after": 127,
+    "removed_tests_belong_to_deleted_routes": true,
+    "pyright_before_errors": 6,
+    "pyright_after_errors": 0
+  },
+  "effect_claim": false
+}

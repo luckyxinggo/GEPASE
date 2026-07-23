@@ -1,0 +1,410 @@
+{
+  "$defs": {
+    "MinibatchPolicy": {
+      "additionalProperties": false,
+      "properties": {
+        "bootstrap_samples": {
+          "default": 2000,
+          "minimum": 100,
+          "title": "Bootstrap Samples",
+          "type": "integer"
+        },
+        "maximum_loss_fraction": {
+          "default": 0.25,
+          "maximum": 1,
+          "minimum": 0,
+          "title": "Maximum Loss Fraction",
+          "type": "number"
+        },
+        "minimum_mean_delta": {
+          "default": 0.0,
+          "title": "Minimum Mean Delta",
+          "type": "number"
+        },
+        "rejection_delta": {
+          "default": -0.02,
+          "maximum": 0,
+          "title": "Rejection Delta",
+          "type": "number"
+        },
+        "seed": {
+          "default": 42,
+          "title": "Seed",
+          "type": "integer"
+        }
+      },
+      "title": "MinibatchPolicy",
+      "type": "object"
+    },
+    "PatchEditBudget": {
+      "additionalProperties": false,
+      "properties": {
+        "allow_file_topology_edits": {
+          "default": true,
+          "title": "Allow File Topology Edits",
+          "type": "boolean"
+        },
+        "allow_script_edits": {
+          "default": true,
+          "title": "Allow Script Edits",
+          "type": "boolean"
+        },
+        "max_added_files": {
+          "default": 1,
+          "maximum": 10,
+          "minimum": 0,
+          "title": "Max Added Files",
+          "type": "integer"
+        },
+        "max_changed_files": {
+          "default": 3,
+          "maximum": 20,
+          "minimum": 1,
+          "title": "Max Changed Files",
+          "type": "integer"
+        },
+        "max_deleted_files": {
+          "default": 1,
+          "maximum": 10,
+          "minimum": 0,
+          "title": "Max Deleted Files",
+          "type": "integer"
+        },
+        "max_operations": {
+          "default": 3,
+          "maximum": 20,
+          "minimum": 1,
+          "title": "Max Operations",
+          "type": "integer"
+        },
+        "max_total_replacement_chars": {
+          "default": 12000,
+          "maximum": 200000,
+          "minimum": 1,
+          "title": "Max Total Replacement Chars",
+          "type": "integer"
+        }
+      },
+      "title": "PatchEditBudget",
+      "type": "object"
+    },
+    "RoleTimeouts": {
+      "additionalProperties": false,
+      "properties": {
+        "comparator": {
+          "minimum": 1,
+          "title": "Comparator",
+          "type": "integer"
+        },
+        "executor": {
+          "minimum": 1,
+          "title": "Executor",
+          "type": "integer"
+        },
+        "independent_grader": {
+          "minimum": 1,
+          "title": "Independent Grader",
+          "type": "integer"
+        },
+        "proposal": {
+          "minimum": 1,
+          "title": "Proposal",
+          "type": "integer"
+        },
+        "reflection": {
+          "minimum": 1,
+          "title": "Reflection",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "proposal",
+        "executor",
+        "independent_grader",
+        "comparator",
+        "reflection"
+      ],
+      "title": "RoleTimeouts",
+      "type": "object"
+    },
+    "RuntimeBudget": {
+      "additionalProperties": false,
+      "properties": {
+        "max_agent_calls": {
+          "minimum": 1,
+          "title": "Max Agent Calls",
+          "type": "integer"
+        },
+        "max_candidates": {
+          "minimum": 3,
+          "title": "Max Candidates",
+          "type": "integer"
+        },
+        "max_concurrency": {
+          "maximum": 32,
+          "minimum": 1,
+          "title": "Max Concurrency",
+          "type": "integer"
+        },
+        "max_estimated_tokens": {
+          "minimum": 1,
+          "title": "Max Estimated Tokens",
+          "type": "integer"
+        },
+        "max_proposals": {
+          "minimum": 2,
+          "title": "Max Proposals",
+          "type": "integer"
+        },
+        "max_repair_attempts_per_work": {
+          "maximum": 2,
+          "minimum": 0,
+          "title": "Max Repair Attempts Per Work",
+          "type": "integer"
+        },
+        "max_wall_clock_seconds": {
+          "minimum": 1,
+          "title": "Max Wall Clock Seconds",
+          "type": "integer"
+        },
+        "role_timeout_seconds": {
+          "$ref": "#/$defs/RoleTimeouts"
+        },
+        "stop_semantics": {
+          "minLength": 1,
+          "title": "Stop Semantics",
+          "type": "string"
+        }
+      },
+      "required": [
+        "max_concurrency",
+        "role_timeout_seconds",
+        "max_repair_attempts_per_work",
+        "max_proposals",
+        "max_candidates",
+        "max_agent_calls",
+        "max_estimated_tokens",
+        "max_wall_clock_seconds",
+        "stop_semantics"
+      ],
+      "title": "RuntimeBudget",
+      "type": "object"
+    },
+    "ValidationPolicy": {
+      "additionalProperties": false,
+      "properties": {
+        "bootstrap_samples": {
+          "default": 5000,
+          "minimum": 100,
+          "title": "Bootstrap Samples",
+          "type": "integer"
+        },
+        "category_regression_floor": {
+          "default": -0.05,
+          "maximum": 0,
+          "title": "Category Regression Floor",
+          "type": "number"
+        },
+        "high_risk_regression_floor": {
+          "default": 0.0,
+          "maximum": 0,
+          "title": "High Risk Regression Floor",
+          "type": "number"
+        },
+        "minimum_primary_delta": {
+          "default": 0.0,
+          "title": "Minimum Primary Delta",
+          "type": "number"
+        },
+        "quality_noninferiority_margin": {
+          "default": 0.0,
+          "minimum": 0,
+          "title": "Quality Noninferiority Margin",
+          "type": "number"
+        },
+        "secondary_minimum_effect": {
+          "additionalProperties": {
+            "type": "number"
+          },
+          "title": "Secondary Minimum Effect",
+          "type": "object"
+        },
+        "secondary_regression_floor": {
+          "default": -0.01,
+          "maximum": 0,
+          "title": "Secondary Regression Floor",
+          "type": "number"
+        },
+        "seed": {
+          "default": 42,
+          "title": "Seed",
+          "type": "integer"
+        }
+      },
+      "title": "ValidationPolicy",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "branch_count": {
+      "minimum": 2,
+      "title": "Branch Count",
+      "type": "integer"
+    },
+    "candidate_reflection_limit": {
+      "const": 1,
+      "default": 1,
+      "title": "Candidate Reflection Limit",
+      "type": "integer"
+    },
+    "enable_e1": {
+      "const": false,
+      "default": false,
+      "title": "Enable E1",
+      "type": "boolean"
+    },
+    "forbid_cross_package_merge": {
+      "const": true,
+      "default": true,
+      "title": "Forbid Cross Package Merge",
+      "type": "boolean"
+    },
+    "frozen_plan_ref": {
+      "title": "Frozen Plan Ref",
+      "type": "string"
+    },
+    "host": {
+      "title": "Host",
+      "type": "string"
+    },
+    "host_policy": {
+      "title": "Host Policy",
+      "type": "string"
+    },
+    "model": {
+      "title": "Model",
+      "type": "string"
+    },
+    "package_graph_ref": {
+      "title": "Package Graph Ref",
+      "type": "string"
+    },
+    "package_ref": {
+      "title": "Package Ref",
+      "type": "string"
+    },
+    "patch_budget": {
+      "$ref": "#/$defs/PatchEditBudget"
+    },
+    "provider_snapshot": {
+      "title": "Provider Snapshot",
+      "type": "string"
+    },
+    "reference_run_ref": {
+      "title": "Reference Run Ref",
+      "type": "string"
+    },
+    "reference_variant": {
+      "enum": [
+        "original",
+        "candidate"
+      ],
+      "title": "Reference Variant",
+      "type": "string"
+    },
+    "require_ab_ba_comparator": {
+      "const": true,
+      "default": true,
+      "title": "Require Ab Ba Comparator",
+      "type": "boolean"
+    },
+    "require_same_package_merge": {
+      "const": true,
+      "default": true,
+      "title": "Require Same Package Merge",
+      "type": "boolean"
+    },
+    "run_id": {
+      "title": "Run Id",
+      "type": "string"
+    },
+    "runtime_budget": {
+      "$ref": "#/$defs/RuntimeBudget"
+    },
+    "runtime_environment_fingerprint": {
+      "title": "Runtime Environment Fingerprint",
+      "type": "string"
+    },
+    "schema_version": {
+      "const": "1.0.0",
+      "default": "1.0.0",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "scoring_policy_ref": {
+      "title": "Scoring Policy Ref",
+      "type": "string"
+    },
+    "seed": {
+      "title": "Seed",
+      "type": "integer"
+    },
+    "selector": {
+      "enum": [
+        "graph",
+        "trace",
+        "round_robin",
+        "random"
+      ],
+      "title": "Selector",
+      "type": "string"
+    },
+    "selector_target_limit": {
+      "minimum": 1,
+      "title": "Selector Target Limit",
+      "type": "integer"
+    },
+    "timeout_seconds": {
+      "minimum": 1,
+      "title": "Timeout Seconds",
+      "type": "integer"
+    },
+    "tool_policy_fingerprint": {
+      "title": "Tool Policy Fingerprint",
+      "type": "string"
+    },
+    "train_policy": {
+      "$ref": "#/$defs/MinibatchPolicy"
+    },
+    "validation_policy": {
+      "$ref": "#/$defs/ValidationPolicy"
+    }
+  },
+  "required": [
+    "run_id",
+    "package_ref",
+    "package_graph_ref",
+    "frozen_plan_ref",
+    "scoring_policy_ref",
+    "reference_run_ref",
+    "reference_variant",
+    "host",
+    "model",
+    "provider_snapshot",
+    "runtime_environment_fingerprint",
+    "tool_policy_fingerprint",
+    "host_policy",
+    "seed",
+    "timeout_seconds",
+    "branch_count",
+    "selector",
+    "selector_target_limit",
+    "runtime_budget",
+    "patch_budget",
+    "train_policy",
+    "validation_policy"
+  ],
+  "title": "R4EvolutionConfig",
+  "type": "object"
+}

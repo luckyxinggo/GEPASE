@@ -1,0 +1,31 @@
+{
+  "context_id": "work-06e0ca3901e49580a002d129",
+  "artifact": {
+    "filename": "compact_check_burst.gif",
+    "media_type": "image/gif",
+    "format_detected": "GIF",
+    "dimensions": [480, 480],
+    "frame_count": 22,
+    "loop": 0,
+    "duration_ms_per_frame": 80,
+    "effective_fps": 12.5,
+    "file_size_bytes": 469924,
+    "file_size_kb": 458.91,
+    "palette_target_colors": 40
+  },
+  "verification": {
+    "opened_and_all_frames_iterated": true,
+    "dimensions_480x480": true,
+    "fps_within_10_16": true,
+    "under_900_kb": true,
+    "infinite_loop": true,
+    "central_check_pixel_evidence": 4110,
+    "outer_particle_pixel_evidence": 3966,
+    "visual_inspection": "Readable white check on a green circular badge, surrounded by distinct cyan, mint, yellow, and pink burst particles on a dark blue background."
+  },
+  "package_execution": [
+    "core/gif_builder.py",
+    "core/easing.py",
+    "core/frame_composer.py"
+  ]
+}

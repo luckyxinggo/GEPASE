@@ -1,0 +1,219 @@
+{
+  "assertion_results": [
+    {
+      "assertion_id": "badge-source-use",
+      "detail": "通过内容/元数据检查",
+      "evidence_refs": [
+        "artifacts/runs/r3-slack-gif-creator-paired/derived/work-b836a5a0009428cefa51ce4f/measurements.json",
+        "artifacts/runs/r3-slack-gif-creator-paired/derived/work-b836a5a0009428cefa51ce4f/contact-sheet.png"
+      ],
+      "family": "frame_content",
+      "measurements": {
+        "cyan_fraction": [
+          0.1416015625,
+          0.1416015625,
+          0.1416015625,
+          0.1416015625,
+          0.1416015625,
+          0.1416015625,
+          0.1416015625,
+          0.1416015625,
+          0.1416015625,
+          0.1416015625,
+          0.1416015625,
+          0.1416015625,
+          0.1416015625,
+          0.1416015625,
+          0.1416015625,
+          0.1416015625,
+          0.1416015625,
+          0.1416015625,
+          0.1416015625,
+          0.1416015625
+        ],
+        "orange_fraction": [
+          0.019775390625,
+          0.019775390625,
+          0.019775390625,
+          0.019775390625,
+          0.019775390625,
+          0.019775390625,
+          0.019775390625,
+          0.019775390625,
+          0.019775390625,
+          0.019775390625,
+          0.019775390625,
+          0.019775390625,
+          0.019775390625,
+          0.019775390625,
+          0.019775390625,
+          0.019775390625,
+          0.019775390625,
+          0.019775390625,
+          0.019775390625,
+          0.019775390625
+        ]
+      },
+      "passed": true,
+      "weight": 0.25
+    },
+    {
+      "assertion_id": "badge-container",
+      "detail": "通过内容/元数据检查",
+      "evidence_refs": [
+        "artifacts/runs/r3-slack-gif-creator-paired/derived/work-b836a5a0009428cefa51ce4f/measurements.json",
+        "artifacts/runs/r3-slack-gif-creator-paired/derived/work-b836a5a0009428cefa51ce4f/contact-sheet.png"
+      ],
+      "family": "artifact_metadata",
+      "measurements": {
+        "frame_count": 20,
+        "height": 128,
+        "loop_count": 0,
+        "unique_frame_count": 19,
+        "width": 128
+      },
+      "passed": true,
+      "weight": 0.15
+    },
+    {
+      "assertion_id": "badge-duration",
+      "detail": "通过内容/元数据检查",
+      "evidence_refs": [
+        "artifacts/runs/r3-slack-gif-creator-paired/derived/work-b836a5a0009428cefa51ce4f/measurements.json",
+        "artifacts/runs/r3-slack-gif-creator-paired/derived/work-b836a5a0009428cefa51ce4f/contact-sheet.png"
+      ],
+      "family": "artifact_metadata",
+      "measurements": {
+        "maximum_ms": 2500,
+        "minimum_ms": 1,
+        "non_positive_frames": 0,
+        "total_duration_ms": 2000,
+        "unique_frame_count": 19
+      },
+      "passed": true,
+      "weight": 0.15
+    },
+    {
+      "assertion_id": "badge-palette",
+      "detail": "通过内容/元数据检查",
+      "evidence_refs": [
+        "artifacts/runs/r3-slack-gif-creator-paired/derived/work-b836a5a0009428cefa51ce4f/measurements.json",
+        "artifacts/runs/r3-slack-gif-creator-paired/derived/work-b836a5a0009428cefa51ce4f/contact-sheet.png"
+      ],
+      "family": "frame_content",
+      "measurements": {
+        "centroid_distances": [
+          0.6690267535516721,
+          0.6017922165321761,
+          0.5121489618809841,
+          0.40010240402911074,
+          0.2880732794414948,
+          0.1760948636692753,
+          0.06443208639669915,
+          0.027400370819511088,
+          0.09354242775727674,
+          0.11587133711904161,
+          0.09354242775727674,
+          0.07126683000010785,
+          0.027400370819511088,
+          0.009686295282004027,
+          0.009686295282004027,
+          0.027400370819511088,
+          0.027400370819511088,
+          0.027400370819511088,
+          0.027400370819511088,
+          0.027400370819511088
+        ],
+        "paired_visible_frames": 20
+      },
+      "passed": true,
+      "weight": 0.2
+    },
+    {
+      "assertion_id": "badge-overshoot",
+      "detail": "通过内容/元数据检查",
+      "evidence_refs": [
+        "artifacts/runs/r3-slack-gif-creator-paired/derived/work-b836a5a0009428cefa51ce4f/measurements.json",
+        "artifacts/runs/r3-slack-gif-creator-paired/derived/work-b836a5a0009428cefa51ce4f/contact-sheet.png"
+      ],
+      "family": "temporal_sequence",
+      "measurements": {
+        "centroid_y": [
+          96.5,
+          93.5,
+          89.5,
+          84.5,
+          79.5,
+          74.5,
+          69.5,
+          65.5,
+          62.5,
+          61.5,
+          62.5,
+          63.5,
+          65.5,
+          66.5,
+          66.5,
+          65.5,
+          65.5,
+          65.5,
+          65.5,
+          65.5
+        ],
+        "direction_changes": 2,
+        "tail_span": 0.0
+      },
+      "passed": true,
+      "weight": 0.25
+    }
+  ],
+  "bundle_id": "deterministic-08bc6a7a055dc49a65d5efc3",
+  "e3_record_id": "record-08bc6a7a055dc49a65d5efc3",
+  "generated_at": "2026-07-21T15:54:37.804012Z",
+  "inspection": {
+    "artifact_ref": "artifacts/runs/r3-slack-gif-creator-paired/workspaces/work-b836a5a0009428cefa51ce4f/uploaded_badge_lift.gif",
+    "artifact_sha256": "b5e20218142be2ad6ab56e9637651874957fd635c716d3afa8487a8d8de13664",
+    "contact_sheet_ref": "artifacts/runs/r3-slack-gif-creator-paired/derived/work-b836a5a0009428cefa51ce4f/contact-sheet.png",
+    "effective_fps": 10.0,
+    "file_size_bytes": 99878,
+    "first_last_pixel_delta": 27.357421875,
+    "frame_count": 20,
+    "frame_durations_ms": [
+      100,
+      100,
+      100,
+      100,
+      100,
+      100,
+      100,
+      100,
+      100,
+      100,
+      100,
+      100,
+      100,
+      100,
+      100,
+      100,
+      100,
+      100,
+      100,
+      100
+    ],
+    "height": 128,
+    "loop_count": 0,
+    "mean_adjacent_pixel_delta": 2.4331975568804824,
+    "measurements_ref": "artifacts/runs/r3-slack-gif-creator-paired/derived/work-b836a5a0009428cefa51ce4f/measurements.json",
+    "total_duration_ms": 2000,
+    "unique_frame_count": 19,
+    "width": 128
+  },
+  "oracle_ref": "benchmarks/canaries/slack-gif-creator/oracles/gif_oracle.py:evaluate",
+  "oracle_sha256": "9ccb487705abdfa91ff82437cc028f139a3af419ee16baac869aaddee75920fa",
+  "pair_id": "pair-ccbb5f6bb581d628f7d2016b",
+  "schema_version": "1.0.0",
+  "source_record_id": "record-0e630f55c70cfa5ea34ca361",
+  "task_id": "functional-train-input-badge-003",
+  "variant": "no-skill",
+  "weighted_score": 1.0
+}

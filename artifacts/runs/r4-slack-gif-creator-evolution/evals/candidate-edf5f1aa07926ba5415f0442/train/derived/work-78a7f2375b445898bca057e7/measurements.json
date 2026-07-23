@@ -1,0 +1,131 @@
+{
+  "artifact_sha256": "5f8ced1a15a067cc52edda8e3bdff0ac5ad65fba2fc6aef4c2dabcdde98afb61",
+  "assertions": [
+    {
+      "assertion_id": "readable-container",
+      "detail": "通过内容/元数据检查",
+      "family": "artifact_metadata",
+      "measurements": {
+        "frame_count": 15,
+        "height": 480,
+        "loop_count": 0,
+        "unique_frame_count": 8,
+        "width": 480
+      },
+      "passed": true,
+      "weight": 0.15
+    },
+    {
+      "assertion_id": "readable-duration",
+      "detail": "通过内容/元数据检查",
+      "family": "artifact_metadata",
+      "measurements": {
+        "maximum_ms": 2200,
+        "minimum_ms": 1800,
+        "non_positive_frames": 0,
+        "total_duration_ms": 2000
+      },
+      "passed": true,
+      "weight": 0.15
+    },
+    {
+      "assertion_id": "readable-ocr",
+      "detail": "通过内容/元数据检查",
+      "family": "frame_content",
+      "measurements": {
+        "method": "glyph-template-iou",
+        "recognized_frame_ratio": 1.0
+      },
+      "passed": true,
+      "weight": 0.3
+    },
+    {
+      "assertion_id": "readable-contrast",
+      "detail": "通过内容/元数据检查",
+      "family": "frame_content",
+      "measurements": {
+        "frame_luminance_spread": [
+          205.0,
+          205.0,
+          205.0,
+          205.0,
+          205.0,
+          205.0,
+          205.0,
+          205.0,
+          205.0,
+          205.0,
+          205.0,
+          205.0,
+          205.0,
+          205.0,
+          205.0
+        ],
+        "minimum_required": 105
+      },
+      "passed": true,
+      "weight": 0.25
+    },
+    {
+      "assertion_id": "readable-palette",
+      "detail": "通过内容/元数据检查",
+      "family": "frame_content",
+      "measurements": {
+        "palette_fractions": [
+          0.6913585069444445,
+          0.207265625,
+          0.0926171875
+        ]
+      },
+      "passed": true,
+      "weight": 0.15
+    }
+  ],
+  "case_id": "functional-train-text-readable-004",
+  "common": {
+    "adjacent_pixel_deltas": [
+      0.008541666666666666,
+      0.02654369212962963,
+      0.1361689814814815,
+      0.1755714699074074,
+      0.2470876736111111,
+      0.11180555555555556,
+      0.026938657407407408,
+      0.026938657407407408,
+      0.11180555555555556,
+      0.2470876736111111,
+      0.1755714699074074,
+      0.1361689814814815,
+      0.02654369212962963,
+      0.008541666666666666
+    ],
+    "effective_fps": 7.5,
+    "file_size_bytes": 26404,
+    "first_last_pixel_delta": 0.0,
+    "frame_count": 15,
+    "frame_durations_ms": [
+      200,
+      100,
+      100,
+      100,
+      100,
+      100,
+      100,
+      400,
+      100,
+      100,
+      100,
+      100,
+      100,
+      100,
+      200
+    ],
+    "height": 480,
+    "loop_count": 0,
+    "mean_adjacent_pixel_delta": 0.10466538525132275,
+    "total_duration_ms": 2000,
+    "unique_frame_count": 8,
+    "width": 480
+  },
+  "schema_version": "1.0.0"
+}

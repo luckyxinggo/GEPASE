@@ -1,0 +1,69 @@
+{
+  "schema_version": "1.0.0",
+  "submission_id": "grader-submission-c-easing-6e12b43e54622d49",
+  "grader_work_id": "grader-work-6e12b43e54622d49ff26bc18",
+  "role_run": {
+    "host": "codex",
+    "model": "gpt-5.6-sol",
+    "context_id": "r4_grade_c_easing",
+    "host_task_id": "/root/r4_grade_c_easing",
+    "usage": {
+      "input_tokens": 10500,
+      "output_tokens": 1800,
+      "tool_calls": 12,
+      "duration_ms": 390000,
+      "token_count_kind": "estimated"
+    },
+    "started_at": "2026-07-22T09:26:00Z",
+    "finished_at": "2026-07-22T09:32:30Z"
+  },
+  "criterion_grades": [
+    {
+      "criterion_id": "orbit-path",
+      "score": 0.98,
+      "evidence_refs": [
+        "artifacts/runs/r4-slack-gif-creator-evolution/evals/candidate-2dad7a05ce4a6460dd71f470/train/workspaces/work-478e69ea53372e0edb2e0123/satellite_orbit_ease.gif",
+        "artifacts/runs/r4-slack-gif-creator-evolution/evals/candidate-2dad7a05ce4a6460dd71f470/train/derived/work-478e69ea53372e0edb2e0123/contact-sheet.png"
+      ],
+      "rationale_zh": "逐帧总览中，卫星从左下方起步，越过行星上方后转向右侧，位置与朝向共同描出连续、清楚的拱形轨道；青色虚线轨迹进一步强化空间弧度，完全不像直线平移。"
+    },
+    {
+      "criterion_id": "orbit-easing",
+      "score": 0.92,
+      "evidence_refs": [
+        "artifacts/runs/r4-slack-gif-creator-evolution/evals/candidate-2dad7a05ce4a6460dd71f470/train/workspaces/work-478e69ea53372e0edb2e0123/satellite_orbit_ease.gif",
+        "artifacts/runs/r4-slack-gif-creator-evolution/evals/candidate-2dad7a05ce4a6460dd71f470/train/derived/work-478e69ea53372e0edb2e0123/contact-sheet.png",
+        "artifacts/runs/r4-slack-gif-creator-evolution/evals/candidate-2dad7a05ce4a6460dd71f470/train/blind-inspections/blind-9d4a96328b4cab26a22ef038.json"
+      ],
+      "rationale_zh": "所有帧时长均为 100 ms，因此 contact sheet 中末段相邻采样位置逐渐靠近可直接体现位移递减，停靠前有明确而连续的 ease-out，未见单帧突停。扣分在于最终停靠目标没有单独的视觉锚点，减速意图主要依靠位移变化来传达。"
+    },
+    {
+      "criterion_id": "orbit-composition",
+      "score": 0.96,
+      "evidence_refs": [
+        "artifacts/runs/r4-slack-gif-creator-evolution/evals/candidate-2dad7a05ce4a6460dd71f470/train/workspaces/work-478e69ea53372e0edb2e0123/satellite_orbit_ease.gif",
+        "artifacts/runs/r4-slack-gif-creator-evolution/evals/candidate-2dad7a05ce4a6460dd71f470/train/derived/work-478e69ea53372e0edb2e0123/contact-sheet.png"
+      ],
+      "rationale_zh": "橙色行星稳定占据画面中心，青色卫星与虚线轨迹以高色彩对比环绕其上方，前后景层级清楚；128×128 小画布内仍保留足够留白，轨迹没有挤压主体。"
+    },
+    {
+      "criterion_id": "orbit-craft",
+      "score": 0.97,
+      "evidence_refs": [
+        "artifacts/runs/r4-slack-gif-creator-evolution/evals/candidate-2dad7a05ce4a6460dd71f470/train/workspaces/work-478e69ea53372e0edb2e0123/satellite_orbit_ease.gif",
+        "artifacts/runs/r4-slack-gif-creator-evolution/evals/candidate-2dad7a05ce4a6460dd71f470/train/derived/work-478e69ea53372e0edb2e0123/contact-sheet.png",
+        "artifacts/runs/r4-slack-gif-creator-evolution/evals/candidate-2dad7a05ce4a6460dd71f470/train/blind-inspections/blind-9d4a96328b4cab26a22ef038.json"
+      ],
+      "rationale_zh": "卫星轮廓、舷窗、推进焰、行星环与高光均有完整像素细节，青橙配色在深色星空上醒目，随机星点丰富但不抢主体；24 帧全部唯一、尺寸与循环属性也符合 Slack emoji 的短小动画形态。"
+    }
+  ],
+  "overall_score": 0.956,
+  "factual_claims_zh": [
+    "产物为 128×128 像素 GIF，共 24 帧。",
+    "每帧时长均为 100 ms，总时长 2400 ms，有效帧率为 10 fps。",
+    "循环次数字段为 0，表示无限循环。",
+    "24 帧全部唯一，首末帧像素差为 5.3038330078125，平均相邻帧像素差为 2.794805112092391。",
+    "总体分数按冻结权重精确计算为 0.98×0.3 + 0.92×0.3 + 0.96×0.2 + 0.97×0.2 = 0.956。"
+  ],
+  "feedback_zh": "弧线路径、主体层级和像素美术都非常成熟，等时帧下末段位移持续缩小，也让 ease-out 清楚可辨。若要进一步提升，可在最终停靠处加入小型信标、接口或轻微吸附反馈，让“减速到明确目标”不只依赖位置变化，同时更自然地衔接循环首尾。"
+}

@@ -1,0 +1,7 @@
+{
+  "schema_version": "1.0.0",
+  "tasks": [
+    {"id": "mock-uppercase", "prompt": "normalize alpha", "expected": "ALPHA"},
+    {"id": "mock-table", "prompt": "render two deterministic rows", "expected": "ROWS=2"}
+  ]
+}

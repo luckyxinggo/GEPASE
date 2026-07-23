@@ -1,0 +1,68 @@
+{
+  "criterion_grades": [
+    {
+      "criterion_id": "orbit-path",
+      "evidence_refs": [
+        "artifacts/runs/r4-slack-gif-creator-evolution/evals/candidate-edf5f1aa07926ba5415f0442/train/workspaces/work-64bc8b5b5180da4402e479d0/satellite_orbit_ease.gif",
+        "artifacts/runs/r4-slack-gif-creator-evolution/evals/candidate-edf5f1aa07926ba5415f0442/train/derived/work-64bc8b5b5180da4402e479d0/contact-sheet.png"
+      ],
+      "rationale_zh": "接近段从画面左下起步，经左上、正上方再弯向右上停靠点，连续帧形成清楚的长弧线，方向变化自然，完全不像直线平移。返航段同样沿行星下方弯回起点；仅目标附近的卫星与圆形停靠标记略有粘连，稍弱化了最后一小段轨迹的辨识度。",
+      "score": 0.97
+    },
+    {
+      "criterion_id": "orbit-easing",
+      "evidence_refs": [
+        "artifacts/runs/r4-slack-gif-creator-evolution/evals/candidate-edf5f1aa07926ba5415f0442/train/workspaces/work-64bc8b5b5180da4402e479d0/satellite_orbit_ease.gif",
+        "artifacts/runs/r4-slack-gif-creator-evolution/evals/candidate-edf5f1aa07926ba5415f0442/train/derived/work-64bc8b5b5180da4402e479d0/contact-sheet.png",
+        "artifacts/runs/r4-slack-gif-creator-evolution/evals/candidate-edf5f1aa07926ba5415f0442/train/blind-inspections/blind-4cd4428f77de0075a03a7285.json"
+      ],
+      "rationale_zh": "逐帧读取成品可测得主要接近段的相邻位移由约 32.89、24.17、18.03、12.04、8.94 像素持续收敛，后段进一步降至约 2.83 像素并进入连续停驻；第 16 帧还使用 160 ms 时长强化停靠，ease-out 明显且没有突然刹停。停驻后的返航加速较快，虽不破坏接近段减速，但让整段循环的速度反差略强。",
+      "score": 0.96
+    },
+    {
+      "criterion_id": "orbit-composition",
+      "evidence_refs": [
+        "artifacts/runs/r4-slack-gif-creator-evolution/evals/candidate-edf5f1aa07926ba5415f0442/train/workspaces/work-64bc8b5b5180da4402e479d0/satellite_orbit_ease.gif",
+        "artifacts/runs/r4-slack-gif-creator-evolution/evals/candidate-edf5f1aa07926ba5415f0442/train/derived/work-64bc8b5b5180da4402e479d0/contact-sheet.png"
+      ],
+      "rationale_zh": "橙色环状行星稳居视觉中心，青色卫星以高色相对比沿外围运动，停靠点位于右上留白区，主体层级在 128×128 小画布中依然清楚。上方点状轨迹、星点、停靠圈与卫星汇聚时局部信息略密，且目标圈与卫星接触时发生视觉重叠，因此未给满分。",
+      "score": 0.93
+    },
+    {
+      "criterion_id": "orbit-craft",
+      "evidence_refs": [
+        "artifacts/runs/r4-slack-gif-creator-evolution/evals/candidate-edf5f1aa07926ba5415f0442/train/workspaces/work-64bc8b5b5180da4402e479d0/satellite_orbit_ease.gif",
+        "artifacts/runs/r4-slack-gif-creator-evolution/evals/candidate-edf5f1aa07926ba5415f0442/train/derived/work-64bc8b5b5180da4402e479d0/contact-sheet.png",
+        "artifacts/runs/r4-slack-gif-creator-evolution/evals/candidate-edf5f1aa07926ba5415f0442/train/blind-inspections/blind-4cd4428f77de0075a03a7285.json"
+      ],
+      "rationale_zh": "像素风卫星、带光影分层的橙色行星、行星环、星点和停靠脉冲构成完整统一的太空场景；青橙对比鲜明，19,579 字节的 128×128 无限循环 GIF 也适合 Slack 表情使用。细节完成度很高，但停靠脉冲与卫星轮廓短暂混合、返航段缺少同等强度的过渡润色，仍有小幅精修空间。",
+      "score": 0.95
+    }
+  ],
+  "factual_claims_zh": [
+    "成品是 128×128 GIF，共 23 帧、22 个唯一帧，总时长 1920 ms，有效帧率约 11.98 fps，循环次数标记为 0（无限循环）。",
+    "首尾帧像素差为 0.0，循环接缝在画面状态上完全闭合。",
+    "卫星接近停靠点时，相邻帧位移总体从约 32.89 像素逐步缩小至约 2.83 像素，随后出现连续零位移停驻。",
+    "接近轨迹从左下绕至画面上方，再弯向行星右上方的圆形目标位置。"
+  ],
+  "feedback_zh": "作品已经把“明显弧线”和“可测 ease-out”两项核心要求做得很扎实，像素场景也完整、适合小尺寸展示。若继续精修，建议把停靠圈与卫星轮廓再分离少许，并让停驻后的返航加速更柔和，使整段循环的运动质感与接近段同样顺滑。",
+  "grader_work_id": "grader-work-7af01ae239a32eb02b72e6bf",
+  "overall_score": 0.955,
+  "role_run": {
+    "context_id": "r4_grade_b_easing",
+    "finished_at": "2026-07-22T08:55:46Z",
+    "host": "codex",
+    "host_task_id": "/root/r4_grade_b_easing",
+    "model": "gpt-5.6-sol",
+    "started_at": "2026-07-22T08:54:39Z",
+    "usage": {
+      "duration_ms": 67000,
+      "input_tokens": 7600,
+      "output_tokens": 1800,
+      "token_count_kind": "estimated",
+      "tool_calls": 8
+    }
+  },
+  "schema_version": "1.0.0",
+  "submission_id": "grade-submission-7af01ae239a32eb02b72e6bf-r4-grade-b-easing"
+}

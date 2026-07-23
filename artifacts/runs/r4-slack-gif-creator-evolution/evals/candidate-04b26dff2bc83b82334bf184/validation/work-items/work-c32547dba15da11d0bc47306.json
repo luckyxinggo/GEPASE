@@ -1,0 +1,51 @@
+{
+  "candidate_snapshot_hash": "30b52f2cab481f75926545479d2fff8bd907d716c0fe241e8f4014369e0d867c",
+  "case_contract_hash": "e5be605fd13acb0e77a116303edcb727a25ef2576908442775d81d38bda05dc1",
+  "created_at": "2026-07-22T10:06:12.893098Z",
+  "evidence_tier": "E2",
+  "fixture_ref": "benchmarks/canaries/slack-gif-creator/fixtures/efficiency-burst.json",
+  "fixture_refs": [
+    "benchmarks/canaries/slack-gif-creator/fixtures/efficiency-burst.json"
+  ],
+  "frozen_plan_hash": "1893ad9a08978f2a8f107981a9a032c7581d08082926ee52276bd5feba2df950",
+  "package_graph_ref": "artifacts/runs/r4-slack-gif-creator-evolution/candidates/candidate-04b26dff2bc83b82334bf184/graph.json",
+  "package_node_map": {
+    "LICENSE.txt": "node-7fd627ed0d50ee9e04018c8a",
+    "SKILL.md": "node-fddc99453114c3a40363b219",
+    "core/easing.py": "node-dbf396ac6852bf4706f33ebf",
+    "core/frame_composer.py": "node-bd3bececef13aaeef0c22570",
+    "core/gif_builder.py": "node-2c61585b9d40c2df7343f499",
+    "core/validators.py": "node-0f241aa06504163be33132f8",
+    "requirements.txt": "node-cc27fb4d7208967c86b1a7e8"
+  },
+  "pair_id": "pair-061ca407be66d6970b347bc5",
+  "pairing": {
+    "fixture_hash": "1a90ea1ed8c3e71d7b7e05d2ab619af471da1f00232abde98eebd36045142956",
+    "host_model_snapshot": "edbfd8f0668f44e333585ee805a6f891a7443402aad61b3e8cfeca5913b1338b",
+    "policy_hash": "3b49f46ee66bafaf2bcf1aeac08f1bd7f4c719463b0e655afe40a98a4af6b3ec",
+    "prompt_hash": "8833a216382e0090a3adf585b8639a2d8979555856866f91ab690b8886921969",
+    "provider_snapshot": "agent-delegated-v1",
+    "seed": 42
+  },
+  "prompt": "为 Slack 消息制作一个紧凑的庆祝 GIF：480×480 画布中央是清楚的勾号，周围粒子向外爆发后渐隐。请在动作顺滑和轮廓可读的前提下控制帧率、调色板与文件体积，严格遵循随附的体积和帧率预算，并输出指定文件。",
+  "provider_id": "agent-delegated-v1",
+  "requested_output": {
+    "description_zh": "在 900KB 预算内保留清晰勾号和顺滑粒子爆发的 480×480 GIF。",
+    "filename": "compact_check_burst.gif",
+    "media_type": "image/gif"
+  },
+  "required_capabilities": [
+    "message_gif_composition",
+    "particle_animation",
+    "gif_size_optimization",
+    "artifact_metadata_analysis"
+  ],
+  "schema_version": "1.0.0",
+  "skill_id": "slack-gif-creator",
+  "skill_ref": "artifacts/runs/r4-slack-gif-creator-evolution/candidate-workspaces/applications/application-1986620ac067029380557187",
+  "split": "validation",
+  "task_id": "functional-validation-efficiency-007",
+  "timeout_seconds": 600,
+  "variant": "candidate",
+  "work_id": "work-c32547dba15da11d0bc47306"
+}

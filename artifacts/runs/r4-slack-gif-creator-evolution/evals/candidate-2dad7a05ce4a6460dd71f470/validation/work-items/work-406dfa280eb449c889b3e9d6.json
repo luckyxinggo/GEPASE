@@ -1,0 +1,51 @@
+{
+  "candidate_snapshot_hash": "cf3c66eb21afcbcfc3518927b5572624075866213c16717d03010ccc25074525",
+  "case_contract_hash": "8d0fca55f35a58e7d08706fc31a53aabe8556c1709cbef14ac0282d4bc5252d5",
+  "created_at": "2026-07-22T10:06:13.694074Z",
+  "evidence_tier": "E2",
+  "fixture_ref": "benchmarks/canaries/slack-gif-creator/fixtures/loop-sparkles.json",
+  "fixture_refs": [
+    "benchmarks/canaries/slack-gif-creator/fixtures/loop-sparkles.json"
+  ],
+  "frozen_plan_hash": "1893ad9a08978f2a8f107981a9a032c7581d08082926ee52276bd5feba2df950",
+  "package_graph_ref": "artifacts/runs/r4-slack-gif-creator-evolution/candidates/candidate-2dad7a05ce4a6460dd71f470/graph.json",
+  "package_node_map": {
+    "LICENSE.txt": "node-7fd627ed0d50ee9e04018c8a",
+    "SKILL.md": "node-fddc99453114c3a40363b219",
+    "core/easing.py": "node-dbf396ac6852bf4706f33ebf",
+    "core/frame_composer.py": "node-bd3bececef13aaeef0c22570",
+    "core/gif_builder.py": "node-2c61585b9d40c2df7343f499",
+    "core/validators.py": "node-0f241aa06504163be33132f8",
+    "requirements.txt": "node-cc27fb4d7208967c86b1a7e8"
+  },
+  "pair_id": "pair-fb5346149a7720089b66c832",
+  "pairing": {
+    "fixture_hash": "c1fcf5b5894f3e7fcb8442d64b69311924f959b6f0244d8a397d3f146ba992e1",
+    "host_model_snapshot": "edbfd8f0668f44e333585ee805a6f891a7443402aad61b3e8cfeca5913b1338b",
+    "policy_hash": "3b49f46ee66bafaf2bcf1aeac08f1bd7f4c719463b0e655afe40a98a4af6b3ec",
+    "prompt_hash": "b1b46698a6fdcc4825b52a71521ea887e8b0e73a8d0a28ddb6ed6d790c62f5ca",
+    "provider_snapshot": "agent-delegated-v1",
+    "seed": 42
+  },
+  "prompt": "制作一个无缝循环的 128×128 Slack emoji GIF：中央圆环保持稳定，三颗火花在它周围按节奏出现、增强、消退。请设计周期运动而不是简单复制静止首尾帧，使最后一帧接回第一帧时没有明显跳变；总时长遵循随附配置，输出指定 GIF。",
+  "provider_id": "agent-delegated-v1",
+  "requested_output": {
+    "description_zh": "三颗火花围绕中央圆环周期变化的无缝循环 Slack GIF。",
+    "filename": "sparkle_ring_loop.gif",
+    "media_type": "image/gif"
+  },
+  "required_capabilities": [
+    "cyclic_animation_design",
+    "loop_seam_analysis",
+    "frame_timing_control",
+    "emoji_gif_export"
+  ],
+  "schema_version": "1.0.0",
+  "skill_id": "slack-gif-creator",
+  "skill_ref": "artifacts/runs/r4-slack-gif-creator-evolution/candidate-workspaces/applications/application-20ada438d49e648f1bb86749",
+  "split": "validation",
+  "task_id": "functional-validation-loop-sparkles-006",
+  "timeout_seconds": 600,
+  "variant": "candidate",
+  "work_id": "work-406dfa280eb449c889b3e9d6"
+}

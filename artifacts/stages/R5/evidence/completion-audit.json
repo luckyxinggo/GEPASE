@@ -1,0 +1,92 @@
+{
+  "schema_version": "1.0.0",
+  "stage_id": "R5",
+  "complete": true,
+  "requirements": [
+    {
+      "requirement": "only_consume_sealed_r2_r4_evidence",
+      "status": "proved",
+      "evidence": [
+        "artifacts/runs/r5-slack-gif-creator-report/evidence-manifest.json",
+        "artifacts/stages/R5/evidence/r5-gates.json#R5-G01-end-to-end-complete"
+      ]
+    },
+    {
+      "requirement": "no_r3_r4_rerun_no_candidate_search_no_headless_api",
+      "status": "proved",
+      "evidence": [
+        "artifacts/stages/R5/resolved-config.json",
+        "artifacts/runs/r5-slack-gif-creator-report/evidence-manifest.json"
+      ]
+    },
+    {
+      "requirement": "reusable_python_api_and_cli_report_mainline",
+      "status": "proved",
+      "evidence": [
+        "src/gepase/reporting/canary.py",
+        "src/gepase/cli/report.py",
+        "tests/reporting/test_canary_report.py"
+      ]
+    },
+    {
+      "requirement": "package_graph_and_no_skill_original_deployable_gifs",
+      "status": "proved",
+      "evidence": [
+        "artifacts/runs/r5-slack-gif-creator-report/index.html",
+        "artifacts/runs/r5-slack-gif-creator-report/report-data.json",
+        "artifacts/stages/R5/evidence/r5-gates.json#R5-G02-real-artifacts-verified"
+      ]
+    },
+    {
+      "requirement": "gepa_candidate_merge_dag_score_vectors_gate_failures_runtime_provenance_deployable_commands",
+      "status": "proved",
+      "evidence": [
+        "artifacts/runs/r5-slack-gif-creator-report/index.html",
+        "artifacts/runs/r5-slack-gif-creator-report/report-data.json",
+        "artifacts/stages/R5/evidence/r5-gates.json"
+      ]
+    },
+    {
+      "requirement": "machine_gates_and_tests",
+      "status": "proved",
+      "evidence": [
+        "artifacts/stages/R5/evidence/r5-gates.json",
+        "artifacts/stages/R5/test-results.xml"
+      ]
+    },
+    {
+      "requirement": "visual_and_core_interaction_check",
+      "status": "proved",
+      "evidence": [
+        "artifacts/stages/R5/evidence/ui-static-audit.json",
+        "artifacts/stages/R5/evidence/visual-validation.json",
+        "artifacts/stages/R5/external-validation.md"
+      ]
+    },
+    {
+      "requirement": "stage_report_and_stage_artifact_seal",
+      "status": "proved",
+      "evidence": [
+        "artifacts/stages/R5/stage_report.json",
+        "artifacts/stages/R5/artifact-index.json"
+      ]
+    },
+    {
+      "requirement": "state_diff_log_and_s10_unlock",
+      "status": "proved",
+      "evidence": [
+        "state.md#2026-07-22-r5-sealed-evidence-report-complete"
+      ]
+    },
+    {
+      "requirement": "preserve_dirty_worktree_and_skills_test",
+      "status": "proved",
+      "evidence": [
+        "artifacts/stages/R5/preflight.json",
+        "artifacts/stages/R5/evidence/r5-gates.json"
+      ]
+    }
+  ],
+  "remaining_requirements": [],
+  "blocking_condition": null
+}

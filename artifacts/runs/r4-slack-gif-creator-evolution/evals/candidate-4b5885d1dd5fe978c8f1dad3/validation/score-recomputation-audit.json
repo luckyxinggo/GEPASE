@@ -1,0 +1,51 @@
+{
+  "reference_cache_hit": true,
+  "rows": [
+    {
+      "candidate_correctness": 1.0,
+      "candidate_grader_score": 0.9835,
+      "candidate_score": 0.9940600000000002,
+      "paired_delta": 0.17574000000000023,
+      "quality_after_comparator": {
+        "candidate": 0.9868000000000001,
+        "reference": 0.7796
+      },
+      "reference_correctness": 0.85,
+      "reference_grader_score": 0.9744999999999999,
+      "reference_score": 0.8183199999999999,
+      "task_id": "functional-validation-efficiency-007"
+    },
+    {
+      "candidate_correctness": 0.75,
+      "candidate_grader_score": 0.966,
+      "candidate_score": 0.85026,
+      "paired_delta": 0.09053999999999995,
+      "quality_after_comparator": {
+        "candidate": 0.9728000000000001,
+        "reference": 0.7716000000000001
+      },
+      "reference_correctness": 0.75,
+      "reference_grader_score": 0.9645,
+      "reference_score": 0.7597200000000001,
+      "task_id": "functional-validation-loop-sparkles-006"
+    },
+    {
+      "candidate_correctness": 0.85,
+      "candidate_grader_score": 0.931,
+      "candidate_score": 0.8026600000000002,
+      "paired_delta": -0.09143999999999997,
+      "quality_after_comparator": {
+        "candidate": 0.7448000000000001,
+        "reference": 0.9480000000000002
+      },
+      "reference_correctness": 0.85,
+      "reference_grader_score": 0.935,
+      "reference_score": 0.8941000000000001,
+      "task_id": "functional-validation-pulse-text-008"
+    }
+  ],
+  "schema_version": "1.0.0",
+  "trigger_mixed": false,
+  "valid": true,
+  "vector_count": 3
+}

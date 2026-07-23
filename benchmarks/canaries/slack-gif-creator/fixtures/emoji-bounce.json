@@ -1,0 +1,8 @@
+{
+  "background": "deep navy to indigo gradient",
+  "canvas": [128, 128],
+  "duration_seconds_max": 2.4,
+  "fps_target": 12,
+  "subject": "a yellow five-point star landing and bouncing once",
+  "style": "bold outline, small highlight, high contrast"
+}

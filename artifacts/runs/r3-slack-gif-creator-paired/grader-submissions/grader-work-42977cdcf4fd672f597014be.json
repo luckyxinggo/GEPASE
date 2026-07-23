@@ -1,0 +1,68 @@
+{
+  "criterion_grades": [
+    {
+      "criterion_id": "efficiency-budget",
+      "evidence_refs": [
+        "artifacts/runs/r3-slack-gif-creator-paired/workspaces/work-18b797bfd1094a2c7da4ec6b/compact_check_burst.gif",
+        "artifacts/runs/r3-slack-gif-creator-paired/blind-inspections/blind-5eef65eb6d70f4c52af4f6c2.json"
+      ],
+      "rationale_zh": "盲检显示成品为 480×480、12.5 FPS、18 个唯一帧，文件仅 139597 字节；在满足 10–16 FPS 要求的同时远低于 900KB 上限，且没有用重复帧虚增时长。",
+      "score": 0.99
+    },
+    {
+      "criterion_id": "efficiency-readability",
+      "evidence_refs": [
+        "artifacts/runs/r3-slack-gif-creator-paired/workspaces/work-18b797bfd1094a2c7da4ec6b/compact_check_burst.gif",
+        "artifacts/runs/r3-slack-gif-creator-paired/derived/work-18b797bfd1094a2c7da4ec6b/contact-sheet.png"
+      ],
+      "rationale_zh": "逐帧可见白色勾号始终完整、居中且与绿色圆形及深色背景保持强对比；粒子分布在外围，没有遮挡勾号主体，量化后边缘仍整洁。",
+      "score": 0.98
+    },
+    {
+      "criterion_id": "efficiency-motion",
+      "evidence_refs": [
+        "artifacts/runs/r3-slack-gif-creator-paired/workspaces/work-18b797bfd1094a2c7da4ec6b/compact_check_burst.gif",
+        "artifacts/runs/r3-slack-gif-creator-paired/derived/work-18b797bfd1094a2c7da4ec6b/contact-sheet.png",
+        "artifacts/runs/r3-slack-gif-creator-paired/blind-inspections/blind-5eef65eb6d70f4c52af4f6c2.json"
+      ],
+      "rationale_zh": "粒子从中心周边出现后沿径向持续外扩，并随距离增加逐渐变暗直至消失；18 帧均为 80 毫秒，节奏稳定。少数细小粒子的位移呈轻微阶梯感，因此未给满分。",
+      "score": 0.94
+    },
+    {
+      "criterion_id": "efficiency-balance",
+      "evidence_refs": [
+        "artifacts/runs/r3-slack-gif-creator-paired/workspaces/work-18b797bfd1094a2c7da4ec6b/compact_check_burst.gif",
+        "artifacts/runs/r3-slack-gif-creator-paired/derived/work-18b797bfd1094a2c7da4ec6b/contact-sheet.png",
+        "artifacts/runs/r3-slack-gif-creator-paired/blind-inspections/blind-5eef65eb6d70f4c52af4f6c2.json"
+      ],
+      "rationale_zh": "深色背景、绿色主体和多色粒子均保持干净分离，未观察到严重色带、轮廓破碎或突兀的帧时长变化；末帧接近静态主体，循环回起始状态也较自然。",
+      "score": 0.97
+    }
+  ],
+  "factual_claims_zh": [
+    "GIF 画布为 480×480。",
+    "GIF 共 18 帧且 18 帧均唯一，每帧时长 80 毫秒，有效帧率为 12.5 FPS。",
+    "文件大小为 139597 字节，低于 900KB 上限。",
+    "中心白色勾号贯穿动画保持完整可辨，外围粒子由中心附近向外扩散并渐隐。"
+  ],
+  "feedback_zh": "成品以很小体积完成了清晰主体和完整庆祝动效，预算利用优秀。若要进一步提升，可让少数小粒子的逐帧位移更细腻，以减少外扩阶段的轻微阶梯感。",
+  "grader_work_id": "grader-work-42977cdcf4fd672f597014be",
+  "overall_score": 0.971,
+  "role_run": {
+    "context_id": "/root/r3_grade_42977c",
+    "finished_at": "2026-07-21T16:03:26Z",
+    "host": "codex",
+    "host_task_id": "/root/r3_grade_42977c",
+    "model": "gpt-5.6-sol",
+    "started_at": "2026-07-21T16:00:30Z",
+    "usage": {
+      "duration_ms": 176000,
+      "input_tokens": 8200,
+      "output_tokens": 1250,
+      "token_count_kind": "estimated",
+      "tool_calls": 7
+    }
+  },
+  "schema_version": "1.0.0",
+  "submission_id": "grade-submission-42977cdcf4fd672f597014be"
+}

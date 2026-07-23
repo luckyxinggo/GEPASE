@@ -1,0 +1,4 @@
+interface:
+  display_name: "Structured Report Builder"
+  short_description: "Build deterministic, accessible HTML reports"
+  default_prompt: "Use -report-builder to turn this structured report fixture into a validated self-contained HTML artifact."

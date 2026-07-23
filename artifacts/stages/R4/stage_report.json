@@ -1,0 +1,169 @@
+{
+  "schema_version": "1.0.0",
+  "stage_id": "R4",
+  "status": "complete",
+  "started_from_commit": "ea84ea8983509a91770932b9e21a74cd43235810",
+  "finished_commit": "ea84ea8983509a91770932b9e21a74cd43235810",
+  "completed_at": "2026-07-22T11:08:20Z",
+  "source_tree_hash": "864987c18577a9a2efcd32805aa4d0119b0fea9887ba1525df492e46575356cd",
+  "source_tree_hash_scope": "sha256 over sorted src/tests/scripts/configs/schemas/prompts/orchestrator/canary/docs plus state.md and README.md in the preserved dirty worktree",
+  "resolved_config_ref": "resolved-config.json",
+  "input_artifacts": [
+    {
+      "path": "artifacts/stages/R3/stage_report.json",
+      "role": "completed upstream stage and immutable reference anchor",
+      "sha256": "8e405bbe3d8c47de76fd8cafa67601edf326c622c266a7643410d82503adbfe1"
+    },
+    {
+      "path": "artifacts/runs/r2-slack-gif-creator-evalplan/frozen-eval-plan.json",
+      "plan_hash": "1893ad9a08978f2a8f107981a9a032c7581d08082926ee52276bd5feba2df950",
+      "role": "unchanged 5-train/3-validation plan"
+    },
+    {
+      "path": "benchmarks/canaries/slack-gif-creator/package",
+      "package_snapshot_hash": "ce42d8a837acf9feda9706a3418fc26a77c497d9615079e616b5fdc6870ef64e",
+      "role": "read-only public canary source"
+    },
+    {
+      "path": "configs/canaries/slack-gif-creator-r4.json",
+      "role": "frozen R4 search, Gate, provider, and runtime policy",
+      "sha256": "44bdb8a368113cd5da7eb0d7075b7171d3fe5972fd635638f430f208c9fc0b72"
+    }
+  ],
+  "output_artifacts": [
+    {
+      "path": "preflight.json",
+      "sha256": "8e0ec6f204d17058efdbf29f4dc1e60b09f0d00495a59629a81af46c7c437496",
+      "media_type": "application/json"
+    },
+    {
+      "path": "resolved-config.json",
+      "sha256": "d90516714aa71ab91f68b021baaaf49119024ed3ac26c6fffa56cfec5aae201c",
+      "media_type": "application/json"
+    },
+    {
+      "path": "evidence/r4-gates.json",
+      "sha256": "d831d2c484fcf42cbc8276e357f4cab844b9e933955e86a88a2d9cf39f7eacfc",
+      "media_type": "application/json"
+    },
+    {
+      "path": "test-results.xml",
+      "sha256": "4868f069f15bf6a3afa2c7df22dac6aad94f1ac1743696f548e8cc76585bfa26",
+      "media_type": "application/xml"
+    },
+    {
+      "path": "commands.log",
+      "sha256": "0da1e149ae5a9dc4c2161c55f20a7f118599fe26734115ad57f9d9d89626e089",
+      "media_type": "text/plain"
+    },
+    {
+      "path": "external-validation.md",
+      "sha256": "ce76ab406ef6f2057fbe21b559e9bf70ce174486c76e394b5545aac529020ca5",
+      "media_type": "text/markdown"
+    },
+    {
+      "path": "stage-summary.md",
+      "sha256": "09be294de38e6f1130920bae3a04ca64c3887989faf358083497c1a0aba8ec57",
+      "media_type": "text/markdown"
+    }
+  ],
+  "run_artifacts": [
+    {
+      "path": "artifacts/runs/r4-slack-gif-creator-evolution/artifact-index.json",
+      "sha256": "61bb6ede5757d8afe3b6ab9ea5ea5ee272d34dd74ff68a3571ee6dfa365e7d36",
+      "checked": 877
+    },
+    {
+      "path": "artifacts/runs/r4-slack-gif-creator-evolution/evolution-state.json",
+      "sha256": "6ee647671b7f91c747f50b3f0a084ad2abea8087240bee9b42aabdb6ba0a2ff3",
+      "phase": "complete"
+    },
+    {
+      "path": "artifacts/runs/r4-slack-gif-creator-evolution/scheduler/runtime-report.json",
+      "sha256": "9fea5f385532404f1a1c770b8efa499c35d784d5568155d04e80b2ac82ebc99f"
+    },
+    {
+      "path": "artifacts/runs/r4-slack-gif-creator-evolution/deployable-frontier.json",
+      "sha256": "aafef677415052339e8de2920b80a50464b4765b0d1311b4115fb47f4b7fbb24"
+    },
+    {
+      "path": "artifacts/runs/r4-slack-gif-creator-evolution/r4-audit.json",
+      "sha256": "aaf0b87da147f0c20a1110a1b643d602faaab35bf11981e7be6b2434327bbd77"
+    }
+  ],
+  "gate_results": [
+    {"gate_id": "R4-G01-reference-cache", "status": "passed"},
+    {"gate_id": "R4-G02-real-candidate-execution", "status": "passed"},
+    {"gate_id": "R4-G03-role-isolation-and-comparison", "status": "passed"},
+    {"gate_id": "R4-G04-score-recomputation", "status": "passed"},
+    {"gate_id": "R4-G05-strict-admission", "status": "passed"},
+    {"gate_id": "R4-G06-graph-patch-causality", "status": "passed"},
+    {"gate_id": "R4-G07-same-package-merge", "status": "passed"},
+    {"gate_id": "R4-G08-runtime-and-resume-audit", "status": "passed"}
+  ],
+  "real_agent_runs": 77,
+  "headless_provider_runs": 0,
+  "metrics": {
+    "mutation_branches": 3,
+    "merge_children": 1,
+    "candidates_evaluated_on_train": 4,
+    "train_case_executions": 20,
+    "candidates_evaluated_on_validation": 3,
+    "validation_case_executions": 9,
+    "successful_task_native_outputs": 28,
+    "typed_timeout_failures": 1,
+    "task_score_vectors": 29,
+    "independent_score_mismatches": 0,
+    "unique_role_contexts": 73,
+    "role_context_leaks": 0,
+    "reference_cache_hits": 8,
+    "reference_cache_misses": 0,
+    "candidate_reflections": 1,
+    "deployable_candidates": 1,
+    "accepted_candidate_id": "candidate-04b26dff2bc83b82334bf184",
+    "accepted_train_mean_delta": 0.04189999999999998,
+    "accepted_validation_mean_delta": 0.1242666666666667,
+    "accepted_validation_wins": 3,
+    "accepted_validation_losses": 0,
+    "merge_validation_mean_delta": 0.058280000000000075,
+    "merge_verdict": "rejected",
+    "machine_gates_passed": 8,
+    "machine_gates_total": 8,
+    "pytest_passed": 141,
+    "pyright_errors": 0,
+    "secret_scan_files": 6013,
+    "secret_scan_findings": 0,
+    "run_artifacts_checked": 877,
+    "run_artifact_failures": 0,
+    "optimization_effect_validated_on_single_canary": true
+  },
+  "usage": {
+    "token_count_kind": "estimated",
+    "proposal_and_reflection": {"calls": 4, "duration_ms": 990000, "estimated_tokens": 36500},
+    "executor": {"calls": 29, "failures": 1, "duration_ms": 12615000, "input_tokens": 857900, "output_tokens": 198200, "tool_calls": 583},
+    "independent_grader": {"calls": 28, "failures": 0, "duration_ms": 7875000, "input_tokens": 293090, "output_tokens": 54250, "tool_calls": 290},
+    "comparator": {"calls": 16, "failures": 0, "duration_ms": 5969000, "input_tokens": 187530, "output_tokens": 21900, "tool_calls": 180},
+    "total_agent_calls": 77,
+    "estimated_tokens": 1649370,
+    "cumulative_agent_duration_ms": 27449000,
+    "wall_clock_duration_ms": 10311052,
+    "wall_clock_budget_ms": 7200000,
+    "exhausted_axes": ["wall_clock"],
+    "queue_wait_observed": false
+  },
+  "known_issues": [
+    "The frozen 7,200-second wall-clock budget was exceeded: observed wall clock was 10,311,052 ms. This is preserved as an audited runtime overrun, not described as budget-compliant execution.",
+    "Agent Host token counts are estimates and enqueue timestamps were unavailable; queue wait is marked unobserved rather than fabricated.",
+    "The validated optimization effect is one public Skill, one frozen EvalPlan, one model snapshot, and one search run; it is not a cross-Skill or statistical generalization claim.",
+    "The deployable candidate changed one bounded SKILL.md instruction node. Full-package graph, materialization, closure, and merge mechanisms ran, but this run does not demonstrate a positive cross-file edit or package-aware superiority over SKILL.md-only editing.",
+    "The same-package merge child improved the validation mean but violated a pre-registered category floor and was correctly rejected. Multi-parent merge is mechanically validated, not shown to outperform the best parent."
+  ],
+  "design_decisions": [
+    "Reuse the fully hashed R3 original anchor and execute only the fresh candidate side when the complete ReferenceEvidenceKey matches.",
+    "Keep all five train and three validation cases; optimize runtime only through same-role concurrency, exact reference reuse, one reflection per candidate, and stage-level full regression.",
+    "Treat executor timeout as typed E2 failure with zero candidate task score and automatic comparator loss; never invent a grader or business output.",
+    "Allow an inconclusive candidate to resolve to accepted or rejected only after missing held-out evidence arrives; invalid and rejected remain terminal.",
+    "Require the same-package merge child to pass the same Gate 0-3 path as every other candidate, including protected category floors."
+  ],
+  "unlocks": ["R5"]
+}

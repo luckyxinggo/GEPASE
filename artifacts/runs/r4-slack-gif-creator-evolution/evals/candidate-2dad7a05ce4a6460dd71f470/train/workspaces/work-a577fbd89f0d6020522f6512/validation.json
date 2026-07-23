@@ -1,0 +1,110 @@
+{
+  "builder": {
+    "path": "deployment_status.gif",
+    "size_kb": 124.3671875,
+    "size_mb": 0.12145233154296875,
+    "dimensions": "480x480",
+    "frame_count": 24,
+    "fps": 10,
+    "duration_seconds": 2.4,
+    "colors": 96
+  },
+  "validator": {
+    "file": "deployment_status.gif",
+    "passes": true,
+    "width": 480,
+    "height": 480,
+    "size_kb": 124.3671875,
+    "size_mb": 0.12145233154296875,
+    "frame_count": 24,
+    "duration_seconds": 2.4,
+    "fps": 10.0,
+    "is_emoji": false,
+    "optimal": null
+  },
+  "export": {
+    "dimensions": [
+      480,
+      480
+    ],
+    "frames": 24,
+    "durations_ms": [
+      100,
+      100,
+      100,
+      100,
+      100,
+      100,
+      100,
+      100,
+      100,
+      100,
+      100,
+      100,
+      100,
+      100,
+      100,
+      100,
+      100,
+      100,
+      100,
+      100,
+      100,
+      100,
+      100,
+      100
+    ],
+    "total_duration_ms": 2400,
+    "loop": 0,
+    "sampled_frames": [
+      {
+        "index": 3,
+        "mode": "RGB",
+        "size": [
+          480,
+          480
+        ]
+      },
+      {
+        "index": 11,
+        "mode": "RGB",
+        "size": [
+          480,
+          480
+        ]
+      },
+      {
+        "index": 19,
+        "mode": "RGB",
+        "size": [
+          480,
+          480
+        ]
+      }
+    ]
+  },
+  "content_schedule": {
+    "waiting": {
+      "frames": [
+        0,
+        7
+      ],
+      "headline": "DEPLOY"
+    },
+    "processing": {
+      "frames": [
+        8,
+        15
+      ],
+      "headline": "DEPLOY"
+    },
+    "complete": {
+      "frames": [
+        16,
+        23
+      ],
+      "headline": "DONE"
+    }
+  },
+  "passes": true
+}

@@ -1,0 +1,22 @@
+{
+  "schema_version": "1.0.0",
+  "stage_id": "R3",
+  "run_id": "r3-slack-gif-creator-paired",
+  "run_dir": "artifacts/runs/r3-slack-gif-creator-paired",
+  "frozen_plan_ref": "artifacts/runs/r2-slack-gif-creator-evalplan/frozen-eval-plan.json",
+  "frozen_plan_hash": "1893ad9a08978f2a8f107981a9a032c7581d08082926ee52276bd5feba2df950",
+  "scoring_policy_ref": "configs/canaries/slack-gif-creator-r3-scoring.json",
+  "skill_ref": "benchmarks/canaries/slack-gif-creator/package",
+  "package_graph_ref": "artifacts/runs/r2-slack-gif-creator-evalplan/package/graph.json",
+  "splits": ["train", "validation"],
+  "variants": ["no-skill", "original"],
+  "tiers": ["E0", "E2", "E3"],
+  "host": "codex",
+  "model": "gpt-5.6-sol",
+  "seed": 42,
+  "timeout_seconds": 600,
+  "comparator_task_count": 3,
+  "comparator_orders": ["AB", "BA"],
+  "external_headless_provider": false,
+  "record_cost": false
+}

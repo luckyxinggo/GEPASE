@@ -1,0 +1,66 @@
+{
+  "criterion_grades": [
+    {
+      "criterion_id": "efficiency-budget",
+      "evidence_refs": [
+        "artifacts/runs/r4-slack-gif-creator-evolution/evals/candidate-04b26dff2bc83b82334bf184/validation/blind-inspections/blind-25c4fcc733bf2a24fbf1247c.json",
+        "artifacts/runs/r4-slack-gif-creator-evolution/evals/candidate-04b26dff2bc83b82334bf184/validation/workspaces/work-c32547dba15da11d0bc47306/compact_check_burst.gif"
+      ],
+      "rationale_zh": "盲检记录显示输出为 480×480、12.5 FPS，文件为 377145 字节，帧率处于 10–16 FPS 范围且体积显著低于 900KB 上限；24 帧均为唯一帧，没有以重复帧虚耗预算。",
+      "score": 1.0
+    },
+    {
+      "criterion_id": "efficiency-readability",
+      "evidence_refs": [
+        "artifacts/runs/r4-slack-gif-creator-evolution/evals/candidate-04b26dff2bc83b82334bf184/validation/derived/work-c32547dba15da11d0bc47306/contact-sheet.png"
+      ],
+      "rationale_zh": "接触表中勾号位于画面中心，以明亮近白色粗轮廓对比绿色圆章和深色背景；从成形到收尾均保持完整、醒目。开场若干帧用于形状显现，故未给满分。",
+      "score": 0.96
+    },
+    {
+      "criterion_id": "efficiency-motion",
+      "evidence_refs": [
+        "artifacts/runs/r4-slack-gif-creator-evolution/evals/candidate-04b26dff2bc83b82334bf184/validation/derived/work-c32547dba15da11d0bc47306/contact-sheet.png",
+        "artifacts/runs/r4-slack-gif-creator-evolution/evals/candidate-04b26dff2bc83b82334bf184/validation/blind-inspections/blind-25c4fcc733bf2a24fbf1247c.json"
+      ],
+      "rationale_zh": "抽样帧清楚呈现粒子自中心环带向外扩散并逐步减弱的连续轨迹；24 个唯一帧均为 80ms，12.5 FPS 下节奏均匀，未见停顿或突兀回跳。",
+      "score": 0.97
+    },
+    {
+      "criterion_id": "efficiency-balance",
+      "evidence_refs": [
+        "artifacts/runs/r4-slack-gif-creator-evolution/evals/candidate-04b26dff2bc83b82334bf184/validation/derived/work-c32547dba15da11d0bc47306/contact-sheet.png",
+        "artifacts/runs/r4-slack-gif-creator-evolution/evals/candidate-04b26dff2bc83b82334bf184/validation/workspaces/work-c32547dba15da11d0bc47306/compact_check_burst.gif"
+      ],
+      "rationale_zh": "接触表中的深色背景、绿色主体和多色粒子层次分明，勾号及圆章边缘连续，未观察到严重色带、轮廓破碎或难看的节奏跳跃；少量同心光晕分层是轻微的压缩/风格权衡。",
+      "score": 0.95
+    }
+  ],
+  "factual_claims_zh": [
+    "盲检记录给出的画布尺寸为 480×480。",
+    "盲检记录给出的有效帧率为 12.5 FPS，24 帧的持续时间均为 80ms。",
+    "GIF 文件大小为 377145 字节，SHA-256 与 work item 中声明的 49c4f25101ed365165e56d83ccf7eec40412087d167e589bc81248dc849d4268 一致。",
+    "盲检记录给出的总时长为 1920ms，唯一帧数为 24。",
+    "总分按冻结权重精确计算：1.0×0.30 + 0.96×0.25 + 0.97×0.25 + 0.95×0.20 = 0.9725。"
+  ],
+  "feedback_zh": "该 GIF 在 377145 字节内同时满足 480×480 和 12.5 FPS 预算，中心勾号对比清晰，粒子扩散与渐隐连贯。若继续优化，可略减弱同心光晕的分层感，并让勾号在开场更早进入清晰可读状态。",
+  "grader_work_id": "grader-work-edc41a3aca93ccab4348c9c5",
+  "overall_score": 0.9725,
+  "role_run": {
+    "context_id": "r4_valgrade_a_eff",
+    "finished_at": "2026-07-22T10:33:17Z",
+    "host": "codex",
+    "host_task_id": "/root/r4_valgrade_a_eff",
+    "model": "gpt-5.6-sol",
+    "started_at": "2026-07-22T10:32:20Z",
+    "usage": {
+      "duration_ms": 57000,
+      "input_tokens": 12800,
+      "output_tokens": 2600,
+      "token_count_kind": "estimated",
+      "tool_calls": 12
+    }
+  },
+  "schema_version": "1.0.0",
+  "submission_id": "grader-submission-edc41a3aca93ccab4348c9c5"
+}

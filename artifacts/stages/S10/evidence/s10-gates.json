@@ -1,0 +1,45 @@
+{
+  "gates": [
+    {
+      "detail": "Legacy paths are absent and only the module entrypoint has zero inbound references.",
+      "gate_id": "S10-G01-targeted-cleanup",
+      "status": "passed"
+    },
+    {
+      "detail": "Bilingual READMEs, visuals, links, commands, and claim boundaries are present.",
+      "gate_id": "S10-G02-bilingual-public-surface",
+      "status": "passed"
+    },
+    {
+      "detail": "R1-R5/R2-R5 hashes, R5 Gates, canary provenance, and licenses verify.",
+      "gate_id": "S10-G03-sealed-evidence-and-attribution",
+      "status": "passed"
+    },
+    {
+      "detail": "Generated schemas are stable and the public/untracked surface has no secret/private-path findings.",
+      "gate_id": "S10-G04-schema-security-privacy",
+      "status": "passed"
+    },
+    {
+      "detail": "Ruff, Pyright, full pytest, compact build, and fresh offline wheel install pass.",
+      "gate_id": "S10-G05-full-regression-and-build",
+      "status": "passed"
+    },
+    {
+      "detail": "Public CLI, both provider configs, offline mock, report verification, and deploy pass.",
+      "gate_id": "S10-G06-cli-resume-report-deploy-smoke",
+      "status": "passed"
+    },
+    {
+      "detail": "README results exactly retain the one-canary and SKILL.md-only accepted-edit limits.",
+      "gate_id": "S10-G07-release-claim-boundary",
+      "status": "passed"
+    }
+  ],
+  "schema_version": "1.0.0",
+  "summary": {
+    "passed": 7,
+    "total": 7
+  },
+  "valid": true
+}

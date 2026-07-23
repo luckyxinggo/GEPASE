@@ -1,0 +1,19 @@
+{
+  "schema_version": "1.0.0",
+  "version": "evolution-v1",
+  "purpose": "development-only repair benchmark with transparent preregistered faults",
+  "base_benchmark_lock": "benchmarks/freeze-v1.lock.json",
+  "test_access_policy": "forbidden",
+  "test_case_ids": [],
+  "fault_families": [
+    {
+      "fault_id": "structured-report-missing-source-footer",
+      "origin_kind": "preregistered_realistic_fault",
+      "base_skill_ref": "benchmarks/skills/structured-report-builder",
+      "changed_component": "scripts/render_report.py::render",
+      "fault_spec_ref": "faults/structured-report-missing-source-footer.json",
+      "oracle_ref": "oracles/structured-report-source-footer.json",
+      "disclosure": "The development seed intentionally omits provenance footer rendering. It is not presented as a naturally occurring original Skill."
+    }
+  ]
+}

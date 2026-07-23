@@ -1,0 +1,162 @@
+{
+  "schema_version": "1.0.0",
+  "stage_id": "R1",
+  "policy": "targeted deletion by reference tracing; no repository-wide four-class labeling",
+  "groups": [
+    {
+      "id": "obsolete-baseline-matrix",
+      "paths": [
+        "src/gepase/baselines/",
+        "src/gepase/cli/baseline.py",
+        "src/gepase/reporting/baselines.py",
+        "tests/baselines/",
+        "configs/baselines/b4_gepa.yaml",
+        "configs/experiments/baseline_pilot.yaml",
+        "configs/experiments/baseline_snapshot_v1.yaml",
+        "configs/experiments/forced_small_budget.yaml",
+        "scripts/run_s4_gates.py",
+        "docs/baselines/"
+      ],
+      "reason": "B0-B6 large-matrix and price-accounting route served invalid Benchmark-v1 effect claims and duplicated paired evaluation.",
+      "reference_check": "All executable imports and root CLI registration removed; no remaining source/test/script import of gepase.baselines.",
+      "replacement": "R3 uses one MultiFidelityEvalEngine for no-skill/original/candidate paired evidence."
+    },
+    {
+      "id": "obsolete-headless-calibration",
+      "paths": [
+        "src/gepase/evals/headless.py",
+        "tests/evals/test_headless.py",
+        "configs/experiments/s1b_calibration.yaml",
+        "scripts/run_s1b_gates.py",
+        "gepase eval headless-calibrate"
+      ],
+      "reason": "The all-case E1 backend concatenated and truncated Package context, was not role-isolated, and was tied to old calibration.",
+      "reference_check": "No remaining import of gepase.evals.headless; E1 remains in schemas but the eval CLI defaults to E2.",
+      "replacement": "R3 may add optional role-scoped Headless Providers behind EvalWorkItem/ExecutionBundle; default remains Agent-native."
+    },
+    {
+      "id": "readiness-headroom-precheck",
+      "paths": [
+        "src/gepase/readiness/",
+        "src/gepase/optimizer/readiness.py",
+        "src/gepase/cli/readiness.py",
+        "tests/readiness/",
+        "schemas/optimization_readiness.schema.json"
+      ],
+      "reason": "The corrected roadmap explicitly defers headroom diagnosis until a complete R5 run stalls.",
+      "reference_check": "No executable readiness/headroom symbol remains.",
+      "replacement": "R3 TaskScoreVector and ASI provide failure evidence; stalled R5 may add a new diagnosis without blocking R2."
+    },
+    {
+      "id": "parallel-stage-controllers",
+      "paths": [
+        "src/gepase/optimizer/gepa_step_engine.py",
+        "src/gepase/optimizer/config.py",
+        "src/gepase/optimizer/acceptance/pilot.py",
+        "src/gepase/optimizer/evolution/engine.py",
+        "src/gepase/optimizer/evolution/audit.py",
+        "src/gepase/optimizer/evolution/evaluation.py",
+        "src/gepase/optimizer/evolution/planner.py",
+        "src/gepase/optimizer/evolution/failure_clusters.py",
+        "src/gepase/optimizer/evolution/checkpoint.py",
+        "src/gepase/optimizer/merge/engine.py",
+        "src/gepase/optimizer/merge/handoff.py",
+        "src/gepase/cli/evolution.py",
+        "tests/optimizer/test_step_engine.py",
+        "tests/acceptance/test_pilot.py",
+        "tests/evolution/test_candidate_evaluation.py",
+        "tests/evolution/test_planner.py",
+        "tests/evolution/test_failure_clusters.py",
+        "configs/experiments/s5_package_gepa.yaml",
+        "configs/experiments/s6_selector.yaml",
+        "configs/experiments/s7_gate_pilot.yaml",
+        "scripts/run_s5_gates.py",
+        "scripts/run_s6_gates.py",
+        "scripts/run_s7_gates.py"
+      ],
+      "reason": "Four stage-specific controllers formed parallel Candidate/Evaluator/Search/Gate/Merge flows; S5 also allowed equality and lacked the strict held-out Gate.",
+      "reference_check": "Root CLI no longer exposes optimize/evolution stage controllers; pure Candidate, Gate, branch, lineage, pool, closure, conflict, selector, and merge contract modules remain.",
+      "replacement": "R4 must reconnect retained components through one Core-owned state machine and store."
+    },
+    {
+      "id": "stage-specific-mutation-planner",
+      "paths": [
+        "src/gepase/mutation/planner.py",
+        "src/gepase/mutation/config.py",
+        "tests/mutation/test_failure_grounding.py",
+        "gepase mutation propose"
+      ],
+      "reason": "The planner consumed an S5 checkpoint and optimization-readiness report rather than R3 TaskScoreVector/ASI evidence.",
+      "reference_check": "Patch schema, proposer queue, graph selectors, causal audit, applier, rollback, and validators remain importable.",
+      "replacement": "R4 plans bounded Patch work from real failure evidence inside the single evolution state machine."
+    },
+    {
+      "id": "manual-export-route",
+      "paths": [
+        "src/gepase/export/",
+        "src/gepase/cli/export.py"
+      ],
+      "reason": "The isolated manual-validation exporter was not the R2 review/freeze workflow and duplicated artifact export.",
+      "reference_check": "No remaining import of gepase.export and no root export command.",
+      "replacement": "R2 implements EvalPlan draft, Chinese review HTML, review.json import, freeze, and resume."
+    },
+    {
+      "id": "obsolete-pricing",
+      "paths": [
+        "UsageRecord.cost",
+        "BudgetSpec.max_cost",
+        "BudgetContract.max_cost",
+        "GateCost.api_cost",
+        "price curves and cost regression naming"
+      ],
+      "reason": "Current scope records calls, reported tokens, latency, tool calls, and stopping conditions, not API billing or RMB/USD estimates.",
+      "reference_check": "Generated schemas contain no price field; historical usage cost keys are accepted only by a pre-validator and discarded.",
+      "replacement": "GateUsage and budget contracts retain non-monetary resource axes."
+    },
+    {
+      "id": "fixed-context-truncation-and-equal-acceptance",
+      "paths": [
+        "OpenAICompatibleSimulator._skill_context fixed excerpt",
+        "ASI fixed component excerpt",
+        "GEPA improvement-or-equal admission"
+      ],
+      "reason": "Fixed character truncation violates filesystem-based progressive disclosure; equality cannot enter the corrected train pool.",
+      "reference_check": "No improvement_or_equal symbol or fixed Package/component excerpt remains in executable code.",
+      "replacement": "Complete PackageSnapshot plus graph-selected full target components; strict Gate admission in R4."
+    }
+  ],
+  "retained": [
+    {
+      "path": "benchmarks/",
+      "reason": "Benchmark v1 remains an integration/calibration fixture; evolution-v1 remains a mechanism/fault fixture."
+    },
+    {
+      "path": "src/gepase/package/",
+      "reason": "Package IR, graph, overlay, slice, diff, and diagnostics are authoritative."
+    },
+    {
+      "path": "src/gepase/evals/",
+      "reason": "MultiFidelityEvalEngine, ledger, EvalWorkItem, ExecutionBundle, statistics, and evidence are authoritative."
+    },
+    {
+      "path": "src/gepase/optimizer/acceptance/ and src/gepase/optimizer/merge/",
+      "reason": "Pure Gate and same-package merge algorithms/contracts remain for R4 integration; stage pilot engines were removed."
+    },
+    {
+      "path": "artifacts/stages/S6, artifacts/stages/S7, artifacts/runs/s6-*, artifacts/runs/s7-*, artifacts/runs/s8-*",
+      "reason": "Historical engineering evidence is preserved but not interpreted as optimization effectiveness."
+    },
+    {
+      "path": "skills_test/",
+      "reason": "Private corpus remains ignored and untouched."
+    }
+  ],
+  "post_cleanup_scale": {
+    "source_python_files": 138,
+    "test_python_files": 55,
+    "scripts": 11,
+    "configs": 2,
+    "schemas": 11
+  },
+  "effect_claim": false
+}

@@ -1,0 +1,45 @@
+{
+  "comparator_work_id": "comparator-work-485b9579ed3edf8ea3d12360",
+  "confidence": 0.88,
+  "criteria": [
+    {
+      "criterion_id": "loop-continuity",
+      "preference": "left",
+      "rationale_zh": "左侧以 32 帧、每帧 60 ms 呈现更细密的渐变，首尾像素差为 0.745，接近其平均相邻帧差 0.685，接缝状态在实看中也能自然接回；右侧仅 12 帧、每帧 100 ms，首尾差 1.993，火花亮度切换和回环更容易被察觉。"
+    },
+    {
+      "criterion_id": "loop-rhythm",
+      "preference": "left",
+      "rationale_zh": "左侧三颗火花以重叠的淡入、峰值、淡出接力，前一颗退场时下一颗已开始增强，1.92 秒周期从容且有呼吸感；右侧三段依次点亮的逻辑清楚，但 12 帧分段较强，节拍更像机械切换。"
+    },
+    {
+      "criterion_id": "loop-stability",
+      "preference": "tie",
+      "rationale_zh": "两侧中央圆环的位置、尺度和轮廓在全部取样帧中都保持清楚稳定，足以承担视觉锚点；右侧环内白点虽在运动，但没有带动或遮乱圆环本体，因此不足以拉开此项差距。"
+    },
+    {
+      "criterion_id": "loop-visual",
+      "preference": "right",
+      "rationale_zh": "右侧青色双层圆环、三色发光火花和细腻深色背景形成更强的层次与小尺寸辨识度，整体更像完成度高的 Slack emoji；左侧配色干净、构图均衡，但光影和材质更朴素。"
+    }
+  ],
+  "rationale_zh": "左侧赢得权重最高的循环连续性与火花节奏（合计 0.65），32 帧的细密过渡使三颗火花的接力与首尾回接明显更顺滑；两侧中心圆环稳定性相当。右侧在整体美感上更精致，但该优势不足以抵消较低帧数带来的分段感和更明显的回环变化，因此总体选择 left。",
+  "role_run": {
+    "context_id": "/root/r3_cmp_485b95",
+    "finished_at": "2026-07-21T16:33:11Z",
+    "host": "codex",
+    "host_task_id": "/root/r3_cmp_485b95",
+    "model": "gpt-5.6-sol",
+    "started_at": "2026-07-21T16:25:30Z",
+    "usage": {
+      "duration_ms": 461000,
+      "input_tokens": 41000,
+      "output_tokens": 5200,
+      "token_count_kind": "estimated",
+      "tool_calls": 15
+    }
+  },
+  "schema_version": "1.0.0",
+  "submission_id": "comparator-submission-485b9579ed3edf8ea3d12360",
+  "winner": "left"
+}

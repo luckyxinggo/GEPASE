@@ -1,0 +1,7 @@
+{
+  "canvas": [480, 480],
+  "duration_seconds_target": 2.4,
+  "phases": ["waiting", "processing", "complete"],
+  "subject": "a compact deployment status card",
+  "text": ["DEPLOY", "DONE"]
+}

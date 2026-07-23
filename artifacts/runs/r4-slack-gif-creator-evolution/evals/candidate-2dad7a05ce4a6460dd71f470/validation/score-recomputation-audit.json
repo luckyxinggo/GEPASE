@@ -1,0 +1,50 @@
+{
+  "reference_cache_hit": true,
+  "rows": [
+    {
+      "agent_comparator_calls": 0,
+      "agent_grader_calls": 0,
+      "candidate_correctness": 0.0,
+      "candidate_grader_score": 0.0,
+      "candidate_score": 0.0,
+      "paired_delta": -0.90832,
+      "reference_correctness": 0.85,
+      "reference_grader_score": 0.9744999999999999,
+      "reference_score": 0.90832,
+      "task_id": "functional-validation-efficiency-007",
+      "typed_failure": "timeout"
+    },
+    {
+      "candidate_correctness": 1.0,
+      "candidate_grader_score": 0.97,
+      "candidate_score": 0.9892000000000001,
+      "paired_delta": 0.22948000000000002,
+      "quality_after_comparator": {
+        "candidate": 0.976,
+        "reference": 0.7716000000000001
+      },
+      "reference_correctness": 0.75,
+      "reference_grader_score": 0.9645,
+      "reference_score": 0.7597200000000001,
+      "task_id": "functional-validation-loop-sparkles-006"
+    },
+    {
+      "candidate_correctness": 1.0,
+      "candidate_grader_score": 0.943,
+      "candidate_score": 0.93448,
+      "paired_delta": 0.0853799999999999,
+      "quality_after_comparator": {
+        "candidate": 0.8543999999999999,
+        "reference": 0.8480000000000001
+      },
+      "reference_correctness": 0.85,
+      "reference_grader_score": 0.935,
+      "reference_score": 0.8491000000000001,
+      "task_id": "functional-validation-pulse-text-008"
+    }
+  ],
+  "schema_version": "1.0.0",
+  "trigger_mixed": false,
+  "valid": true,
+  "vector_count": 3
+}

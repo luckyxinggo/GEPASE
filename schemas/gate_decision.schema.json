@@ -1,0 +1,553 @@
+{
+  "$defs": {
+    "AcceptancePolicyKind": {
+      "enum": [
+        "conservative",
+        "exploratory"
+      ],
+      "title": "AcceptancePolicyKind",
+      "type": "string"
+    },
+    "CandidateStatus": {
+      "enum": [
+        "seed",
+        "proposed",
+        "invalid",
+        "rejected",
+        "inconclusive",
+        "accepted"
+      ],
+      "title": "CandidateStatus",
+      "type": "string"
+    },
+    "GateLevel": {
+      "enum": [
+        "gate_0_schema",
+        "gate_1_static",
+        "gate_2_minibatch",
+        "gate_3_validation",
+        "gate_4_frontier"
+      ],
+      "title": "GateLevel",
+      "type": "string"
+    },
+    "GateOutcome": {
+      "enum": [
+        "passed",
+        "failed",
+        "inconclusive",
+        "not_run"
+      ],
+      "title": "GateOutcome",
+      "type": "string"
+    },
+    "GateResult": {
+      "additionalProperties": false,
+      "properties": {
+        "checks": {
+          "additionalProperties": true,
+          "title": "Checks",
+          "type": "object"
+        },
+        "completed_at": {
+          "title": "Completed At",
+          "type": "string"
+        },
+        "evidence_refs": {
+          "default": [],
+          "items": {
+            "type": "string"
+          },
+          "title": "Evidence Refs",
+          "type": "array"
+        },
+        "human_summary": {
+          "minLength": 1,
+          "title": "Human Summary",
+          "type": "string"
+        },
+        "level": {
+          "$ref": "#/$defs/GateLevel"
+        },
+        "outcome": {
+          "$ref": "#/$defs/GateOutcome"
+        },
+        "reason_codes": {
+          "items": {
+            "type": "string"
+          },
+          "minItems": 1,
+          "title": "Reason Codes",
+          "type": "array"
+        },
+        "schema_version": {
+          "default": "1.0.0",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "started_at": {
+          "title": "Started At",
+          "type": "string"
+        },
+        "target_calls": {
+          "default": 0,
+          "minimum": 0,
+          "title": "Target Calls",
+          "type": "integer"
+        },
+        "usage": {
+          "$ref": "#/$defs/GateUsage"
+        }
+      },
+      "required": [
+        "level",
+        "outcome",
+        "reason_codes",
+        "human_summary"
+      ],
+      "title": "GateResult",
+      "type": "object"
+    },
+    "GateUsage": {
+      "additionalProperties": false,
+      "properties": {
+        "duration_ms": {
+          "default": 0,
+          "minimum": 0,
+          "title": "Duration Ms",
+          "type": "integer"
+        },
+        "e2_calls": {
+          "default": 0,
+          "minimum": 0,
+          "title": "E2 Calls",
+          "type": "integer"
+        },
+        "e3_calls": {
+          "default": 0,
+          "minimum": 0,
+          "title": "E3 Calls",
+          "type": "integer"
+        },
+        "metric_calls": {
+          "default": 0,
+          "minimum": 0,
+          "title": "Metric Calls",
+          "type": "integer"
+        },
+        "tokens": {
+          "default": 0,
+          "minimum": 0,
+          "title": "Tokens",
+          "type": "integer"
+        }
+      },
+      "title": "GateUsage",
+      "type": "object"
+    },
+    "McNemarResult": {
+      "additionalProperties": false,
+      "properties": {
+        "discordant_candidate_only": {
+          "minimum": 0,
+          "title": "Discordant Candidate Only",
+          "type": "integer"
+        },
+        "discordant_parent_only": {
+          "minimum": 0,
+          "title": "Discordant Parent Only",
+          "type": "integer"
+        },
+        "exact_two_sided_p": {
+          "maximum": 1,
+          "minimum": 0,
+          "title": "Exact Two Sided P",
+          "type": "number"
+        }
+      },
+      "required": [
+        "discordant_parent_only",
+        "discordant_candidate_only",
+        "exact_two_sided_p"
+      ],
+      "title": "McNemarResult",
+      "type": "object"
+    },
+    "PairedScore": {
+      "additionalProperties": false,
+      "properties": {
+        "candidate_record_id": {
+          "title": "Candidate Record Id",
+          "type": "string"
+        },
+        "candidate_score": {
+          "title": "Candidate Score",
+          "type": "number"
+        },
+        "category": {
+          "title": "Category",
+          "type": "string"
+        },
+        "evidence_tier": {
+          "title": "Evidence Tier",
+          "type": "string"
+        },
+        "minimum_acceptance_tier": {
+          "title": "Minimum Acceptance Tier",
+          "type": "string"
+        },
+        "parent_record_id": {
+          "title": "Parent Record Id",
+          "type": "string"
+        },
+        "parent_score": {
+          "title": "Parent Score",
+          "type": "number"
+        },
+        "repeat_index": {
+          "default": 0,
+          "minimum": 0,
+          "title": "Repeat Index",
+          "type": "integer"
+        },
+        "risk_level": {
+          "title": "Risk Level",
+          "type": "string"
+        },
+        "task_id": {
+          "title": "Task Id",
+          "type": "string"
+        },
+        "uncertainty": {
+          "default": 0.0,
+          "maximum": 1,
+          "minimum": 0,
+          "title": "Uncertainty",
+          "type": "number"
+        }
+      },
+      "required": [
+        "task_id",
+        "category",
+        "risk_level",
+        "parent_score",
+        "candidate_score",
+        "evidence_tier",
+        "minimum_acceptance_tier",
+        "parent_record_id",
+        "candidate_record_id"
+      ],
+      "title": "PairedScore",
+      "type": "object"
+    },
+    "PairedStatistics": {
+      "additionalProperties": false,
+      "properties": {
+        "bootstrap_95_ci": {
+          "maxItems": 2,
+          "minItems": 2,
+          "prefixItems": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "number"
+            }
+          ],
+          "title": "Bootstrap 95 Ci",
+          "type": "array"
+        },
+        "bootstrap_samples": {
+          "minimum": 100,
+          "title": "Bootstrap Samples",
+          "type": "integer"
+        },
+        "losses": {
+          "minimum": 0,
+          "title": "Losses",
+          "type": "integer"
+        },
+        "mcnemar": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/McNemarResult"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "mean_candidate": {
+          "title": "Mean Candidate",
+          "type": "number"
+        },
+        "mean_delta": {
+          "title": "Mean Delta",
+          "type": "number"
+        },
+        "mean_parent": {
+          "title": "Mean Parent",
+          "type": "number"
+        },
+        "median_delta": {
+          "title": "Median Delta",
+          "type": "number"
+        },
+        "n": {
+          "minimum": 1,
+          "title": "N",
+          "type": "integer"
+        },
+        "schema_version": {
+          "default": "1.0.0",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "seed": {
+          "title": "Seed",
+          "type": "integer"
+        },
+        "std_delta": {
+          "minimum": 0,
+          "title": "Std Delta",
+          "type": "number"
+        },
+        "ties": {
+          "minimum": 0,
+          "title": "Ties",
+          "type": "integer"
+        },
+        "wins": {
+          "minimum": 0,
+          "title": "Wins",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "n",
+        "seed",
+        "bootstrap_samples",
+        "mean_parent",
+        "mean_candidate",
+        "mean_delta",
+        "median_delta",
+        "std_delta",
+        "bootstrap_95_ci",
+        "wins",
+        "ties",
+        "losses"
+      ],
+      "title": "PairedStatistics",
+      "type": "object"
+    },
+    "VarianceAction": {
+      "enum": [
+        "stable",
+        "reevaluate",
+        "exhausted_inconclusive"
+      ],
+      "title": "VarianceAction",
+      "type": "string"
+    },
+    "VarianceDecision": {
+      "additionalProperties": false,
+      "properties": {
+        "action": {
+          "$ref": "#/$defs/VarianceAction"
+        },
+        "reason_codes": {
+          "items": {
+            "type": "string"
+          },
+          "minItems": 1,
+          "title": "Reason Codes",
+          "type": "array"
+        },
+        "reevaluations_remaining": {
+          "minimum": 0,
+          "title": "Reevaluations Remaining",
+          "type": "integer"
+        },
+        "reevaluations_used": {
+          "minimum": 0,
+          "title": "Reevaluations Used",
+          "type": "integer"
+        },
+        "schema_version": {
+          "default": "1.0.0",
+          "title": "Schema Version",
+          "type": "string"
+        }
+      },
+      "required": [
+        "action",
+        "reason_codes",
+        "reevaluations_used",
+        "reevaluations_remaining"
+      ],
+      "title": "VarianceDecision",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "candidate_id": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "title": "Candidate Id"
+    },
+    "created_at": {
+      "title": "Created At",
+      "type": "string"
+    },
+    "decision_id": {
+      "title": "Decision Id",
+      "type": "string"
+    },
+    "exploration_pool_eligible": {
+      "default": false,
+      "title": "Exploration Pool Eligible",
+      "type": "boolean"
+    },
+    "frontier_eligible": {
+      "title": "Frontier Eligible",
+      "type": "boolean"
+    },
+    "gates": {
+      "items": {
+        "$ref": "#/$defs/GateResult"
+      },
+      "minItems": 1,
+      "title": "Gates",
+      "type": "array"
+    },
+    "human_summary": {
+      "minLength": 1,
+      "title": "Human Summary",
+      "type": "string"
+    },
+    "parent_candidate_id": {
+      "title": "Parent Candidate Id",
+      "type": "string"
+    },
+    "patch_id": {
+      "title": "Patch Id",
+      "type": "string"
+    },
+    "policy": {
+      "$ref": "#/$defs/AcceptancePolicyKind"
+    },
+    "reason_codes": {
+      "items": {
+        "type": "string"
+      },
+      "minItems": 1,
+      "title": "Reason Codes",
+      "type": "array"
+    },
+    "rejected_record_id": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Rejected Record Id"
+    },
+    "run_id": {
+      "title": "Run Id",
+      "type": "string"
+    },
+    "schema_version": {
+      "default": "1.0.0",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "test_access_count": {
+      "default": 0,
+      "minimum": 0,
+      "title": "Test Access Count",
+      "type": "integer"
+    },
+    "total_usage": {
+      "$ref": "#/$defs/GateUsage"
+    },
+    "train_pairs": {
+      "default": [],
+      "items": {
+        "$ref": "#/$defs/PairedScore"
+      },
+      "title": "Train Pairs",
+      "type": "array"
+    },
+    "train_statistics": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/PairedStatistics"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null
+    },
+    "validation_pairs": {
+      "default": [],
+      "items": {
+        "$ref": "#/$defs/PairedScore"
+      },
+      "title": "Validation Pairs",
+      "type": "array"
+    },
+    "validation_statistics": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/PairedStatistics"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null
+    },
+    "variance_decision": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/VarianceDecision"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null
+    },
+    "verdict": {
+      "$ref": "#/$defs/CandidateStatus"
+    }
+  },
+  "required": [
+    "decision_id",
+    "run_id",
+    "patch_id",
+    "parent_candidate_id",
+    "candidate_id",
+    "policy",
+    "verdict",
+    "gates",
+    "reason_codes",
+    "human_summary",
+    "frontier_eligible"
+  ],
+  "title": "GateDecision",
+  "type": "object"
+}

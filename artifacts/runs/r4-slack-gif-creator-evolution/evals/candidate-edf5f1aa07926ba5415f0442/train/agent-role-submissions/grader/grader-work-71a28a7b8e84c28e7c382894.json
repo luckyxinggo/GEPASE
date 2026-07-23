@@ -1,0 +1,68 @@
+{
+  "schema_version": "1.0.0",
+  "submission_id": "grader-submission-71a28a7b8e84c28e7c382894-r4-grade-b-emoji",
+  "grader_work_id": "grader-work-71a28a7b8e84c28e7c382894",
+  "role_run": {
+    "host": "codex",
+    "model": "gpt-5.6-sol",
+    "context_id": "r4_grade_b_emoji",
+    "host_task_id": "/root/r4_grade_b_emoji",
+    "usage": {
+      "duration_ms": 480000,
+      "input_tokens": 11800,
+      "output_tokens": 2200,
+      "tool_calls": 8,
+      "token_count_kind": "estimated"
+    },
+    "started_at": "2026-07-22T08:48:00Z",
+    "finished_at": "2026-07-22T08:56:00Z"
+  },
+  "criterion_grades": [
+    {
+      "criterion_id": "emoji-bounce-clarity",
+      "score": 0.96,
+      "evidence_refs": [
+        "artifacts/runs/r4-slack-gif-creator-evolution/evals/candidate-edf5f1aa07926ba5415f0442/train/workspaces/work-9f3e7140a9c34fc8b7adbb5f/emoji_star_bounce.gif",
+        "artifacts/runs/r4-slack-gif-creator-evolution/evals/candidate-edf5f1aa07926ba5415f0442/train/derived/work-9f3e7140a9c34fc8b7adbb5f/contact-sheet.png"
+      ],
+      "rationale_zh": "亮黄色五角星配合粗深棕描边和白色高光，在深海军蓝至靛蓝背景上形成很强的明暗与色相对比；逐帧缩略图中，即使主体快速移动或接近画面边缘，五角星轮廓仍能被快速识别。"
+    },
+    {
+      "criterion_id": "emoji-bounce-dynamics",
+      "score": 0.92,
+      "evidence_refs": [
+        "artifacts/runs/r4-slack-gif-creator-evolution/evals/candidate-edf5f1aa07926ba5415f0442/train/workspaces/work-9f3e7140a9c34fc8b7adbb5f/emoji_star_bounce.gif",
+        "artifacts/runs/r4-slack-gif-creator-evolution/evals/candidate-edf5f1aa07926ba5415f0442/train/derived/work-9f3e7140a9c34fc8b7adbb5f/contact-sheet.png",
+        "artifacts/runs/r4-slack-gif-creator-evolution/evals/candidate-edf5f1aa07926ba5415f0442/train/blind-inspections/blind-1d0393f3220cf05651e4b31f.json"
+      ],
+      "rationale_zh": "contact sheet 清楚呈现主体从顶部落下、到达低点、伴随冲击线回弹一次、再次下落并在底部收稳的完整路径，停顿帧也强化了落定感。25 帧中有 23 个独特帧，动作信息充足；约 11.11 fps 下触地形变较克制，重量感仍有少量提升空间。"
+    },
+    {
+      "criterion_id": "emoji-bounce-polish",
+      "score": 0.95,
+      "evidence_refs": [
+        "artifacts/runs/r4-slack-gif-creator-evolution/evals/candidate-edf5f1aa07926ba5415f0442/train/workspaces/work-9f3e7140a9c34fc8b7adbb5f/emoji_star_bounce.gif",
+        "artifacts/runs/r4-slack-gif-creator-evolution/evals/candidate-edf5f1aa07926ba5415f0442/train/derived/work-9f3e7140a9c34fc8b7adbb5f/contact-sheet.png"
+      ],
+      "rationale_zh": "背景具有稳定的深色渐变和稀疏星点，主体包含暖色阴影式粗描边、亮黄填充、白色高光与落地冲击装饰，配色统一且层次完整；收尾淡出也经过设计，整体明显超出占位图形。"
+    },
+    {
+      "criterion_id": "emoji-bounce-slack",
+      "score": 0.99,
+      "evidence_refs": [
+        "artifacts/runs/r4-slack-gif-creator-evolution/evals/candidate-edf5f1aa07926ba5415f0442/train/workspaces/work-9f3e7140a9c34fc8b7adbb5f/emoji_star_bounce.gif",
+        "artifacts/runs/r4-slack-gif-creator-evolution/evals/candidate-edf5f1aa07926ba5415f0442/train/blind-inspections/blind-1d0393f3220cf05651e4b31f.json"
+      ],
+      "rationale_zh": "GIF 为 128×128、56,482 字节、总时长 2.25 秒，loop_count 为 0；首尾像素差为 0，且首帧与收稳附近有延长停顿，既便于反复观看，也能在循环切换时保持背景连续，技术规格和播放节奏都很适合 Slack emoji。"
+    }
+  ],
+  "overall_score": 0.9515,
+  "factual_claims_zh": [
+    "盲检记录显示 GIF 尺寸为 128×128，文件大小为 56,482 字节。",
+    "动画共有 25 帧，其中 23 帧独特，总时长为 2,250 毫秒，有效帧率约为 11.11 fps。",
+    "盲检记录的 loop_count 为 0，首尾像素差为 0.0。",
+    "contact sheet 显示亮黄色粗描边五角星从画面顶部落下，在底部附近出现冲击装饰，随后回弹一次并再次落定。",
+    "画面背景为深海军蓝至靛蓝渐变，并分布少量浅色星点；主体带白色高光和暖深色描边。"
+  ],
+  "feedback_zh": "成品已经具备很高的 Slack emoji 完成度：主体在小尺寸下醒目，单次反弹叙事清楚，背景、描边、高光与冲击线形成统一视觉。若要继续提升，可在触地瞬间加入更细微的压缩—回弹形变，并略提高关键运动段的帧率或缓动密度，让重量感与流畅度更进一步。"
+}

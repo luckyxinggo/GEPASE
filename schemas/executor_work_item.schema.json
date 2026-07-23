@@ -1,0 +1,102 @@
+{
+  "additionalProperties": false,
+  "description": "Oracle-free view exported to one isolated Agent Executor context.",
+  "properties": {
+    "fixture_refs": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Fixture Refs",
+      "type": "array"
+    },
+    "package_graph_ref": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Package Graph Ref"
+    },
+    "package_node_map": {
+      "additionalProperties": {
+        "type": "string"
+      },
+      "title": "Package Node Map",
+      "type": "object"
+    },
+    "prompt": {
+      "title": "Prompt",
+      "type": "string"
+    },
+    "requested_output": {
+      "additionalProperties": {
+        "type": "string"
+      },
+      "title": "Requested Output",
+      "type": "object"
+    },
+    "required_capabilities": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Required Capabilities",
+      "type": "array"
+    },
+    "role": {
+      "const": "executor",
+      "default": "executor",
+      "title": "Role",
+      "type": "string"
+    },
+    "schema_version": {
+      "default": "1.0.0",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "skill_ref": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Skill Ref"
+    },
+    "submission_schema_ref": {
+      "default": "schemas/execution_bundle.schema.json",
+      "title": "Submission Schema Ref",
+      "type": "string"
+    },
+    "task_id": {
+      "title": "Task Id",
+      "type": "string"
+    },
+    "timeout_seconds": {
+      "minimum": 1,
+      "title": "Timeout Seconds",
+      "type": "integer"
+    },
+    "work_id": {
+      "title": "Work Id",
+      "type": "string"
+    }
+  },
+  "required": [
+    "work_id",
+    "task_id",
+    "prompt",
+    "fixture_refs",
+    "requested_output",
+    "required_capabilities",
+    "timeout_seconds"
+  ],
+  "title": "ExecutorWorkItem",
+  "type": "object"
+}

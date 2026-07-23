@@ -1,0 +1,178 @@
+{
+  "artifact_sha256": "6de3bde3b12f85cc8c5015d25066b7e2926e39d19545e672be13e07991fa4291",
+  "assertions": [
+    {
+      "assertion_id": "emoji-bounce-container",
+      "detail": "通过内容/元数据检查",
+      "family": "artifact_metadata",
+      "measurements": {
+        "frame_count": 25,
+        "height": 128,
+        "loop_count": 0,
+        "unique_frame_count": 23,
+        "width": 128
+      },
+      "passed": true,
+      "weight": 0.2
+    },
+    {
+      "assertion_id": "emoji-bounce-duration",
+      "detail": "通过内容/元数据检查",
+      "family": "artifact_metadata",
+      "measurements": {
+        "maximum_ms": 2400,
+        "minimum_ms": 1,
+        "non_positive_frames": 0,
+        "total_duration_ms": 2250
+      },
+      "passed": true,
+      "weight": 0.2
+    },
+    {
+      "assertion_id": "emoji-bounce-subject",
+      "detail": "通过内容/元数据检查",
+      "family": "frame_content",
+      "measurements": {
+        "highlight_peak": 0.0013427734375,
+        "yellow_fraction_by_frame": [
+          0.0,
+          0.0,
+          0.0,
+          0.00048828125,
+          0.01129150390625,
+          0.03192138671875,
+          0.03387451171875,
+          0.03375244140625,
+          0.0340576171875,
+          0.03338623046875,
+          0.03753662109375,
+          0.03814697265625,
+          0.03662109375,
+          0.03631591796875,
+          0.03570556640625,
+          0.03399658203125,
+          0.03411865234375,
+          0.0338134765625,
+          0.03399658203125,
+          0.03369140625,
+          0.03399658203125,
+          0.0272216796875,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "passed": true,
+      "weight": 0.2
+    },
+    {
+      "assertion_id": "emoji-bounce-motion",
+      "detail": "未满足已冻结 expectation 的可执行判据",
+      "family": "temporal_sequence",
+      "measurements": {
+        "centroid_y": [
+          0.5,
+          5.0864864864864865,
+          13.104330708661417,
+          32.86456400742115,
+          58.04646840148699,
+          87.7518656716418,
+          90.69292929292929,
+          73.13644524236985,
+          64.5383275261324,
+          61.57858376511226,
+          64.5383275261324,
+          73.13644524236985,
+          87.62900188323917,
+          89.67917448405254,
+          86.98080614203455,
+          87.98285714285714,
+          87.35593220338983,
+          87.62900188323917,
+          87.70521541950113
+        ],
+        "direction_changes": 4
+      },
+      "passed": false,
+      "weight": 0.2
+    },
+    {
+      "assertion_id": "emoji-bounce-loop",
+      "detail": "通过内容/元数据检查",
+      "family": "temporal_sequence",
+      "measurements": {
+        "first_last_delta": 0.0,
+        "threshold": 20.511428833007805
+      },
+      "passed": true,
+      "weight": 0.2
+    }
+  ],
+  "case_id": "functional-train-emoji-bounce-001",
+  "common": {
+    "adjacent_pixel_deltas": [
+      0.13975016276041666,
+      0.213623046875,
+      0.7938232421875,
+      3.02105712890625,
+      5.795979817708333,
+      11.527262369791666,
+      14.00335693359375,
+      14.790262858072916,
+      6.290120442708333,
+      11.809549967447916,
+      7.900634765625,
+      4.519795735677083,
+      4.154012044270833,
+      7.902933756510417,
+      10.220357259114584,
+      3.2267862955729165,
+      3.87841796875,
+      2.0429484049479165,
+      1.2984619140625,
+      0.845458984375,
+      2.6662394205729165,
+      2.73626708984375,
+      2.89013671875,
+      2.5307210286458335
+    ],
+    "effective_fps": 11.11111111111111,
+    "file_size_bytes": 56482,
+    "first_last_pixel_delta": 0.0,
+    "frame_count": 25,
+    "frame_durations_ms": [
+      160,
+      80,
+      80,
+      80,
+      80,
+      80,
+      80,
+      80,
+      80,
+      80,
+      80,
+      80,
+      80,
+      80,
+      80,
+      80,
+      80,
+      80,
+      80,
+      80,
+      250,
+      80,
+      80,
+      80,
+      80
+    ],
+    "height": 128,
+    "loop_count": 0,
+    "mean_adjacent_pixel_delta": 5.216581556532117,
+    "total_duration_ms": 2250,
+    "unique_frame_count": 23,
+    "width": 128
+  },
+  "schema_version": "1.0.0"
+}

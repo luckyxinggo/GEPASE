@@ -1,0 +1,21 @@
+{
+  "candidate_snapshot_hash": "ce42d8a837acf9feda9706a3418fc26a77c497d9615079e616b5fdc6870ef64e",
+  "efficiency": 0.7595793333333334,
+  "evidence_refs": [
+    "artifacts/runs/r3-slack-gif-creator-paired/records/record-813bda120b03d345d046e2ee.json",
+    "artifacts/runs/r3-slack-gif-creator-paired/records/record-53a43d7fba9f788db0cfccd9.json",
+    "artifacts/runs/r3-slack-gif-creator-paired/deterministic/work-9a981b04ae2ac3fb91d31911.json",
+    "artifacts/runs/r3-slack-gif-creator-paired/grader-submissions/grader-work-ed109e4e4e306e72a7c4a6bb.json",
+    "artifacts/runs/r3-slack-gif-creator-paired/e0-package-record.json"
+  ],
+  "output_quality": 0.9355,
+  "package_quality": 1.0,
+  "pair_id": "pair-c99631e8bbb8ecc1465efcc2",
+  "reliability": 0.9,
+  "schema_version": "1.0.0",
+  "scoring_policy_ref": "configs/canaries/slack-gif-creator-r3-scoring.json",
+  "skill_gain": 0.00022500000000002517,
+  "task_correctness": 1.0,
+  "task_id": "functional-train-message-status-002",
+  "variant": "original"
+}

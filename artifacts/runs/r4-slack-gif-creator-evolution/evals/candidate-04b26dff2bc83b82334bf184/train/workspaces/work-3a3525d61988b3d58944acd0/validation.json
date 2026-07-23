@@ -1,0 +1,90 @@
+{
+  "output": "artifacts/runs/r4-slack-gif-creator-evolution/evals/candidate-04b26dff2bc83b82334bf184/train/workspaces/work-3a3525d61988b3d58944acd0/meeting_sync_reminder.gif",
+  "build": {
+    "path": "artifacts/runs/r4-slack-gif-creator-evolution/evals/candidate-04b26dff2bc83b82334bf184/train/workspaces/work-3a3525d61988b3d58944acd0/meeting_sync_reminder.gif",
+    "size_kb": 41.5791015625,
+    "size_mb": 0.040604591369628906,
+    "dimensions": "480x480",
+    "frame_count": 20,
+    "fps": 10,
+    "duration_seconds": 2.0,
+    "colors": 48
+  },
+  "package_validation": {
+    "file": "artifacts/runs/r4-slack-gif-creator-evolution/evals/candidate-04b26dff2bc83b82334bf184/train/workspaces/work-3a3525d61988b3d58944acd0/meeting_sync_reminder.gif",
+    "passes": true,
+    "width": 480,
+    "height": 480,
+    "size_kb": 41.5791015625,
+    "size_mb": 0.040604591369628906,
+    "frame_count": 13,
+    "duration_seconds": 2.6,
+    "fps": 5.0,
+    "is_emoji": false,
+    "optimal": null
+  },
+  "frame_analysis": {
+    "dimensions": [
+      480,
+      480
+    ],
+    "frame_count": 13,
+    "durations_ms": [
+      300,
+      100,
+      100,
+      100,
+      100,
+      100,
+      500,
+      100,
+      100,
+      100,
+      100,
+      100,
+      200
+    ],
+    "total_duration_ms": 2000,
+    "loop_seam_mean_abs_rgb_delta": 0.0,
+    "animated_pixel_count_max": 13549,
+    "primary_text_regions_stable": {
+      "SYNC": true,
+      "10:30": true
+    },
+    "primary_text_region_mean_abs_rgb_delta_max": {
+      "SYNC": 0.0,
+      "10:30": 0.6357
+    },
+    "declared_content_bounds_px": {
+      "SYNC": [
+        115,
+        116,
+        365,
+        205
+      ],
+      "10:30": [
+        100,
+        267,
+        380,
+        339
+      ]
+    },
+    "safe_margin_px": 26,
+    "contrast_ratios": {
+      "dark_on_ivory": 14.09,
+      "ivory_on_brick": 4.63
+    },
+    "file_size_bytes": 42577
+  },
+  "checks": {
+    "package_validator_passes": true,
+    "dimensions_exact": true,
+    "duration_exact": true,
+    "all_frame_holds_positive": true,
+    "primary_text_stable": true,
+    "animation_present": true,
+    "loop_seam_subtle": true,
+    "strong_dark_ivory_contrast": true,
+    "adequate_ivory_brick_contrast": true
+  }
+}

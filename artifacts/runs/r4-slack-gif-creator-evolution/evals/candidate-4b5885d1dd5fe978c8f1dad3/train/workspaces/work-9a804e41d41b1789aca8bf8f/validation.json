@@ -1,0 +1,67 @@
+{
+  "output": "satellite_orbit_ease.gif",
+  "build": {
+    "path": "satellite_orbit_ease.gif",
+    "size_kb": 34.7509765625,
+    "size_mb": 0.033936500549316406,
+    "dimensions": "128x128",
+    "frame_count": 24,
+    "fps": 10,
+    "duration_seconds": 2.4,
+    "colors": 96
+  },
+  "slack_validation": {
+    "file": "satellite_orbit_ease.gif",
+    "passes": true,
+    "width": 128,
+    "height": 128,
+    "size_kb": 34.7509765625,
+    "size_mb": 0.033936500549316406,
+    "frame_count": 24,
+    "duration_seconds": 2.4,
+    "fps": 10.0,
+    "is_emoji": true,
+    "optimal": true
+  },
+  "motion": {
+    "easing": "ease_out",
+    "path": "single continuous parabolic arc",
+    "start_center": [
+      15,
+      102
+    ],
+    "dock_center": [
+      105,
+      51
+    ],
+    "integer_tail_displacements": [
+      4.243,
+      2.828,
+      2.828,
+      1.414,
+      1.414,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    "rendered_tail_displacements": [
+      4.243,
+      2.828,
+      2.828,
+      1.414,
+      1.414,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    "rendered_final_cyan_centroid": [
+      105.228,
+      51.228
+    ],
+    "pixel_rounding_tolerance": 1.25
+  }
+}

@@ -1,0 +1,42 @@
+{
+  "schema_version": "1.0.0",
+  "old_route_scan": {
+    "patterns": [
+      "selected_action",
+      "expected_action",
+      "business result.json",
+      "src/gepase/experiments",
+      "improvement_or_equal",
+      "OptimizationReadiness",
+      "headless-calibrate"
+    ],
+    "executable_matches": 0,
+    "valid": true
+  },
+  "deleted_import_scan": {
+    "matches": 0,
+    "valid": true
+  },
+  "pricing_field_scan": {
+    "patterns": [
+      "api_cost",
+      "max_cost",
+      "estimated_cost"
+    ],
+    "matches": 0,
+    "valid": true
+  },
+  "authoritative_class_definitions": {
+    "EvalWorkItem": 1,
+    "ExecutionBundle": 1,
+    "PackageCandidate": 1,
+    "PackagePatch": 1,
+    "PackageGraph": 1,
+    "TaskScoreVector": 1,
+    "GateDecision": 1,
+    "EvolutionPoolEntry": 1,
+    "MergeParentSetSnapshot": 1
+  },
+  "work_submission_is_execution_bundle_alias": true,
+  "valid": true
+}
