@@ -4,7 +4,8 @@
     "Publish corrected R2-R5 evidence and R1-R5/S10 stage reports; omit superseded S-stage outputs and old proxy results.",
     "Keep GitHub evidence separate from the compact Python sdist/wheel.",
     "Use Agent-native by default and expose only a typed optional Headless routing boundary.",
-    "Do not run Agent roles, Headless APIs, candidate search, R3, or R4 during release verification."
+    "Do not run Agent roles, Headless APIs, candidate search, R3, or R4 during release verification.",
+    "Keep learning.html aligned with sealed v0.1 evidence and validate its local references and claim boundaries in the release Gate."
   ],
   "finished_commit": "ea84ea8983509a91770932b9e21a74cd43235810",
   "gate_results": [
@@ -14,7 +15,7 @@
       "status": "passed"
     },
     {
-      "detail": "Bilingual READMEs, visuals, links, commands, and claim boundaries are present.",
+      "detail": "Bilingual READMEs, visuals, the current learning guide, links, commands, and claim boundaries are present.",
       "gate_id": "S10-G02-bilingual-public-surface",
       "status": "passed"
     },
@@ -39,7 +40,7 @@
       "status": "passed"
     },
     {
-      "detail": "README results exactly retain the one-canary and SKILL.md-only accepted-edit limits.",
+      "detail": "README and learning-guide results retain the one-canary and SKILL.md-only accepted-edit limits.",
       "gate_id": "S10-G07-release-claim-boundary",
       "status": "passed"
     }
@@ -100,11 +101,12 @@
   ],
   "metrics": {
     "fresh_install_passed": true,
+    "learning_guide_valid": true,
     "machine_gates_passed": 7,
     "machine_gates_total": 7,
     "public_artifact_roots_verified": 9,
     "public_schemas": 32,
-    "pytest_passed": 152,
+    "pytest_passed": 153,
     "secret_scan_files": 5840,
     "secret_scan_findings": 0,
     "source_modules": 147,
@@ -115,7 +117,7 @@
     {
       "media_type": "application/json",
       "path": "preflight.json",
-      "sha256": "7263a8d3a280a3c5e052d8e9ac9774cbce6dd559e87a3d4e88ba8f6a4defaaed",
+      "sha256": "b6c0c5c2a6230b7fb1b1f6acda33ee673f5ec01b598bb5301349baab90380bef",
       "size_bytes": 582
     },
     {
@@ -127,20 +129,20 @@
     {
       "media_type": "application/xml",
       "path": "test-results.xml",
-      "sha256": "2d0f56d11840819b65ccb45487b621b22a3f2893609b2bda7c9823824fa2499f",
-      "size_bytes": 20617
+      "sha256": "50faef3bb1cc1c0abb9f74c0864bf4768faa54921b3282543027cad7c74c5fde",
+      "size_bytes": 20740
     },
     {
       "media_type": "application/json",
       "path": "release-manifest.json",
-      "sha256": "7b7809cc294f49147018e1ad2cb69c70afab969a776539e246efab587add809a",
-      "size_bytes": 3714
+      "sha256": "db26f7dbcb29d4858d8b7a3697007d8977eb76ed6be0ef449598f8a9c34787ca",
+      "size_bytes": 3956
     },
     {
       "media_type": "application/json",
       "path": "evidence/static-and-schema.json",
-      "sha256": "08992441179b9cd1743c527e50c10ef3326f3649aa545691ea34fdb892508e66",
-      "size_bytes": 360
+      "sha256": "97548ce10d3662772af8e12f940f6f298fe512f41a0245404c3c39a449597141",
+      "size_bytes": 602
     },
     {
       "media_type": "application/json",
@@ -163,20 +165,20 @@
     {
       "media_type": "application/json",
       "path": "evidence/reproduction-smoke.json",
-      "sha256": "5f16c4a129687a2e2b5e11ec87a2ba77e8f00f565b855d4aa7de6cf03c52ba87",
+      "sha256": "d0f65c4ba420383c62f73c0a535c84da7115c8bfef3f905033916003ac50b347",
       "size_bytes": 998
     },
     {
       "media_type": "application/json",
       "path": "evidence/s10-gates.json",
-      "sha256": "100486e7a38b19c3fe63d28b27c900f65f218b38013e92548cafaa8d9e4392bd",
-      "size_bytes": 1476
+      "sha256": "caabfb410a27f5de4f14644741bf8aed61637354ce9bf62e20db1f9508920613",
+      "size_bytes": 1515
     },
     {
       "media_type": "text/plain",
       "path": "commands.log",
-      "sha256": "9d437f57b7dec94c077eb6cd7e7e0a5e86c03783c9feef9fc46089a4707bcfc8",
-      "size_bytes": 434520
+      "sha256": "2a3c47e79916bec87ca3587d59fc7e8534f5b4909cd7f74339378e6abf14b350",
+      "size_bytes": 434536
     },
     {
       "media_type": "text/markdown",
@@ -187,15 +189,15 @@
     {
       "media_type": "text/markdown",
       "path": "stage-summary.md",
-      "sha256": "b0c6d816f6371e74d12d07cbda03e8ca4e0246d4da17a5bb71945b8bc9a78ba1",
-      "size_bytes": 282
+      "sha256": "f51fa7390699b43b28534336f738b50fb44b2e3d877c1732f47ccf8a566ce2ab",
+      "size_bytes": 307
     }
   ],
   "r3_reruns": 0,
   "r4_reruns": 0,
   "real_agent_runs": 0,
   "schema_version": "1.0.0",
-  "source_tree_hash": "017eb83c2581dceea761bc56e0994a43b0706bea9db0e5cbe8f09587e8102579",
+  "source_tree_hash": "9203b79d6a8240c10a958437aa0f6d47edd5b78113094b7788f534244c4eda25",
   "source_tree_hash_scope": "current curated dirty worktree; private/ignored content excluded",
   "stage_id": "S10",
   "started_from_commit": "ea84ea8983509a91770932b9e21a74cd43235810",

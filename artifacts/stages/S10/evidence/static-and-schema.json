@@ -1,4 +1,14 @@
 {
+  "learning_guide": {
+    "bytes": 101787,
+    "duplicate_ids": [],
+    "missing_anchors": [],
+    "missing_local_references": [],
+    "missing_markers": [],
+    "present_prohibited_markers": [],
+    "section_ids": 30,
+    "valid": true
+  },
   "module_audit": {
     "allowed_entrypoints": [
       "gepase.__main__"

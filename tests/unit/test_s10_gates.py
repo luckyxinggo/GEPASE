@@ -29,3 +29,16 @@ def test_structured_evidence_redacts_project_and_home_paths() -> None:
         },
         "items": ["<HOME>/private/input.txt", True],
     }
+
+
+def test_learning_guide_matches_current_release_contract() -> None:
+    gates = load_s10_gates()
+
+    audit = gates.learning_guide_audit()
+
+    assert audit["valid"] is True
+    assert audit["missing_markers"] == []
+    assert audit["present_prohibited_markers"] == []
+    assert audit["duplicate_ids"] == []
+    assert audit["missing_anchors"] == []
+    assert audit["missing_local_references"] == []

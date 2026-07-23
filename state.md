@@ -278,7 +278,7 @@ R1 已完成仓库整理与权威 Core 收敛；R2 的公开 canary 与 EvalPlan
 
 R5 已实现并封存只读的 `CanaryReportBuilder` Python API、`gepase report build/verify` CLI、中文自包含交互报告和六项独立机器 Gate。报告只消费已封存的 R2–R4 evidence，重新校验 19/429/877 个上游 artifact，复制并复验 9 个任务原生 GIF，导出 7 文件 deployable Package；本阶段 Agent/API 调用均为 0，未重跑 R3/R4、未重新搜索候选。6/6 R5 machine Gate、146 tests、Ruff、Pyright、secret/link/license/diff check 均已通过。Codex Browser 安全策略禁止自动打开本地 `file://`，未绕过；用户已在目标路径打开正式报告并确认布局、GIF case、Package Graph 控件和评分下拉正常，R5 完成并解锁 S10。
 
-S10 已完成面向 GitHub 的发布整理。仓库现在提供中英双语 README、真实 canary 图像与量化结果、架构/结果 SVG、安装与复现文档、Agent-native 默认路径、按角色可选 Headless 配置契约，以及 `report build/verify/deploy` 闭环。当前 S10 machine Gate 为 7/7：152 tests、147 个 source module、32 个公开 schema、9 个 R2–R5 公共证据根、生成后 secret/private-path scan 5,840 files/0 findings；Gate 封存后的独立全树复检为 5,845 files/0 findings。wheel 和精简 sdist 均在全新离线环境安装成功。S10 没有重跑 R3/R4、没有搜索候选，也没有调用 Agent 或 Headless/API。
+S10 已完成面向 GitHub 的发布整理。仓库现在提供中英双语 README、按 v0.1 封存证据更新的中文算法/使用学习手册、真实 canary 图像与量化结果、架构/结果 SVG、安装与复现文档、Agent-native 默认路径、按角色可选 Headless 配置契约，以及 `report build/verify/deploy` 闭环。当前 S10 machine Gate 为 7/7：153 tests、147 个 source module、32 个公开 schema、9 个 R2–R5 公共证据根、生成后 secret/private-path scan 5,840 files/0 findings；Gate 封存后的独立全树复检为 5,845 files/0 findings。wheel 和精简 sdist 均在全新离线环境安装成功。S10 没有重跑 R3/R4、没有搜索候选，也没有调用 Agent 或 Headless/API。
 
 项目现已在**一个公开 Skill、一个 frozen EvalPlan、一个模型快照和一次搜索运行**上获得真实优化证据：`candidate-04b26dff2bc83b82334bf184` 的 train mean delta 为 `+0.04190`，held-out validation mean delta 为 `+0.12427`，3/3 validation case 均严格胜出且保护阈值通过，已进入 deployable frontier。该结论足以证明当前 canary 上的应用主链有效，但不能外推为跨 Skill、跨模型或统计普遍性。严格 Gate 同时拒绝了 train `+0.07643`、validation `-0.19782` 且发生真实 timeout 的恢复分支，以及 validation 总均值 `+0.05828` 但 `emoji_animation=-0.09144` 越过 category floor 的 merge child。
 
@@ -308,7 +308,7 @@ S10 已完成面向 GitHub 的发布整理。仓库现在提供中英双语 READ
 | R3 真实 paired 执行与评分 | ✅ | 8 pairs/16 real E2+E3、16 blind Grader、6 AB/BA Comparator、8 graph-linked Analyzer、16 可重算向量；8/8 Gate 通过，original mean skill gain `-0.0455` |
 | R4 GEPA/Graph/Patch/多父 Merge | ✅ | 4 candidates、29 fresh case、73 隔离评测调用、1 个 deployable candidate；8/8 Gate 和 877-file run seal 通过，墙钟预算 overrun 如实记录 |
 | R5 全链 canary 与中文报告 | ✅ | 只读报告主链、20-file run seal、6/6 machine Gate、用户本地视觉/交互确认与 deployable Package 均已封存；未重复搜索 |
-| S10 开源发布 | ✅ | 中英双语 README、公开图像/结果、复现与 deploy 流程、role-scoped Headless 配置、精简发行包和 7/7 release Gate 已完成；未发布私有数据 |
+| S10 开源发布 | ✅ | 中英双语 README、v0.1 中文学习手册、公开图像/结果、复现与 deploy 流程、role-scoped Headless 配置、精简发行包和 7/7 release Gate 已完成；未发布私有数据 |
 
 ### 7.3 已有阶段的实现档案
 
@@ -747,7 +747,7 @@ RuntimeBudget 中 proposal/candidate/Agent-call/token 上限均未超出；总�
 
 **完成状态（2026-07-23）**：✅。中英双语 README、架构/结果 SVG、真实 R5 GIF、安装与复现文档、发布边界和 `gepase report deploy` 已落地；可选 Headless 只提供按角色、凭据环境变量引用式配置契约，默认仍是 Agent-native。确认未使用、重复或只服务撤销路径的 5 个零入边 source module 及旧阶段脚本/配置/artifact/result 已从发布树移出；相关测试改为即时 typed fixture，公开 evidence 收敛为 R1–R5/S10 stage 与 R2–R5 run。清理采用仓外可恢复归档，没有 `reset/clean`，没有修改 `skills_test/`。
 
-最终 S10-G01–G07 7/7 通过：Ruff、Pyright、152 tests、32 schema 幂等导出、Markdown link、license、生成前后两次 secret/private-path scan、artifact seal、R5 复算、offline mock、report deploy、compact wheel/sdist 和全新离线环境安装均有效。S10 调用计数为 Agent 0、Headless/API 0、candidate search 0；它验证发布工程，不新增算法效果结论。完整证据见 `artifacts/stages/S10/`。
+最终 S10-G01–G07 7/7 通过：Ruff、Pyright、153 tests、32 schema 幂等导出、学习手册事实/本地资源/锚点检查、Markdown link、license、生成前后两次 secret/private-path scan、artifact seal、R5 复算、offline mock、report deploy、compact wheel/sdist 和全新离线环境安装均有效。S10 调用计数为 Agent 0、Headless/API 0、candidate search 0；它验证发布工程，不新增算法效果结论。完整证据见 `artifacts/stages/S10/`。
 
 ## 9. 数据、仓库与隐私边界
 
@@ -828,7 +828,7 @@ skills_test/                         # Git ignored、只读私有 corpus
 
 截至 2026-07-23 的 v0.1/S10 完成快照：
 
-- S10 release Gate 7/7；Ruff 通过；Pyright 0 errors；pytest 152 passed；32 个公开 schema 幂等；生成后 secret/private-path scan 5,840 files/0 findings，封存后独立全树复检 5,845 files/0 findings；Markdown links、license、artifact hash、`git diff --check` 全部通过。
+- S10 release Gate 7/7；Ruff 通过；Pyright 0 errors；pytest 153 passed；32 个公开 schema 幂等；`learning.html` 当前事实、内部锚点和本地证据资源检查通过；生成后 secret/private-path scan 5,840 files/0 findings，封存后独立全树复检 5,845 files/0 findings；Markdown links、license、artifact hash、`git diff --check` 全部通过。
 - 发布树包含 147 个 source module；静态入边审计仅保留合法入口 `gepase.__main__` 为零入边，5 个确认未使用的旧 module 已移除，测试不再依赖旧 S2/S8 artifact。
 - wheel 与 244KB 级精简 sdist 已构建，并在全新离线虚拟环境完成安装、`--version`、根帮助与配置校验；公开 CLI 另通过 offline mock、report verify/deploy smoke。
 - 中英 README、架构/结果图、真实 GIF、复现文档、9 个上游公开证据根和发布 claim boundary 已校验；S10 未执行 Agent、Headless/API、候选搜索或 R3/R4 重跑。
@@ -855,6 +855,15 @@ skills_test/                         # Git ignored、只读私有 corpus
 ### 12.1 记录规则
 
 新记录放在最上方，至少说明：日期/标识、修改范围、行为变化、原因、验证、未解决问题。历史过程只保留摘要；详细证据以对应 artifact、stage report 和 Git diff 为准。
+
+### 2026-07-23 · learning-field-guide-v0.1-refresh
+
+- 修改范围：保留原有中文离线单页、固定目录、深浅主题、搜索、复制、Tab、响应式与打印风格，将 `learning.html` 从早期算法学习稿更新为与 v0.1 Core 和 R2–R5 封存证据一致的算法/实践手册；没有修改评测数据、候选、分数、deployable Package 或运行时主链。
+- 内容更新：新增“当前实证”“真实 Canary”“项目使用”三大部分；细化 GEPA 的 task-level local advantage、per-key/Pareto 与 deployable Gate 区别，按当前加权和实现解释 Graph-guided selector，使用现行 typed `PackagePatch` 操作/预算字段，并给出 Core 代码目录映射、E0–E3 证据边界、角色隔离、reference cache、Train/Frozen Validation 和三条 CLI 使用路径。
+- 实例与交互：直接复用 R5 封存的 no-skill/original/deployable 三个真实 GIF；加入 failure→graph node→bounded Patch→Gate 流程、六维 Validation 均值、4→4→3→1→1 Gate funnel，以及可切换 A/B/D/Merge 的候选实验台，解释 train 假阳性、均值为正但类别 floor 越界和 no-skill 反超 original。所有结论继续限定为一个 Skill、一个 EvalPlan、一个模型快照和一次搜索运行。
+- 漂移修正：删除“E0/E1 前筛后才能进 E2/E3”“三 split/三个 seed/三个 Skill 才算真实可用”“v0.1 必须完成图消融”等旧强制表述；明确 E1 默认关闭且不能 acceptance、当前使用 5 train + 3 frozen validation、图已进入决策但未证明优于替代 selector、跨 Skill Package merge 禁止。
+- 机器 Gate：`run_s10_gates.py` 新增 `learning_guide_audit`，S10-G02/G07 现在检查关键事实、禁用旧结论、重复 ID、内部锚点与本地资源；新增单元回归。S10-G01–G07 为 7/7，pytest 153 passed，learning guide audit valid，生成后 secret/private-path scan 5,840 files/0 findings，fresh offline install 通过；Agent/Headless/API/candidate search/R3/R4 调用均为 0，算法效果结论不变。
+- 视觉边界：HTML/parser、内部锚点、本地 GIF、inline JavaScript 和响应式规则已静态校验；内置 Browser 仍按安全策略拒绝自动导航本地 `file://`，没有绕过，因此最终桌面/移动视觉与交互仍需用户在本地页面做一次外部确认。
 
 ### 2026-07-23 · github-ci-generated-evidence-redaction-fix
 

@@ -6,7 +6,7 @@
       "status": "passed"
     },
     {
-      "detail": "Bilingual READMEs, visuals, links, commands, and claim boundaries are present.",
+      "detail": "Bilingual READMEs, visuals, the current learning guide, links, commands, and claim boundaries are present.",
       "gate_id": "S10-G02-bilingual-public-surface",
       "status": "passed"
     },
@@ -31,7 +31,7 @@
       "status": "passed"
     },
     {
-      "detail": "README results exactly retain the one-canary and SKILL.md-only accepted-edit limits.",
+      "detail": "README and learning-guide results retain the one-canary and SKILL.md-only accepted-edit limits.",
       "gate_id": "S10-G07-release-claim-boundary",
       "status": "passed"
     }

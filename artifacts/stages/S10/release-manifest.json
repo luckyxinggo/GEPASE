@@ -22,6 +22,16 @@
     "README.md",
     "README_zh.md"
   ],
+  "learning_guide": {
+    "bytes": 101787,
+    "duplicate_ids": [],
+    "missing_anchors": [],
+    "missing_local_references": [],
+    "missing_markers": [],
+    "present_prohibited_markers": [],
+    "section_ids": 30,
+    "valid": true
+  },
   "private_paths_published": 0,
   "private_skills_published": 0,
   "public_runs": {
@@ -103,14 +113,14 @@
     "deploy": {
       "candidate_id": "candidate-04b26dff2bc83b82334bf184",
       "files": 7,
-      "output": "<PROJECT_ROOT>/artifacts/local/s10-release-sl2omw39/deployed-package",
+      "output": "<PROJECT_ROOT>/artifacts/local/s10-release-bsu93z1k/deployed-package",
       "valid": true
     },
     "deployed_files": 7,
     "mock": {
       "config_hash": "dc83c452b115095fc7a221e51f9c560281e1542ed13dadd358b999e75e1ef122",
       "schema_version": "1.0.0",
-      "source_tree_hash": "017eb83c2581dceea761bc56e0994a43b0706bea9db0e5cbe8f09587e8102579",
+      "source_tree_hash": "9203b79d6a8240c10a958437aa0f6d47edd5b78113094b7788f534244c4eda25",
       "summary": {
         "passed": 2,
         "total": 2

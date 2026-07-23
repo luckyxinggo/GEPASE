@@ -10,6 +10,7 @@ import sys
 import tempfile
 from dataclasses import dataclass
 from datetime import UTC, datetime
+from html.parser import HTMLParser
 from pathlib import Path
 from typing import Any
 
@@ -160,6 +161,81 @@ def module_audit() -> dict[str, object]:
     }
 
 
+def learning_guide_audit() -> dict[str, object]:
+    """Check that the public field guide matches the sealed v0.1 evidence boundary."""
+
+    path = ROOT / "learning.html"
+    if not path.is_file():
+        return {"valid": False, "missing_file": True}
+    content = path.read_text(encoding="utf-8")
+    required_markers = (
+        "GEPASE v0.1",
+        "+0.12427",
+        "3 / 3",
+        "TaskScoreVector",
+        "E1 仍作为",
+        "当前结论边界",
+        'data-candidate="merge"',
+        "uv run gepase report verify",
+        "跨 Skill Package merge 被明确禁止",
+    )
+    prohibited_markers = (
+        "至少三个非 toy Skill",
+        "不代表 GEPASE 已经获得实验提升",
+        '"op"</span>: <span class="st">"move_node"',
+        '"op"</span>: <span class="st">"patch_script"',
+    )
+
+    class GuideParser(HTMLParser):
+        def __init__(self) -> None:
+            super().__init__()
+            self.ids: list[str] = []
+            self.references: list[str] = []
+
+        def handle_starttag(self, tag: str, attrs: list[tuple[str, str | None]]) -> None:
+            attributes = dict(attrs)
+            if attributes.get("id"):
+                self.ids.append(str(attributes["id"]))
+            key = "src" if tag in {"img", "script"} else "href" if tag == "a" else None
+            if key and attributes.get(key):
+                self.references.append(str(attributes[key]))
+
+    parser = GuideParser()
+    parser.feed(content)
+    duplicate_ids = sorted({item for item in parser.ids if parser.ids.count(item) > 1})
+    missing_anchors = sorted(
+        reference
+        for reference in parser.references
+        if reference.startswith("#") and reference[1:] not in parser.ids
+    )
+    missing_local_references: list[str] = []
+    for reference in parser.references:
+        if reference.startswith(("#", "http:", "https:", "data:", "mailto:")):
+            continue
+        relative = reference.split("#", 1)[0]
+        if relative and not (path.parent / relative).is_file():
+            missing_local_references.append(reference)
+
+    missing_markers = [marker for marker in required_markers if marker not in content]
+    present_prohibited = [marker for marker in prohibited_markers if marker in content]
+    return {
+        "valid": not (
+            missing_markers
+            or present_prohibited
+            or duplicate_ids
+            or missing_anchors
+            or missing_local_references
+        ),
+        "bytes": path.stat().st_size,
+        "section_ids": len(parser.ids),
+        "missing_markers": missing_markers,
+        "present_prohibited_markers": present_prohibited,
+        "duplicate_ids": duplicate_ids,
+        "missing_anchors": missing_anchors,
+        "missing_local_references": sorted(set(missing_local_references)),
+    }
+
+
 def main() -> int:
     if STAGE_ROOT.exists():
         shutil.rmtree(STAGE_ROOT)
@@ -215,6 +291,7 @@ def main() -> int:
     )
     present_legacy = [item for item in legacy_paths if (ROOT / item).exists()]
     module_result = module_audit()
+    learning_guide = learning_guide_audit()
     deleted_entries = sum(line.startswith(" D ") for line in status.stdout.splitlines())
     cleanup = {
         "schema_version": "1.0.0",
@@ -509,6 +586,7 @@ def main() -> int:
             "single_canary_scope": True,
             "accepted_changed_files": report_data["deployable"]["files"][1]["path"],
         },
+        "learning_guide": learning_guide,
         "private_paths_published": 0,
         "private_skills_published": 0,
         "agent_calls_in_s10": 0,
@@ -524,6 +602,7 @@ def main() -> int:
             "schema_hashes_stable": schema_before == schema_after,
             "schema_count": len(schema_after),
             "module_audit": module_result,
+            "learning_guide": learning_guide,
         },
     )
     pre_secret_payload = parse_json(pre_secret)
@@ -604,9 +683,14 @@ def main() -> int:
         },
         {
             "gate_id": "S10-G02-bilingual-public-surface",
-            "status": "passed" if links.ok and claims_bounded and root_help.ok else "failed",
+            "status": (
+                "passed"
+                if links.ok and claims_bounded and root_help.ok and learning_guide["valid"]
+                else "failed"
+            ),
             "detail": (
-                "Bilingual READMEs, visuals, links, commands, and claim boundaries are present."
+                "Bilingual READMEs, visuals, the current learning guide, links, commands, and "
+                "claim boundaries are present."
             ),
         },
         {
@@ -665,12 +749,13 @@ def main() -> int:
             "gate_id": "S10-G07-release-claim-boundary",
             "status": "passed"
             if claims_bounded
+            and learning_guide["valid"]
             and report_data["headline"]["single_canary_scope"]
             and report_data["deployable"]["changed_files"] == ["SKILL.md"]
             else "failed",
             "detail": (
-                "README results exactly retain the one-canary and SKILL.md-only accepted-edit "
-                "limits."
+                "README and learning-guide results retain the one-canary and SKILL.md-only "
+                "accepted-edit limits."
             ),
         },
     ]
@@ -704,6 +789,7 @@ def main() -> int:
         f"- Machine Gates: {sum(item['status'] == 'passed' for item in gates)}/{len(gates)}\n"
         f"- Full tests: {pytest_count} passed\n"
         f"- Public schemas: {len(schema_after)} stable exports\n"
+        f"- Learning guide: {'passed' if learning_guide['valid'] else 'failed'}\n"
         f"- Secret findings: {len(secret_payload.get('findings', []))}\n"
         f"- Fresh wheel install: {'passed' if fresh_install['valid'] else 'failed'}\n"
         "- Agent/API/search calls in S10: 0/0/0\n"
@@ -746,6 +832,7 @@ def main() -> int:
             "validation_mean_delta": report_data["headline"]["validation_mean_delta"],
             "validation_wins": report_data["headline"]["validation_wins"],
             "fresh_install_passed": bool(fresh_install["valid"]),
+            "learning_guide_valid": bool(learning_guide["valid"]),
         },
         "known_issues": [
             (
@@ -778,6 +865,10 @@ def main() -> int:
             (
                 "Do not run Agent roles, Headless APIs, candidate search, R3, or R4 during "
                 "release verification."
+            ),
+            (
+                "Keep learning.html aligned with sealed v0.1 evidence and validate its local "
+                "references and claim boundaries in the release Gate."
             ),
         ],
         "unlocks": ["GitHub v0.1 release"] if all_passed else [],

@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="GEPASE 算法学习手册：GEPA、SkillOpt、SkillLens、skill-creator、Darwin-skill、Heuristic Learning 与完整 Skill Package 进化。">
+  <meta name="description" content="GEPASE v0.1 算法与实践手册：GEPA、SkillOpt、Package Graph、真实 Agent Eval、结构化 Patch、严格 Gate、Canary 证据与 CLI 使用。">
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%23e84b31'/%3E%3Ctext x='32' y='43' text-anchor='middle' font-family='Arial' font-size='34' font-weight='700' fill='white'%3EG%3C/text%3E%3C/svg%3E">
   <title>GEPASE · 算法学习手册</title>
   <style>
@@ -270,6 +270,57 @@
     .metric strong { color: var(--accent); font-size: 30px; }
     .metric span { color: var(--muted); font-size: 13px; }
 
+    .metric-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 12px;
+      margin: 22px 0;
+    }
+
+    .metric-card {
+      padding: 18px;
+      border: 1px solid var(--line);
+      border-radius: 15px;
+      background: var(--panel);
+    }
+
+    .metric-card strong {
+      display: block;
+      color: var(--accent);
+      font-size: 28px;
+      line-height: 1.2;
+    }
+
+    .metric-card span { color: var(--muted); font-size: 12px; }
+
+    .evidence-lane {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 10px;
+      margin: 24px 0;
+    }
+
+    .lane-item {
+      position: relative;
+      padding: 18px 16px;
+      border-top: 4px solid var(--accent-2);
+      background: var(--panel);
+    }
+
+    .lane-item::after {
+      content: "";
+      position: absolute;
+      top: -4px;
+      right: -10px;
+      width: 20px;
+      height: 4px;
+      background: var(--accent-2);
+    }
+
+    .lane-item:last-child::after { display: none; }
+    .lane-item b { display: block; }
+    .lane-item small { color: var(--muted); }
+
     .callout {
       margin: 22px 0;
       padding: 18px 20px;
@@ -439,6 +490,164 @@
     .node.good { border-color: var(--accent-2); }
     .node small { display: block; margin-top: 5px; color: var(--muted); }
 
+    .score-board {
+      display: grid;
+      gap: 11px;
+      margin: 20px 0;
+    }
+
+    .score-row {
+      display: grid;
+      grid-template-columns: minmax(110px, .8fr) minmax(220px, 2.4fr) 64px;
+      gap: 12px;
+      align-items: center;
+    }
+
+    .score-row > span:first-child { color: var(--muted); font-size: 13px; }
+    .score-row output { text-align: right; font: 700 13px "SFMono-Regular", Consolas, monospace; }
+    .score-track { height: 12px; overflow: hidden; border-radius: 999px; background: var(--panel-2); }
+    .score-fill { display: block; height: 100%; border-radius: inherit; background: var(--accent-2); }
+    .score-fill.warn { background: var(--accent); }
+    .score-fill.neutral { background: var(--accent-3); }
+
+    .candidate-lab {
+      margin: 24px 0;
+      padding: 22px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: var(--panel);
+    }
+
+    .candidate-controls {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 18px;
+    }
+
+    .candidate-btn {
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      padding: 8px 12px;
+      color: var(--muted);
+      background: var(--bg);
+      cursor: pointer;
+    }
+
+    .candidate-btn.active {
+      color: #fff;
+      border-color: var(--accent-2);
+      background: var(--accent-2);
+    }
+
+    .candidate-readout {
+      display: grid;
+      grid-template-columns: minmax(0, 1.5fr) minmax(230px, 1fr);
+      gap: 20px;
+      align-items: start;
+    }
+
+    .delta-scale {
+      position: relative;
+      height: 34px;
+      margin-top: 12px;
+      border-radius: 999px;
+      background: linear-gradient(90deg,
+        color-mix(in srgb, var(--accent) 18%, var(--panel)) 0 50%,
+        color-mix(in srgb, var(--accent-2) 18%, var(--panel)) 50% 100%);
+    }
+
+    .delta-scale::before {
+      content: "0";
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      color: var(--muted);
+      font: 11px "SFMono-Regular", Consolas, monospace;
+    }
+
+    .delta-marker {
+      position: absolute;
+      top: 5px;
+      width: 4px;
+      height: 24px;
+      border-radius: 999px;
+      background: var(--ink);
+      transition: left .25s ease;
+    }
+
+    .candidate-status {
+      display: inline-block;
+      padding: 5px 9px;
+      border-radius: 999px;
+      color: var(--panel);
+      background: var(--accent-2);
+      font-size: 12px;
+      font-weight: 800;
+    }
+
+    .candidate-status.rejected { background: var(--accent); }
+
+    .case-gallery {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+      margin: 22px 0;
+    }
+
+    .case-gallery figure { margin: 0; }
+    .case-gallery img {
+      display: block;
+      width: 100%;
+      aspect-ratio: 1;
+      object-fit: contain;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      background: var(--panel-2);
+    }
+    .case-gallery figcaption { margin-top: 8px; color: var(--muted); font-size: 12px; text-align: center; }
+
+    .role-flow {
+      display: grid;
+      grid-template-columns: repeat(5, minmax(130px, 1fr));
+      gap: 10px;
+      margin: 22px 0;
+      overflow-x: auto;
+    }
+
+    .role {
+      min-width: 130px;
+      padding: 15px;
+      border-bottom: 3px solid var(--accent-3);
+      background: var(--panel);
+    }
+
+    .role b { display: block; }
+    .role small { color: var(--muted); }
+
+    .file-map { margin: 20px 0; border-top: 1px solid var(--line); }
+    .file-row {
+      display: grid;
+      grid-template-columns: minmax(230px, .9fr) minmax(0, 1.5fr);
+      gap: 18px;
+      padding: 12px 0;
+      border-bottom: 1px solid var(--line);
+    }
+    .file-row code { color: var(--accent-2); font-weight: 700; }
+    .file-row span { color: var(--muted); }
+
+    .truth-label {
+      display: inline-block;
+      margin-right: 6px;
+      padding: 3px 7px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      color: var(--muted);
+      font-size: 11px;
+      font-weight: 800;
+    }
+
     details {
       margin: 10px 0;
       border: 1px solid var(--line);
@@ -485,6 +694,8 @@
       .grid-3 { grid-template-columns: 1fr 1fr; }
       .pipeline { grid-template-columns: repeat(3, 1fr); }
       .step:nth-child(3)::after { display: none; }
+      .metric-grid, .evidence-lane { grid-template-columns: repeat(2, 1fr); }
+      .role-flow { grid-template-columns: repeat(3, minmax(130px, 1fr)); }
     }
 
     @media (max-width: 780px) {
@@ -503,7 +714,8 @@
         backdrop-filter: blur(16px);
       }
       main { width: 100%; padding: 22px 16px 72px; }
-      .grid-2, .grid-3, .graph-demo { grid-template-columns: 1fr; }
+      .grid-2, .grid-3, .graph-demo, .metric-grid, .evidence-lane,
+      .candidate-readout, .case-gallery, .file-row { grid-template-columns: 1fr; }
       .section-head { grid-template-columns: 52px 1fr; }
       .num { width: 46px; height: 46px; border-radius: 13px; }
       .pipeline { grid-template-columns: 1fr; }
@@ -511,6 +723,9 @@
       .hero { padding: 30px 22px; }
       h1 { font-size: 42px; }
       table { display: block; overflow-x: auto; white-space: nowrap; }
+      .lane-item::after { display: none; }
+      .score-row { grid-template-columns: 92px minmax(130px, 1fr) 52px; }
+      .role-flow { grid-template-columns: 1fr; overflow-x: visible; }
     }
 
     @media print {
@@ -545,6 +760,7 @@
 
       <nav id="toc">
         <a href="#overview">01 · 项目问题</a>
+        <a href="#current">NOW · 当前实证</a>
         <a href="#map">02 · 算法地图</a>
         <a href="#gepa">03 · GEPA 深入</a>
         <a href="#skillopt">04 · SkillOpt</a>
@@ -555,7 +771,9 @@
         <a href="#comparison">09 · 横向比较</a>
         <a href="#gepase">10 · GEPASE 设计</a>
         <a href="#graph">11 · Package Graph</a>
+        <a href="#case-study">LAB · 真实 Canary</a>
         <a href="#eval">12 · Eval 与统计</a>
+        <a href="#usage">RUN · 项目使用</a>
         <a href="#interview">13 · 面试问答</a>
         <a href="#sources">14 · 一手资料</a>
       </nav>
@@ -582,7 +800,45 @@
           <span class="tag">Package Graph</span>
           <span class="tag">LLM Reflection</span>
           <span class="tag">Executable Evals</span>
-          <span class="tag">Open-source Research</span>
+          <span class="tag">Open-source v0.1</span>
+        </div>
+      </section>
+
+      <section class="searchable" id="current">
+        <div class="section-head">
+          <div class="num">NOW</div>
+          <div>
+            <h2>先看当前项目究竟做到了哪一步</h2>
+            <p class="subtitle">学习设计时必须把“代码存在”“机制经过测试”“真实效果已经观察到”分开。</p>
+          </div>
+        </div>
+
+        <div class="metric-grid" aria-label="GEPASE v0.1 封存结果">
+          <div class="metric-card"><strong>+0.04190</strong><span>deployable candidate · train mean delta</span></div>
+          <div class="metric-card"><strong>+0.12427</strong><span>frozen validation · mean paired delta</span></div>
+          <div class="metric-card"><strong>3 / 3</strong><span>held-out validation case wins</span></div>
+          <div class="metric-card"><strong>1 / 4</strong><span>proposed candidates accepted</span></div>
+        </div>
+
+        <table>
+          <thead><tr><th>结论层级</th><th>当前证据</th><th>不能偷换成什么</th></tr></thead>
+          <tbody>
+            <tr><td><span class="truth-label">IMPLEMENTED</span>代码已实现</td><td>Package IR/Graph、Eval WorkItem、TaskScoreVector、GEPA adapter、typed Patch、Gate、merge、report/deploy。</td><td>不能因为类和 CLI 存在，就说算法有效。</td></tr>
+            <tr><td><span class="truth-label">TESTED</span>工程机制通过测试</td><td>单元/集成/故障/契约测试，artifact hash、resume/cache、角色隔离、merge conflict 与发布安全检查。</td><td>不能因为 152 个测试通过，就说 Skill 质量提升。</td></tr>
+            <tr><td><span class="truth-label">OBSERVED</span>效果已观察</td><td>一个 pinned 公开 Skill、一个 frozen EvalPlan、一个模型快照、一次真实搜索中出现严格 held-out 提升。</td><td>不能外推到所有 Skill、模型、seed，也不能宣称图或跨文件编辑已经普遍优越。</td></tr>
+          </tbody>
+        </table>
+
+        <div class="evidence-lane" aria-label="R2 到 R5 的证据链">
+          <div class="lane-item"><b>R2 · EvalPlan</b><small>生成、人工审核并冻结 5 train + 3 validation functional cases</small></div>
+          <div class="lane-item"><b>R3 · Paired Eval</b><small>no-skill/original 隔离执行；original 平均 Skill gain 为 −0.0455</small></div>
+          <div class="lane-item"><b>R4 · Evolution</b><small>3 个 mutation branch + 1 个同 Package merge child，全部走唯一 Core</small></div>
+          <div class="lane-item"><b>R5 · Report</b><small>封存 raw evidence、9 个真实 GIF、六维评分、Gate 与 deployable Package</small></div>
+        </div>
+
+        <div class="callout yellow">
+          <strong>最值得记住的负结果：</strong>
+          原始 Skill 相比 no-skill 没有天然优势，说明“能被 Agent 使用”与“能改善任务结果”是两回事；merge child 的 validation 总均值为正，也仍因类别回归越过 floor 被拒绝，说明平均分不能凌驾于保护目标。
         </div>
       </section>
 
@@ -675,6 +931,20 @@
           GEPA 不是“随机遗传算法 + LLM”。变异不是盲目字符扰动，而是 LLM 阅读轨迹和反馈后的定向诊断；遗传性主要体现在候选继承、变异、融合与多代谱系。
         </div>
 
+        <h3>3.2.1 为什么要保留 task-level feedback？</h3>
+        <p>
+          对父代 p、候选 c 和任务 i，最基本的局部信号是
+          <strong>Δ<sub>i</sub>(c,p)=s<sub>i</sub>(c)−s<sub>i</sub>(p)</strong>。只保存平均分
+          Δ̄ 会把“修好一个困难任务、破坏另一个高风险任务”的结构抹平。GEPA 式搜索保存每个任务的输出、反馈和局部优势，父代选择和反思模型才能知道候选究竟擅长什么。
+        </p>
+        <div class="formula">local advantage Δᵢ(c,p) = scoreᵢ(c) − scoreᵢ(p)　　|　　mean delta Δ̄ = (1 / n) Σᵢ Δᵢ</div>
+
+        <div class="grid-3">
+          <article class="card"><h4>搜索信号</h4><p>用 task-level 局部优势保留专长候选，避免最高平均分候选垄断全部父代机会。</p></article>
+          <article class="card"><h4>反思信号</h4><p>向 Reflection 提供失败任务的 assertion、grader、comparator、trace 和 graph target，而不是只给“0.73”。</p></article>
+          <article class="card"><h4>接受信号</h4><p>train 的严格改善只授予 validation 资格；deployable 仍由冻结 held-out Gate 决定。</p></article>
+        </div>
+
         <h3>3.3 Per-key Pareto Frontier 到底是什么？</h3>
         <p>
           当前 GEPA 为每个 frontier key 记录 best-in-class 候选。key 可以是验证样本、显式目标，或者两者组合。候选在多少个 key 上处于最佳，会影响它被选作父代的概率。
@@ -702,6 +972,13 @@
           <li><strong>hybrid frontier：</strong>同时考虑任务和目标，GEPASE 的初始主设置。</li>
           <li><strong>true non-dominated selector：</strong>保留全部非支配候选，可加入 crowding distance 避免候选坍缩。</li>
         </ul>
+
+        <h3>3.3.1 Pareto 支配与 GEPASE 的严格接受不是一回事</h3>
+        <p>
+          若候选 a 在所有目标上不差于 b，并至少一个目标严格更好，则 a 支配 b。Pareto pool 解决的是“哪些候选值得继续探索”；Validation Gate 解决的是“哪个候选可以部署”。一个候选可以在 pool 中有局部价值，但只要 held-out 保护目标越界，就不能进入 deployable frontier。
+        </p>
+        <div class="formula">a ≻ b ⇔ (∀j, fⱼ(a) ≥ fⱼ(b)) ∧ (∃k, fₖ(a) &gt; fₖ(b))</div>
+        <div class="formula">deployable ⇔ (∃ primary Δ &gt; ε) ∧ (∀ protected objective, Δ ≥ registered floor)</div>
 
         <h3>3.4 反思式变异</h3>
         <div class="tabs" role="tablist" aria-label="GEPA 变异信息">
@@ -731,47 +1008,50 @@
           <div class="node"><b>子代 C</b><small>重新通过全部 Gate</small></div>
         </div>
 
-        <h3>3.6 用当前 GEPA API 表达 GEPASE</h3>
+        <h3>3.6 GEPA 在当前 GEPASE 中的真实边界</h3>
+        <p>
+          项目锁定 <code>gepa==0.1.4</code>，但没有让 GEPA 直接读写 Skill 目录。Core 先把
+          <code>PackageCandidate</code> 投影为稳定 component map，再由 <code>GEPASEAdapter</code>
+          规划 candidate-only WorkItem、回收 TaskScoreVector，并把 task-level score/feedback 映射到 GEPA 的候选选择骨架。文件落盘、Patch、Graph、Gate 和 deployable frontier 都仍由 GEPASE 拥有。
+        </p>
         <div class="code-wrap">
-          <div class="code-head"><span>Python · 概念性集成骨架</span><button class="copy">复制</button></div>
-          <pre><code><span class="kw">from</span> gepa.optimize_anything <span class="kw">import</span> (
-    optimize_anything, GEPAConfig, EngineConfig, ReflectionConfig
+          <div class="code-head"><span>Python · 当前 Core 的角色分工（简化示意）</span><button class="copy">复制</button></div>
+          <pre><code><span class="kw">from</span> pathlib <span class="kw">import</span> Path
+<span class="kw">from</span> gepase.optimizer.candidate <span class="kw">import</span> build_seed_candidate
+<span class="kw">from</span> gepase.optimizer.gepa_adapter <span class="kw">import</span> GEPASEAdapter
+
+root = Path(<span class="st">"."</span>)
+seed = build_seed_candidate(
+    root,
+    <span class="st">"benchmarks/canaries/slack-gif-creator/package"</span>,
+    run_id=<span class="st">"my-run"</span>,
 )
 
-seed = {
-    <span class="st">"metadata_and_routing"</span>: load_routing(seed_path),
-    <span class="st">"skill_instructions"</span>: load_skill_md(seed_path),
-    <span class="st">"reference_bundle"</span>: load_references(seed_path),
-    <span class="st">"script_bundle"</span>: load_scripts(seed_path),
-}
-
-config = GEPAConfig(
-    engine=EngineConfig(
-        max_metric_calls=200,
-        candidate_selection_strategy=<span class="st">"pareto"</span>,
-        frontier_type=<span class="st">"hybrid"</span>,
-        acceptance_criterion=ValidationGatedAcceptance(),
-        cache_evaluation=True,
-    ),
-    reflection=ReflectionConfig(
-        reflection_lm=<span class="st">"provider/strong-reflection-model"</span>
-    ),
+adapter = GEPASEAdapter(
+    project_root=root,
+    manifest=Path(<span class="st">"path/to/frozen-eval-manifest.json"</span>),
+    eval_run_dir=Path(<span class="st">"artifacts/local/my-run/evals"</span>),
 )
 
-result = optimize_anything(
-    seed_candidate=seed,
-    evaluator=evaluate_package,
-    dataset=train_tasks,
-    valset=validation_tasks,
-    objective=<span class="st">"Improve task utility while preserving package integrity."</span>,
-    config=config,
+<span class="cm"># Adapter 只规划 typed work；Agent Host 在独立上下文执行。</span>
+work_items = adapter.plan_evaluations(
+    batch=train_cases,
+    candidate=seed,
+    split=<span class="st">"train"</span>,
+    tier=EvidenceTier.E2_DELEGATED,
+    candidate_ref=<span class="st">"candidates/seed"</span>,
+    host=<span class="st">"agent-native"</span>, model=<span class="st">"pinned-model"</span>, seed=42,
 )
 
-export_package(result.best_candidate, output_dir=<span class="st">"best_skill_package"</span>)</code></pre>
+<span class="cm"># Evidence 回收后再由 Core 评分、选择、Patch 与 Gate。</span>
+evaluation = adapter.ingest_evidence(
+    seed, train_cases, split=<span class="st">"train"</span>,
+    requested_tier=EvidenceTier.E2_DELEGATED,
+)</code></pre>
         </div>
 
         <p class="callout yellow">
-          代码中的 ValidationGatedAcceptance、load_routing 和 evaluate_package 是 GEPASE 需要实现的扩展；接口细节应以项目锁定的 GEPA 版本为准，并通过集成测试防止上游 API 演化导致结果漂移。
+          这段代码用于理解边界，不是完整优化的一键脚本。真实运行还需要 EvalPlan onboarding、隔离的 Agent submissions、PackagePatch、Gate 和 checkpoint/resume；具体参数以仓库当前 CLI 与 schema 为准。
         </p>
       </section>
 
@@ -806,27 +1086,46 @@ export_package(result.best_candidate, output_dir=<span class="st">"best_skill_pa
 
         <h3>4.3 GEPASE 的结构化 Patch</h3>
         <div class="code-wrap">
-          <div class="code-head"><span>JSON · PackagePatch 示例</span><button class="copy">复制</button></div>
+          <div class="code-head"><span>JSON · 当前 PackagePatch 字段示意（hash 已缩写）</span><button class="copy">复制</button></div>
           <pre><code>{
-  <span class="st">"parent_snapshot"</span>: <span class="st">"sha256:8cc..."</span>,
-  <span class="st">"edit_budget"</span>: 2,
+  <span class="st">"schema_version"</span>: <span class="st">"1.0.0"</span>,
+  <span class="st">"patch_id"</span>: <span class="st">"patch-smooth-stop"</span>,
+  <span class="st">"proposal_work_id"</span>: <span class="st">"proposal-work-a"</span>,
+  <span class="st">"base_candidate_id"</span>: <span class="st">"candidate-seed"</span>,
+  <span class="st">"base_snapshot_hash"</span>: <span class="st">"64-hex-snapshot-hash..."</span>,
+  <span class="st">"base_content_hash"</span>: <span class="st">"64-hex-content-hash..."</span>,
+  <span class="st">"selector"</span>: <span class="st">"graph_guided"</span>,
+  <span class="st">"selected_node_ids"</span>: [<span class="st">"node-smooth-stop"</span>],
   <span class="st">"operations"</span>: [
     {
-      <span class="st">"op"</span>: <span class="st">"move_node"</span>,
-      <span class="st">"node_id"</span>: <span class="st">"section:common-domain-rules"</span>,
-      <span class="st">"to"</span>: <span class="st">"references/domain.md#rules"</span>,
-      <span class="st">"evidence_eval_ids"</span>: [<span class="st">"E17"</span>, <span class="st">"E24"</span>],
-      <span class="st">"expected_benefit"</span>: <span class="st">"Reduce always-loaded context."</span>
-    },
-    {
-      <span class="st">"op"</span>: <span class="st">"patch_script"</span>,
-      <span class="st">"path"</span>: <span class="st">"scripts/parse.py"</span>,
-      <span class="st">"target"</span>: <span class="st">"function:parse_rows"</span>,
-      <span class="st">"reason"</span>: <span class="st">"Empty rows fail deterministic assertions."</span>
+      <span class="st">"op"</span>: <span class="st">"replace_markdown_block"</span>,
+      <span class="st">"operation_id"</span>: <span class="st">"op-smooth-stop"</span>,
+      <span class="st">"path"</span>: <span class="st">"SKILL.md"</span>,
+      <span class="st">"target_node_id"</span>: <span class="st">"node-smooth-stop"</span>,
+      <span class="st">"precondition_hash"</span>: <span class="st">"64-hex-node-hash..."</span>,
+      <span class="st">"replacement"</span>: <span class="st">"...bounded instruction..."</span>,
+      <span class="st">"evidence_refs"</span>: [<span class="st">"analysis-ease-out-tail-regression"</span>],
+      <span class="st">"expected_benefit"</span>: <span class="st">"Prevent late-tail displacement increase."</span>,
+      <span class="st">"regression_risk"</span>: <span class="st">"medium"</span>,
+      <span class="st">"rationale"</span>: <span class="st">"E3 and blind grading locate the same bounded gap."</span>
     }
-  ]
+  ],
+  <span class="st">"edit_budget"</span>: {
+    <span class="st">"max_operations"</span>: 1,
+    <span class="st">"max_changed_files"</span>: 1,
+    <span class="st">"max_total_replacement_chars"</span>: 1600,
+    <span class="st">"allow_script_edits"</span>: <span class="kw">false</span>,
+    <span class="st">"allow_file_topology_edits"</span>: <span class="kw">false</span>
+  },
+  <span class="st">"summary"</span>: <span class="st">"Strengthen rendered-frame smooth-stop acceptance checks."</span>
 }</code></pre>
         </div>
+
+        <p class="callout yellow">
+          当前 schema 支持 <code>replace_markdown_block</code>、<code>insert_reference</code>、<code>update_frontmatter</code>、
+          <code>replace_python_function</code>、<code>replace_text_file</code>、<code>add_file</code> 与 <code>delete_file</code>。
+          “能表达大改动”不等于“默认允许大改动”：脚本编辑和文件拓扑编辑都必须由预算显式授权。
+        </p>
 
         <div class="callout green">
           SkillOpt 最重要的启发不是“把训练术语搬到 Prompt”，而是：每次更新保持足够小、证据足够清楚、失败编辑能被记住，并由独立的 held-out 数据决定是否保留。
@@ -989,41 +1288,48 @@ export_package(result.best_candidate, output_dir=<span class="st">"best_skill_pa
         <ol>
           <li>从 hybrid Pareto pool 选择父代 PackageCandidate。</li>
           <li>采样一组失败、退化或高不确定性的训练任务。</li>
-          <li>先执行 E0 静态检查与 E1 推演式 paired rollout；只让有希望或高不确定候选晋级 E2 子智能体 Forward Test 和 E3 可执行断言。</li>
-          <li>严格区分 E1 planned edge 与 E2/E3 observed edge，再与静态 Package Graph 合并生成 fidelity-aware failure subgraph。</li>
+          <li>复用同一环境、模型、EvalPlan 与 scoring policy 下已经封存的 no-skill/original 参考证据，只为新候选执行 E2 真实 Agent 任务。</li>
+          <li>对 E2 原生产物执行 E3 确定性断言，并把 observed trace 与静态 Package Graph 合并为 failure subgraph。</li>
           <li>GraphGuidedSelector 在编辑预算内选择 mutation scope。</li>
           <li>LLM 读取相关候选片段、ASI、成功行为和 rejected history，提出 PackagePatch。</li>
           <li>Patch Engine 在临时 snapshot 应用 Patch。</li>
-          <li>运行 schema、引用、语法、测试、安全等廉价 Gate。</li>
-          <li>运行 minibatch 前后对照；无希望则拒绝。</li>
-          <li>运行完整 held-out validation；满足接受规则才加入池。</li>
+          <li>Gate 0/1 运行 schema、precondition、引用、语法、测试与安全检查。</li>
+          <li>Gate 2 在 train paired evidence 上要求至少一个预注册主目标严格改善，完全等分不能入池。</li>
+          <li>Gate 3 在冻结 held-out validation 上重新执行；均值改善但类别/风险 floor 越界也必须拒绝。</li>
+          <li>Gate 4 才将合格候选加入 deployable frontier。</li>
           <li>更新 per-task / per-objective frontier、候选 DAG、成本和负反馈记忆。</li>
         </ol>
+
+        <p class="callout yellow">
+          <strong>E1 的当前定位：</strong>E1 仍作为“仅推演计划”的可选低保真证据保留，但 v0.1 默认关闭；它不能冒充真实执行，也不能支持候选接受。功能结论必须来自 E2 原生产物与 E3 内容级断言。
+        </p>
 
         <h3>10.2 候选接受伪代码</h3>
         <div class="code-wrap">
           <div class="code-head"><span>Python · 概念性伪代码</span><button class="copy">复制</button></div>
-          <pre><code><span class="kw">def</span> <span class="fn">should_accept</span>(parent, proposal, state):
+          <pre><code><span class="kw">def</span> <span class="fn">should_accept</span>(parent, proposal, frozen_reference):
     candidate = patch_engine.apply(parent, proposal.patch)
 
-    <span class="cm"># 廉价硬门控先执行，避免浪费 LLM 调用</span>
-    hard = validators.run_all(candidate)
-    <span class="kw">if not</span> hard.ok:
-        rejected_store.add(proposal, reason=hard.failures)
+    <span class="cm"># Gate 0/1：schema、precondition、结构、测试与安全</span>
+    hard = validators.run_gate_0_and_1(candidate)
+    <span class="kw">if not</span> hard.passed:
+        rejected_store.add(proposal, reason=hard.reasons)
         <span class="kw">return False</span>
 
-    mini = paired_eval(parent, candidate, proposal.minibatch, tiers=[<span class="st">"E0"</span>, <span class="st">"E1"</span>])
-    <span class="kw">if not</span> mini.promising:
-        rejected_store.add(proposal, reason=mini.delta)
+    <span class="cm"># Gate 2：真实 E2 + 原生产物 E3；可复用冻结的 reference evidence</span>
+    train = paired_e2_e3(candidate, frozen_reference, split=<span class="st">"train"</span>)
+    <span class="kw">if not</span> train.has_strict_primary_improvement(epsilon=<span class="nm">0.005</span>):
+        rejected_store.add(proposal, reason=train.failure_reason)
         <span class="kw">return False</span>
 
-    <span class="cm"># 功能接受必须由预注册的 E2/E3 证据决定</span>
-    val = full_validation(candidate, minimum_tier=<span class="st">"E2"</span>)
-    <span class="kw">if</span> val.breaks_regression_floor:
-        rejected_store.add(proposal, reason=val.regressions)
+    <span class="cm"># Gate 3：冻结 held-out validation，保护类别与高风险任务</span>
+    validation = paired_e2_e3(candidate, frozen_reference, split=<span class="st">"validation"</span>)
+    <span class="kw">if</span> validation.breaks_any_floor:
+        rejected_store.add(proposal, reason=validation.floor_violations)
         <span class="kw">return False</span>
 
-    <span class="kw">return</span> val.is_epsilon_non_dominated_and_useful()</code></pre>
+    <span class="cm"># Gate 4：只有 held-out 严格改善才进入 deployable frontier</span>
+    <span class="kw">return</span> validation.strictly_improves_primary() <span class="kw">and</span> frontier.admit(candidate)</code></pre>
         </div>
 
         <h3>10.3 为什么它不是简单套壳？</h3>
@@ -1032,9 +1338,19 @@ export_package(result.best_candidate, output_dir=<span class="st">"best_skill_pa
           <li>SkillOpt 不负责多父代 Pareto 探索，也不联合训练完整目录。</li>
           <li>Package Graph 不只是报告，它改变 component selection、edit budget、validation intensity 和 merge。</li>
           <li>独立 Python Core 管理 Evidence、候选、图、Pareto 与 Gate；Agent Orchestrator Skill 只负责领取任务、委派子智能体和回写结果。</li>
-          <li>MultiFidelityEvalEngine 把 E0 静态、E1 推演、E2 子智能体和 E3 可执行证据统一到同一 schema，同时禁止 planned/observed 混淆。</li>
-          <li>项目贡献能通过等预算消融验证，而不是依靠架构图叙事。</li>
+          <li>Eval Core 把 E0 静态、可选 E1 推演、E2 真实执行和 E3 可执行断言统一到 typed schema，同时禁止 planned/observed 混淆。</li>
+          <li>图必须实际参与 selector、impact closure、merge 和 Gate；v0.1 不把“图优于随机”的消融当作收尾条件，也不做未经实验的优越性宣称。</li>
         </ul>
+
+        <h3>10.4 设计概念落到哪些代码？</h3>
+        <div class="file-map">
+          <div class="file-row"><code>src/gepase/package/</code><span>Package snapshot、异构 IR、静态/动态图、failure slice 与 graph diff。</span></div>
+          <div class="file-row"><code>src/gepase/evals/</code><span>WorkItem、Submission、E0–E3、TaskScoreVector、paired evidence 与统计。</span></div>
+          <div class="file-row"><code>src/gepase/optimizer/</code><span>GEPA adapter、候选池、graph selector、Gate、evolution 与同包多父融合。</span></div>
+          <div class="file-row"><code>src/gepase/mutation/</code><span>typed PackagePatch、提案、原子应用/回滚与影响分析。</span></div>
+          <div class="file-row"><code>src/gepase/store/</code><span>artifact、candidate、checkpoint、evolution pool 与 rejected-edit memory。</span></div>
+          <div class="file-row"><code>.agents/skills/gepase-orchestrator/</code><span>薄 Agent Host 适配层；不拥有分数、候选或接受状态。</span></div>
+        </div>
       </section>
 
       <section class="searchable" id="graph">
@@ -1071,15 +1387,142 @@ export_package(result.best_candidate, output_dir=<span class="st">"best_skill_pa
         </p>
 
         <h3>11.3 Graph-guided selector</h3>
-        <div class="formula">priority(v) = failure_coverage × expected_impact × uncertainty_bonus ÷ (1 + mutation_risk + historical_regression)</div>
+        <div class="formula">score(v) = 3.0·coverage + 2.0·inverse_distance + 1.4·access + 1.2·severity + 0.8·yield + 0.6·explore − 1.0·fan_out − 1.5·regression</div>
         <p>
-          这个公式是可替换的启发式，不应包装成未经验证的理论定理。真正的证据来自等预算消融：random、round-robin、trace-only 与 graph-guided 在 accepted improvement、metric calls、回归率和最终 test utility 上谁更好。
+          当前实现先从 failure/evidence 节点沿允许的边做 BFS，再为可编辑节点计算透明的加权和。距离项使用 <code>1 / (1 + d)</code>；
+          动态访问、诊断严重度、历史成功率和探索奖励提供正向信号，公共节点的 fan-out 风险与历史回归提供惩罚。
         </p>
+
+        <table>
+          <thead><tr><th>特征</th><th>权重</th><th>直觉</th></tr></thead>
+          <tbody>
+            <tr><td>failure_coverage</td><td>+3.0</td><td>一个节点能解释多少当前失败，是最强正向信号。</td></tr>
+            <tr><td>inverse_distance</td><td>+2.0</td><td>离失败证据越近，越可能是局部根因。</td></tr>
+            <tr><td>dynamic_access / severity</td><td>+1.4 / +1.2</td><td>真实执行访问与高严重度诊断提高优先级。</td></tr>
+            <tr><td>historical_yield / exploration</td><td>+0.8 / +0.6</td><td>兼顾历史有效区域和未充分探索区域。</td></tr>
+            <tr><td>fan_out / regression</td><td>−1.0 / −1.5</td><td>依赖面大或曾引入回归的节点更保守。</td></tr>
+          </tbody>
+        </table>
+
+        <div class="callout yellow">
+          这是可检查、可替换的工程启发式，不是已经证明最优的图算法。v0.1 的证据只支持“图已经进入定位、作用域和验证决策”；
+          如果未来要声称 graph-guided 优于 random、round-robin 或 trace-only，再补等预算消融。
+        </div>
 
         <div class="callout">
           <strong>为什么第一版不用 GNN？</strong>
           单个 Skill Package 图规模小，监督样本也少。GNN 会增加训练数据需求和解释成本，却未必优于透明规则。只有积累大量跨 Skill 的 graph—patch—outcome 数据后，学习式 selector 才合理。
         </div>
+      </section>
+
+      <section class="searchable" id="case-study">
+        <div class="section-head">
+          <div class="num">LAB</div>
+          <div>
+            <h2>真实 Canary：一次改动如何从失败走到部署</h2>
+            <p class="subtitle">公开的 slack-gif-creator 不是“漂亮演示素材”，而是 v0.1 第一条封存的真实优化证据链。</p>
+          </div>
+        </div>
+
+        <h3>从观测到 Patch，而不是从直觉到重写</h3>
+        <div class="pipeline" aria-label="Canary 失败定位与接受流程">
+          <div class="step"><b>Paired E2</b><small>同 case 隔离执行 no-skill / original</small></div>
+          <div class="step"><b>E3 失败</b><small>ease-out 尾段位移反而增大</small></div>
+          <div class="step"><b>ASI 定位</b><small>反向切到 smooth-stop 指令节点</small></div>
+          <div class="step"><b>Bounded Patch</b><small>只改 1 个 SKILL.md block</small></div>
+          <div class="step"><b>Gate 2</b><small>train mean delta +0.04190</small></div>
+          <div class="step"><b>Gate 3/4</b><small>validation +0.12427，进入 frontier</small></div>
+        </div>
+
+        <div class="grid-2">
+          <article class="card">
+            <div class="eyebrow">Failure evidence</div>
+            <h3>尾部没有真正平滑停止</h3>
+            <p>原始产物最后两段相邻位移约从 <strong>1.575 px</strong> 增至 <strong>3.898 px</strong>。文件存在、GIF 可打开都无法发现这个问题；只有对渲染帧内容做断言，才能识别运动语义不正确。</p>
+          </article>
+          <article class="card">
+            <div class="eyebrow">Accepted edit</div>
+            <h3>强化验收条件，而不是堆更多步骤</h3>
+            <p>候选只修改一个有证据支撑的 Markdown 节点，要求用渲染帧确认尾段持续减速。它没有复制测试答案，也没有改 evaluator；最终由冻结 validation 独立决定是否保留。</p>
+          </article>
+        </div>
+
+        <h3>同一 held-out case 的真实产物</h3>
+        <div class="case-gallery">
+          <figure>
+            <img loading="lazy" src="artifacts/runs/r5-slack-gif-creator-report/assets/gifs/functional-validation-loop-sparkles-006/no-skill.gif" alt="no-skill Agent 生成的 validation GIF">
+            <figcaption>no-skill · 没有加载 Skill Package</figcaption>
+          </figure>
+          <figure>
+            <img loading="lazy" src="artifacts/runs/r5-slack-gif-creator-report/assets/gifs/functional-validation-loop-sparkles-006/original.gif" alt="原始 Skill 生成的 validation GIF">
+            <figcaption>original · 原始公开 Skill</figcaption>
+          </figure>
+          <figure>
+            <img loading="lazy" src="artifacts/runs/r5-slack-gif-creator-report/assets/gifs/functional-validation-loop-sparkles-006/candidate.gif" alt="优化候选生成的 validation GIF">
+            <figcaption>candidate · Gate 4 deployable 候选</figcaption>
+          </figure>
+        </div>
+        <p class="callout">
+          GIF 只能帮助人做直观检查，不能替代结构化评分。报告中的结论同时读取原生产物、transcript、observed trace、usage、artifact hash、确定性断言与盲评结果。
+        </p>
+
+        <h3>候选实验台：为什么“均值为正”仍可能被拒绝？</h3>
+        <div class="candidate-lab" id="candidateLab">
+          <div class="candidate-controls" role="group" aria-label="选择候选分支">
+            <button class="candidate-btn active" data-candidate="a">候选 A · deployable</button>
+            <button class="candidate-btn" data-candidate="b">分支 B · validation 回归</button>
+            <button class="candidate-btn" data-candidate="d">候选 D · train 失败</button>
+            <button class="candidate-btn" data-candidate="merge">Merge child · 类别越界</button>
+          </div>
+          <div class="candidate-readout" aria-live="polite">
+            <div>
+              <div class="eyebrow" id="labTitle">候选 A · deployable</div>
+              <h3 id="labReason">3/3 held-out cases 获胜，所有类别与风险 floor 均满足。</h3>
+              <div class="delta-scale" aria-label="validation mean paired delta，范围负 0.25 到正 0.15">
+                <span class="delta-marker" id="labMarker" style="left: 93.6%"></span>
+              </div>
+              <small>左端 −0.25 · 中线附近为 0 · 右端 +0.15</small>
+            </div>
+            <div>
+              <p><span class="candidate-status" id="labStatus">ACCEPTED</span></p>
+              <p>Train mean delta <output id="labTrain">+0.04190</output></p>
+              <p>Validation mean delta <output id="labValidation">+0.12427</output></p>
+            </div>
+          </div>
+        </div>
+
+        <div class="grid-2">
+          <div>
+            <h3>Validation 六维均值</h3>
+            <table>
+              <thead><tr><th>维度</th><th>no-skill</th><th>original</th><th>candidate</th></tr></thead>
+              <tbody>
+                <tr><td>task_correctness</td><td>0.8667</td><td>0.8167</td><td class="yes">0.8833</td></tr>
+                <tr><td>output_quality</td><td>0.9423</td><td>0.7997</td><td class="yes">0.9611</td></tr>
+                <tr><td>skill_gain</td><td>0.0000</td><td class="no">−0.0916</td><td class="yes">+0.0326</td></tr>
+                <tr><td>reliability</td><td>0.9000</td><td>0.9000</td><td>0.9000</td></tr>
+                <tr><td>efficiency</td><td>0.8096</td><td>0.7905</td><td class="no">0.3589</td></tr>
+                <tr><td>package_quality</td><td>1.0000</td><td>1.0000</td><td>1.0000</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <div>
+            <h3>Gate funnel</h3>
+            <div class="score-board" aria-label="候选 Gate 漏斗">
+              <div class="score-row"><span>提案 / Gate 0</span><span class="score-track"><i class="score-fill" style="width:100%"></i></span><output>4</output></div>
+              <div class="score-row"><span>Gate 1 静态</span><span class="score-track"><i class="score-fill" style="width:100%"></i></span><output>4</output></div>
+              <div class="score-row"><span>Gate 2 train</span><span class="score-track"><i class="score-fill neutral" style="width:75%"></i></span><output>3</output></div>
+              <div class="score-row"><span>Gate 3 held-out</span><span class="score-track"><i class="score-fill warn" style="width:25%"></i></span><output>1</output></div>
+              <div class="score-row"><span>Gate 4 frontier</span><span class="score-track"><i class="score-fill" style="width:25%"></i></span><output>1</output></div>
+            </div>
+            <p class="callout yellow">这里的 <strong>+0.12427</strong> 是预注册复合 paired score 的平均差，不等于表中单独的 <code>skill_gain</code> 维度。多目标向量保留原始语义，接受策略才负责做有限聚合。</p>
+          </div>
+        </div>
+
+        <p class="callout green">
+          <strong>当前结论边界：</strong>这条 canary 证明 GEPASE v0.1 在一个固定公开 Skill、一个冻结 EvalPlan 与一个固定 Agent/模型配置下，产生过严格 held-out 改善。
+          它没有证明所有 Skill 都能提升，也没有单独证明跨文件编辑、图引导或多父融合优于替代方法。
+        </p>
       </section>
 
       <section class="searchable" id="eval">
@@ -1091,39 +1534,179 @@ export_package(result.best_candidate, output_dir=<span class="st">"best_skill_pa
           </div>
         </div>
 
-        <h3>12.1 三段数据为什么必须隔离？</h3>
-        <div class="grid-3">
-          <article class="card"><h4>Train</h4><p>可以进入反思上下文，用来发现失败模式和产生 Patch。</p></article>
-          <article class="card"><h4>Validation</h4><p>决定候选是否接受和哪一个是 best candidate，但不直接告诉 proposer 正确答案。</p></article>
-          <article class="card"><h4>Test</h4><p>优化冻结后才运行，只用于最终结论，不能反复查看后继续调系统。</p></article>
-        </div>
-
-        <h3>12.2 多目标指标</h3>
+        <h3>12.1 E0–E3 不是四套分数，而是四种证据保真度</h3>
         <table>
-          <thead><tr><th>类别</th><th>主要指标</th><th>用途</th></tr></thead>
+          <thead><tr><th>Tier</th><th>回答的问题</th><th>当前用途</th><th>不能证明</th></tr></thead>
           <tbody>
-            <tr><td>Task utility</td><td>pass rate、task-specific score</td><td>主要效果结论</td></tr>
-            <tr><td>Trigger</td><td>precision、recall、F1</td><td>判断 Skill 是否在正确场景生效</td></tr>
-            <tr><td>Efficiency</td><td>token、cost、latency、tool calls</td><td>避免用无限成本换准确率</td></tr>
-            <tr><td>Structure</td><td>broken links、orphans、tests、complexity</td><td>门控与维护性</td></tr>
-            <tr><td>Continual</td><td>regression、negative transfer、accepted yield</td><td>衡量持续优化稳定性</td></tr>
+            <tr><td><strong>E0</strong></td><td>Package 能否解析？schema、引用、语法和安全规则是否通过？</td><td>廉价结构 Gate；所有候选先过。</td><td>Agent 能完成真实任务。</td></tr>
+            <tr><td><strong>E1</strong></td><td>如果执行，计划可能如何展开？</td><td>可选低保真诊断；v0.1 默认关闭。</td><td>真实工具调用、产物正确或候选可接受。</td></tr>
+            <tr><td><strong>E2</strong></td><td>隔离 Agent 是否真正完成了用户任务？</td><td>保存 task-native outputs、transcript、trace、usage、timing 与 hashes。</td><td>产物内容一定满足隐藏要求。</td></tr>
+            <tr><td><strong>E3</strong></td><td>对 E2 原生产物运行内容级 assertion 后是否满足可执行契约？</td><td>与独立 grader、comparator 一起构成功能证据。</td><td>单一断言通过就等于综合质量 1.0。</td></tr>
           </tbody>
         </table>
 
-        <h3>12.3 统计最小要求</h3>
+        <h3>12.2 为什么角色必须隔离？</h3>
+        <div class="role-flow" aria-label="GEPASE 评测角色流">
+          <div class="role"><b>Executor</b><small>只看用户任务、fixture 和 candidate ref，实际完成任务。</small></div>
+          <div class="role"><b>Deterministic Grader</b><small>读取原生产物，运行内容级 assertion。</small></div>
+          <div class="role"><b>Independent Grader</b><small>核验正确性、完整性、专业度与可用性。</small></div>
+          <div class="role"><b>Comparator</b><small>匿名比较 A/B，不知道候选身份与预期胜者。</small></div>
+          <div class="role"><b>Analyzer / ASI</b><small>解释失败，并把证据定位到可编辑 Package 节点。</small></div>
+        </div>
+        <p>
+          Executor 看不到 assertion、rubric、expected answer、sibling output 或 candidate identity；不同角色不共享聊天上下文，只通过 typed submission 交换证据。
+          这样可以降低“执行者顺手给自己打分”和 sibling leakage。相同环境、模型、EvalPlan、scoring policy 与 reference Package hash 下，no-skill/original 证据可以安全缓存，新候选只需重跑自己的分支。
+        </p>
+
+        <h3>12.3 Train 与 frozen Validation</h3>
+        <div class="grid-2">
+          <article class="card"><h4>Train</h4><p>允许进入反思上下文，用于失败归因、Patch 提案和 Gate 2。严格改善才有资格进入 held-out。</p></article>
+          <article class="card"><h4>Frozen Validation</h4><p>在 EvalPlan 审核后冻结；不向 proposer 泄露正确答案，用于 Gate 3 与最终 deployable 判定。</p></article>
+        </div>
+        <p class="callout yellow">
+          独立 test split、多 seed 与跨模型复验适合更强泛化结论，但不是应用框架 v0.1 的强制收尾条件。当前公开 canary 使用 5 个 train 与 3 个 frozen validation case，并明确限制结论范围。
+        </p>
+
+        <h3>12.4 TaskScoreVector：保留多目标语义</h3>
+        <table>
+          <thead><tr><th>维度</th><th>回答的问题</th><th>典型证据</th></tr></thead>
+          <tbody>
+            <tr><td><code>task_correctness</code></td><td>任务的核心事实与行为是否正确？</td><td>断言、task-native artifacts、事实核验。</td></tr>
+            <tr><td><code>output_quality</code></td><td>产物是否完整、专业、可用、符合格式？</td><td>独立 grader 与盲 Comparator。</td></tr>
+            <tr><td><code>skill_gain</code></td><td>相对 no-skill，Skill 是帮助还是伤害？</td><td>同轮 paired comparison。</td></tr>
+            <tr><td><code>reliability</code></td><td>执行是否稳定，是否有超时、缺失或工具错误？</td><td>typed failure、重复执行与提交完整性。</td></tr>
+            <tr><td><code>efficiency</code></td><td>是否以合理上下文、工具调用与时延完成？</td><td>usage、timing、trace；不要求框架代管 API 账单。</td></tr>
+            <tr><td><code>package_quality</code></td><td>修改后 Package 是否结构健康、可维护、可执行？</td><td>E0、graph diagnostics、tests 与 safety Gate。</td></tr>
+          </tbody>
+        </table>
+        <p>Trigger Eval 的 precision、recall、F1、accuracy 与 trigger rate 单独报告，不混入 Functional Eval；否则一个 description 写得很会触发，就可能掩盖执行结果很差。</p>
+
+        <h3>12.5 当前统计与接受规则</h3>
         <ul class="checklist">
           <li>同一任务、同一环境、同一模型配置的 paired before/after。</li>
-          <li>二元结果报告 paired bootstrap 95% CI，必要时使用 McNemar。</li>
-          <li>至少三个独立优化种子，报告平均值与方差。</li>
-          <li>报告总 metric calls、LLM calls、token、美元成本和时间。</li>
-          <li>主表展示所有 Skill，不只展示最好案例。</li>
+          <li>至少一个预注册主目标严格改善；默认 epsilon 为 0.005，完全等分拒绝或记为 inconclusive。</li>
+          <li>held-out 同时检查均值、逐 case 胜负、类别 floor 与高风险 floor；保护目标优先于总均值。</li>
+          <li>paired bootstrap 95% CI 描述不确定性；当前 accepted candidate 的区间为 [0.08928, 0.17106]。</li>
+          <li>记录 Agent work、usage、timing、cache provenance 与 artifact hashes；墙钟时间是工程约束，不是 Skill 质量分数。</li>
           <li>失败候选和不显著结果也进入公开 artifact。</li>
         </ul>
 
-        <h3>12.4 什么才算项目成功？</h3>
+        <h3>12.6 这个应用框架怎样才算成功？</h3>
         <p>
-          不是“LLM 生成了一个新版本”，而是：在未见 test 上，GEPASE 相对 seed skill 有稳定正向提升；在等预算下相对 vanilla GEPA 或随机 selector 更高效或更少回归；所有最终 Package 仍然结构合法、可执行、可审计。若图引导没有收益，诚实的负结果和原因分析仍有价值，但不能继续宣称图算法有效。
+          v0.1 的目标不是完成论文式全量消融，而是把一条真实闭环做可信：对一个非 toy、可本地执行的公开 Skill，框架能从真实 Agent 失败中产生有界 PackagePatch，
+          并在冻结 held-out 上得到可量化严格改善，同时输出可审计证据、失败候选、可部署 Package 与清晰报告。更广泛的 Skill、模型、seed 与 selector 比较属于后续外部有效性，而不是把首个有效结果无限推迟的前置条件。
         </p>
+      </section>
+
+      <section class="searchable" id="usage">
+        <div class="section-head">
+          <div class="num">RUN</div>
+          <div>
+            <h2>项目怎样使用：三条路径不要混在一起</h2>
+            <p class="subtitle">先决定你是在验证工程、复算已封存结果，还是发起一轮新的真实 Agent 进化。</p>
+          </div>
+        </div>
+
+        <div class="grid-3">
+          <article class="card">
+            <div class="eyebrow">Path A · Offline</div>
+            <h3>工程 smoke</h3>
+            <p>验证安装、CLI、ArtifactStore 与确定性 mock。不会调用 Agent，不产生优化效果结论。</p>
+          </article>
+          <article class="card">
+            <div class="eyebrow">Path B · Sealed</div>
+            <h3>复算公开 Canary</h3>
+            <p>验证 R2–R5 hash、重算 Gate、重建报告或导出 deployable Package，不重复搜索。</p>
+          </article>
+          <article class="card">
+            <div class="eyebrow">Path C · Agent-native</div>
+            <h3>优化一个新 Skill</h3>
+            <p>重新 onboarding EvalPlan、人工审核、派发隔离角色并运行 GEPA/Graph/Patch/Gate 状态机。</p>
+          </article>
+        </div>
+
+        <h3>路径 A：5 分钟内确认仓库可用</h3>
+        <div class="code-wrap">
+          <div class="code-head"><span>Shell · 离线 smoke，不调用 Agent/API</span><button class="copy">复制</button></div>
+          <pre><code>uv sync --all-extras --frozen
+uv run gepase --version
+uv run gepase doctor --format json
+uv run gepase mock run \
+  --config configs/examples/mock.yaml \
+  --output artifacts/local/mock-run \
+  --format json
+uv run gepase artifact verify artifacts/local/mock-run --format json</code></pre>
+        </div>
+
+        <h3>路径 B：不花 Agent 预算复算 +0.12427</h3>
+        <div class="code-wrap">
+          <div class="code-head"><span>Shell · 封存证据与 deployable Package</span><button class="copy">复制</button></div>
+          <pre><code>uv run gepase report verify \
+  --config configs/canaries/slack-gif-creator-r5.json \
+  --report-dir artifacts/runs/r5-slack-gif-creator-report \
+  --format json
+
+uv run gepase report deploy \
+  --config configs/canaries/slack-gif-creator-r5.json \
+  --report-dir artifacts/runs/r5-slack-gif-creator-report \
+  --output artifacts/local/deployed-slack-gif-creator \
+  --format json</code></pre>
+        </div>
+
+        <h3>路径 C：新 Skill 的 resumable 状态机</h3>
+        <div class="role-flow" aria-label="新 Skill onboarding 和进化流程">
+          <div class="role"><b>1 · onboarding-start</b><small>解析并 pin 完整 Package，导出 Designer WorkItem。</small></div>
+          <div class="role"><b>2 · Agent Designer</b><small>在隔离上下文读取 package，生成 typed EvalPlan draft。</small></div>
+          <div class="role"><b>3 · review / import</b><small>离线中文 HTML 审核后导入决定，冻结 plan hash。</small></div>
+          <div class="role"><b>4 · paired roles</b><small>Executor、Grader、Comparator、Analyzer 独立派发。</small></div>
+          <div class="role"><b>5 · optimizer</b><small>GEPA → selector → Patch → Gate；checkpoint 可恢复。</small></div>
+        </div>
+
+        <div class="code-wrap">
+          <div class="code-head"><span>Shell · EvalPlan onboarding 的关键命令</span><button class="copy">复制</button></div>
+          <pre><code>uv run gepase eval onboarding-start \
+  --run-dir artifacts/local/my-skill-onboarding \
+  --package path/to/my-skill-package \
+  --provenance path/to/source-provenance.json \
+  --design-brief path/to/design-brief.json
+
+<span class="cm"># 隔离 Agent Designer 提交 typed JSON 后：</span>
+uv run gepase eval submit-design \
+  --run-dir artifacts/local/my-skill-onboarding \
+  --submission artifacts/local/my-skill-onboarding/agent/designer-submission.json
+uv run gepase eval review --run-dir artifacts/local/my-skill-onboarding
+
+<span class="cm"># 用户在 review.html 中确认并导出 review.json：</span>
+uv run gepase eval import-review \
+  --run-dir artifacts/local/my-skill-onboarding \
+  --review review.json
+uv run gepase eval resume --run-dir artifacts/local/my-skill-onboarding</code></pre>
+        </div>
+
+        <p class="callout green">
+          人工审核不是突兀地“打断一个长脚本”，而是持久状态机的正式 checkpoint：运行在 <code>awaiting_review</code> 暂停，用户离线检查并导入决定后，从同一 run resume。
+          对同一 Skill 的 original、candidate 与 merge child，必须共享冻结的 plan revision；不能为了让某个候选过关临时改题。
+        </p>
+
+        <h3>Core、Agent 与可选 LLM API 的边界</h3>
+        <table>
+          <thead><tr><th>层</th><th>负责什么</th><th>不负责什么</th></tr></thead>
+          <tbody>
+            <tr><td>GEPASE Core</td><td>WorkItem、证据校验、候选/图/GEPA/Patch/Gate 状态、缓存、checkpoint、报告。</td><td>不自研通用 Agent planner、工具调度器或登录环境。</td></tr>
+            <tr><td>Agent Host</td><td>真实执行任务、读取完整 Skill、使用工具，并在独立上下文完成不同角色。</td><td>不能自己改变分数、入池规则或 held-out 结果。</td></tr>
+            <tr><td>Headless Provider</td><td>可按角色替换模型调用后端，适合自动化或比较不同模型。</td><td>v0.1 只提供 provider-neutral 契约，不内置第二套实验系统。</td></tr>
+          </tbody>
+        </table>
+        <p>
+          默认 Agent-native，不需要额外 API key；如果显式启用 <code>configs/examples/headless-roles.yaml</code>，Executor、Grader、Comparator、Analyzer、Reflection 与 Proposer 仍必须上下文隔离。
+          LLM API 与 Agent 不冲突：Agent 是承担任务和角色的执行主体，API 只是某个角色可选的模型调用通道。
+        </p>
+
+        <div class="callout yellow">
+          <strong>先读命令帮助再跑高成本阶段：</strong>
+          <code>uv run gepase eval --help</code>、<code>uv run gepase optimizer --help</code>、<code>uv run gepase mutation --help</code>、<code>uv run gepase report --help</code>。
+          真正的新 Agent-native run 会消耗较长墙钟时间；reference cache 与同阶段并行只减少重复工作，不改变隔离、公平性或 held-out Gate。
+        </div>
       </section>
 
       <section class="searchable" id="interview">
@@ -1149,11 +1732,11 @@ export_package(result.best_candidate, output_dir=<span class="st">"best_skill_pa
         </details>
         <details>
           <summary>4. GEPA 的 Pareto 是严格的非支配前沿吗？</summary>
-          <div class="answer">默认不完全是。当前 GEPA 的 per-key frontier 保存至少在某个验证样本或目标上达到 best-in-class 的候选。一个各方面都不错但从未单项第一的非支配候选可能被遗漏。GEPASE 会比较 hybrid per-key 与 true non-dominated selector，并考虑 crowding distance。</div>
+          <div class="answer">默认不完全是。官方 GEPA 的 per-key frontier 重点保留在某个样本或目标上 best-in-class 的候选；一个各方面都不错但从未单项第一的候选可能被遗漏。GEPASE 保留 task/objective 局部优势与 Pareto 候选池，但把“搜索中值得继续探索”和“可以部署”分开：后者仍必须通过严格 held-out Gate。</div>
         </details>
         <details>
           <summary>5. 图算法为什么不是为了包装项目？</summary>
-          <div class="answer">图直接影响四个决策：失败相关组件选择、Patch 的依赖闭包、公共接口修改的验证强度、多个父代的子图融合。如果移除图只影响可视化，那它就是装饰；因此必须通过 random、trace-only 和 graph-guided 等预算消融验证。</div>
+          <div class="answer">图直接影响四个决策：失败相关组件选择、Patch 的依赖闭包、公共接口修改的验证强度、多个父代的同包子图融合。如果移除图只影响可视化，它就是装饰。v0.1 已验证图进入这些代码路径，但不声称它优于 random 或 trace-only；只有未来要做这种优越性主张时，才需要等预算消融。</div>
         </details>
         <details>
           <summary>6. 为什么不用 GNN？</summary>
@@ -1161,7 +1744,7 @@ export_package(result.best_candidate, output_dir=<span class="st">"best_skill_pa
         </details>
         <details>
           <summary>7. 如何防止 LLM 通过修改 Skill 钻 Eval 漏洞？</summary>
-          <div class="answer">严格隔离 test；对 assertion 做反例和 mutation testing；不把验证答案直接提供给 proposer；监控候选是否写入任务实体；使用多样任务和分组切分；对 suspicious shortcut 设置规则；保留独立 Judge 和人工抽查。</div>
+          <div class="answer">严格隔离 frozen validation；对 assertion 做反例和 mutation testing；不把 assertion、rubric 或预期答案提供给 Executor/Proposer；监控候选是否写入任务实体；使用分组切分与泄漏检查；保留独立 Grader、匿名 Comparator 和人工抽查。未来若增加 test，它必须在优化冻结后一次性使用。</div>
         </details>
         <details>
           <summary>8. 为什么不能只用 LLM-as-a-Judge？</summary>
@@ -1169,11 +1752,11 @@ export_package(result.best_candidate, output_dir=<span class="st">"best_skill_pa
         </details>
         <details>
           <summary>9. 有界 Patch 如何对应 SkillOpt 的 textual learning rate？</summary>
-          <div class="answer">学习率不再是连续数值，而是一次允许的操作数、修改节点数、图边变化数、token diff 和公共接口风险。早期可以较大，后期逐渐收缩；高风险或高 fan-out 节点自动降低预算并提高验证强度。</div>
+          <div class="answer">学习率不再是连续数值，而是一次允许的操作数、修改文件数、增删文件数、替换字符数，以及是否允许脚本/拓扑编辑。高风险或高 fan-out 节点应使用更小预算并提高验证强度；Patch 的 precondition hash 还能阻止基于过期节点盲改。</div>
         </details>
         <details>
           <summary>10. 如何衡量图引导带来的样本效率？</summary>
-          <div class="answer">在相同 target/optimizer 模型、任务、proposal 次数和 metric-call 预算下，比较达到相同 validation score 所需调用数、accepted-improvement yield、无效 Patch 比例、回归率和最终 test utility。不能只比较墙钟时间，因为并发配置可能不同。</div>
+          <div class="answer">如果未来要回答这个研究问题，应在相同 target/optimizer 模型、任务、proposal 次数和 metric-call 预算下，比较达到相同 validation score 所需调用数、accepted-improvement yield、无效 Patch 比例与回归率。不能只比较墙钟时间，因为并发配置可能不同；这不是 v0.1 应用闭环的完成 Gate。</div>
         </details>
         <details>
           <summary>11. 如何避免灾难性遗忘？</summary>
@@ -1185,19 +1768,19 @@ export_package(result.best_candidate, output_dir=<span class="st">"best_skill_pa
         </details>
         <details>
           <summary>13. 如果图引导实验没有显著提升怎么办？</summary>
-          <div class="answer">不修改结论迎合设计。分析图解析误差、动态 trace 覆盖、任务规模和 selector 公式；报告图在结构合法性或解释性上是否仍有收益。若任务中 Package 组件耦合弱，图没有效果本身也是合理结论，应简化主算法而不是继续堆复杂度。</div>
+          <div class="answer">不修改结论迎合设计。如果开展消融，应分析图解析误差、动态 trace 覆盖、任务规模和 selector 公式；如果图只提供可解释定位或结构安全，就只报告这部分价值。若长期既不改变决策也不改善工程质量，再简化设计，而不是为了“看起来像算法”继续堆复杂度。</div>
         </details>
         <details>
           <summary>14. 为什么项目定位为离线优化，而不是在线无限自进化？</summary>
-          <div class="answer">在线自动采用更新涉及数据漂移、密钥与隐私、回滚、安全、用户影响和不可重复模型行为。离线候选搜索、held-out gate 和显式 adopt 才适合第一版开源研究系统。未来可以接入生产日志，但仍应默认 staging，而不是无条件替换。</div>
+          <div class="answer">在线自动采用更新涉及数据漂移、密钥与隐私、回滚、安全、用户影响和不可重复模型行为。离线候选搜索、held-out Gate 和显式 deploy 才适合第一版开源应用框架。未来可以接入生产日志，但仍应默认 staging，而不是无条件替换。</div>
         </details>
         <details>
           <summary>15. 这个项目的算法贡献与工程贡献分别是什么？</summary>
-          <div class="answer">算法贡献是多保真证据调度、Package Graph 上的失败信用分配、图引导有界 mutation、依赖闭合 merge 与验证门控的 GEPA 混合搜索；工程贡献是独立 Python Core、EvidenceProvider 协议、任务级 Eval、候选 DAG、断点恢复和开源报告。Agent Skill 只是薄编排适配层，不承载算法状态。</div>
+          <div class="answer">更准确的表述是“系统性组合创新”：以官方 GEPA 搜索骨架为主体，把 Package Graph 上的失败信用分配、图引导有界 mutation、依赖闭合同包 merge 和严格 held-out Gate 组合到完整 Skill Package；工程上提供独立 Python Core、typed evidence、候选 DAG、断点恢复和开源报告。v0.1 已证明闭环在单 canary 上有效，但不把每个部件都包装成已独立验证的新算法。</div>
         </details>
         <details>
           <summary>16. 如何控制 API 成本？</summary>
-          <div class="answer">候选和任务结果缓存；E0/E1 在前筛选，只有晋级候选执行 E2/E3；记录高保真 work item、token、时延和可选 API 成本；Agent-native 使用宿主 Agent 能力而不要求额外 API，headless 模式再设置 API cost ceiling。</div>
+          <div class="answer">默认 Agent-native，避免强制额外 API key；在环境、模型、EvalPlan、scoring policy 和 hash 全等时复用封存的 no-skill/original 参考证据；同阶段独立角色并行但保持上下文隔离；失败尽早经过结构 Gate。Core 记录调用、估算 token 与时延，但 v0.1 不建设 API 费用或人民币账单系统。</div>
         </details>
         <details>
           <summary>17. 为什么需要 no-skill baseline？</summary>
@@ -1205,7 +1788,15 @@ export_package(result.best_candidate, output_dir=<span class="st">"best_skill_pa
         </details>
         <details>
           <summary>18. 最终如何证明“真实可用”？</summary>
-          <div class="answer">至少三个非 toy Skill、公开任务与 fixtures、真实 Agent 与 API Rollout、严格 train/validation/test、多个基线、多个优化种子、成本统计、置信区间、可部署 Package、完整失败记录和外部用户可复现命令。没有这些，只能称为可运行 Demo。</div>
+          <div class="answer">应用框架的第一道标准是：一个非 toy 公开 Skill 经真实 Agent paired eval 后，在冻结 held-out 上出现严格可量化提升，并能从原始证据复算、解释、回滚和导出。GEPASE v0.1 已达到这一标准：+0.12427、3/3 held-out wins、一个 deployable Package；同时明确它只是单 Skill、单模型快照、单次搜索证据。跨 Skill、seed 和模型复验会提高外部有效性，但不应把已经完成的真实闭环贬成 toy demo。</div>
+        </details>
+        <details>
+          <summary>19. 为什么原始 Skill 可能比 no-skill 更差？</summary>
+          <div class="answer">Skill 会改变 Agent 的注意力、流程约束、工具选择和输出偏好。如果规则过强、验收不足或参考资料过时，它可能造成负迁移。R3 的 original 平均 skill_gain 为 −0.0455，正说明“Skill 可执行”不等于“Skill 有增益”；因此 no-skill baseline 必须与 original 同轮隔离运行。</div>
+        </details>
+        <details>
+          <summary>20. 多父 Merge 是不是合并不同 Skill？</summary>
+          <div class="answer">不是。父代必须来自同一个 base Package、同一 frozen EvalPlan 和兼容 lineage；合并的是同一 Skill 内不同候选的互补改动，并补齐依赖闭包、检查冲突后重新过完整 Gate。跨 Skill Package merge 被明确禁止。v0.1 的 merge child 总均值为正仍因 emoji_animation 类别回归被拒绝，说明 merge 也没有特殊通行证。</div>
         </details>
       </section>
 
@@ -1219,6 +1810,9 @@ export_package(result.best_candidate, output_dir=<span class="st">"best_skill_pa
         </div>
 
         <ol class="source-list">
+          <li><a href="state.md">GEPASE state.md</a> — 当前权威事实、阶段状态、约束与 Diff Log。</li>
+          <li><a href="artifacts/runs/r5-slack-gif-creator-report/index.html">R5 中文交互报告</a> — 从封存证据复算的真实 GIF、候选 DAG、六维评分与 Gate。</li>
+          <li><a href="docs/reproduction.md">GEPASE 复现指南</a> — 区分离线 smoke、封存结果复算与新 Agent-native run。</li>
           <li><a href="https://arxiv.org/abs/2507.19457" target="_blank" rel="noreferrer">GEPA: Reflective Prompt Evolution Can Outperform Reinforcement Learning</a> — 先理解原始算法。</li>
           <li><a href="https://github.com/gepa-ai/gepa" target="_blank" rel="noreferrer">gepa-ai/gepa</a> — 再看当前实现，因为接口已经扩展。</li>
           <li><a href="https://gepa-ai.github.io/gepa/guides/candidate-selection/" target="_blank" rel="noreferrer">GEPA Candidate Selection Strategies</a> — 弄清 per-key frontier 与严格 Pareto 的差别。</li>
@@ -1240,8 +1834,8 @@ export_package(result.best_candidate, output_dir=<span class="st">"best_skill_pa
       </section>
 
       <footer>
-        <p><strong>GEPASE Algorithm Field Guide</strong> · 初版 2026-07-15</p>
-        <p>本页是项目学习材料，不代表 GEPASE 已经获得实验提升。任何结果结论应以仓库中锁定版本、原始 task-level 数据和最终实验报告为准。</p>
+        <p><strong>GEPASE Algorithm Field Guide</strong> · 初版 2026-07-15 · 按 v0.1 封存证据更新 2026-07-23</p>
+        <p>本页是项目学习材料。GEPASE 已在一个公开 canary 上观察到严格 held-out 提升；结论范围、原始 task-level 数据与可部署产物以 <a href="state.md">state.md</a> 和 <a href="artifacts/runs/r5-slack-gif-creator-report/index.html">R5 报告</a>为准。</p>
       </footer>
     </main>
   </div>
@@ -1320,6 +1914,68 @@ export_package(result.best_candidate, output_dir=<span class="st">"best_skill_pa
           });
           button.classList.add("active");
           document.getElementById(button.getAttribute("data-tab")).classList.add("active");
+        });
+      });
+
+      var candidateData = {
+        a: {
+          title: "候选 A · deployable",
+          status: "ACCEPTED",
+          train: "+0.04190",
+          validation: "+0.12427",
+          value: 0.12427,
+          reason: "3/3 held-out cases 获胜，所有类别与风险 floor 均满足。"
+        },
+        b: {
+          title: "分支 B · train 假阳性",
+          status: "REJECTED",
+          train: "+0.07643",
+          validation: "−0.19782",
+          value: -0.19782,
+          reason: "Train 看似更高，但 held-out 明显回归并出现真实 timeout；Gate 3 拒绝。"
+        },
+        d: {
+          title: "候选 D · Gate 2 截停",
+          status: "REJECTED",
+          train: "−0.02415",
+          validation: "未运行",
+          value: null,
+          reason: "预注册 train 主目标没有严格改善，因此不消耗 held-out Agent 预算。"
+        },
+        merge: {
+          title: "Merge child · 均值正但类别越界",
+          status: "REJECTED",
+          train: "+0.04417",
+          validation: "+0.05828",
+          value: 0.05828,
+          reason: "总均值为正，但 emoji_animation 为 −0.09144，低于 −0.05 category floor。"
+        }
+      };
+
+      document.querySelectorAll(".candidate-btn").forEach(function (button) {
+        button.addEventListener("click", function () {
+          var data = candidateData[button.getAttribute("data-candidate")];
+          if (!data) return;
+          document.querySelectorAll(".candidate-btn").forEach(function (item) {
+            item.classList.toggle("active", item === button);
+          });
+          document.getElementById("labTitle").textContent = data.title;
+          document.getElementById("labReason").textContent = data.reason;
+          document.getElementById("labTrain").textContent = data.train;
+          document.getElementById("labValidation").textContent = data.validation;
+
+          var status = document.getElementById("labStatus");
+          status.textContent = data.status;
+          status.classList.toggle("rejected", data.status === "REJECTED");
+
+          var marker = document.getElementById("labMarker");
+          if (data.value === null) {
+            marker.style.display = "none";
+          } else {
+            var percent = Math.max(0, Math.min(100, ((data.value + 0.25) / 0.40) * 100));
+            marker.style.display = "block";
+            marker.style.left = percent.toFixed(1) + "%";
+          }
         });
       });
     }());
