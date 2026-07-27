@@ -42,3 +42,22 @@ def test_learning_guide_matches_current_release_contract() -> None:
     assert audit["duplicate_ids"] == []
     assert audit["missing_anchors"] == []
     assert audit["missing_local_references"] == []
+
+
+def test_learning_course_is_complete_linked_and_claim_bounded() -> None:
+    gates = load_s10_gates()
+
+    audit = gates.learning_course_audit()
+
+    assert audit["valid"] is True
+    assert audit["html_pages"] == 14
+    assert audit["total_html_bytes"] >= 200_000
+    assert audit["quiz_options"] >= 25
+    assert audit["interview_questions"] >= 40
+    assert audit["algorithm_steps"] >= 25
+    assert audit["missing_files"] == []
+    assert audit["missing_markers"] == []
+    assert audit["present_prohibited_claims"] == []
+    assert audit["duplicate_ids"] == {}
+    assert audit["missing_anchors"] == []
+    assert audit["missing_local_references"] == []

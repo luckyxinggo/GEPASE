@@ -1,6 +1,6 @@
 {
-  "captured_at": "2026-07-23T08:15:14.128270+00:00",
-  "dirty_entries_observed": 4062,
+  "captured_at": "2026-07-24T10:25:36.243929+00:00",
+  "dirty_entries_observed": 4063,
   "schema_version": "1.0.0",
   "scope": {
     "agent_native_roles_allowed": false,
@@ -11,7 +11,7 @@
     "r4_rerun_allowed": false,
     "sealed_r2_r5_evidence_only": true
   },
-  "source_tree_hash": "9203b79d6a8240c10a958437aa0f6d47edd5b78113094b7788f534244c4eda25",
+  "source_tree_hash": "d9645e585b59dd7cc5abe1c372de4136313a04dcdc8d86671903050501a2d664",
   "stage_id": "S10",
   "started_from_commit": "ea84ea8983509a91770932b9e21a74cd43235810"
 }

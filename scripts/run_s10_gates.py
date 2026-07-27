@@ -236,6 +236,151 @@ def learning_guide_audit() -> dict[str, object]:
     }
 
 
+def learning_course_audit() -> dict[str, object]:
+    """Validate the beginner course as a linked, claim-bounded local learning surface."""
+
+    course_root = ROOT / "learning-course"
+    required_files = (
+        "index.html",
+        "00-glossary.html",
+        "01-foundations.html",
+        "02-package-graph.html",
+        "03-eval-plan.html",
+        "04-agent-evaluation.html",
+        "05-scoring-gates.html",
+        "06-gepa-deep.html",
+        "06-pareto-lab.html",
+        "06-gepa-search.html",
+        "07-patch-evolution.html",
+        "08-canary.html",
+        "09-code-usage.html",
+        "10-interview.html",
+        "assets/course.css",
+        "assets/course.js",
+    )
+    missing_files = [item for item in required_files if not (course_root / item).is_file()]
+    html_paths = sorted(course_root.glob("*.html")) if course_root.is_dir() else []
+
+    class CourseParser(HTMLParser):
+        def __init__(self) -> None:
+            super().__init__()
+            self.ids: list[str] = []
+            self.references: list[str] = []
+            self.quiz_options = 0
+            self.interview_questions = 0
+            self.algorithm_steps = 0
+
+        def handle_starttag(self, tag: str, attrs: list[tuple[str, str | None]]) -> None:
+            attributes = dict(attrs)
+            if attributes.get("id"):
+                self.ids.append(str(attributes["id"]))
+            key = (
+                "src"
+                if tag in {"img", "script"}
+                else "href"
+                if tag in {"a", "link"}
+                else None
+            )
+            if key and attributes.get(key):
+                self.references.append(str(attributes[key]))
+            classes = str(attributes.get("class") or "").split()
+            if "quiz-option" in classes:
+                self.quiz_options += 1
+            if tag == "details":
+                self.interview_questions += 1
+            if "algorithm-step" in classes:
+                self.algorithm_steps += 1
+
+    duplicate_ids: dict[str, list[str]] = {}
+    missing_anchors: list[str] = []
+    missing_local_references: list[str] = []
+    quiz_options = 0
+    interview_questions = 0
+    algorithm_steps = 0
+    contents: list[str] = []
+    for path in html_paths:
+        content = path.read_text(encoding="utf-8")
+        contents.append(content)
+        parser = CourseParser()
+        parser.feed(content)
+        duplicates = sorted({item for item in parser.ids if parser.ids.count(item) > 1})
+        if duplicates:
+            duplicate_ids[path.name] = duplicates
+        quiz_options += parser.quiz_options
+        interview_questions += parser.interview_questions
+        algorithm_steps += parser.algorithm_steps
+        for reference in parser.references:
+            if reference.startswith(("http:", "https:", "data:", "mailto:")):
+                continue
+            local, _, fragment = reference.partition("#")
+            target = path if not local else (path.parent / local).resolve()
+            if not target.is_file():
+                missing_local_references.append(f"{path.name}:{reference}")
+                continue
+            if fragment and target.suffix == ".html":
+                target_parser = CourseParser()
+                target_parser.feed(target.read_text(encoding="utf-8"))
+                if fragment not in target_parser.ids:
+                    missing_anchors.append(f"{path.name}:{reference}")
+
+    corpus = "\n".join(contents)
+    required_markers = (
+        "完整 Skill Package",
+        "GEPA",
+        "SkillOpt",
+        "Trigger Eval",
+        "Functional Eval",
+        "TaskScoreVector",
+        "PackagePatch",
+        "held-out validation",
+        "+0.12427",
+        "跨不同 Skill Package",
+        "本章面试问答",
+        "GEPAEngine",
+        "GEPAState",
+        "ParetoCandidateSelector",
+        "instance",
+        "objective",
+        "hybrid",
+        "cartesian",
+        "贯穿案例",
+    )
+    prohibited_claims = (
+        "E1 可以作为功能接纳证据",
+        "assertion pass rate 就是综合 Skill 质量",
+        "跨不同 Skill Package 合并是允许的",
+        "GEPASE 已经普遍证明能自动优化任意 Skill",
+    )
+    missing_markers = [marker for marker in required_markers if marker not in corpus]
+    present_prohibited = [marker for marker in prohibited_claims if marker in corpus]
+    return {
+        "valid": not (
+            missing_files
+            or missing_markers
+            or present_prohibited
+            or duplicate_ids
+            or missing_anchors
+            or missing_local_references
+        )
+        and len(html_paths) == 14
+        and sum(path.stat().st_size for path in html_paths) >= 200_000
+        and quiz_options >= 25
+        and interview_questions >= 40
+        and algorithm_steps >= 25,
+        "html_pages": len(html_paths),
+        "total_html_bytes": sum(path.stat().st_size for path in html_paths),
+        "quiz_options": quiz_options,
+        "interview_questions": interview_questions,
+        "algorithm_steps": algorithm_steps,
+        "missing_files": missing_files,
+        "missing_markers": missing_markers,
+        "present_prohibited_claims": present_prohibited,
+        "duplicate_ids": duplicate_ids,
+        "missing_anchors": sorted(missing_anchors),
+        "missing_local_references": sorted(set(missing_local_references)),
+    }
+
+
 def main() -> int:
     if STAGE_ROOT.exists():
         shutil.rmtree(STAGE_ROOT)
@@ -292,6 +437,7 @@ def main() -> int:
     present_legacy = [item for item in legacy_paths if (ROOT / item).exists()]
     module_result = module_audit()
     learning_guide = learning_guide_audit()
+    learning_course = learning_course_audit()
     deleted_entries = sum(line.startswith(" D ") for line in status.stdout.splitlines())
     cleanup = {
         "schema_version": "1.0.0",
@@ -587,6 +733,7 @@ def main() -> int:
             "accepted_changed_files": report_data["deployable"]["files"][1]["path"],
         },
         "learning_guide": learning_guide,
+        "learning_course": learning_course,
         "private_paths_published": 0,
         "private_skills_published": 0,
         "agent_calls_in_s10": 0,
@@ -603,6 +750,7 @@ def main() -> int:
             "schema_count": len(schema_after),
             "module_audit": module_result,
             "learning_guide": learning_guide,
+            "learning_course": learning_course,
         },
     )
     pre_secret_payload = parse_json(pre_secret)
@@ -685,12 +833,16 @@ def main() -> int:
             "gate_id": "S10-G02-bilingual-public-surface",
             "status": (
                 "passed"
-                if links.ok and claims_bounded and root_help.ok and learning_guide["valid"]
+                if links.ok
+                and claims_bounded
+                and root_help.ok
+                and learning_guide["valid"]
+                and learning_course["valid"]
                 else "failed"
             ),
             "detail": (
-                "Bilingual READMEs, visuals, the current learning guide, links, commands, and "
-                "claim boundaries are present."
+                "Bilingual READMEs, visuals, the field guide, the 14-page deep narrative course, "
+                "links, commands, and claim boundaries are present."
             ),
         },
         {
@@ -750,11 +902,12 @@ def main() -> int:
             "status": "passed"
             if claims_bounded
             and learning_guide["valid"]
+            and learning_course["valid"]
             and report_data["headline"]["single_canary_scope"]
             and report_data["deployable"]["changed_files"] == ["SKILL.md"]
             else "failed",
             "detail": (
-                "README and learning-guide results retain the one-canary and SKILL.md-only "
+                "README and both learning surfaces retain the one-canary and SKILL.md-only "
                 "accepted-edit limits."
             ),
         },
@@ -790,6 +943,8 @@ def main() -> int:
         f"- Full tests: {pytest_count} passed\n"
         f"- Public schemas: {len(schema_after)} stable exports\n"
         f"- Learning guide: {'passed' if learning_guide['valid'] else 'failed'}\n"
+        f"- Beginner course: {'passed' if learning_course['valid'] else 'failed'} "
+        f"({learning_course['html_pages']} HTML pages)\n"
         f"- Secret findings: {len(secret_payload.get('findings', []))}\n"
         f"- Fresh wheel install: {'passed' if fresh_install['valid'] else 'failed'}\n"
         "- Agent/API/search calls in S10: 0/0/0\n"
@@ -833,6 +988,13 @@ def main() -> int:
             "validation_wins": report_data["headline"]["validation_wins"],
             "fresh_install_passed": bool(fresh_install["valid"]),
             "learning_guide_valid": bool(learning_guide["valid"]),
+            "learning_course_valid": bool(learning_course["valid"]),
+            "learning_course_pages": learning_course["html_pages"],
+            "learning_course_quiz_options": learning_course["quiz_options"],
+            "learning_course_interview_questions": learning_course[
+                "interview_questions"
+            ],
+            "learning_course_algorithm_steps": learning_course["algorithm_steps"],
         },
         "known_issues": [
             (

@@ -6,7 +6,7 @@
   "pre_generation_secret_scan": {
     "findings": [],
     "include_generated": true,
-    "scanned_files": 5834,
+    "scanned_files": 5850,
     "tracked_skills_test_files": 0,
     "tracked_skills_test_paths": [],
     "valid": true
@@ -14,7 +14,7 @@
   "secret_scan": {
     "findings": [],
     "include_generated": true,
-    "scanned_files": 5840,
+    "scanned_files": 5856,
     "tracked_skills_test_files": 0,
     "tracked_skills_test_paths": [],
     "valid": true

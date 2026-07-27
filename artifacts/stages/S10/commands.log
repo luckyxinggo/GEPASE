@@ -3974,6 +3974,7 @@ exit_code=0
 ?? configs/examples/headless-roles.yaml
 ?? docs/assets/
 ?? docs/reproduction.md
+?? learning-course/
 ?? prompts/
 ?? schemas/analyzer_submission.schema.json
 ?? schemas/analyzer_work_item.schema.json
@@ -4090,10 +4091,10 @@ exit_code=0
 $ uv run pytest -q --junitxml=<PROJECT_ROOT>/artifacts/stages/S10/test-results.xml
 exit_code=0
 [stdout]
-........................................................................ [ 47%]
-........................................................................ [ 94%]
-.........                                                                [100%]
-153 passed in 7.35s
+........................................................................ [ 46%]
+........................................................................ [ 93%]
+..........                                                               [100%]
+154 passed in 7.39s
 [stderr]
 
 
@@ -4103,7 +4104,7 @@ exit_code=0
 {
   "findings": [],
   "include_generated": true,
-  "scanned_files": 5834,
+  "scanned_files": 5850,
   "tracked_skills_test_files": 0,
   "tracked_skills_test_paths": [],
   "valid": true
@@ -4666,13 +4667,13 @@ exit_code=0
 [stderr]
 
 
-$ uv run gepase mock run --config configs/examples/mock.yaml --output <PROJECT_ROOT>/artifacts/local/s10-release-bsu93z1k/mock --format json
+$ uv run gepase mock run --config configs/examples/mock.yaml --output <PROJECT_ROOT>/artifacts/local/s10-release-jdsdkhpt/mock --format json
 exit_code=0
 [stdout]
 {
   "config_hash": "dc83c452b115095fc7a221e51f9c560281e1542ed13dadd358b999e75e1ef122",
   "schema_version": "1.0.0",
-  "source_tree_hash": "9203b79d6a8240c10a958437aa0f6d47edd5b78113094b7788f534244c4eda25",
+  "source_tree_hash": "d9645e585b59dd7cc5abe1c372de4136313a04dcdc8d86671903050501a2d664",
   "summary": {
     "passed": 2,
     "total": 2
@@ -4695,7 +4696,7 @@ exit_code=0
 [stderr]
 
 
-$ uv run gepase artifact verify <PROJECT_ROOT>/artifacts/local/s10-release-bsu93z1k/mock --format json
+$ uv run gepase artifact verify <PROJECT_ROOT>/artifacts/local/s10-release-jdsdkhpt/mock --format json
 exit_code=0
 [stdout]
 {
@@ -4709,51 +4710,51 @@ exit_code=0
 [stderr]
 
 
-$ uv run gepase report deploy --config configs/canaries/slack-gif-creator-r5.json --report-dir artifacts/runs/r5-slack-gif-creator-report --output <PROJECT_ROOT>/artifacts/local/s10-release-bsu93z1k/deployed-package --format json
+$ uv run gepase report deploy --config configs/canaries/slack-gif-creator-r5.json --report-dir artifacts/runs/r5-slack-gif-creator-report --output <PROJECT_ROOT>/artifacts/local/s10-release-jdsdkhpt/deployed-package --format json
 exit_code=0
 [stdout]
 {
   "candidate_id": "candidate-04b26dff2bc83b82334bf184",
   "files": 7,
-  "output": "<PROJECT_ROOT>/artifacts/local/s10-release-bsu93z1k/deployed-package",
+  "output": "<PROJECT_ROOT>/artifacts/local/s10-release-jdsdkhpt/deployed-package",
   "valid": true
 }
 [stderr]
 
 
-$ uv build --out-dir <PROJECT_ROOT>/artifacts/local/s10-release-bsu93z1k/dist
+$ uv build --out-dir <PROJECT_ROOT>/artifacts/local/s10-release-jdsdkhpt/dist
 exit_code=0
 [stdout]
 
 [stderr]
 Building source distribution...
 Building wheel from source distribution...
-Successfully built artifacts/local/s10-release-bsu93z1k/dist/gepase-0.1.0.tar.gz
-Successfully built artifacts/local/s10-release-bsu93z1k/dist/gepase-0.1.0-py3-none-any.whl
+Successfully built artifacts/local/s10-release-jdsdkhpt/dist/gepase-0.1.0.tar.gz
+Successfully built artifacts/local/s10-release-jdsdkhpt/dist/gepase-0.1.0-py3-none-any.whl
 
-$ <PROJECT_ROOT>/.venv/bin/python3 -m venv <PROJECT_ROOT>/artifacts/local/s10-release-bsu93z1k/venv
+$ <PROJECT_ROOT>/.venv/bin/python3 -m venv <PROJECT_ROOT>/artifacts/local/s10-release-jdsdkhpt/venv
 exit_code=0
 [stdout]
 
 [stderr]
 
 
-$ uv pip install --python <PROJECT_ROOT>/artifacts/local/s10-release-bsu93z1k/venv/bin/python --offline <PROJECT_ROOT>/artifacts/local/s10-release-bsu93z1k/dist/gepase-0.1.0-py3-none-any.whl
+$ uv pip install --python <PROJECT_ROOT>/artifacts/local/s10-release-jdsdkhpt/venv/bin/python --offline <PROJECT_ROOT>/artifacts/local/s10-release-jdsdkhpt/dist/gepase-0.1.0-py3-none-any.whl
 exit_code=0
 [stdout]
 
 [stderr]
-Using Python 3.13.13 environment at: artifacts/local/s10-release-bsu93z1k/venv
+Using Python 3.13.13 environment at: artifacts/local/s10-release-jdsdkhpt/venv
 WARN typer==0.27.0 needs to be downloaded from a registry
 WARN typer needs to be downloaded from a registry
-Resolved 20 packages in 12ms
-Prepared 1 package in 9ms
-Installed 20 packages in 16ms
+Resolved 20 packages in 11ms
+Prepared 1 package in 10ms
+Installed 20 packages in 67ms
  + annotated-doc==0.0.4
  + annotated-types==0.7.0
  + attrs==26.1.0
  + gepa==0.1.4
- + gepase==0.1.0 (from file://<PROJECT_ROOT>/artifacts/local/s10-release-bsu93z1k/dist/gepase-0.1.0-py3-none-any.whl)
+ + gepase==0.1.0 (from file://<PROJECT_ROOT>/artifacts/local/s10-release-jdsdkhpt/dist/gepase-0.1.0-py3-none-any.whl)
  + jsonschema==4.26.0
  + jsonschema-specifications==2025.9.1
  + markdown-it-py==4.2.0
@@ -4770,14 +4771,14 @@ Installed 20 packages in 16ms
  + typing-extensions==4.16.0
  + typing-inspection==0.4.2
 
-$ <PROJECT_ROOT>/artifacts/local/s10-release-bsu93z1k/venv/bin/gepase --version
+$ <PROJECT_ROOT>/artifacts/local/s10-release-jdsdkhpt/venv/bin/gepase --version
 exit_code=0
 [stdout]
 0.1.0
 [stderr]
 
 
-$ <PROJECT_ROOT>/artifacts/local/s10-release-bsu93z1k/venv/bin/gepase --help
+$ <PROJECT_ROOT>/artifacts/local/s10-release-jdsdkhpt/venv/bin/gepase --help
 exit_code=0
 [stdout]
                                                                                 
@@ -4819,7 +4820,7 @@ exit_code=0
 [stderr]
 
 
-$ <PROJECT_ROOT>/artifacts/local/s10-release-bsu93z1k/venv/bin/gepase config validate configs/examples/mock.yaml --format json
+$ <PROJECT_ROOT>/artifacts/local/s10-release-jdsdkhpt/venv/bin/gepase config validate configs/examples/mock.yaml --format json
 exit_code=0
 [stdout]
 {
@@ -4868,7 +4869,7 @@ exit_code=0
 {
   "findings": [],
   "include_generated": true,
-  "scanned_files": 5840,
+  "scanned_files": 5856,
   "tracked_skills_test_files": 0,
   "tracked_skills_test_paths": [],
   "valid": true

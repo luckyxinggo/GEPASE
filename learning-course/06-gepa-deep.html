@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="zh-CN">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="description" content="从零深入 GEPA：对象、反思式 mutation、评测、Pareto state、merge 与 GEPASE 适配"><title>GEPASE 从零课程 · GEPA 深入</title><link rel="stylesheet" href="assets/course.css"><script src="assets/course.js" defer></script></head>
+<body data-page="gepa-deep"><main class="course-main">
+<section class="lesson-section hero"><div class="eyebrow">COURSE 06 · GEPA DEEP DIVE</div><h1>把 GEPA 拆开：它不是一句“反思后改 Prompt”，而是一套有状态、有评测预算的候选搜索引擎</h1><p class="lead">上一章已经把真实 Agent 产物变成 task-level 分数、轨迹和反馈。现在我们暂时离开 GEPASE 的 Package 细节，完整学习官方 <code>gepa==0.1.4</code> 如何表示 candidate、怎样产生 reflective mutation、如何筛选提案、怎样维护 Pareto state，以及 merge 在什么条件下发生。</p><div class="hero-meta"><span class="tag">建议学习 80–110 分钟</span><span class="tag">对应官方 0.1.4 源码</span><span class="tag">含逐轮手算例子</span><span class="tag">下一章专门推导 Pareto</span></div></section>
+
+<section class="lesson-section" id="why"><div class="section-head"><span class="section-number">01</span><div><div class="section-kicker">THE OPTIMIZATION PROBLEM</div><h2>GEPA 究竟在优化什么问题？</h2><p class="section-intro">它面对的是“候选由可读文本组件组成、任务反馈包含自然语言轨迹、完整评测昂贵”的黑盒优化问题。</p></div></div>
+<div class="chapter-objectives"><div class="chapter-objective"><b>输入</b><span>初始 candidate、trainset、valset、Adapter、Reflection LM、预算与策略。</span></div><div class="chapter-objective"><b>过程</b><span>选父代和小批任务 → 收集轨迹 → 反思改组件 → 小批筛选 → 全集评测 → 更新状态。</span></div><div class="chapter-objective"><b>输出</b><span>候选列表、父代谱系、逐题/逐目标分数、Pareto mapping、最佳 candidate 与运行轨迹。</span></div></div>
+<div class="plain-language"><b>核心难点</b><p>如果只让 LLM 看一个总分 <code>0.63</code>，它不知道失败发生在哪里；如果每次提案都跑全部任务，费用很高；如果只保留平均分第一名，又会丢掉“只在某一类题上特别好”的候选。GEPA 分别用轨迹反思、minibatch screening 和 per-key Pareto memory 回答这三个问题。</p></div>
+<div class="formula">寻找 candidate c*，使任务表现更好；但 evaluate(c, task) 是昂贵黑盒，且反馈不仅有分数 r，还有 trajectory τ 与自然语言反馈 f。</div>
+<div class="concept-layers"><div class="concept-layer"><b>候选空间</b><p>不是连续向量，而是一个 <code>dict[str, str]</code>：键是可更新组件名，值是文本。比如 <code>{"planner": "…", "solver": "…"}</code>。</p></div><div class="concept-layer"><b>评测函数</b><p>Adapter 执行 candidate 对一批 DataInst，返回 outputs、scores、可选 objective_scores；反思阶段还需要 trajectories。</p></div><div class="concept-layer"><b>搜索信号</b><p>单题分数告诉引擎哪里存在局部优势；trajectory 和 feedback 告诉 Reflection LM 为什么失败、改什么可能有效。</p></div><div class="concept-layer"><b>状态记忆</b><p>GEPAState 保存所有 candidate、父代、逐题分数、逐目标分数、Pareto mapping、预算和 cache，而不是每轮只留一段最新 Prompt。</p></div></div>
+<div class="source-note"><strong>依据：</strong>课程按本项目锁定的 <code>gepa==0.1.4</code> 本地实现核对，入口包括 <code>gepa.core.engine.GEPAEngine</code>、<code>gepa.core.state.GEPAState</code> 与 <code>gepa.proposer.reflective_mutation</code>。可对照 <a href="https://github.com/gepa-ai/gepa">GEPA 官方仓库</a> 和 <a href="https://arxiv.org/abs/2507.19457">GEPA 论文</a>。</div></section>
+
+<section class="lesson-section" id="objects"><div class="section-head"><span class="section-number">02</span><div><div class="section-kicker">SIX CORE OBJECTS</div><h2>先认清六个对象，后面流程就不会混</h2></div></div>
+<div class="table-wrap"><table class="data-table"><thead><tr><th>对象</th><th>它保存什么</th><th>不负责什么</th><th>在 GEPASE 中对应</th></tr></thead><tbody>
+<tr><td><code>candidate</code></td><td><code>dict[str, str]</code> 文本组件</td><td>不自带评测结论</td><td>PackageCandidate 的 component map 投影</td></tr>
+<tr><td><code>DataInst</code></td><td>一个任务输入</td><td>不是 grader 结果</td><td>冻结 EvalPlan 中的 TaskCase</td></tr>
+<tr><td><code>EvaluationBatch</code></td><td>outputs、scores、trajectories、objective_scores</td><td>不决定接纳</td><td>CandidateEvaluation / TaskScoreVector evidence</td></tr>
+<tr><td><code>GEPAAdapter</code></td><td>如何执行 candidate、如何产生反思侧信息</td><td>不拥有候选池</td><td>GEPASEAdapter 与外部 Eval Core</td></tr>
+<tr><td><code>CandidateProposal</code></td><td>新 candidate、父代、小批前后分数、反思元数据</td><td>不是已接纳 candidate</td><td>Reflection + PackagePatch proposal</td></tr>
+<tr><td><code>GEPAState</code></td><td>候选、父代、逐题/目标分、frontier、预算、cache</td><td>不替代真实 Runtime</td><td>官方 state + GEPASE CandidateStore/EvolutionPool</td></tr>
+</tbody></table></div>
+<div class="code-wrap"><div class="code-head"><span>官方抽象的最小心智模型（教学伪代码，并非复制源码）</span></div><pre><code><span class="comment"># Candidate 是“组件名 → 文本”，GEPA 不知道组件的业务含义</span>
+seed_candidate = {
+    <span class="string">"planner"</span>: <span class="string">"先拆解问题，再逐步执行"</span>,
+    <span class="string">"solver"</span>: <span class="string">"给出准确、简洁的答案"</span>,
+}
+
+<span class="keyword">class</span> <span class="type">MyAdapter</span>(GEPAAdapter):
+    <span class="keyword">def</span> evaluate(self, batch, candidate, capture_traces):
+        outputs, scores, traces, objectives = [], [], [], []
+        <span class="keyword">for</span> task <span class="keyword">in</span> batch:
+            output, trace = run_system(task, candidate)
+            outputs.append(output)
+            scores.append(metric(task, output))
+            traces.append(trace <span class="keyword">if</span> capture_traces <span class="keyword">else</span> None)
+            objectives.append({<span class="string">"correctness"</span>: ..., <span class="string">"style"</span>: ...})
+        <span class="keyword">return</span> EvaluationBatch(outputs, scores, traces, objectives)</code></pre></div>
+<div class="callout warning"><strong>最容易混淆的地方</strong><p>Adapter 是“把你的系统接给 GEPA”的翻译层，不是 Agent Runtime。它可以调用任何外部系统完成 evaluate，但 candidate 的保存、Pareto state 和搜索循环仍属于 GEPA Core。</p></div></section>
+
+<section class="lesson-section" id="loop"><div class="section-head"><span class="section-number">03</span><div><div class="section-kicker">ONE REFLECTIVE ITERATION</div><h2>一轮 reflective mutation 实际经过九步</h2><p class="section-intro">下面严格区分“生成提案”“小批接纳”“完整评测”“进入状态”四个层次。</p></div></div>
+<div class="algorithm-trace">
+<article class="algorithm-step"><h3>采样父 candidate 与 minibatch</h3><p>SamplingStrategy 调用 CandidateSelector 选父代，再由 BatchSampler 选少量 train task。父代可能是 current best，也可能来自 Pareto mapping。</p><p class="io-line"><strong>输入：</strong>GEPAState + trainset　<strong>输出：</strong>(parent_idx, minibatch_ids)</p></article>
+<article class="algorithm-step"><h3>重新执行父代，并要求 capture_traces</h3><p>引擎在本轮 minibatch 上运行父代，得到当前 outputs、scores 与 trajectories。不能只拿旧总分，因为反思需要这批任务的详细行为。</p><p class="io-line"><strong>输入：</strong>parent + minibatch　<strong>输出：</strong>parent EvaluationBatch</p></article>
+<article class="algorithm-step"><h3>构造 reflection dataset</h3><p>把 task input、output、score、trajectory 和 Adapter 提供的反馈整理成反思样本。这里的信息带宽远高于一个 scalar reward。</p><p class="io-line"><strong>输出：</strong>每个 task 的可读失败证据</p></article>
+<article class="algorithm-step"><h3>选择本轮要修改的 component</h3><p>ComponentSelector 决定改 <code>planner</code> 还是 <code>solver</code>。官方可以 round-robin 或按策略选择；GEPASE 后续用图选择器替换纯文本组件选择。</p><p class="io-line"><strong>输出：</strong>components_to_update</p></article>
+<article class="algorithm-step"><h3>Reflection LM 产生新文本</h3><p>反思器比较失败轨迹与现有组件，输出 <code>new_texts</code>、用于复现的 prompts、raw LM outputs 和 metadata。父 candidate 其他组件保持不变。</p><p class="io-line"><strong>输出：</strong>尚未验证的新 candidate</p></article>
+<article class="algorithm-step"><h3>在同一 minibatch 上执行 proposal</h3><p>新 candidate 再跑这批任务，得到 <code>subsample_scores_after</code>。这是便宜的 early screen，不是完整效果结论。</p><p class="io-line"><strong>比较：</strong>before scores ↔ after scores</p></article>
+<article class="algorithm-step"><h3>AcceptanceCriterion + SelectionStrategy</h3><p>Criterion 判断是否改善；SelectionStrategy 从一批提案中决定哪些值得进入完整评测。0.1.4 默认接纳语义是 strict improvement，默认选择所有通过项。</p><p class="io-line"><strong>输出：</strong>selected proposals 与明确拒绝原因</p></article>
+<article class="algorithm-step"><h3>selected proposal 跑完整 valset</h3><p>只有小批筛选通过的提案才进行 full evaluation；EvaluationCache 以 candidate hash + example id 避免重复执行。</p><p class="io-line"><strong>输出：</strong>逐 val_id 分数与逐 objective 聚合</p></article>
+<article class="algorithm-step"><h3>写入 GEPAState 并更新 frontier</h3><p>追加 candidate、父代索引、发现时预算、逐题分数和目标分数；更新 instance/objective/cartesian frontier，触发 callback，并可能调度 merge。</p><p class="io-line"><strong>输出：</strong>可保存、可恢复的新搜索状态</p></article>
+</div>
+<div class="story-bridge"><div class="section-kicker">WHY THIS ORDER</div><h3>先小批找方向，再全集确认</h3><p>如果直接对每个 LLM 提案跑全量评测，预算会浪费在明显无效修改上；如果只信 minibatch，又容易过拟合。GEPA 用两级评测平衡成本和可信度。</p><p class="handoff">但注意：官方 GEPA 的 valset 是搜索引擎内部完整评测集，不自动等同于 GEPASE 的部署 held-out validation。后者在搜索之外另设严格 Gate。</p></div></section>
+
+<section class="lesson-section" id="worked"><div class="section-head"><span class="section-number">04</span><div><div class="section-kicker">WORKED ITERATION</div><h2>手算一轮：为什么总分变化很小，候选仍值得保留？</h2></div></div>
+<p>设 seed candidate <strong>S</strong> 在三个任务上的分数是：</p>
+<div class="table-wrap"><table class="data-table"><thead><tr><th>任务</th><th>S 分数</th><th>轨迹暴露的问题</th></tr></thead><tbody><tr><td>T1 · 文字动画</td><td>0.55</td><td>没有根据画布缩放字号</td></tr><tr><td>T2 · 循环过渡</td><td>0.82</td><td>已经较好</td></tr><tr><td>T3 · 文件压缩</td><td>0.75</td><td>执行了体积检查</td></tr></tbody></table></div>
+<div class="derivation"><div class="derivation-row"><span class="symbol">①</span><p>父代选择器选 S，minibatch 抽到 T1、T2。</p></div><div class="derivation-row"><span class="symbol">②</span><p>Reflection LM 根据 T1 trace 把 planner 从“渲染文字”改为“先测量文本边界，超出时逐步缩小字号，再渲染”。得到候选 A。</p></div><div class="derivation-row"><span class="symbol">③</span><p>A 在 minibatch 上变成 T1=0.83、T2=0.80。合计从 1.37 变为 1.63，严格改善，进入 full eval。</p></div><div class="derivation-row"><span class="symbol">④</span><p>full eval 得 A=[0.83, 0.80, 0.70]，平均 0.7767；S 平均 0.7067。A 是 current best。</p></div><div class="derivation-row"><span class="symbol">⑤</span><p>后来候选 B=[0.60, 0.86, 0.90]，平均 0.7867，比 A 更高；但 A 仍是 T1 champion。若只留平均第一，T1 的局部优势就丢了。</p></div></div>
+<p>这正是 GEPA 引入 per-instance frontier 的动机：A 可继续作为针对 T1 失败的父代，甚至与 B 的互补组件发生 merge。下一章会把这里的“champion mapping”和传统多目标 Pareto 区分开。</p></section>
+
+<section class="lesson-section" id="state"><div class="section-head"><span class="section-number">05</span><div><div class="section-kicker">WHAT THE STATE REMEMBERS</div><h2>GEPAState 为什么是算法骨架，而不是日志袋？</h2></div></div>
+<div class="state-ledger"><div class="state-cell active"><b>program_candidates</b><small>所有候选组件字典</small></div><div class="state-cell active"><b>parent_program_for_candidate</b><small>单父/多父谱系</small></div><div class="state-cell active"><b>prog_candidate_val_subscores</b><small>逐 val_id 分数</small></div><div class="state-cell active"><b>objective_scores</b><small>候选的目标聚合</small></div><div class="state-cell active"><b>pareto mappings</b><small>每个 key 的最佳候选集合</small></div><div class="state-cell"><b>total_num_evals</b><small>实际 metric calls 预算</small></div><div class="state-cell"><b>discovery budget</b><small>候选出现时已用预算</small></div><div class="state-cell"><b>full_program_trace</b><small>每轮发生了什么</small></div><div class="state-cell"><b>evaluation_cache</b><small>(candidate hash, example id)</small></div><div class="state-cell"><b>adapter_state</b><small>Adapter 自有可恢复状态</small></div></div>
+<div class="code-wrap"><div class="code-head"><span>新候选写入状态时发生什么（教学伪代码）</span></div><pre><code><span class="keyword">def</span> add_candidate(parent_ids, candidate, full_eval):
+    idx = len(state.program_candidates)
+    state.program_candidates.append(candidate)
+    state.parents.append(parent_ids)
+    state.scores_by_task.append(full_eval.scores_by_id)
+    state.objectives.append(mean_by_objective(full_eval.objective_scores))
+
+    <span class="keyword">for</span> task_id, score <span class="keyword">in</span> full_eval.scores_by_id.items():
+        <span class="keyword">if</span> score &gt; state.best_score_for_task[task_id]:
+            state.best_score_for_task[task_id] = score
+            state.champions_for_task[task_id] = {idx}
+        <span class="keyword">elif</span> score == state.best_score_for_task[task_id]:
+            state.champions_for_task[task_id].add(idx)
+
+    update_objective_and_cartesian_frontiers(idx, full_eval)</code></pre></div>
+<div class="callout"><strong>为什么 cache 是算法的一部分？</strong><p>搜索反复评测相同 candidate/task。0.1.4 的 EvaluationCache 使用候选内容哈希和 example ID 作为键；缓存命中不增加实际 metric call。否则预算统计会把重复工作当成新探索。</p></div></section>
+
+<section class="lesson-section" id="merge"><div class="section-head"><span class="section-number">06</span><div><div class="section-kicker">MERGE IN OFFICIAL GEPA</div><h2>官方 merge 不是把两个最高分 Prompt 拼起来</h2></div></div>
+<div class="algorithm-trace"><article class="algorithm-step"><h3>从 frontier dominators 中找两条分支</h3><p>父代不能互为祖先，必须存在共同祖先；共同祖先的 aggregate score 不能高于两个后代。</p></article><article class="algorithm-step"><h3>比较每个 predictor/component 相对祖先的变化</h3><p>如果只有一个后代修改某组件，取该修改；如果双方都改且不同，0.1.4 的通用 merge 依据 aggregate score 或平局随机选择。</p></article><article class="algorithm-step"><h3>用父代优势区域选 subsample</h3><p>从 parent 1 更好、parent 2 更好、二者平局的 val IDs 中抽样，检查 child 是否至少不差于两个父代。</p></article><article class="algorithm-step"><h3>通过后才进行 full eval 并写入多父谱系</h3><p>merge child 仍是新 candidate；它不会自动继承父代的分数。</p></article></div>
+<div class="callout warning"><strong>为什么 GEPASE 不能直接照搬文本 merge？</strong><p>Package 组件存在文件引用、函数调用和依赖闭包。两个父代都改同一文件时不能只按 aggregate score 选择文本；GEPASE 增加 common lineage root、source snapshot、contribution subgraph、dependency closure、conflict set 与 typed resolution，再让 child 重新跑 Gate。</p></div></section>
+
+<section class="lesson-section" id="boundary"><div class="section-head"><span class="section-number">07</span><div><div class="section-kicker">OFFICIAL GEPA VS GEPASE</div><h2>哪些由官方 GEPA 提供，哪些是 GEPASE 外围新增？</h2></div></div>
+<div class="table-wrap"><table class="data-table"><thead><tr><th>能力</th><th>官方 GEPA 0.1.4</th><th>GEPASE 的处理</th></tr></thead><tbody><tr><td>Candidate</td><td><code>dict[str,str]</code> 文本组件</td><td>不可变 PackageCandidate；component 是稳定图节点/内容投影</td></tr><tr><td>Feedback</td><td>score、trajectory、Adapter feedback</td><td>ExecutionBundle、TaskScoreVector、grader/comparator/analyzer、evidence refs</td></tr><tr><td>组件选择</td><td>通用 component selector</td><td>Graph-guided/random/round-robin/trace selector</td></tr><tr><td>Mutation</td><td>Reflection LM 返回 new texts</td><td>Agent/LLM 返回 typed PackagePatch，带 precondition 和 edit budget</td></tr><tr><td>Frontier</td><td>instance/objective/hybrid/cartesian mapping</td><td>官方 state 的 snapshot + train pool/deployable frontier 分离</td></tr><tr><td>Acceptance</td><td>小批 criterion + full val evaluation</td><td>Gate 0/1/2/3；held-out validation 在搜索之外严格保护</td></tr><tr><td>Merge</td><td>共同祖先上的文本 predictor 合成</td><td>同 Package/snapshot/root + closure/conflict/typed child</td></tr><tr><td>Runtime</td><td>由 Adapter 提供 evaluate</td><td>Agent Host 外置；Core 用 WorkItem/Submission 接收真实证据</td></tr></tbody></table></div>
+<div class="callout danger"><strong>命名陷阱：valset ≠ 自动 held-out</strong><p>官方 GEPA 在搜索中用 valset 更新 frontier、选 best candidate；它可能被多轮搜索间接利用。GEPASE 的 frozen held-out validation 只对 train-admitted candidate 解锁，并由 strict Gate 决定 deployable 状态。课程后续凡说“部署验证”，指后者。</p></div>
+<a class="deep-dive-link" href="06-pareto-lab.html"><span><strong>下一站：Pareto 推导实验室</strong>现在你已经知道 frontier 在循环中的位置，下一章将从数学支配关系开始，再解释 GEPA 的 per-key champion mapping 为什么不完全等同于教科书二维 Pareto front。</span><i>→</i></a>
+<div class="quiz"><h4>一个 proposal 在 minibatch 上严格提升，接下来最准确的说法是？</h4><div class="quiz-options"><button class="quiz-option" data-correct="false" data-explain="小批只负责 early screen，不能直接写入最终效果结论。">已经是 GEPA 最佳 candidate</button><button class="quiz-option" data-correct="true" data-explain="Selection 后还要 full valset eval；在 GEPASE 中还要经过 Package Gate 和 frozen held-out。">获得进入完整评测的资格</button><button class="quiz-option" data-correct="false" data-explain="进入搜索状态与进入 deployable frontier 是不同状态。">已经可以部署</button></div><div class="quiz-feedback" aria-live="polite"></div></div>
+<div class="interview"><h3>本章面试问答</h3><details><summary>请完整描述 GEPA 一轮 reflective mutation</summary><div class="answer">选择父代和 minibatch；带 trace 执行父代；构造 reflection dataset；选择组件；Reflection LM 产生新文本；在同一 minibatch 评测；AcceptanceCriterion 与 SelectionStrategy 选出提案；selected proposal 跑 full valset；写入 candidate、父代、逐题/目标分并更新 frontier、预算和 cache。</div></details><details><summary>GEPA 为什么比只用标量 reward 更适合文本组件优化？</summary><div class="answer">文本与 Agent 轨迹天然包含可读语义。GEPA 把 input、output、trajectory 和反馈交给 Reflection LM，使修改有具体因果假设；score 仍负责验证，而不是让语言反思自我批准。</div></details><details><summary>官方 GEPA 的 Adapter 和 GEPASEAdapter 有何关系？</summary><div class="answer">概念上都是领域翻译层。GEPASE 把 PackageCandidate components 与真实 Eval Core 产生的 CandidateEvaluation 映射给官方 state/selector；它本身不调用 Agent Runtime，实际执行通过 Core work queue 和 Agent Host 完成。</div></details><details><summary>为什么 GEPASE 不直接调用 GEPAEngine 完成所有状态转换？</summary><div class="answer">GEPAEngine 的通用 candidate/new-text/valset 语义不足以表达 Package snapshot、typed Patch、结构安全 Gate、真实角色 evidence、train/held-out 分离与 dependency-aware merge。GEPASE 复用锁定的 state/selector/算法骨架，在外层保持这些强契约。</div></details></div>
+<div class="lesson-summary"><h3>本章必须真正掌握的五点</h3><ul><li>GEPA candidate 是可更新文本组件字典，Adapter 把领域系统接入 evaluate。</li><li>一轮 mutation 包含父代小批轨迹、反思提案、小批筛选、完整评测和 state 更新。</li><li>GEPAState 保存候选、谱系、逐题/目标分、frontier、预算和 cache。</li><li>merge 依赖共同祖先与组件差异，child 必须重新评测。</li><li>GEPASE 使用官方骨架，但把 deployment held-out、PackagePatch 和图依赖放在外层。</li></ul><button class="complete-button" data-complete-lesson type="button"></button></div></section>
+</main></body></html>

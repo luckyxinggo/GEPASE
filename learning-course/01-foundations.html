@@ -1,0 +1,78 @@
+<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="description" content="GEPASE 的算法与项目思想来源"><title>GEPASE 从零课程 · 思想来源</title><link rel="stylesheet" href="assets/course.css"><script src="assets/course.js" defer></script></head>
+<body data-page="foundations"><main class="course-main">
+<section class="lesson-section hero"><div class="eyebrow">COURSE 01 · FOUNDATIONS</div><h1>五个来源不是五套系统，而是回答五个不同问题</h1><p class="lead">启发式学习定义“什么可以被学习”，GEPA 提供“如何搜索”，skill-creator 提供“如何评测”，SkillOpt 约束“如何修改”，Darwin skill 启发“如何形成版本闭环”。GEPASE 再用图把对象扩展到完整 Package。</p><div class="hero-meta"><span class="tag">建议学习 90–120 分钟</span><span class="tag">含算法直觉</span><span class="tag">含来源处理流程</span><span class="tag">含 GEPASE 改造边界</span></div></section>
+<section class="lesson-section"><div class="section-head"><span class="section-number">01</span><div><div class="section-kicker">HEURISTIC LEARNING</div><h2>不更新模型权重，也可以“学习”</h2><p class="section-intro">传统训练修改模型参数；启发式学习直接修改模型外部可读的规则、代码、记忆和上下文。</p></div></div>
+<div class="plain-language"><b>类比</b><p>棋手的大脑不变，但你可以更新他的开局手册、复盘笔记和计算工具。下次行动策略因此改变，这也是一种学习，只是被更新的状态在模型之外。</p></div>
+<div class="formula">冻结的 Agent 模型 M + 可更新的 Package θ → 行为策略 π(a | task, θ)</div>
+<div class="grid-3"><article class="card"><h3>环境反馈</h3><p>真实任务产物、错误、trace、grader 与 comparator 结论。</p></article><article class="card"><h3>显式编辑</h3><p>对 Markdown、代码、参考文件或配置实施可审查 Patch。</p></article><article class="card"><h3>下一轮行为</h3><p>Agent 读取新 Package 后改变规划、工具调用和产物质量。</p></article></div>
+<p>GEPASE 因而把 <button class="term" data-term="Skill Package">完整 Package</button> 视为参数 <code>θ</code>，但这里的“训练”不涉及梯度和模型权重。</p>
+<h3>一次“无梯度学习”必须同时具备四个条件</h3><div class="concept-layers"><div class="concept-layer"><b>可变状态</b><p>必须明确哪些外部内容允许更新。GEPASE 中是不可变父快照派生出的 PackageCandidate，而不是直接改模型或用户原目录。</p></div><div class="concept-layer"><b>环境反馈</b><p>反馈必须来自实际任务行为：原生产物、工具轨迹、错误、独立评分和对照差值，而不是模型对自己的静态观感。</p></div><div class="concept-layer"><b>编辑算子</b><p>系统需要知道如何从反馈产生新的策略状态。这里是带目标节点、前置条件和预算的 typed PackagePatch。</p></div><div class="concept-layer"><b>接纳规则</b><p>修改不能因为“看起来合理”就生效；必须通过结构、安全、train 和 held-out validation 的冻结 Gate。</p></div></div>
+<div class="derivation"><div class="derivation-row"><span class="symbol">t</span><p>第 t 轮有策略状态 <code>θₜ</code>，Agent 在任务环境中执行，得到轨迹 <code>τₜ</code> 和任务反馈 <code>Fₜ</code>。</p></div><div class="derivation-row"><span class="symbol">μ</span><p>mutation operator 根据 <code>(θₜ, τₜ, Fₜ)</code> 提出修改 <code>Δθₜ</code>，形成候选 <code>θ′=apply(θₜ, Δθₜ)</code>。</p></div><div class="derivation-row"><span class="symbol">G</span><p>Gate 在冻结任务上判断 <code>G(θ′, θₜ)</code>；通过才写入候选前沿，失败则进入 rejected memory。</p></div></div></section>
+
+<section class="lesson-section" id="reference-map"><div class="section-head"><span class="section-number">02</span><div><div class="section-kicker">REFERENCE PROJECT MAP</div><h2>先看“缺口—来源—改造”的关系，而不是把五个项目混成一套</h2></div></div>
+<div class="table-wrap"><table class="data-table"><thead><tr><th>GEPASE 流程缺口</th><th>主要参考</th><th>原项目提供的处理流程</th><th>GEPASE 为什么还要改造</th></tr></thead><tbody><tr><td>什么可以被学习</td><td>Heuristic Learning</td><td>环境反馈 → 更新规则/代码/上下文 → 再执行</td><td>需要明确 Package snapshot、Patch 和 Gate 契约</td></tr><tr><td>怎样从高带宽反馈搜索</td><td>GEPA</td><td>选父代/任务 → 捕获轨迹 → reflection → minibatch → full eval → Pareto state</td><td>官方文本组件要提升为图节点和完整 Package</td></tr><tr><td>怎样设计可信 Skill 测试</td><td>Anthropic skill-creator</td><td>trigger eval 与 functional eval；独立执行、评分、A/B 分析</td><td>需要 typed WorkItem、ledger、完整 evidence 和可恢复人工审核</td></tr><tr><td>怎样避免无界重写</td><td>Microsoft SkillOpt</td><td>有界 add/delete/replace → selection set → held-out 严格接受 → 记住坏编辑</td><td>从单一文档编辑推广为跨文件 typed PackagePatch</td></tr><tr><td>怎样形成可解释进化历史</td><td>Darwin skill</td><td>执行 → 反思 → 修订 → 独立判断 → git ratchet / human checkpoint</td><td>补充 paired baseline、六维分数与统计 Gate</td></tr><tr><td>怎样定位完整包中的根因</td><td>GEPASE Package Graph</td><td>IR → 静态/动态关系 → reverse slice → closure / blast radius</td><td>这是项目相对单文档优化的核心结构扩展</td></tr></tbody></table></div>
+<div class="callout"><strong>学习方法</strong><p>不要问“GEPASE 到底用了哪个项目”。更准确的问题是：当前流程的哪一个决策来自哪个思想？它在 GEPASE 中被什么类型和 Gate 限制？</p></div></section>
+
+<section class="lesson-section" id="skill-creator"><div class="section-head"><span class="section-number">03</span><div><div class="section-kicker">ANTHROPIC SKILL-CREATOR</div><h2>skill-creator 的核心不是生成 SKILL.md，而是把“触发”和“做事”拆成两种可观察实验</h2></div></div>
+<div class="algorithm-trace"><article class="algorithm-step"><h3>先分析 Skill 能力边界</h3><p>识别该 Skill 解决哪些用户意图、需要哪些输入、应交付什么原生产物，以及什么相似请求不该触发。</p></article><article class="algorithm-step"><h3>生成 activation / trigger queries</h3><p>正例、负例和近边界 query 用于检查 description/metadata；失败通常修改触发描述，不应混入功能分。</p></article><article class="algorithm-step"><h3>设计 functional tasks</h3><p>让独立 Agent 真正使用 Skill 完成任务，保存 transcript 和 output，而不是让它解释“我会怎么做”。</p></article><article class="algorithm-step"><h3>独立 grader 与 blind comparison</h3><p>评分角色读取任务与产物，A/B comparator 不知道哪个输出来自新版本，减少候选身份偏见。</p></article><article class="algorithm-step"><h3>Analyzer 解释胜负，再迭代 Skill</h3><p>分析不是最终分数，而是把失败转成可编辑建议；下一轮仍需重新执行与比较。</p></article></div>
+<div class="grid-2"><article class="concept-card"><h3>GEPASE 直接保留</h3><p>Trigger/Functional 分轨、真实产物、with-skill/no-skill 对照、独立角色、匿名 comparator、Analyzer 读取证据。</p></article><article class="concept-card coral"><h3>GEPASE 进一步加严</h3><p>EvalPlanDraft → 自动检查 → 中文人工 review → frozen hash；角色用 typed WorkItem/Submission；Core 拥有 ledger、cache、candidate 和 Gate。</p></article></div>
+<div class="source-note"><strong>继续学习：</strong>课程会在 <a href="03-eval-plan.html">EvalPlan 章节</a> 展开出题与人工审核，在 <a href="04-agent-evaluation.html">真实 Agent 评测章节</a> 展开角色可见性。参考 <a href="https://github.com/anthropics/skills/blob/main/skills/skill-creator/SKILL.md">Anthropic skill-creator</a> 与 <a href="https://claude.com/blog/improving-skill-creator-test-measure-and-refine-agent-skills">官方介绍</a>。</div></section>
+
+<section class="lesson-section" id="skillopt"><div class="section-head"><span class="section-number">04</span><div><div class="section-kicker">MICROSOFT SKILLOPT</div><h2>SkillOpt 给 GEPASE 的最重要约束：修改是“候选编辑”，不是直接写回正式 Skill</h2></div></div>
+<div class="algorithm-trace"><article class="algorithm-step"><h3>从失败例子生成 bounded edits</h3><p>优化器用 add/delete/replace 形式表达有限修改，避免每轮全量重写导致不可比较。</p></article><article class="algorithm-step"><h3>在 selection/train 数据上评估编辑</h3><p>只有产生可测改进的编辑才有资格继续；完全等分不能为了“候选数量”被包装成成功。</p></article><article class="algorithm-step"><h3>在 held-out 数据上做严格选择</h3><p>修改必须泛化到未参与产生它的任务，保护原有能力；否则即使 train 很好也拒绝。</p></article><article class="algorithm-step"><h3>把 rejected edits 变成负向记忆</h3><p>保存编辑内容、触发的回归和拒绝理由，后续 proposer 避免重复犯错。</p></article></div>
+<div class="code-wrap"><div class="code-head"><span>从 SkillOpt 风格编辑到 GEPASE typed PackagePatch</span></div><pre><code><span class="comment"># 单文档层面的 bounded edit 直觉</span>
+edit = Replace(old_block=<span class="string">"…"</span>, new_block=<span class="string">"…"</span>)
+
+<span class="comment"># GEPASE 还要求文件/节点身份、父快照和前置条件</span>
+patch = PackagePatch(
+    parent_candidate_id=<span class="string">"candidate-A"</span>,
+    operations=[ReplaceMarkdownBlock(
+        target_node_id=<span class="string">"SKILL.md#verification"</span>,
+        expected_content_hash=<span class="string">"sha256:old…"</span>,
+        replacement=<span class="string">"…"</span>,
+    )],
+    edit_budget={<span class="string">"max_files"</span>: 1, <span class="string">"max_ops"</span>: 1},
+)</code></pre></div>
+<div class="callout warning"><strong>不能机械照搬的地方</strong><p>一个 Package edit 可能改变 Python 函数、reference、frontmatter 或资产引用。GEPASE 必须在应用后重建 IR/Graph、计算 dependency closure 和 blast radius；这超出了单文档 add/delete/replace。</p></div>
+<div class="source-note"><strong>继续学习：</strong><a href="07-patch-evolution.html">图引导 Patch 章节</a> 会逐项解释七类 PackagePatch 操作、precondition、atomic apply 与 rollback。参考 <a href="https://microsoft.github.io/SkillOpt/">SkillOpt 官方项目</a>。</div></section>
+
+<section class="lesson-section" id="darwin"><div class="section-head"><span class="section-number">05</span><div><div class="section-kicker">DARWIN SKILL</div><h2>Darwin skill 提供的是“进化工作流”直觉：任何改进都要留下可回退历史</h2></div></div>
+<div class="pipeline"><div class="flow-step"><b>执行任务</b><small>在环境里暴露真实缺陷</small></div><div class="flow-step"><b>反思失败</b><small>把证据变成修订理由</small></div><div class="flow-step"><b>生成新版本</b><small>不覆盖旧版本</small></div><div class="flow-step"><b>独立判断</b><small>新版本是否真的更好</small></div><div class="flow-step"><b>Git ratchet</b><small>只让通过者推进基线</small></div><div class="flow-step"><b>Human checkpoint</b><small>高影响变更可人工介入</small></div></div>
+<div class="grid-3"><article class="card"><h3>GEPASE 借鉴 lineage</h3><p>每个 child 记录父代、Patch、图差异和 Gate，形成候选 DAG。</p></article><article class="card"><h3>GEPASE 加入 paired evidence</h3><p>不是由同一个 Agent 自己宣布改进，而是同 case 对照、独立 grader/comparator。</p></article><article class="card"><h3>GEPASE 加入 strict frontier</h3><p>train pool 与 deployable frontier 分开，validation 回归不会推进正式版本。</p></article></div>
+<div class="source-note"><strong>继续学习：</strong>在 <a href="06-gepa-search.html">GEPASE 搜索适配</a> 看 branch/lineage，在 <a href="08-canary.html">真实 canary</a> 看 accepted/rejected 历史。参考 <a href="https://github.com/alchaincyf/darwin-skill">Darwin skill 官方仓库</a>。</div></section>
+
+<section class="lesson-section"><div class="section-head"><span class="section-number">06</span><div><div class="section-kicker">GEPA PREVIEW</div><h2>GEPA 为什么不只保留一个总分最高的候选？</h2><p class="section-intro">GEPA 的核心价值不是“让 LLM 随便反思”，而是保留任务级轨迹、结构化反馈和不同目标上的局部优势。本节只建立地图，后面有两章完整推导。</p></div></div>
+<div class="pipeline"><div class="flow-step"><b>选择候选</b><small>从 Pareto 池选父代</small></div><div class="flow-step"><b>选择任务</b><small>找有失败信息或优化价值的 case</small></div><div class="flow-step"><b>读取轨迹</b><small>不只看一个 reward</small></div><div class="flow-step"><b>生成反思</b><small>解释失败和修改依据</small></div><div class="flow-step"><b>产生 mutation</b><small>修改文本组件或 Package 节点</small></div><div class="flow-step"><b>评测入池</b><small>保留局部优势</small></div></div>
+<h3>Pareto 用一个两目标例子理解</h3>
+<div class="table-wrap"><table class="data-table"><thead><tr><th>候选</th><th>GIF 视觉质量</th><th>文件体积稳定性</th><th>关系</th></tr></thead><tbody><tr><td>A</td><td>0.90</td><td>0.60</td><td>A 擅长视觉</td></tr><tr><td>B</td><td>0.78</td><td>0.92</td><td>B 擅长稳定</td></tr><tr><td>C</td><td>0.70</td><td>0.55</td><td>C 被 A 完全支配</td></tr></tbody></table></div>
+<p>A 和 B 互不支配，可能共同进入 <button class="term" data-term="Frontier">前沿集合</button>；C 在两个目标上都不如 A，没有保留必要。多父合并可以尝试把 A、B 的互补改进组合起来，但必须重新过 Gate。</p>
+<div class="callout warning"><strong>GEPASE 没有从头复刻 GEPA</strong><p>项目锁定并依赖 <code>gepa==0.1.4</code>，在外部增加 PackageCandidate、TaskScoreVector、图选择器、PackagePatch、验证门禁与 Package-aware merge。</p></div></section>
+<a class="deep-dive-link" href="06-gepa-deep.html"><span><strong>进入 GEPA 深入章节</strong>学习官方 candidate、Adapter、EvaluationBatch、九步 reflective mutation、GEPAState、cache、merge，以及它与 GEPASE held-out Gate 的差异。</span><i>→</i></a>
+<a class="deep-dive-link" href="06-pareto-lab.html"><span><strong>进入 Pareto 推导实验室</strong>从数学支配关系开始，拖动候选分数，再学习 GEPA instance/objective/hybrid/cartesian frontier 与频次抽样。</span><i>→</i></a>
+<section class="lesson-section"><div class="section-head"><span class="section-number">07</span><div><div class="section-kicker">SYNTHESIS</div><h2>把五个来源重新放回一条 GEPASE 主线</h2></div></div>
+<div class="reference-grid">
+<article class="concept-card"><h3>Anthropic skill-creator</h3><p><strong>借鉴：</strong>触发与功能分开；Executor 真做任务；Grader 看证据；A/B 匿名比较；AI 可辅助出题但人要确认关键契约。</p><p><strong>不照搬：</strong>GEPASE 的对象是跨文件 Package，状态和 Gate 在独立 Core。</p><a href="https://claude.com/blog/improving-skill-creator-test-measure-and-refine-agent-skills">官方评测思路</a></article>
+<article class="concept-card coral"><h3>Microsoft SkillOpt</h3><p><strong>借鉴：</strong>add/delete/replace 式有界修改，留出选择，只有严格提升才接受，保存 rejected edit。</p><p><strong>扩展：</strong>从单一 skill 文档推广为 typed PackagePatch。</p><a href="https://microsoft.github.io/SkillOpt/">官方项目页</a></article>
+<article class="concept-card amber"><h3>Darwin skill</h3><p><strong>借鉴：</strong>执行 → 反思 → 修改 → 验证的工程循环，以及 git 式历史和人工 checkpoint。</p><p><strong>补强：</strong>严格 paired eval 与 held-out Gate 仍由 GEPASE 提供。</p><a href="https://github.com/alchaincyf/darwin-skill">官方仓库</a></article>
+</div>
+<h3>从来源到 GEPASE 组件</h3><div class="table-wrap"><table class="data-table"><thead><tr><th>问题</th><th>主要来源</th><th>GEPASE 中的落点</th></tr></thead><tbody><tr><td>什么能被训练？</td><td>Heuristic Learning</td><td>完整 Skill Package 是外部可训练状态</td></tr><tr><td>如何基于反馈搜索？</td><td>GEPA</td><td>reflection、Pareto pool、预算与多父融合</td></tr><tr><td>如何获得可信反馈？</td><td>skill-creator</td><td>paired roles、真实产物、盲比较、EvalPlan</td></tr><tr><td>如何避免无界重写？</td><td>SkillOpt</td><td>typed Patch、strict improvement、rejected memory</td></tr><tr><td>如何保存进化历史？</td><td>Darwin skill</td><td>lineage、checkpoint、human review</td></tr><tr><td>如何修改完整 Package？</td><td>GEPASE 扩展</td><td>Package IR/Graph、slice、closure、blast radius</td></tr></tbody></table></div></section>
+<section class="lesson-section"><div class="section-head"><span class="section-number">08</span><div><div class="section-kicker">CODE CONNECTION</div><h2>思想怎样落进实际类型？</h2></div></div>
+<div class="code-wrap"><div class="code-head"><span>概念化伪代码 · 对应 Core 主链</span></div><pre><code><span class="comment"># 模型不训练，Package 才是候选状态</span>
+parent = pool.select_pareto_parent(task_feedback)
+
+<span class="comment"># 轨迹 + grader + graph slice 形成可执行反思</span>
+insight = analyzer.reflect(parent, failed_cases, package_graph)
+
+<span class="comment"># 输出不是整包自由重写，而是结构化补丁</span>
+patch = proposer.propose(insight, bounded_scope=True)
+child = applier.apply_atomically(parent, patch)
+
+<span class="comment"># train 负责搜索，held-out 负责最终接纳</span>
+if gates.train_pass(child) and gates.validation_strictly_improves(child):
+    pool.add_deployable(child)
+else:
+    rejected_memory.remember(patch)</code></pre></div>
+<div class="quiz"><h4>为什么“反思写得很有道理”仍不足以接纳候选？</h4><div class="quiz-options"><button class="quiz-option" data-correct="true" data-explain="反思只是提案依据；效果要由隔离执行与冻结 Gate 验证。">因为反思不是功能证据</button><button class="quiz-option" data-correct="false" data-explain="语言长度不是可信性的根源。">因为反思不够长</button></div><div class="quiz-feedback" aria-live="polite"></div></div>
+<div class="interview"><h3>本章面试问答</h3><details><summary>为什么选择 GEPA 而不是直接做强化学习？</summary><div class="answer">目标状态是可读、可编辑的文本与代码 Package，任务反馈也包含自然语言轨迹。GEPA 式反思能直接利用这些高带宽反馈，同时避免模型权重训练成本；它还保留多目标与任务级局部优势。</div></details><details><summary>GEPASE 的创新是否只是“拼项目”？</summary><div class="answer">应诚实称为系统性组合创新。价值不在重新发明每个算法，而在把真实 Agent 评测、Package 级 IR/Graph、typed Patch、GEPA/Pareto 和 strict held-out Gate 串成一个边界清晰、可复现的 Core，并用真实 canary 验证闭环。</div></details><details><summary>Pareto 会不会让候选池无限增长？</summary><div class="answer">不会把所有候选都保留。被支配候选可淘汰，另外还有预算、父代选择和 Gate；工程上必须限制池规模与评测成本。</div></details></div>
+<div class="lesson-summary"><h3>本章结论</h3><ul><li>外部 Package 是策略状态，反馈驱动显式编辑。</li><li>GEPA 负责反思式多目标搜索，不替代评测和 Gate。</li><li>其他参考项目分别补充评测、有界修改和工程历史。</li></ul><button class="complete-button" data-complete-lesson type="button"></button></div></section>
+</main></body></html>

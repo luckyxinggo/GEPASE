@@ -1,4 +1,18 @@
 {
+  "learning_course": {
+    "algorithm_steps": 44,
+    "duplicate_ids": {},
+    "html_pages": 14,
+    "interview_questions": 52,
+    "missing_anchors": [],
+    "missing_files": [],
+    "missing_local_references": [],
+    "missing_markers": [],
+    "present_prohibited_claims": [],
+    "quiz_options": 33,
+    "total_html_bytes": 209195,
+    "valid": true
+  },
   "learning_guide": {
     "bytes": 101787,
     "duplicate_ids": [],

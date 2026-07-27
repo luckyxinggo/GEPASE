@@ -2,14 +2,14 @@
   "deploy": {
     "candidate_id": "candidate-04b26dff2bc83b82334bf184",
     "files": 7,
-    "output": "<PROJECT_ROOT>/artifacts/local/s10-release-bsu93z1k/deployed-package",
+    "output": "<PROJECT_ROOT>/artifacts/local/s10-release-jdsdkhpt/deployed-package",
     "valid": true
   },
   "deployed_files": 7,
   "mock": {
     "config_hash": "dc83c452b115095fc7a221e51f9c560281e1542ed13dadd358b999e75e1ef122",
     "schema_version": "1.0.0",
-    "source_tree_hash": "9203b79d6a8240c10a958437aa0f6d47edd5b78113094b7788f534244c4eda25",
+    "source_tree_hash": "d9645e585b59dd7cc5abe1c372de4136313a04dcdc8d86671903050501a2d664",
     "summary": {
       "passed": 2,
       "total": 2

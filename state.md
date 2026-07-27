@@ -270,7 +270,7 @@ Patch 只能修改允许节点和闭包；应用后必须重新解析 Package、
 
 搜索调度器每轮都要检查 merge eligibility；出现两个及以上满足契约且贡献互补的父代时必须创建并验证 merge child。若当前没有合法 parent set，必须记录 `no_eligible_parent_set` 及原因，而不能退化为跨 Package 合并或跳过审计。
 
-## 7. 当前状态（2026-07-23）
+## 7. 当前状态（2026-07-24）
 
 ### 7.1 总结
 
@@ -278,7 +278,7 @@ R1 已完成仓库整理与权威 Core 收敛；R2 的公开 canary 与 EvalPlan
 
 R5 已实现并封存只读的 `CanaryReportBuilder` Python API、`gepase report build/verify` CLI、中文自包含交互报告和六项独立机器 Gate。报告只消费已封存的 R2–R4 evidence，重新校验 19/429/877 个上游 artifact，复制并复验 9 个任务原生 GIF，导出 7 文件 deployable Package；本阶段 Agent/API 调用均为 0，未重跑 R3/R4、未重新搜索候选。6/6 R5 machine Gate、146 tests、Ruff、Pyright、secret/link/license/diff check 均已通过。Codex Browser 安全策略禁止自动打开本地 `file://`，未绕过；用户已在目标路径打开正式报告并确认布局、GIF case、Package Graph 控件和评分下拉正常，R5 完成并解锁 S10。
 
-S10 已完成面向 GitHub 的发布整理。仓库现在提供中英双语 README、按 v0.1 封存证据更新的中文算法/使用学习手册、真实 canary 图像与量化结果、架构/结果 SVG、安装与复现文档、Agent-native 默认路径、按角色可选 Headless 配置契约，以及 `report build/verify/deploy` 闭环。当前 S10 machine Gate 为 7/7：153 tests、147 个 source module、32 个公开 schema、9 个 R2–R5 公共证据根、生成后 secret/private-path scan 5,840 files/0 findings；Gate 封存后的独立全树复检为 5,845 files/0 findings。wheel 和精简 sdist 均在全新离线环境安装成功。S10 没有重跑 R3/R4、没有搜索候选，也没有调用 Agent 或 Headless/API。
+S10 已完成面向 GitHub 的发布整理。仓库现在提供中英双语 README、按 v0.1 封存证据更新的中文算法/使用学习手册、真实 canary 图像与量化结果、架构/结果 SVG、安装与复现文档、Agent-native 默认路径、按角色可选 Headless 配置契约，以及 `report build/verify/deploy` 闭环。2026-07-24 又新增并按用户反馈扩充本地 `learning-course/` 初学者课程：14 个相互链接的 HTML 页面以同一个 Package/case 的端到端进化为叙事主线，从术语、五类思想来源、Package Graph、EvalPlan、真实 Agent 评测、评分/Gate，进入独立的 GEPA 深入与 Pareto 推导实验室，再回到 GEPASE 搜索适配、PackagePatch、真实 canary、源码使用和面试复习。课程复用 R5 封存 GIF，不改写任何算法证据；当前保留在 dirty worktree 中供用户审核，尚未提交或推送 GitHub。
 
 项目现已在**一个公开 Skill、一个 frozen EvalPlan、一个模型快照和一次搜索运行**上获得真实优化证据：`candidate-04b26dff2bc83b82334bf184` 的 train mean delta 为 `+0.04190`，held-out validation mean delta 为 `+0.12427`，3/3 validation case 均严格胜出且保护阈值通过，已进入 deployable frontier。该结论足以证明当前 canary 上的应用主链有效，但不能外推为跨 Skill、跨模型或统计普遍性。严格 Gate 同时拒绝了 train `+0.07643`、validation `-0.19782` 且发生真实 timeout 的恢复分支，以及 validation 总均值 `+0.05828` 但 `emoji_animation=-0.09144` 越过 category floor 的 merge child。
 
@@ -308,7 +308,7 @@ S10 已完成面向 GitHub 的发布整理。仓库现在提供中英双语 READ
 | R3 真实 paired 执行与评分 | ✅ | 8 pairs/16 real E2+E3、16 blind Grader、6 AB/BA Comparator、8 graph-linked Analyzer、16 可重算向量；8/8 Gate 通过，original mean skill gain `-0.0455` |
 | R4 GEPA/Graph/Patch/多父 Merge | ✅ | 4 candidates、29 fresh case、73 隔离评测调用、1 个 deployable candidate；8/8 Gate 和 877-file run seal 通过，墙钟预算 overrun 如实记录 |
 | R5 全链 canary 与中文报告 | ✅ | 只读报告主链、20-file run seal、6/6 machine Gate、用户本地视觉/交互确认与 deployable Package 均已封存；未重复搜索 |
-| S10 开源发布 | ✅ | 中英双语 README、v0.1 中文学习手册、公开图像/结果、复现与 deploy 流程、role-scoped Headless 配置、精简发行包和 7/7 release Gate 已完成；未发布私有数据 |
+| S10 开源发布 | ✅ | 中英双语 README、v0.1 中文学习手册、14 页本地深度学习课程、公开图像/结果、复现与 deploy 流程、role-scoped Headless 配置、精简发行包和 7/7 release Gate 已完成；课程待用户审核且未推送，未发布私有数据 |
 
 ### 7.3 已有阶段的实现档案
 
@@ -745,9 +745,11 @@ RuntimeBudget 中 proposal/candidate/Agent-call/token 上限均未超出；总�
 4. README/简历只陈述已由 R5 证据支持的结果，不声称普遍优于单文件优化、所有图方法或所有 Skill。
 5. 全新环境安装、公开命令、链接、schema、artifact hash、secret scan、license attribution 和复现 smoke 全部通过后，S10 才可标完成。
 
-**完成状态（2026-07-23）**：✅。中英双语 README、架构/结果 SVG、真实 R5 GIF、安装与复现文档、发布边界和 `gepase report deploy` 已落地；可选 Headless 只提供按角色、凭据环境变量引用式配置契约，默认仍是 Agent-native。确认未使用、重复或只服务撤销路径的 5 个零入边 source module 及旧阶段脚本/配置/artifact/result 已从发布树移出；相关测试改为即时 typed fixture，公开 evidence 收敛为 R1–R5/S10 stage 与 R2–R5 run。清理采用仓外可恢复归档，没有 `reset/clean`，没有修改 `skills_test/`。
+**完成状态（2026-07-24）**：✅。中英双语 README、架构/结果 SVG、真实 R5 GIF、安装与复现文档、发布边界和 `gepase report deploy` 已落地；可选 Headless 只提供按角色、凭据环境变量引用式配置契约，默认仍是 Agent-native。确认未使用、重复或只服务撤销路径的 5 个零入边 source module 及旧阶段脚本/配置/artifact/result 已从发布树移出；相关测试改为即时 typed fixture，公开 evidence 收敛为 R1–R5/S10 stage 与 R2–R5 run。清理采用仓外可恢复归档，没有 `reset/clean`，没有修改 `skills_test/`。
 
-最终 S10-G01–G07 7/7 通过：Ruff、Pyright、153 tests、32 schema 幂等导出、学习手册事实/本地资源/锚点检查、Markdown link、license、生成前后两次 secret/private-path scan、artifact seal、R5 复算、offline mock、report deploy、compact wheel/sdist 和全新离线环境安装均有效。S10 调用计数为 Agent 0、Headless/API 0、candidate search 0；它验证发布工程，不新增算法效果结论。完整证据见 `artifacts/stages/S10/`。
+在原 `learning.html` 字段手册之外，新增 `learning-course/` 零基础课程目录。课程首页提供完整架构图和“一份 Package 完成一次进化”的三幕式学习路线，后续 13 页逐层解释 70+ 中英文术语、五类方法来源、Package IR/Graph、EvalPlan 审核 checkpoint、角色隔离/E0–E3、TaskScoreVector/strict Gate、官方 `gepa==0.1.4` 九步 reflective iteration、`GEPAState`、标准 Pareto 支配与 GEPA per-key champion mapping、GEPASE Adapter、多父 merge、typed PackagePatch、真实 canary、源码/CLI/API 与面试追问。每章顶部固定显示上一环节输入/本章过程/下一环节输出，并让 `loop-sparkles-006` 贯穿建图、出题、执行、评分、搜索、Patch 和 Gate。共享 CSS/JavaScript 提供深浅主题、阅读/课程进度、术语弹窗、搜索、代码复制、交互对照、可调 Pareto 实验、练习题和响应式/打印布局。该课程只读引用 R5 封存证据，不修改候选、分数、deployable Package 或 Runtime。
+
+最终 S10-G01–G07 7/7 通过：Ruff、Pyright、154 tests、32 schema 幂等导出、字段手册和 14 页课程的事实/本地资源/锚点检查、Markdown link、license、生成前后两次 secret/private-path scan、artifact seal、R5 复算、offline mock、report deploy、compact wheel/sdist 和全新离线环境安装全部有效。课程审计额外检查 209KB HTML 内容、页面清单、重复 ID、断链、关键事实、错误 claim、33 个练习选项、52 个面试问答和 44 个流程算法步骤。S10 调用计数保持 Agent 0、Headless/API 0、candidate search 0；它验证学习与发布工程，不新增算法效果结论。完整证据见 `artifacts/stages/S10/`。
 
 ## 9. 数据、仓库与隐私边界
 
@@ -791,6 +793,7 @@ artifacts/stages/                    # 发布保留的 R1–R5/S10 Gate 与完�
 artifacts/runs/                      # 发布保留的 R2–R5 运行状态、账本与报告
 artifacts/local/                     # Git ignored 的本地临时/fixture 运行目录
 skills_test/                         # Git ignored、只读私有 corpus
+learning-course/                     # 本地零基础深度课程；14 页 HTML + 共享 CSS/JS
 ```
 
 事实归属必须保持唯一：Core state 在 `src/gepase` 与 store 中；Agent Skill 只有编排说明；阶段完成事实在 `artifacts/stages`；实验结论来自 raw evidence 的可重算聚合；`state.md` 记录当前解释和演进，不复制所有原始日志。
@@ -826,12 +829,12 @@ skills_test/                         # Git ignored、只读私有 corpus
 
 ## 11. 当前验证快照
 
-截至 2026-07-23 的 v0.1/S10 完成快照：
+截至 2026-07-24 的 v0.1/S10 完成快照：
 
-- S10 release Gate 7/7；Ruff 通过；Pyright 0 errors；pytest 153 passed；32 个公开 schema 幂等；`learning.html` 当前事实、内部锚点和本地证据资源检查通过；生成后 secret/private-path scan 5,840 files/0 findings，封存后独立全树复检 5,845 files/0 findings；Markdown links、license、artifact hash、`git diff --check` 全部通过。
+- S10 release Gate 7/7；Ruff、Pyright、pytest 154 passed、32 个公开 schema 幂等、Markdown links、license、artifact hash 与 `git diff --check` 全部通过。`learning.html` 与 `learning-course/` 分别通过事实边界、本地资源、内部锚点和禁用旧结论审计；课程为 14 页、209,195 bytes HTML、33 个练习选项、52 个面试问答和 44 个算法流程步骤；生成后 secret/private-path scan 为 0 findings。
 - 发布树包含 147 个 source module；静态入边审计仅保留合法入口 `gepase.__main__` 为零入边，5 个确认未使用的旧 module 已移除，测试不再依赖旧 S2/S8 artifact。
 - wheel 与 244KB 级精简 sdist 已构建，并在全新离线虚拟环境完成安装、`--version`、根帮助与配置校验；公开 CLI 另通过 offline mock、report verify/deploy smoke。
-- 中英 README、架构/结果图、真实 GIF、复现文档、9 个上游公开证据根和发布 claim boundary 已校验；S10 未执行 Agent、Headless/API、候选搜索或 R3/R4 重跑。
+- 中英 README、架构/结果图、真实 GIF、复现文档、9 个上游公开证据根和发布 claim boundary 已校验；14 页课程只复用现有公开证据并对照本地锁定的 GEPA 0.1.4 接口，S10 未执行 Agent、Headless/API、候选搜索或 R3/R4 重跑。
 
 - Ruff：通过；Pyright：0 errors，0 warnings；pytest：141 passed；secret/private-path scan 6,013 files/0 findings；Markdown links 与 `git diff --check` 通过。
 - R3 reference key `426e75b…` 绑定 429 个封存 artifact；R4 root + 7 split cache audit 为 8 hit/0 miss，没有 stale/partial/cross-model reuse。
@@ -855,6 +858,25 @@ skills_test/                         # Git ignored、只读私有 corpus
 ### 12.1 记录规则
 
 新记录放在最上方，至少说明：日期/标识、修改范围、行为变化、原因、验证、未解决问题。历史过程只保留摘要；详细证据以对应 artifact、stage report 和 Git diff 为准。
+
+### 2026-07-24 · beginner-learning-course-deep-narrative-v2
+
+- 修改范围：在课程 v1 上新增 `06-gepa-deep.html` 与 `06-pareto-lab.html`，将课程扩为 14 页；扩充 `01`–`09` 流程章节、共享 CSS/JavaScript、术语库、S10 课程审计和对应单元断言。没有修改 R2–R5 EvalPlan、Agent evidence、候选、评分、Patch、Gate、deployable Package、Runtime 或私有 `skills_test/`。
+- 教学主线：课程首页重排为“定义可学习状态 → Package Graph → EvalPlan → 隔离 Agent 执行 → TaskScoreVector → 官方 GEPA → Pareto → GEPASE Adapter → PackagePatch → held-out Gate → 源码/面试”的三幕流程；所有页面自动显示前一环节输入、本章处理和后一环节输出，并用 `loop-sparkles-006` 持续演示同一对象怎样在章节间传递，避免并列专题式跳转。
+- 算法深化：新增官方 `gepa==0.1.4` 的候选/Adapter/EvaluationBatch/`GEPAState` 六对象、九步 reflective mutation、minibatch screening、strict acceptance、full val/cache、frontier 与 common-ancestor merge；新增标准 Pareto 支配推导、`O(n²m)` 教学实现、可拖动四候选实验，以及 GEPA `instance/objective/hybrid/cartesian` champion mapping、coverage pruning 和频次抽样。课程明确 GEPA search `valset` 不自动等同于 GEPASE frozen deployment held-out。
+- 参考项目深化：把 skill-creator 的 trigger/functional/Executor/Grader/Comparator/Analyzer 流程、SkillOpt 的 bounded edits/held-out/rejected memory、Darwin 的执行—反思—修改—验证—lineage、Heuristic Learning 的外部可训练状态分别映射到 GEPASE 真实类型；`06-gepa-search` 只讲 Package 适配和边界，不再用一页概念性概括 GEPA/Pareto。
+- 流程细节：建图、评测设计、执行、评分、搜索、Patch、canary 和源码章节分别补入一条完整输入—过程—输出证据链、伪代码或真实 artifact 阅读路线；术语表扩充 GEPAEngine、GEPAState、Adapter、EvaluationBatch、Trajectory、Minibatch、Acceptance Criterion、Selection Strategy、Dominance、Frontier Type 和 Champion Mapping。
+- 机器验证：课程审计为 14/14 页、209,195 bytes HTML、33 个练习选项、52 个面试问答、44 个 algorithm steps，重复 ID、内部锚点、本地引用、关键事实和禁用错误 claim 均无异常；`node --check`、课程单测和 `git diff --check` 通过。完整 S10 release Gate 保持 7/7、154 tests、Agent/Headless/API/search 调用 0；该更新只增强学习材料，不新增算法效果结论。
+- 未解决：课程仍只陈述一个公开 canary 的封存效果；图 selector 的普遍优势、跨 Skill/模型/seed 有效性仍未证明。课程继续保留在 dirty worktree 中供用户按真实学习过程检查，尚未提交或推送 GitHub。
+
+### 2026-07-24 · beginner-learning-course-v1
+
+- 修改范围：新增本地 `learning-course/`，包含课程总览、术语地图和 10 个流程章节共 12 个 HTML 页面，以及共享 `assets/course.css`、`assets/course.js`；没有修改 R2–R5 EvalPlan、Agent evidence、候选、分数、Patch、Gate、deployable Package 或私有 `skills_test/`。
+- 教学设计：从完全不了解项目的视角，以“问题—白话类比—输入/过程/输出—代码映射—交互练习—本章面试问答”展开；70+ 英文术语可点击解释和搜索，完整架构图贯通 Core/Host/Eval/GEPA/Graph/Patch/Gate，真实 `slack-gif-creator` 章节直接展示 R5 封存的 no-skill/original/accepted GIF 与候选漏斗。
+- 交互与视觉：延续 `learning.html` 与 R5 报告的克制纸张/珊瑚/青绿视觉，提供深浅主题、阅读进度、12 章完成进度、响应式侧栏、术语对话框、筛选/对照、代码复制、练习反馈、折叠面试答案和打印样式；不依赖网络资源即可完成主要学习。
+- 事实边界：课程明确区分代码实现、机制测试与算法效果，只陈述一个公开 Skill/一个 EvalPlan/一个模型快照/一次搜索的 `+0.12427` held-out 结果；说明图 selector 尚未证明普遍优于替代方案、accepted edit 只改一个有界 `SKILL.md` 节点、跨 Package merge 禁止、E1 不能 acceptance。
+- 机器 Gate：`run_s10_gates.py` 新增 `learning_course_audit` 并接入 S10-G02/G07、release manifest、stage summary 和 metrics；检查 12 页清单、断链/锚点/重复 ID、关键事实、错误 claim、练习与面试覆盖，并新增单元回归。最终 S10-G01–G07 为 7/7，Ruff、Pyright、154 tests、fresh offline install 全部通过；课程为 12 页、27 个练习选项、44 个面试问答，本地资源/锚点/claim 均有效，Gate 内 secret/private-path 为 5,854 files/0 findings，独立全树复检为 5,859 files/0 findings。
+- 未解决：课程尚未提交或推送 GitHub，等待用户按真实学习过程检查内容节奏、桌面/移动视觉和交互；用户反馈后再决定是否纳入公开发布面。课程创建没有运行 Agent、Headless/API、候选搜索或 R3/R4，不改变算法效果结论。
 
 ### 2026-07-23 · learning-field-guide-v0.1-refresh
 

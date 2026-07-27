@@ -1,0 +1,18 @@
+<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="description" content="GEPASE 中英文术语地图"><title>GEPASE 从零课程 · 术语地图</title><link rel="stylesheet" href="assets/course.css"><script src="assets/course.js" defer></script></head>
+<body data-page="glossary"><main class="course-main">
+<section class="lesson-section hero"><div class="eyebrow">COURSE TOOL · GLOSSARY</div><h1>先把英文术语翻译成你能使用的项目语言</h1><p class="lead">本页不是词典式直译，而是解释“这个词在 GEPASE 里具体指什么、解决什么问题”。你也可以在其他章节点击带虚线的词，随时打开同一份解释。</p><div class="hero-meta"><span class="tag">70+ 项目术语</span><span class="tag">支持中英文搜索</span><span class="tag">按项目语境解释</span></div></section>
+<section class="lesson-section"><div class="section-head"><span class="section-number">01</span><div><div class="section-kicker">HOW TO READ</div><h2>先认识四组最容易混淆的词</h2></div></div>
+<div class="grid-2">
+<article class="concept-card"><h3>LLM、Agent、Agent Host</h3><p><strong>LLM</strong> 负责生成与推理；<strong>Agent</strong> 在 LLM 之外还有工具、状态和行动；<strong>Host</strong> 是启动 Agent 并提供运行环境的系统。</p></article>
+<article class="concept-card coral"><h3>Skill、Prompt、Package</h3><p><strong>Prompt</strong> 是文本上下文；<strong>Skill</strong> 是可复用工作能力；<strong>Package</strong> 是承载该能力的完整文件与依赖集合。</p></article>
+<article class="concept-card amber"><h3>Eval、Grader、Gate</h3><p><strong>Eval</strong> 产生证据与分数；<strong>Grader</strong> 是其中一个评分角色；<strong>Gate</strong> 根据冻结规则决定候选能否继续。</p></article>
+<article class="concept-card"><h3>Train、Validation、Deployable</h3><p><strong>Train</strong> 反馈可以指导搜索；<strong>Validation</strong> 对优化器保密；只有通过后才是 <strong>deployable</strong> 候选。</p></article>
+</div>
+<div class="callout"><strong>阅读约定</strong><p>课程第一次出现专有词时尽量写成“中文（English）”。代码字段保留英文，因为它们是实际 schema 名称；旁边会给中文解释。</p></div></section>
+<section class="lesson-section"><div class="section-head"><span class="section-number">02</span><div><div class="section-kicker">SEARCHABLE TERM BOOK</div><h2>可搜索术语表</h2><p class="section-intro">试试输入“评测”“图”“held-out”“候选”或具体字段名。</p></div></div>
+<div class="glossary-toolbar"><input type="search" data-glossary-search placeholder="搜索中文、英文或解释……" aria-label="搜索术语"><span class="status-pill" data-glossary-count></span></div><div class="glossary-grid" data-glossary-grid></div></section>
+<section class="lesson-section"><div class="section-head"><span class="section-number">03</span><div><div class="section-kicker">MINI CHECK</div><h2>判断你是否真的分清了</h2></div></div>
+<div class="quiz"><h4>谁应该拥有候选池、评分和 Gate 状态？</h4><div class="quiz-options"><button class="quiz-option" data-correct="true" data-explain="Core 是唯一状态所有者；编排层只领取与提交工作。">GEPASE Core</button><button class="quiz-option" data-correct="false" data-explain="Orchestrator 如果拥有裁决状态，就会形成第二套实验系统。">gepaste-orchestrator Skill</button><button class="quiz-option" data-correct="false" data-explain="Executor 只能完成任务，不能知道候选身份或决定胜负。">Executor Agent</button></div><div class="quiz-feedback" aria-live="polite"></div></div>
+<div class="interview"><h3>本章面试问答</h3><details><summary>为什么代码字段不全部翻译成中文？</summary><div class="answer">schema 与 Python API 的英文名是稳定交换契约，强行翻译会让学习内容与代码脱节。课程在第一次出现时解释含义，之后保留原字段名。</div></details><details><summary>Candidate 和 deployable candidate 有什么区别？</summary><div class="answer">Candidate 只是待验证的新 Package 版本；deployable candidate 已逐层通过结构、安全、train 与 held-out Gate。两者之间可能隔着多次拒绝。</div></details></div>
+<div class="lesson-summary"><h3>术语学习方法</h3><p>不必一次背完。先记住 Core/Host、Package、Eval/Gate、Train/Validation 四组边界，后面遇到词再点开解释。</p><button class="complete-button" data-complete-lesson type="button"></button></div></section>
+</main></body></html>
