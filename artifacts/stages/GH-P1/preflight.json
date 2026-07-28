@@ -1,0 +1,240 @@
+{
+  "actual_call_budget": {
+    "analyzer_role_run": {
+      "context_id": "/root/gh_p1_analyzer",
+      "finished_at": "2026-07-28T06:43:01Z",
+      "host": "codex",
+      "host_task_id": "/root/gh_p1_analyzer",
+      "model": "gpt-5.6-sol",
+      "started_at": "2026-07-28T06:34:34Z",
+      "usage": {
+        "duration_ms": 507000,
+        "input_tokens": 26000,
+        "output_tokens": 3500,
+        "token_count_kind": "estimated",
+        "tool_calls": 8
+      }
+    },
+    "eval_runs": 0,
+    "frozen_budget": {
+      "timeout_ms": 180000,
+      "token_budget": 12000
+    },
+    "new_candidates": 0,
+    "new_skill_effect_scores": 0,
+    "observed": {
+      "duration_ms": 507000,
+      "input_plus_output_tokens": 29500,
+      "within_budget": false
+    },
+    "role_calls": {
+      "analyzer": 1,
+      "comparator": 0,
+      "executor": 0,
+      "grader": 0,
+      "headless_api": 0,
+      "proposer": 0
+    },
+    "schema_version": "1.0.0"
+  },
+  "branch": "codex/graph-hardening",
+  "call_budget_before_agent": {
+    "agent": 0,
+    "analyzer": 0,
+    "comparator": 0,
+    "eval": 0,
+    "executor": 0,
+    "grader": 0,
+    "headless_api": 0,
+    "new_candidate": 0,
+    "new_skill_effect_score": 0,
+    "proposer": 0
+  },
+  "fixture_first": true,
+  "fixture_gates_valid": true,
+  "forbidden_features": {
+    "binary_asset_mutation": false,
+    "codebase_memory_mcp": false,
+    "file_watcher": false,
+    "gh_p2": false,
+    "graphrag": false,
+    "vector_database": false
+  },
+  "head": "c9ff12f8bf40920e29a7dbd45a95c90af167ae7b",
+  "maximum_stage_calls": {
+    "all_other_roles_and_apis": 0,
+    "analyzer": 1
+  },
+  "protected_after": {
+    "deployable_package": {
+      "exists": true,
+      "files": 7,
+      "sha256": "fada27740ea72a69bba6cd6d7d7ad65a2914e7a17d78b368d7c30f9f64ccca1e"
+    },
+    "gh_p0_stage": {
+      "exists": true,
+      "files": 17,
+      "sha256": "fb62ed29f2ad69a1d7f9e0f2c4321050f3ff814980e430cc24be55aa66cdca56"
+    },
+    "public_canary_source": {
+      "exists": true,
+      "files": 7,
+      "sha256": "1c839cfdff180be343f5ec0d625c817506c37876a1a8671c21d9e8020f9bb983"
+    },
+    "r2_run": {
+      "exists": true,
+      "files": 20,
+      "sha256": "7fd2d456e2d50f56a20e89ba1d20a468eef87c1662ba5f600b92ca4950ecc85f"
+    },
+    "r2_stage": {
+      "exists": true,
+      "files": 15,
+      "sha256": "d30a38b193d12d4d6e605d4493c16fcede56ee2a78032dae5350b9cc1c84b680"
+    },
+    "r3_run": {
+      "exists": true,
+      "files": 430,
+      "sha256": "7229c7321aee31905aadc423c88c8462f8367f0dd0c5c4bf8b41764780438a47"
+    },
+    "r3_stage": {
+      "exists": true,
+      "files": 9,
+      "sha256": "83051fdb79c18b97f2c1cfd68305df262f6ed9da58809e3326186e2268ceadb6"
+    },
+    "r4_run": {
+      "exists": true,
+      "files": 878,
+      "sha256": "e4f1b1b6de0ddc656a1b42e2f0c0f0a6d0c16be98e006bb7998f299eeb01cb0b"
+    },
+    "r4_stage": {
+      "exists": true,
+      "files": 9,
+      "sha256": "0de4209e128a4c35061a64d6d5424eba9222bbe7c5d04a6561b0c6b82e62b04c"
+    },
+    "r5_run": {
+      "exists": true,
+      "files": 21,
+      "sha256": "81707200d99c9e7c2517dd572fc485c92468282059cf4f0e0c74cdaef606759f"
+    },
+    "r5_stage": {
+      "exists": true,
+      "files": 12,
+      "sha256": "11e661713e7a9f7b75a227b8a897909cd2614a2307e7bb5d05f90740d246e0f8"
+    },
+    "s10_stage": {
+      "exists": true,
+      "files": 15,
+      "sha256": "a5c1fa895a9f0f5deec6f048b620504c5db17619ba10b2a286fc6a3f4b5eaae6"
+    },
+    "skills_test": {
+      "exists": true,
+      "files": 283,
+      "sha256": "f56ebe48bf3c634e6ca8b3df8a757c714f9a027cccbf512465845a0918a6287f"
+    }
+  },
+  "protected_before": {
+    "deployable_package": {
+      "exists": true,
+      "files": 7,
+      "sha256": "fada27740ea72a69bba6cd6d7d7ad65a2914e7a17d78b368d7c30f9f64ccca1e"
+    },
+    "gh_p0_stage": {
+      "exists": true,
+      "files": 17,
+      "sha256": "fb62ed29f2ad69a1d7f9e0f2c4321050f3ff814980e430cc24be55aa66cdca56"
+    },
+    "public_canary_source": {
+      "exists": true,
+      "files": 7,
+      "sha256": "1c839cfdff180be343f5ec0d625c817506c37876a1a8671c21d9e8020f9bb983"
+    },
+    "r2_run": {
+      "exists": true,
+      "files": 20,
+      "sha256": "7fd2d456e2d50f56a20e89ba1d20a468eef87c1662ba5f600b92ca4950ecc85f"
+    },
+    "r2_stage": {
+      "exists": true,
+      "files": 15,
+      "sha256": "d30a38b193d12d4d6e605d4493c16fcede56ee2a78032dae5350b9cc1c84b680"
+    },
+    "r3_run": {
+      "exists": true,
+      "files": 430,
+      "sha256": "7229c7321aee31905aadc423c88c8462f8367f0dd0c5c4bf8b41764780438a47"
+    },
+    "r3_stage": {
+      "exists": true,
+      "files": 9,
+      "sha256": "83051fdb79c18b97f2c1cfd68305df262f6ed9da58809e3326186e2268ceadb6"
+    },
+    "r4_run": {
+      "exists": true,
+      "files": 878,
+      "sha256": "e4f1b1b6de0ddc656a1b42e2f0c0f0a6d0c16be98e006bb7998f299eeb01cb0b"
+    },
+    "r4_stage": {
+      "exists": true,
+      "files": 9,
+      "sha256": "0de4209e128a4c35061a64d6d5424eba9222bbe7c5d04a6561b0c6b82e62b04c"
+    },
+    "r5_run": {
+      "exists": true,
+      "files": 21,
+      "sha256": "81707200d99c9e7c2517dd572fc485c92468282059cf4f0e0c74cdaef606759f"
+    },
+    "r5_stage": {
+      "exists": true,
+      "files": 12,
+      "sha256": "11e661713e7a9f7b75a227b8a897909cd2614a2307e7bb5d05f90740d246e0f8"
+    },
+    "s10_stage": {
+      "exists": true,
+      "files": 15,
+      "sha256": "a5c1fa895a9f0f5deec6f048b620504c5db17619ba10b2a286fc6a3f4b5eaae6"
+    },
+    "skills_test": {
+      "exists": true,
+      "files": 283,
+      "sha256": "f56ebe48bf3c634e6ca8b3df8a757c714f9a027cccbf512465845a0918a6287f"
+    }
+  },
+  "protected_unchanged": true,
+  "raw_submission_validation_error": null,
+  "schema_version": "1.0.0",
+  "sealed_inputs": {
+    "gh_p0_artifact_index": {
+      "media_type": "application/json",
+      "path": "artifacts/stages/GH-P0/artifact-index.json",
+      "sha256": "86b36b8284fe3a756b42a36b48f8eece2d9d4b1ba3ea136c6218eaa39c023510",
+      "size_bytes": 3266
+    },
+    "gh_p0_graph": {
+      "media_type": "application/json",
+      "path": "artifacts/stages/GH-P0/new-package-graph.json",
+      "sha256": "382b4f15658e90464386d7e19ed9fec05bf53f5d43eec74c4cc474f82db13eef",
+      "size_bytes": 486150
+    },
+    "r3_analyzer_submission": {
+      "media_type": "application/json",
+      "path": "artifacts/runs/r3-slack-gif-creator-paired/analyzer-submissions/analyzer-work-66550acf708dcf7d83b689cb.json",
+      "sha256": "8e75dffef9c02281523ff33a7408bad9ed970b9248c8a96b3caa68463873a0b0",
+      "size_bytes": 5370
+    },
+    "r3_analyzer_work": {
+      "media_type": "application/json",
+      "path": "artifacts/runs/r3-slack-gif-creator-paired/analyzer-work-items/analyzer-work-66550acf708dcf7d83b689cb.json",
+      "sha256": "33fccfed7d5870c032c9cc31ccff4e0148926cc83089f48e2f350cc5f971f662",
+      "size_bytes": 24472
+    },
+    "r4_failure_slice_work": {
+      "media_type": "application/json",
+      "path": "artifacts/runs/r4-slack-gif-creator-evolution/proposal-work-items/proposal-work-ab7f56118676006487a9edc3.json",
+      "sha256": "90651270f1310ef3e32620790eee03d4d5094e5652b4b7176e1c61be016ea058",
+      "size_bytes": 7887
+    }
+  },
+  "semantic_engine_error": null,
+  "stage_id": "GH-P1",
+  "submission_boundary_problems": []
+}

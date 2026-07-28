@@ -4,7 +4,7 @@ from __future__ import annotations
 
 from dataclasses import dataclass, field
 
-from gepase.package.ir import EdgeKind, IRNode
+from gepase.package.ir import EdgeKind, IRNode, ParseStatus
 
 
 @dataclass(frozen=True)
@@ -22,3 +22,6 @@ class RelationFact:
 class ParsedFile:
     nodes: tuple[IRNode, ...]
     relations: tuple[RelationFact, ...]
+    status: ParseStatus = ParseStatus.DEEP
+    parser: str = "deterministic"
+    detail: str | None = None

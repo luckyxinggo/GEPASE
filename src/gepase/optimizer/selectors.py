@@ -20,6 +20,19 @@ class SelectorKind(StrEnum):
     GRAPH_GUIDED = "graph_guided"
 
 
+class FeatureGroup(StrEnum):
+    RELEVANCE = "relevance"
+    EXPLORATION = "exploration"
+    RISK = "risk"
+    CONTROL = "control"
+
+
+class ValidationLevel(StrEnum):
+    STANDARD = "standard"
+    ELEVATED = "elevated"
+    FULL = "full"
+
+
 class SelectionTarget(FrozenModel):
     node_id: str
     path: str
@@ -61,6 +74,20 @@ class FeatureContribution(FrozenModel):
     raw_value: float
     weight: float
     contribution: float
+    group: FeatureGroup = FeatureGroup.RELEVANCE
+
+
+class SelectionScoreBreakdown(FrozenModel):
+    relevance: float = 0.0
+    exploration: float = 0.0
+    risk: float = 0.0
+    capped_ranking_risk_penalty: float = 0.0
+
+
+class ValidationIntensity(FrozenModel):
+    level: ValidationLevel = ValidationLevel.STANDARD
+    reasons: tuple[str, ...] = ()
+    required_checks: tuple[str, ...] = ("targeted_static", "package_reparse")
 
 
 class RankedSelection(FrozenModel):
@@ -73,6 +100,14 @@ class RankedSelection(FrozenModel):
     evidence_refs: tuple[str, ...] = Field(min_length=1)
     reason_code: str
     high_blast_radius: bool = False
+    eligible: bool = True
+    eligibility_reasons: tuple[str, ...] = ("mutable_and_typed",)
+    score_breakdown: SelectionScoreBreakdown = Field(
+        default_factory=SelectionScoreBreakdown
+    )
+    validation_intensity: ValidationIntensity = Field(
+        default_factory=ValidationIntensity
+    )
 
 
 class SelectionResult(FrozenModel):
@@ -82,8 +117,33 @@ class SelectionResult(FrozenModel):
     iteration: int
     requested_limit: int = Field(ge=1)
     selected: tuple[RankedSelection, ...] = Field(min_length=1)
+    alternatives: tuple[RankedSelection, ...] = ()
     eligible_nodes: int = Field(ge=1)
     deterministic_fingerprint: str = Field(pattern=r"^[0-9a-f]{64}$")
+
+
+class SelectorRankingAudit(FrozenModel):
+    """Bounded view of the full ranking exported with proposal evidence."""
+
+    schema_version: str = "1.0.0"
+    total_ranked: int = Field(ge=1)
+    selected_node_ids: tuple[str, ...] = Field(min_length=1, max_length=2)
+    top_k: tuple[RankedSelection, ...] = Field(min_length=1)
+    executable_alternative: RankedSelection | None = None
+
+    @model_validator(mode="after")
+    def ranking_is_coherent(self) -> SelectorRankingAudit:
+        if len(self.top_k) > self.total_ranked:
+            raise ValueError("selector top-k exceeds the full ranking")
+        ranked_ids = {item.node_id for item in self.top_k}
+        if not set(self.selected_node_ids) <= ranked_ids:
+            raise ValueError("selected targets must be present in selector top-k")
+        if (
+            self.executable_alternative is not None
+            and not self.executable_alternative.path.endswith((".py", ".sh", ".bash", ".zsh"))
+        ):
+            raise ValueError("executable alternative must point to an executable component")
+        return self
 
 
 def _fingerprint(kind: SelectorKind, context: SelectionContext, ids: list[str]) -> str:
@@ -223,6 +283,8 @@ def _result(
     context: SelectionContext,
     limit: int,
     rows: tuple[RankedSelection, ...],
+    *,
+    alternatives: tuple[RankedSelection, ...] = (),
 ) -> SelectionResult:
     ids = [item.node_id for item in rows]
     return SelectionResult(
@@ -231,6 +293,7 @@ def _result(
         iteration=context.iteration,
         requested_limit=limit,
         selected=rows,
+        alternatives=alternatives,
         eligible_nodes=len(context.targets),
         deterministic_fingerprint=_fingerprint(kind, context, ids),
     )

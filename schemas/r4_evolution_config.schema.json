@@ -190,6 +190,54 @@
       "title": "RuntimeBudget",
       "type": "object"
     },
+    "SelectorGraphPolicy": {
+      "additionalProperties": false,
+      "description": "Controls which trusted graph layers the mutation selector may consume.",
+      "properties": {
+        "mode": {
+          "default": "static",
+          "enum": [
+            "static",
+            "static_observed"
+          ],
+          "title": "Mode",
+          "type": "string"
+        },
+        "require_observed_when_access_present": {
+          "const": true,
+          "default": true,
+          "title": "Require Observed When Access Present",
+          "type": "boolean"
+        },
+        "require_sealed_typed_access": {
+          "const": true,
+          "default": true,
+          "title": "Require Sealed Typed Access",
+          "type": "boolean"
+        },
+        "schema_version": {
+          "const": "1.0.0",
+          "default": "1.0.0",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "semantic_hypotheses_enabled": {
+          "const": false,
+          "default": false,
+          "title": "Semantic Hypotheses Enabled",
+          "type": "boolean"
+        },
+        "top_k_audit_limit": {
+          "default": 10,
+          "maximum": 50,
+          "minimum": 1,
+          "title": "Top K Audit Limit",
+          "type": "integer"
+        }
+      },
+      "title": "SelectorGraphPolicy",
+      "type": "object"
+    },
     "ValidationPolicy": {
       "additionalProperties": false,
       "properties": {
@@ -360,7 +408,19 @@
       "title": "Selector",
       "type": "string"
     },
+    "selector_graph_policy": {
+      "$ref": "#/$defs/SelectorGraphPolicy",
+      "default": {
+        "mode": "static",
+        "require_observed_when_access_present": true,
+        "require_sealed_typed_access": true,
+        "schema_version": "1.0.0",
+        "semantic_hypotheses_enabled": false,
+        "top_k_audit_limit": 10
+      }
+    },
     "selector_target_limit": {
+      "maximum": 2,
       "minimum": 1,
       "title": "Selector Target Limit",
       "type": "integer"

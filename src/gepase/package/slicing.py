@@ -26,6 +26,15 @@ _REVERSE_KINDS = {
     EdgeKind.OBSERVED_EXECUTE,
     EdgeKind.FAILED_AT,
 }
+_SEMANTIC_REVERSE_KINDS = {
+    EdgeKind.IMPLEMENTS,
+    EdgeKind.EXPLAINS,
+    EdgeKind.CONSTRAINS,
+    EdgeKind.CONSUMES,
+    EdgeKind.PRODUCES,
+    EdgeKind.VALIDATES,
+    EdgeKind.CONFLICTS_WITH,
+}
 
 
 def reverse_slice(
@@ -34,6 +43,7 @@ def reverse_slice(
     *,
     max_nodes: int = 20,
     max_tokens: int = 2_000,
+    include_semantic_hypotheses: bool = False,
 ) -> FailureSlice:
     by_id = {node.node_id: node for node in graph.nodes}
     unknown = set(seed_node_ids) - set(by_id)
@@ -41,7 +51,14 @@ def reverse_slice(
         raise ValueError(f"unknown failure slice seeds: {sorted(unknown)}")
     predecessors: defaultdict[str, list[tuple[str, EdgeKind, float]]] = defaultdict(list)
     for edge in graph.edges:
-        if edge.kind in _REVERSE_KINDS:
+        trusted = edge.layer in {"static", "planned", "observed"} and edge.kind in _REVERSE_KINDS
+        semantic = (
+            include_semantic_hypotheses
+            and edge.layer == "semantic_hypothesis"
+            and edge.kind in _SEMANTIC_REVERSE_KINDS
+            and "failure_localization" in set(edge.metadata.get("allowed_consumers", []))
+        )
+        if trusted or semantic:
             predecessors[edge.target].append((edge.source, edge.kind, edge.confidence))
     distance: dict[str, int] = {node_id: 0 for node_id in seed_node_ids}
     reason: dict[str, str] = {node_id: "failure seed" for node_id in seed_node_ids}
@@ -52,7 +69,8 @@ def reverse_slice(
             if source in distance:
                 continue
             distance[source] = distance[target] + 1
-            reason[source] = f"reverse {kind.value} dependency of {target}"
+            prefix = "semantic hypothesis" if kind in _SEMANTIC_REVERSE_KINDS else "reverse"
+            reason[source] = f"{prefix} {kind.value} dependency of {target}"
             queue.append(source)
     candidates = []
     for node_id, hop in distance.items():

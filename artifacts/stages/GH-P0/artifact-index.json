@@ -1,0 +1,101 @@
+{
+  "artifacts": [
+    {
+      "media_type": "application/json",
+      "path": "preflight.json",
+      "sha256": "2171e8e19dd2ef78c4bf236a9d3e21aabcfb9be83841473e676023db9673fcc9",
+      "size_bytes": 5255
+    },
+    {
+      "media_type": "application/json",
+      "path": "coverage-audit.json",
+      "sha256": "b6d00535bb585ca8b55e9af46ecc90c838017c46a04f49ceb9ef0b5cf2e19526",
+      "size_bytes": 9243
+    },
+    {
+      "media_type": "application/json",
+      "path": "overlay-mapping.json",
+      "sha256": "03e67d1423a4c9d49c4eaab3c8d8d733bcd1c0023ece6f0570cd7eff1b564f9a",
+      "size_bytes": 38429
+    },
+    {
+      "media_type": "application/json",
+      "path": "old-selector-replay.json",
+      "sha256": "e27862af11c6073ae83e645b1535903520d32e934c7cad35b44d22012687b9a0",
+      "size_bytes": 207074
+    },
+    {
+      "media_type": "application/json",
+      "path": "new-selector-replay.json",
+      "sha256": "ecc6b0508e368f99926745bfea11734a1d515fa5b085bd778d0a3b1fb846edd2",
+      "size_bytes": 218558
+    },
+    {
+      "media_type": "application/json",
+      "path": "selector-replay-comparison.json",
+      "sha256": "bb33000f4f3ace12613e26366e6dec906f15940fd5be0853cd3d18e5a900cdc7",
+      "size_bytes": 17207
+    },
+    {
+      "media_type": "application/json",
+      "path": "risk-intensity-report.json",
+      "sha256": "2fe14f44237fd30548eb65d3e90465c7c6e8d6e0cf8bc42c5d483119d687834e",
+      "size_bytes": 2631
+    },
+    {
+      "media_type": "application/json",
+      "path": "target-set-fixture.json",
+      "sha256": "d788414057684f05506614c578ea0f4753942ff9047f9e29dca118a5f94eaaf6",
+      "size_bytes": 1257
+    },
+    {
+      "media_type": "application/json",
+      "path": "offline-value-gate.json",
+      "sha256": "70ff3ffb5431a1299f2d2270a310aee350f0f0fc4a77a46f270b5cfe638544f0",
+      "size_bytes": 689
+    },
+    {
+      "media_type": "application/json",
+      "path": "verification.json",
+      "sha256": "72a087b164c9e4e3ae4c3708f7ab1261649d0b98137c377b1fb0b6e9d7a20815",
+      "size_bytes": 2142
+    },
+    {
+      "media_type": "application/json",
+      "path": "machine-gates.json",
+      "sha256": "760aaa8f12ba5e42d7d6180af2472cb6daabb81cbc2b63d218ab264bef71b3b5",
+      "size_bytes": 3549
+    },
+    {
+      "media_type": "application/json",
+      "path": "new-package-graph.json",
+      "sha256": "382b4f15658e90464386d7e19ed9fec05bf53f5d43eec74c4cc474f82db13eef",
+      "size_bytes": 486150
+    },
+    {
+      "media_type": "text/plain",
+      "path": "commands.log",
+      "sha256": "c70d091f8cd15fd606e26c14376d12d93393512b3286cb4509452975e8267ee6",
+      "size_bytes": 631
+    },
+    {
+      "media_type": "application/xml",
+      "path": "test-results.xml",
+      "sha256": "5b181a686b5b0d52db78290821a3129dd5443f362e2958a18893ad580b1d40a2",
+      "size_bytes": 21572
+    },
+    {
+      "media_type": "application/json",
+      "path": "stage_report.json",
+      "sha256": "9b6020840c780fd5974a9b2d2c39e71920e195ae3ac30a1b9fedfc349f624ad3",
+      "size_bytes": 8497
+    },
+    {
+      "media_type": "application/json",
+      "path": "post-generation-security.json",
+      "sha256": "4b2e936c08e9293297886ac8fb1e439c658c062801908eaeb03ae852a07bd187",
+      "size_bytes": 85
+    }
+  ],
+  "schema_version": "1.0.0"
+}

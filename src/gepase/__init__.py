@@ -25,6 +25,12 @@ from gepase.optimizer.acceptance.models import GateDecision
 from gepase.optimizer.candidate import PackageCandidate
 from gepase.optimizer.evolution.models import MergeParentSetSnapshot
 from gepase.package.ir import PackageGraph
+from gepase.package.semantic import SemanticHypothesisCache, SemanticHypothesisEngine
+from gepase.package.semantic_models import (
+    SemanticEnrichmentScope,
+    SemanticHypothesisConfig,
+    SemanticRelationProposal,
+)
 from gepase.schemas.common import SCHEMA_VERSION
 from gepase.store.evolution_pool import EvolutionPoolEntry
 
@@ -53,6 +59,11 @@ __all__ = [
     "PackageCandidate",
     "PackageGraph",
     "PackagePatch",
+    "SemanticEnrichmentScope",
+    "SemanticHypothesisCache",
+    "SemanticHypothesisConfig",
+    "SemanticHypothesisEngine",
+    "SemanticRelationProposal",
     "TaskScoreVector",
     "__version__",
 ]

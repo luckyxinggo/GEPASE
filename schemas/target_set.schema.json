@@ -1,0 +1,66 @@
+{
+  "additionalProperties": false,
+  "properties": {
+    "causal_path_edge_ids": {
+      "default": [],
+      "items": {
+        "type": "string"
+      },
+      "title": "Causal Path Edge Ids",
+      "type": "array"
+    },
+    "causal_path_node_ids": {
+      "items": {
+        "type": "string"
+      },
+      "minItems": 1,
+      "title": "Causal Path Node Ids",
+      "type": "array"
+    },
+    "companion_target_ids": {
+      "default": [],
+      "items": {
+        "type": "string"
+      },
+      "maxItems": 1,
+      "title": "Companion Target Ids",
+      "type": "array"
+    },
+    "evidence_refs": {
+      "items": {
+        "type": "string"
+      },
+      "minItems": 1,
+      "title": "Evidence Refs",
+      "type": "array"
+    },
+    "parent_candidate_id": {
+      "title": "Parent Candidate Id",
+      "type": "string"
+    },
+    "primary_target_id": {
+      "title": "Primary Target Id",
+      "type": "string"
+    },
+    "schema_version": {
+      "default": "1.0.0",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "scope_reason": {
+      "maxLength": 800,
+      "minLength": 1,
+      "title": "Scope Reason",
+      "type": "string"
+    }
+  },
+  "required": [
+    "parent_candidate_id",
+    "primary_target_id",
+    "causal_path_node_ids",
+    "evidence_refs",
+    "scope_reason"
+  ],
+  "title": "TargetSet",
+  "type": "object"
+}

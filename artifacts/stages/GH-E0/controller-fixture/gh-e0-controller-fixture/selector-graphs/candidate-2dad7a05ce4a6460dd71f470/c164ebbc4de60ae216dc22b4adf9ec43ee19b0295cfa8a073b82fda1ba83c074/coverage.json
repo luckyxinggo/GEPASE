@@ -1,0 +1,160 @@
+{
+  "ambiguous_symbols": [],
+  "edge_kind_counts": {
+    "calls": 136,
+    "contains": 319,
+    "imports": 16,
+    "references": 4
+  },
+  "error_paths": [],
+  "file_node_count": 7,
+  "file_node_coverage": 1.0,
+  "files": [
+    {
+      "file_kind": "license",
+      "file_node_id": "node-7fd627ed0d50ee9e04018c8a",
+      "incoming_edge_count": 1,
+      "internal_node_count": 0,
+      "isolated_mutable": true,
+      "mutation_capabilities": [
+        "inspect_only"
+      ],
+      "outgoing_edge_count": 0,
+      "parse_detail": "unsupported text format retained as a file node",
+      "parse_status": "shallow",
+      "parse_status_explicit": true,
+      "parser": "file_manifest",
+      "path": "LICENSE.txt"
+    },
+    {
+      "file_kind": "skill",
+      "file_node_id": "node-fddc99453114c3a40363b219",
+      "incoming_edge_count": 1,
+      "internal_node_count": 121,
+      "isolated_mutable": false,
+      "mutation_capabilities": [
+        "replace_markdown_block",
+        "replace_text_file"
+      ],
+      "outgoing_edge_count": 2,
+      "parse_detail": null,
+      "parse_status": "deep",
+      "parse_status_explicit": true,
+      "parser": "deterministic",
+      "path": "SKILL.md"
+    },
+    {
+      "file_kind": "script",
+      "file_node_id": "node-dbf396ac6852bf4706f33ebf",
+      "incoming_edge_count": 2,
+      "internal_node_count": 41,
+      "isolated_mutable": false,
+      "mutation_capabilities": [
+        "replace_python_function",
+        "replace_text_file"
+      ],
+      "outgoing_edge_count": 1,
+      "parse_detail": null,
+      "parse_status": "deep",
+      "parse_status_explicit": true,
+      "parser": "deterministic",
+      "path": "core/easing.py"
+    },
+    {
+      "file_kind": "script",
+      "file_node_id": "node-bd3bececef13aaeef0c22570",
+      "incoming_edge_count": 2,
+      "internal_node_count": 30,
+      "isolated_mutable": false,
+      "mutation_capabilities": [
+        "replace_python_function",
+        "replace_text_file"
+      ],
+      "outgoing_edge_count": 1,
+      "parse_detail": null,
+      "parse_status": "deep",
+      "parse_status_explicit": true,
+      "parser": "deterministic",
+      "path": "core/frame_composer.py"
+    },
+    {
+      "file_kind": "script",
+      "file_node_id": "node-2c61585b9d40c2df7343f499",
+      "incoming_edge_count": 2,
+      "internal_node_count": 92,
+      "isolated_mutable": false,
+      "mutation_capabilities": [
+        "replace_python_function",
+        "replace_text_file"
+      ],
+      "outgoing_edge_count": 1,
+      "parse_detail": null,
+      "parse_status": "deep",
+      "parse_status_explicit": true,
+      "parser": "deterministic",
+      "path": "core/gif_builder.py"
+    },
+    {
+      "file_kind": "script",
+      "file_node_id": "node-0f241aa06504163be33132f8",
+      "incoming_edge_count": 2,
+      "internal_node_count": 24,
+      "isolated_mutable": false,
+      "mutation_capabilities": [
+        "replace_python_function",
+        "replace_text_file"
+      ],
+      "outgoing_edge_count": 1,
+      "parse_detail": null,
+      "parse_status": "deep",
+      "parse_status_explicit": true,
+      "parser": "deterministic",
+      "path": "core/validators.py"
+    },
+    {
+      "file_kind": "metadata",
+      "file_node_id": "node-cc27fb4d7208967c86b1a7e8",
+      "incoming_edge_count": 1,
+      "internal_node_count": 4,
+      "isolated_mutable": false,
+      "mutation_capabilities": [
+        "inspect_only"
+      ],
+      "outgoing_edge_count": 4,
+      "parse_detail": null,
+      "parse_status": "deep",
+      "parse_status_explicit": true,
+      "parser": "deterministic",
+      "path": "requirements.txt"
+    }
+  ],
+  "isolated_mutable_components": [
+    "LICENSE.txt"
+  ],
+  "layer_counts": {
+    "static": 475
+  },
+  "node_kind_counts": {
+    "call": 136,
+    "class": 1,
+    "dependency": 4,
+    "external": 61,
+    "file": 7,
+    "frontmatter": 1,
+    "function": 34,
+    "import": 12,
+    "instruction": 96,
+    "package": 1,
+    "python_module": 4,
+    "section": 24
+  },
+  "package_id": "slack-gif-creator",
+  "parse_status_counts": {
+    "deep": 6,
+    "shallow": 1
+  },
+  "schema_version": "1.0.0",
+  "snapshot_file_count": 7,
+  "snapshot_hash": "cf3c66eb21afcbcfc3518927b5572624075866213c16717d03010ccc25074525",
+  "unresolved_symbols": []
+}

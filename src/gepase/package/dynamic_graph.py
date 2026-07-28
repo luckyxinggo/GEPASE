@@ -4,9 +4,13 @@ from __future__ import annotations
 
 import json
 from pathlib import Path
+from typing import Literal
+
+from pydantic import Field, model_validator
 
 from gepase.evals.evidence import EvaluationRecord, TraceCompleteness, TraceStep
 from gepase.evals.schema import EvidenceTier
+from gepase.evals.work_items import ExecutionBundle, PackageAccessKind
 from gepase.package.ir import (
     EdgeKind,
     IRNode,
@@ -15,6 +19,108 @@ from gepase.package.ir import (
     make_edge,
     make_node,
 )
+from gepase.schemas.common import FrozenModel
+from gepase.store.artifacts import ArtifactStore, sha256_bytes
+
+
+class PackageAccessMapping(FrozenModel):
+    work_id: str
+    task_id: str
+    variant: str
+    context_id: str
+    snapshot_hash: str = Field(pattern=r"^[0-9a-f]{64}$")
+    source_artifact: str
+    source_sha256: str = Field(pattern=r"^[0-9a-f]{64}$")
+    sequence: int = Field(ge=0)
+    access_kind: Literal["available", "read", "executed"]
+    path: str
+    supplied_node_id: str | None
+    mapped_node_id: str | None
+    mapping_strength: Literal["typed", "weak", "rejected"]
+    reason: str
+    bytes_loaded: int = Field(ge=0)
+    tokens_loaded: int = Field(ge=0)
+
+
+class PackageAccessOverlayAudit(FrozenModel):
+    schema_version: str = "1.0.0"
+    package_id: str
+    snapshot_hash: str = Field(pattern=r"^[0-9a-f]{64}$")
+    source_run: str
+    source_run_seal_valid: bool
+    allowed_task_ids: tuple[str, ...]
+    accepted_work_ids: tuple[str, ...]
+    filtered_work_ids: tuple[str, ...]
+    mappings: tuple[PackageAccessMapping, ...]
+    observed_edges: int = Field(ge=0)
+    mapped_events: int = Field(ge=0)
+    rejected_events: int = Field(ge=0)
+    typed_mapping_rate: float = Field(ge=0, le=1)
+    planned_edges_added: int = Field(default=0, ge=0)
+    weak_fallback_events: int = Field(default=0, ge=0)
+
+
+class SelectorGraphBinding(FrozenModel):
+    """Immutable provenance for the exact graph consumed by one selector."""
+
+    schema_version: str = "1.0.0"
+    mode: Literal["static_observed"]
+    parent_candidate_id: str
+    parent_snapshot_hash: str = Field(pattern=r"^[0-9a-f]{64}$")
+    parent_content_hash: str = Field(pattern=r"^[0-9a-f]{64}$")
+    package_ref: str
+    snapshot_ref: str
+    snapshot_sha256: str = Field(pattern=r"^[0-9a-f]{64}$")
+    package_ir_ref: str
+    package_ir_sha256: str = Field(pattern=r"^[0-9a-f]{64}$")
+    static_graph_ref: str
+    static_graph_sha256: str = Field(pattern=r"^[0-9a-f]{64}$")
+    selector_graph_ref: str
+    selector_graph_sha256: str = Field(pattern=r"^[0-9a-f]{64}$")
+    coverage_ref: str
+    coverage_sha256: str = Field(pattern=r"^[0-9a-f]{64}$")
+    overlay_audit_ref: str
+    overlay_audit_sha256: str = Field(pattern=r"^[0-9a-f]{64}$")
+    layer_counts: dict[str, int]
+    evidence_run_ref: str
+    evidence_variant: Literal["original", "candidate"]
+    evidence_task_ids: tuple[str, ...]
+    evidence_scope_hash: str = Field(pattern=r"^[0-9a-f]{64}$")
+    graph_policy_hash: str = Field(pattern=r"^[0-9a-f]{64}$")
+    cache_key: str = Field(pattern=r"^[0-9a-f]{64}$")
+    accepted_work_ids: tuple[str, ...]
+    filtered_work_ids: tuple[str, ...]
+    mapped_access_events: int = Field(ge=0)
+    rejected_access_events: int = Field(ge=0)
+    observed_edges: int = Field(ge=0)
+    semantic_hypothesis_edges: Literal[0] = 0
+
+    @model_validator(mode="after")
+    def safe_and_layered(self) -> SelectorGraphBinding:
+        for reference in (
+            self.package_ref,
+            self.snapshot_ref,
+            self.package_ir_ref,
+            self.static_graph_ref,
+            self.selector_graph_ref,
+            self.coverage_ref,
+            self.overlay_audit_ref,
+            self.evidence_run_ref,
+        ):
+            path = Path(reference)
+            if path.is_absolute() or ".." in path.parts:
+                raise ValueError("selector graph refs must be repository-relative")
+        if not self.evidence_task_ids or not self.accepted_work_ids:
+            raise ValueError("observed selector graph requires accepted parent-train evidence")
+        if any(value < 0 for value in self.layer_counts.values()):
+            raise ValueError("selector graph layer counts cannot be negative")
+        if self.layer_counts.get("observed", 0) != self.observed_edges:
+            raise ValueError("selector graph observed layer count disagrees with overlay audit")
+        if self.layer_counts.get("planned", 0) != 0:
+            raise ValueError("selector graph must not consume planned evidence")
+        if self.layer_counts.get("semantic_hypothesis", 0) != 0:
+            raise ValueError("GH-E0 selector graph must not consume semantic hypotheses")
+        return self
 
 
 def overlay_evidence(graph: PackageGraph, run_dir: Path) -> tuple[PackageGraph, dict[str, object]]:
@@ -153,6 +259,290 @@ def overlay_evidence(graph: PackageGraph, run_dir: Path) -> tuple[PackageGraph, 
             for edge in overlaid.edges
         ),
     }
+    return overlaid, audit
+
+
+def overlay_package_access(
+    graph: PackageGraph,
+    run_dir: Path,
+    *,
+    allowed_task_ids: set[str],
+    expected_graph_ref: str,
+    expected_variant: Literal["original", "candidate"] = "original",
+    expected_provider_id: str | None = None,
+    expected_host: str | None = None,
+    expected_model: str | None = None,
+    expected_seed: int | None = None,
+    expected_timeout_seconds: int | None = None,
+    expected_candidate_id: str | None = None,
+    expected_content_hash: str | None = None,
+    expected_reference_key_hash: str | None = None,
+) -> tuple[PackageGraph, PackageAccessOverlayAudit]:
+    """Bind sealed typed PackageAccessEvent rows to one snapshot-scoped graph.
+
+    This intentionally does not infer access from prose.  Work outside the caller's
+    pre-registered task allowlist (for GH-P0: parent train only) is filtered before
+    any edge is created.
+    """
+
+    run = run_dir.resolve()
+    seal = ArtifactStore(run).verify()
+    if not seal.valid or seal.unindexed_files:
+        raise ValueError(f"source run artifact seal is invalid: {seal.as_dict()}")
+    raw_index = json.loads((run / "artifact-index.json").read_text(encoding="utf-8"))
+    indexed = {str(item["path"]): str(item["sha256"]) for item in raw_index["artifacts"]}
+    metadata_path = run / "run-metadata.json"
+    if indexed.get("run-metadata.json") != sha256_bytes(metadata_path.read_bytes()):
+        raise ValueError("source run metadata is not sealed or hash-matched")
+    metadata = json.loads(metadata_path.read_text(encoding="utf-8"))
+    expected_metadata = {
+        "host": expected_host,
+        "model": expected_model,
+        "seed": expected_seed,
+        "timeout_seconds": expected_timeout_seconds,
+    }
+    mismatched_metadata = [
+        key
+        for key, expected in expected_metadata.items()
+        if expected is not None and metadata.get(key) != expected
+    ]
+    if mismatched_metadata:
+        raise ValueError(
+            f"source run provider/runtime mismatch: {sorted(mismatched_metadata)}"
+        )
+    if metadata.get("split") not in {None, "train"}:
+        raise ValueError("observed selector evidence must come from the train split")
+    if expected_candidate_id is not None:
+        if metadata.get("candidate_id") != expected_candidate_id:
+            raise ValueError("candidate evidence is bound to another parent")
+        if metadata.get("candidate_content_hash") != expected_content_hash:
+            raise ValueError("candidate evidence content hash mismatch")
+    elif metadata.get("mode") != "frozen-functional":
+        raise ValueError("seed observed evidence must come from a functional reference run")
+    if (
+        expected_reference_key_hash is not None
+        and metadata.get("reference_key_hash") not in {None, expected_reference_key_hash}
+    ):
+        raise ValueError("candidate evidence reference/runtime key mismatch")
+    work_manifest_path = run / "executor-work-items.json"
+    manifest_ref = "executor-work-items.json"
+    if indexed.get(manifest_ref) != sha256_bytes(work_manifest_path.read_bytes()):
+        raise ValueError("executor-work-items manifest is not sealed or hash-matched")
+    work_rows = json.loads(work_manifest_path.read_text(encoding="utf-8"))["work_items"]
+    by_work = {str(row["work_id"]): row for row in work_rows}
+    for work_path in sorted((run / "executor-work-items").glob("*.json")):
+        relative = work_path.relative_to(run).as_posix()
+        if indexed.get(relative) != sha256_bytes(work_path.read_bytes()):
+            raise ValueError(f"executor work item is not sealed: {relative}")
+        row = json.loads(work_path.read_text(encoding="utf-8"))
+        work_id = str(row["work_id"])
+        if work_id in by_work and by_work[work_id] != row:
+            raise ValueError(f"executor work manifest disagrees with typed item: {work_id}")
+        by_work[work_id] = row
+    nodes = {node.node_id: node for node in graph.nodes}
+    file_nodes = {
+        node.path: node for node in graph.nodes if node.kind is NodeKind.FILE
+    }
+    edges = {edge.edge_id: edge for edge in graph.edges}
+    mappings: list[PackageAccessMapping] = []
+    accepted: list[str] = []
+    filtered: list[str] = []
+    mapped = 0
+    rejected = 0
+    observed = 0
+    graph_reference = Path(expected_graph_ref)
+    if graph_reference.is_absolute() or ".." in graph_reference.parts:
+        raise ValueError("expected graph ref must be repository-relative")
+    referenced_graph = next(
+        (
+            parent / graph_reference
+            for parent in (run, *run.parents)
+            if (parent / graph_reference).is_file()
+        ),
+        None,
+    )
+    if referenced_graph is None:
+        raise ValueError("expected sealed graph ref cannot be resolved")
+    graph_seal: tuple[Path, str] | None = None
+    for graph_run in referenced_graph.parents:
+        graph_index_path = graph_run / "artifact-index.json"
+        if not graph_index_path.is_file():
+            continue
+        graph_relative = referenced_graph.relative_to(graph_run).as_posix()
+        graph_index = json.loads(graph_index_path.read_text(encoding="utf-8"))
+        graph_hashes = {
+            str(item["path"]): str(item["sha256"]) for item in graph_index["artifacts"]
+        }
+        if graph_hashes.get(graph_relative) == sha256_bytes(referenced_graph.read_bytes()):
+            graph_seal = graph_run, graph_relative
+            break
+    if graph_seal is None:
+        raise ValueError("referenced PackageGraph is not sealed or hash-matched")
+    graph_payload = json.loads(referenced_graph.read_text(encoding="utf-8"))
+    if graph_payload.get("snapshot_hash") != graph.snapshot_hash:
+        raise ValueError("snapshot hash mismatch for referenced PackageGraph")
+    for path in sorted((run / "execution-submissions").glob("*.json")):
+        relative = path.relative_to(run).as_posix()
+        digest = sha256_bytes(path.read_bytes())
+        if indexed.get(relative) != digest:
+            raise ValueError(f"execution submission is not sealed or hash-matched: {relative}")
+        submission = ExecutionBundle.model_validate_json(path.read_text(encoding="utf-8"))
+        work = by_work.get(submission.work_id)
+        if work is None:
+            raise ValueError(f"execution work item is missing: {submission.work_id}")
+        if str(work.get("task_id")) not in allowed_task_ids or work.get("skill_ref") is None:
+            filtered.append(submission.work_id)
+            continue
+        if expected_provider_id is not None and submission.provider_id != expected_provider_id:
+            raise ValueError(f"provider mismatch for {submission.work_id}")
+        if expected_host is not None and submission.host != expected_host:
+            raise ValueError(f"host mismatch for {submission.work_id}")
+        if expected_model is not None and submission.model != expected_model:
+            raise ValueError(f"model mismatch for {submission.work_id}")
+        if work.get("package_graph_ref") != expected_graph_ref:
+            raise ValueError(f"snapshot graph ref mismatch for {submission.work_id}")
+        node_map = {str(key): str(value) for key, value in work["package_node_map"].items()}
+        sequences = [event.sequence for event in submission.package_access]
+        if sequences != sorted(set(sequences)):
+            raise ValueError(
+                "package access sequence is not unique and ordered: "
+                f"{submission.work_id}"
+            )
+        access_summary_path = run / "package-access" / f"{submission.work_id}.json"
+        access_summary_ref = access_summary_path.relative_to(run).as_posix()
+        if indexed.get(access_summary_ref) != sha256_bytes(access_summary_path.read_bytes()):
+            raise ValueError(f"package access summary is not sealed: {submission.work_id}")
+        access_summary = json.loads(access_summary_path.read_text(encoding="utf-8"))
+        if (
+            access_summary.get("valid") is not True
+            or access_summary.get("variant") != expected_variant
+        ):
+            raise ValueError(f"package access summary is invalid: {submission.work_id}")
+        evidence = make_node(
+            graph.package_id,
+            NodeKind.EVIDENCE,
+            relative,
+            f"package-access/{submission.work_id}",
+            f"E2:{work['task_id']}:{expected_variant}",
+            path.read_bytes(),
+            mutable=False,
+            metadata={
+                "work_id": submission.work_id,
+                "task_id": work["task_id"],
+                "variant": expected_variant,
+                "context_id": submission.context_id,
+                "snapshot_hash": graph.snapshot_hash,
+                "provider": submission.provider_id,
+                "host": submission.host,
+                "model": submission.model,
+                "trace_completeness": "typed_package_access",
+                "source_artifact": relative,
+                "source_sha256": digest,
+            },
+        )
+        nodes[evidence.node_id] = evidence
+        accepted.append(submission.work_id)
+        for event in submission.package_access:
+            expected_node_id = node_map.get(event.path)
+            target = file_nodes.get(event.path)
+            valid = (
+                expected_node_id is not None
+                and event.node_id == expected_node_id
+                and target is not None
+                and target.node_id == expected_node_id
+            )
+            mapping = PackageAccessMapping(
+                work_id=submission.work_id,
+                task_id=str(work["task_id"]),
+                variant=expected_variant,
+                context_id=submission.context_id or submission.work_id,
+                snapshot_hash=graph.snapshot_hash,
+                source_artifact=relative,
+                source_sha256=digest,
+                sequence=event.sequence,
+                access_kind=event.kind.value,
+                path=event.path,
+                supplied_node_id=event.node_id,
+                mapped_node_id=target.node_id if valid and target is not None else None,
+                mapping_strength="typed" if valid else "rejected",
+                reason=(
+                    "node_id/path/snapshot binding verified"
+                    if valid
+                    else "typed binding mismatch"
+                ),
+                bytes_loaded=event.bytes_loaded,
+                tokens_loaded=event.tokens_loaded,
+            )
+            mappings.append(mapping)
+            if not valid or target is None:
+                rejected += 1
+                continue
+            mapped += 1
+            if event.kind is PackageAccessKind.AVAILABLE:
+                continue
+            kind = (
+                EdgeKind.OBSERVED_READ
+                if event.kind is PackageAccessKind.READ
+                else EdgeKind.OBSERVED_EXECUTE
+            )
+            edge = make_edge(
+                evidence.node_id,
+                target.node_id,
+                kind,
+                layer="observed",
+                identity=(submission.work_id, event.sequence, kind.value),
+                evidence_tier="E2",
+                evaluation_id=submission.work_id,
+                task_id=str(work["task_id"]),
+                provider=submission.provider_id,
+                confidence=1.0,
+                trace_completeness="typed_package_access",
+                metadata={
+                    "variant": expected_variant,
+                    "context_id": submission.context_id,
+                    "snapshot_hash": graph.snapshot_hash,
+                    "host": submission.host,
+                    "model": submission.model,
+                    "trace_sequence": event.sequence,
+                    "path": event.path,
+                    "bytes_loaded": event.bytes_loaded,
+                    "tokens_loaded": event.tokens_loaded,
+                    "evidence_path": relative,
+                    "source_sha256": digest,
+                    "mapping_strength": "typed",
+                },
+            )
+            edges[edge.edge_id] = edge
+            observed += 1
+    overlaid = PackageGraph(
+        package_id=graph.package_id,
+        snapshot_hash=graph.snapshot_hash,
+        nodes=tuple(sorted(nodes.values(), key=lambda item: item.node_id)),
+        edges=tuple(sorted(edges.values(), key=lambda item: item.edge_id)),
+        diagnostics=graph.diagnostics,
+    )
+    total = mapped + rejected
+    source_run = run.name
+    for ancestor in run.parents:
+        if ancestor.name == "runs" and ancestor.parent.name == "artifacts":
+            source_run = (
+                Path("artifacts/runs") / run.relative_to(ancestor)
+            ).as_posix()
+            break
+    audit = PackageAccessOverlayAudit(
+        package_id=graph.package_id,
+        snapshot_hash=graph.snapshot_hash,
+        source_run=source_run,
+        source_run_seal_valid=True,
+        allowed_task_ids=tuple(sorted(allowed_task_ids)),
+        accepted_work_ids=tuple(sorted(accepted)),
+        filtered_work_ids=tuple(sorted(filtered)),
+        mappings=tuple(mappings),
+        observed_edges=observed,
+        mapped_events=mapped,
+        rejected_events=rejected,
+        typed_mapping_rate=(mapped / total if total else 0.0),
+    )
     return overlaid, audit
 
 

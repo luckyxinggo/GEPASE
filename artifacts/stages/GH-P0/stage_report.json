@@ -1,0 +1,241 @@
+{
+  "commands": [
+    "uv run pytest -q tests/package/test_graph_hardening.py tests/package/test_graph_analysis.py tests/optimizer/test_selectors.py tests/mutation/test_target_set.py tests/mutation/test_schema_applier.py tests/mutation/test_proposer.py",
+    "uv run pytest -q --junitxml artifacts/stages/GH-P0/test-results.xml",
+    "uv run ruff check .",
+    "uv run pyright",
+    "uv run python scripts/export_core_schemas.py",
+    "uv run python scripts/export_core_schemas.py",
+    "uv run python scripts/check_secrets.py --format json",
+    "uv run python scripts/check_markdown_links.py",
+    "uv run python scripts/check_license.py",
+    "git diff --check",
+    "uv run python scripts/check_secrets.py --format json"
+  ],
+  "conclusion_boundary": {
+    "code_implemented": true,
+    "engineering_mechanism_tested": true,
+    "new_algorithm_effect_validated": false
+  },
+  "design_decisions": [
+    "Typed R3 parent-train package_access is the only dynamic overlay source.",
+    "Risk is capped in ranking and primarily controls validation intensity.",
+    "Single target remains default; a two-target scope requires a typed static/observed path."
+  ],
+  "finished_commit": "c9ff12f8bf40920e29a7dbd45a95c90af167ae7b",
+  "gate_results": [
+    {
+      "detail": "All Agent/API/evaluation/proposal/candidate/effect-score counters are zero.",
+      "evidence": [
+        "preflight.json"
+      ],
+      "gate_id": "GHP0-G00-offline_only",
+      "status": "passed"
+    },
+    {
+      "detail": "R2-R5/S10, public canary, deployable Package, and skills_test tree hashes match.",
+      "evidence": [
+        "preflight.json"
+      ],
+      "gate_id": "GHP0-G01-source_and_artifact_immutable",
+      "status": "passed"
+    },
+    {
+      "detail": "File coverage=1.000; explicit statuses=7/7.",
+      "evidence": [
+        "coverage-audit.json"
+      ],
+      "gate_id": "GHP0-G02-graph_coverage_explicit",
+      "status": "passed"
+    },
+    {
+      "detail": "Mapped typed events=46; rejected=0; held-out/no-skill work filtered=11.",
+      "evidence": [
+        "overlay-mapping.json",
+        "verification.json"
+      ],
+      "gate_id": "GHP0-G03-observed_overlay_bound",
+      "status": "passed"
+    },
+    {
+      "detail": "Observed edges=46; replay targets with non-zero dynamic=483.",
+      "evidence": [
+        "new-selector-replay.json",
+        "overlay-mapping.json"
+      ],
+      "gate_id": "GHP0-G04-selector_consumes_dynamic",
+      "status": "passed"
+    },
+    {
+      "detail": "Risk is separately reported, executable alternatives remain visible, and one sealed replay ranks a Python target first.",
+      "evidence": [
+        "risk-intensity-report.json",
+        "new-selector-replay.json"
+      ],
+      "gate_id": "GHP0-G05-risk_does_not_forbid_exploration",
+      "status": "passed"
+    },
+    {
+      "detail": "Default is one target; connected same-parent fixture is bounded to 2/2/2 and fault injection leaves no partial candidate or source mutation.",
+      "evidence": [
+        "target-set-fixture.json",
+        "verification.json"
+      ],
+      "gate_id": "GHP0-G06-bounded_target_set_atomic",
+      "status": "passed"
+    },
+    {
+      "detail": "同一 sealed evidence/failure slice 下, typed observed edge 已进入 selector; parse status、排名/脚本可达性和风险解释出现可审计变化。",
+      "evidence": [
+        "offline-value-gate.json",
+        "selector-replay-comparison.json"
+      ],
+      "gate_id": "GHP0-G07-offline_value_gate",
+      "status": "passed"
+    },
+    {
+      "detail": "Targeted/full tests, Ruff, Pyright, 36 idempotent schemas, security/docs/license and diff checks passed=True. Post-generation secret/private-path scan also passed.",
+      "evidence": [
+        "verification.json",
+        "test-results.xml",
+        "artifact-index.json"
+      ],
+      "gate_id": "GHP0-G08-regression_and_seal",
+      "status": "passed"
+    }
+  ],
+  "generated_at": "2026-07-28T04:21:32.355192+00:00",
+  "headless_provider_runs": 0,
+  "input_artifacts": [
+    {
+      "path": "artifacts/runs/r2-slack-gif-creator-evalplan/package/graph.json",
+      "sha256": "a05716cc8dc8fb9e181384d8456e39869d014624c10fcb72612f706b95a32822"
+    },
+    {
+      "path": "artifacts/runs/r3-slack-gif-creator-paired/artifact-index.json",
+      "sha256": "09a959e759eadfb5e8b6ebd5b8e0c7d7c99886baf9d4784427905db1d776c648"
+    },
+    {
+      "path": "artifacts/runs/r4-slack-gif-creator-evolution/artifact-index.json",
+      "sha256": "61bb6ede5757d8afe3b6ab9ea5ea5ee272d34dd74ff68a3571ee6dfa365e7d36"
+    }
+  ],
+  "known_issues": [
+    "GH-P0 is an offline mechanism validation; it adds no Skill-effect evidence.",
+    "The only public effect result remains the sealed v0.1 canary; no GH-P1 work ran."
+  ],
+  "metrics": {
+    "common_target_rank_changes": 457,
+    "executable_top10_net_change": 1,
+    "explicit_parse_status_gain": 7,
+    "machine_gates_passed": 9,
+    "machine_gates_total": 9,
+    "new_candidates": 0,
+    "new_skill_effect_scores": 0,
+    "observed_edges_added": 46,
+    "targets_with_nonzero_dynamic": 483,
+    "top1_changes": 1,
+    "typed_mapping_rate": 1.0
+  },
+  "output_artifacts": [
+    {
+      "media_type": "application/json",
+      "path": "preflight.json",
+      "sha256": "2171e8e19dd2ef78c4bf236a9d3e21aabcfb9be83841473e676023db9673fcc9",
+      "size_bytes": 5255
+    },
+    {
+      "media_type": "application/json",
+      "path": "coverage-audit.json",
+      "sha256": "b6d00535bb585ca8b55e9af46ecc90c838017c46a04f49ceb9ef0b5cf2e19526",
+      "size_bytes": 9243
+    },
+    {
+      "media_type": "application/json",
+      "path": "overlay-mapping.json",
+      "sha256": "03e67d1423a4c9d49c4eaab3c8d8d733bcd1c0023ece6f0570cd7eff1b564f9a",
+      "size_bytes": 38429
+    },
+    {
+      "media_type": "application/json",
+      "path": "old-selector-replay.json",
+      "sha256": "e27862af11c6073ae83e645b1535903520d32e934c7cad35b44d22012687b9a0",
+      "size_bytes": 207074
+    },
+    {
+      "media_type": "application/json",
+      "path": "new-selector-replay.json",
+      "sha256": "ecc6b0508e368f99926745bfea11734a1d515fa5b085bd778d0a3b1fb846edd2",
+      "size_bytes": 218558
+    },
+    {
+      "media_type": "application/json",
+      "path": "selector-replay-comparison.json",
+      "sha256": "bb33000f4f3ace12613e26366e6dec906f15940fd5be0853cd3d18e5a900cdc7",
+      "size_bytes": 17207
+    },
+    {
+      "media_type": "application/json",
+      "path": "risk-intensity-report.json",
+      "sha256": "2fe14f44237fd30548eb65d3e90465c7c6e8d6e0cf8bc42c5d483119d687834e",
+      "size_bytes": 2631
+    },
+    {
+      "media_type": "application/json",
+      "path": "target-set-fixture.json",
+      "sha256": "d788414057684f05506614c578ea0f4753942ff9047f9e29dca118a5f94eaaf6",
+      "size_bytes": 1257
+    },
+    {
+      "media_type": "application/json",
+      "path": "offline-value-gate.json",
+      "sha256": "70ff3ffb5431a1299f2d2270a310aee350f0f0fc4a77a46f270b5cfe638544f0",
+      "size_bytes": 689
+    },
+    {
+      "media_type": "application/json",
+      "path": "verification.json",
+      "sha256": "72a087b164c9e4e3ae4c3708f7ab1261649d0b98137c377b1fb0b6e9d7a20815",
+      "size_bytes": 2142
+    },
+    {
+      "media_type": "application/json",
+      "path": "machine-gates.json",
+      "sha256": "760aaa8f12ba5e42d7d6180af2472cb6daabb81cbc2b63d218ab264bef71b3b5",
+      "size_bytes": 3549
+    },
+    {
+      "media_type": "application/json",
+      "path": "new-package-graph.json",
+      "sha256": "382b4f15658e90464386d7e19ed9fec05bf53f5d43eec74c4cc474f82db13eef",
+      "size_bytes": 486150
+    },
+    {
+      "media_type": "text/plain",
+      "path": "commands.log",
+      "sha256": "c70d091f8cd15fd606e26c14376d12d93393512b3286cb4509452975e8267ee6",
+      "size_bytes": 631
+    },
+    {
+      "media_type": "application/xml",
+      "path": "test-results.xml",
+      "sha256": "5b181a686b5b0d52db78290821a3129dd5443f362e2958a18893ad580b1d40a2",
+      "size_bytes": 21572
+    },
+    {
+      "media_type": "application/json",
+      "path": "post-generation-security.json",
+      "sha256": "4b2e936c08e9293297886ac8fb1e439c658c062801908eaeb03ae852a07bd187",
+      "size_bytes": 85
+    }
+  ],
+  "real_agent_runs": 0,
+  "schema_version": "1.0.0",
+  "source_tree_hash": "3ac59bc8c74f9c447eb349d839c6b5e7fa3b89c972cf1fd00ae264ab86f26794",
+  "stage_id": "GH-P0",
+  "started_from_commit": "c9ff12f8bf40920e29a7dbd45a95c90af167ae7b",
+  "status": "complete",
+  "unlocks": [
+    "GH-P1 design eligibility"
+  ]
+}

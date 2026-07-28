@@ -1,0 +1,224 @@
+{
+  "$defs": {
+    "PackageAccessMapping": {
+      "additionalProperties": false,
+      "properties": {
+        "access_kind": {
+          "enum": [
+            "available",
+            "read",
+            "executed"
+          ],
+          "title": "Access Kind",
+          "type": "string"
+        },
+        "bytes_loaded": {
+          "minimum": 0,
+          "title": "Bytes Loaded",
+          "type": "integer"
+        },
+        "context_id": {
+          "title": "Context Id",
+          "type": "string"
+        },
+        "mapped_node_id": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Mapped Node Id"
+        },
+        "mapping_strength": {
+          "enum": [
+            "typed",
+            "weak",
+            "rejected"
+          ],
+          "title": "Mapping Strength",
+          "type": "string"
+        },
+        "path": {
+          "title": "Path",
+          "type": "string"
+        },
+        "reason": {
+          "title": "Reason",
+          "type": "string"
+        },
+        "sequence": {
+          "minimum": 0,
+          "title": "Sequence",
+          "type": "integer"
+        },
+        "snapshot_hash": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Snapshot Hash",
+          "type": "string"
+        },
+        "source_artifact": {
+          "title": "Source Artifact",
+          "type": "string"
+        },
+        "source_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Source Sha256",
+          "type": "string"
+        },
+        "supplied_node_id": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Supplied Node Id"
+        },
+        "task_id": {
+          "title": "Task Id",
+          "type": "string"
+        },
+        "tokens_loaded": {
+          "minimum": 0,
+          "title": "Tokens Loaded",
+          "type": "integer"
+        },
+        "variant": {
+          "title": "Variant",
+          "type": "string"
+        },
+        "work_id": {
+          "title": "Work Id",
+          "type": "string"
+        }
+      },
+      "required": [
+        "work_id",
+        "task_id",
+        "variant",
+        "context_id",
+        "snapshot_hash",
+        "source_artifact",
+        "source_sha256",
+        "sequence",
+        "access_kind",
+        "path",
+        "supplied_node_id",
+        "mapped_node_id",
+        "mapping_strength",
+        "reason",
+        "bytes_loaded",
+        "tokens_loaded"
+      ],
+      "title": "PackageAccessMapping",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "accepted_work_ids": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Accepted Work Ids",
+      "type": "array"
+    },
+    "allowed_task_ids": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Allowed Task Ids",
+      "type": "array"
+    },
+    "filtered_work_ids": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Filtered Work Ids",
+      "type": "array"
+    },
+    "mapped_events": {
+      "minimum": 0,
+      "title": "Mapped Events",
+      "type": "integer"
+    },
+    "mappings": {
+      "items": {
+        "$ref": "#/$defs/PackageAccessMapping"
+      },
+      "title": "Mappings",
+      "type": "array"
+    },
+    "observed_edges": {
+      "minimum": 0,
+      "title": "Observed Edges",
+      "type": "integer"
+    },
+    "package_id": {
+      "title": "Package Id",
+      "type": "string"
+    },
+    "planned_edges_added": {
+      "default": 0,
+      "minimum": 0,
+      "title": "Planned Edges Added",
+      "type": "integer"
+    },
+    "rejected_events": {
+      "minimum": 0,
+      "title": "Rejected Events",
+      "type": "integer"
+    },
+    "schema_version": {
+      "default": "1.0.0",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "snapshot_hash": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Snapshot Hash",
+      "type": "string"
+    },
+    "source_run": {
+      "title": "Source Run",
+      "type": "string"
+    },
+    "source_run_seal_valid": {
+      "title": "Source Run Seal Valid",
+      "type": "boolean"
+    },
+    "typed_mapping_rate": {
+      "maximum": 1,
+      "minimum": 0,
+      "title": "Typed Mapping Rate",
+      "type": "number"
+    },
+    "weak_fallback_events": {
+      "default": 0,
+      "minimum": 0,
+      "title": "Weak Fallback Events",
+      "type": "integer"
+    }
+  },
+  "required": [
+    "package_id",
+    "snapshot_hash",
+    "source_run",
+    "source_run_seal_valid",
+    "allowed_task_ids",
+    "accepted_work_ids",
+    "filtered_work_ids",
+    "mappings",
+    "observed_edges",
+    "mapped_events",
+    "rejected_events",
+    "typed_mapping_rate"
+  ],
+  "title": "PackageAccessOverlayAudit",
+  "type": "object"
+}

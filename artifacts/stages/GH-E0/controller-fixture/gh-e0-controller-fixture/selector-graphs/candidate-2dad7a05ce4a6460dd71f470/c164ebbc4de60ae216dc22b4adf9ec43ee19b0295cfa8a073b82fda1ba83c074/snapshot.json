@@ -1,0 +1,80 @@
+{
+  "capabilities": {
+    "agent_config": {},
+    "required_hosts": [],
+    "required_secrets": [],
+    "required_services": [],
+    "required_tools": [],
+    "side_effects": [],
+    "skill_id": "slack-gif-creator"
+  },
+  "files": [
+    {
+      "binary": false,
+      "kind": "license",
+      "mutable": true,
+      "path": "LICENSE.txt",
+      "reason": null,
+      "sha256": "bc6b3af2f331cbc7fb0da1344efb2cbe5877a31498b4d70dbc7000f3405a1362",
+      "size_bytes": 11345
+    },
+    {
+      "binary": false,
+      "kind": "skill",
+      "mutable": true,
+      "path": "SKILL.md",
+      "reason": null,
+      "sha256": "ad74636dc0f77f5e37d676719f5d5fb51042592f355383d1891333614ec20354",
+      "size_bytes": 8306
+    },
+    {
+      "binary": false,
+      "kind": "script",
+      "mutable": true,
+      "path": "core/easing.py",
+      "reason": null,
+      "sha256": "60bc943449802541f0f0881a874faa7ef408aaaf0b758fde756664ada7740452",
+      "size_bytes": 6265
+    },
+    {
+      "binary": false,
+      "kind": "script",
+      "mutable": true,
+      "path": "core/frame_composer.py",
+      "reason": null,
+      "sha256": "a127ea8f2a58893ea10a5c7b5cab4e2010af6515adc538676eb0cc14f5a03985",
+      "size_bytes": 4548
+    },
+    {
+      "binary": false,
+      "kind": "script",
+      "mutable": true,
+      "path": "core/gif_builder.py",
+      "reason": null,
+      "sha256": "b6f50d738c491ee0438a2e86e897f71cdab9792494ba4605f140befb0bddbf89",
+      "size_bytes": 9847
+    },
+    {
+      "binary": false,
+      "kind": "script",
+      "mutable": true,
+      "path": "core/validators.py",
+      "reason": null,
+      "sha256": "56bd19e3aae05f8387d78ec8185d6098b3dc909d1fa041211753da37212528a3",
+      "size_bytes": 3785
+    },
+    {
+      "binary": false,
+      "kind": "metadata",
+      "mutable": true,
+      "path": "requirements.txt",
+      "reason": null,
+      "sha256": "edc7108a0c6b56183566c71ee96830f6dc791e3b41952112d9cb56b33a6bd757",
+      "size_bytes": 66
+    }
+  ],
+  "package_id": "slack-gif-creator",
+  "root_name": "application-20ada438d49e648f1bb86749",
+  "schema_version": "1.0.0",
+  "snapshot_hash": "cf3c66eb21afcbcfc3518927b5572624075866213c16717d03010ccc25074525"
+}

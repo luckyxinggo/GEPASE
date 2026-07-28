@@ -1,0 +1,14 @@
+{
+  "binding_ref": "artifacts/stages/GH-E0/controller-fixture/gh-e0-controller-fixture/selector-graphs/candidate-19a78e0afc08234d2d7f23c6/29ce56c4f21ccefd9841bb5c842709ffbb31f38df9c86cfc259730627bac5be1/binding.json",
+  "cache_key": "29ce56c4f21ccefd9841bb5c842709ffbb31f38df9c86cfc259730627bac5be1",
+  "evidence_scope_hash": "c35c8be0edb974d3b18ad027ef7ca57e8639b8992a195cbae4acb40cdbe98311",
+  "graph_policy_hash": "5273c4dfec55643b0d9f5a3d37998f5a3b65e5293857d5884081a75a90e48a34",
+  "hit": true,
+  "parent_candidate_id": "candidate-19a78e0afc08234d2d7f23c6",
+  "parent_content_hash": "ce42d8a837acf9feda9706a3418fc26a77c497d9615079e616b5fdc6870ef64e",
+  "parent_snapshot_hash": "ce42d8a837acf9feda9706a3418fc26a77c497d9615079e616b5fdc6870ef64e",
+  "schema_version": "1.0.0",
+  "selector_graph_ref": "artifacts/stages/GH-E0/controller-fixture/gh-e0-controller-fixture/selector-graphs/candidate-19a78e0afc08234d2d7f23c6/29ce56c4f21ccefd9841bb5c842709ffbb31f38df9c86cfc259730627bac5be1/graph.json",
+  "sequence": 2,
+  "verified_at": "2026-07-28T08:39:50.311521+00:00"
+}

@@ -108,6 +108,138 @@
       "title": "RoleRunProvenance",
       "type": "object"
     },
+    "SemanticNodeAnchor": {
+      "additionalProperties": false,
+      "properties": {
+        "content_hash": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Content Hash",
+          "type": "string"
+        },
+        "excerpt": {
+          "anyOf": [
+            {
+              "maxLength": 600,
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Excerpt"
+        },
+        "node_id": {
+          "title": "Node Id",
+          "type": "string"
+        },
+        "span_hash": {
+          "anyOf": [
+            {
+              "pattern": "^[0-9a-f]{64}$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Span Hash"
+        }
+      },
+      "required": [
+        "node_id",
+        "content_hash"
+      ],
+      "title": "SemanticNodeAnchor",
+      "type": "object"
+    },
+    "SemanticRelationProposal": {
+      "additionalProperties": false,
+      "properties": {
+        "confidence": {
+          "maximum": 1,
+          "minimum": 0,
+          "title": "Confidence",
+          "type": "number"
+        },
+        "evidence_refs": {
+          "items": {
+            "type": "string"
+          },
+          "minItems": 1,
+          "title": "Evidence Refs",
+          "type": "array"
+        },
+        "failure_cluster_id": {
+          "minLength": 1,
+          "title": "Failure Cluster Id",
+          "type": "string"
+        },
+        "generated_at": {
+          "format": "date-time",
+          "title": "Generated At",
+          "type": "string"
+        },
+        "proposal_id": {
+          "minLength": 1,
+          "title": "Proposal Id",
+          "type": "string"
+        },
+        "rationale_zh": {
+          "maxLength": 1200,
+          "minLength": 1,
+          "title": "Rationale Zh",
+          "type": "string"
+        },
+        "relation_type": {
+          "$ref": "#/$defs/SemanticRelationType"
+        },
+        "schema_version": {
+          "default": "1.0.0",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "source": {
+          "$ref": "#/$defs/SemanticNodeAnchor"
+        },
+        "target": {
+          "$ref": "#/$defs/SemanticNodeAnchor"
+        },
+        "task_id": {
+          "minLength": 1,
+          "title": "Task Id",
+          "type": "string"
+        }
+      },
+      "required": [
+        "proposal_id",
+        "source",
+        "target",
+        "relation_type",
+        "task_id",
+        "failure_cluster_id",
+        "evidence_refs",
+        "rationale_zh",
+        "confidence"
+      ],
+      "title": "SemanticRelationProposal",
+      "type": "object"
+    },
+    "SemanticRelationType": {
+      "enum": [
+        "implements",
+        "explains",
+        "constrains",
+        "consumes",
+        "produces",
+        "validates",
+        "conflicts_with"
+      ],
+      "title": "SemanticRelationType",
+      "type": "string"
+    },
     "UsageRecord": {
       "additionalProperties": false,
       "properties": {
@@ -170,6 +302,14 @@
       "default": "1.0.0",
       "title": "Schema Version",
       "type": "string"
+    },
+    "semantic_relation_proposals": {
+      "default": [],
+      "items": {
+        "$ref": "#/$defs/SemanticRelationProposal"
+      },
+      "title": "Semantic Relation Proposals",
+      "type": "array"
     },
     "submission_id": {
       "title": "Submission Id",

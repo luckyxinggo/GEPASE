@@ -1,0 +1,9 @@
+.venv/bin/pytest -q --junitxml artifacts/stages/GH-E0/test-results.xml
+.venv/bin/ruff check .
+.venv/bin/pyright --pythonpath .venv/bin/python
+.venv/bin/python scripts/export_core_schemas.py
+.venv/bin/python scripts/export_core_schemas.py
+.venv/bin/python scripts/check_secrets.py --format json
+.venv/bin/python scripts/check_markdown_links.py
+.venv/bin/python scripts/check_license.py
+git diff --check

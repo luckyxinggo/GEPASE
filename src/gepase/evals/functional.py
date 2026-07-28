@@ -18,6 +18,7 @@ from pydantic import Field, model_validator
 from gepase.evals.eval_plan import RoleRunProvenance, RubricCriterion
 from gepase.evals.evidence import AssertionResult, ProviderFailureKind, UsageRecord
 from gepase.evals.work_items import Variant
+from gepase.package.semantic_models import SemanticEnrichmentScope, SemanticRelationProposal
 from gepase.schemas.common import SCHEMA_VERSION, ArtifactRef, FrozenModel
 
 
@@ -236,6 +237,7 @@ class AnalyzerWorkItem(FrozenModel):
     package_graph_ref: str
     node_hints: tuple[AnalysisNodeHint, ...]
     submission_schema_ref: str
+    semantic_enrichment: SemanticEnrichmentScope | None = None
     forbidden_inputs: tuple[str, ...] = (
         "candidate identity",
         "search history",
@@ -262,6 +264,7 @@ class AnalyzerSubmission(FrozenModel):
     role_run: RoleRunProvenance
     analyses: tuple[FailureAnalysis, ...]
     summary_zh: str = Field(min_length=1)
+    semantic_relation_proposals: tuple[SemanticRelationProposal, ...] = ()
 
 
 class PackageAccessAuditItem(FrozenModel):

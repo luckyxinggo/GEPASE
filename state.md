@@ -14,7 +14,7 @@
 
 ### 1.1 一句话介绍
 
-GEPASE（Graph-Enhanced Package-Aware Skill Evolution）是一个面向**完整 Agent Skill Package** 的自动进化框架：它通过多保真 Agent 评测获得反馈，使用 GEPA 式反思进化、Pareto 搜索、图引导的结构化 Patch 和 held-out Gate，优化 `SKILL.md`、references、scripts、assets 及其依赖关系。
+GEPASE（Graph-Enhanced Package-Aware Skill Evolution）是一个面向**完整 Agent Skill Package** 的自动进化框架：它通过多保真 Agent 评测获得反馈，使用 GEPA 式反思进化、Pareto 搜索、图引导的结构化 Patch 和 held-out Gate，联合分析、验证并进化 `SKILL.md`、references、scripts、assets、metadata/runtime 配置及其依赖关系。当前自动修改面覆盖可审计的文本、代码与 metadata；二进制 assets 已进入 PackageSnapshot、图、访问证据和 Gate，但在获得专门的 typed mutation 与验证器之前保持不可变，不能把“完整 Package 可达”误写成“所有文件类型都已可自动改写”。
 
 > GEPASE evolves complete agent skill packages—not just prompts—through multi-fidelity agent evaluation, graph-guided reflective mutation, Pareto search, and held-out validation gates.
 
@@ -241,7 +241,9 @@ package_parsed
 
 `Task failure → transcript/artifact/assertion → observed/static graph edge → target node → PackagePatch operation`
 
-图选择优先最小失败相关闭包，并对高风险脚本、跨文件影响和 blast radius 加罚。首个版本通过 traceability、dependency closure、conflict detection 和可视化证明图确实参与决策，不要求额外运行 random/round-robin 消融；如果真实开发中图长期不影响任何选择，再在后续版本简化。
+Package Graph 分为三个证据层：可确定重放的静态结构边、来自真实 Executor/package access 的 observed 边，以及后续可选的受控语义假设边。selector 使用的候选图必须明确记录包含了哪些层及其来源；不能因为 parser/schema 中“支持 overlay”，就把没有叠加 observed edge 的静态图宣称为动态图。
+
+图选择优先最小失败相关闭包，并把“失败相关性”和“修改风险”作为两组独立特征。高 fan-out、脚本或跨文件影响可以提高回归风险与后续验证强度，但不得单独取消节点资格或让可执行组件永久失去探索机会。首个版本通过 traceability、dependency closure、conflict detection 和可视化证明图确实参与决策，不要求额外运行 random/round-robin 消融；如果真实开发中图长期不影响任何选择，再在后续版本简化。
 
 ### 6.4 PackagePatch
 
@@ -251,9 +253,16 @@ Patch 必须是有类型、可校验、可回滚的操作，例如：
 - 添加、更新或删除 reference；
 - 更新脚本、测试和依赖声明；
 - 修复引用边或拆分过大的 `SKILL.md`；
-- 对 assets 做受控变更。
+- 在具有专门 operation、precondition 和内容验证器时对 assets 做受控变更；当前二进制 assets 只读，不属于自动 mutation 面。
 
 Patch 只能修改允许节点和闭包；应用后必须重新解析 Package、计算 graph diff，并运行 Gate。
+
+“一个 Patch 可包含多个相关 target”与“一个 child 有多个候选父代”是两个不同维度：
+
+- **同父代有界多目标 Patch**：从一个 parent 出发，对同一失败假设中因果相关的少量节点做原子修改；默认仍是单目标，只有满足 target-set 契约时才放宽。
+- **多父 Package Merge**：把同一 Package/common-root 下已经形成的多个候选父代贡献合成新 child；它不能替代必须原子成立的跨文件修复，因为两个单独无效的“半个修复”可能根本没有资格进入 merge。
+
+因此，Graph Hardening P0 将允许受控的 1–2 target、1–2 file、1–2 operation 修改，但不会开放任意多文件重写；完整限制和 Gate 见 8.8。
 
 ### 6.5 同一 Skill 的多父 Package Merge
 
@@ -270,7 +279,7 @@ Patch 只能修改允许节点和闭包；应用后必须重新解析 Package、
 
 搜索调度器每轮都要检查 merge eligibility；出现两个及以上满足契约且贡献互补的父代时必须创建并验证 merge child。若当前没有合法 parent set，必须记录 `no_eligible_parent_set` 及原因，而不能退化为跨 Package 合并或跳过审计。
 
-## 7. 当前状态（2026-07-24）
+## 7. 当前状态（2026-07-28）
 
 ### 7.1 总结
 
@@ -278,7 +287,13 @@ R1 已完成仓库整理与权威 Core 收敛；R2 的公开 canary 与 EvalPlan
 
 R5 已实现并封存只读的 `CanaryReportBuilder` Python API、`gepase report build/verify` CLI、中文自包含交互报告和六项独立机器 Gate。报告只消费已封存的 R2–R4 evidence，重新校验 19/429/877 个上游 artifact，复制并复验 9 个任务原生 GIF，导出 7 文件 deployable Package；本阶段 Agent/API 调用均为 0，未重跑 R3/R4、未重新搜索候选。6/6 R5 machine Gate、146 tests、Ruff、Pyright、secret/link/license/diff check 均已通过。Codex Browser 安全策略禁止自动打开本地 `file://`，未绕过；用户已在目标路径打开正式报告并确认布局、GIF case、Package Graph 控件和评分下拉正常，R5 完成并解锁 S10。
 
-S10 已完成面向 GitHub 的发布整理。仓库现在提供中英双语 README、按 v0.1 封存证据更新的中文算法/使用学习手册、真实 canary 图像与量化结果、架构/结果 SVG、安装与复现文档、Agent-native 默认路径、按角色可选 Headless 配置契约，以及 `report build/verify/deploy` 闭环。2026-07-24 又新增并按用户反馈扩充本地 `learning-course/` 初学者课程：14 个相互链接的 HTML 页面以同一个 Package/case 的端到端进化为叙事主线，从术语、五类思想来源、Package Graph、EvalPlan、真实 Agent 评测、评分/Gate，进入独立的 GEPA 深入与 Pareto 推导实验室，再回到 GEPASE 搜索适配、PackagePatch、真实 canary、源码使用和面试复习。课程复用 R5 封存 GIF，不改写任何算法证据；当前保留在 dirty worktree 中供用户审核，尚未提交或推送 GitHub。
+S10 已完成面向 GitHub 的发布整理。仓库现在提供中英双语 README、按 v0.1 封存证据更新的中文算法/使用学习手册、真实 canary 图像与量化结果、架构/结果 SVG、安装与复现文档、Agent-native 默认路径、按角色可选 Headless 配置契约，以及 `report build/verify/deploy` 闭环。2026-07-24 又新增并按用户反馈扩充 `learning-course/` 初学者课程：14 个相互链接的 HTML 页面以同一个 Package/case 的端到端进化为叙事主线，从术语、五类思想来源、Package Graph、EvalPlan、真实 Agent 评测、评分/Gate，进入独立的 GEPA 深入与 Pareto 推导实验室，再回到 GEPASE 搜索适配、PackagePatch、真实 canary、源码使用和面试复习。课程复用 R5 封存 GIF，不改写任何算法证据；已由提交 `c9ff12f8b` 推送到 `github/main`。
+
+2026-07-28 已从公开发布基线 `github/main=c9ff12f8b` 建立 `codex/graph-hardening` 分支，专门承载 v0.1 之后的图能力加固。本地 `codex/github-release-v0.1` 与该公开基线保持一致；旧开发快照 `main=ea84ea898` 保持不动。GH-P0 已按纯离线契约完成：只读校验并复用 R2 frozen PackageSnapshot、R3 sealed ExecutionBundle/package access/Analyzer-ASI evidence 和 R4 failure slice/selector/proposal artifact，未回写 R2–R5/S10、公开 canary source、deployable Package 或 `skills_test/`。新 Core 将 46 条 parent-train typed access 全部映射成 observed edge，7/7 Package 文件拥有显式 parse status；相同三个 R4 failure slice 的 old/new replay 中，所有可修改 target 获得可审计的 relevance/exploration/risk 分解，1 个 replay 的 top-1 从 `SKILL.md` 转到 `core/validators.py`，top-10 executable 可达数净增 1。TargetSet fixture 又证明默认单目标、同 parent/同 evidence/有 static path 时最多 2-target/2-file/2-operation，并在第一项操作后注入故障时不产生 partial child。GHP0-G00–G08 共 9/9 通过，`offline_value_gate=passed`；Agent/API/Executor/Grader/Comparator/Analyzer/Proposer/Eval/new-candidate/new-effect-score 均为 0。
+
+GH-P1 随后按 fixture-first 契约实施并封存，但阶段结论为 **stalled**。Core 在既有 `AnalyzerWorkItem/AnalyzerSubmission`、`PackageGraph` 和 selector 主链中加入七类 typed semantic hypothesis、同 snapshot/节点/内容/evidence/provenance 校验、精确 cache、独立 `semantic_hypothesis` layer 和 consumer allowlist；没有新建 Graph/Evaluator/Search。确定性与对抗 fixture 先通过后，只对 `functional-train-input-badge-003` 启动一次隔离 Analyzer，得到 4 条 Core-accepted 假设。它们只让 5 个精确端点获得不超过 `0.35` 的 selector 贡献，其中 `validate_gif` 从 rank 4→3、Core Workflow instruction 从 11→6、`GIFBuilder.save` 从 159→142；static/observed 图、node set、eligibility、validation intensity、TargetSet、dependency/safety closure、Merge 和 Gate 权限均未改变，因此 `offline_value_gate=passed`。但该唯一 Analyzer 的估算总 token/时长为 `29,500 / 507,000 ms`，超过冻结的 `12,000 / 180,000 ms`，所以 GHP1-G06 失败，最终 7/8 Gate、stage `stalled`，不解锁 semantic 下游。除这 1 次 Analyzer 外，Headless/API、Executor、Grader、Comparator、Proposer、Eval、新 candidate 和新效果分数全部为 0。GH-P0/P1 都只新增结构与工程证据，不改变 v0.1 的 Skill 效果结论。
+
+用户已于 2026-07-28 明确授权在同一个公开 `slack-gif-creator` 上执行一次**完全独立的图加固后效果复现**。该路线不以 GH-P1 通过为前置，也不消费 semantic hypothesis。GH-E0 已把 GH-P0 验证的 `static + observed` graph view 小范围接入现有唯一 `R4EvolutionController`：旧配置仍复现 static-only 目标，新配置显式启用 parent-bound fresh compile/overlay/cache；initialize/首轮 proposal/recovery 两个入口都经同一 builder 和同一 proposal-scope 组装路径取图。seed-original train 映射 46/46 access、形成 46 observed edge并过滤 11 个 no-skill/held-out work；candidate-parent train fixture 映射 45/45、形成 45 observed edge并硬拒绝 sibling/validation。两个首轮 work 共 4 个 target 的 dynamic contribution 全部非零，并都保存 top-k、Python executable alternative、图 hash/layer/source 和 1–2 target 有界契约。pre-GH-E1 stabilization 又修复了新增默认字段造成的旧 R4 resolved-config 指纹漂移：旧配置现在严格复现 sealed hash `3a224bcb…`，并以独立 access artifact 封存 selector graph cache 的 1 次 miss→1 次 hit，避免把瞬时缓存状态写入不可变 proposal identity。GHE0-G00–G08 9/9、171 tests、Ruff、Pyright、43 schema 幂等与 44-artifact seal 均通过；所有 Agent/评测/Proposer、mutation candidate 和新效果分数为 0。GH-E1 已解锁但尚未开始，正式 run 仍必须从公开 source fresh 构建 PackageSnapshot/IR/static graph并叠加本轮 fresh parent-train evidence，不得复制 GH-P0/GH-E0 fixture 冒充效果结果。
 
 项目现已在**一个公开 Skill、一个 frozen EvalPlan、一个模型快照和一次搜索运行**上获得真实优化证据：`candidate-04b26dff2bc83b82334bf184` 的 train mean delta 为 `+0.04190`，held-out validation mean delta 为 `+0.12427`，3/3 validation case 均严格胜出且保护阈值通过，已进入 deployable frontier。该结论足以证明当前 canary 上的应用主链有效，但不能外推为跨 Skill、跨模型或统计普遍性。严格 Gate 同时拒绝了 train `+0.07643`、validation `-0.19782` 且发生真实 timeout 的恢复分支，以及 validation 总均值 `+0.05828` 但 `emoji_animation=-0.09144` 越过 category floor 的 merge child。
 
@@ -293,10 +308,10 @@ S10 已完成面向 GitHub 的发布整理。仓库现在提供中英双语 READ
 | S0 工程底座 | ✅ | Python 工程、配置、artifact、secret scan 和基础测试可用 |
 | S1 Benchmark 基础设施 | 🟡 | schema、split、fixture、mutation test 可复用；Benchmark v1 只作集成/校准 fixture，不是质量基准 |
 | S2 Eval Core | ✅ | EvalWorkItem、ExecutionBundle、ledger、cache/resume、E0–E3 边界和 Agent-native 导出/回收可用 |
-| S3 Package IR/Graph | ✅ | 完整 Package 解析、静态图、overlay、reverse slice 和 graph diff 可用 |
+| S3 Package IR/Graph | ✅ | 完整文件注册、显式 parse status、确定性 Markdown/Python/shell/config IR、snapshot-bound typed observed overlay、reverse slice 和 graph diff 可用；历史 R4 未消费动态边，GH-P0 已离线验证修正组件，GH-E0 已完成实时 Controller 接线 |
 | S4 Baseline 框架 | ⛔ | B0–B6、大矩阵、价格估算和独立 evaluator/runner 已在 R1 删除；no-skill/original 统一走 Eval Core |
 | S5 GEPA/Candidate Core | ✅ | R4 唯一 Controller 已接入锁定的 `gepa==0.1.4`、TaskScoreVector、ASI、Pareto/current-best snapshot、CandidateStore 与 checkpoint |
-| S6 Graph-guided Patch | ✅ | 3 个真实失败驱动 mutation branch 均完成 failure→graph node→typed Patch→隔离 apply/Gate；首版未做 selector 消融 |
+| S6 Graph-guided Patch | ✅ | R4 的真实分支继续保持 static-only 历史事实；GH-P0 已工程验证 observed feature、相关性/探索/风险分解、risk→validation intensity 和同父代 1–2 target 原子契约，但尚无新的真实候选效果 |
 | S7 Gate/Rejected Memory | ✅ | 新评分上的 Gate 0–3、严格 train admission、held-out floor、variance 与 rejected memory 已在 4 个候选上重新验收 |
 | S7.5 Local-real repair | ⛔ | action-based 评测、readiness 结果和人工 A/B 导出已撤销/删除 |
 | S7.6 多分支搜索 | ✅ | 3 个真实 mutation branch、候选级单次 Reflection、恢复分支、lineage 与 Pareto snapshot 已进入唯一主链 |
@@ -308,7 +323,11 @@ S10 已完成面向 GitHub 的发布整理。仓库现在提供中英双语 READ
 | R3 真实 paired 执行与评分 | ✅ | 8 pairs/16 real E2+E3、16 blind Grader、6 AB/BA Comparator、8 graph-linked Analyzer、16 可重算向量；8/8 Gate 通过，original mean skill gain `-0.0455` |
 | R4 GEPA/Graph/Patch/多父 Merge | ✅ | 4 candidates、29 fresh case、73 隔离评测调用、1 个 deployable candidate；8/8 Gate 和 877-file run seal 通过，墙钟预算 overrun 如实记录 |
 | R5 全链 canary 与中文报告 | ✅ | 只读报告主链、20-file run seal、6/6 machine Gate、用户本地视觉/交互确认与 deployable Package 均已封存；未重复搜索 |
-| S10 开源发布 | ✅ | 中英双语 README、v0.1 中文学习手册、14 页本地深度学习课程、公开图像/结果、复现与 deploy 流程、role-scoped Headless 配置、精简发行包和 7/7 release Gate 已完成；课程待用户审核且未推送，未发布私有数据 |
+| S10 开源发布 | ✅ | 中英双语 README、v0.1 中文学习手册、14 页深度学习课程、公开图像/结果、复现与 deploy 流程、role-scoped Headless 配置、精简发行包和 7/7 release Gate 已完成并推送 `github/main`；未发布私有数据 |
+| GH-P0 动态图与有界 Patch 加固 | ✅ | 纯离线 9/9 Gate：46 observed edges、100% file/parse-status coverage、1.0 typed mapping、old/new selector replay、risk/intensity 和 2/2/2 atomic TargetSet 均封存；0 Agent/API/Eval/candidate/effect score |
+| GH-P1 受控语义假设层 | 🟡 stalled | Core/schema/cache/layer/allowlist 已实现，fixture 与真实单-cluster Analyzer 均产生可审计证据，定位 value Gate 通过；但唯一 Analyzer 超过冻结 token/timeout，G06 失败且总 Gate 为 7/8，不解锁 semantic 下游 |
+| GH-E0 实时图主链接线 | ✅ | 唯一 Controller 的 initialize/首轮/recovery selector 已消费 parent-bound fresh static+observed graph；旧 config 严格保持 sealed hash/static 行为，统一 proposal scope、可审计 cache miss→hit、seed/candidate train 绑定、top-k/脚本备选与 2/2/2 scope 均通过 9/9 Gate；0 Agent/Eval/mutation candidate/effect score |
+| GH-E1 图加固后效果复现 | ⏳ | 计划在全新目录用同一公开 Skill/frozen EvalPlan fresh 跑 paired reference、Graph/GEPA/Patch/Gate/Merge/报告；沿用现有 RuntimeBudget，不覆盖或改写 v0.1/GH-P0/P1 结果 |
 
 ### 7.3 已有阶段的实现档案
 
@@ -379,7 +398,7 @@ S10 已完成面向 GitHub 的发布整理。仓库现在提供中英双语 READ
 
 **主要产物**：`src/gepase/package/`、`src/gepase/reporting/graph_report.py`、`schemas/package_graph.schema.json`、`benchmarks/fault_localization.jsonl`、`artifacts/stages/S3/`。
 
-**阶段关系**：稳定 node identity 被 S5 component map、S6 selector/Patch、S7 validation intensity 和 S8 merge closure 共用。R3 已验证真实 Package read/execute 与 Analyzer target 可回溯到 frozen graph node；R4 又验证 mutation target、failure slice、dependency contribution 与 Merge parent closure 使用同一 node identity。首版未做 selector 消融。
+**阶段关系**：稳定 node identity 被 S5 component map、S6 selector/Patch、S7 validation intensity 和 S8 merge closure 共用。R3 已验证真实 Package read/execute 与 Analyzer target 可回溯到 frozen graph node；R4 又验证 mutation target、failure slice、dependency contribution 与 Merge parent closure 使用同一 node identity。首版未做 selector 消融。2026-07-28 的消费链审计确认：S3 的 overlay 类型与构建能力存在，但历史 R4 selector 接收的候选图没有叠加 observed edge；“可构建”与“真实被 selector 使用”此前没有分开验收。GH-P0 已用 snapshot-bound typed overlay 和相同 failure-slice replay 补上该断点，历史 R4 artifact 保持原样。
 
 #### S4：公平 Baseline 与多轴预算
 
@@ -431,7 +450,7 @@ S10 已完成面向 GitHub 的发布整理。仓库现在提供中英双语 READ
 
 **主要产物**：`src/gepase/optimizer/selectors.py`、`graph_selector.py`、`failure_union.py`、`src/gepase/mutation/`、`schemas/package_patch.schema.json`、`artifacts/runs/s6-graph-guided-agent-native/`、`artifacts/stages/S6/`。
 
-**当前边界**：旧 proposal viability 仍然失效；R4 的 3 个真实 mutation branch 已证明每个 target 可由新 failure evidence 经 graph slice 定位，并形成 typed Patch、precondition、隔离 apply 和 merge contribution closure。graph-guided 与非图 selector 的消融仍不是首版 Gate。
+**当前边界**：旧 proposal viability 仍然失效；R4 的 3 个真实 mutation branch 已证明每个 target 可由新 failure evidence 经静态 graph slice 定位，并形成 typed Patch、precondition、隔离 apply 和 merge contribution closure。但 R4 候选图的 planned/observed edge 数均为 0，三个 proposal 的 `dynamic_access` 均为 `0.0`，且当时 Controller/配置把 proposer 限定为一个 target、一个文件、一个 operation；因此历史运行不能被改写成动态图或跨组件 mutation 已验证。GH-P0 已离线验证 observed selector 输入和 2/2/2 原子契约；graph-guided 与非图 selector 的效果消融仍不是当前 Gate，新的跨文件效果仍需未来真实 E2/E3 candidate 才能陈述。
 
 #### S7：Validation Gate、统计与拒绝记忆
 
@@ -487,6 +506,10 @@ R0 清除错误旁路（✅）
   → R4 GEPA / Graph / PackagePatch / strict Gate / 多父 Merge 主链（✅，8/8 Gate）
   → R5 完整公开 canary 与中文 HTML 报告（✅，6/6 Gate）
   → S10 开源与简历呈现（✅，7/7 Gate）
+  → GH-P0 动态图、结构覆盖与有界 Patch 加固（✅，9/9 Gate，纯离线）
+  ├→ GH-P1 受控语义假设层（🟡 stalled，7/8 Gate；不解锁 semantic 下游）
+  └→ GH-E0 实时图主链接线（✅，9/9 Gate；只消费 GH-P0 trusted static + observed）
+       → GH-E1 图加固后完整效果复现（⏳，fresh reference/candidate/report）
 ```
 
 每个阶段完成时必须提供：resolved config、原始证据、机器 Gate、测试结果、usage/时延记录、stage report 和本文件 Diff Log。当前不要求构建 API 账单或人民币成本记录。失败时保持阶段未完成，不得用文字解释代替 Gate。
@@ -751,6 +774,295 @@ RuntimeBudget 中 proposal/candidate/Agent-call/token 上限均未超出；总�
 
 最终 S10-G01–G07 7/7 通过：Ruff、Pyright、154 tests、32 schema 幂等导出、字段手册和 14 页课程的事实/本地资源/锚点检查、Markdown link、license、生成前后两次 secret/private-path scan、artifact seal、R5 复算、offline mock、report deploy、compact wheel/sdist 和全新离线环境安装全部有效。课程审计额外检查 209KB HTML 内容、页面清单、重复 ID、断链、关键事实、错误 claim、33 个练习选项、52 个面试问答和 44 个流程算法步骤。S10 调用计数保持 Agent 0、Headless/API 0、candidate search 0；它验证学习与发布工程，不新增算法效果结论。完整证据见 `artifacts/stages/S10/`。
 
+### 8.8 `codex/graph-hardening`：v0.1 之后的图能力加固分支
+
+**分支目标**：在不改写 v0.1 sealed evidence、不扩大为重型 GraphRAG 平台的前提下，修复 Graph “有 overlay 类型但 R4 selector 未消费 observed edge”的实现断点，补足可解释的结构覆盖，并把过严的单目标 mutation 放宽为仍可审计的有界多目标 Patch；随后在同一个公开 Skill 上用 fresh reference 和全新输出目录验证这些变化是否真正进入候选搜索并产生效果。该分支不重新定义 GEPASE，不建立第二套 Candidate/Evaluator/Search，也不以新增图复杂度本身作为成功标准。
+
+**已确认的起点事实**：
+
+1. Package 编译器会为完整目录中的文件建立 file node，但当前深层 IR 主要覆盖 Markdown、Python、shell、依赖文件和 binary manifest；未支持的文本可能只有文件节点，缺少内部结构与跨文件关系。
+2. R3 已保存 typed package access、observed trace 和 Analyzer target；S3 也存在 planned/observed overlay 能力，但 R4 selector 使用的候选图中 static edge 为 477、planned/observed edge 均为 0，三个 proposal 的 `dynamic_access` 均为 `0.0`。
+3. R4 的 `selector_target_limit=1`，Patch budget 为 1 operation/1 changed file，Controller 与 proposer workspace 还硬性要求恰好一个 target；三个真实 mutation 最终都落在 `SKILL.md`。
+4. fan-out 风险进入 selector 是合理的，因为高影响节点更容易引入回归并消耗评测预算；但候选在 sibling workspace 中隔离应用，失败后会被 Gate 拒绝且不覆盖 source，因此 fan-out 不应成为事实上的禁选条件。
+5. 同父代多目标 Patch 与同 Package 多父 Merge 不冲突：前者表示一次必须原子成立的因果修复，后者表示多个已有候选父代的贡献合并。Merge 保持主链能力，cross-package merge 继续硬禁止。
+
+**离线优先与调用预算**：
+
+1. GH-P0 是纯离线机制阶段：只复用 R2 PackageSnapshot、R3 ExecutionBundle/package access/Analyzer evidence 和 R4 failure/selection artifact；Agent、Headless API、Executor、Grader、Comparator、Analyzer、Proposer 与新 candidate evaluation 调用数必须全部为 0。
+2. P0 在修改前后使用同一 frozen failure slice、同一 scoring/selector config 和同一 sealed evidence 做 graph rebuild 与 selector replay，比较 graph coverage、observed mapping、top-k target、feature contribution、script/component 可达性和 validation-intensity 决策；不得重新生成有利 evidence 或改写旧分数。
+3. P0.5 设置 `offline_value_gate`：只有动态图真正进入 selector，且结构覆盖、目标排名/候选可达性或风险解释至少一项出现可审计的实质变化，才讨论进入 P1；若输出与旧 selector 等价或变化只来自权重噪声，先记录停滞并修正/简化 P0，不自动调用 Agent 增加语义边。
+4. GH-P1 也不重跑完整 Eval：先用 deterministic/adversarial fixture 验证 schema 和信任边界；通过后最多只对一个公开 failure cluster 调用一次隔离 Analyzer enrichment。P1 不调用 Executor、Grader、Comparator 或 Proposer，不生成候选，不产生新的 Skill 效果分数。
+5. 任何新的 PackagePatch candidate、E2/E3 train 或 held-out validation 都属于 P0/P1 机制验收之后的独立效果验证，不能夹带在图重建阶段中。用户现已授权 GH-E0/GH-E1：继续沿用现有 R3/R4 RuntimeBudget、并发、角色 timeout、repair、proposal/candidate/Agent/token/墙钟上限和停止语义；本轮不新增 `observe_only`、无限预算或费用 Gate。若实际运行再次被预算实质阻塞，再依据 sealed runtime evidence 单独讨论修改，不能运行中临时放宽。
+
+**分支顺序与停止线**：
+
+```text
+v0.1 sealed R3/R4 evidence（只读）
+  → GH-P0.0 现状审计与可重放基线
+  → GH-P0.1 observed overlay 真正进入 selector
+  → GH-P0.2 确定性结构覆盖与显式 parse status
+  → GH-P0.3 相关性 / 风险 / 探索解耦
+  → GH-P0.4 同父代有界多目标 PackagePatch
+  → GH-P0.5 离线 replay、fixture 与机器 Gate
+  ├→ GH-P1 受控语义假设层（独立可选，当前 stalled）
+  └→ GH-E0 实时图主链接线
+       → GH-E1 fresh reference + 完整效果复现
+```
+
+GH-P0 全部 HARD Gate 通过前，不实现 GH-P1 或 GH-E0。GH-P1 完成前也不把 semantic edge 写入 trusted structural graph；GH-E0/GH-E1 明确不消费 semantic hypothesis，因此其授权不是绕过 GHP1-G06，而是沿 GH-P0 trusted graph 的独立效果验证支路。GH-E0 HARD Gate 全部通过前不得启动 GH-E1 Agent。任何阶段如果发现额外复杂度没有形成可解释的 selector 输入或验证价值，应停在该阶段记录负结论，不继续增加向量库、图数据库或外部服务。
+
+#### GH-P0：动态证据、结构覆盖与有界 Patch
+
+**P0.0｜只读基线审计**
+
+1. 从 R2 frozen PackageSnapshot、R3 sealed ExecutionBundle/package access、R4 failure/selection/proposal artifact 重建审计输入；先逐 hash 校验，不修改原 artifact。
+2. 输出 `GraphCoverageAudit`：Package 文件总数、file node 覆盖率、各文件 `deep/shallow/opaque/error` parse status、内部节点/边类型、孤立可修改组件、未解析/歧义符号、observed access 映射率和当前 mutation capability。
+3. 保存旧 selector 的 target ranking、feature contribution 和候选图各层 edge count，明确记录 `dynamic_access=0.0` 基线，避免修复后只凭截图判断变化。
+4. 本步骤不调用 Agent/LLM、不重新评分、不生成候选；只证明输入事实和当前断点可重放。
+
+**P0.1｜把真实 observed evidence 叠加到候选图**
+
+1. typed `package_access` 中的 path/node id、访问类型、顺序、bytes/tokens 和 execute/read 状态是主要动态证据；显式工具 trace/file-open/execute 记录作为补充。只有缺少 typed access 时才能使用文本匹配 fallback，并必须标记为 weak/heuristic，不能伪装成观测事实。
+2. 每条 observed edge 绑定 `task_id`、variant、run/context、PackageSnapshot hash、Provider/Agent Host、trace completeness、source artifact/hash 和时间顺序。node 不存在、snapshot 不同、路径越界或 artifact hash 失配时硬拒绝。
+3. proposal 只消费其 parent 在对应 train evidence 上形成的 `static + observed` graph view；no-skill、sibling candidate、held-out validation 和其他 snapshot 的访问边不能泄漏或交叉叠加。
+4. selector/ASI/proposal artifact 必须保存 graph layer counts、overlay source refs、mapped/unmapped access 和每个 target 的 dynamic feature contribution。若存在有效 Package access 而 target 的动态特征仍全为 0，Gate 失败。
+5. planned edge 继续与 observed edge 分层；Agent 声称“将读取/调用”不能升级为真实 read/execute。
+
+**P0.2｜增强确定性结构图，而不是依赖 LLM 猜完整图**
+
+1. 每个 snapshot 文件都必须有 file node 和显式 parse status；unsupported/opaque 是允许且可见的状态，静默无节点或静默空解析不允许。
+2. Python 优先补齐本地 import 解析、alias、qualified call、class/method scope 和歧义候选，避免仅凭全局同名 symbol 连边；无法唯一解析时保留 typed unresolved/ambiguous diagnostic，不强连错误边。
+3. Markdown 扩展一般相对路径/anchor 引用；YAML/JSON/TOML 等可审计配置至少建立 key-path、文件引用和入口/metadata 关系；shell 保持保守解析并记录 source/execute/file/env 关系。解析失败不得阻断完整 Package snapshot，但必须进入 coverage audit。
+4. 二进制 assets 只建立 manifest、角色、hash、被引用/被读取关系，不在 P0 中做内容语义解析或自动替换。测试、license 和其他非 mutation 文件仍属于图和 blast-radius 证据，不能因为不可修改就从图中消失。
+5. 所有新静态关系必须可由相同输入确定性重建；同一 snapshot 重跑的 node/edge id 和 graph hash 必须一致。
+
+**P0.3｜重新校准 selector：相关性决定“值得试什么”，风险决定“需要多强验证”**
+
+1. selector 输出把 failure relevance、observed/structural support、exploration novelty 与 regression risk 分开记录；不再用一个不可解释的总分掩盖节点为何入选或落选。
+2. fan-out、脚本/API、跨文件 blast radius 仍进入风险评估，但风险惩罚采用可配置、可审计且有上限的权重，不得改变 eligibility 或作为 hard exclusion。具体数值在 sealed evidence 离线 replay 后冻结，不在计划文档中拍脑袋指定。
+3. 风险主要映射到 validation intensity：相关测试范围、静态/安全检查、dependency closure 和必要的完整 split；不能通过“不产生脚本候选”来假装规避风险。
+4. 当同一 failure evidence 明确覆盖 executable node 且候选预算允许时，top-k/alternative scope 至少保留一个脚本或其他可执行组件的探索机会；它可以在 Gate 中失败，但必须有机器可读的入选/未入选原因。
+5. component exploration 记录每个节点的历史尝试、收益、失败与拒绝原因；探索项不能绕开 causal evidence、allowed operation 或 Gate，也不要求每轮机械轮询所有文件。
+
+**P0.4｜放宽为同父代有界多目标 Patch**
+
+1. 单 target 继续是默认路径。只有一个失败假设同时指向 primary target 与 companion target，且两者之间存在 static/observed 因果路径、共享 evidence refs 和明确的“为何必须一起修改”说明时，才可创建 `TargetSet`。
+2. P0 hard limit 为最多 2 targets、2 files、2 operations；Controller/proposer 不再硬编码“恰好一个 target”，而是接收 typed `TargetSet(primary, companions, causal_path, evidence_refs, scope_reason)`。
+3. 同一 TargetSet 必须来自同一个 parent PackageCandidate，并作为一个 PackagePatch 原子 apply/reparse/diff/rollback；任一 precondition、operation 或验证失败都回滚整个 Patch，不能留下半个修复。
+4. P0 canary mutation 仍禁止任意文件拓扑重写和 binary asset 修改，`max_added_files=max_deleted_files=0`；现有通用 Add/Delete schema 能力不删除，但不在本阶段自动 proposer 中开放。
+5. 脚本 target 可以独立形成单目标候选，也可以在因果契约满足时与 instruction/reference/config 组成双目标候选；不能为了“证明改了 Package”强制修改脚本。
+6. 多父 Merge 的 parent contract、dependency contribution、冲突检测和完整 Gate 保持不变。两个分别不成立的半修复不能靠 Merge 绕过 train admission；cross-package merge 仍是硬错误。
+
+**P0.5｜离线 replay、测试与阶段证据**
+
+P0 首轮只消费 sealed evidence 和 deterministic fixture，不运行新的 Executor/Grader/Comparator，不产生新的 Skill 效果数字。使用相同 failure slice 对比旧/新 selector ranking，验证修复改变的是证据消费和搜索可达性，而不是事后改分。阶段产物写入 `artifacts/stages/GH-P0/`，至少包含 preflight、coverage audit、overlay mapping、old/new selector replay、risk/intensity report、TargetSet fixture、machine Gate、stage report、artifact index 和本 Diff Log 更新。
+
+**GH-P0 HARD Gate**：
+
+- `GHP0-G00 offline_only`：Agent/Headless/API 与所有评测/提议角色调用均为 0；输入只来自 hash 校验后的 sealed evidence 和 deterministic fixture；
+- `GHP0-G01 source_and_artifact_immutable`：v0.1 R2–R5/S10 seal、公开 source snapshot、deployable Package 和 `skills_test/` hash 均未改变；
+- `GHP0-G02 graph_coverage_explicit`：snapshot 内 100% 文件有 file node 与 parse status；opaque/error/unresolved 均有显式诊断，无静默丢失；
+- `GHP0-G03 observed_overlay_bound`：sealed typed package access 可映射到同 snapshot 节点，跨 snapshot/path/hash mismatch 全部拒绝，planned/observed 不混用；
+- `GHP0-G04 selector_consumes_dynamic`：存在有效访问证据时，候选图 observed edge 和对应 target dynamic contribution 非 0，并有 source refs；
+- `GHP0-G05 risk_does_not_forbid_exploration`：高 fan-out 只提高风险/验证强度，不取消 eligibility；带 executable failure evidence 的 fixture 能产生可审计的脚本 alternative；
+- `GHP0-G06 bounded_target_set_atomic`：默认单目标，双目标仅在同 failure/同 parent/有 static-or-observed causal path 时允许，严格不超过 2/2/2，任一失败完整回滚；
+- `GHP0-G07 offline_value_gate`：old/new replay 使用同一输入；至少一项预注册的 coverage/ranking/reachability/risk-explanation 指标发生可解释变化，否则阶段标记 stalled，不自动解锁 P1；
+- `GHP0-G08 regression_and_seal`：相关 unit/integration/fault tests、Ruff、Pyright、schema 幂等、安全/路径检查、artifact seal 和 `git diff --check` 全部通过。
+
+**P0 结论边界**：Gate 通过只证明动态图证据真实进入 selector、结构盲区可见、风险策略与多目标 Patch 机械契约有效；离线 ranking 改善或脚本进入候选集不等于 Skill 质量提升。是否产生新的跨文件正向候选，必须在后续经过真实 E2/E3 train 与 frozen validation 才能陈述。
+
+**完成状态（2026-07-28）**：✅，`GHP0-G00`–`GHP0-G08` 9/9 通过，`offline_value_gate=passed`。具体事实如下：
+
+1. R2/R3/R4 输入先通过 artifact index 和内容 hash 校验；R2–R5/S10、公开 canary source、R5 deployable Package 与 `skills_test/` 的前后树 hash 一致。R3 的 8 条 Analyzer/ASI submission 仅作只读 target 可解析性审计，28/28 target node 均存在，没有重新调用 Analyzer。
+2. 新图仍以 R2 snapshot hash `ce42d8a…` 为根；7/7 文件都有 file node 和显式 `deep/shallow/opaque/error` 状态，本 canary 为 6 deep + 1 shallow。Python local import/alias/qualified call 与歧义诊断、Markdown 一般相对引用、YAML/JSON/TOML key-path/本地文件引用已进入确定性 parser；binary 继续只做 manifest 且不可修改。
+3. 只消费 5 个 parent-train original ExecutionBundle 的 typed `package_access`：46/46 event 映射成功、0 rejected、mapping rate 1.0，形成 46 observed edge；11 个 no-skill/held-out work 在 overlay 前被过滤，planned edge 新增为 0，weak/text fallback 为 0。每条边保存 work/task/variant/context/snapshot/provider/host/model/sequence/bytes/tokens/source artifact/hash。
+4. 三个 R4 proposal 使用原封不动的 failure slice/evidence refs 重放。旧策略继续显示 `dynamic_access=0`；新策略有 483 个“target×replay”动态贡献非零，457 个共同 target 的 rank 发生变化，其中 1 个 top-1 从 `SKILL.md` 变为 `core/validators.py`，top-10 executable 数量净增 1。该变化来自 observed evidence 与显式策略，不是新评分或事后修改 failure。
+5. selector 分别保存 relevance、exploration、risk 和 capped ranking penalty；三个 replay 共识别 6 个 high-fan-out target，6/6 仍为 eligible、6/6 映射到 full validation。每个 replay 都保留 executable alternative，其中一个真实 replay 把 Python file 排到 top-1。
+6. typed `TargetSet(primary, companions, causal_path, evidence_refs, scope_reason)` 已接入 Controller/proposer workspace。单 target 仍是默认；deterministic fixture 的双目标有同 parent、共享 failure evidence 和 static causal path，严格限制为 2 targets/2 files/2 operations、禁止 add/delete/binary mutation。第一项操作后故障注入得到 `invalid`、无 child、无 partial workspace，source hash 不变。
+7. `artifacts/stages/GH-P0/` 已封存 preflight、coverage、overlay、old/new replay、comparison、risk/intensity、TargetSet fixture、offline Gate、verification、new graph、machine Gate、test XML、commands、stage report 和 artifact index。定向测试 17 passed、全量 pytest 159 passed、Ruff、Pyright 0 errors、36 schema 两次导出幂等、secret/private-path、Markdown links、license、artifact seal 与 diff check 均通过。
+8. GH-P0 自身的调用计数保持 Agent 0、Headless/API 0、Executor 0、Grader 0、Comparator 0、Analyzer 0、Proposer 0、Eval 0、新 candidate 0、新 Skill 效果分数 0。它当时只解锁“可以实施 GH-P1”的前置资格；后续 GH-P1 的独立调用与结论以紧随其后的阶段记录为准，不能回写进 GH-P0。
+
+#### GH-P1：受控语义假设层
+
+**目标**：在确定性结构边和 observed 边之外，补充“两个现有节点在任务语义上可能相关”的弱假设，帮助 Analyzer/selector 发现只靠语法无法表达的 instruction↔reference↔script↔asset/metadata 联系。P1 不是把完整 Package 改造成自动知识图谱，也不让 LLM 生成不可审计的任意实体和关系。
+
+**角色与运行方式**：
+
+1. 复用现有独立 `Analyzer/ASI` 角色，不新增一个拥有共享上下文的“全知图 Agent”。Analyzer 仍只读取当前 task/failure 的 typed evidence、受限 graph slice 和 PackageSnapshot；Executor、Grader、Comparator、Proposer 上下文继续隔离。
+2. Analyzer submission 增加可选 `semantic_relation_proposals`；Core 拥有 schema、节点校验、去重、预算、缓存、置信度和消费规则。Agent 只能提议，不能直接修改 trusted graph 或 Package。
+3. 默认 Agent-native，不增加强制 API key；Headless Analyzer 仍只是按角色显式配置的可选后端。没有 Analyzer 或语义提议失败时，系统必须能只用 static + observed graph 正常退化运行。
+4. 语义生成只针对当前 failure slice、未解析引用、孤立但可达文件及其 bounded neighborhood；不对完整仓库反复全量总结。相同 snapshot/content、failure cluster、prompt/schema/model 的有效结果缓存复用，目标节点内容变化后精确失效。
+
+**有限关系词表**：`relation_type` 只能取以下枚举，不允许 Agent 自造字符串；若后续确需新增，必须更新 schema、解释、消费者和回归测试。
+
+| relation_type | 中文含义 | 典型方向 |
+|---|---|---|
+| `implements` | 实现某条能力/流程 | instruction/reference → script/function |
+| `explains` | 为节点提供背景或操作解释 | reference/section → instruction/component |
+| `constrains` | 施加格式、权限、运行或输出约束 | metadata/rule/config → component/output node |
+| `consumes` | 语义上消费某输入、模板或资源 | script/instruction → reference/asset/config |
+| `produces` | 语义上产生某类任务原生输出 | script/instruction → output/artifact node |
+| `validates` | 检查某能力、输出或约束 | test/validator/rubric node → component/output node |
+| `conflicts_with` | 两条规则或实现存在潜在冲突 | instruction/config/component ↔ peer node |
+
+这些关系不复制 `imports/calls/references/reads/writes/executes` 等可由 parser/trace 得出的结构事实；能确定解析的关系必须留在 static/observed 层。
+
+**每条语义提议的强制字段**：同一 PackageSnapshot 中已存在的 source/target node id、有限 `relation_type`、支持它的 task/failure/evidence refs、最小 source/target excerpt 或 span hash、简短 rationale、`confidence`、Analyzer work/context/model/prompt/schema provenance 和生成时间。P1 不创建新的可修改 Package node；对只有 file node 的 opaque 文件，可以连接该 file node，但不能虚构内部函数或段落。
+
+**信任与消费边界**：
+
+1. semantic edge 单独存放在 `semantic_hypothesis` layer，并在 CLI/HTML 中使用虚线、颜色和“Agent 假设”标签，与 static/observed 事实区分。
+2. Core 拒绝未知 node、cross-package/cross-snapshot、stale content hash、无证据、无 provenance、超过每 work item/每 node pair 上限或枚举外 relation。高 `confidence` 只是模型声明，不自动升级为事实；多个 LLM 重复同一说法也不能自动转成 trusted edge。
+3. semantic edge 只能以封顶权重辅助 failure localization、ASI explanation、selector top-k 和探索排序；权重、数量和触发次数进入 resolved config 与 artifact。
+4. semantic-only 路径不能单独授权 Delete/Add、扩大双目标 TargetSet、进入 dependency/safety closure、降低 validation intensity、判定 Merge eligibility/冲突已解决或让 candidate 通过任何 Gate。若需要这些高影响动作，必须有 static/observed evidence 或用户明确批准。
+5. touched node/content 变化后只失效相关 semantic edge；无关节点缓存可复用。cache key、hit/miss、失效原因和 Agent 调用/时延必须可审计，避免每轮全图重建拖慢运行。
+
+**执行与验收顺序**：只有 GH-P0 `offline_value_gate` 通过才进入本阶段。先用 deterministic/adversarial fixture 验证 schema、信任边界、cache 和 consumer allowlist，再在公开 canary 的一个真实 failure cluster 上最多运行一次有预算上限的隔离 Analyzer enrichment，检查语义提议是否有证据、是否与静态/observed 层清楚区分。该 real viability 只证明 Agent 能按契约提交并被 Core 约束，不要求它产生被接受的 Patch 或新的分数提升；不得在 P1 中重跑 Executor、Grader、Comparator、Proposer 或 candidate E2/E3。
+
+阶段产物写入 `artifacts/stages/GH-P1/`，至少包含 resolved relation schema/config、Analyzer work/submission、accepted/rejected semantic proposals、cache audit、layered graph diff/visual sample、consumer trace、adversarial tests、usage 和 stage report。
+
+**GH-P1 HARD/REAL Gate**：
+
+- `GHP1-G00 preflight_and_scope`：GH-P0/offline value Gate 有效，公开 failure cluster、节点/evidence 邻域、relation/config、唯一 Analyzer 调用和全部禁用角色在调用前冻结；
+- `GHP1-G01 bounded_relation_schema`：枚举外关系、未知/stale/cross-snapshot node、缺 evidence/provenance 和超预算提议全部硬拒绝；
+- `GHP1-G02 layer_and_trust_isolation`：static、observed、semantic_hypothesis 可独立计数/重放/展示，语义假设不能伪装为事实；
+- `GHP1-G03 consumer_allowlist`：semantic-only edge 只影响允许的定位/排序消费者，不能授权危险 Patch、trusted closure、Merge 或 Gate 放行；
+- `GHP1-G04 cache_and_invalidation`：相同 key 确定性命中，touched node 精确失效，无关 edge 不全量重建；
+- `GHP1-G05 adversarial_containment`：故意错误、高置信和冲突语义边均不能越权扩大 mutation scope 或污染 source；
+- `GHP1-G06 agent_native_viability`：最多一个公开 failure cluster、一次隔离 Analyzer enrichment 有完整 provenance、有限上下文、调用/时延记录和 Core accept/reject 结果；Executor/Grader/Comparator/Proposer/candidate-eval 调用均为 0；
+- `GHP1-G07 regression_and_seal`：GH-P0 Gate 保持通过，相关测试、Ruff、Pyright、schema、安全检查、artifact seal 与 Diff Log 完整。
+
+**实际执行与阶段结论（2026-07-28）**：🟡 `stalled`，GHP1-G00–G07 为 7/8，只有 G06 因冻结运行预算超限失败；不得据此解锁 GH-P2 或任何依赖 semantic layer 的候选评测。后续 GH-E1 的授权只来自 GH-P0 trusted graph，并明确关闭 semantic hypothesis，不能反向改写本结论。具体事实如下：
+
+1. `SemanticRelationType` 固定为七类，`AnalyzerSubmission.semantic_relation_proposals` 为可选扩展；Core 对同 snapshot 现有节点、content hash、excerpt/span、task/failure、evidence、数量、置信度和完整 role/prompt/schema/config provenance 做逐条校验。非法枚举、unknown/stale/out-of-scope/低置信度和高置信越权 fixture 均被拒绝。
+2. accepted edge 只追加到 `semantic_hypothesis` layer，HTML 使用虚线紫色和“Agent 假设”标记。`trusted_graph_view` 仍只有 static + observed；TargetSet 和 Merge dependency closure 显式忽略 semantic-only edge。没有创建节点，也没有修改公开 Package。
+3. selector 只对语义边精确命中的可修改 endpoint 增加独立 relevance feature，不向同文件其他节点扩散，不借 semantic path 放大 `inverse_distance`；每个节点额外贡献封顶 `0.35`，risk、eligibility 和 validation intensity 不受语义置信度降级。failure localization 也必须显式 opt-in。
+4. deterministic/adversarial fixture 先完成 G00–G05，随后才启动唯一一次 `/root/gh_p1_analyzer`。它只读取一个有界 work item、6 个 sealed evidence ref、7 个 allowed node excerpt 和 prompt/schema；返回 2 条 failure analysis、4 条关系提议，Core 接受 4、拒绝 0。没有第二次 repair 或 Analyzer 调用。
+5. 4 条假设分别连接 GIFBuilder file→imageio dependency、Core Workflow instruction→`GIFBuilder.save`、validator example→`validate_gif`、`validate_gif`→`GIFBuilder.save`。它们令 5 个精确 endpoint 获得非零语义贡献：`validate_gif` rank 4→3、Core Workflow instruction 11→6、GIFBuilder file 127→125、`GIFBuilder.save` 159→142；validator example 保持 rank 2 但得分增加。semantic score delta 全部等于独立语义贡献且不超过 `0.35`，因此本阶段的 bounded localization value Gate 通过；它不是 Skill 质量提升。
+6. cache key 绑定 snapshot、节点内容、failure cluster、prompt/schema/model/config；真实 submission 展示 miss→put→hit，改变 accepted relation 的 source node 后得到新 key miss，并只失效命中旧 node 的 entry。无 semantic 输入时 static + observed 行为保持不变。
+7. 唯一 Analyzer 自报估算 `26,000` input + `3,500` output token、`507,000 ms`，超过预先冻结的 `12,000 token / 180,000 ms`。关系内容和信任隔离仍可审计，但 `agent_native_viability` 不能判通过；阶段按契约标 `stalled`，不追加第二次调用，也不事后提高预算。
+8. `artifacts/stages/GH-P1/` 封存 23 个 indexed artifact，包括 preflight/config/schema、work/raw/canonical submission、accepted/rejected、cache、layered graph/diff/HTML、consumer trace、adversarial fixture、usage、machine Gate、测试 XML、verification 和 stage report。全量 pytest 165 passed、Ruff、Pyright 0 errors/0 warnings、41 schema 两次导出幂等、安全/链接/license/diff/artifact seal 均通过；GH-P0 与 R2–R5/S10/source/deployable/`skills_test` hash 不变。
+
+因此必须区分：**代码已经实现**；**schema、信任隔离、cache、受控消费与真实 ingest/replay 的工程机制已经通过测试**；**GH-P1 的冻结运行预算验收没有通过，且没有产生任何新的 Skill 优化效果证据**。下一步若要解除 stalled，必须先由用户审核并重新冻结更现实的 Analyzer context/预算策略，不能自动重试或进入 GH-P2。
+
+#### GH-E0：fresh graph → observed overlay → 唯一 Controller 的实时接线
+
+**目标与必要性**：把 GH-P0 已离线证明的 graph-view 能力接入下一次真实搜索，而不是复制一套新的优化器。只读审计已确认，当前 `R4EvolutionController` 的初始化、首轮 proposal 和 recovery 路径仍有直接调用 `PackageAnalyzer().analyze(...).graph` 的位置；如果现在仅替换 run id 重跑，它们会重新得到 static-only graph，`package_graph_ref`/fresh parent evidence 不会自动变成 selector 输入。因此 GH-E0 是一个小范围但不可跳过的接线阶段。它不改变 Eval、Candidate、GEPA、PackagePatch、Gate、Pool 或 Merge 的定义，也不运行真实候选。
+
+**兼容性与最小修改原则**：
+
+1. 在现有 `R4EvolutionController` 内形成一个权威的 parent-bound selector graph-view 构建入口；初始化分支、recovery/reflection 分支和其他调用 graph selector 的位置都调用该入口，不另建 Controller、GraphStore、Search 或 CLI 旁路。
+2. graph view 由 `parent PackageCandidate + parent materialized Package + evidence scope + config` 唯一确定。先使用当前 Package compiler 从 parent Package **重新构建** PackageSnapshot、IR 和 static graph，校验 snapshot/content hash 与 parent 一致，再选择是否叠加 observed evidence；不能把 GH-P0 的 `new-package-graph.json` 直接复制成正式 run 的 graph。
+3. seed parent 只允许消费同一 fresh reference run 中 `variant=original`、`split=train` 的 sealed typed package access；已评测 candidate 作为后续 parent 时，只允许消费该 candidate 自己的 train evidence。no-skill、sibling candidate、held-out validation、其他模型/provider 或其他 snapshot 全部在 overlay 前过滤。
+4. persisted selector graph、coverage audit 和 overlay audit 按 `(parent_snapshot_hash, parent_content_hash, evidence_scope_hash, graph_policy_hash)` 缓存；键完全一致时可复用，任一 Package/evidence/config 变化必须重建。缓存用于避免重复解析，不允许跨 parent 冒用动态边。
+5. proposal work item 保存实际 `selector_graph_ref/hash`、layer counts、overlay refs、mapped/rejected access、每个目标的 feature contribution、top-k 和 executable alternative；有有效 typed access 但 observed edge/dynamic contribution 全为 0 时，Core 在导出 Proposer work 前硬失败。
+6. 旧 v0.1 配置和没有 graph-evidence policy 的调用保持原 static 行为；新行为必须由 GH-E1 config 显式选择。R2–R5/S10/GH-P0/P1 sealed artifact 不迁移、不重写，现有 report/deployable 结论不重算。
+7. TargetSet 继续由现有 `choose_bounded_target_set` 形成，默认单目标，最多 2 targets/2 files/2 operations；semantic-only edge 不进入 causal path。脚本 alternative 必须在 evidence 支持时进入可审计 scope，但不能为了展示 package-aware 而强制生成无因果依据的脚本 Patch。
+8. structural reparse、Patch atomic apply/rollback、Gate 0–3、dependency/safety closure 和 Merge 继续使用各自现有 trusted contracts。GH-E0 只替换“selector 从哪里获得正确的 parent graph view”这一处供应关系，不放宽任何接受阈值或写权限。
+
+**执行步骤**：
+
+1. `E0.0 preflight`：保存 dirty worktree、分支、旧 run/stage/source/deployable/`skills_test` 树 hash；定位 Controller 中所有 graph-selector 调用点并生成 consumption audit。
+2. `E0.1 graph-view contract`：扩展现有 typed R4 config/schema，使新 run 能显式声明 static-only 或 snapshot-bound static+observed；缺省值必须向后兼容。
+3. `E0.2 fresh rebuild`：对公开 source Package 和 deterministic fixture 从零运行 snapshot→IR→static graph，验证同输入 node/edge/hash 稳定，parse status/coverage 不退化。
+4. `E0.3 parent evidence binding`：复用 sealed R3 证据做纯离线接线 fixture，验证 seed-original train 和 candidate-parent train 两类绑定；验证 no-skill/held-out/sibling/cross-snapshot/hash mismatch 均拒绝。
+5. `E0.4 Controller consumption`：让 initialize/first proposal/recovery 等现有选择路径消费 persisted graph view；用 spy/artifact assertion 证明 selector 实际收到 observed layer，不能只证明 overlay helper 可单独调用。
+6. `E0.5 bounded proposal fixture`：在不调用 Proposer 的前提下，验证 top-k、executable alternative、1–2 target TargetSet、operation allowlist、validation intensity 和失败前停止。
+7. `E0.6 regression/seal`：运行 unit/integration/fault、Ruff、Pyright、schema、安全、artifact seal、旧 config compatibility 和 protected-tree diff；通过后才允许创建 GH-E1 run。
+
+**输出**：写入 `artifacts/stages/GH-E0/`，至少包含 `preflight.json`、`controller-graph-consumption-audit.json`、`fresh-graph-rebuild.json`、`parent-evidence-overlay-audit.json`、`selector-integration-replay.json`、`compatibility-audit.json`、`target-set-live-fixture.json`、`machine-gates.json`、`verification.json`、`commands.log`、`test-results.xml`、`stage_report.json` 和 `artifact-index.json`。GH-E0 的 Agent、Headless/API、Executor、Grader、Comparator、Analyzer、Proposer、Eval、新 candidate 和新效果分数都必须为 0。
+
+**GH-E0 HARD Gate**：
+
+- `GHE0-G00 preflight_and_immutability`：分支/dirty 状态、允许修改范围和 protected hashes 已封存；旧 run/stage/source/deployable/`skills_test` 前后不变；
+- `GHE0-G01 backward_compatible_single_mainline`：旧 config 无新字段仍复现 static 行为和原 sealed resolved-config hash；只有一个 Controller/selector/Candidate/Evaluator/Patch/Gate 主链，无第二套系统；
+- `GHE0-G02 fresh_graph_rebuild_deterministic`：从 parent Package 重新构建 snapshot/IR/static graph，snapshot/content 匹配，node/edge/hash 可确定重放，coverage/parse status 不低于 GH-P0 契约；
+- `GHE0-G03 parent_observed_binding`：只接受同 parent、同 snapshot、同 provider/runtime key、train evidence；合法 typed access 映射非 0，越界输入全部硬拒绝；
+- `GHE0-G04 controller_really_consumes_layered_graph`：initialize、首轮 proposal、recovery/reflection selector 路径实际读取 persisted static+observed graph；work item 中 layer/feature/source ref 完整，不能退回 `dynamic_access=0`；
+- `GHE0-G05 bounded_scope_and_executable_opportunity`：top-k 与脚本 alternative 可审计，TargetSet 不超过 2/2/2，semantic edge 不授权 scope，operation 与 node kind 一致；
+- `GHE0-G06 no_eval_or_effect_claim`：全部 Agent/评测/提议调用为 0，没有 candidate、TaskScoreVector 或效果声明；
+- `GHE0-G07 regression_and_fault_containment`：旧 static config、原 R4 fixture、overlay mismatch、cache invalidation、持久化 miss→hit 审计、atomic rollback、Merge/cross-package 边界测试均通过；
+- `GHE0-G08 verification_and_seal`：相关及全量测试、Ruff、Pyright、schema 幂等、安全/路径/license/link/diff、artifact index/seal 全部通过。
+
+**实际执行与阶段结论（2026-07-28）**：✅，GHE0-G00–G08 9/9 通过，GH-E1 的工程前置已解锁，但本阶段没有产生任何新 Skill 效果结论。
+
+1. `R4EvolutionConfig` 新增缺省 `mode=static` 的 typed `SelectorGraphPolicy`；旧 `configs/canaries/slack-gif-creator-r4.json` 不添加字段即可复现相同两项 task→target 映射，不创建 selector-graph artifact，并严格保持 sealed resolved-config hash `3a224bcb9f3887b6af9974915b51407be7d757535b71b18913af70ebcc757572`。新 `configs/graph-hardening/slack-gif-creator-gh-e0.json` 才显式启用 `static_observed`、关闭 semantic hypothesis并使用既有 2/2/2 Patch 边界。
+2. 现有 `R4EvolutionController` 内新增唯一 `build_selector_graph_view` 入口。它把 cache key 绑定到 parent source snapshot、当前 content hash、sealed evidence scope 和 graph policy；cache miss 时从 parent materialized Package fresh 重建 snapshot/IR/static graph，cache hit 前仍重新核对 Package snapshot、evidence seal 和全部缓存 artifact hash。首次选择与 recovery 入口共同复用 `_select_proposal_scope`，failure slice、ranking、TargetSet、observed 要求和 operation scope 只组装一次；其余 `PackageAnalyzer` 调用继续只承担 Gate/reparse/candidate/merge structural graph 职责。selector cache 的瞬时 hit/miss 不写入 immutable proposal identity，而以独立 access artifact 持久化；正式 fixture 得到 1 miss→1 hit。
+3. seed fixture 只消费 sealed R3 `original + train`：46/46 typed access 映射、0 rejected、46 observed edge，11 个 no-skill/held-out work 在 overlay 前过滤，planned/semantic edge 均为 0。candidate-parent fixture 使用 `candidate-2dad7a…` 自己的 train run：45/45 映射、45 observed edge；fresh graph snapshot 等于该 parent 的 content hash，sibling candidate、validation split、provider/runtime、graph/snapshot/hash mismatch 均由 Core 或 fault test 硬拒绝。
+4. 两个 initialize work item 与一个 recovery fixture 都保存真实 selector graph ref/hash、static/snapshot/IR/coverage/overlay refs、layer counts、accepted/filtered work、mapped/rejected event、完整 feature contribution、top-k 和 executable alternative。首轮共选择 4 个 target，4/4 的 `dynamic_access > 0`；`easing-orbit` 的 Python alternative 为 `core/easing.py`，`input-badge` 的 top target 和 executable alternative 均为 `core/validators.py`。
+5. live TargetSet 两项 work 均保持最多 2 targets/2 files/2 operations，causal path 只允许 static/observed；脚本获得探索机会但没有被强制修改。Patch atomic apply/rollback、Gate 0–3、Merge/cross-package 和 semantic-no-authority 契约均未放宽。
+6. `artifacts/stages/GH-E0/` 已封存 preflight、Controller consumption audit、fresh rebuild、parent overlay、selector integration replay、compatibility、selector cache audit、live TargetSet、machine Gate、verification、命令、171-test JUnit、stage report、可重放 Controller fixture 和 artifact index；44 个 indexed artifact 校验有效且无 unindexed file。Ruff、Pyright 0 errors/0 warnings、43 个 schema 两次导出幂等、secret/private-path、Markdown links、license 和 diff check 全部通过，R2–R5/S10/GH-P0/P1/source/deployable/`skills_test` 前后树 hash 不变。
+7. 调用计数为 Agent 0、Headless/API 0、Executor 0、Grader 0、Comparator 0、Analyzer 0、Proposer 0、Eval 0、mutation candidate 0、新 TaskScoreVector/效果分数 0。fixture 只构建未修改的 seed descriptor 和 proposal work，不执行 proposer、不应用 Patch、不评测候选。因此必须表述为：**代码已经实现；工程机制通过测试；算法效果尚未新增验证**。
+
+**停止条件与结论边界**：任一调用点仍绕过 graph-view builder、fresh parent evidence 没有形成 observed contribution、旧 static config 行为漂移或 protected tree 变化时，GH-E0 标 `stalled/blocked`，不得启动 GH-E1。全部 Gate 通过只能证明实时主链接线完成，不能证明新的图策略提升了 Skill。
+
+#### GH-E1：同一公开 Skill 的独立完整效果复现
+
+**目标**：使用相同 pinned `slack-gif-creator`、相同人工审核后的 frozen EvalPlan、相同 scoring/acceptance policy 和相同 Agent-native provider/model 约束，建立一套与 v0.1 完全隔离的新 reference→graph→GEPA/Patch→Gate→Merge→report 证据链，真实回答 GH-P0 图加固进入主链后是否产生更好的候选，以及非 `SKILL.md` Package 组件是否真正被选择、修改并泛化。它是应用效果复现，不是 graph-vs-random 论文消融。
+
+**独立目录与禁止覆盖**：
+
+```text
+configs/graph-hardening/slack-gif-creator-gh-e1-reference.yaml
+configs/graph-hardening/slack-gif-creator-gh-e1-evolution.json
+configs/graph-hardening/slack-gif-creator-gh-e1-report.json
+artifacts/runs/gh-e1-slack-gif-creator-reference/
+artifacts/runs/gh-e1-slack-gif-creator-evolution/
+artifacts/runs/gh-e1-slack-gif-creator-report/
+artifacts/stages/GH-E1/
+```
+
+所有新命令在目标目录已存在时默认 fail-closed；resume 只能通过该 run 的 typed state/checkpoint 显式进入，不能把“目录存在”当成覆盖许可。以下目录及其 artifact index/tree hash 始终只读：R2 EvalPlan run、R3 paired run、R4 evolution run、R5 report、S10、GH-P0、GH-P1、公开 canary source、R5 deployable Package 和 `skills_test/`。
+
+**输入冻结与预算决定**：
+
+1. 复用 R2 frozen EvalPlan hash `1893ad9a…`、原 fixture/rubric/split 和现有 scoring policy；不重新调用 Eval Designer、不修改 case、不重新人工定标。Trigger 与 Functional 仍分轨，Trigger 结果不混入功能分。
+2. reference 继续使用 Agent-native `codex / gpt-5.6-sol`、seed 42、E0/E2/E3、每 work fresh context、`timeout_seconds=600`、scoring 中 `duration_budget_ms=600000`、`token_budget=32000`、`tool_call_budget=32` 和 `artifact_size_budget_bytes=1500000`；Headless 保持关闭。
+3. evolution 继续使用现有 R4 RuntimeBudget：`max_concurrency=3`，proposal/executor/grader/comparator/reflection timeout 分别为 `600/600/420/300/600` 秒，`max_repair_attempts_per_work=1`、`max_proposals=4`、`max_candidates=5`、`max_agent_calls=80`、`max_estimated_tokens=2,000,000`、`max_wall_clock_seconds=7,200`，以及“完成已 ingest 的原子操作、保存 checkpoint、不再导出新 work”的停止语义。
+4. 本轮不加入 `observe_only`、无限预算、自动临时加额或人民币费用 Gate。超时/预算按现有 typed failure、checkpoint 和 runtime audit 处理；若确实导致主实验不能完成，保留不完整结果后再单独评审，运行中不得事后放宽。
+5. GH-P0 的 mutation scope 不是 RuntimeBudget 变化：新 evolution config 显式使用 `selector_target_limit=2`、`max_operations=2`、`max_changed_files=2`，仍为 `max_added_files=max_deleted_files=0`、允许 bounded script edit、禁止任意文件拓扑和 binary mutation。train/validation strict threshold、category/high-risk/secondary floors 保持 R4 原值。
+6. GH-P1 semantic enrichment 在本轮关闭；selector graph 只有 fresh static + fresh observed。这样 GH-E1 的结论不受 stalled semantic stage 混杂，且 GHP1-G06 不会被绕过。
+
+**完整执行流程**：
+
+1. `E1.0 preflight`：检查 GH-E0 9/9、provider/host、磁盘、依赖、目标目录不存在、旧 artifact seals 和 source commit/tree/license；保存全树保护 hash 和新 run ids。
+2. `E1.1 fresh Package compile`：从公开 source Package 重新运行 PackageSnapshot→IR→static graph→coverage/diagnostics，写入新 reference run；source snapshot 必须仍为 `ce42d8a…`，graph 使用当前 compiler 重新生成，不能复制 R2/GH-P0 graph 文件。相同 static graph ref/node map进入本轮 Executor work item。
+3. `E1.2 fresh paired reference`：对 frozen plan 的 5 train + 3 validation 全部同轮隔离运行 no-skill/original，生成 16 个 fresh E2/E3；随后按 barrier 顺序运行 blind Independent Grader、关键 case AB/BA Comparator 和独立 Analyzer/ASI，形成新的完整 TaskScoreVector/reference key/artifact seal。任何旧 R3 ExecutionBundle/分数都不能作为本轮 fresh 角色调用冒充。
+4. `E1.3 fresh observed graph`：只从新 reference 的 original-train typed package access 构建 seed selector graph，封存 mapping/coverage/layer audit；no-skill 与 validation access 必须过滤。若 fresh original 没有完整 typed package access，先修复 evidence 而不是退回文本猜测。
+5. `E1.4 graph-guided branches`：沿用唯一 GEPA/Controller 和当前有限搜索预算，从 fresh Analyzer/ASI failure 中创建多分支。普通 relevance top target、最高 evidence-supported executable alternative 和合法双目标 TargetSet 都必须在 branch-plan 中可审计；不强制脚本入选，但若脚本未入选必须保存排名、证据和原因。Proposer 只见各自 bounded work item。
+6. `E1.5 Patch/Gate/train`：每个 valid proposal 形成 typed PackagePatch，在 sibling workspace 原子 apply/reparse/diff/rollback；通过 Gate 0/1 后运行完整 5-case train。严格 improvement/floor 规则保持不变，等分或回归候选拒绝并进入 memory；不能按 graph slice 裁剪 Eval case。
+7. `E1.6 reflection/recovery/Pareto`：按现有最多一次 candidate Reflection 和 recovery 契约保存 task-level feedback、parent graph/evidence、rejected reason、GEPA state、Pareto/current-best 和 checkpoint；不能为了得到脚本候选增加预算外 repair 或共享上下文。
+8. `E1.7 validation/Merge`：所有 train-admitted candidate 完整运行 3-case frozen validation；出现两个以上 same-package/same-snapshot/common-root 且贡献互补父代时，按现有 closure/conflict contract 构建 merge child并重新走 Gate 0–3。没有合法 parent set 时输出 typed ineligible，而不是拼接两个无效半修复；cross-package parent 继续硬拒绝。
+9. `E1.8 result/report`：从新 sealed reference/evolution evidence 生成新的中文自包含报告，至少展示 fresh no-skill/original/candidates、Package Graph layer、top-k/executable opportunity、TargetSet/Patch paths、lineage/Merge、六维分数、strict Gate、真实 GIF、usage/时延、预算状态和 provenance。旧 R5 只作为明确标注的历史背景，不进入本轮 primary paired delta。
+10. `E1.9 seal/compare`：复算所有数字和 hash，验证新 deployable（若存在）与 candidate manifest 一致；对旧 protected roots 做前后 hash audit，生成新 stage report/Diff Log。无 strict improvement 时仍完整保存负结果，不能换题、改阈值或覆盖旧成功报告。
+
+**GH-E1 HARD/REAL Gate**：
+
+- `GHE1-G00 isolated_preflight`：GH-E0 完成，新 config/run/stage/report 路径唯一且预先不存在，旧 sealed roots 和 source 均只读；
+- `GHE1-G01 fresh_package_and_frozen_eval_contract`：Package 从 source 重新构建且 snapshot/commit/tree/license 正确；EvalPlan/scoring/split/threshold 与 v0.1 一致，没有重新出题或泄漏 oracle；
+- `GHE1-G02 fresh_paired_reference`：8 个 case 的 16 个 no-skill/original E2/E3、blind Grader、预注册 Comparator、Analyzer/ASI、隔离 context、TaskScoreVector 和 artifact seal 完整；
+- `GHE1-G03 live_observed_selector_graph`：本轮 original-train typed access 的映射率/layer/source refs 可审计，Controller proposal 实际具有非零 observed/dynamic feature；no-skill/held-out/sibling/cross-snapshot 泄漏为 0；
+- `GHE1-G04 package_aware_search_reachability`：每个 branch 的 full ranking、top-k、executable alternative、selected TargetSet/Patch path 和未入选原因完整；至少证明非 `SKILL.md` 节点真实进入可选 scope，但不强制无证据脚本 Patch；
+- `GHE1-G05 bounded_candidates_and_train_gate`：所有 candidate 来自唯一 PackageCandidate/PackagePatch 主链，scope 不超过 2/2/2，atomic apply/rollback 和 Gate 0/1 有效，所有被评测候选完整覆盖 5 train；
+- `GHE1-G06 held_out_and_merge`：train-admitted candidate 完整覆盖 3 validation；合法多父集合必须构建并完整验证 merge child，无合法集合时有可解释 eligibility 结论，cross-package 为 0；
+- `GHE1-G07 effect_outcome_honest`：fresh candidate 相对 fresh original 的 strict improvement、wins/ties/losses、保护 floor 和六维 delta 可重算；结果明确标记 `strict_improvement`、`no_strict_improvement` 或 `budget_incomplete`，不得用旧 R5 分数填补；
+- `GHE1-G08 report_reproducible`：中文报告数字、GIF、graph、Patch、Gate、lineage、runtime 和 provenance 可从本轮 raw evidence 重建，历史/本轮对照标签清楚；
+- `GHE1-G09 regression_immutability_and_seal`：相关与全量测试、Ruff、Pyright、schema、安全/link/license/diff、run/stage seal 全部通过，旧 protected tree hash 逐项不变。
+
+**阶段判定**：协议完整运行、全部工程/证据 Gate 通过时，GH-E1 可以完成并报告独立效果结果；只有 `effect_outcome=strict_improvement` 且候选通过 held-out floors 时才产生新的 deployable/effect claim。若搜索完成但没有 strict improvement，应标记可复现负结果而不是修改 frozen plan；若现有 RuntimeBudget 导致剩余预注册 work 未执行，则标 `budget_incomplete/stalled`，不得把部分结果写成完整效果。无论结果正负，本轮不能证明跨 Skill、跨模型或 graph 相对其他 selector 的普遍优越性。
+
+**当前状态（2026-07-28）**：GH-E0 已完成 pre-GH-E1 stabilization 并以 9/9 machine Gate 解锁 GH-E1；GH-E1 仍为 `⏳`，三个正式 run/stage 目录均未创建。GH-E0 只完成 Controller/config/schema/test 与 0-Agent fixture 接线，旧 R4 config hash 已严格恢复、proposal scope 已收敛、selector cache miss→hit 已持久化审计；没有启动 Executor/Grader/Comparator/Analyzer/Proposer，没有应用 Patch、创建 mutation candidate 或产生新效果分数。GH-E1 必须继续按本节冻结的隔离目录、现有预算、fresh graph/reference 和验收标准执行。
+
+**明确不纳入当前分支**：
+
+- 不引入 `DeusData/codebase-memory-mcp`，也不依赖外部 MCP 才能建图或运行 selector；
+- 不建设通用 GraphRAG、向量数据库、社区发现、全仓实体抽取或后台 watcher；
+- 不让 LLM 替代 Python/Markdown/config parser，不用 semantic edge 掩盖静态解析缺陷；
+- 不恢复旧 S9、action label、统一业务 `result.json`、第二套实验系统或 cross-package Merge；
+- 不把 P0/P1 的结构/机制 Gate 表述成新的算法效果。只有未来真实候选通过预注册 E2/E3 与 held-out strict Gate，才能更新效果结论。
+
+**分支完成条件**：GH-P0/P1/E0/E1 各自拥有独立 stage report 和 machine Gate，v0.1 sealed evidence 未变，新增 public schema/既有 CLI/Python API 保持单一事实源，且用户审核阶段结果后再决定是否提交 PR。GH-P1 为独立可选语义支路且仍是 7/8 `stalled`；GH-E0 已用 trusted static+observed graph 独立完成 9/9 接线 Gate，不能借此把 GH-P1 改写为通过。当前分支仍不满足 PR-ready：GH-E1 尚未开始，是否要求 GH-P1 解除 stalled 后才合并 PR由用户看到 GH-E1 新效果后再决定。codebase-memory-mcp 保持排除；第二公开 Skill、跨模型和重型语义检索仍由真实使用需要另行决策。
+
 ## 9. 数据、仓库与隐私边界
 
 ### 9.1 `skills_test/`
@@ -816,20 +1128,42 @@ learning-course/                     # 本地零基础深度课程；14 页 HTML
 - 首个公开 canary 是 pinned `slack-gif-creator` 完整 Package；私有 Skill 与生产 mock 不进入 v0.1 主线。
 - 首个 canary 不做独立 headroom qualification；全链停滞后才启动诊断。
 - same-package、same-snapshot、common-root 的多父 Package Merge 是主链必要能力；cross-package merge 是硬错误。
+- 同父代有界多目标 Patch 与多父 Merge 是不同机制：GH-P0 默认单目标，只在同一失败假设、同 parent 且有 static/observed 因果路径时允许最多 2 targets/2 files/2 operations；Merge 不能用来拼接两个单独不成立的半修复。
+- Graph selector 必须显式声明并封存 static/observed/semantic_hypothesis 层；R4 未叠加 observed edge 的历史事实保持原样，GH-P0 不回写旧 artifact。
+- fan-out/脚本/跨文件影响属于风险与验证强度信号，不是节点资格硬过滤；相关性、风险和探索贡献必须分别可审计。
+- GH-P1 只允许 Analyzer 提议有限枚举、同 snapshot、带 evidence/provenance 的语义假设边；semantic-only 路径不能授权危险 Patch、trusted closure、Merge 或 Gate 放行。
+- GH-E0 已只在现有 Controller 内建立一个 parent-bound selector graph-view 入口和一个共享 proposal-scope 组装入口；旧 config 缺省保持 static 行为及 sealed resolved-config hash，新 effect run 才显式启用 fresh static + same-parent train observed。selector cache access 独立持久化，Eval、Candidate、GEPA、Patch、Gate、Pool 和 Merge 没有复制。
+- GH-E1 复用同一 frozen EvalPlan/scoring/threshold，但必须 fresh 运行 no-skill/original reference 和 candidate E2/E3；正式 graph 从 source Package 重新构建后叠加本轮 evidence，不能复制 GH-P0 graph 冒充新运行。
+- GH-E1 所有 reference/evolution/report/stage 输出使用新的 fail-closed 路径，旧 R2–R5/S10/GH-P0/P1/source/deployable/`skills_test` 始终只读并做前后 hash 审计。
+- GH-E1 暂时沿用现有 R3/R4 RuntimeBudget、timeout、repair、proposal/candidate/Agent/token/墙钟上限和停止语义；不引入 `observe_only` 或运行中临时加额。`selector_target_limit=2` 与 Patch 2/2/2 是 GH-P0 mutation scope，不是取消运行预算。
+- GH-E1 首轮关闭 semantic hypothesis；它只验证 GH-P0 trusted static + observed 路径，因此 GH-P1 stalled 状态保持独立且不能被旁路改写。
+- 当前不引入 `codebase-memory-mcp`、全量 GraphRAG、向量数据库或后台全仓图重建；默认主链不得依赖外部 MCP 才能工作。
 - v0.1 是应用框架：不以 graph/random 消融、package-vs-SKILL-only 对比、大规模 seed、跨模型迁移或论文式 S9′ 作为完成前置。
 - R1 已完成主链收敛，S10 又按实际导入、CLI、测试和发布边界完成第二次定向清理；没有使用全仓四分类、`reset` 或 `clean`。
 - 人工审核位于 EvalPlan 生成后、执行前，以中文 HTML + `review.json` + checkpoint/resume 形式完成；`agent-assisted` 决定必须如实标注，不能冒充用户人工审核。
 
-### 10.2 v0.1 之后按真实使用决定
+### 10.2 GH-P0/P1/E0/E1 之后按真实使用决定
 
-- GEPA component 粒度以及图选择预算。
+- 是否在真实双目标候选有效后将 Patch 上限扩大到 3 个以上 target/file/operation；在此之前保持 2/2/2 hard limit。
+- GH-P1 单 cluster 已显示有限定位价值（5 个精确 endpoint、最大额外贡献 0.35），但唯一 Analyzer 超过冻结 token/timeout 而使阶段 stalled；是否保留该层、怎样缩小 evidence/context 或重新冻结现实预算，必须先由用户审核，不能只因图更丰富而扩大 relation enum 或自动重试。
+- GH-E1 先按现有预算真实运行；只有 sealed runtime 表明预注册 work 因预算未完成时，才讨论 `observe_only`、增大上限或缩小搜索范围，不能在运行中临时修改 config/hash。
+- 是否要求 GH-P1 解除 stalled 才把整个 `codex/graph-hardening` 分支合并到 PR，等待 GH-E1 的真实效果、复杂度与运行时间报告后由用户决定；GH-E1 本身不依赖 semantic layer。
+- 第二公开 Skill 是否暴露新的 parser、component 粒度或图选择预算问题；先按 coverage audit 和失败证据决定，不预建通用知识图谱平台。
 - R4 已固定所有评测角色为 `gpt-5.6-sol` 并命中 R3 provider snapshot；后续模型变化必须形成新 reference key，不能跨模型复用。
 - R4 已使用 frozen 5-train/3-validation、`minimum_primary_delta=0.005` 与 category/high-risk floors；R5 只呈现并复算，不修改阈值。
 - v0.1 之后是否加入 test split、跨模型/Agent Host、第二个公开 Skill、私有 Skill 和生产 mock。
 
 ## 11. 当前验证快照
 
-截至 2026-07-24 的 v0.1/S10 完成快照：
+截至 2026-07-28，v0.1/S10 完成快照保持不变，GH-P0 新增纯离线图工程验证，GH-P1 新增受控语义假设层的工程与单次真实 Analyzer viability 证据，GH-E0 又把 GH-P0 trusted graph 接入唯一 Controller。四者必须分开阅读：v0.1 的单-canary Skill 效果仍只来自 R4/R5；GH-P0/P1/E0 都没有重跑任务、没有 mutation candidate、没有新效果分数。GH-E1 仍只有冻结计划，当前没有正式 run、Agent 调用或新结果。
+
+**GH-P0 快照**：9/9 machine Gate；R2–R5/S10 和受保护 Package 前后 hash 一致；7/7 显式 file/parse status；46/46 parent-train typed access 映射为 observed edge；old/new replay 有 1 次 top-1 转为 Python、top-10 executable 净增 1、6/6 high-fan-out target 保持 eligible 并要求 full validation；TargetSet 2/2/2 fault injection 无 partial child。定向测试 17 passed、全量 pytest 159 passed、Ruff、Pyright、36 schema 幂等、安全/链接/license/diff/seal 全部通过。所有 Agent/API/评测/提议/候选/效果调用为 0。
+
+**GH-P1 快照**：7/8 machine Gate、stage outcome `stalled`。G00–G05 fixture-first 与 G07 全量回归/immutability 通过；唯一 G06 因实际 `29,500 estimated tokens / 507,000 ms` 超过冻结 `12,000 / 180,000 ms` 失败。一次隔离 Analyzer 提出并由 Core 接受 4 条 semantic hypothesis，static/observed/node set 不变；5 个精确 endpoint 获得 `≤0.35` 的独立 selector contribution，`validate_gif` 4→3、Core Workflow instruction 11→6、GIFBuilder file 127→125、`GIFBuilder.save` 159→142，bounded localization value Gate 通过。cache miss/hit/content invalidation、虚线“Agent 假设”展示、consumer allowlist 和高置信越权对抗测试均有效。全量 pytest 165 passed、Ruff、Pyright、41 schema、安全/链接/license/diff/seal 通过；除 1 Analyzer 外所有角色/API/Eval/candidate/effect-score 为 0，不解锁 semantic 下游。
+
+**GH-E0/E1 快照**：GH-E0 已以 0 Agent 的离线 Gate 验证现有 Controller 的 initialize/首轮/recovery selector 均消费 parent-bound fresh static + observed graph，同时保持旧 config static 行为与 sealed hash `3a224bcb…`。首次与 recovery 复用同一 proposal-scope 组装入口，selector graph cache 形成 1 miss→1 hit 的独立持久化审计。GHE0 9/9；seed/candidate parent 分别形成 46/45 observed edge；首轮 4/4 selected target 的 dynamic contribution 非零；44 个 indexed artifact、171 tests、Ruff、Pyright、43 schema、安全/链接/license/diff/seal 通过。GH-E1 接下来才会在三个全新 run 目录复用同一 frozen EvalPlan，fresh 运行 paired reference、候选 E2/E3、strict Gate、Merge 和中文报告；semantic layer 关闭，旧 sealed roots 只读。当前只能写 GH-E0 代码/工程机制已通过，不能写图加固后的算法效果已验证。
+
+**v0.1/S10 快照**：
 
 - S10 release Gate 7/7；Ruff、Pyright、pytest 154 passed、32 个公开 schema 幂等、Markdown links、license、artifact hash 与 `git diff --check` 全部通过。`learning.html` 与 `learning-course/` 分别通过事实边界、本地资源、内部锚点和禁用旧结论审计；课程为 14 页、209,195 bytes HTML、33 个练习选项、52 个面试问答和 44 个算法流程步骤；生成后 secret/private-path scan 为 0 findings。
 - 发布树包含 147 个 source module；静态入边审计仅保留合法入口 `gepase.__main__` 为零入边，5 个确认未使用的旧 module 已移除，测试不再依赖旧 S2/S8 artifact。
@@ -851,13 +1185,74 @@ learning-course/                     # 本地零基础深度课程；14 页 HTML
 - R5 运行边界：只读消费 R2–R4，0 Agent-native call、0 Headless/API call、0 candidate search；R4 10,311,052 ms 墙钟 overrun 保留在状态和阶段文档中，结果页只中性展示实际运行规模。
 - 用户已在正式本地报告路径确认页面布局、3 组 GIF case 切换、Package Graph 版本/细粒度控件和评分 case 下拉正常；确认只覆盖视觉与核心交互，不等同于重新评分。
 
-该快照证明代码实现、工程机制与单 canary 算法效果三层均已有证据：当前 GEPASE 能在 frozen validation 上产出一个严格提升候选，同时拒绝 train-only 假阳性和带局部回归的 merge child，并可从 sealed evidence 复算、呈现和导出 deployable Package。它仍不是跨 Skill/模型/seed 的普遍性证明；S10 已完成，当前状态是可提交到 GitHub 的 v0.1 release candidate，而不是已经发布、跨场景验证完毕的成熟产品。
+三层快照合起来证明：v0.1 已有“代码实现—工程机制—单 canary 效果”三层证据；GH-P0 证明 typed observed evidence、显式 coverage、风险/探索解耦和 bounded TargetSet 的工程主链有效；GH-P1 又证明有限语义假设可以在不获得高影响权限的前提下改变若干真实 failure target 的 selector 排名。后两者都不能合并进效果结论。项目仍不是跨 Skill/模型/seed 的普遍性证明；S10 已完成，当前 `codex/graph-hardening` 是尚未提交 PR 的后续加固分支，GH-P1 因运行预算 Gate stalled，是否调整上下文/预算并重新验收必须由用户决定。
 
 ## 12. Diff Log
 
 ### 12.1 记录规则
 
 新记录放在最上方，至少说明：日期/标识、修改范围、行为变化、原因、验证、未解决问题。历史过程只保留摘要；详细证据以对应 artifact、stage report 和 Git diff 为准。
+
+### 2026-07-28 · pre-gh-e1-runtime-stabilization
+
+- 审计结论：在启动昂贵的 GH-E1 Agent 运行前，对 `codex/graph-hardening` 做了小范围兼容性与重复路径审计。没有发现第二套 PackageGraph、Candidate、TaskScoreVector、Controller、Evaluator 或 S9 旁路；历史 `LegacyGraphGuidedSelector` 只由 GH-P0 old/new replay 作为冻结对照消费，保留它是为了可重放性，不重新接入正式 factory。真正需要处理的是旧配置指纹漂移、两处 proposal scope 组装重复、selector cache 命中缺少 durable provenance，以及三个 GH stage Gate 脚本的基础 helper 重复。
+- 兼容修复：新增的 `selector_graph_policy` 缺省值曾使未声明该字段的旧 R4 config resolved hash 从 sealed `3a224bcb…` 漂移为 `af2c…`，虽然 task→target 行为未变，但这不满足严格缓存与复现契约。`load_r4_config` 现在只在原始 config 显式声明该字段时把它计入新指纹；旧 config 精确恢复 sealed hash，新 GH-E0 config 仍显式绑定 graph policy。GHE0-G01 已从“行为相同”加强为“行为与 sealed fingerprint 都相同”。
+- 主链收敛：首次 proposal 与 recovery 不再各自重复 failure slice、selector ranking、TargetSet、observed 要求和 operation scope 组装，而共同调用一个 `_select_proposal_scope`；权威 selector graph-view builder、Candidate、Patch、Gate、Merge 和 evaluator 数量没有增加。三个 GH stage Gate 脚本的 JSON/tree-hash/command/protected-root/git helper 收敛到 `scripts/stage_gate_support.py`，阶段特有 Gate 和 artifact 仍分别保留。
+- cache provenance：selector graph cache 每次访问现在写独立的 append-only audit artifact，正式 fixture 封存 1 miss→1 hit。曾尝试把 hit 状态直接写进 `PatchProposalWorkItem`，但这会令同一 deterministic work id 因瞬时缓存状态改变 payload，破坏 immutable work-item/idempotency，故未采用；proposal 只引用稳定 graph/ranking，cache outcome 由独立运行审计承担。
+- 重新封存：`artifacts/stages/GH-E0/` 从零重建为 44 个 indexed artifact，GHE0-G00–G08 9/9；全量 pytest 171 passed、Ruff、Pyright 0 errors/0 warnings、43 schema 两次导出幂等、secret/private-path、Markdown links、license、`git diff --check`、artifact verify 和 protected-tree hash 全部通过。R2–R5/S10/GH-P0/P1、公开 canary source、deployable Package 与 `skills_test` 均未改变；两份被替代的本地 GH-E0 工作副本只保存在 ignored `artifacts/local/`，未进入发布证据。
+- 结论边界：pre-GH-E1 stabilization 只减少主链歧义、恢复 sealed compatibility 并补足 cache provenance。Agent、Headless/API、Executor、Grader、Comparator、Analyzer、Proposer、Eval、mutation candidate 和新效果分数均为 0；因此只能说明**代码已经实现、工程机制通过测试**，不能说明图加固后的**算法效果已经验证**。GH-E1 仍未开始，必须在全新隔离目录真实运行后才能得出正或负效果结论。
+
+### 2026-07-28 · gh-e0-parent-bound-selector-graph-live-wiring-complete
+
+- 修改范围：在既有 `R4EvolutionController`、`R4EvolutionConfig`、`PackageGraph`、typed `package_access` overlay、graph selector 和 `PatchProposalWorkItem` 上完成最小接线；新增缺省 static 的 `SelectorGraphPolicy`、typed `SelectorGraphBinding`/`SelectorRankingAudit`、显式 GH-E0 config、集成/fault 测试、schema export 与 `scripts/run_gh_e0_gates.py`。没有新建 Controller、GraphStore、Candidate、Evaluator、Search、Patch、Gate、Merge 或实验旁路，没有实现 GH-E1。
+- parent-bound graph view：唯一 builder 以 `(parent source snapshot, parent content, sealed evidence scope, graph policy)` 为 cache identity。cache miss 从 parent materialized Package fresh 构建 snapshot/IR/static graph并运行 coverage；cache hit 前重新核对 Package snapshot、evidence seal 和 snapshot/IR/static/selector graph/coverage/overlay 全部 hash。旧 config 缺省不持久化 selector graph且保持 static 目标行为，新 config 才显式启用 `static_observed`。
+- evidence 绑定：seed 只接受 R3 original-train，46/46 access 映射、0 rejected、46 observed edge并过滤 11 个 no-skill/held-out work；candidate-parent fixture 只接受其自身 train，45/45 映射、45 observed edge，fresh graph snapshot 等于 parent content hash。sibling、validation、cross-snapshot、graph/hash/provider/runtime mismatch 由 Core/test 硬拒绝，planned 与 semantic layer 均为 0。
+- Controller 消费：源码审计确认仅有的 initialize/首轮与 recovery 两处 selector 调用都由 parent-bound view 供图，剩余直接 Analyzer 调用只服务 Gate/reparse/candidate/merge structural graph。每个新策略 work item 保存 selector graph/ref/hash/layer/source/coverage/overlay、mapped/rejected access、完整 feature、top-k 与 executable alternative；有 typed access 但 observed/dynamic 为 0 时在 Proposer export 前失败。
+- 有界范围：两个 initialize work 共选择 4 个 target，4/4 `dynamic_access>0`；分别暴露 `core/easing.py` 与 `core/validators.py` executable opportunity。TargetSet 保持最多 2 targets/2 files/2 operations，semantic-only path 不授权 scope，script risk 只提高验证强度；Patch atomic rollback、Gate 0–3、same-package Merge 与 cross-package hard reject 均未放宽。
+- Gate 与封存：`artifacts/stages/GH-E0/` 封存 40 个 indexed artifact；GHE0-G00–G08 9/9、全量 pytest 171 passed、Ruff、Pyright 0 errors/0 warnings、43 schema 两次导出幂等、secret/private-path、Markdown links、license、`git diff --check` 和 artifact seal 全部通过。R2–R5/S10/GH-P0/P1、公开 source、deployable Package 与 `skills_test` 前后树 hash 一致。第一次 evidence build 曾因 compatibility audit 按文件名排序比较 branch 顺序而得 8/9 stalled；检查发现 task→target 完全一致后修正审计为按 task 比较，首份 stalled 产物移入 ignored `artifacts/local/` 保留，正式 stage 从零重建并通过，没有降低 Gate。
+- 结论边界：本阶段 Agent、Headless/API、Executor、Grader、Comparator、Analyzer、Proposer、Eval、mutation candidate、新 TaskScoreVector/效果分数均为 0。代码已经实现，工程机制通过测试，算法效果尚未新增验证。GH-E1 工程前置已解锁，但三个正式 run 尚未创建；后续仍须 fresh 执行 paired reference/candidate/held-out/Merge/report 才能回答效果。
+
+### 2026-07-28 · gh-e0-e1-live-graph-effect-replication-plan
+
+- 修改范围：只更新 `state.md`，在 `codex/graph-hardening` 第 8.8 节新增 GH-E0 实时图主链接线与 GH-E1 独立完整效果复现的详细阶段契约、目录、输入、执行步骤、GHE0-G00–G08、GHE1-G00–G09、阶段判定和状态表；没有修改 Controller、config/schema、测试、Skill Package、EvalPlan、候选、分数或任何 sealed artifact。
+- 路线决定：GH-P1 保持 7/8 `stalled`，不通过文档强行解锁；GH-E0/E1 是从已通过 9/9 的 GH-P0 trusted static + observed graph 分出的效果验证支路，首轮明确关闭 semantic hypothesis。GH-E0 通过前不得启动 GH-E1 Agent。
+- 接线边界：下一实现只允许在现有 `R4EvolutionController` 中形成一个 parent-bound selector graph-view 构建入口，让 initialize/首轮 proposal/recovery 等选择路径实际消费同 snapshot parent-train observed evidence；旧 config 缺省保持 static，不复制 Graph/Candidate/Evaluator/Search/Patch/Gate/Merge，也不改变 acceptance threshold。
+- fresh 运行决定：GH-E1 使用同一个 pinned `slack-gif-creator` 和 frozen EvalPlan/scoring/split，但从公开 source 重新构建 PackageSnapshot/IR/static graph，再 fresh 运行 8 组 no-skill/original paired reference并叠加本轮 original-train access；候选、validation、Merge 和报告全部写入 `gh-e1-*` 新目录，旧 R2–R5/S10/GH-P0/P1/source/deployable/`skills_test` 只读并做前后 hash audit。
+- 预算决定：用户要求暂时保持现有预算契约。GH-E1 沿用 R3 timeout/scoring budgets 和 R4 的 concurrency、role timeout、repair、proposal/candidate/Agent/token/墙钟上限与停止语义，不实现 `observe_only`、无限预算或运行中临时加额；`selector_target_limit=2`、Patch 2/2/2 仅是 GH-P0 已冻结的 bounded mutation scope。
+- 效果口径：新 candidate 必须相对 fresh original 走完整 5 train/3 held-out validation；旧 R5 只能作为标注清楚的历史背景。结果必须区分 `strict_improvement`、`no_strict_improvement` 和 `budget_incomplete`，不得为了制造非 `SKILL.md` 修改强制选择无证据脚本，也不得用部分运行或旧分数填补。
+- 验证与未解决：本条完成后仅运行 Markdown link/结构、术语残留和 `git diff --check -- state.md`；因此只能表述为“计划已同步”。GH-E0 代码/工程 Gate、GH-E1 真实 Agent/候选/效果和最终运行时间均尚未发生，后续必须严格按本节逐阶段验收。
+
+### 2026-07-28 · gh-p1-bounded-semantic-hypothesis-stalled
+
+- 修改范围：在既有 `AnalyzerWorkItem/AnalyzerSubmission`、`PackageGraph`、`GraphGuidedComponentSelector`、reverse slice、TargetSet、Merge closure 和 HTML graph report 主链内加入可选语义假设能力；新增 `semantic_models.py`/`semantic.py`、七类 relation schema、prompt、public schema/API、现有 `submit-analysis` ingest 扩展、Orchestrator 薄协议、测试和 `scripts/run_gh_p1_gates.py`。没有新建 Graph/Candidate/Evaluator/Search，没有引入 GraphRAG、codebase-memory-mcp、向量库、watcher 或 binary mutation。
+- fixture-first 与信任边界：G00–G05 在 Agent 调用前通过。Core 拒绝枚举外、unknown、stale、out-of-scope evidence、低置信和超预算关系；semantic edge 只能进入独立 `semantic_hypothesis` layer。高置信错误关系不能扩大 TargetSet 或 trusted dependency/safety closure，也不能授权 Patch、Merge 或 Gate；无 semantic input 时退化为 static + observed。
+- 单次真实 Analyzer：只对 `functional-train-input-badge-003` 的 loop-seam/GIFBuilder failure cluster 建立 7-node/6-evidence 有界 work item；fixture 通过后启动且只启动一次 `/root/gh_p1_analyzer`，没有 repair。Core 接受 4 条、拒绝 0 条关系，分别连接 GIFBuilder→imageio、Core Workflow→`GIFBuilder.save`、validator example→`validate_gif`、`validate_gif`→`GIFBuilder.save`；Agent 不能直接写图。
+- 定位价值与封顶：4 条 edge 只使 5 个精确 endpoint 获得非零贡献，没有向同文件全部节点扩散，也没有借 semantic path 放大 inverse-distance。每个 score delta 等于独立 semantic feature 且 `≤0.35`；`validate_gif` rank 4→3、Core Workflow instruction 11→6、GIFBuilder file 127→125、`GIFBuilder.save` 159→142。node/static/observed graph、eligibility 和 validation intensity 不变，bounded localization value Gate 通过；这不是候选或 Skill 效果提升。
+- cache/可视化/产物：cache key 绑定 snapshot/content/failure/prompt/schema/model/config，真实结果展示 miss→hit、content-change miss 和 touched-node 精确失效。HTML 使用虚线紫色“Agent 假设”。`artifacts/stages/GH-P1/` 封存 23 个 indexed artifact，包括 preflight/config/schema/work/raw/canonical submission、accepted/rejected、cache、layered graph/diff/HTML、consumer trace、adversarial/usage/verification/machine Gate/stage report。
+- stalled 原因：唯一 Analyzer 的 usage 为 `29,500 estimated tokens / 507,000 ms`，超过调用前冻结的 `12,000 / 180,000 ms`。没有事后提高预算或追加第二次 Agent；GHP1-G06 如实失败，最终 7/8、stage outcome `stalled`，不解锁 GH-P2 或 PR-ready。除该 Analyzer 外，Headless/API、Executor、Grader、Comparator、Proposer、Eval、新 candidate、新 Skill 效果分数均为 0。
+- 工程验证与结论：全量 pytest 165 passed、Ruff、Pyright 0 errors/0 warnings、41 schema 两次导出幂等、secret/private-path、Markdown links、license、`git diff --check`、artifact seal 和受保护树 hash 全部通过。代码已经实现，工程机制已经通过测试，冻结运行预算验收未通过，算法效果没有新增验证。下一步必须先由用户审核 context 缩减与预算策略，不能自动重试。
+
+### 2026-07-28 · gh-p0-offline-graph-hardening-complete
+
+- 修改范围：在现有 PackageGraph/selector/PackagePatch/Controller 主链上新增显式 parse status、YAML/JSON/TOML key-path parser、Python local import/alias/qualified-call/ambiguity解析、sealed typed package-access overlay、GraphCoverageAudit、相关性/探索/风险分解、validation intensity、typed TargetSet 与最多 2-target proposer workspace；没有建立第二套 Graph、Candidate、Evaluator、Search 或实验系统，没有实现 GH-P1/GraphRAG/codebase-memory-mcp/semantic edge/binary mutation。
+- 只读输入：R2 `PackageSnapshot`/graph、R3 16 个 ExecutionBundle 中的 5 个 parent-train original `package_access`、R3 Analyzer/ASI target、R4 三个 proposal 的原 failure slice/selection/evidence 全部按 artifact index/hash 读取。R2–R5/S10 stage/run、公开 canary source、R5 deployable Package 与 `skills_test/` 前后树 hash 一致；没有 reset/clean、Eval 重跑或 sealed artifact 回写。
+- 动态与 coverage：7/7 Package 文件均有 file node 和显式 parse status，本 canary 为 6 deep + 1 shallow；46/46 typed access event 映射成功、0 rejected、1.0 mapping rate，形成 46 observed edge。11 个 no-skill/held-out work 在 overlay 前过滤，planned edge 新增 0、weak fallback 0；R3 ASI 的 28/28 target node 只读可解析且没有触发 Analyzer。
+- selector replay：冻结旧 v0.1 scorer 与新 scorer使用完全相同的三个 failure slice/evidence refs。新图累计 483 个 target×replay dynamic contribution 非零、457 个共同 target rank 变化、1 个 top-1 从 `SKILL.md` 变为 `core/validators.py`，top-10 executable 净增 1；三个 replay 都有脚本 alternative。relevance/exploration/risk/capped penalty 分开保存；6 个 high-fan-out target 全部 eligible 且全部要求 full validation。
+- TargetSet：单目标保持默认；只有同 parent、共享 failure evidence 且存在 static/observed path 才能形成一个 companion。Core/Controller/proposer 支持 1–2 targets/files/operations，双目标 fixture 禁止 add/delete/binary mutation；第一项 operation 后故障注入得到 invalid、无 child、无 partial workspace，source snapshot 不变。same-package 多父 Merge 契约未修改，cross-package 继续硬禁止。
+- Gate 与封存：`offline_value_gate` 的 coverage/ranking/reachability/risk-explanation 四项均有可审计变化，GHP0-G00–G08 9/9 通过。`artifacts/stages/GH-P0/` 包含 preflight、coverage、overlay、old/new replay、comparison、risk/intensity、TargetSet、offline Gate、verification、new graph、machine Gate、commands、test XML、stage report 和 artifact index。
+- 工程验证：定向 pytest 17 passed、全量 pytest 159 passed、Ruff 通过、Pyright 0 errors/0 warnings、36 个公开 schema 两次导出幂等、secret/private-path scan、Markdown links、license、artifact seal 和 `git diff --check` 全部通过。Agent、Headless/API、Executor、Grader、Comparator、Analyzer、Proposer、Eval、新 candidate 与新 Skill 效果分数均为 0。
+- 结论边界与未解决：代码已经实现，工程机制已经通过 sealed replay/fixture/fault/全量回归；算法效果没有新增验证。当前只满足进入 GH-P1 的前置资格，GH-P1 尚未开始；是否继续语义假设层、何时运行新的真实双目标候选，必须由用户另行确认，不能从本阶段离线排名变化推断 Skill 已进一步提升。
+
+### 2026-07-28 · graph-hardening-branch-plan
+
+- 分支与范围：最初因当前 HEAD 仍停在旧 `main=ea84ea898` 而误从 S5 快照创建 `codex/graph-hardening`；只读审计确认磁盘工作树与 `github/main=c9ff12f8b` 仅有本次 `state.md` 差异后，将 `codex/github-release-v0.1` 安全快进一格，并以保留工作区文件的 mixed index realignment 把 graph 分支对齐到相同公开基线。旧 `main` 保持不动；没有 clean/delete/覆盖 dirty worktree，没有修改 Graph/Core/schema/test/stage artifact、R2–R5 sealed evidence、公开 canary source、deployable Package 或 `skills_test/`，也没有创建 PR。
+- 审计纠正：明确区分“S3 具备 overlay 类型/构建能力”与“R4 selector 实际消费动态图”。现有 R4 候选图只有 static edge，planned/observed edge 均为 0，三个 proposal 的 `dynamic_access` 均为 `0.0`；这不撤销单-canary held-out 提升，但撤销了把 R4 描述成动态边已参与选择的可能误解。
+- GH-P0 计划：先做 sealed evidence 的 coverage/replay audit，再把 typed package access/observed trace 以 snapshot-bound provenance 叠加到 selector；补齐 Python/Markdown/config 的确定性结构关系和显式 parse status；把 relevance、risk、exploration 解耦，使 fan-out 主要提高 validation intensity 而不是禁止探索；默认单目标，仅在同 failure、同 parent 且有 static/observed 因果路径时允许最多 2-target/2-file/2-operation 的原子 Patch。
+- 离线与成本边界：GH-P0 的 Agent/Headless/API/全部评测角色调用必须为 0，只用 sealed R3/R4 evidence 做 old/new graph rebuild 与 selector replay；新增 `offline_value_gate`，无可解释的 coverage/ranking/reachability/risk 变化就停滞而不自动进入 P1。GH-P1 先跑 fixture，随后最多一次单 failure-cluster Analyzer enrichment，仍不重跑 Executor/Grader/Comparator/Proposer 或 candidate E2/E3。
+- Patch/Merge 边界：同父代有界多目标 Patch 解决一个因果修复必须同步改两处的问题；多父 Merge 合并已经形成的同 Package/common-root 候选贡献，保持主链且继续禁止 cross-package。Merge 不能作为拼接两个单独无效半修复的替代方案。
+- GH-P1 计划：复用隔离 Analyzer/ASI 角色提出有限枚举的 `implements/explains/constrains/consumes/produces/validates/conflicts_with` 语义假设边；Core 负责 evidence/provenance、同 snapshot、数量、cache 和 consumer allowlist。semantic-only 路径不能授权危险 Patch、trusted closure、Merge 或 Gate 放行。
+- 明确排除：当前不引入 `DeusData/codebase-memory-mcp`、重型 GraphRAG、向量数据库、全仓实体抽取或 watcher；不恢复旧 S9/action label/统一业务 `result.json`，不建立第二套搜索系统，不修改二进制 assets。
+- 验证与结论边界：分支修正后 `HEAD`、`codex/graph-hardening`、`codex/github-release-v0.1` 与 `github/main` 均为 `c9ff12f8b`，旧 `main` 仍为 `ea84ea898`；`git status` 只剩未暂存的 `state.md`。在写入本条 Git 审计说明之前，branch/index realignment 前后的 `state.md` blob hash 均为 `55e3415923ab5afbb5b6ea7f97e0f2687bbb2a9e`，证明对齐操作本身没有改写计划内容。`git diff --check -- state.md` 与 `uv run python scripts/check_markdown_links.py` 均通过；GH-P0/GH-P1 仍为 `⏳`，尚无 stage report、machine Gate、Agent 调用或新增算法效果。用户审核计划后才允许进入 GH-P0 实现。
 
 ### 2026-07-24 · beginner-learning-course-deep-narrative-v2
 

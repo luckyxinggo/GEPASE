@@ -1,0 +1,82 @@
+{
+  "branch_count": 2,
+  "candidate_reflection_limit": 1,
+  "enable_e1": false,
+  "forbid_cross_package_merge": true,
+  "frozen_plan_ref": "artifacts/runs/r2-slack-gif-creator-evalplan/frozen-eval-plan.json",
+  "host": "codex",
+  "host_policy": "isolated-role-context-v1",
+  "model": "gpt-5.6-sol",
+  "package_graph_ref": "artifacts/runs/r2-slack-gif-creator-evalplan/package/graph.json",
+  "package_ref": "benchmarks/canaries/slack-gif-creator/package",
+  "patch_budget": {
+    "allow_file_topology_edits": false,
+    "allow_script_edits": true,
+    "max_added_files": 0,
+    "max_changed_files": 2,
+    "max_deleted_files": 0,
+    "max_operations": 2,
+    "max_total_replacement_chars": 24000
+  },
+  "provider_snapshot": "agent-delegated-v1",
+  "reference_run_ref": "artifacts/runs/r3-slack-gif-creator-paired",
+  "reference_variant": "original",
+  "require_ab_ba_comparator": true,
+  "require_same_package_merge": true,
+  "run_id": "gh-e0-controller-fixture",
+  "runtime_budget": {
+    "max_agent_calls": 80,
+    "max_candidates": 5,
+    "max_concurrency": 3,
+    "max_estimated_tokens": 2000000,
+    "max_proposals": 4,
+    "max_repair_attempts_per_work": 1,
+    "max_wall_clock_seconds": 7200,
+    "role_timeout_seconds": {
+      "comparator": 300,
+      "executor": 600,
+      "independent_grader": 420,
+      "proposal": 600,
+      "reflection": 600
+    },
+    "stop_semantics": "finish already ingested atomic operation, persist checkpoint, export no new work"
+  },
+  "runtime_environment_fingerprint": "codex-agent-native-macos-python3.13-pillow-gif-v1",
+  "schema_version": "1.0.0",
+  "scoring_policy_ref": "configs/canaries/slack-gif-creator-r3-scoring.json",
+  "seed": 42,
+  "selector": "graph",
+  "selector_graph_policy": {
+    "mode": "static_observed",
+    "require_observed_when_access_present": true,
+    "require_sealed_typed_access": true,
+    "schema_version": "1.0.0",
+    "semantic_hypotheses_enabled": false,
+    "top_k_audit_limit": 10
+  },
+  "selector_target_limit": 2,
+  "timeout_seconds": 600,
+  "tool_policy_fingerprint": "codex-shell-python-pillow-gif-v1",
+  "train_policy": {
+    "bootstrap_samples": 2000,
+    "maximum_loss_fraction": 0.4,
+    "minimum_mean_delta": 0.005,
+    "rejection_delta": -0.02,
+    "seed": 42
+  },
+  "validation_policy": {
+    "bootstrap_samples": 5000,
+    "category_regression_floor": -0.05,
+    "high_risk_regression_floor": -0.025,
+    "minimum_primary_delta": 0.005,
+    "quality_noninferiority_margin": 0.0,
+    "secondary_minimum_effect": {
+      "complexity": 0.02,
+      "latency": 0.02,
+      "tokens": 0.02,
+      "tool_calls": 0.02
+    },
+    "secondary_regression_floor": -0.01,
+    "seed": 42
+  }
+}

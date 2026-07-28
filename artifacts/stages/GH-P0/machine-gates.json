@@ -1,0 +1,110 @@
+{
+  "failed": 0,
+  "gates": [
+    {
+      "detail": "All Agent/API/evaluation/proposal/candidate/effect-score counters are zero.",
+      "evidence": [
+        "preflight.json"
+      ],
+      "gate_id": "GHP0-G00-offline_only",
+      "status": "passed"
+    },
+    {
+      "detail": "R2-R5/S10, public canary, deployable Package, and skills_test tree hashes match.",
+      "evidence": [
+        "preflight.json"
+      ],
+      "gate_id": "GHP0-G01-source_and_artifact_immutable",
+      "status": "passed"
+    },
+    {
+      "detail": "File coverage=1.000; explicit statuses=7/7.",
+      "evidence": [
+        "coverage-audit.json"
+      ],
+      "gate_id": "GHP0-G02-graph_coverage_explicit",
+      "status": "passed"
+    },
+    {
+      "detail": "Mapped typed events=46; rejected=0; held-out/no-skill work filtered=11.",
+      "evidence": [
+        "overlay-mapping.json",
+        "verification.json"
+      ],
+      "gate_id": "GHP0-G03-observed_overlay_bound",
+      "status": "passed"
+    },
+    {
+      "detail": "Observed edges=46; replay targets with non-zero dynamic=483.",
+      "evidence": [
+        "new-selector-replay.json",
+        "overlay-mapping.json"
+      ],
+      "gate_id": "GHP0-G04-selector_consumes_dynamic",
+      "status": "passed"
+    },
+    {
+      "detail": "Risk is separately reported, executable alternatives remain visible, and one sealed replay ranks a Python target first.",
+      "evidence": [
+        "risk-intensity-report.json",
+        "new-selector-replay.json"
+      ],
+      "gate_id": "GHP0-G05-risk_does_not_forbid_exploration",
+      "status": "passed"
+    },
+    {
+      "detail": "Default is one target; connected same-parent fixture is bounded to 2/2/2 and fault injection leaves no partial candidate or source mutation.",
+      "evidence": [
+        "target-set-fixture.json",
+        "verification.json"
+      ],
+      "gate_id": "GHP0-G06-bounded_target_set_atomic",
+      "status": "passed"
+    },
+    {
+      "detail": "同一 sealed evidence/failure slice 下, typed observed edge 已进入 selector; parse status、排名/脚本可达性和风险解释出现可审计变化。",
+      "evidence": [
+        "offline-value-gate.json",
+        "selector-replay-comparison.json"
+      ],
+      "gate_id": "GHP0-G07-offline_value_gate",
+      "status": "passed"
+    },
+    {
+      "detail": "Targeted/full tests, Ruff, Pyright, 36 idempotent schemas, security/docs/license and diff checks passed=True. Post-generation secret/private-path scan also passed.",
+      "evidence": [
+        "verification.json",
+        "test-results.xml",
+        "artifact-index.json"
+      ],
+      "gate_id": "GHP0-G08-regression_and_seal",
+      "status": "passed"
+    }
+  ],
+  "offline_value_gate": {
+    "conclusion_zh": "同一 sealed evidence/failure slice 下, typed observed edge 已进入 selector; parse status、排名/脚本可达性和风险解释出现可审计变化。",
+    "does_not_claim_skill_improvement": true,
+    "metrics": {
+      "common_target_rank_changes": 457,
+      "executable_top10_net_change": 1,
+      "explicit_parse_status_gain": 7,
+      "observed_edges_added": 46,
+      "targets_with_nonzero_dynamic": 483,
+      "top1_changes": 1,
+      "typed_mapping_rate": 1.0
+    },
+    "pre_registered_changes": {
+      "coverage": true,
+      "ranking": true,
+      "reachability": true,
+      "risk_explanation": true
+    },
+    "schema_version": "1.0.0",
+    "status": "passed",
+    "valid": true
+  },
+  "passed": 9,
+  "schema_version": "1.0.0",
+  "stage_id": "GH-P0",
+  "valid": true
+}

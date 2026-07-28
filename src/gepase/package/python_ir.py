@@ -22,12 +22,21 @@ class _PythonVisitor(ast.NodeVisitor):
         self.relative_path = relative_path
         self.source = source
         self.module = module
+        self.module_name = _module_name(relative_path)
         self.nodes: list[IRNode] = []
         self.relations: list[RelationFact] = []
         self.scope: list[IRNode] = [module]
         self.occurrence: defaultdict[tuple[str, str], int] = defaultdict(int)
 
-    def _node(self, kind: NodeKind, locator: str, label: str, value: ast.AST) -> IRNode:
+    def _node(
+        self,
+        kind: NodeKind,
+        locator: str,
+        label: str,
+        value: ast.AST,
+        *,
+        metadata: dict[str, object] | None = None,
+    ) -> IRNode:
         segment = ast.get_source_segment(self.source, value) or label
         node = make_node(
             self.package_id,
@@ -40,6 +49,7 @@ class _PythonVisitor(ast.NodeVisitor):
                 start_line=max(1, getattr(value, "lineno", 1)),
                 end_line=max(1, getattr(value, "end_lineno", getattr(value, "lineno", 1))),
             ),
+            metadata=metadata or {},
         )
         self.nodes.append(node)
         self.relations.append(
@@ -50,17 +60,51 @@ class _PythonVisitor(ast.NodeVisitor):
     def visit_Import(self, node: ast.Import) -> None:
         for alias in node.names:
             locator = self._locator("import", alias.name)
-            imported = self._node(NodeKind.IMPORT, locator, alias.name, node)
+            imported = self._node(
+                NodeKind.IMPORT,
+                locator,
+                alias.name,
+                node,
+                metadata={
+                    "module": alias.name,
+                    "alias": alias.asname or alias.name.split(".", 1)[0],
+                    "level": 0,
+                },
+            )
             self.relations.append(
-                RelationFact(imported.node_id, EdgeKind.IMPORTS, external_name=alias.name)
+                RelationFact(
+                    imported.node_id,
+                    EdgeKind.IMPORTS,
+                    external_name=alias.name,
+                    metadata={"python_module": alias.name, "level": 0},
+                )
             )
 
     def visit_ImportFrom(self, node: ast.ImportFrom) -> None:
         module_name = "." * node.level + (node.module or "")
         locator = self._locator("import", module_name)
-        imported = self._node(NodeKind.IMPORT, locator, module_name, node)
+        imported = self._node(
+            NodeKind.IMPORT,
+            locator,
+            module_name,
+            node,
+            metadata={
+                "module": node.module or "",
+                "alias": None,
+                "imported_names": [alias.name for alias in node.names],
+                "imported_aliases": {
+                    alias.asname or alias.name: alias.name for alias in node.names
+                },
+                "level": node.level,
+            },
+        )
         self.relations.append(
-            RelationFact(imported.node_id, EdgeKind.IMPORTS, external_name=module_name)
+            RelationFact(
+                imported.node_id,
+                EdgeKind.IMPORTS,
+                external_name=module_name,
+                metadata={"python_module": node.module or "", "level": node.level},
+            )
         )
 
     def visit_FunctionDef(self, node: ast.FunctionDef) -> None:
@@ -71,14 +115,28 @@ class _PythonVisitor(ast.NodeVisitor):
 
     def _visit_function(self, node: ast.FunctionDef | ast.AsyncFunctionDef) -> None:
         locator = self._locator("function", node.name)
-        function = self._node(NodeKind.FUNCTION, locator, node.name, node)
+        qualified = ".".join((self.module_name, *self.scope_names()[1:], node.name))
+        function = self._node(
+            NodeKind.FUNCTION,
+            locator,
+            node.name,
+            node,
+            metadata={"qualified_name": qualified, "scope": list(self.scope_names())},
+        )
         self.scope.append(function)
         self.generic_visit(node)
         self.scope.pop()
 
     def visit_ClassDef(self, node: ast.ClassDef) -> None:
         locator = self._locator("class", node.name)
-        class_node = self._node(NodeKind.CLASS, locator, node.name, node)
+        qualified = ".".join((self.module_name, *self.scope_names()[1:], node.name))
+        class_node = self._node(
+            NodeKind.CLASS,
+            locator,
+            node.name,
+            node,
+            metadata={"qualified_name": qualified, "scope": list(self.scope_names())},
+        )
         self.scope.append(class_node)
         self.generic_visit(node)
         self.scope.pop()
@@ -86,13 +144,20 @@ class _PythonVisitor(ast.NodeVisitor):
     def visit_Call(self, node: ast.Call) -> None:
         name = _call_name(node.func)
         locator = self._locator("call", name)
-        call = self._node(NodeKind.CALL, locator, name, node)
+        call = self._node(
+            NodeKind.CALL,
+            locator,
+            name,
+            node,
+            metadata={"call_name": name, "scope": list(self.scope_names())},
+        )
         self.relations.append(
             RelationFact(
                 call.node_id,
                 EdgeKind.CALLS,
                 target_locator=f"symbol/{name}",
                 external_name=name,
+                metadata={"call_name": name, "scope": list(self.scope_names())},
             )
         )
         self.generic_visit(node)
@@ -124,6 +189,14 @@ def _call_name(node: ast.AST) -> str:
     if isinstance(node, ast.Attribute):
         return f"{_call_name(node.value)}.{node.attr}"
     return type(node).__name__
+
+
+def _module_name(relative_path: str) -> str:
+    path = Path(relative_path)
+    parts = list(path.with_suffix("").parts)
+    if parts and parts[-1] == "__init__":
+        parts.pop()
+    return ".".join(parts) or path.stem
 
 
 def _is_main_guard(node: ast.AST) -> bool:

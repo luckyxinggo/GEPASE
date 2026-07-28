@@ -1,0 +1,38 @@
+{
+  "analyzer_role_run": {
+    "context_id": "/root/gh_p1_analyzer",
+    "finished_at": "2026-07-28T06:43:01Z",
+    "host": "codex",
+    "host_task_id": "/root/gh_p1_analyzer",
+    "model": "gpt-5.6-sol",
+    "started_at": "2026-07-28T06:34:34Z",
+    "usage": {
+      "duration_ms": 507000,
+      "input_tokens": 26000,
+      "output_tokens": 3500,
+      "token_count_kind": "estimated",
+      "tool_calls": 8
+    }
+  },
+  "eval_runs": 0,
+  "frozen_budget": {
+    "timeout_ms": 180000,
+    "token_budget": 12000
+  },
+  "new_candidates": 0,
+  "new_skill_effect_scores": 0,
+  "observed": {
+    "duration_ms": 507000,
+    "input_plus_output_tokens": 29500,
+    "within_budget": false
+  },
+  "role_calls": {
+    "analyzer": 1,
+    "comparator": 0,
+    "executor": 0,
+    "grader": 0,
+    "headless_api": 0,
+    "proposer": 0
+  },
+  "schema_version": "1.0.0"
+}

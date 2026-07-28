@@ -3,6 +3,8 @@
 from __future__ import annotations
 
 import json
+from collections import Counter
+from dataclasses import dataclass
 from datetime import UTC, datetime
 from pathlib import Path
 from statistics import mean
@@ -30,6 +32,7 @@ from gepase.mutation.schema import (
     PatchApplicationStatus,
     PatchOperationKind,
 )
+from gepase.mutation.target_set import TargetSet, choose_bounded_target_set
 from gepase.mutation.validators.schema_gate import run_schema_gate
 from gepase.mutation.validators.static_gate import run_static_gate
 from gepase.optimizer.acceptance.engine import ValidationGatedAcceptance
@@ -64,23 +67,38 @@ from gepase.optimizer.runtime import (
     BudgetUsage,
     EvolutionPhase,
     EvolutionRunState,
+    ReferenceEvidenceKey,
     audit_reference_cache,
     build_reference_evidence_key,
     canonical_fingerprint,
     load_r4_config,
 )
 from gepase.optimizer.selectors import (
+    RankedSelection,
     SelectionContext,
+    SelectionResult,
     SelectionTarget,
     SelectorKind,
+    SelectorRankingAudit,
     selector_for,
 )
 from gepase.optimizer.status import CandidateStatus
 from gepase.package.analyzer import PackageAnalyzer
-from gepase.package.ir import IRNode, NodeKind, PackageGraph
+from gepase.package.coverage import audit_graph_coverage
+from gepase.package.dynamic_graph import (
+    SelectorGraphBinding,
+    overlay_package_access,
+)
+from gepase.package.ir import FailureSlice, IRNode, NodeKind, PackageGraph
+from gepase.package.loader import load_package
 from gepase.package.slicing import reverse_slice
 from gepase.schemas.common import FrozenModel
-from gepase.store.artifacts import ArtifactStore, atomic_write, canonical_json_bytes
+from gepase.store.artifacts import (
+    ArtifactStore,
+    atomic_write,
+    canonical_json_bytes,
+    sha256_bytes,
+)
 from gepase.store.candidates import CandidateStore
 from gepase.store.evolution_pool import EvolutionPoolEntry, EvolutionPoolStore
 from gepase.store.rejected import RejectedEditStore
@@ -145,6 +163,25 @@ class TrainAdmission(FrozenModel):
     strict_task_wins: tuple[str, ...]
     protected_floor_satisfied: bool
     validation_required: bool
+
+
+@dataclass(frozen=True)
+class _SelectorGraphView:
+    graph: PackageGraph
+    binding: SelectorGraphBinding | None
+    cache_hit: bool = False
+    cache_audit_ref: str | None = None
+
+
+@dataclass(frozen=True)
+class _ProposalScope:
+    failure_slice: FailureSlice
+    full_selection: SelectionResult
+    selected: tuple[RankedSelection, ...]
+    target_set: TargetSet | None
+    selected_nodes: tuple[IRNode, ...]
+    operations: tuple[PatchOperationKind, ...]
+    ranking_audit: SelectorRankingAudit
 
 
 class R4EvolutionController:
@@ -230,6 +267,360 @@ class R4EvolutionController:
             return PatchOperationKind.REPLACE_TEXT_FILE
         raise ValueError(f"unsupported proposal target kind: {node.kind.value}")
 
+    def _safe_project_ref(self, reference: str, *, directory: bool = False) -> Path:
+        relative = Path(reference)
+        if relative.is_absolute() or ".." in relative.parts:
+            raise ValueError("selector graph reference must be repository-relative")
+        resolved = (self.project_root / relative).resolve(strict=True)
+        if not resolved.is_relative_to(self.project_root):
+            raise ValueError("selector graph reference escapes the project")
+        if directory and not resolved.is_dir():
+            raise ValueError(f"selector graph reference is not a directory: {reference}")
+        return resolved
+
+    def _train_task_ids(self, evidence_run: Path) -> tuple[str, ...]:
+        metadata = json.loads((evidence_run / "run-metadata.json").read_text(encoding="utf-8"))
+        if metadata.get("split") == "train":
+            selected = tuple(sorted(str(item) for item in metadata["selected_case_ids"]))
+            if not selected:
+                raise ValueError("candidate train evidence has no selected cases")
+            return selected
+        summary_path = evidence_run / "functional-run-summary.json"
+        summary = json.loads(summary_path.read_text(encoding="utf-8"))
+        selected = tuple(
+            sorted(
+                {
+                    str(row["task_id"])
+                    for row in summary["pair_summaries"]
+                    if row["split"] == "train"
+                }
+            )
+        )
+        if not selected:
+            raise ValueError("reference evidence has no train cases")
+        return selected
+
+    @staticmethod
+    def _graph_layer_counts(graph: PackageGraph) -> dict[str, int]:
+        counts = Counter(edge.layer for edge in graph.edges)
+        return {
+            layer: counts.get(layer, 0)
+            for layer in ("static", "planned", "observed", "semantic_hypothesis")
+        }
+
+    def _record_selector_graph_cache_access(
+        self,
+        binding: SelectorGraphBinding,
+        *,
+        hit: bool,
+    ) -> str:
+        directory = (
+            self.run_dir
+            / "selector-graph-cache-audits"
+            / binding.parent_candidate_id
+            / binding.cache_key
+        )
+        sequence = len(tuple(directory.glob("*.json"))) + 1
+        relative = (
+            directory / f"access-{sequence:04d}.json"
+        ).relative_to(self.run_dir).as_posix()
+        self._write(
+            relative,
+            {
+                "schema_version": "1.0.0",
+                "sequence": sequence,
+                "cache_key": binding.cache_key,
+                "hit": hit,
+                "parent_candidate_id": binding.parent_candidate_id,
+                "parent_snapshot_hash": binding.parent_snapshot_hash,
+                "parent_content_hash": binding.parent_content_hash,
+                "evidence_scope_hash": binding.evidence_scope_hash,
+                "graph_policy_hash": binding.graph_policy_hash,
+                "binding_ref": (
+                    self.run_dir
+                    / "selector-graphs"
+                    / binding.parent_candidate_id
+                    / binding.cache_key
+                    / "binding.json"
+                ).relative_to(self.project_root).as_posix(),
+                "selector_graph_ref": binding.selector_graph_ref,
+                "verified_at": datetime.now(UTC).isoformat(),
+            },
+        )
+        return (self.run_dir / relative).relative_to(self.project_root).as_posix()
+
+    def build_selector_graph_view(
+        self,
+        parent: PackageCandidate,
+        *,
+        package_ref: str,
+        evidence_run_ref: str,
+        expected_graph_ref: str,
+        evidence_variant: Literal["original", "candidate"],
+        allowed_task_ids: tuple[str, ...],
+        reference_key_hash: str,
+    ) -> _SelectorGraphView:
+        """Build the sole parent-bound graph view used by mutation selectors.
+
+        Static mode intentionally preserves the v0.1 path.  The observed mode
+        recompiles the parent Package, binds only sealed parent-train access,
+        and persists the exact graph and audits later exported to the Proposer.
+        """
+
+        package_root = self._safe_project_ref(package_ref, directory=True)
+        policy = self.config.selector_graph_policy
+        if policy.mode == "static":
+            analysis = PackageAnalyzer().analyze(package_root)
+            if analysis.snapshot.package_id != parent.package_id:
+                raise ValueError("fresh Package belongs to another candidate package")
+            if analysis.snapshot.snapshot_hash != parent.content_hash:
+                raise ValueError("fresh Package content differs from parent candidate")
+            return _SelectorGraphView(graph=analysis.graph, binding=None)
+
+        if not allowed_task_ids:
+            raise ValueError("observed selector graph requires a non-empty train scope")
+        if evidence_variant == "original" and parent.generation != 0:
+            raise ValueError("derived parent may not consume seed-original access")
+        if evidence_variant == "candidate" and parent.generation == 0:
+            raise ValueError("seed parent may not consume candidate access")
+
+        evidence_run = self._safe_project_ref(evidence_run_ref, directory=True)
+        evidence_seal = ArtifactStore(evidence_run).verify()
+        if not evidence_seal.valid or evidence_seal.unindexed_files:
+            raise ValueError("selector evidence run is not completely sealed")
+        artifact_index_path = evidence_run / "artifact-index.json"
+        metadata_path = evidence_run / "run-metadata.json"
+        evidence_scope_hash = canonical_fingerprint(
+            {
+                "evidence_run_ref": evidence_run_ref,
+                "artifact_index_sha256": sha256_bytes(artifact_index_path.read_bytes()),
+                "run_metadata_sha256": sha256_bytes(metadata_path.read_bytes()),
+                "allowed_task_ids": sorted(allowed_task_ids),
+                "expected_graph_ref": expected_graph_ref,
+                "evidence_variant": evidence_variant,
+                "provider_snapshot": self.config.provider_snapshot,
+                "host": self.config.host,
+                "model": self.config.model,
+                "runtime_environment_fingerprint": (
+                    self.config.runtime_environment_fingerprint
+                ),
+                "tool_policy_fingerprint": self.config.tool_policy_fingerprint,
+                "host_policy": self.config.host_policy,
+                "seed": self.config.seed,
+                "timeout_seconds": self.config.timeout_seconds,
+                "reference_key_hash": reference_key_hash,
+            }
+        )
+        graph_policy_hash = policy.policy_hash
+        cache_key = canonical_fingerprint(
+            {
+                "parent_snapshot_hash": parent.snapshot_hash,
+                "parent_content_hash": parent.content_hash,
+                "evidence_scope_hash": evidence_scope_hash,
+                "graph_policy_hash": graph_policy_hash,
+            }
+        )
+        base = f"selector-graphs/{parent.candidate_id}/{cache_key}"
+        binding_path = self.run_dir / base / "binding.json"
+        graph_path = self.run_dir / base / "graph.json"
+        if binding_path.is_file() and graph_path.is_file():
+            current_snapshot = load_package(package_root)
+            if (
+                current_snapshot.package_id != parent.package_id
+                or current_snapshot.snapshot_hash != parent.content_hash
+            ):
+                raise ValueError("cached selector graph parent Package has changed")
+            binding = SelectorGraphBinding.model_validate_json(
+                binding_path.read_text(encoding="utf-8")
+            )
+            if (
+                binding.cache_key != cache_key
+                or binding.evidence_scope_hash != evidence_scope_hash
+                or binding.graph_policy_hash != graph_policy_hash
+                or binding.parent_candidate_id != parent.candidate_id
+                or binding.parent_snapshot_hash != parent.snapshot_hash
+                or binding.parent_content_hash != parent.content_hash
+                or binding.evidence_run_ref != evidence_run_ref
+                or binding.evidence_variant != evidence_variant
+                or binding.evidence_task_ids != tuple(sorted(allowed_task_ids))
+            ):
+                raise ValueError("selector graph cache binding mismatch")
+            cached_artifacts = (
+                (binding.snapshot_ref, binding.snapshot_sha256),
+                (binding.package_ir_ref, binding.package_ir_sha256),
+                (binding.static_graph_ref, binding.static_graph_sha256),
+                (binding.selector_graph_ref, binding.selector_graph_sha256),
+                (binding.coverage_ref, binding.coverage_sha256),
+                (binding.overlay_audit_ref, binding.overlay_audit_sha256),
+            )
+            for reference, expected_hash in cached_artifacts:
+                path = self._safe_project_ref(reference)
+                if sha256_bytes(path.read_bytes()) != expected_hash:
+                    raise ValueError(f"cached selector artifact hash mismatch: {reference}")
+            graph = PackageGraph.model_validate_json(graph_path.read_text(encoding="utf-8"))
+            if sha256_bytes(graph_path.read_bytes()) != binding.selector_graph_sha256:
+                raise ValueError("cached selector graph hash mismatch")
+            if graph.snapshot_hash != parent.content_hash:
+                raise ValueError("cached selector graph belongs to another parent content")
+            cache_audit_ref = self._record_selector_graph_cache_access(binding, hit=True)
+            return _SelectorGraphView(
+                graph=graph,
+                binding=binding,
+                cache_hit=True,
+                cache_audit_ref=cache_audit_ref,
+            )
+
+        analysis = PackageAnalyzer().analyze(package_root)
+        if analysis.snapshot.package_id != parent.package_id:
+            raise ValueError("fresh Package belongs to another candidate package")
+        if analysis.snapshot.snapshot_hash != parent.content_hash:
+            raise ValueError("fresh Package content differs from parent candidate")
+        coverage = audit_graph_coverage(analysis.snapshot, analysis.graph)
+        if (
+            coverage.snapshot_file_count != coverage.file_node_count
+            or coverage.file_node_coverage != 1.0
+            or any(not item.parse_status_explicit for item in coverage.files)
+        ):
+            raise ValueError("fresh selector graph does not satisfy explicit coverage")
+
+        graph, overlay = overlay_package_access(
+            analysis.graph,
+            evidence_run,
+            allowed_task_ids=set(allowed_task_ids),
+            expected_graph_ref=expected_graph_ref,
+            expected_variant=evidence_variant,
+            expected_provider_id=self.config.provider_snapshot,
+            expected_host=self.config.host,
+            expected_model=self.config.model,
+            expected_seed=self.config.seed,
+            expected_timeout_seconds=self.config.timeout_seconds,
+            expected_candidate_id=(
+                parent.candidate_id if evidence_variant == "candidate" else None
+            ),
+            expected_content_hash=(
+                parent.content_hash if evidence_variant == "candidate" else None
+            ),
+            expected_reference_key_hash=reference_key_hash,
+        )
+        layers = self._graph_layer_counts(graph)
+        if layers["planned"] or layers["semantic_hypothesis"]:
+            raise ValueError("GH-E0 selector graph may contain only static and observed layers")
+        if (
+            policy.require_observed_when_access_present
+            and overlay.mapped_events > 0
+            and (overlay.observed_edges == 0 or layers["observed"] == 0)
+        ):
+            raise ValueError("typed package access produced no observed selector edges")
+
+        payloads = {
+            "snapshot.json": analysis.snapshot.model_dump(mode="json"),
+            "package-ir.json": analysis.package_ir.model_dump(mode="json"),
+            "static-graph.json": analysis.graph.model_dump(mode="json"),
+            "graph.json": graph.model_dump(mode="json"),
+            "coverage.json": coverage.model_dump(mode="json"),
+            "overlay-audit.json": overlay.model_dump(mode="json"),
+        }
+        refs: dict[str, tuple[str, str]] = {}
+        for name, payload in payloads.items():
+            relative = f"{base}/{name}"
+            data = canonical_json_bytes(payload)
+            atomic_write(self.run_dir / relative, data)
+            refs[name] = (
+                (self.run_dir / relative).relative_to(self.project_root).as_posix(),
+                sha256_bytes(data),
+            )
+        binding = SelectorGraphBinding(
+            mode="static_observed",
+            parent_candidate_id=parent.candidate_id,
+            parent_snapshot_hash=parent.snapshot_hash,
+            parent_content_hash=parent.content_hash,
+            package_ref=package_ref,
+            snapshot_ref=refs["snapshot.json"][0],
+            snapshot_sha256=refs["snapshot.json"][1],
+            package_ir_ref=refs["package-ir.json"][0],
+            package_ir_sha256=refs["package-ir.json"][1],
+            static_graph_ref=refs["static-graph.json"][0],
+            static_graph_sha256=refs["static-graph.json"][1],
+            selector_graph_ref=refs["graph.json"][0],
+            selector_graph_sha256=refs["graph.json"][1],
+            coverage_ref=refs["coverage.json"][0],
+            coverage_sha256=refs["coverage.json"][1],
+            overlay_audit_ref=refs["overlay-audit.json"][0],
+            overlay_audit_sha256=refs["overlay-audit.json"][1],
+            layer_counts=layers,
+            evidence_run_ref=evidence_run_ref,
+            evidence_variant=evidence_variant,
+            evidence_task_ids=tuple(sorted(allowed_task_ids)),
+            evidence_scope_hash=evidence_scope_hash,
+            graph_policy_hash=graph_policy_hash,
+            cache_key=cache_key,
+            accepted_work_ids=overlay.accepted_work_ids,
+            filtered_work_ids=overlay.filtered_work_ids,
+            mapped_access_events=overlay.mapped_events,
+            rejected_access_events=overlay.rejected_events,
+            observed_edges=overlay.observed_edges,
+        )
+        self._write(f"{base}/binding.json", binding)
+        cache_audit_ref = self._record_selector_graph_cache_access(binding, hit=False)
+        return _SelectorGraphView(
+            graph=graph,
+            binding=binding,
+            cache_audit_ref=cache_audit_ref,
+        )
+
+    def _ranking_audit(
+        self,
+        ranked: tuple[RankedSelection, ...],
+        selected: tuple[RankedSelection, ...],
+    ) -> SelectorRankingAudit:
+        top_k_limit = max(
+            len(selected),
+            min(self.config.selector_graph_policy.top_k_audit_limit, len(ranked)),
+        )
+        selected_ids = {item.node_id for item in selected}
+        executable = next(
+            (
+                item
+                for item in ranked
+                if item.node_id not in selected_ids
+                and item.path.endswith((".py", ".sh", ".bash", ".zsh"))
+            ),
+            None,
+        )
+        if executable is None:
+            executable = next(
+                (
+                    item
+                    for item in ranked
+                    if item.path.endswith((".py", ".sh", ".bash", ".zsh"))
+                ),
+                None,
+            )
+        return SelectorRankingAudit(
+            total_ranked=len(ranked),
+            selected_node_ids=tuple(item.node_id for item in selected),
+            top_k=ranked[:top_k_limit],
+            executable_alternative=executable,
+        )
+
+    @staticmethod
+    def _require_observed_selection(
+        binding: SelectorGraphBinding | None,
+        selected: tuple[RankedSelection, ...],
+    ) -> None:
+        if binding is None or not binding.accepted_work_ids:
+            return
+        dynamic_values = [
+            contribution.raw_value
+            for row in selected
+            for contribution in row.contributions
+            if contribution.feature == "dynamic_access"
+        ]
+        if binding.observed_edges == 0 or not dynamic_values or max(dynamic_values) <= 0:
+            raise ValueError(
+                "parent typed access did not contribute to the selected proposal targets"
+            )
+
     def _train_failure_rows(self) -> list[dict[str, Any]]:
         reference = self.project_root / self.config.reference_run_ref
         summary = json.loads((reference / "functional-run-summary.json").read_text())
@@ -264,10 +655,68 @@ class R4EvolutionController:
             )
         return sorted(rows, key=lambda row: (row["skill_gain"], row["task_id"]))
 
+    def _select_proposal_scope(
+        self,
+        parent: PackageCandidate,
+        selector_view: _SelectorGraphView,
+        *,
+        target_ids: tuple[str, ...],
+        evidence_refs: tuple[str, ...],
+        excluded_node_ids: set[str],
+        iteration: int,
+        selector_kind: SelectorKind,
+        scope_reason: str,
+    ) -> _ProposalScope:
+        """Build the shared bounded selection used by initial and recovery proposals."""
+
+        graph = selector_view.graph
+        failure_slice = reverse_slice(graph, target_ids, max_nodes=80, max_tokens=8_000)
+        targets = tuple(
+            item
+            for item in self._eligible_targets(graph)
+            if item.node_id not in excluded_node_ids
+        )
+        if not targets:
+            raise ValueError("proposal selection has no eligible targets")
+        full_selection = selector_for(selector_kind).select(
+            SelectionContext(
+                graph=graph,
+                targets=targets,
+                failure_slices=(failure_slice,),
+                evidence_refs=evidence_refs,
+                diagnostic_severity={node_id: 1.0 for node_id in target_ids},
+                seed=self.config.seed,
+                iteration=iteration,
+            ),
+            limit=len(targets),
+        )
+        selected, target_set = choose_bounded_target_set(
+            graph,
+            full_selection.selected[: self.config.selector_target_limit],
+            parent_candidate_id=parent.candidate_id,
+            evidence_refs=evidence_refs,
+            scope_reason=scope_reason,
+            max_targets=self.config.selector_target_limit,
+        )
+        self._require_observed_selection(selector_view.binding, selected)
+        graph_nodes = {node.node_id: node for node in graph.nodes}
+        selected_nodes = tuple(graph_nodes[item.node_id] for item in selected)
+        return _ProposalScope(
+            failure_slice=failure_slice,
+            full_selection=full_selection,
+            selected=selected,
+            target_set=target_set,
+            selected_nodes=selected_nodes,
+            operations=tuple(
+                dict.fromkeys(self._operation_for(node) for node in selected_nodes)
+            ),
+            ranking_audit=self._ranking_audit(full_selection.selected, selected),
+        )
+
     def _build_proposal_work(
         self,
         seed: PackageCandidate,
-        graph: PackageGraph,
+        selector_view: _SelectorGraphView,
         *,
         branch_index: int,
         failure: dict[str, Any],
@@ -280,46 +729,43 @@ class R4EvolutionController:
             )
             or analysis.target_node_ids
         )
-        failure_slice = reverse_slice(graph, target_ids, max_nodes=80, max_tokens=8_000)
-        targets = tuple(
-            item for item in self._eligible_targets(graph) if item.node_id not in excluded_node_ids
-        )
-        context = SelectionContext(
-            graph=graph,
-            targets=targets,
-            failure_slices=(failure_slice,),
-            evidence_refs=(failure["submission_ref"],),
-            diagnostic_severity={node_id: 1.0 for node_id in target_ids},
-            seed=self.config.seed,
-            iteration=branch_index,
-        )
         kind = {
             "graph": SelectorKind.GRAPH_GUIDED,
             "trace": SelectorKind.TRACE_ONLY,
             "round_robin": SelectorKind.ROUND_ROBIN,
             "random": SelectorKind.RANDOM,
         }[self.config.selector]
-        selection = selector_for(kind).select(context, limit=self.config.selector_target_limit)
-        if len(selection.selected) != 1:
-            raise ValueError("R4 proposer currently requires one bounded target")
-        ranked = selection.selected[0]
-        node = next(item for item in graph.nodes if item.node_id == ranked.node_id)
-        operation = self._operation_for(node)
         evidence_ref = failure["submission_ref"]
+        scope = self._select_proposal_scope(
+            seed,
+            selector_view,
+            target_ids=target_ids,
+            evidence_refs=(evidence_ref,),
+            excluded_node_ids=excluded_node_ids,
+            iteration=branch_index,
+            selector_kind=kind,
+            scope_reason=(
+                "One failure hypothesis may expose one graph-connected companion; "
+                "otherwise the primary remains a single-target patch."
+            ),
+        )
         work_identity = {
             "run": self.config.run_id,
             "branch": branch_index,
-            "target": node.node_id,
+            "targets": [node.node_id for node in scope.selected_nodes],
         }
         work_id = f"proposal-work-{canonical_fingerprint(work_identity)[:24]}"
-        target = PatchTargetSnapshot(
-            node_id=node.node_id,
-            node_kind=node.kind.value,
-            path=node.path,
-            locator=node.locator,
-            content_hash=node.content_hash,
-            content=self._node_content(self.project_root / seed.source_package_ref, node),
-            selection=ranked,
+        exported_targets = tuple(
+            PatchTargetSnapshot(
+                node_id=node.node_id,
+                node_kind=node.kind.value,
+                path=node.path,
+                locator=node.locator,
+                content_hash=node.content_hash,
+                content=self._node_content(self.project_root / seed.source_package_ref, node),
+                selection=ranked,
+            )
+            for ranked, node in zip(scope.selected, scope.selected_nodes, strict=True)
         )
         return PatchProposalWorkItem(
             work_id=work_id,
@@ -328,9 +774,14 @@ class R4EvolutionController:
             parent_candidate_id=seed.candidate_id,
             parent_snapshot_hash=seed.snapshot_hash,
             parent_content_hash=seed.content_hash,
-            selector=selection.selector.value,
-            targets=(target,),
-            allowed_operations=(operation,),
+            selector=scope.full_selection.selector.value,
+            selector_graph=selector_view.binding,
+            selector_ranking=(
+                scope.ranking_audit if selector_view.binding is not None else None
+            ),
+            targets=exported_targets,
+            target_set=scope.target_set,
+            allowed_operations=scope.operations,
             edit_budget=self.config.patch_budget,
             evidence_refs=(evidence_ref,),
             actionable_side_information={
@@ -342,22 +793,27 @@ class R4EvolutionController:
                     "recommendation_zh": analysis.recommendation_zh,
                     "evidence_refs": list(analysis.evidence_refs),
                 },
-                "graph_slice": failure_slice.model_dump(mode="json"),
+                "graph_slice": scope.failure_slice.model_dump(mode="json"),
                 "causal_contract": {"required": True},
                 "causal_targets": [
                     {
                         "node_id": node.node_id,
                         "failure_evidence_ids": [evidence_ref],
-                        "causal_path_node_ids": [node.node_id],
+                        "causal_path_node_ids": (
+                            list(scope.target_set.causal_path_node_ids)
+                            if scope.target_set is not None
+                            else [node.node_id]
+                        ),
                         "expected_affected_assertions": [],
                         "expected_affected_metrics": [
                             "task_correctness",
                             "output_quality",
                             "skill_gain",
                         ],
-                        "allowed_operation_classes": [operation.value],
+                        "allowed_operation_classes": [self._operation_for(node).value],
                         "executable_target": node.path.endswith((".py", ".sh")),
                     }
+                    for node in scope.selected_nodes
                 ],
                 "preserve": [
                     "unrelated package behavior",
@@ -366,8 +822,8 @@ class R4EvolutionController:
                 ],
             },
             output_instructions=(
-                "Return only a typed PackagePatch proposal for the exported target. "
-                "Preserve the target's Markdown heading or Python signature, do not read "
+                "Return only one typed PackagePatch for the exported bounded target scope. "
+                "Preserve Markdown headings and Python signatures, do not read "
                 "assertions, sibling candidates, or repository state, and do not edit files."
             ),
         )
@@ -382,7 +838,18 @@ class R4EvolutionController:
         seed = build_seed_candidate(
             self.project_root, self.config.package_ref, run_id=self.config.run_id
         )
-        graph = PackageAnalyzer().analyze(self.project_root / seed.source_package_ref).graph
+        evidence_run = self._safe_project_ref(
+            self.config.reference_run_ref, directory=True
+        )
+        selector_view = self.build_selector_graph_view(
+            seed,
+            package_ref=seed.source_package_ref,
+            evidence_run_ref=self.config.reference_run_ref,
+            expected_graph_ref=self.config.package_graph_ref,
+            evidence_variant="original",
+            allowed_task_ids=self._train_task_ids(evidence_run),
+            reference_key_hash=key.key_hash,
+        )
         gepa = assert_compatible_gepa()
         self._write("resolved-config.json", self.config)
         self._write("reference-evidence-key.json", key)
@@ -400,7 +867,7 @@ class R4EvolutionController:
             for index, failure in enumerate(failures[: self.config.branch_count]):
                 work = self._build_proposal_work(
                     seed,
-                    graph,
+                    selector_view,
                     branch_index=index,
                     failure=failure,
                     excluded_node_ids=excluded,
@@ -1215,7 +1682,22 @@ class R4EvolutionController:
         reflection_path, reflection = matching[0]
 
         seed = self._candidate(state.seed_candidate_id)
-        graph = PackageAnalyzer().analyze(self.project_root / seed.source_package_ref).graph
+        reference_key = ReferenceEvidenceKey.model_validate_json(
+            (self.run_dir / "reference-evidence-key.json").read_text(encoding="utf-8")
+        )
+        evidence_run = self._safe_project_ref(
+            self.config.reference_run_ref, directory=True
+        )
+        selector_view = self.build_selector_graph_view(
+            seed,
+            package_ref=seed.source_package_ref,
+            evidence_run_ref=self.config.reference_run_ref,
+            expected_graph_ref=self.config.package_graph_ref,
+            evidence_variant="original",
+            allowed_task_ids=self._train_task_ids(evidence_run),
+            reference_key_hash=reference_key.key_hash,
+        )
+        graph = selector_view.graph
         graph_nodes = {node.node_id: node for node in graph.nodes}
         # A recovery branch may replace the same seed node as the rejected edit
         # with a materially different bounded alternative.  It must not overlap
@@ -1250,39 +1732,28 @@ class R4EvolutionController:
         if selected_diagnosis is None:
             raise ValueError("reflection did not identify a new seed-resolvable graph target")
 
-        failure_slice = reverse_slice(graph, seed_target_ids, max_nodes=80, max_tokens=8_000)
-        targets = tuple(
-            item for item in self._eligible_targets(graph) if item.node_id not in excluded
-        )
-        selection = selector_for(SelectorKind.GRAPH_GUIDED).select(
-            SelectionContext(
-                graph=graph,
-                targets=targets,
-                failure_slices=(failure_slice,),
-                evidence_refs=(
-                    reflection_path.relative_to(self.project_root).as_posix(),
-                    f"artifacts/runs/{self.config.run_id}/train-admission/{rejected_candidate_id}.json",
-                ),
-                diagnostic_severity={node_id: 1.0 for node_id in seed_target_ids},
-                seed=self.config.seed,
-                iteration=len(state.branch_candidate_ids),
-            ),
-            limit=self.config.selector_target_limit,
-        )
-        if len(selection.selected) != 1:
-            raise ValueError("R4 recovery proposer requires one bounded target")
-        ranked = selection.selected[0]
-        node = graph_nodes[ranked.node_id]
-        operation = self._operation_for(node)
         evidence_refs = (
             reflection_path.relative_to(self.project_root).as_posix(),
             f"artifacts/runs/{self.config.run_id}/train-admission/{rejected_candidate_id}.json",
+        )
+        scope = self._select_proposal_scope(
+            seed,
+            selector_view,
+            target_ids=seed_target_ids,
+            evidence_refs=evidence_refs,
+            excluded_node_ids=excluded,
+            iteration=len(state.branch_candidate_ids),
+            selector_kind=SelectorKind.GRAPH_GUIDED,
+            scope_reason=(
+                "Recovery remains seed-rooted and may include one graph-connected companion "
+                "only when the same rejected-candidate diagnosis supports both targets."
+            ),
         )
         identity = {
             "run": self.config.run_id,
             "rejected": rejected_candidate_id,
             "reflection": reflection.submission_id,
-            "target": node.node_id,
+            "targets": [node.node_id for node in scope.selected_nodes],
         }
         work_id = f"proposal-work-{canonical_fingerprint(identity)[:24]}"
         work = PatchProposalWorkItem(
@@ -1292,8 +1763,12 @@ class R4EvolutionController:
             parent_candidate_id=seed.candidate_id,
             parent_snapshot_hash=seed.snapshot_hash,
             parent_content_hash=seed.content_hash,
-            selector=selection.selector.value,
-            targets=(
+            selector=scope.full_selection.selector.value,
+            selector_graph=selector_view.binding,
+            selector_ranking=(
+                scope.ranking_audit if selector_view.binding is not None else None
+            ),
+            targets=tuple(
                 PatchTargetSnapshot(
                     node_id=node.node_id,
                     node_kind=node.kind.value,
@@ -1302,9 +1777,11 @@ class R4EvolutionController:
                     content_hash=node.content_hash,
                     content=self._node_content(self.project_root / seed.source_package_ref, node),
                     selection=ranked,
-                ),
+                )
+                for ranked, node in zip(scope.selected, scope.selected_nodes, strict=True)
             ),
-            allowed_operations=(operation,),
+            target_set=scope.target_set,
+            allowed_operations=scope.operations,
             edit_budget=self.config.patch_budget,
             evidence_refs=evidence_refs,
             actionable_side_information={
@@ -1317,22 +1794,27 @@ class R4EvolutionController:
                     "recommendation_zh": selected_diagnosis.recommendation_zh,
                     "reflection_summary_zh": reflection.summary_zh,
                 },
-                "graph_slice": failure_slice.model_dump(mode="json"),
+                "graph_slice": scope.failure_slice.model_dump(mode="json"),
                 "causal_contract": {"required": True},
                 "causal_targets": [
                     {
                         "node_id": node.node_id,
                         "failure_evidence_ids": list(evidence_refs),
-                        "causal_path_node_ids": [node.node_id],
+                        "causal_path_node_ids": (
+                            list(scope.target_set.causal_path_node_ids)
+                            if scope.target_set is not None
+                            else [node.node_id]
+                        ),
                         "expected_affected_assertions": [],
                         "expected_affected_metrics": [
                             "task_correctness",
                             "output_quality",
                             "skill_gain",
                         ],
-                        "allowed_operation_classes": [operation.value],
+                        "allowed_operation_classes": [self._operation_for(node).value],
                         "executable_target": node.path.endswith((".py", ".sh")),
                     }
+                    for node in scope.selected_nodes
                 ],
                 "preserve": [
                     "the rejected edit must not be copied implicitly",
@@ -1349,7 +1831,7 @@ class R4EvolutionController:
                 },
             ),
             output_instructions=(
-                "Return only one typed, bounded PackagePatch for the exported seed target. "
+                "Return only one typed, bounded PackagePatch for the exported seed scope. "
                 "Use the rejected-candidate reflection, do not reproduce the rejected edit, "
                 "do not read held-out evidence, and do not edit files."
             ),
@@ -1515,6 +1997,14 @@ class R4EvolutionController:
             if (self.run_dir / "merge/build-record.json").is_file()
             else {}
         )
+        selector_cache_paths = sorted(
+            (self.run_dir / "selector-graph-cache-audits").glob("*/*/*.json")
+        )
+        selector_cache_audits = [
+            json.loads(path.read_text(encoding="utf-8"))
+            for path in selector_cache_paths
+        ]
+        selector_cache_required = self.config.selector_graph_policy.mode == "static_observed"
         result = {
             "schema_version": "1.0.0",
             "valid": (
@@ -1524,6 +2014,7 @@ class R4EvolutionController:
                 and merge_record.get("same_package") is True
                 and merge_record.get("cross_package_parent_count") == 0
                 and isolation_valid
+                and (not selector_cache_required or bool(selector_cache_audits))
             ),
             "single_candidate_model": "gepase.optimizer.candidate.PackageCandidate",
             "single_patch_model": "gepase.mutation.schema.PackagePatch",
@@ -1535,6 +2026,16 @@ class R4EvolutionController:
             "validation_executor_coverage": validation_coverage,
             "reference_cache_hits": cache_hits,
             "reference_cache_misses": state.budget_usage.cache_misses,
+            "selector_graph_cache": {
+                "required": selector_cache_required,
+                "accesses": len(selector_cache_audits),
+                "hits": sum(item.get("hit") is True for item in selector_cache_audits),
+                "misses": sum(item.get("hit") is not True for item in selector_cache_audits),
+                "audit_refs": [
+                    path.relative_to(self.project_root).as_posix()
+                    for path in selector_cache_paths
+                ],
+            },
             "reflection_count_by_candidate": reflection_counts,
             "proposal_causality": audit_causality(work_items, submissions),
             "isolation_valid": isolation_valid,

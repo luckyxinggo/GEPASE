@@ -1,0 +1,269 @@
+{
+  "artifacts": [
+    {
+      "media_type": "text/plain",
+      "path": "commands.log",
+      "sha256": "a7160ab53b238a3d7fd5b44623dae257b2b984ee3c05666b7b62bc6f44f520a5",
+      "size_bytes": 402
+    },
+    {
+      "media_type": "application/json",
+      "path": "compatibility-audit.json",
+      "sha256": "05894ea1dde1c6f44de32540ec6deb4c81ccef411d9704c9dd6e99e53be2f10d",
+      "size_bytes": 1143
+    },
+    {
+      "media_type": "application/json",
+      "path": "controller-fixture/gh-e0-controller-fixture/branch-plan.json",
+      "sha256": "c007a286e167f8926f4e6763655fbbd5a83c95bca55d2dac759f386ac2197abc",
+      "size_bytes": 651
+    },
+    {
+      "media_type": "application/x-sqlite3",
+      "path": "controller-fixture/gh-e0-controller-fixture/candidates.sqlite3",
+      "sha256": "2befed4395e4e48b8b94836ce0165d32fe5ba6e214778ed13f73f93f97f1d820",
+      "size_bytes": 110592
+    },
+    {
+      "media_type": "application/json",
+      "path": "controller-fixture/gh-e0-controller-fixture/checkpoint.json",
+      "sha256": "01d850761e0fd4db30445d7215486823a359e9ea456a6a62f0e14d11430b56c6",
+      "size_bytes": 39428
+    },
+    {
+      "media_type": "text/plain",
+      "path": "controller-fixture/gh-e0-controller-fixture/events.jsonl",
+      "sha256": "75dc82ab93917b9b2c9ffb9d4f98e241f63b95fd8c66012fb03ea495dfb71207",
+      "size_bytes": 215
+    },
+    {
+      "media_type": "application/json",
+      "path": "controller-fixture/gh-e0-controller-fixture/evolution-state.json",
+      "sha256": "0b1a50b15993f47b8b7f5e1f31584c58a08b8bbe1c20970ff18116fbc5d9ced3",
+      "size_bytes": 745
+    },
+    {
+      "media_type": "application/json",
+      "path": "controller-fixture/gh-e0-controller-fixture/gepa-provenance.json",
+      "sha256": "53667a8b27b34f5c7ee25217541f738163d52a5ce9aab4f811c3e60e6e2a00d3",
+      "size_bytes": 84
+    },
+    {
+      "media_type": "application/json",
+      "path": "controller-fixture/gh-e0-controller-fixture/proposal-checkpoint.json",
+      "sha256": "5a02b77fb8b69bcf0e6b9f5cd50401a64d53fd357f3bb247f639f705cf977b98",
+      "size_bytes": 161
+    },
+    {
+      "media_type": "application/json",
+      "path": "controller-fixture/gh-e0-controller-fixture/proposal-work-items/proposal-work-4d7eee87556f7c4cc43e4195.json",
+      "sha256": "2efef375b87f0961ba3896d51c79474e12d308e074f096d6498e44b796022348",
+      "size_bytes": 50597
+    },
+    {
+      "media_type": "application/json",
+      "path": "controller-fixture/gh-e0-controller-fixture/proposal-work-items/proposal-work-c0e29b68f326c7f5fa1d0475.json",
+      "sha256": "fd5ad958adb02107be4aa8da1884f6c2e8c457aa691f92734a7a44e8f0cf5cdb",
+      "size_bytes": 53385
+    },
+    {
+      "media_type": "application/x-sqlite3",
+      "path": "controller-fixture/gh-e0-controller-fixture/proposal-work.sqlite3",
+      "sha256": "cf5e379090ab5deab2e32240a38c56013c9cae525f8c272de5f06fb1811be801",
+      "size_bytes": 86016
+    },
+    {
+      "media_type": "application/json",
+      "path": "controller-fixture/gh-e0-controller-fixture/reference-cache-audit.json",
+      "sha256": "07fe62889e30d76d70525a3422db2732e8fd866a05fa959f47671ec6acfc8dba",
+      "size_bytes": 27725
+    },
+    {
+      "media_type": "application/json",
+      "path": "controller-fixture/gh-e0-controller-fixture/reference-evidence-key.json",
+      "sha256": "426e75b8f1b9f211e1b3d9ee16c52c464ebe1e41125f9e2bcbacbc05923d7179",
+      "size_bytes": 59934
+    },
+    {
+      "media_type": "application/json",
+      "path": "controller-fixture/gh-e0-controller-fixture/resolved-config.json",
+      "sha256": "5bbb384304e6e3f5e2841c5c36c9e6dfc3f6c8c50a74b7f336274b767fd28724",
+      "size_bytes": 2669
+    },
+    {
+      "media_type": "application/json",
+      "path": "controller-fixture/gh-e0-controller-fixture/seed-candidate.json",
+      "sha256": "f15c351c8d89146c9f17941b89374e8c05bba54573b3cfba3380b30380ba5b88",
+      "size_bytes": 37862
+    },
+    {
+      "media_type": "application/json",
+      "path": "controller-fixture/gh-e0-controller-fixture/selector-graph-cache-audits/candidate-19a78e0afc08234d2d7f23c6/29ce56c4f21ccefd9841bb5c842709ffbb31f38df9c86cfc259730627bac5be1/access-0001.json",
+      "sha256": "a2e317e7ae24977eb013445881bbb94dc6418cc78292274a4ecf0f8b5d69f572",
+      "size_bytes": 1072
+    },
+    {
+      "media_type": "application/json",
+      "path": "controller-fixture/gh-e0-controller-fixture/selector-graph-cache-audits/candidate-19a78e0afc08234d2d7f23c6/29ce56c4f21ccefd9841bb5c842709ffbb31f38df9c86cfc259730627bac5be1/access-0002.json",
+      "sha256": "af5b711c02d407be49753db953c3b326ee1bda3e470eef8adfe2cdf9a431c601",
+      "size_bytes": 1071
+    },
+    {
+      "media_type": "application/json",
+      "path": "controller-fixture/gh-e0-controller-fixture/selector-graph-cache-audits/candidate-2dad7a05ce4a6460dd71f470/c164ebbc4de60ae216dc22b4adf9ec43ee19b0295cfa8a073b82fda1ba83c074/access-0001.json",
+      "sha256": "c31525d766eb36fccbe1400cce98350bf5a40c82bd6d84148902eaf1cb628a9a",
+      "size_bytes": 1072
+    },
+    {
+      "media_type": "application/json",
+      "path": "controller-fixture/gh-e0-controller-fixture/selector-graphs/candidate-19a78e0afc08234d2d7f23c6/29ce56c4f21ccefd9841bb5c842709ffbb31f38df9c86cfc259730627bac5be1/binding.json",
+      "sha256": "14b295298f5aba6a750030bbd65f39858aebd984f23e24c74116432d49d898fa",
+      "size_bytes": 3746
+    },
+    {
+      "media_type": "application/json",
+      "path": "controller-fixture/gh-e0-controller-fixture/selector-graphs/candidate-19a78e0afc08234d2d7f23c6/29ce56c4f21ccefd9841bb5c842709ffbb31f38df9c86cfc259730627bac5be1/coverage.json",
+      "sha256": "44454420e61dd1cb10fe101d900e24cf261fc294bbe1d17cde6d0060ee571562",
+      "size_bytes": 4277
+    },
+    {
+      "media_type": "application/json",
+      "path": "controller-fixture/gh-e0-controller-fixture/selector-graphs/candidate-19a78e0afc08234d2d7f23c6/29ce56c4f21ccefd9841bb5c842709ffbb31f38df9c86cfc259730627bac5be1/graph.json",
+      "sha256": "382b4f15658e90464386d7e19ed9fec05bf53f5d43eec74c4cc474f82db13eef",
+      "size_bytes": 486150
+    },
+    {
+      "media_type": "application/json",
+      "path": "controller-fixture/gh-e0-controller-fixture/selector-graphs/candidate-19a78e0afc08234d2d7f23c6/29ce56c4f21ccefd9841bb5c842709ffbb31f38df9c86cfc259730627bac5be1/overlay-audit.json",
+      "sha256": "03e67d1423a4c9d49c4eaab3c8d8d733bcd1c0023ece6f0570cd7eff1b564f9a",
+      "size_bytes": 38429
+    },
+    {
+      "media_type": "application/json",
+      "path": "controller-fixture/gh-e0-controller-fixture/selector-graphs/candidate-19a78e0afc08234d2d7f23c6/29ce56c4f21ccefd9841bb5c842709ffbb31f38df9c86cfc259730627bac5be1/package-ir.json",
+      "sha256": "80b5755847c78277027223f7d01e66e7129fd2be30b5877e7e24ad32127710e0",
+      "size_bytes": 430733
+    },
+    {
+      "media_type": "application/json",
+      "path": "controller-fixture/gh-e0-controller-fixture/selector-graphs/candidate-19a78e0afc08234d2d7f23c6/29ce56c4f21ccefd9841bb5c842709ffbb31f38df9c86cfc259730627bac5be1/snapshot.json",
+      "sha256": "56ddcd6e1cece6c5f7c6d3e4ef4d9e713d09df01cfe15ef3c25a984d106f7575",
+      "size_bytes": 2150
+    },
+    {
+      "media_type": "application/json",
+      "path": "controller-fixture/gh-e0-controller-fixture/selector-graphs/candidate-19a78e0afc08234d2d7f23c6/29ce56c4f21ccefd9841bb5c842709ffbb31f38df9c86cfc259730627bac5be1/static-graph.json",
+      "sha256": "8fee934d85b75c2cd29df5e1273b6871b4c6910895ce6faed1382c48adda7ff1",
+      "size_bytes": 430754
+    },
+    {
+      "media_type": "application/json",
+      "path": "controller-fixture/gh-e0-controller-fixture/selector-graphs/candidate-2dad7a05ce4a6460dd71f470/c164ebbc4de60ae216dc22b4adf9ec43ee19b0295cfa8a073b82fda1ba83c074/binding.json",
+      "sha256": "f98e996827dd1470bd273aa5bc62f49a34e2a19cf9e3b8c8c5fa912b6913aadc",
+      "size_bytes": 3459
+    },
+    {
+      "media_type": "application/json",
+      "path": "controller-fixture/gh-e0-controller-fixture/selector-graphs/candidate-2dad7a05ce4a6460dd71f470/c164ebbc4de60ae216dc22b4adf9ec43ee19b0295cfa8a073b82fda1ba83c074/coverage.json",
+      "sha256": "9290638bdf5632e5fab4a90f9d8c7f640b0e48e0bcc11c040d666594a06425db",
+      "size_bytes": 4277
+    },
+    {
+      "media_type": "application/json",
+      "path": "controller-fixture/gh-e0-controller-fixture/selector-graphs/candidate-2dad7a05ce4a6460dd71f470/c164ebbc4de60ae216dc22b4adf9ec43ee19b0295cfa8a073b82fda1ba83c074/graph.json",
+      "sha256": "db0f327b86658a8db8ed08bac4917f31bf8519424dc941bc49e5a0f303722122",
+      "size_bytes": 486115
+    },
+    {
+      "media_type": "application/json",
+      "path": "controller-fixture/gh-e0-controller-fixture/selector-graphs/candidate-2dad7a05ce4a6460dd71f470/c164ebbc4de60ae216dc22b4adf9ec43ee19b0295cfa8a073b82fda1ba83c074/overlay-audit.json",
+      "sha256": "6e8520fceb48b655cd5f9cb2b4cdf4cfdfdfbeb9ea177002830cc942250005c2",
+      "size_bytes": 37145
+    },
+    {
+      "media_type": "application/json",
+      "path": "controller-fixture/gh-e0-controller-fixture/selector-graphs/candidate-2dad7a05ce4a6460dd71f470/c164ebbc4de60ae216dc22b4adf9ec43ee19b0295cfa8a073b82fda1ba83c074/package-ir.json",
+      "sha256": "41b49dd623494fcf6260550891d13422a6632cd5a639cb9340343c13f07b5004",
+      "size_bytes": 431921
+    },
+    {
+      "media_type": "application/json",
+      "path": "controller-fixture/gh-e0-controller-fixture/selector-graphs/candidate-2dad7a05ce4a6460dd71f470/c164ebbc4de60ae216dc22b4adf9ec43ee19b0295cfa8a073b82fda1ba83c074/snapshot.json",
+      "sha256": "52faf24d2654a29196e1593aa80cf81d0e173765325280059854fdec16715954",
+      "size_bytes": 2179
+    },
+    {
+      "media_type": "application/json",
+      "path": "controller-fixture/gh-e0-controller-fixture/selector-graphs/candidate-2dad7a05ce4a6460dd71f470/c164ebbc4de60ae216dc22b4adf9ec43ee19b0295cfa8a073b82fda1ba83c074/static-graph.json",
+      "sha256": "2cec9feb049b7875c260326b77c5b557749623e25758c975163c6171b5fddcef",
+      "size_bytes": 431942
+    },
+    {
+      "media_type": "application/json",
+      "path": "controller-graph-consumption-audit.json",
+      "sha256": "889de5d924b605c2455412678ad4ff7a76bb45a052a674623f0070548437d568",
+      "size_bytes": 946
+    },
+    {
+      "media_type": "application/json",
+      "path": "fresh-graph-rebuild.json",
+      "sha256": "9fd719b78d4c7b055bf1a17acdee67224c802854179b507f174c813750562679",
+      "size_bytes": 5392
+    },
+    {
+      "media_type": "application/json",
+      "path": "machine-gates.json",
+      "sha256": "d957b4a0a170abc9874f1e82ba6e1dd48eee48b1382ed3e80a59f3a01c518490",
+      "size_bytes": 1849
+    },
+    {
+      "media_type": "application/json",
+      "path": "parent-evidence-overlay-audit.json",
+      "sha256": "87433ee7db7cfbad52fae30851cd80a1fa1446f9d12f7c71f5410e06b5d8e28e",
+      "size_bytes": 90871
+    },
+    {
+      "media_type": "application/json",
+      "path": "preflight.json",
+      "sha256": "cdcd0a8c8d8773cd064efd00d9ae54935e5f9dcaf1fc596abcc75ba2c0bfa3e1",
+      "size_bytes": 2680
+    },
+    {
+      "media_type": "application/json",
+      "path": "selector-cache-audit.json",
+      "sha256": "7dcd2f05ad2653baea65b99525e89d14baa8f6f4a86ed9fb54bc0c2368aca247",
+      "size_bytes": 882
+    },
+    {
+      "media_type": "application/json",
+      "path": "selector-integration-replay.json",
+      "sha256": "3351a6f5a7355264ca95d8f36409d9856cfa1f374bb1f1205a57ad3d9908e55a",
+      "size_bytes": 95317
+    },
+    {
+      "media_type": "application/json",
+      "path": "stage_report.json",
+      "sha256": "0e233cb77f5b1deb9e1394af6a6be3acd819af3223b6ce390c243062c96e19f9",
+      "size_bytes": 4488
+    },
+    {
+      "media_type": "application/json",
+      "path": "target-set-live-fixture.json",
+      "sha256": "deba51b0fe56bb0179f5a4f74e78bca59afc21eb8a112ae205fcee6e3be77c3b",
+      "size_bytes": 8767
+    },
+    {
+      "media_type": "application/xml",
+      "path": "test-results.xml",
+      "sha256": "2abe2a20c4b9869f4058f8fdea576f69b7ec03140404d08dcf4969cd1090bee3",
+      "size_bytes": 23349
+    },
+    {
+      "media_type": "application/json",
+      "path": "verification.json",
+      "sha256": "82f5674d9f14022410807077fca1bb5a427555287f73bd2027b8ec680b324b89",
+      "size_bytes": 6399
+    }
+  ],
+  "schema_version": "1.0.0"
+}

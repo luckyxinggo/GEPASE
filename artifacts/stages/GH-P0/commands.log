@@ -1,0 +1,11 @@
+uv run pytest -q tests/package/test_graph_hardening.py tests/package/test_graph_analysis.py tests/optimizer/test_selectors.py tests/mutation/test_target_set.py tests/mutation/test_schema_applier.py tests/mutation/test_proposer.py
+uv run pytest -q --junitxml artifacts/stages/GH-P0/test-results.xml
+uv run ruff check .
+uv run pyright
+uv run python scripts/export_core_schemas.py
+uv run python scripts/export_core_schemas.py
+uv run python scripts/check_secrets.py --format json
+uv run python scripts/check_markdown_links.py
+uv run python scripts/check_license.py
+git diff --check
+uv run python scripts/check_secrets.py --format json

@@ -1,0 +1,53 @@
+{
+  "rows": [
+    {
+      "confidence": 0.99,
+      "edge_id": "edge-1fb048a09e003df55fdf3db2",
+      "proposal_id": "gh-p1-rel-gifbuilder-consumes-imageio",
+      "reason_codes": [
+        "bounded_hypothesis_accepted"
+      ],
+      "relation_type": "consumes",
+      "source_node_id": "node-2c61585b9d40c2df7343f499",
+      "status": "accepted",
+      "target_node_id": "node-a464c33893d3283bf7b3ea7f"
+    },
+    {
+      "confidence": 0.97,
+      "edge_id": "edge-f568bb0507d3bdfc61ea0a2f",
+      "proposal_id": "gh-p1-rel-workflow-explains-save",
+      "reason_codes": [
+        "bounded_hypothesis_accepted"
+      ],
+      "relation_type": "explains",
+      "source_node_id": "node-39e1aff632e5776f04740a41",
+      "status": "accepted",
+      "target_node_id": "node-f592ff3e34f1b63061471b9c"
+    },
+    {
+      "confidence": 0.98,
+      "edge_id": "edge-944704f25acb06b378663f62",
+      "proposal_id": "gh-p1-rel-validator-example-explains-function",
+      "reason_codes": [
+        "bounded_hypothesis_accepted"
+      ],
+      "relation_type": "explains",
+      "source_node_id": "node-46d940221fa8caf3b6c22d2c",
+      "status": "accepted",
+      "target_node_id": "node-774bca90618f6a6cbf560caa"
+    },
+    {
+      "confidence": 0.82,
+      "edge_id": "edge-5d4b442afe4281defc35bf70",
+      "proposal_id": "gh-p1-rel-validator-validates-save-output",
+      "reason_codes": [
+        "bounded_hypothesis_accepted"
+      ],
+      "relation_type": "validates",
+      "source_node_id": "node-774bca90618f6a6cbf560caa",
+      "status": "accepted",
+      "target_node_id": "node-f592ff3e34f1b63061471b9c"
+    }
+  ],
+  "schema_version": "1.0.0"
+}

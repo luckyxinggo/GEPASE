@@ -1,0 +1,43 @@
+{
+  "binary_mutation_allowed": false,
+  "candidate_created": false,
+  "default_single_target_count": 1,
+  "default_target_set_absent": true,
+  "fault_injection_error": "injected_failure",
+  "fault_injection_status": "invalid",
+  "limits": {
+    "files": 2,
+    "operations": 2,
+    "targets": 2
+  },
+  "partial_workspace_absent": true,
+  "same_failure_evidence": true,
+  "same_parent": true,
+  "schema_version": "1.0.0",
+  "source_hash_unchanged": true,
+  "target_set": {
+    "causal_path_edge_ids": [
+      "edge-ee0a87b21ccce660562cc6b5",
+      "edge-cc0e9d2714b9bf8d2a581d36",
+      "edge-2e9b9114cc7f3f5a0e429c12"
+    ],
+    "causal_path_node_ids": [
+      "node-c8f7fe07b3759daf03d525cb",
+      "node-2f28ed79b98f7d8146ac82fa",
+      "node-075b8bd17ca6cd7d1593ea80",
+      "node-5bb000b282f0b79b322be246"
+    ],
+    "companion_target_ids": [
+      "node-5bb000b282f0b79b322be246"
+    ],
+    "evidence_refs": [
+      "fixture:shared-failure"
+    ],
+    "parent_candidate_id": "candidate-c96901414be96b9232526d9b",
+    "primary_target_id": "node-c8f7fe07b3759daf03d525cb",
+    "schema_version": "1.0.0",
+    "scope_reason": "Instruction and implementation are connected by one static reference."
+  },
+  "topology_edits_allowed": false,
+  "valid": true
+}

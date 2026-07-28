@@ -1,0 +1,80 @@
+{
+  "gates": [
+    {
+      "evidence": [
+        "preflight.json",
+        "verification.json"
+      ],
+      "gate_id": "GHE0-G00-preflight_and_immutability",
+      "status": "passed"
+    },
+    {
+      "evidence": [
+        "compatibility-audit.json",
+        "controller-graph-consumption-audit.json"
+      ],
+      "gate_id": "GHE0-G01-backward_compatible_single_mainline",
+      "status": "passed"
+    },
+    {
+      "evidence": [
+        "fresh-graph-rebuild.json"
+      ],
+      "gate_id": "GHE0-G02-fresh_graph_rebuild_deterministic",
+      "status": "passed"
+    },
+    {
+      "evidence": [
+        "parent-evidence-overlay-audit.json"
+      ],
+      "gate_id": "GHE0-G03-parent_observed_binding",
+      "status": "passed"
+    },
+    {
+      "evidence": [
+        "selector-integration-replay.json",
+        "controller-graph-consumption-audit.json"
+      ],
+      "gate_id": "GHE0-G04-controller_really_consumes_layered_graph",
+      "status": "passed"
+    },
+    {
+      "evidence": [
+        "target-set-live-fixture.json"
+      ],
+      "gate_id": "GHE0-G05-bounded_scope_and_executable_opportunity",
+      "status": "passed"
+    },
+    {
+      "evidence": [
+        "preflight.json"
+      ],
+      "gate_id": "GHE0-G06-no_eval_or_effect_claim",
+      "status": "passed"
+    },
+    {
+      "evidence": [
+        "selector-cache-audit.json",
+        "test-results.xml",
+        "verification.json"
+      ],
+      "gate_id": "GHE0-G07-regression_and_fault_containment",
+      "status": "passed"
+    },
+    {
+      "evidence": [
+        "verification.json",
+        "commands.log",
+        "artifact-index.json"
+      ],
+      "gate_id": "GHE0-G08-verification_and_seal",
+      "status": "passed"
+    }
+  ],
+  "gh_e1_unlocked": true,
+  "passed": 9,
+  "schema_version": "1.0.0",
+  "stage_id": "GH-E0",
+  "status": "passed",
+  "total": 9
+}

@@ -18,7 +18,9 @@ from gepase.mutation.schema import (
     PatchOperationKind,
     package_patch_from_proposal,
 )
-from gepase.optimizer.selectors import RankedSelection
+from gepase.mutation.target_set import TargetSet
+from gepase.optimizer.selectors import RankedSelection, SelectorRankingAudit
+from gepase.package.dynamic_graph import SelectorGraphBinding
 from gepase.schemas.common import FrozenModel
 from gepase.store.artifacts import atomic_write, canonical_json_bytes
 from gepase.store.rejected import RejectedEditStore
@@ -51,7 +53,10 @@ class PatchProposalWorkItem(FrozenModel):
     parent_snapshot_hash: str = Field(pattern=r"^[0-9a-f]{64}$")
     parent_content_hash: str = Field(pattern=r"^[0-9a-f]{64}$")
     selector: str
+    selector_graph: SelectorGraphBinding | None = None
+    selector_ranking: SelectorRankingAudit | None = None
     targets: tuple[PatchTargetSnapshot, ...] = Field(min_length=1)
+    target_set: TargetSet | None = None
     allowed_operations: tuple[PatchOperationKind, ...] = Field(min_length=1)
     edit_budget: PatchEditBudget
     evidence_refs: tuple[str, ...] = Field(min_length=1)
@@ -62,8 +67,46 @@ class PatchProposalWorkItem(FrozenModel):
 
     @model_validator(mode="after")
     def bounded_work(self) -> PatchProposalWorkItem:
+        if (self.selector_graph is None) != (self.selector_ranking is None):
+            raise ValueError("selector graph and ranking provenance must appear together")
+        if self.selector_graph is not None:
+            if self.selector_graph.parent_candidate_id != self.parent_candidate_id:
+                raise ValueError("selector graph is bound to another parent")
+            if self.selector_graph.parent_snapshot_hash != self.parent_snapshot_hash:
+                raise ValueError("selector graph snapshot differs from proposal parent")
+            if self.selector_graph.parent_content_hash != self.parent_content_hash:
+                raise ValueError("selector graph content differs from proposal parent")
+        if len(self.targets) > 2:
+            raise ValueError("proposal work exceeds GH-P0 two-target limit")
         if len(self.targets) > self.edit_budget.max_operations:
             raise ValueError("proposal work exposes more targets than operation budget")
+        if self.edit_budget.max_operations > 2 or self.edit_budget.max_changed_files > 2:
+            raise ValueError("proposal work exceeds GH-P0 2 operation/file limits")
+        target_ids = tuple(item.node_id for item in self.targets)
+        if (
+            self.selector_ranking is not None
+            and self.selector_ranking.selected_node_ids != target_ids
+        ):
+            raise ValueError("selector ranking selected targets differ from proposal targets")
+        if len(set(target_ids)) != len(target_ids):
+            raise ValueError("proposal work targets must be unique")
+        if len(self.targets) == 2:
+            if self.target_set is None:
+                raise ValueError("two-target proposal work requires a typed TargetSet")
+            if self.target_set.parent_candidate_id != self.parent_candidate_id:
+                raise ValueError("TargetSet parent differs from proposal parent")
+            if set(self.target_set.target_node_ids) != set(target_ids):
+                raise ValueError("TargetSet does not match exported targets")
+            if not set(self.target_set.evidence_refs) <= set(self.evidence_refs):
+                raise ValueError("TargetSet evidence is outside proposal evidence")
+            if (
+                self.edit_budget.allow_file_topology_edits
+                or self.edit_budget.max_added_files
+                or self.edit_budget.max_deleted_files
+            ):
+                raise ValueError("GH-P0 TargetSet work may not change file topology")
+        elif self.target_set is not None:
+            raise ValueError("single-target proposal work must not manufacture a TargetSet")
         if not self.actionable_side_information:
             raise ValueError("proposal work requires actionable side information")
         return self
@@ -192,19 +235,22 @@ def prepare_proposal_workspace(
 ) -> dict[str, object]:
     """Materialize only exported target content for an isolated proposal worker."""
 
-    if len(work.targets) != 1:
-        raise ValueError("proposal workspace currently requires exactly one target")
     output = output_dir.resolve()
-    target = work.targets[0]
-    replacement = output / "replacement" / target.path
-    atomic_write(replacement, target.content.encode())
+    replacements: list[dict[str, str]] = []
+    for index, target in enumerate(work.targets, 1):
+        base = output / "replacement" if len(work.targets) == 1 else output / f"target-{index}"
+        replacement = base / target.path
+        atomic_write(replacement, target.content.encode())
+        replacements.append({"node_id": target.node_id, "path": replacement.as_posix()})
     context = work.model_dump(mode="json")
-    context["targets"][0]["content"] = "<materialized-in-replacement-directory>"
+    for target in context["targets"]:
+        target["content"] = "<materialized-in-target-directory>"
     atomic_write(output / "work-context.json", canonical_json_bytes(context))
     return {
         "schema_version": PACKAGE_PATCH_SCHEMA_VERSION,
         "work_id": work.work_id,
-        "replacement": replacement.as_posix(),
+        "replacement": replacements[0]["path"],
+        "replacements": replacements,
         "context": (output / "work-context.json").as_posix(),
         "assertions_included": False,
         "sibling_outputs_included": False,
@@ -256,6 +302,52 @@ def draft_replacement_proposal(
         ],
         "summary": summary,
     }
+
+
+def draft_bounded_replacement_proposal(
+    work: PatchProposalWorkItem,
+    replacement_paths: dict[str, Path],
+    *,
+    summary: str,
+) -> dict[str, object]:
+    """Build a one/two-target replacement proposal from isolated files."""
+
+    if set(replacement_paths) != {target.node_id for target in work.targets}:
+        raise ValueError("replacement paths must exactly match exported targets")
+    if len(work.allowed_operations) not in {1, len(work.targets)}:
+        raise ValueError("allowed operations must be shared or one-per-target")
+    operations: list[dict[str, object]] = []
+    for index, target in enumerate(work.targets):
+        operation = (
+            work.allowed_operations[0]
+            if len(work.allowed_operations) == 1
+            else work.allowed_operations[index]
+        )
+        if operation not in {
+            PatchOperationKind.REPLACE_MARKDOWN_BLOCK,
+            PatchOperationKind.UPDATE_FRONTMATTER,
+            PatchOperationKind.REPLACE_PYTHON_FUNCTION,
+            PatchOperationKind.REPLACE_TEXT_FILE,
+        }:
+            raise ValueError("bounded draft only supports replacement operations")
+        replacement = replacement_paths[target.node_id].read_text(encoding="utf-8")
+        if not replacement.strip() or replacement == target.content:
+            raise ValueError(f"replacement for {target.node_id} is empty or a no-op")
+        operations.append(
+            {
+                "operation_id": f"op-{work.work_id}-{index + 1}",
+                "op": operation.value,
+                "target_node_id": target.node_id,
+                "path": target.path,
+                "precondition_hash": target.content_hash,
+                "replacement": replacement,
+                "evidence_refs": list(work.evidence_refs),
+                "expected_benefit": "Apply the bounded evidence-grounded repair atomically.",
+                "regression_risk": "medium",
+                "rationale": "The target belongs to the exported same-parent causal scope.",
+            }
+        )
+    return {"operations": operations, "summary": summary}
 
 
 def inject_rejected_history(

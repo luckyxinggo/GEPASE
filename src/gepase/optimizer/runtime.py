@@ -47,6 +47,21 @@ class RuntimeBudget(FrozenModel):
     stop_semantics: str = Field(min_length=1)
 
 
+class SelectorGraphPolicy(FrozenModel):
+    """Controls which trusted graph layers the mutation selector may consume."""
+
+    schema_version: Literal["1.0.0"] = "1.0.0"
+    mode: Literal["static", "static_observed"] = "static"
+    require_sealed_typed_access: Literal[True] = True
+    require_observed_when_access_present: Literal[True] = True
+    semantic_hypotheses_enabled: Literal[False] = False
+    top_k_audit_limit: int = Field(default=10, ge=1, le=50)
+
+    @property
+    def policy_hash(self) -> str:
+        return canonical_fingerprint(self.model_dump(mode="json"))
+
+
 class R4EvolutionConfig(FrozenModel):
     schema_version: Literal["1.0.0"] = "1.0.0"
     run_id: str
@@ -66,7 +81,8 @@ class R4EvolutionConfig(FrozenModel):
     timeout_seconds: int = Field(ge=1)
     branch_count: int = Field(ge=2)
     selector: Literal["graph", "trace", "round_robin", "random"]
-    selector_target_limit: int = Field(ge=1)
+    selector_target_limit: int = Field(ge=1, le=2)
+    selector_graph_policy: SelectorGraphPolicy = SelectorGraphPolicy()
     runtime_budget: RuntimeBudget
     patch_budget: PatchEditBudget
     train_policy: MinibatchPolicy
@@ -93,6 +109,13 @@ class R4EvolutionConfig(FrozenModel):
             raise ValueError("proposal budget cannot cover the required mutation branches")
         if self.runtime_budget.max_candidates < self.branch_count + 1:
             raise ValueError("candidate budget must reserve one same-package merge child")
+        if self.selector_graph_policy.mode == "static_observed":
+            if self.selector != "graph":
+                raise ValueError("static_observed graph policy requires graph selector")
+            if self.reference_variant != "original":
+                raise ValueError(
+                    "seed static_observed graph must bind original reference evidence"
+                )
         return self
 
 
@@ -202,7 +225,13 @@ def load_r4_config(project_root: Path, path: Path) -> tuple[str, R4EvolutionConf
     if not resolved.is_relative_to(root):
         raise ValueError("R4 config must remain inside the project")
     config = R4EvolutionConfig.model_validate_json(resolved.read_text(encoding="utf-8"))
-    return sha256_bytes(canonical_json_bytes(config.model_dump(mode="json"))), config
+    payload = config.model_dump(mode="json")
+    # A field added with a backward-compatible default must not silently change
+    # the fingerprint of a sealed legacy config that never declared it.  New
+    # graph-aware configs include the explicit policy in their fingerprint.
+    if "selector_graph_policy" not in config.model_fields_set:
+        payload.pop("selector_graph_policy")
+    return sha256_bytes(canonical_json_bytes(payload)), config
 
 
 def canonical_fingerprint(value: object) -> str:

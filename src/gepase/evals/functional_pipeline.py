@@ -48,6 +48,7 @@ from gepase.evals.work_items import (
     executor_view,
 )
 from gepase.package.ir import NodeKind, PackageGraph
+from gepase.package.semantic import SemanticHypothesisEngine
 from gepase.store.artifacts import ArtifactStore
 
 ModelT = TypeVar("ModelT", bound=BaseModel)
@@ -622,6 +623,10 @@ class FunctionalEvalCoordinator:
             allowed_refs.add(work.original.package_access_ref)
         if work.comparator_ref:
             allowed_refs.add(work.comparator_ref)
+        if work.semantic_enrichment is not None:
+            allowed_refs.update(
+                item.path for item in work.semantic_enrichment.evidence_artifacts
+            )
         for analysis in submission.analyses:
             if not set(analysis.evidence_refs).issubset(allowed_refs):
                 raise ValueError("Analyzer cited evidence outside its typed work item")
@@ -630,8 +635,35 @@ class FunctionalEvalCoordinator:
         imperfect = min(work.original.task_correctness, work.original.output_quality) < 1.0
         if imperfect and not submission.analyses:
             raise ValueError("imperfect original output requires at least one failure analysis")
+        semantic_result: dict[str, Any] | None = None
+        if submission.semantic_relation_proposals and work.semantic_enrichment is None:
+            raise ValueError("semantic proposals require a bounded Analyzer work scope")
+        if work.semantic_enrichment is not None:
+            layered_graph, overlay = SemanticHypothesisEngine().evaluate(
+                work,
+                submission,
+                self.graph,
+                project_root=self.project_root,
+            )
+            self.store.write_json(
+                f"semantic-overlays/{submission.analyzer_work_id}.json",
+                overlay.model_dump(mode="json"),
+            )
+            self.store.write_json(
+                f"semantic-graphs/{submission.analyzer_work_id}.json",
+                layered_graph.model_dump(mode="json"),
+            )
+            semantic_result = {
+                "accepted": len(overlay.accepted),
+                "rejected": len(overlay.rejected),
+                "layered_graph_fingerprint": overlay.layered_graph_fingerprint,
+            }
         self.store.write_json(relative, submission.model_dump(mode="json"))
-        return {"duplicate": False, "submission_id": submission.submission_id}
+        return {
+            "duplicate": False,
+            "submission_id": submission.submission_id,
+            "semantic_overlay": semantic_result,
+        }
 
     def audit_isolation(self) -> IsolationAudit:
         executor_contexts = tuple(

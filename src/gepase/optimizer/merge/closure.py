@@ -38,7 +38,7 @@ def dependency_closure(
 
     Containment is traversed in both directions so an edited function carries
     its file/module context and an edited instruction carries its containing
-    section/file. Semantic dependency edges are traversed outward; incoming
+    section/file. Typed structural dependency edges are traversed outward; incoming
     TESTS/REFERENCES/IMPORTS edges are retained because they encode consumers
     that must remain compatible.
     """
@@ -50,7 +50,9 @@ def dependency_closure(
     outgoing: defaultdict[str, list[tuple[str, EdgeKind]]] = defaultdict(list)
     incoming: defaultdict[str, list[tuple[str, EdgeKind]]] = defaultdict(list)
     for edge in graph.edges:
-        if edge.kind in DEPENDENCY_EDGE_KINDS:
+        # Agent semantic hypotheses are deliberately excluded from merge,
+        # dependency and safety authorization, regardless of confidence.
+        if edge.layer in {"static", "observed"} and edge.kind in DEPENDENCY_EDGE_KINDS:
             outgoing[edge.source].append((edge.target, edge.kind))
             incoming[edge.target].append((edge.source, edge.kind))
     seen = set(seed_node_ids)
