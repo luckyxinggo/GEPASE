@@ -1,0 +1,29 @@
+{
+  "artifacts": [
+    {
+      "media_type": "application/zip",
+      "path": "packages/typed-fixture-one-0.zip",
+      "sha256": "07d5f6e50ff3da1297ba97e0c5423b237e24d69515d53459621722c56bb4816d",
+      "size_bytes": 138
+    },
+    {
+      "media_type": "application/json",
+      "path": "report-data.json",
+      "sha256": "9112bf5dcdf725f767bcdba37b1566eb09e83c1c8b150763253fcf26511eb3dd",
+      "size_bytes": 3242
+    },
+    {
+      "media_type": "application/json",
+      "path": "evidence-manifest.json",
+      "sha256": "4c9655f0c147ecf9d223ba7e769d580ca982ecf15e77542cf4301c51aa4b8879",
+      "size_bytes": 521
+    },
+    {
+      "media_type": "text/html",
+      "path": "index.html",
+      "sha256": "949c826225ba829a869349eaade93c69da8bde9e621d2908b388d8b8e1956da8",
+      "size_bytes": 6641
+    }
+  ],
+  "schema_version": "1.0.0"
+}

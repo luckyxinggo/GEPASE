@@ -1,0 +1,126 @@
+{
+  "agent_calls": 0,
+  "outputs": [
+    {
+      "path": "evidence/gifs/00-gif-5b0f0006c6173333775cc9bc.gif",
+      "sha256": "fda1b3554ae5d0cd30c93a6469f1bf516f7ec948d3b79648a5ded00d1f3c1834"
+    },
+    {
+      "path": "evidence/gifs/01-gif-5c941fc2e76665bd8cc73259.gif",
+      "sha256": "2347240e08f63f2c1e61319554ac0ccbcb5925be852c03bb375c448e8f6712df"
+    },
+    {
+      "path": "evidence/gifs/02-gif-7d78f7b747438701e17070ec.gif",
+      "sha256": "e8c3c2e11d6703d8411e7bcef426dda401c84985b48581df761496bfe0b16ee0"
+    },
+    {
+      "path": "evidence/gifs/03-gif-b9e0166724415ae4580e428c.gif",
+      "sha256": "803f93af7831c443dd0d98075904a99cee54aaf9c7dac2f1446b0bbee635ed01"
+    },
+    {
+      "path": "evidence/gifs/04-gif-bdf2fc67a2b3cc2eaeecf71b.gif",
+      "sha256": "b1b1719c80312767fd6e1b2496ec55ea115449ef9e0e40aa56c1ce71cb82c129"
+    },
+    {
+      "path": "evidence/gifs/05-gif-8a8834e5cae0d25577191397.gif",
+      "sha256": "6465f1fb9ebc48fca49c8a0dfb57d3dfb835b0b01acc4286d199909c68200ebe"
+    },
+    {
+      "path": "evidence/gifs/06-gif-102b13e282de5a23e7be614f.gif",
+      "sha256": "aa83463b58a268c8df9c091423758279538373133c34e7c9fbcd89c709833eef"
+    },
+    {
+      "path": "evidence/gifs/07-gif-2ee7adcbe1262a431c6e1204.gif",
+      "sha256": "25b4a01f3cfd23bbe6e3cb30e9d251fa505a870761fae94d12a530082b4865f3"
+    },
+    {
+      "path": "evidence/gifs/08-gif-4e86bec30761e76f64507bb4.gif",
+      "sha256": "07ef91643a81d279578cb35098774847aab9852e98216ebf8bd1cc0064f82147"
+    },
+    {
+      "path": "evidence/gifs/09-gif-6d6f6a3c62dbe1266a4d822e.gif",
+      "sha256": "10ab69eb6b3fda21efe9a41c6054bde15d5e149c4814a21f951387b3d77fd629"
+    },
+    {
+      "path": "evidence/gifs/10-gif-e2a18747006b809d00eeecaa.gif",
+      "sha256": "2561e69d526a73788ec936667417c0eb10c3fa0542f1a65137684397a5d88c1a"
+    },
+    {
+      "path": "evidence/gifs/11-gif-51da6979c6ac7c8eb0ac0971.gif",
+      "sha256": "aecf997b410c885bab29f022e085669e8e92e7eec21efa468e1ad939beed32b0"
+    },
+    {
+      "path": "evidence/gifs/12-gif-49723f88fce1cc14e47d3a44.gif",
+      "sha256": "8f369f15f9910b09b3e27c9b87c24c122f0430d9869f708bad9c977d66a46bb8"
+    },
+    {
+      "path": "evidence/gifs/13-gif-9308883779c358c3aeb791db.gif",
+      "sha256": "41fd5944dbd66e4cfe43e4517c5c60f7cdf1e97fa3f06c35bd032c80bc9977e0"
+    },
+    {
+      "path": "evidence/gifs/14-gif-f9502963a43f159877cbad82.gif",
+      "sha256": "2a6fc89d182d588bbc81c25796886530a7603cf80fef38cd61ad5cbd7c9687d6"
+    },
+    {
+      "path": "evidence/gifs/15-gif-830692588400e13d2079de21.gif",
+      "sha256": "d473c3d9be4160deb8fd575152db3b3900c30d6b205cf1a666ec03a9eddbbd63"
+    },
+    {
+      "path": "evidence/gifs/16-gif-eb195d9b6dcbdc744e25d11a.gif",
+      "sha256": "56614005911a0f99894d0e4ea296ab7a8649f817cda0fbaa021c33d80c08d273"
+    },
+    {
+      "path": "evidence/gifs/17-gif-931c8655aa262a8b3d49be76.gif",
+      "sha256": "34d77ac18d8ede08ca3fd39148f527d6459c558a983414f9985b99e44ecf40ca"
+    },
+    {
+      "path": "evidence/gifs/18-gif-d5ece240f0e9229b2afc6d22.gif",
+      "sha256": "ab96cbdd9e53eca313ba40550f30e182155235247e1f476af61a76aecda0f84c"
+    },
+    {
+      "path": "evidence/gifs/19-gif-4dfc76d07c9aa48e04a9e767.gif",
+      "sha256": "48c0c1fd0e2aa97082b6bf42914e4b7bfaf5cc57a4f96840bebca002c466ae10"
+    },
+    {
+      "path": "evidence/gifs/20-gif-81415c2fd84e828ee652fc1b.gif",
+      "sha256": "ee5f1bd5584e2d527695e4bce422b0c1ae47d39babad4314bd097abd50e74336"
+    },
+    {
+      "path": "evidence/gifs/21-gif-16773823b583f04c481fdafe.gif",
+      "sha256": "6f18934a5ec90e2d05e6f5511db607abefa71705a3ed07b04bd7063fadba590b"
+    },
+    {
+      "path": "evidence/gifs/22-gif-7600fa6cd88e5bf1d96a8ff4.gif",
+      "sha256": "c8619afc0a2c1600386a900127c05cdfa6c098951b39d3edc1046eec93499f52"
+    },
+    {
+      "path": "evidence/gifs/23-gif-de4197bb0724fc41b737c0d7.gif",
+      "sha256": "78a61f7cb56e449a1fb377189fd408520253e28b852ca581da54985777a5f940"
+    },
+    {
+      "path": "evidence/gifs/24-gif-1d584642ded70643312c62d0.gif",
+      "sha256": "2266c6082384036dcc664079e9d3d903b2e9de32e2429ab51abdda558c43e2e3"
+    },
+    {
+      "path": "evidence/gifs/25-gif-8f0b28e5ff93afe5c61ae61e.gif",
+      "sha256": "262847bf3bb1e1395993035d111cadc14e0d75a0e9e3792f9bacbe405a2435de"
+    },
+    {
+      "path": "evidence/gifs/26-gif-e7c7aaf6ad1b3bedd065573b.gif",
+      "sha256": "a2b7af35603cda86255d150c37fa3cfbab6e870300f897654894fb2742e54301"
+    },
+    {
+      "path": "evidence/gifs/27-gif-2f9d6ddd8d0632fd89473935.gif",
+      "sha256": "1dae7602ae6a9cc54631f3c03b13c2ae1d40510854978ed0589db15e7525094b"
+    },
+    {
+      "path": "evidence/gifs/28-gif-8ab0b9b6891c3ce2572818b2.gif",
+      "sha256": "4db9a66260d97f6f20fee8bb3e66cef3e7bc055832652cb8683376a599ebe95c"
+    }
+  ],
+  "read_only_inputs": true,
+  "report_data_sha256": "7ae746c72cb920bd486c5441d4ddacd879811c0bf600ff5ab280c0450e8de73f",
+  "schema_version": "1.0.0",
+  "source_ref": "artifacts/runs/gh-e1-slack-gif-creator-evolution/effect-outcome-report-input.json",
+  "source_sha256": "836b0f7db60ba8506d46fa6ef10b0f752ff5f7ce6f62a6f6950457acfcbb9c5b"
+}

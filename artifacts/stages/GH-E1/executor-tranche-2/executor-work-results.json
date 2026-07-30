@@ -1,0 +1,75 @@
+{
+  "batch_export_ref": "artifacts/runs/gh-e1-slack-gif-creator-evolution/evals/candidate-db0b9d19f0ff48b624ea03b6/train/exports/executor-batch-2.json",
+  "candidate_id": "candidate-db0b9d19f0ff48b624ea03b6",
+  "candidate_train_ledger_after": {
+    "completed": 5,
+    "exported": 0,
+    "failed": 0,
+    "pending": 0,
+    "records": 10,
+    "submissions": 5
+  },
+  "generated_at": "2026-07-29T08:13:07Z",
+  "reservation_id": "reservation-21cd2e063453d92d7b27f3f4",
+  "schema_version": "1.0.0",
+  "works": [
+    {
+      "agent_repair_used": false,
+      "deterministic_correction_used": false,
+      "e2_record_id": "record-cd0c37894c51f2b886f82101",
+      "e3_assertions_passed": 5,
+      "e3_assertions_total": 5,
+      "e3_deterministic_score": 1.0,
+      "e3_record_id": "record-aace5c7d0d3b3e016bc951c0",
+      "host_attempt_accounting_ids": [],
+      "host_context_id": "/root/exec_input_badge_train2",
+      "native_output": {
+        "path": "uploaded_badge_lift.gif",
+        "sha256": "10ab69eb6b3fda21efe9a41c6054bde15d5e149c4814a21f951387b3d77fd629",
+        "size_bytes": 62460
+      },
+      "same_context_tool_recovery": "system Python 缺少 imageio 后改用冻结仓库已有 .venv；没有新 Agent context，也不计 repair",
+      "submission_id": "submission-18167828f4133544aa4a36c0",
+      "task_id": "functional-train-input-badge-003",
+      "terminal_status": "completed",
+      "usage": {
+        "duration_ms": 386057,
+        "estimated_tokens": 28500,
+        "input_tokens": 23500,
+        "output_tokens": 5000,
+        "token_count_kind": "estimated",
+        "tool_calls": 19
+      },
+      "work_id": "work-aadafebefc1e2d501cbe7db4"
+    },
+    {
+      "agent_repair_used": false,
+      "deterministic_correction_used": false,
+      "e2_record_id": "record-6dce66180dfbe331263abe27",
+      "e3_assertions_passed": 5,
+      "e3_assertions_total": 5,
+      "e3_deterministic_score": 1.0,
+      "e3_record_id": "record-9ef15261a5b425ac0aebf97d",
+      "host_attempt_accounting_ids": [],
+      "host_context_id": "/root/exec_emoji_bounce_train2",
+      "native_output": {
+        "path": "emoji_star_bounce.gif",
+        "sha256": "6465f1fb9ebc48fca49c8a0dfb57d3dfb835b0b01acc4286d199909c68200ebe",
+        "size_bytes": 71850
+      },
+      "same_context_tool_recovery": "system Python 缺少 Pillow 后改用冻结仓库已有 .venv；没有新 Agent context，也不计 repair",
+      "submission_id": "submission-d8e711d6354389b6d283bd50",
+      "task_id": "functional-train-emoji-bounce-001",
+      "terminal_status": "completed",
+      "usage": {
+        "duration_ms": 425564,
+        "estimated_tokens": 38000,
+        "input_tokens": 32000,
+        "output_tokens": 6000,
+        "token_count_kind": "estimated",
+        "tool_calls": 22
+      },
+      "work_id": "work-f4822f29168045273356a3fc"
+    }
+  ]
+}

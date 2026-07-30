@@ -1,0 +1,14 @@
+{
+  "agent_calls": 0,
+  "outputs": [
+    {
+      "path": "packages/typed-fixture-one-0.zip",
+      "sha256": "07d5f6e50ff3da1297ba97e0c5423b237e24d69515d53459621722c56bb4816d"
+    }
+  ],
+  "read_only_inputs": true,
+  "report_data_sha256": "9112bf5dcdf725f767bcdba37b1566eb09e83c1c8b150763253fcf26511eb3dd",
+  "schema_version": "1.0.0",
+  "source_ref": "artifacts/stages/GH-E0.5/fixtures/report/one/effect-outcome-report-input.json",
+  "source_sha256": "38048ee748eb9405af0ecf1847ac73e8ae5af8ce702a2d2f3966f238dbe5509d"
+}

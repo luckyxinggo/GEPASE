@@ -1,0 +1,22 @@
+{
+  "schema_version": "1.0.0",
+  "decision_id": "continuation-78f4d8270abf463f55c9ba39",
+  "run_id": "gh-e1-slack-gif-creator-reference",
+  "config_hash": "cf902e88f72c1d8c778e2cade2590b0254732d5824e15c5124a550355d579668",
+  "checkpoint_id": "budget-checkpoint-6fea10cbac5af24bef5c8cc7",
+  "checkpoint_hash": "575858f5999885b6c0ffba136d1388ef41f24666aba22fd05a6d4eee278e8009",
+  "evidence_hash": "0066a5bbcfad3a7cc660939fa5f1f52a586324e6b3cddaf190979e619dc4b8d3",
+  "action": "continue",
+  "approved_increment": {
+    "agent_calls": 8,
+    "estimated_tokens": 96000,
+    "active_wall_clock_ms": 1800000,
+    "proposals": 0,
+    "candidates": 0,
+    "repairs": 8
+  },
+  "reviewer": "user",
+  "comment_zh": "用户在当前对话明确授权：按 GH-E1 继续执行；本决定只批准 8 个 fresh paired reference 的隔离 Analyzer/ASI work，semantic hypothesis 仍关闭且不得启动候选、Patch 或搜索。",
+  "previous_decision_hash": "a6e6c929e9aa8974de10cc06e04fa5a2037105ea065bf60d4485ebeaa05cc64b",
+  "decided_at": "2026-07-28T16:23:20Z"
+}

@@ -1,0 +1,46 @@
+{
+  "candidate_id": "candidate-db0b9d19f0ff48b624ea03b6",
+  "candidate_train": {
+    "accepted_e2": 5,
+    "derived_e3": 5,
+    "executor_completed": 5,
+    "executor_failed": 0,
+    "independent_grader_completed": 0,
+    "strict_train_gate_complete": false,
+    "task_score_vectors_complete": false,
+    "total_cases": 5
+  },
+  "formal_ghe1": {
+    "passed": 4,
+    "status": "in_progress",
+    "total": 10
+  },
+  "latest_checkpoint": {
+    "barrier": "budget_limit",
+    "checkpoint_id": "budget-checkpoint-43c2fac4562f4bcf58af0023",
+    "checkpoint_sha256": "ec43aec73a25339832f3b444c38844d8cda7cbf7841a88a3622ecb3903c605ba",
+    "evidence_hash": "9a75c76840f44be59037cbaa88ca881e4d85d1b0d8f8fe52e106c861015cb312",
+    "state_hash": "b5ab56b8b9b42adb78ae99be54ae852a35081ea9bdcf5c4d2404e46c823c304a"
+  },
+  "next_batch_estimate": {
+    "active_wall_clock_ms": 840000,
+    "agent_calls": 5,
+    "estimated_tokens": 60000,
+    "max_repairs": 5,
+    "role": "independent_grader"
+  },
+  "outcome": "budget_incomplete",
+  "runtime": {
+    "open_reservations": 0,
+    "status": "awaiting_continuation",
+    "used": {
+      "active_wall_clock_ms": 2790748,
+      "agent_calls": 11,
+      "candidates": 2,
+      "estimated_tokens": 354500,
+      "proposals": 4,
+      "repairs": 2
+    }
+  },
+  "schema_version": "1.0.0"
+}

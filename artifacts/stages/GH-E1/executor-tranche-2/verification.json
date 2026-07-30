@@ -1,0 +1,18 @@
+{
+  "checks": {
+    "candidate_ledger_completed_5_failed_0": true,
+    "continuation_hash_bound": true,
+    "e2_records_for_both_new_works": true,
+    "e3_records_for_both_new_works": true,
+    "formal_ghe1_gate_count_remains_4_of_10": true,
+    "native_outputs_present_and_hashed": true,
+    "no_agent_repair_context": true,
+    "no_downstream_role_exported": true,
+    "no_open_reservation": true,
+    "runtime_paused_at_fresh_checkpoint": true,
+    "usage_variance_preserved": true
+  },
+  "generated_at": "2026-07-29T08:13:07Z",
+  "result": "passed_with_budget_variance",
+  "schema_version": "1.0.0"
+}

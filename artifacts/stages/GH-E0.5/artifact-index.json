@@ -1,0 +1,419 @@
+{
+  "artifacts": [
+    {
+      "media_type": "application/json",
+      "path": "active-session-fixture.json",
+      "sha256": "062af48985c9804c8d7130de0aaddfb2dbc8c83fd494199168c119dd23ea68f3",
+      "size_bytes": 745
+    },
+    {
+      "media_type": "application/json",
+      "path": "budget-policy.json",
+      "sha256": "009b9029f59186cbb11c8aa6e65dd0b3f04180467ed82835377ef632aefe3a54",
+      "size_bytes": 1725
+    },
+    {
+      "media_type": "application/json",
+      "path": "budget-reservation-fixture.json",
+      "sha256": "0217809c43da60f5b2393330526d96108936f8cfe7cf6b44cdf3db5c482b24b6",
+      "size_bytes": 2034
+    },
+    {
+      "media_type": "text/html",
+      "path": "checkpoint-review-fixture.html",
+      "sha256": "c42927699163cd6f2cc6c99177b2408e4226244548314fe2928c52cae1f0a00a",
+      "size_bytes": 993
+    },
+    {
+      "media_type": "text/plain",
+      "path": "commands.log",
+      "sha256": "0131ca2b82b10b3eb9a7087abe88519e470327fade9048b1a80545c0994fff95",
+      "size_bytes": 458
+    },
+    {
+      "media_type": "application/json",
+      "path": "continuation-decision-fixture.json",
+      "sha256": "250c2b2013e33c285cf7753171dbac4c2530da1f97e67570997f28e363b3baf5",
+      "size_bytes": 1537
+    },
+    {
+      "media_type": "text/html",
+      "path": "fixtures/active-session/budget-checkpoints/budget-checkpoint-8fe66f685dbc4850f1e7cee8.html",
+      "sha256": "c42927699163cd6f2cc6c99177b2408e4226244548314fe2928c52cae1f0a00a",
+      "size_bytes": 993
+    },
+    {
+      "media_type": "application/json",
+      "path": "fixtures/active-session/budget-checkpoints/budget-checkpoint-8fe66f685dbc4850f1e7cee8.json",
+      "sha256": "e951b97820ccfa5d06962b1286b0013d964f9078ca8405841d36fab9a5b72111",
+      "size_bytes": 1410
+    },
+    {
+      "media_type": "application/json",
+      "path": "fixtures/active-session/continuation-decisions/0001-continuation-98892743acb37c989970fde6.json",
+      "sha256": "161ab6355725233c1d533561b6b2a26b45f6bb5b7d3316613d87765f5249b4fc",
+      "size_bytes": 862
+    },
+    {
+      "media_type": "application/json",
+      "path": "fixtures/active-session/runtime-session.json",
+      "sha256": "2522b4438829c53aa7076709adf91cb22326529bf2296bc0ebda7d6f0510e068",
+      "size_bytes": 1046
+    },
+    {
+      "media_type": "text/html",
+      "path": "fixtures/budget-blocked/budget-checkpoints/budget-checkpoint-a5a6b8ade20abf396666299b.html",
+      "sha256": "35138158565d95aa2e233399846c53546c0258d4c89993182e4bd4b2e101abd8",
+      "size_bytes": 1013
+    },
+    {
+      "media_type": "application/json",
+      "path": "fixtures/budget-blocked/budget-checkpoints/budget-checkpoint-a5a6b8ade20abf396666299b.json",
+      "sha256": "69053f820af55cbed2346d080d260feb9826605ce4c156a44ef0d48e95d3d568",
+      "size_bytes": 1426
+    },
+    {
+      "media_type": "application/json",
+      "path": "fixtures/budget-blocked/runtime-session.json",
+      "sha256": "86de5b993de8a5e34e42ebd50b2be28d101c7e1d94231229c6d4ccf84055eb8b",
+      "size_bytes": 976
+    },
+    {
+      "media_type": "application/json",
+      "path": "fixtures/budget-settlement/reservation-settlements/work-a.json",
+      "sha256": "4aedd754fc1bcd7aa3eaf2fc7bc9df2a727b3e9d241db90ad7999982740e16ef",
+      "size_bytes": 635
+    },
+    {
+      "media_type": "application/json",
+      "path": "fixtures/budget-settlement/runtime-session.json",
+      "sha256": "ff20afc6acd91f2dcb1ec5154918eb7f627b9aaf125d07d8fd08b595718ba01f",
+      "size_bytes": 1436
+    },
+    {
+      "media_type": "application/json",
+      "path": "fixtures/lifecycle/half/metadata.json",
+      "sha256": "22c6ac3b1d5e5d07fd3c4b054fb29cd17fc23df4d2d34e4c8ffd6c290e5c3318",
+      "size_bytes": 13
+    },
+    {
+      "media_type": "application/json",
+      "path": "fixtures/lifecycle/half/run-lifecycle.json",
+      "sha256": "8051348003453354e73a58a2e6e0c658c6110e40a72e83c54869abd83ab72c6d",
+      "size_bytes": 241
+    },
+    {
+      "media_type": "application/json",
+      "path": "fixtures/lifecycle/tampered/lifecycle-checkpoint.json",
+      "sha256": "7292e6df56fb8aa1b3c1571b3d2f8390ffe82c7200b48bd8619f8f002868b450",
+      "size_bytes": 412
+    },
+    {
+      "media_type": "application/json",
+      "path": "fixtures/lifecycle/tampered/metadata.json",
+      "sha256": "7b9a72466d3960eb2aacccfc848939453490db0678bd4725def3f789b891c919",
+      "size_bytes": 6
+    },
+    {
+      "media_type": "application/json",
+      "path": "fixtures/lifecycle/tampered/run-lifecycle.json",
+      "sha256": "26a19f4a50e8d530486efec071fe950bd9ed402563af2f118d5e3cf87cece2a3",
+      "size_bytes": 334
+    },
+    {
+      "media_type": "application/json",
+      "path": "fixtures/lifecycle/terminal/lifecycle-checkpoint.json",
+      "sha256": "e0604adafaf88f50c4be58ed42fb1ee85a78d337dbeb49053e7f44a314ebe1ee",
+      "size_bytes": 416
+    },
+    {
+      "media_type": "application/json",
+      "path": "fixtures/lifecycle/terminal/run-lifecycle.json",
+      "sha256": "a8a829f734ce8350b36ee93c1f7ab5bd1604b955300565131966f48f84110478",
+      "size_bytes": 341
+    },
+    {
+      "media_type": "application/json",
+      "path": "fixtures/lifecycle/terminal/state.json",
+      "sha256": "ba518b85b8f967e00d93cf1ad7b5e7404268bc3955ba3d38fb2f10b299125745",
+      "size_bytes": 17
+    },
+    {
+      "media_type": "application/json",
+      "path": "fixtures/lifecycle/valid/lifecycle-checkpoint.json",
+      "sha256": "d83925f1ad8b983e96f02f1c61794e21fec933c5245612d2a2ac12093c17f264",
+      "size_bytes": 421
+    },
+    {
+      "media_type": "application/json",
+      "path": "fixtures/lifecycle/valid/metadata.json",
+      "sha256": "46bee82796025ddbeca9fe2871edaf31bad925f34e4129dfff3d0152dfd163ff",
+      "size_bytes": 15
+    },
+    {
+      "media_type": "application/json",
+      "path": "fixtures/lifecycle/valid/run-lifecycle.json",
+      "sha256": "a5967acbc7c2e62a228180f833e3b9fd38a625edc485cb52c01115ba26bd27b4",
+      "size_bytes": 343
+    },
+    {
+      "media_type": "application/json",
+      "path": "fixtures/merge/parent-set-enumeration.json",
+      "sha256": "5e225755ec1a8d6dc11ae19dee50eaedeed4831e3f8042a5071fffc74b4fd057",
+      "size_bytes": 17091
+    },
+    {
+      "media_type": "application/json",
+      "path": "fixtures/report/budget/effect-outcome-report-input.json",
+      "sha256": "21f3bc39a0c9e7d8152a87891e3b75f222355b4e04a9c3a6d281f31f68d4149b",
+      "size_bytes": 2741
+    },
+    {
+      "media_type": "text/markdown",
+      "path": "fixtures/report/budget/packages/typed-fixture-budget-0/SKILL.md",
+      "sha256": "83a02bbc047ca48c287c1ce753a06385f8abbeea2a453f7af0734f4873f8a6cb",
+      "size_bytes": 25
+    },
+    {
+      "media_type": "application/json",
+      "path": "fixtures/report/budget/report/artifact-index.json",
+      "sha256": "a5602a6f5deaefb7846cc3f6ee52f2cb26e6771649235c3c39f64cc8adfc71c4",
+      "size_bytes": 846
+    },
+    {
+      "media_type": "application/json",
+      "path": "fixtures/report/budget/report/evidence-manifest.json",
+      "sha256": "673e662d214ee606941551ac48173e9f565bf199efbeeb6b20818b2f581f453a",
+      "size_bytes": 527
+    },
+    {
+      "media_type": "text/html",
+      "path": "fixtures/report/budget/report/index.html",
+      "sha256": "05dfcc25b68a99b45ce52d6700d6488187e5ebb3acc92a8e24f2c8439dba17e3",
+      "size_bytes": 6817
+    },
+    {
+      "media_type": "application/zip",
+      "path": "fixtures/report/budget/report/packages/typed-fixture-budget-0.zip",
+      "sha256": "7faecb1450d87f3cd7066d33ca896dd36f121b27c50b53323e2a0462715feb84",
+      "size_bytes": 141
+    },
+    {
+      "media_type": "application/json",
+      "path": "fixtures/report/budget/report/report-data.json",
+      "sha256": "3f4b2f23d51925f8f00444fb965f4deb7749163f08043cb10fce39aa786a474c",
+      "size_bytes": 3354
+    },
+    {
+      "media_type": "application/json",
+      "path": "fixtures/report/budget/report-config.json",
+      "sha256": "81e24abf6743256680badc2c534a765ea5c5c2f1fcbb70d081c166dacc83ee0d",
+      "size_bytes": 338
+    },
+    {
+      "media_type": "application/json",
+      "path": "fixtures/report/many/effect-outcome-report-input.json",
+      "sha256": "5494d546e07bea73849821f8ff733f55d56e9b725a0a2fd3f25af3163baa5c32",
+      "size_bytes": 3896
+    },
+    {
+      "media_type": "text/markdown",
+      "path": "fixtures/report/many/packages/typed-fixture-many-0/SKILL.md",
+      "sha256": "d6bdfb237353831e124d95aa43e89e5af875e3fafca77069f66e3bc1010a1ef0",
+      "size_bytes": 23
+    },
+    {
+      "media_type": "text/markdown",
+      "path": "fixtures/report/many/packages/typed-fixture-many-1/SKILL.md",
+      "sha256": "ab7c74fac9a752a4ebd52514fa5d5d3758a3ca37e70d4f548fd85f2e7610234b",
+      "size_bytes": 23
+    },
+    {
+      "media_type": "application/json",
+      "path": "fixtures/report/many/report/artifact-index.json",
+      "sha256": "41b54e07e3a8f74b6a9b15996eac93c1c412190b0ed0dde51a86203f2206b939",
+      "size_bytes": 1055
+    },
+    {
+      "media_type": "application/json",
+      "path": "fixtures/report/many/report/evidence-manifest.json",
+      "sha256": "edcdad2ab68f40426c6d2685036efb6541a193f3bce78fc8783f4fde8a5e67bc",
+      "size_bytes": 670
+    },
+    {
+      "media_type": "text/html",
+      "path": "fixtures/report/many/report/index.html",
+      "sha256": "bac68d298f4f92b78186fd46b75ca47bca6955a1f280a56f54e73d351fcd40b0",
+      "size_bytes": 9033
+    },
+    {
+      "media_type": "application/zip",
+      "path": "fixtures/report/many/report/packages/typed-fixture-many-0.zip",
+      "sha256": "131727a6b151a23021bbb6a4a8dce202ade32845bc6a952c009f4ad8d3370acd",
+      "size_bytes": 139
+    },
+    {
+      "media_type": "application/zip",
+      "path": "fixtures/report/many/report/packages/typed-fixture-many-1.zip",
+      "sha256": "da8c5e3c949ecb8344c9285c9a1a02b74248666764e85cf78694ca49eebe9c6a",
+      "size_bytes": 139
+    },
+    {
+      "media_type": "application/json",
+      "path": "fixtures/report/many/report/report-data.json",
+      "sha256": "af057bbb1c747fe6adbf5fd9218bcdc273c14b8bb0aa8cc6f95b5ef83ed89492",
+      "size_bytes": 4821
+    },
+    {
+      "media_type": "application/json",
+      "path": "fixtures/report/many/report-config.json",
+      "sha256": "30acda7468455a3a68730c9176309379b4ced4cbec6ed8c783bb6c7fc6033091",
+      "size_bytes": 334
+    },
+    {
+      "media_type": "application/json",
+      "path": "fixtures/report/one/effect-outcome-report-input.json",
+      "sha256": "38048ee748eb9405af0ecf1847ac73e8ae5af8ce702a2d2f3966f238dbe5509d",
+      "size_bytes": 2661
+    },
+    {
+      "media_type": "text/markdown",
+      "path": "fixtures/report/one/packages/typed-fixture-one-0/SKILL.md",
+      "sha256": "435f28dc1134af9be803149a4717337d244c2bb9f984803762bc39984c73bd72",
+      "size_bytes": 22
+    },
+    {
+      "media_type": "application/json",
+      "path": "fixtures/report/one/report/artifact-index.json",
+      "sha256": "04521396e5ff00c578bbb5e8f51860271cdd73fd0b4d17b98ae220964e0a2a8d",
+      "size_bytes": 843
+    },
+    {
+      "media_type": "application/json",
+      "path": "fixtures/report/one/report/evidence-manifest.json",
+      "sha256": "4c9655f0c147ecf9d223ba7e769d580ca982ecf15e77542cf4301c51aa4b8879",
+      "size_bytes": 521
+    },
+    {
+      "media_type": "text/html",
+      "path": "fixtures/report/one/report/index.html",
+      "sha256": "949c826225ba829a869349eaade93c69da8bde9e621d2908b388d8b8e1956da8",
+      "size_bytes": 6641
+    },
+    {
+      "media_type": "application/zip",
+      "path": "fixtures/report/one/report/packages/typed-fixture-one-0.zip",
+      "sha256": "07d5f6e50ff3da1297ba97e0c5423b237e24d69515d53459621722c56bb4816d",
+      "size_bytes": 138
+    },
+    {
+      "media_type": "application/json",
+      "path": "fixtures/report/one/report/report-data.json",
+      "sha256": "9112bf5dcdf725f767bcdba37b1566eb09e83c1c8b150763253fcf26511eb3dd",
+      "size_bytes": 3242
+    },
+    {
+      "media_type": "application/json",
+      "path": "fixtures/report/one/report-config.json",
+      "sha256": "d5272931a4db9cc38130e0b691e9f02a5fc3a12757b81bbdc56be5f52b03ed09",
+      "size_bytes": 332
+    },
+    {
+      "media_type": "application/json",
+      "path": "fixtures/report/zero/effect-outcome-report-input.json",
+      "sha256": "59b1ab48314ccbed6e302957f1c69a58be3c82cd8b679dfa43641c4a7b27b380",
+      "size_bytes": 2169
+    },
+    {
+      "media_type": "application/json",
+      "path": "fixtures/report/zero/report/artifact-index.json",
+      "sha256": "53e3b9e538eb087b7c23b8a176d303d647c8d8982241f4e377d5856d94282206",
+      "size_bytes": 633
+    },
+    {
+      "media_type": "application/json",
+      "path": "fixtures/report/zero/report/evidence-manifest.json",
+      "sha256": "d5b7f8356171a2dc715767ac9ac4cf40c795c1eecbde509e39ab9edec872149e",
+      "size_bytes": 374
+    },
+    {
+      "media_type": "text/html",
+      "path": "fixtures/report/zero/report/index.html",
+      "sha256": "1bd626fed4896dc7e078cd8cdddfe7be58eb949be051828826c547e4ebf27b42",
+      "size_bytes": 6007
+    },
+    {
+      "media_type": "application/json",
+      "path": "fixtures/report/zero/report/report-data.json",
+      "sha256": "a286bc6b898cdd60c28e222cc1348ed0d507e9b2ac74fe2f7f72b3086370e686",
+      "size_bytes": 2410
+    },
+    {
+      "media_type": "application/json",
+      "path": "fixtures/report/zero/report-config.json",
+      "sha256": "1ce7c6c44fb1f461ead10e0f0a72c9c0110c2a3d2dbf8544895163eddca9f59b",
+      "size_bytes": 334
+    },
+    {
+      "media_type": "application/json",
+      "path": "gh-e1-config-audit.json",
+      "sha256": "95f700c3dfd5a953aa9f9b5fdd746ae965383dbe065ce0b474a58d500eb5601f",
+      "size_bytes": 5127
+    },
+    {
+      "media_type": "application/json",
+      "path": "gh-e1-gate-dry-run.json",
+      "sha256": "ae6c43532a9f2c542d53fac22bfb4fb36c3903f0741b8d7ac018bfbcca9cf8de",
+      "size_bytes": 4206
+    },
+    {
+      "media_type": "application/json",
+      "path": "machine-gates.json",
+      "sha256": "57c34aaf32937c07c5a9c312da70ad233b4620d9c9ee5aacb325fcb6c54e8cf8",
+      "size_bytes": 2133
+    },
+    {
+      "media_type": "application/json",
+      "path": "merge-outcome-fixture.json",
+      "sha256": "cc787247acfa9cd341ffb88c82d7a8f273fd63007961deb82b73cc41262e12b2",
+      "size_bytes": 2041
+    },
+    {
+      "media_type": "application/json",
+      "path": "preflight.json",
+      "sha256": "63d90540f2dd859a59a97d2e2baf08169b60ce81658efd53f46538242f4cfce5",
+      "size_bytes": 3054
+    },
+    {
+      "media_type": "application/json",
+      "path": "report-outcome-fixture.json",
+      "sha256": "50830d39d08ed97b77b0ec1cb3424907f8601281781a27e69b62c1574fb437dd",
+      "size_bytes": 2225
+    },
+    {
+      "media_type": "application/json",
+      "path": "runtime-lifecycle-audit.json",
+      "sha256": "a38e193ca28356b5c577591f3df39938c9b0f6474b4e56d829456ca0675cd134",
+      "size_bytes": 509
+    },
+    {
+      "media_type": "application/json",
+      "path": "stage_report.json",
+      "sha256": "d9120b227735c1707739520a6bfc7c186008327d707cbf6ebd13f2c04b68cec4",
+      "size_bytes": 4309
+    },
+    {
+      "media_type": "application/xml",
+      "path": "test-results.xml",
+      "sha256": "28087ec76a1af613feda19040764eff27cdff528a0f949c5dd4b64f9dc6642fe",
+      "size_bytes": 26053
+    },
+    {
+      "media_type": "application/json",
+      "path": "verification.json",
+      "sha256": "51124f4c529ad862ce7dbf045363bf2135d6b950418b6c0f2a44671ffeded0f1",
+      "size_bytes": 6867
+    }
+  ],
+  "schema_version": "1.0.0"
+}

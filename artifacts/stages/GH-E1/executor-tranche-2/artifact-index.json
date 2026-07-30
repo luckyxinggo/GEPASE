@@ -1,0 +1,89 @@
+{
+  "artifacts": [
+    {
+      "media_type": "application/json",
+      "path": "continuation-authorization.json",
+      "sha256": "d283e65a2f3290f87a20ae6b0b559dac1e6f0734a59a47932b9f20007e733cd3",
+      "size_bytes": 1243
+    },
+    {
+      "media_type": "application/json",
+      "path": "executor-work-results.json",
+      "sha256": "216b1f4ecf128a83986ce60fa5632f73e493de85c0d7e10065c53d10a23ec8a0",
+      "size_bytes": 2848
+    },
+    {
+      "media_type": "application/json",
+      "path": "runtime-usage-audit.json",
+      "sha256": "59be0d693bd862674db42b91d4100e4a9287a3ca8be3ced40902638c8f643c42",
+      "size_bytes": 1876
+    },
+    {
+      "media_type": "application/json",
+      "path": "checkpoint-binding.json",
+      "sha256": "4f85b0a93e7b76f8eda1763b650e10e9f5e94a35e442ea9b9ba3b22d6b99f095",
+      "size_bytes": 920
+    },
+    {
+      "media_type": "application/json",
+      "path": "next-role-estimate.json",
+      "sha256": "3f081bf9375053edd12ca9d830a4e56c94402cce59a659f86b0fefe51370ad72",
+      "size_bytes": 927
+    },
+    {
+      "media_type": "application/json",
+      "path": "machine-gates-progress.json",
+      "sha256": "0cb03180dd181776f0ee7ec4dff6931abf1a999a981f796d2d09834131b2fb44",
+      "size_bytes": 1206
+    },
+    {
+      "media_type": "application/json",
+      "path": "stage_report.json",
+      "sha256": "1fb07153e5230c912b5c5c3e2d795521853167d1a7f1aaed73fc38e50fefbfb9",
+      "size_bytes": 1369
+    },
+    {
+      "media_type": "application/json",
+      "path": "verification.json",
+      "sha256": "0f7ab8446523df1b4aa8741f6d23d532b733e9e8221a2ffe4861ad31303768ae",
+      "size_bytes": 605
+    },
+    {
+      "media_type": "application/json",
+      "path": "regression-verification.json",
+      "sha256": "6818fdf7c002dd3c6310a94af21898be5028eb71e25eba9836f7e2f40ea88e4d",
+      "size_bytes": 2191
+    },
+    {
+      "media_type": "application/json",
+      "path": "protected-tree-audit.json",
+      "sha256": "2ae63411eba9eab8be504f88eca5082e8dc630093d0d7417729294b1db4e6d41",
+      "size_bytes": 2168
+    },
+    {
+      "media_type": "application/json",
+      "path": "seal-amendment.json",
+      "sha256": "b2b08b748c93154539750ab2bbcf86be7aa2ce8f093de4f6b865fef9a8eacc06",
+      "size_bytes": 521
+    },
+    {
+      "media_type": "application/json",
+      "path": "checkpoint-supersession.json",
+      "sha256": "27552ea3492e006b4ec7da76c9b7a4c44be2a73369488fe31d3e7514a3eb2a11",
+      "size_bytes": 1161
+    },
+    {
+      "media_type": "application/json",
+      "path": "final-progress-summary.json",
+      "sha256": "5fa1c059452ac9edd9fc7c574c9b74ef053c4267b9e15b832083d3208f1a56ef",
+      "size_bytes": 1317
+    },
+    {
+      "media_type": "application/json",
+      "path": "seal-amendment-v2.json",
+      "sha256": "b50825cd026b2e1ea72700f6b8823d3aed4b3a8b66742d82e4adcf7e9cfdb6be",
+      "size_bytes": 459
+    }
+  ],
+  "schema_version": "1.0.0"
+}

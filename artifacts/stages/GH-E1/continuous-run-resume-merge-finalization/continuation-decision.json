@@ -1,0 +1,22 @@
+{
+  "schema_version": "1.0.0",
+  "decision_id": "continuation-698d23d1eb90a63c10f7f299",
+  "run_id": "gh-e1-slack-gif-creator-evolution",
+  "config_hash": "64f73c49a10c92dcef02647682b75645ac1331e2f85d5fbedf4b567bd5f863c1",
+  "checkpoint_id": "budget-checkpoint-97cf12d35e60a867d9ad1aaa",
+  "checkpoint_hash": "d3e1af9b7ece5e7674b1a7f0fb56a66b7204e8a0640fce9557637985286bcfe1",
+  "evidence_hash": "d4caa9668e569eb30e66fba1dfa5462e583485eac1c6b7f24418008c3cd90129",
+  "action": "continue",
+  "approved_increment": {
+    "agent_calls": 1,
+    "estimated_tokens": 8000,
+    "active_wall_clock_ms": 300000,
+    "proposals": 0,
+    "candidates": 0,
+    "repairs": 1
+  },
+  "reviewer": "user-bounded-continuous-authorization",
+  "comment_zh": "依据用户对当前 GH-E1 剩余冻结流程的有界持续授权自动继续。本 decision 仅批准 Merge no_eligible_parent_set 后的 search closure 与 before_final_report barrier；不导出任何 Agent work，不增加 Proposal、Candidate 或 Merge child。",
+  "previous_decision_hash": "c351aca4bc1c2bd1066b979e7e4d2db6c070bd6d5e382abac4e989fcde9751db",
+  "decided_at": "2026-07-29T16:37:33.764630Z"
+}

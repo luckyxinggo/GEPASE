@@ -1,0 +1,21 @@
+{
+  "schema_version": "1.0.0",
+  "stage_id": "GH-E1",
+  "status": "in_progress",
+  "passed": 4,
+  "total": 10,
+  "preserved_reason": "Append-only copy of the pre-final progress projection before GHE1-G04 through G09 were computed.",
+  "latest_checkpoint_at_projection": "budget-checkpoint-5d23b80b3ea0123c444707dc",
+  "gates": [
+    {"gate_id": "GHE1-G00", "status": "passed", "evidence": ["preflight.json"]},
+    {"gate_id": "GHE1-G01", "status": "passed", "evidence": ["package-contract-audit.json"]},
+    {"gate_id": "GHE1-G02", "status": "passed", "evidence": ["fresh-reference-audit.json"]},
+    {"gate_id": "GHE1-G03", "status": "passed", "evidence": ["observed-selector-graph-audit.json"]},
+    {"gate_id": "GHE1-G04", "status": "pending", "evidence": ["search-reachability-audit.json"]},
+    {"gate_id": "GHE1-G05", "status": "pending", "evidence": ["candidate-train-gate-audit.json"]},
+    {"gate_id": "GHE1-G06", "status": "pending", "evidence": ["held-out-merge-audit.json"]},
+    {"gate_id": "GHE1-G07", "status": "pending", "evidence": ["effect-outcome-audit.json"]},
+    {"gate_id": "GHE1-G08", "status": "pending", "evidence": ["report-reproduction-audit.json"]},
+    {"gate_id": "GHE1-G09", "status": "pending", "evidence": ["verification.json", "protected-tree-audit.json"]}
+  ]
+}

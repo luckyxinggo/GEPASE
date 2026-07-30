@@ -1,0 +1,144 @@
+{
+  "agent_calls": 0,
+  "all_expected_gates_present": true,
+  "all_status_dry_wired": true,
+  "config_audit": {
+    "evolution": {
+      "config_hash": "64f73c49a10c92dcef02647682b75645ac1331e2f85d5fbedf4b567bd5f863c1",
+      "path": "configs/graph-hardening/slack-gif-creator-gh-e1-evolution.json",
+      "run_id": "gh-e1-slack-gif-creator-evolution",
+      "sha256": "92521d3a1edeeff901893a8d4d2fd215d3a515ea26d505aa56ea85261dd09ee2"
+    },
+    "reference": {
+      "config_hash": "cf902e88f72c1d8c778e2cade2590b0254732d5824e15c5124a550355d579668",
+      "path": "configs/graph-hardening/slack-gif-creator-gh-e1-reference.yaml",
+      "run_id": "gh-e1-slack-gif-creator-reference",
+      "sha256": "99cb76737138de69a44ef61b32e919729d6b72bc9d3e92665e2d50040ddeab89"
+    },
+    "report": {
+      "outcome_input_refs": [
+        "artifacts/runs/gh-e1-slack-gif-creator-evolution/effect-outcome-report-input.json",
+        "artifacts/runs/gh-e1-slack-gif-creator-reference/effect-outcome-report-input.json"
+      ],
+      "path": "configs/graph-hardening/slack-gif-creator-gh-e1-report.json",
+      "report_id": "gh-e1-slack-gif-creator-report",
+      "sha256": "69720136264d04e7fccf401606346dc774311dee7c5e98daa582c9579e4df07d"
+    }
+  },
+  "effect_scores_read": 0,
+  "formal_gate_passed": false,
+  "formal_paths": [
+    "artifacts/runs/gh-e1-slack-gif-creator-reference",
+    "artifacts/runs/gh-e1-slack-gif-creator-evolution",
+    "artifacts/runs/gh-e1-slack-gif-creator-report",
+    "artifacts/stages/GH-E1"
+  ],
+  "formal_paths_absent": true,
+  "gate_results": [
+    {
+      "formal_status": "not_run",
+      "gate_id": "GHE1-G00",
+      "name": "isolated_preflight",
+      "passed": false,
+      "required_formal_refs": [
+        "preflight.json"
+      ],
+      "status": "dry_wired"
+    },
+    {
+      "formal_status": "not_run",
+      "gate_id": "GHE1-G01",
+      "name": "fresh_package_and_frozen_eval_contract",
+      "passed": false,
+      "required_formal_refs": [
+        "package-contract-audit.json"
+      ],
+      "status": "dry_wired"
+    },
+    {
+      "formal_status": "not_run",
+      "gate_id": "GHE1-G02",
+      "name": "fresh_paired_reference",
+      "passed": false,
+      "required_formal_refs": [
+        "fresh-reference-audit.json"
+      ],
+      "status": "dry_wired"
+    },
+    {
+      "formal_status": "not_run",
+      "gate_id": "GHE1-G03",
+      "name": "live_observed_selector_graph",
+      "passed": false,
+      "required_formal_refs": [
+        "observed-selector-graph-audit.json"
+      ],
+      "status": "dry_wired"
+    },
+    {
+      "formal_status": "not_run",
+      "gate_id": "GHE1-G04",
+      "name": "package_aware_search_reachability",
+      "passed": false,
+      "required_formal_refs": [
+        "search-reachability-audit.json"
+      ],
+      "status": "dry_wired"
+    },
+    {
+      "formal_status": "not_run",
+      "gate_id": "GHE1-G05",
+      "name": "bounded_candidates_and_train_gate",
+      "passed": false,
+      "required_formal_refs": [
+        "candidate-train-gate-audit.json"
+      ],
+      "status": "dry_wired"
+    },
+    {
+      "formal_status": "not_run",
+      "gate_id": "GHE1-G06",
+      "name": "held_out_and_merge",
+      "passed": false,
+      "required_formal_refs": [
+        "held-out-merge-audit.json"
+      ],
+      "status": "dry_wired"
+    },
+    {
+      "formal_status": "not_run",
+      "gate_id": "GHE1-G07",
+      "name": "effect_outcome_honest",
+      "passed": false,
+      "required_formal_refs": [
+        "effect-outcome-audit.json"
+      ],
+      "status": "dry_wired"
+    },
+    {
+      "formal_status": "not_run",
+      "gate_id": "GHE1-G08",
+      "name": "report_reproducible",
+      "passed": false,
+      "required_formal_refs": [
+        "report-reproduction-audit.json"
+      ],
+      "status": "dry_wired"
+    },
+    {
+      "formal_status": "not_run",
+      "gate_id": "GHE1-G09",
+      "name": "regression_immutability_and_seal",
+      "passed": false,
+      "required_formal_refs": [
+        "verification.json",
+        "protected-tree-audit.json"
+      ],
+      "status": "dry_wired"
+    }
+  ],
+  "mode": "dry_run",
+  "raw_evidence_consumed": false,
+  "schema_version": "1.0.0",
+  "stage_id": "GH-E1"
+}

@@ -1,0 +1,10 @@
+{
+  "checkpoint_id": null,
+  "config_hash": null,
+  "created_at": "2026-07-28T13:54:14.744546Z",
+  "owner": "eval",
+  "run_id": "half",
+  "schema_version": "1.0.0",
+  "status": "initializing",
+  "updated_at": "2026-07-28T13:54:14.744546Z"
+}

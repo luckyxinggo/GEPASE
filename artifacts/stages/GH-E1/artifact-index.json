@@ -1,0 +1,533 @@
+{
+  "artifacts": [
+    {
+      "media_type": "application/json",
+      "path": "preflight.json",
+      "sha256": "7948af242d3bee5abc449815941fd2063de7adc1d6275dc8a36b8cc1c143b3b9",
+      "size_bytes": 6028
+    },
+    {
+      "media_type": "application/json",
+      "path": "machine-gates.json",
+      "sha256": "a34cb8d36880c1ba3bd08d4ca46b1f39c6b646fd6b28cccc82ae9de39e3e292f",
+      "size_bytes": 1964
+    },
+    {
+      "media_type": "application/json",
+      "path": "stage_report.json",
+      "sha256": "3466e2a14ae24d4e9251cc7e429cbf47e9074110905cfb8d077fb125f68b32e7",
+      "size_bytes": 5720
+    },
+    {
+      "media_type": "application/json",
+      "path": "package-contract-audit.json",
+      "sha256": "dbfa551308fe0d91758643aca663e7e98d7e49774bdc1167d1a787d31b9c3265",
+      "size_bytes": 2057
+    },
+    {
+      "media_type": "application/json",
+      "path": "continuation-decisions/reference-package-compiled.json",
+      "sha256": "07b2ec46b12633c146f62fb396aca870dd4b0dea14fd32415879bd3ba0ac9166",
+      "size_bytes": 872
+    },
+    {
+      "media_type": "application/json",
+      "path": "reference-executor-tranche-audit.json",
+      "sha256": "512992e9f4793900c4ccce3974d1dc8022c8ecb521c5a78d78b7f50be50f41cf",
+      "size_bytes": 2861
+    },
+    {
+      "media_type": "application/json",
+      "path": "reference-executor-tranche-audit-repair-1.json",
+      "sha256": "b3c43983190f346032d3dbfb949453332abb44721ce62162580c55359e4a67ad",
+      "size_bytes": 2857
+    },
+    {
+      "media_type": "application/json",
+      "path": "fresh-reference-audit.json",
+      "sha256": "de2b29dd5b04c51abf8bd86604f4b32cb90a8b6d17a65768722d51ac9b5f72ad",
+      "size_bytes": 5030
+    },
+    {
+      "media_type": "application/json",
+      "path": "analyzer-interruption-audit.json",
+      "sha256": "53474728deea3e8ddcc5561baa8d770e2813d7d8e1386c827834c25f16d828c5",
+      "size_bytes": 703
+    },
+    {
+      "media_type": "application/json",
+      "path": "continuation-decisions/reference-analyzer.json",
+      "sha256": "1d915b7579fc958ba37e19a30e3670394b889431ce789f6083c2a9f29fb322de",
+      "size_bytes": 1056
+    },
+    {
+      "media_type": "application/json",
+      "path": "continuation-decisions/reference-comparator.json",
+      "sha256": "60a1e028a1fb0e9e1e6dea76ed49aba91273e27d2236e0afe688fa20fc80d358",
+      "size_bytes": 1026
+    },
+    {
+      "media_type": "application/json",
+      "path": "continuation-decisions/reference-executor-accounting-repair.json",
+      "sha256": "3b0493ebde768d25ca0b478387fcd4599bf438a928378f6e96b6754a5b498eb3",
+      "size_bytes": 1067
+    },
+    {
+      "media_type": "application/json",
+      "path": "continuation-decisions/reference-independent-grader.json",
+      "sha256": "57d56f84065165a23ff0c35c718344ecead3d8949ee4c329192f785da1c54edb",
+      "size_bytes": 1076
+    },
+    {
+      "media_type": "application/json",
+      "path": "continuation-decisions/reference-terminal-seal.json",
+      "sha256": "e843e771026512db0fad1eda7e051041b2712f1dcdacaf0fa179ac6c98ee69cd",
+      "size_bytes": 1018
+    },
+    {
+      "media_type": "application/json",
+      "path": "reference-workspace-quarantine-audit.json",
+      "sha256": "33e105fc70980998e3cde948adbd4a3feeaf4e3edcbc02aa518c9d243a164e43",
+      "size_bytes": 683
+    },
+    {
+      "media_type": "application/json",
+      "path": "observed-selector-graph-audit.json",
+      "sha256": "f531de6414c0706d251daf7e822559e3787f3ce788178b43afef6dbf21731cf3",
+      "size_bytes": 5305
+    },
+    {
+      "media_type": "application/json",
+      "path": "continuation-decisions/evolution-package-compiled-scope-only.json",
+      "sha256": "57d8dc0d5ecf3183b293d4b14f55e685d8c25d5355071583da597cd6efeff636",
+      "size_bytes": 995
+    },
+    {
+      "media_type": "application/json",
+      "path": "proposer-repair-pause-audit.json",
+      "sha256": "21a9935f2bfc30b596b14e126861af5226c7fb2cc55c3bece44698a604f99469",
+      "size_bytes": 4437
+    },
+    {
+      "media_type": "application/json",
+      "path": "continuation-decisions/evolution-proposer-two-work-items.json",
+      "sha256": "df6df3e95f17d006d10f38d052c3ed66d20281252fccbc3743b8ff77db94d5f7",
+      "size_bytes": 1293
+    },
+    {
+      "media_type": "application/json",
+      "path": "candidate-train-repair-stall-audit.json",
+      "sha256": "04b7bc41a3603b639ad6bb22bb23d60f598567ba23b152e83897723c2e5be8b6",
+      "size_bytes": 4519
+    },
+    {
+      "media_type": "application/json",
+      "path": "continuation-decisions/evolution-proposer-repair-work-items.json",
+      "sha256": "441fdbac8cbd1d661422dc824d19b31305455923129306cd210691cdccce1e87",
+      "size_bytes": 1347
+    },
+    {
+      "media_type": "application/json",
+      "path": "recovery-stabilization-audit.json",
+      "sha256": "71e5b9683867bc0ec8b2acbbf21e110967c2e9767134159a9a68c696115aa800",
+      "size_bytes": 32399
+    },
+    {
+      "media_type": "application/json",
+      "path": "recovery-stabilization-verification.json",
+      "sha256": "f685271c25564d40b52d14281add91cf902b148b6af7184039961af2ca72b2a4",
+      "size_bytes": 3151
+    },
+    {
+      "media_type": "application/json",
+      "path": "machine-gates-recovery-stabilization.json",
+      "sha256": "ad11985389787d9ba3b469b8f68f230a3b96ff163f80bc034e362f24532ab840",
+      "size_bytes": 2170
+    },
+    {
+      "media_type": "application/json",
+      "path": "stage-report-recovery-stabilization.json",
+      "sha256": "e912f73bd1b16780d68f4c9fb93e86d01a0954f62368fd17e095f1e275145fd8",
+      "size_bytes": 1071
+    },
+    {
+      "media_type": "application/json",
+      "path": "candidate-train-gate-audit.json",
+      "sha256": "3e818e4d68f0e2772949f9977e0efd8cba730797323fcf5fed28cd1e9906901a",
+      "size_bytes": 2041
+    },
+    {
+      "media_type": "application/octet-stream",
+      "path": "commands.log",
+      "sha256": "2c765439e078e43be8d8967b9ab46c0dea3ab369ca2973d1773b80804d4b866f",
+      "size_bytes": 971
+    },
+    {
+      "media_type": "application/json",
+      "path": "continuous-authorization/decision-candidate-c36e-train-executors.json",
+      "sha256": "96b5e6db19170ec251212452915c1a4b5364573b502fd34437887d8bcbe13c74",
+      "size_bytes": 1233
+    },
+    {
+      "media_type": "application/json",
+      "path": "continuous-authorization/decision-candidate-c36e-train-graders.json",
+      "sha256": "02d71633f8c31e7131b5939432983d66df712339ef167ac60858adc8d4294603",
+      "size_bytes": 1203
+    },
+    {
+      "media_type": "application/json",
+      "path": "continuous-authorization/decision-candidate-db0b-train-graders.json",
+      "sha256": "197a6e45688b1e0d762b569d959016394120a137ad2b1784e17d0086e3b9319c",
+      "size_bytes": 1169
+    },
+    {
+      "media_type": "application/json",
+      "path": "continuous-run-blocker/blocker-audit.json",
+      "sha256": "207046dd326ed7bc1c9ed36f746a16894a2e7aa13271c5f22475e6bf2617b4a9",
+      "size_bytes": 2945
+    },
+    {
+      "media_type": "application/json",
+      "path": "continuous-run-blocker/machine-gates-progress.json",
+      "sha256": "2d06630d8bb5e16d6c9e65d53b69a4c6e80f5b62e6e359e9a93ec8299bf7b172",
+      "size_bytes": 839
+    },
+    {
+      "media_type": "application/json",
+      "path": "continuous-run-blocker/stage-report.json",
+      "sha256": "423b1b94910d6bf91a8a61998a00c96753284400fbb2a2cc99e2e777fadd7426",
+      "size_bytes": 1506
+    },
+    {
+      "media_type": "application/json",
+      "path": "continuous-run-blocker/verification.json",
+      "sha256": "3680b27dc74ea5fb6f2744c50baec4d5ecf99463d373a4e48bc0244ba272c157",
+      "size_bytes": 508
+    },
+    {
+      "media_type": "application/json",
+      "path": "continuous-run-resume-c36e-reflection/continuation-decision.json",
+      "sha256": "b705125601cfc03d1e1d9f6918f929bfbad353c0ffd481028aa5a7bc927d2a59",
+      "size_bytes": 1096
+    },
+    {
+      "media_type": "application/json",
+      "path": "continuous-run-resume-db0b-reflection/continuation-decision.json",
+      "sha256": "c351aca4bc1c2bd1066b979e7e4d2db6c070bd6d5e382abac4e989fcde9751db",
+      "size_bytes": 1148
+    },
+    {
+      "media_type": "application/json",
+      "path": "continuous-run-resume-db0b-validation-comparators/continuation-decision.json",
+      "sha256": "e1dd573975a0f089246ac2be2bde49f12efd35a16fb840b3e0204ce7deee16bd",
+      "size_bytes": 1111
+    },
+    {
+      "media_type": "application/json",
+      "path": "continuous-run-resume-db0b-validation-executors/continuation-decision.json",
+      "sha256": "de86634b500b02c8faca489e3aa4b86748e107caa16110e32835c98bf9c69154",
+      "size_bytes": 1143
+    },
+    {
+      "media_type": "application/json",
+      "path": "continuous-run-resume-db0b-validation-graders/continuation-decision.json",
+      "sha256": "797c33bfe88a0d2dcedb8912a8d2aece880b9670edc47732da3162ed2be609ac",
+      "size_bytes": 1143
+    },
+    {
+      "media_type": "application/json",
+      "path": "continuous-run-resume-final-report/continuation-decision.json",
+      "sha256": "55eccf0e581784939c8491d5874c89c6b4865e735c2e36645d11f975411cc7d3",
+      "size_bytes": 1152
+    },
+    {
+      "media_type": "application/json",
+      "path": "continuous-run-resume-merge-finalization/continuation-decision.json",
+      "sha256": "0821cb5063967c2ed65ec7694d6d827fa840ffbaa5cc580a75248d7d70094e80",
+      "size_bytes": 1152
+    },
+    {
+      "media_type": "application/json",
+      "path": "effect-outcome-audit.json",
+      "sha256": "31e5a89e38e126d0358ea63dbfcff192a0f5ab64d3d3702954055fc8d1a49977",
+      "size_bytes": 1846
+    },
+    {
+      "media_type": "application/json",
+      "path": "executor-tranche-2/checkpoint-binding.json",
+      "sha256": "4f85b0a93e7b76f8eda1763b650e10e9f5e94a35e442ea9b9ba3b22d6b99f095",
+      "size_bytes": 920
+    },
+    {
+      "media_type": "application/json",
+      "path": "executor-tranche-2/checkpoint-supersession.json",
+      "sha256": "27552ea3492e006b4ec7da76c9b7a4c44be2a73369488fe31d3e7514a3eb2a11",
+      "size_bytes": 1161
+    },
+    {
+      "media_type": "application/json",
+      "path": "executor-tranche-2/continuation-authorization.json",
+      "sha256": "d283e65a2f3290f87a20ae6b0b559dac1e6f0734a59a47932b9f20007e733cd3",
+      "size_bytes": 1243
+    },
+    {
+      "media_type": "application/json",
+      "path": "executor-tranche-2/executor-work-results.json",
+      "sha256": "216b1f4ecf128a83986ce60fa5632f73e493de85c0d7e10065c53d10a23ec8a0",
+      "size_bytes": 2848
+    },
+    {
+      "media_type": "application/json",
+      "path": "executor-tranche-2/final-progress-summary.json",
+      "sha256": "5fa1c059452ac9edd9fc7c574c9b74ef053c4267b9e15b832083d3208f1a56ef",
+      "size_bytes": 1317
+    },
+    {
+      "media_type": "application/json",
+      "path": "executor-tranche-2/machine-gates-progress.json",
+      "sha256": "0cb03180dd181776f0ee7ec4dff6931abf1a999a981f796d2d09834131b2fb44",
+      "size_bytes": 1206
+    },
+    {
+      "media_type": "application/json",
+      "path": "executor-tranche-2/next-role-estimate.json",
+      "sha256": "3f081bf9375053edd12ca9d830a4e56c94402cce59a659f86b0fefe51370ad72",
+      "size_bytes": 927
+    },
+    {
+      "media_type": "application/json",
+      "path": "executor-tranche-2/protected-tree-audit.json",
+      "sha256": "2ae63411eba9eab8be504f88eca5082e8dc630093d0d7417729294b1db4e6d41",
+      "size_bytes": 2168
+    },
+    {
+      "media_type": "application/json",
+      "path": "executor-tranche-2/regression-verification.json",
+      "sha256": "6818fdf7c002dd3c6310a94af21898be5028eb71e25eba9836f7e2f40ea88e4d",
+      "size_bytes": 2191
+    },
+    {
+      "media_type": "application/json",
+      "path": "executor-tranche-2/runtime-usage-audit.json",
+      "sha256": "59be0d693bd862674db42b91d4100e4a9287a3ca8be3ced40902638c8f643c42",
+      "size_bytes": 1876
+    },
+    {
+      "media_type": "application/json",
+      "path": "executor-tranche-2/seal-amendment-v2.json",
+      "sha256": "b50825cd026b2e1ea72700f6b8823d3aed4b3a8b66742d82e4adcf7e9cfdb6be",
+      "size_bytes": 459
+    },
+    {
+      "media_type": "application/json",
+      "path": "executor-tranche-2/seal-amendment.json",
+      "sha256": "b2b08b748c93154539750ab2bbcf86be7aa2ce8f093de4f6b865fef9a8eacc06",
+      "size_bytes": 521
+    },
+    {
+      "media_type": "application/json",
+      "path": "executor-tranche-2/stage_report.json",
+      "sha256": "1fb07153e5230c912b5c5c3e2d795521853167d1a7f1aaed73fc38e50fefbfb9",
+      "size_bytes": 1369
+    },
+    {
+      "media_type": "application/json",
+      "path": "executor-tranche-2/verification.json",
+      "sha256": "0f7ab8446523df1b4aa8741f6d23d532b733e9e8221a2ffe4861ad31303768ae",
+      "size_bytes": 605
+    },
+    {
+      "media_type": "application/json",
+      "path": "held-out-merge-audit.json",
+      "sha256": "f31fa013d8b0d22da17982710fc8bf9bc390108479edd96627404220e31e129d",
+      "size_bytes": 1874
+    },
+    {
+      "media_type": "application/json",
+      "path": "machine-gates-history-before-final.json",
+      "sha256": "ac516f7f9846e9b695fa8f876d904ac0dab16e790c8dfd8b9f1dbaa526c9dc1b",
+      "size_bytes": 1298
+    },
+    {
+      "media_type": "application/json",
+      "path": "optional-diagnostic-quarantine-audit.json",
+      "sha256": "127c3abfbb0ead4e56ff8748c21956d60492f7220b44c5ca1b339fded3cd291b",
+      "size_bytes": 2858
+    },
+    {
+      "media_type": "application/json",
+      "path": "protected-tree-audit.json",
+      "sha256": "c56223a825b27c6237006b410be4fe78049cded658b33d8b7cc5baeb89d8c7f1",
+      "size_bytes": 3952
+    },
+    {
+      "media_type": "application/json",
+      "path": "recovery-v2-correctness/checkpoint-freshness-fixture.json",
+      "sha256": "4cc404d5773037e47d8e3f408a745e8cccd4aa10a39c92c870660aaead7dca10",
+      "size_bytes": 1858
+    },
+    {
+      "media_type": "application/json",
+      "path": "recovery-v2-correctness/machine-gates.json",
+      "sha256": "41d2df2d96ea22bdaf6e69f8611502c935f065b64f5ed04c6d87cc87d7f67e42",
+      "size_bytes": 2636
+    },
+    {
+      "media_type": "application/json",
+      "path": "recovery-v2-correctness/recovery-correctness-audit.json",
+      "sha256": "46705dd76332b122e1bb52ed9b09fda052111fa9469c92eaafc4372bbb247b48",
+      "size_bytes": 39050
+    },
+    {
+      "media_type": "application/json",
+      "path": "recovery-v2-correctness/selected-readable-recovery-audit.json",
+      "sha256": "99e5d8425e6fedd19385ec61b2c3fe6b8a296009b122fa851fdcb083643a7ad9",
+      "size_bytes": 8599
+    },
+    {
+      "media_type": "application/json",
+      "path": "recovery-v2-correctness/selected-status-recovery-audit.json",
+      "sha256": "60de2261d2802f01f11da55bfe0488053809249bb18c9cae6c38f672f885d3d9",
+      "size_bytes": 7986
+    },
+    {
+      "media_type": "application/json",
+      "path": "recovery-v2-correctness/stage-report.json",
+      "sha256": "f4f472b866ffdd92b5303043d485faf718e31fb88dd35d3431cfa279fc89af40",
+      "size_bytes": 581
+    },
+    {
+      "media_type": "application/json",
+      "path": "recovery-v2-correctness/verification.json",
+      "sha256": "839f2787c65f3ca27c7a11fe1d443b9873546256fb6bcd25370251c46c95dd7b",
+      "size_bytes": 2327
+    },
+    {
+      "media_type": "application/json",
+      "path": "recovery-v2-ingest/machine-gates.json",
+      "sha256": "71df1a70d60e7824350976e463e0bc450dcfa0d72323564f9eaa9487cf9748d0",
+      "size_bytes": 1842
+    },
+    {
+      "media_type": "application/json",
+      "path": "recovery-v2-ingest/recovery-ingest-audit.json",
+      "sha256": "4d611778095aa590ce68e0b28538f93b6a2bd5c5e2830f7529c4feb21e913a09",
+      "size_bytes": 7796
+    },
+    {
+      "media_type": "application/json",
+      "path": "recovery-v2-ingest/stage-report.json",
+      "sha256": "efc13e062e55216dfc6f644fc56cdfd98a6f584b05222f9ddecc9605e4b24d49",
+      "size_bytes": 1053
+    },
+    {
+      "media_type": "application/json",
+      "path": "recovery-v2-ingest/verification.json",
+      "sha256": "79e3b08947f5c27a22f5fe043604fa4a410e8f1d7a4493e3d49f4dd7793fe055",
+      "size_bytes": 1876
+    },
+    {
+      "media_type": "application/json",
+      "path": "reexecution-authorization-badge-grader/continuation-decision.json",
+      "sha256": "38626e6359108b4ce9a56aa866cb813f2542231106fbfff6bbe2b25e393e8c1e",
+      "size_bytes": 1082
+    },
+    {
+      "media_type": "application/json",
+      "path": "reexecution-authorization-badge-grader/reexecution-authorization.json",
+      "sha256": "a786361aef7f3616e846f3ea9f2f1316aadf2d930ba7c5766de67e21bcfb87cb",
+      "size_bytes": 821
+    },
+    {
+      "media_type": "application/json",
+      "path": "report-reproduction-audit.json",
+      "sha256": "8fc2b14337fea636f97e081743b51d55bd68318f23bbb9cbb87af6bdf3c8b8b2",
+      "size_bytes": 1621
+    },
+    {
+      "media_type": "application/json",
+      "path": "search-reachability-audit.json",
+      "sha256": "480baab956e4bcd2011153b166beb0eeb5f0d229902e86ecfcffb0b566a62064",
+      "size_bytes": 1596
+    },
+    {
+      "media_type": "application/json",
+      "path": "stage-report-history-before-final.json",
+      "sha256": "7ced74f86ebcfcf2841d6e3e4032877a5c4df069ba76197cc05eaa1ece489d20",
+      "size_bytes": 744
+    },
+    {
+      "media_type": "application/octet-stream",
+      "path": "test-results.xml",
+      "sha256": "4392a40f56d8127a648d52ecbcbf2a3305475b543d00f48644f05c5888c0ce8b",
+      "size_bytes": 29177
+    },
+    {
+      "media_type": "application/json",
+      "path": "verification.json",
+      "sha256": "1d2417cbcb2f56a6b78a5620117ae9fccadc3a4136149efd103ea95444446510",
+      "size_bytes": 2179
+    },
+    {
+      "media_type": "application/json",
+      "path": "continuous-authorization/artifact-index.json",
+      "sha256": "1c907a6a5f59b1997f4ac01ad3a03cca9f89a1780a1a52c7fa683f2b14f3f7f8",
+      "size_bytes": 275
+    },
+    {
+      "media_type": "application/json",
+      "path": "continuous-run-blocker/artifact-index.json",
+      "sha256": "608e94eb9adc57d6fd72a1633f355b71d4b1f79c341d9011f2207e77755b43e6",
+      "size_bytes": 850
+    },
+    {
+      "media_type": "application/json",
+      "path": "continuous-run-resume-db0b-reflection/artifact-index.json",
+      "sha256": "de41b5e9708b12c5f9985ebaf6280def8e63e3b751cadf89fbbe06095050656f",
+      "size_bytes": 259
+    },
+    {
+      "media_type": "application/json",
+      "path": "continuous-run-resume-db0b-validation-comparators/artifact-index.json",
+      "sha256": "b1463a0b38fc8cebecd16b4bc3b7aeee6989c32795e36c5f2c4da49469021924",
+      "size_bytes": 259
+    },
+    {
+      "media_type": "application/json",
+      "path": "continuous-run-resume-db0b-validation-executors/artifact-index.json",
+      "sha256": "95b85df015a9e0195719596313625ac34fed664c6157990f9cfd42ec71185600",
+      "size_bytes": 259
+    },
+    {
+      "media_type": "application/json",
+      "path": "continuous-run-resume-db0b-validation-graders/artifact-index.json",
+      "sha256": "739ea41b911eedbeedc0215e232ffceedc94da0db17b384261c9b37d7b037e98",
+      "size_bytes": 259
+    },
+    {
+      "media_type": "application/json",
+      "path": "executor-tranche-2/artifact-index.json",
+      "sha256": "cc50f813ac72553c0cde9cf854b51bb0705a6c647a2e05b91f7ee3fd0440e4c8",
+      "size_bytes": 2905
+    },
+    {
+      "media_type": "application/json",
+      "path": "recovery-v2-correctness/artifact-index.json",
+      "sha256": "87ebefc2877cd2424fc1da71eb6bb50d225df81093f0a5315de194b6373cb47d",
+      "size_bytes": 1501
+    },
+    {
+      "media_type": "application/json",
+      "path": "recovery-v2-ingest/artifact-index.json",
+      "sha256": "a16c57c8cf6aa64d42aa953d8c3410b0acda805c5cb7a569ca12850d254d905d",
+      "size_bytes": 851
+    },
+    {
+      "media_type": "application/json",
+      "path": "reexecution-authorization-badge-grader/artifact-index.json",
+      "sha256": "a360ab4eeb42031fb55e8b14d009e9516e51b037f1f9d5114574523eed03c230",
+      "size_bytes": 468
+    }
+  ],
+  "schema_version": "1.0.0"
+}

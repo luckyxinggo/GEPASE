@@ -1,0 +1,33 @@
+{
+  "export_rejection_before_fresh_checkpoint": "runtime is paused; a valid continuation decision is required before export",
+  "fresh_checkpoint_id": "budget-checkpoint-1332f4cacd3c4bdf489c3328",
+  "fresh_checkpoint_state_hash": "c935387d38c8b66e4d8668296932e44aedafd8afa75ffc8d0b31bed462d75afd",
+  "freshness_audit": {
+    "audit_id": "checkpoint-freshness-60d3e1a87bc542d0635dbbe3",
+    "audited_at": "2026-07-29T07:26:47.921614Z",
+    "checkpoint_id": "budget-checkpoint-1332f4cacd3c4bdf489c3328",
+    "checkpoint_ref": "budget-checkpoints/budget-checkpoint-1332f4cacd3c4bdf489c3328.json",
+    "checkpoint_sha256": "74e9bc64ec568f41d9fee3496b181f207af539e16dbc8b645eff8c99f573f08f",
+    "checkpoint_state_hash": "c935387d38c8b66e4d8668296932e44aedafd8afa75ffc8d0b31bed462d75afd",
+    "config_hash": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
+    "evidence_hash": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+    "is_latest_checkpoint": true,
+    "no_uncheckpointed_recovery": true,
+    "run_id": "gher-v2-fixture",
+    "runtime_state_hash": "c935387d38c8b66e4d8668296932e44aedafd8afa75ffc8d0b31bed462d75afd",
+    "schema_version": "1.0.0",
+    "valid": true
+  },
+  "new_agent_calls": 0,
+  "old_checkpoint_id": "budget-checkpoint-893a1627b19ad6e33b200564",
+  "old_checkpoint_rejection_after_fresh_checkpoint": "checkpoint is not the latest runtime checkpoint",
+  "pending_work_ids_before_fresh_checkpoint": [
+    "work-a",
+    "work-b"
+  ],
+  "persisted_runtime_state_hash": "c935387d38c8b66e4d8668296932e44aedafd8afa75ffc8d0b31bed462d75afd",
+  "post_recovery_checkpoint_required_after": false,
+  "stale_decision_rejection_before_fresh_checkpoint": "a fresh post-recovery checkpoint is required before continuation",
+  "uncheckpointed_recovery_work_ids_after": [],
+  "usage_unchanged_by_settlement": true
+}

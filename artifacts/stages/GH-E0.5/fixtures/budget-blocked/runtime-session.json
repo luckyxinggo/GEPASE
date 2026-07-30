@@ -1,0 +1,35 @@
+{
+  "active_accumulated_ms": 1000,
+  "approved": {
+    "active_wall_clock_ms": 10800000,
+    "agent_calls": 1,
+    "candidates": 0,
+    "estimated_tokens": 15000,
+    "proposals": 0,
+    "repairs": 10
+  },
+  "checkpoint_ids": [
+    "budget-checkpoint-a5a6b8ade20abf396666299b"
+  ],
+  "completed_work_ids": [],
+  "config_hash": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+  "created_at": "2026-07-28T00:00:00Z",
+  "cumulative_agent_duration_ms": 0,
+  "internal_accounting_ids": [],
+  "last_transition_at": "2026-07-28T00:00:01Z",
+  "latest_checkpoint_id": "budget-checkpoint-a5a6b8ade20abf396666299b",
+  "latest_decision_hash": null,
+  "open_reservations": [],
+  "paused_accumulated_ms": 0,
+  "run_id": "gh-e05-budget-blocked",
+  "schema_version": "1.0.0",
+  "status": "awaiting_continuation",
+  "used": {
+    "active_wall_clock_ms": 1000,
+    "agent_calls": 0,
+    "candidates": 0,
+    "estimated_tokens": 0,
+    "proposals": 0,
+    "repairs": 0
+  }
+}

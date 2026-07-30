@@ -1,0 +1,30 @@
+{
+  "future_bounded_second_generation": {
+    "initial_candidates": 2,
+    "max_candidates": 5,
+    "max_conditional_merge_children": 1,
+    "max_refinement_or_recovery_children": 2
+  },
+  "honest_claim": "bounded GEPA-style reflection/Pareto run; not realized multi-generation evolution",
+  "merge": "no_eligible_parent_set",
+  "realized_candidate_depth": [
+    {
+      "candidate_id": "candidate-c36eb3adc54c93e3233d59e0",
+      "generation": 1,
+      "parent_ids": [
+        "candidate-6216d41d096cf68cae667dac"
+      ]
+    },
+    {
+      "candidate_id": "candidate-db0b9d19f0ff48b624ea03b6",
+      "generation": 1,
+      "parent_ids": [
+        "candidate-6216d41d096cf68cae667dac"
+      ]
+    }
+  ],
+  "recovery_parentage": "new_seed_rooted_generation_1_branch",
+  "reflection_created_generation_2_child": false,
+  "schema_version": "1.0.0",
+  "valid": true
+}

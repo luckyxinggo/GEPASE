@@ -1,0 +1,36 @@
+{
+  "candidate_train": {
+    "completed_executor_cases": 5,
+    "derived_e3_records": 5,
+    "failed_executor_cases": 0,
+    "independent_grading_complete": false,
+    "strict_train_gate_complete": false,
+    "task_score_vectors_complete": false,
+    "total_cases": 5
+  },
+  "checkpoint": {
+    "checkpoint_id": "budget-checkpoint-376e332e803c57f44f49c1a1",
+    "checkpoint_sha256": "a36d8e8b848a0cee491517fd8a1ac7cdb66d9047c8b68ccc0823bafa03fafb87",
+    "runtime_status": "awaiting_continuation"
+  },
+  "conclusion_boundary": {
+    "algorithm_effect_validated": false,
+    "code_implemented": true,
+    "engineering_mechanism_exercised": true,
+    "reason_zh": "本批只完成 candidate 5-case train 的 Executor E2/E3；deterministic assertion 不能冒充综合质量，尚无 blind Grader、TaskScoreVector、strict train Gate、held-out validation 或 Merge。"
+  },
+  "formal_gh_e1_gates": "4/10",
+  "generated_at": "2026-07-29T08:13:07Z",
+  "next_batch": {
+    "active_wall_clock_ms": 840000,
+    "agent_calls": 5,
+    "estimated_tokens": 60000,
+    "role": "independent_grader",
+    "requires_new_user_continuation": true
+  },
+  "outcome": "budget_incomplete",
+  "schema_version": "1.0.0",
+  "stage_id": "GH-E1/executor-tranche-2",
+  "status": "paused_at_candidate_train_executor_barrier",
+  "usage_authority": "ActiveSessionRuntime + HostAttemptAccounting"
+}

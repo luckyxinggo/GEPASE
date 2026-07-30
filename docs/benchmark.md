@@ -60,6 +60,16 @@ Its replacement is specified in `state.md` R1-R5: reviewed trigger cases, task-n
 outputs, same-round with-skill/baseline Agent execution, independent grading, composite score
 vectors, full package filesystem access, and strict-improvement admission.
 
+## Graph-hardening canary track
+
+GH-E1 is not a new benchmark split and does not change Benchmark v1. It is a separate application
+run on the pinned public `slack-gif-creator` Package using the already frozen 5-train/3-validation
+EvalPlan. It rebuilt a fresh paired reference, evaluated two graph-guided bounded patches, and
+ended with `no_strict_improvement`: one branch regressed at train; the train-admitted branch had a
+positive held-out mean but crossed a protected category floor. This negative result is retained
+because the benchmark contract forbids changing cases, weights, thresholds, or the candidate after
+seeing validation.
+
 ## Known limitations
 
 - The data is synthetic but non-toy and license-clean; external validity on private production

@@ -1,0 +1,26 @@
+{
+  "active_time_preserved": true,
+  "checkpoint_id": "budget-checkpoint-8fe66f685dbc4850f1e7cee8",
+  "decision_idempotent": true,
+  "expected_cross_day_pause": {
+    "active_wall_clock_ms": 3600000,
+    "calendar_elapsed_ms": 90000000,
+    "paused_ms": 86400000
+  },
+  "fixture_kind": "zero_agent_core_contract",
+  "paused_clock": {
+    "active_wall_clock_ms": 3600000,
+    "calendar_elapsed_ms": 90000000,
+    "cumulative_agent_duration_ms": 0,
+    "paused_ms": 86400000
+  },
+  "paused_time_preserved": true,
+  "resume_does_not_reset_usage": true,
+  "resumed_clock": {
+    "active_wall_clock_ms": 5400000,
+    "calendar_elapsed_ms": 91800000,
+    "cumulative_agent_duration_ms": 0,
+    "paused_ms": 86400000
+  },
+  "schema_version": "1.0.0"
+}

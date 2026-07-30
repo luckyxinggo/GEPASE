@@ -1,0 +1,80 @@
+{
+  "all_fixture_reports_valid": true,
+  "fixture_kind": "zero_agent_typed_reporting_contract",
+  "fixture_reports": [
+    {
+      "archive_count": 0,
+      "built_frontier_count": 0,
+      "conditional_html_sections": true,
+      "frontier_count": 0,
+      "outcome": "no_strict_improvement",
+      "provisional_boundary": null,
+      "report_ref": "artifacts/stages/GH-E0.5/fixtures/report/zero/report",
+      "scenario": "zero",
+      "search_complete": true,
+      "verification_valid": true,
+      "zero_frontier_message": true
+    },
+    {
+      "archive_count": 1,
+      "built_frontier_count": 1,
+      "conditional_html_sections": true,
+      "frontier_count": 1,
+      "outcome": "strict_improvement",
+      "provisional_boundary": null,
+      "report_ref": "artifacts/stages/GH-E0.5/fixtures/report/one/report",
+      "scenario": "one",
+      "search_complete": true,
+      "verification_valid": true,
+      "zero_frontier_message": null
+    },
+    {
+      "archive_count": 2,
+      "built_frontier_count": 2,
+      "conditional_html_sections": true,
+      "frontier_count": 2,
+      "outcome": "strict_improvement",
+      "provisional_boundary": null,
+      "report_ref": "artifacts/stages/GH-E0.5/fixtures/report/many/report",
+      "scenario": "many",
+      "search_complete": true,
+      "verification_valid": true,
+      "zero_frontier_message": null
+    },
+    {
+      "archive_count": 1,
+      "built_frontier_count": 1,
+      "conditional_html_sections": true,
+      "frontier_count": 1,
+      "outcome": "budget_incomplete",
+      "provisional_boundary": true,
+      "report_ref": "artifacts/stages/GH-E0.5/fixtures/report/budget/report",
+      "scenario": "budget",
+      "search_complete": false,
+      "verification_valid": true,
+      "zero_frontier_message": null
+    }
+  ],
+  "frontier_counts": [
+    0,
+    1,
+    2,
+    1
+  ],
+  "old_r5_compatibility": {
+    "artifact_verification": {
+      "checked": 20,
+      "hash_mismatch": 0,
+      "missing": 0,
+      "schema_errors": 0,
+      "unindexed_files": 0,
+      "valid": true
+    },
+    "errors": [],
+    "manifest_matches": true,
+    "report_data_matches": true,
+    "required_sections": 10,
+    "valid": true
+  },
+  "schema_version": "1.0.0"
+}

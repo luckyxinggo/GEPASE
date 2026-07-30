@@ -1,0 +1,22 @@
+{
+  "action": "continue",
+  "approved_increment": {
+    "active_wall_clock_ms": 1800000,
+    "agent_calls": 3,
+    "candidates": 0,
+    "estimated_tokens": 96000,
+    "proposals": 0,
+    "repairs": 3
+  },
+  "checkpoint_hash": "5736f917f581f1a7237aa59fea3e4868939906bc05a81c4077cb7f6e429988b4",
+  "checkpoint_id": "budget-checkpoint-84bc125ec965c5d7d037ebed",
+  "comment_zh": "依据用户对当前 GH-E1 剩余冻结流程的有界持续授权自动继续。本 decision 仅批准 candidate-db0b9d19f0ff48b624ea03b6 的 3 个 frozen held-out validation Executor work；不批准 Grader、Comparator、其他 Candidate 或 Proposal。",
+  "config_hash": "64f73c49a10c92dcef02647682b75645ac1331e2f85d5fbedf4b567bd5f863c1",
+  "decided_at": "2026-07-29T16:00:48.441074Z",
+  "decision_id": "continuation-e91a7644397f62d9ca55655b",
+  "evidence_hash": "a8c1eef7b8fad339fd9ad3dc070acb0b1e9c984032fde354aad4b00961891069",
+  "previous_decision_hash": "e585da37c0ee1db73decdfbbbe00f96c31ba598d1c308388829904ec522708f1",
+  "reviewer": "user-bounded-continuous-authorization",
+  "run_id": "gh-e1-slack-gif-creator-evolution",
+  "schema_version": "1.0.0"
+}

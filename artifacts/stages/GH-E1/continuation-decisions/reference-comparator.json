@@ -1,0 +1,22 @@
+{
+  "schema_version": "1.0.0",
+  "decision_id": "continuation-7d54717867d8a536a0704e9a",
+  "run_id": "gh-e1-slack-gif-creator-reference",
+  "config_hash": "cf902e88f72c1d8c778e2cade2590b0254732d5824e15c5124a550355d579668",
+  "checkpoint_id": "budget-checkpoint-d4fc47c829482a237db416bf",
+  "checkpoint_hash": "a2fe9829826af619466301ca3e65ae68ffb41789b3f85eb8944ecb4a2b9d1111",
+  "evidence_hash": "0066a5bbcfad3a7cc660939fa5f1f52a586324e6b3cddaf190979e619dc4b8d3",
+  "action": "continue",
+  "approved_increment": {
+    "agent_calls": 6,
+    "estimated_tokens": 48000,
+    "active_wall_clock_ms": 600000,
+    "proposals": 0,
+    "candidates": 0,
+    "repairs": 6
+  },
+  "reviewer": "user",
+  "comment_zh": "用户在当前对话明确授权：按 GH-E1 继续执行；本决定只批准 frozen scoring policy 的 3 个关键 case、每个 AB/BA 各一条的 6 个 blind Comparator work。",
+  "previous_decision_hash": "1dcd430ab19e660b47accb193326b5ae581465efa8870141e6327dd9995e8d40",
+  "decided_at": "2026-07-28T16:16:16Z"
+}

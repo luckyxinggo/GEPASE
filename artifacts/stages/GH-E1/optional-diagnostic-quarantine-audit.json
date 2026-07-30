@@ -1,0 +1,59 @@
+{
+  "schema_version": "1.0.0",
+  "stage_id": "GH-E1",
+  "generated_at": "2026-07-29T17:04:06Z",
+  "valid": true,
+  "policy": "Raw Agent workspaces are immutable. Private absolute paths are forbidden in accepted required evidence, but optional diagnostics are retained byte-for-byte with their hash and exclusion reason.",
+  "accepted_required_evidence_scan": {
+    "valid": true,
+    "accepted_e2_records": 29,
+    "accepted_artifact_count": 138,
+    "unique_artifact_count": 138,
+    "findings": 0,
+    "missing": 0,
+    "hash_mismatch": 0
+  },
+  "full_raw_workspace_scan": {
+    "valid": false,
+    "secret_or_key_findings": 0,
+    "private_path_findings": 6,
+    "affected_optional_files": 4,
+    "interpretation": "Expected quarantine findings in preserved optional diagnostics; none is referenced by a Core-accepted E2 artifact list."
+  },
+  "quarantined_optional_diagnostics": [
+    {
+      "path": "artifacts/runs/gh-e1-slack-gif-creator-evolution/evals/candidate-db0b9d19f0ff48b624ea03b6/train/workspaces/work-2902fd854c96d694d92cbd84-repair-1/validation.json",
+      "sha256": "ce9fd7a28a7b75fca1cc623eb3e54c43db80a253c40c8592bd4de1e6766d5c7c",
+      "finding_count": 2,
+      "disposition": "excluded_optional_diagnostic",
+      "reason": "contains private absolute paths and is not required evidence"
+    },
+    {
+      "path": "artifacts/runs/gh-e1-slack-gif-creator-evolution/evals/candidate-db0b9d19f0ff48b624ea03b6/train/workspaces/work-4019f9c03c551a54cc773edb/generation-report.json",
+      "sha256": "4aa7d1272b1fb95281a4250351717571fb205398c7bc9f5b8ef8e645e33538c9",
+      "finding_count": 1,
+      "disposition": "excluded_optional_diagnostic",
+      "reason": "contains a private absolute path and is not required evidence"
+    },
+    {
+      "path": "artifacts/runs/gh-e1-slack-gif-creator-evolution/evals/candidate-db0b9d19f0ff48b624ea03b6/train/workspaces/work-4019f9c03c551a54cc773edb/verification.json",
+      "sha256": "26317ad83a94945978f125a6cf6666cb7ecf4fd5772d1e57d288b2d8a45cd22b",
+      "finding_count": 1,
+      "disposition": "excluded_optional_diagnostic",
+      "reason": "contains a private absolute path and is not required evidence"
+    },
+    {
+      "path": "artifacts/runs/gh-e1-slack-gif-creator-evolution/evals/candidate-db0b9d19f0ff48b624ea03b6/validation/workspaces/work-232e37fbed39fa841d967abc/validation-report.json",
+      "sha256": "e23813f305a0be54ad255f4ffd67a850c08473eec84471a3600e41f6d48dd452",
+      "finding_count": 2,
+      "disposition": "excluded_optional_diagnostic",
+      "reason": "contains private absolute paths and is absent from the accepted submission's four required artifacts"
+    }
+  ],
+  "fail_closed_check": {
+    "any_quarantined_file_in_accepted_e2_artifacts": false,
+    "any_required_evidence_finding": false,
+    "raw_bytes_modified": false,
+    "safe_to_finalize": true
+  }
+}

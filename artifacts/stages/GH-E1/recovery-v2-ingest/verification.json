@@ -1,0 +1,72 @@
+{
+  "commands": [
+    {
+      "command": ".venv/bin/pytest -q tests/evals/test_recovery.py tests/budget/test_active_session_runtime.py tests/evals/test_engine_integration.py tests/evals/test_r4_candidate.py",
+      "exit_code": 0,
+      "ok": true,
+      "summary": "25 passed in 1.55s"
+    },
+    {
+      "command": ".venv/bin/pytest -q",
+      "exit_code": 0,
+      "ok": true,
+      "summary": "205 passed in 11.63s"
+    },
+    {
+      "command": ".venv/bin/ruff check .",
+      "exit_code": 0,
+      "ok": true,
+      "summary": "All checks passed!"
+    },
+    {
+      "command": ".venv/bin/pyright --pythonpath .venv/bin/python",
+      "exit_code": 0,
+      "ok": true,
+      "summary": "0 errors, 0 warnings, 0 informations"
+    },
+    {
+      "command": ".venv/bin/python scripts/export_core_schemas.py",
+      "exit_code": 0,
+      "ok": true,
+      "summary": "no output"
+    },
+    {
+      "command": ".venv/bin/python scripts/export_core_schemas.py",
+      "exit_code": 0,
+      "ok": true,
+      "summary": "no output"
+    },
+    {
+      "command": ".venv/bin/python scripts/check_markdown_links.py",
+      "exit_code": 0,
+      "ok": true,
+      "summary": "markdown links: ok"
+    },
+    {
+      "command": ".venv/bin/python scripts/check_license.py",
+      "exit_code": 0,
+      "ok": true,
+      "summary": "license policy: ok"
+    },
+    {
+      "command": "git diff --check",
+      "exit_code": 0,
+      "ok": true,
+      "summary": "no output"
+    }
+  ],
+  "evolution_stable_during_finalization": true,
+  "historical_25_object_seal_unchanged": true,
+  "protected_tree_unchanged": true,
+  "reference_unchanged": true,
+  "schema_idempotent": true,
+  "schema_version": "1.0.0",
+  "security": {
+    "findings": [],
+    "raw_agent_workspaces_excluded": true,
+    "scanned_files": 837,
+    "valid": true
+  },
+  "v2_correctness_unchanged": true,
+  "valid": true
+}

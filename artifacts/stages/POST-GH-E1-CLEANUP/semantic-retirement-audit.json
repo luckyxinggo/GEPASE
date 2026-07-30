@@ -1,0 +1,16 @@
+{
+  "active_selector_layers": [
+    "static",
+    "observed"
+  ],
+  "historical_gh_p1_status": "sealed_stalled_read_only",
+  "retained_read_only_compatibility": [
+    "Analyzer embedded semantic models",
+    "PackageGraph semantic layer parsing",
+    "historical HTML graph rendering",
+    "false-only SelectorGraphPolicy compatibility sentinel"
+  ],
+  "schema_version": "1.0.0",
+  "standalone_semantic_schemas": 0,
+  "valid": true
+}

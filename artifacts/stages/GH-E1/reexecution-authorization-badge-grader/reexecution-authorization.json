@@ -1,0 +1,13 @@
+{
+  "authorization_id": "reexecution-authorization-3c31ea2e43d1a809e644f431",
+  "authorized_additional_reexecutions": 1,
+  "authorized_at": "2026-07-29T15:39:51.073081Z",
+  "authorized_by": "user",
+  "checkpoint_ref": "artifacts/runs/gh-e1-slack-gif-creator-evolution/budget-checkpoints/budget-checkpoint-9bea990345503764a50da55a.json",
+  "checkpoint_sha256": "ce2d4694832524b3379323cda5f0884d745687a159685565471ccddbbf35d4b3",
+  "prior_reexecution_count": 1,
+  "reason_zh": "用户明确授权 badge Independent Grader 在初始 context 与冻结一次 repair 均无 submission 后，额外启动且仅启动一个全新隔离 context；不得重跑其他角色或修改冻结评分。",
+  "run_id": "gh-e1-slack-gif-creator-evolution",
+  "schema_version": "1.0.0",
+  "work_id": "grader-work-81f28e928175a8830734a7e1"
+}

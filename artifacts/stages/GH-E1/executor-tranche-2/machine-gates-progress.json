@@ -1,0 +1,33 @@
+{
+  "formal_gate_count": {
+    "passed": 4,
+    "total": 10
+  },
+  "gates": [
+    {"gate_id": "GHE1-G00", "status": "passed"},
+    {"gate_id": "GHE1-G01", "status": "passed"},
+    {"gate_id": "GHE1-G02", "status": "passed"},
+    {"gate_id": "GHE1-G03", "status": "passed"},
+    {"gate_id": "GHE1-G04", "status": "pending"},
+    {"gate_id": "GHE1-G05", "status": "pending"},
+    {"gate_id": "GHE1-G06", "status": "pending"},
+    {"gate_id": "GHE1-G07", "status": "pending"},
+    {"gate_id": "GHE1-G08", "status": "pending"},
+    {"gate_id": "GHE1-G09", "status": "pending"}
+  ],
+  "generated_at": "2026-07-29T08:13:07Z",
+  "progress": {
+    "candidate_train": {
+      "accepted_e2": 5,
+      "checkpoint_id": "budget-checkpoint-376e332e803c57f44f49c1a1",
+      "derived_e3": 5,
+      "failed_executor_work": 0,
+      "status": "executor_complete_awaiting_blind_grading",
+      "unsettled_work_items": 0
+    },
+    "formal_root_projection_note": "根 machine-gates.json/stage_report.json 保持 append-only 历史快照；本 artifact 是更新后的正式 Gate 进度投影，不把 Executor 完成冒充 GHE1-G04/G05。"
+  },
+  "schema_version": "1.0.0",
+  "stage_id": "GH-E1",
+  "status": "in_progress"
+}

@@ -1,0 +1,22 @@
+{
+  "action": "continue",
+  "approved_increment": {
+    "active_wall_clock_ms": 60000,
+    "agent_calls": 0,
+    "candidates": 0,
+    "estimated_tokens": 0,
+    "proposals": 0,
+    "repairs": 0
+  },
+  "checkpoint_hash": "09caf764fdf5e4b30e5dfa48ad717c009e161bdb6a57019106495877319c6808",
+  "checkpoint_id": "budget-checkpoint-d8c4e7b5f92c131e2178ba74",
+  "comment_zh": "用户在当前对话明确授权：修复后继续严格按 GH-E1 阶段向下执行；本决定只批准不发起 Agent 的 fresh observed graph / train-only proposal scope 构建，不导出 Proposer work。",
+  "config_hash": "64f73c49a10c92dcef02647682b75645ac1331e2f85d5fbedf4b567bd5f863c1",
+  "decided_at": "2026-07-28T17:13:31.351234Z",
+  "decision_id": "continuation-6e9f80aed26b662ef20d8255",
+  "evidence_hash": "8b5c9a8daf1d2ce3a3296135e8dfb6b14d3fe4b774b6d44843034eae3d0d31e5",
+  "previous_decision_hash": null,
+  "reviewer": "user",
+  "run_id": "gh-e1-slack-gif-creator-evolution",
+  "schema_version": "1.0.0"
+}

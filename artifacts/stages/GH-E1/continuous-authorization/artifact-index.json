@@ -1,0 +1,11 @@
+{
+  "artifacts": [
+    {
+      "media_type": "application/json",
+      "path": "decision-candidate-db0b-train-graders.json",
+      "sha256": "197a6e45688b1e0d762b569d959016394120a137ad2b1784e17d0086e3b9319c",
+      "size_bytes": 1169
+    }
+  ],
+  "schema_version": "1.0.0"
+}

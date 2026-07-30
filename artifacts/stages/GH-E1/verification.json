@@ -1,0 +1,59 @@
+{
+  "schema_version": "1.0.0",
+  "stage_id": "GH-E1",
+  "generated_at": "2026-07-29T17:04:06Z",
+  "valid": true,
+  "tests": {
+    "command": ".venv/bin/pytest -q --junitxml artifacts/stages/GH-E1/test-results.xml",
+    "passed": 210,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "duration_seconds": 11.986
+  },
+  "static_checks": {
+    "ruff": "passed",
+    "pyright": "0 errors, 0 warnings, 0 informations",
+    "compileall": "passed",
+    "markdown_links": "passed",
+    "license": "passed",
+    "git_diff_check": "passed"
+  },
+  "schemas": {
+    "count": 63,
+    "first_export_tree_sha256": "90f9193b8d71a2f82fca975d708d85716cfc906ae02a510602bf29e148b384c1",
+    "second_export_tree_sha256": "90f9193b8d71a2f82fca975d708d85716cfc906ae02a510602bf29e148b384c1",
+    "idempotent": true
+  },
+  "security": {
+    "accepted_required_evidence_valid": true,
+    "accepted_required_evidence_findings": 0,
+    "raw_workspace_scan_valid": false,
+    "raw_workspace_private_path_findings": 6,
+    "raw_workspace_secret_or_key_findings": 0,
+    "quarantine_audit_ref": "optional-diagnostic-quarantine-audit.json",
+    "all_findings_are_hash_preserved_optional_diagnostics": true,
+    "required_evidence_fail_closed": true
+  },
+  "run_seals": {
+    "reference": {"valid": true, "checked": 485, "missing": 0, "hash_mismatch": 0, "schema_errors": 0, "unindexed_files": 0},
+    "evolution": {"valid": true, "checked": 579, "missing": 0, "hash_mismatch": 0, "schema_errors": 0, "unindexed_files": 0},
+    "report_root": {"valid": true, "checked": 36, "missing": 0, "hash_mismatch": 0, "schema_errors": 0, "unindexed_files": 0},
+    "report_final": {"valid": true, "checked": 32, "missing": 0, "hash_mismatch": 0, "schema_errors": 0, "unindexed_files": 0}
+  },
+  "report_reproduction": {
+    "valid": true,
+    "outcome": "no_strict_improvement",
+    "frontier_count": 0,
+    "checked": 32,
+    "errors": []
+  },
+  "protected_tree": {
+    "valid": true,
+    "mismatches": 0,
+    "audit_ref": "protected-tree-audit.json"
+  },
+  "state_diff_log_marker": "gh-e1-complete-no-strict-improvement",
+  "final_stage_seal_expected_checked": 88,
+  "final_stage_seal_is_last_operation": true
+}

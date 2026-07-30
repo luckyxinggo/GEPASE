@@ -1,0 +1,13 @@
+{
+  "amends": "regression-verification.json#artifact_seals.executor_tranche_2",
+  "final_expected_seal": {
+    "checked": 11,
+    "hash_mismatch": 0,
+    "missing": 0,
+    "schema_errors": 0,
+    "unindexed_files": 0,
+    "valid": true
+  },
+  "reason_zh": "regression-verification.json 的 8-object 数字是加入 regression/protected-tree/final amendment 前的中间 seal 快照；本 append-only amendment 给出该 tranche 完成时的最终 11-object seal，不覆盖历史快照。",
+  "schema_version": "1.0.0"
+}

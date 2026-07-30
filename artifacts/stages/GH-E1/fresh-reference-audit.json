@@ -1,0 +1,124 @@
+{
+  "boundary": {
+    "candidate_count": 0,
+    "evolution_run_created": false,
+    "new_algorithm_effect_scores": 0,
+    "package_patch_count": 0,
+    "proposal_count": 0,
+    "report_run_created": false
+  },
+  "checks": {
+    "append_only_host_accounting_reconciles_usage": true,
+    "fresh_original_snapshot_and_access_boundary": true,
+    "fresh_paired_e2_e3_and_vectors": true,
+    "frozen_reference_contract": true,
+    "functional_summary_is_complete_and_recomputable": true,
+    "isolated_blind_grader_comparator_analyzer": true,
+    "no_candidate_or_effect_run_created": true,
+    "quarantine_is_nonaccepted_and_recoverable": true,
+    "terminal_lifecycle_and_run_seal": true
+  },
+  "gate_id": "GHE1-G02",
+  "host_context_accounting": {
+    "accounted_usage": {
+      "agent_calls": 52,
+      "candidates": 0,
+      "estimated_tokens": 598505,
+      "proposals": 0,
+      "repairs": 4
+    },
+    "historical_divergence_audit": "reference-executor-tranche-audit-repair-1.json",
+    "host_attempt_ids": [
+      "host-attempt-60168d4c3a2f481d7ca89d52",
+      "host-attempt-72e89a53838533a8ecccf54d",
+      "host-attempt-822f777d57bde3722bd3bf36",
+      "host-attempt-a081bbb9560b9d1d6b364447",
+      "host-attempt-cddb625ed950ce366753a244",
+      "host-attempt-ce8e3afefb9c2f1d433ab8e6"
+    ],
+    "host_attempt_usage": {
+      "agent_calls": 6,
+      "candidates": 0,
+      "estimated_tokens": 112800,
+      "proposals": 0,
+      "repairs": 1
+    },
+    "non_submission_host_contexts": 6,
+    "resolution_zh": "此前 3 个 Executor host context、2 个 fail-closed Grader context 和 1 个中断 Analyzer context 均已以 HostAttemptAccounting 写入同一 Core runtime; 没有伪造 WorkSubmission 或第二套账本。",
+    "settled_role_contexts": 46,
+    "settlement_usage": {
+      "agent_calls": 46,
+      "candidates": 0,
+      "estimated_tokens": 485705,
+      "proposals": 0,
+      "repairs": 3
+    },
+    "total_actual_host_contexts": 52
+  },
+  "paired_reference": {
+    "e2_records": 16,
+    "e3_records": 16,
+    "held_out_pairs": 3,
+    "interpretation_zh": "这是 fresh original 与 no-skill 的参考差值, 不是候选 Package、Graph-guided Patch 或 GEPA 搜索的效果结论。",
+    "is_graph_guided_algorithm_effect": false,
+    "original_vs_no_skill_mean_skill_gain": -0.03608906250000002,
+    "task_score_vectors": 16,
+    "train_pairs": 5,
+    "work_items": 16
+  },
+  "phase": "E1.2_fresh_paired_reference_terminal_sealed",
+  "reference_run": {
+    "active_accumulated_ms": 6300124,
+    "cumulative_agent_duration_ms": 11720000,
+    "latest_checkpoint_id": "budget-checkpoint-462a6807a061e930ca37e29b",
+    "package_snapshot_hash": "ce42d8a837acf9feda9706a3418fc26a77c497d9615079e616b5fdc6870ef64e",
+    "run_id": "gh-e1-slack-gif-creator-reference",
+    "run_seal": {
+      "checked": 485,
+      "hash_mismatch": 0,
+      "missing": 0,
+      "schema_errors": 0,
+      "unindexed_files": 0,
+      "valid": true
+    },
+    "runtime_used": {
+      "active_wall_clock_ms": 6300124,
+      "agent_calls": 52,
+      "candidates": 0,
+      "estimated_tokens": 598505,
+      "proposals": 0,
+      "repairs": 4
+    }
+  },
+  "refs": {
+    "asi-dataset.json": "96c4e8bf7f8b4a68a01023d670b6590359acba85d2c8148ee693e84f2a7d90fe",
+    "budget-checkpoints/budget-checkpoint-462a6807a061e930ca37e29b.json": "eee56d43440c88ae75c9a2b51690b2363c09a6b7f63f01a553ba697d162fa9d0",
+    "functional-run-summary.json": "3052fc8944a656f86ed59cd4d7e157e747ba61c0f296a5ebbfa607aea975ce6a",
+    "isolation-audit.json": "7af443011ffa0a27288405697320b76b27ab97d5f31c47e6922b2e09efa2336e",
+    "ledger-snapshot.json": "18f547a7344b14cf20a17296fd05ba41e3d35e39507f45ca4f7053ec2450d33c",
+    "lifecycle-checkpoint.json": "8cf21defd7871145fd50fe8d74364aaf599243992d226e71fa36c3920e7ddd3c",
+    "package-access-audit.json": "ffa3ced3df51e9a7f6aa1cfd0296c0942707195ca6a73559c25266adeef70c02",
+    "package/snapshot.json": "56ddcd6e1cece6c5f7c6d3e4ef4d9e713d09df01cfe15ef3c25a984d106f7575",
+    "resolved-reference-config.json": "cf902e88f72c1d8c778e2cade2590b0254732d5824e15c5124a550355d579668",
+    "run-lifecycle.json": "1a39adea25466a12241f1749fa5a151aaf41337d7d3cf4ab0a455cf665f57f48",
+    "run-metadata.json": "e96ecac1f516dcce1db63b7be911be3fb8481c589ae0f4efcb32080a72d37c30",
+    "runtime-session.json": "011c92ef255811fa47e44dcecf095737e268619ac6406fc97e8ee95cccfd12a2"
+  },
+  "role_evidence": {
+    "analyzer_accepted": 8,
+    "asi_rows": 8,
+    "comparator_accepted": 6,
+    "comparator_reconciliations": 3,
+    "executor_accepted": 16,
+    "independent_grader_accepted": 16,
+    "semantic_hypotheses_enabled": false
+  },
+  "schema_version": "1.0.0",
+  "stage_id": "GH-E1",
+  "stage_refs": {
+    "analyzer_interruption_audit": "53474728deea3e8ddcc5561baa8d770e2813d7d8e1386c827834c25f16d828c5",
+    "historical_executor_audit": "b3c43983190f346032d3dbfb949453332abb44721ce62162580c55359e4a67ad",
+    "workspace_quarantine_audit": "33e105fc70980998e3cde948adbd4a3feeaf4e3edcbc02aa518c9d243a164e43"
+  },
+  "valid": true
+}

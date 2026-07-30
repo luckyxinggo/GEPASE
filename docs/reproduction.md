@@ -62,6 +62,33 @@ uv run gepase report deploy \
 None of the commands in this section runs R3/R4 again, searches for a candidate, or calls a
 Headless provider.
 
+### Verify the GH-E1 graph-hardening result
+
+On the `codex/graph-hardening` branch, a clean clone can verify the published GH-E1 negative-result
+report and every public graph-hardening/finalization stage without dispatching an Agent:
+
+```bash
+uv run gepase artifact verify \
+  artifacts/runs/gh-e1-slack-gif-creator-report --format json
+uv run gepase artifact verify \
+  artifacts/runs/gh-e1-slack-gif-creator-report/final --format json
+uv run gepase artifact verify artifacts/stages/GH-E0.5 --format json
+uv run gepase artifact verify artifacts/stages/GH-E1 --format json
+uv run gepase artifact verify artifacts/stages/POST-GH-E1-CLEANUP --format json
+uv run gepase artifact verify artifacts/stages/POST-GH-E1-FINALIZATION --format json
+```
+
+Expected outcome: `no_strict_improvement`, zero deployable candidates, and GHE1-G00–G09 all
+passed in the published report/stage evidence. These commands verify content-addressed public
+evidence and do not rerun Executor, Grader, Comparator, Analyzer, Reflection, or Proposer roles.
+
+The complete GH-E1 reference/evolution directories are byte-preserved, sealed local research
+evidence and are intentionally excluded from Git because they contain raw Agent workspaces and
+optional machine-local diagnostics. Consequently, a clean clone does not run the full raw-evidence
+projection in `scripts/run_gh_e1_gates.py` and does not claim to verify the unpublished 485/579
+object run seals. Historical stage-construction and recovery scripts were retired after sealing;
+the published append-only report/stage artifacts are the public reproducibility contract.
+
 ## 3. Start a new Agent-native run
 
 The generic flow is resumable rather than a single opaque command:
@@ -107,7 +134,8 @@ default path remains Agent-native and requires no additional API key.
 
 - Code existence is shown by import, schema and CLI checks.
 - Engineering behavior is shown by unit/integration/fault tests and content-addressed artifacts.
-- Algorithm effect is supported only for the sealed `slack-gif-creator` run: held-out mean delta
-  `+0.12427`, three wins in three validation cases, one deployable candidate.
+- Algorithm effect has two separately scoped `slack-gif-creator` observations: v0.1 produced one
+  deployable candidate at held-out `+0.12427` with three wins; GH-E1 independently produced
+  `no_strict_improvement` and an empty frontier after a protected-category validation regression.
 - The accepted edit changed one bounded `SKILL.md` instruction node. The run does not establish
   cross-file superiority, graph-method superiority, or generalization across Skills/models/seeds.

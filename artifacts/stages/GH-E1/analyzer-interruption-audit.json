@@ -1,0 +1,16 @@
+{
+  "schema_version": "1.0.0",
+  "stage_id": "GH-E1",
+  "role": "analyzer",
+  "host_task_id": "/root/analyzer_d73a",
+  "context_id": "/root/analyzer_d73a",
+  "work_id": "analyzer-work-d73a34bb35f67f90f2db475d",
+  "status": "interrupted_before_submission",
+  "reason_zh": "该隔离 Analyzer context 在多个观察窗口内没有生成 pending submission；为避免无界占用本轮预注册 600 秒角色预算，Host 主动中断。Core 未 ingest 任何分析、分数、候选或 semantic proposal。",
+  "accounting_policy": {
+    "estimated_tokens": 12000,
+    "agent_duration_ms": 600000,
+    "repairs_consumed_by_interrupted_context": 0,
+    "next_context_must_set_repair_attempt": true
+  }
+}

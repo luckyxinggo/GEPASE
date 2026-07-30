@@ -1,0 +1,47 @@
+{
+  "artifacts": [
+    {
+      "media_type": "application/json",
+      "path": "preflight.json",
+      "sha256": "db5e886f9ae01c7135017ee430af9948f7d61a7dbd057bb5e5ee6b8db90ce33a",
+      "size_bytes": 8314
+    },
+    {
+      "media_type": "application/json",
+      "path": "role-terminalization-audit.json",
+      "sha256": "3edac5dffc48027f4db27838c3267259a62f66bc0557c293917ecd5ffc6db386",
+      "size_bytes": 1817
+    },
+    {
+      "media_type": "application/json",
+      "path": "selector-attribution-replay.json",
+      "sha256": "42a9dd3675da78c0b4afa69c717af64c60b46eb7ab20b1005b02f602b55cc5dd",
+      "size_bytes": 206687
+    },
+    {
+      "media_type": "application/json",
+      "path": "generation2-fixture-audit.json",
+      "sha256": "642036596a9b89de47c168c126f0f6dd16844cfaea4ae92dcf89fbfa6f1144e0",
+      "size_bytes": 5157
+    },
+    {
+      "media_type": "application/json",
+      "path": "verification.json",
+      "sha256": "9c89eacae65d06a734fb7a78d427f91bb6c0d461782f5abc3897b8dff32df43c",
+      "size_bytes": 14063
+    },
+    {
+      "media_type": "application/json",
+      "path": "machine-gates.json",
+      "sha256": "f30e8af965cb60583c3b83602eeb1aec03991bba129a80a30336a92d4a6b60a8",
+      "size_bytes": 997
+    },
+    {
+      "media_type": "application/json",
+      "path": "stage_report.json",
+      "sha256": "6cb60aea774fd694f0f0daf28191868ef4fc3d3fb9dbb364495a99515b1c81d4",
+      "size_bytes": 735
+    }
+  ],
+  "schema_version": "1.0.0"
+}

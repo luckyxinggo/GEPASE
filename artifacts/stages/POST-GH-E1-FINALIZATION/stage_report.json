@@ -1,0 +1,29 @@
+{
+  "agent_calls": 0,
+  "api_calls": 0,
+  "branch": "codex/graph-hardening",
+  "completed_substages": [
+    "F.1",
+    "F.2",
+    "F.3"
+  ],
+  "conclusion_boundary": {
+    "code_implemented": true,
+    "engineering_mechanisms_tested_and_offline_replayed": true,
+    "new_algorithm_effect_validated": false
+  },
+  "f4_status": "waiting_user_decision",
+  "formal_candidates": 0,
+  "generated_at": "2026-07-30T06:41:21.364646+00:00",
+  "gh_e1_outcome_unchanged": "no_strict_improvement",
+  "head": "7fa0a110b254e05319699a79ec44da2bf2014409",
+  "machine_gates": {
+    "passed": 6,
+    "total": 6
+  },
+  "new_effect_scores": 0,
+  "real_evals": 0,
+  "schema_version": "1.0.0",
+  "stage_id": "POST-GH-E1-FINALIZATION",
+  "status": "passed"
+}

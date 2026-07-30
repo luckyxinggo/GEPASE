@@ -1,0 +1,153 @@
+{
+  "branch": "codex/graph-hardening",
+  "calls": {
+    "agent": 0,
+    "analyzer": 0,
+    "comparator": 0,
+    "eval": 0,
+    "executor": 0,
+    "grader": 0,
+    "headless_api": 0,
+    "mutation_candidates": 0,
+    "new_skill_effect_scores": 0,
+    "proposer": 0,
+    "reflection": 0
+  },
+  "commands": [
+    ".venv/bin/pytest -q --junitxml artifacts/stages/GH-E0.5/test-results.xml",
+    ".venv/bin/ruff check .",
+    ".venv/bin/pyright --pythonpath .venv/bin/python",
+    ".venv/bin/python scripts/export_core_schemas.py",
+    ".venv/bin/python scripts/export_core_schemas.py",
+    ".venv/bin/python scripts/check_secrets.py --format json",
+    ".venv/bin/python scripts/check_markdown_links.py",
+    ".venv/bin/python scripts/check_license.py",
+    "git diff --check",
+    ".venv/bin/python scripts/run_gh_e1_gates.py --dry-run"
+  ],
+  "conclusion_boundary": {
+    "code_implemented": true,
+    "engineering_mechanism_tested": true,
+    "new_algorithm_effect_validated": false
+  },
+  "finished_commit": "7fa0a110b254e05319699a79ec44da2bf2014409",
+  "gate_results": [
+    {
+      "evidence": [
+        "preflight.json",
+        "verification.json"
+      ],
+      "gate_id": "GHE05-G00-preflight_and_immutability",
+      "status": "passed"
+    },
+    {
+      "evidence": [
+        "runtime-lifecycle-audit.json"
+      ],
+      "gate_id": "GHE05-G01-single_mainline_and_lifecycle",
+      "status": "passed"
+    },
+    {
+      "evidence": [
+        "active-session-fixture.json",
+        "checkpoint-review-fixture.html",
+        "continuation-decision-fixture.json"
+      ],
+      "gate_id": "GHE05-G02-active_clock_and_pause_resume",
+      "status": "passed"
+    },
+    {
+      "evidence": [
+        "budget-policy.json",
+        "budget-reservation-fixture.json",
+        "continuation-decision-fixture.json"
+      ],
+      "gate_id": "GHE05-G03-budget_reservation_and_user_control",
+      "status": "passed"
+    },
+    {
+      "evidence": [
+        "budget-policy.json",
+        "gh-e1-config-audit.json"
+      ],
+      "gate_id": "GHE05-G04-runtime_efficiency_preserved",
+      "status": "passed"
+    },
+    {
+      "evidence": [
+        "merge-outcome-fixture.json"
+      ],
+      "gate_id": "GHE05-G05-conditional_merge_outcome",
+      "status": "passed"
+    },
+    {
+      "evidence": [
+        "report-outcome-fixture.json"
+      ],
+      "gate_id": "GHE05-G06-multi_outcome_multi_frontier_report",
+      "status": "passed"
+    },
+    {
+      "evidence": [
+        "gh-e1-config-audit.json",
+        "gh-e1-gate-dry-run.json"
+      ],
+      "gate_id": "GHE05-G07-gh_e1_configs_and_gate_dry_run",
+      "status": "passed"
+    },
+    {
+      "evidence": [
+        "preflight.json"
+      ],
+      "gate_id": "GHE05-G08-no_agent_or_effect_claim",
+      "status": "passed"
+    },
+    {
+      "evidence": [
+        "verification.json",
+        "commands.log",
+        "test-results.xml",
+        "artifact-index.json"
+      ],
+      "gate_id": "GHE05-G09-regression_verification_and_seal",
+      "status": "passed"
+    }
+  ],
+  "generated_at": "2026-07-28T13:54:32.577321+00:00",
+  "hard_stop": "GH-E1 formal run has not started; only deterministic dry wiring ran.",
+  "input_artifacts": [
+    {
+      "path": "artifacts/runs/r4-slack-gif-creator-evolution/artifact-index.json",
+      "role": "sealed historical budget and train-only Merge fixture",
+      "sha256": "61bb6ede5757d8afe3b6ab9ea5ea5ee272d34dd74ff68a3571ee6dfa365e7d36"
+    },
+    {
+      "path": "artifacts/runs/r5-slack-gif-creator-report/artifact-index.json",
+      "role": "legacy report compatibility input",
+      "sha256": "f6979a4ffd33c326d5731237117569bc333f8c8a16925a393a816692a310cb8f"
+    },
+    {
+      "path": "configs/graph-hardening/slack-gif-creator-gh-e1-reference.yaml",
+      "role": "pre-Agent fresh reference config",
+      "sha256": "99cb76737138de69a44ef61b32e919729d6b72bc9d3e92665e2d50040ddeab89"
+    }
+  ],
+  "metrics": {
+    "agent_calls": 0,
+    "machine_gates_passed": 10,
+    "machine_gates_total": 10,
+    "new_candidates": 0,
+    "new_effect_scores": 0,
+    "pytest_tests": 189,
+    "typed_report_fixture_counts": [
+      0,
+      1,
+      2,
+      1
+    ]
+  },
+  "schema_version": "1.0.0",
+  "stage_id": "GH-E0.5",
+  "started_from_commit": "7fa0a110b254e05319699a79ec44da2bf2014409",
+  "status": "complete"
+}

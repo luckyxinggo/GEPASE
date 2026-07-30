@@ -1,0 +1,22 @@
+{
+  "action": "continue",
+  "approved_increment": {
+    "active_wall_clock_ms": 600000,
+    "agent_calls": 2,
+    "candidates": 0,
+    "estimated_tokens": 64000,
+    "proposals": 0,
+    "repairs": 2
+  },
+  "checkpoint_hash": "0cd44864340c8197d6c6dc74918c1b0adf1aee25224ce1c99e160ce5004be913",
+  "checkpoint_id": "budget-checkpoint-80ae4f7e87b02d63f2544d84",
+  "comment_zh": "用户在当前对话明确授权：修复后继续按 GH-E1 本阶段向下执行；本决定只解除 proposal_scope_ready checkpoint，以导出并执行既有 2 个隔离 Proposer work。增量精确覆盖本批 2 calls / 64,000 estimated tokens / 600,000 active ms / 2 repairs；2 个 proposal 仍由初始 tranche 已冻结的 max_proposals=4 容量覆盖，不变更 config、EvalPlan、评分、模型、Patch/Gate 或累计上限。",
+  "config_hash": "64f73c49a10c92dcef02647682b75645ac1331e2f85d5fbedf4b567bd5f863c1",
+  "decided_at": "2026-07-29T02:49:06.661920Z",
+  "decision_id": "continuation-db11e6a40ccf1e49e1480951",
+  "evidence_hash": "8e2fec9acafde54eae870bdea86dd728bb7ffa139da95d3d903c45d7d36f9a79",
+  "previous_decision_hash": "57d8dc0d5ecf3183b293d4b14f55e685d8c25d5355071583da597cd6efeff636",
+  "reviewer": "user",
+  "run_id": "gh-e1-slack-gif-creator-evolution",
+  "schema_version": "1.0.0"
+}

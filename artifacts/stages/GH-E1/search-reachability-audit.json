@@ -1,0 +1,44 @@
+{
+  "schema_version": "1.0.0",
+  "stage_id": "GH-E1",
+  "phase": "E1.4_package_aware_search",
+  "generated_at": "2026-07-29T17:04:06Z",
+  "valid": true,
+  "checks": {
+    "single_existing_controller": true,
+    "single_existing_candidate_model": true,
+    "single_existing_eval_engine": true,
+    "single_existing_patch_model": true,
+    "fresh_parent_bound_selector_graph_consumed": true,
+    "selector_graph_cache_miss_then_hit": true,
+    "proposal_scope_bounded_2_2_2": true,
+    "accepted_repair_submissions_preserve_original_failures": true,
+    "two_package_patches_and_candidates_created": true,
+    "gate_0_1_passed_for_both_candidates": true,
+    "semantic_hypothesis_consumed": false
+  },
+  "search": {
+    "initial_proposal_contexts": 2,
+    "repair_proposal_contexts": 2,
+    "accepted_patches": 2,
+    "created_candidates": 2,
+    "selector_graph_cache": {
+      "accesses": 2,
+      "misses": 1,
+      "hits": 1
+    },
+    "causal_bindings": 2,
+    "scope_errors": 0
+  },
+  "models": {
+    "candidate": "gepase.optimizer.candidate.PackageCandidate",
+    "evaluator": "gepase.evals.engine.MultiFidelityEvalEngine",
+    "patch": "gepase.mutation.schema.PackagePatch"
+  },
+  "evidence": {
+    "r4_audit_ref": "artifacts/runs/gh-e1-slack-gif-creator-evolution/r4-audit.json",
+    "r4_audit_sha256": "7a3e6e7701666a39a454153611e1d84f4f3341dbcd7b9d28831f8d670fd1772d",
+    "proposal_causality_ref": "artifacts/runs/gh-e1-slack-gif-creator-evolution/proposal-causality-audit.json",
+    "proposal_causality_sha256": "1a6f8578694dc5459d06ba348eeb4367aedb79df77fa794d25e57f05679318e0"
+  }
+}

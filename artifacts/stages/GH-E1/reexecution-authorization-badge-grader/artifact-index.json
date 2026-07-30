@@ -1,0 +1,17 @@
+{
+  "artifacts": [
+    {
+      "media_type": "application/json",
+      "path": "reexecution-authorization.json",
+      "sha256": "a786361aef7f3616e846f3ea9f2f1316aadf2d930ba7c5766de67e21bcfb87cb",
+      "size_bytes": 821
+    },
+    {
+      "media_type": "application/json",
+      "path": "continuation-decision.json",
+      "sha256": "38626e6359108b4ce9a56aa866cb813f2542231106fbfff6bbe2b25e393e8c1e",
+      "size_bytes": 1082
+    }
+  ],
+  "schema_version": "1.0.0"
+}

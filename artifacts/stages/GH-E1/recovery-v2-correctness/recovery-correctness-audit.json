@@ -1,0 +1,755 @@
+{
+  "attempt_audits": {
+    "readable_initial": {
+      "attempt_kind": "initial_execution",
+      "audit_id": "recovery-audit-2c85fda34992c4d825868ff7",
+      "audited_at": "2026-07-29T07:26:47.921614Z",
+      "disposition": "recoverable_without_agent",
+      "failure_kind_if_terminal": null,
+      "host_attempt_accounting_ids": [
+        "host-attempt-405f981208743ca7b9504052",
+        "host-attempt-894be87c29f89c4526f4a5bb"
+      ],
+      "manifest": {
+        "action_kinds": [
+          "deterministic_submission_packaging_correction"
+        ],
+        "attempt_binding": {
+          "attempt_kind": "initial_execution",
+          "binding_valid": true,
+          "context_id": "/root/exec_readable_train1",
+          "host_attempt_accounting_hashes": {
+            "host-attempt-405f981208743ca7b9504052": "7dc8e7c5f8b887be0ac7df0183ad2150d342356cf4a9f3c86eabf5bb86490ecd",
+            "host-attempt-894be87c29f89c4526f4a5bb": "48183146fd22d2e696b10e7c612cdc03357bef5a792ef7fab0a3d7bdc09c3f98"
+          },
+          "host_attempt_accounting_ids": [
+            "host-attempt-405f981208743ca7b9504052",
+            "host-attempt-894be87c29f89c4526f4a5bb"
+          ],
+          "host_task_id": "/root/exec_readable_train1",
+          "raw_workspace_ref": "artifacts/runs/gh-e1-slack-gif-creator-evolution/evals/candidate-db0b9d19f0ff48b624ea03b6/train/workspaces/work-4019f9c03c551a54cc773edb",
+          "raw_workspace_tree_hash": "5b1ac4372b0b8e491bd4d8fea9b3fea0b3fa08790b44a471e5e9c4538d275008",
+          "repair_attempt": false,
+          "run_id": "gh-e1-slack-gif-creator-evolution",
+          "schema_version": "1.0.0",
+          "selected_host_attempt_accounting_id": "host-attempt-405f981208743ca7b9504052",
+          "source_artifact_root_ref": "artifacts/runs/gh-e1-slack-gif-creator-evolution/evals/candidate-db0b9d19f0ff48b624ea03b6/train/workspaces/work-4019f9c03c551a54cc773edb",
+          "source_submission_id": "submission-afe19ba0dde02c41973cddbe",
+          "source_submission_ref": "artifacts/runs/gh-e1-slack-gif-creator-evolution/evals/candidate-db0b9d19f0ff48b624ea03b6/train/execution-submissions/work-4019f9c03c551a54cc773edb.json",
+          "source_submission_sha256": "9d379677874689d4dd4c37681f38468f9d1486846efd709e9917fd6805ea4f1a",
+          "task_id": "functional-train-text-readable-004",
+          "work_id": "work-4019f9c03c551a54cc773edb"
+        },
+        "entries": [
+          {
+            "disposition": "included_unchanged",
+            "exclusion_reason": null,
+            "media_type": "image/gif",
+            "required": true,
+            "role": "task_output",
+            "sensitive_findings": [],
+            "sha256": "34d77ac18d8ede08ca3fd39148f527d6459c558a983414f9985b99e44ecf40ca",
+            "size_bytes": 77269,
+            "source_ref": "artifacts/runs/gh-e1-slack-gif-creator-evolution/evals/candidate-db0b9d19f0ff48b624ea03b6/train/workspaces/work-4019f9c03c551a54cc773edb/meeting_sync_reminder.gif",
+            "staged_path": "meeting_sync_reminder.gif"
+          },
+          {
+            "disposition": "included_unchanged",
+            "exclusion_reason": null,
+            "media_type": "text/markdown",
+            "required": true,
+            "role": "transcript",
+            "sensitive_findings": [],
+            "sha256": "16c890cd2e21e6eaa4515e55fbc0927f553e6d64dec69ede3c106b1fb920cfca",
+            "size_bytes": 909,
+            "source_ref": "artifacts/runs/gh-e1-slack-gif-creator-evolution/evals/candidate-db0b9d19f0ff48b624ea03b6/train/workspaces/work-4019f9c03c551a54cc773edb/transcript.md",
+            "staged_path": "transcript.md"
+          },
+          {
+            "disposition": "included_unchanged",
+            "exclusion_reason": null,
+            "media_type": "application/json",
+            "required": true,
+            "role": "observed_trace",
+            "sensitive_findings": [],
+            "sha256": "8b615a25d18b810e486875e798a5fb46558d96b8f58cb1e59596484d90030085",
+            "size_bytes": 1979,
+            "source_ref": "artifacts/runs/gh-e1-slack-gif-creator-evolution/evals/candidate-db0b9d19f0ff48b624ea03b6/train/workspaces/work-4019f9c03c551a54cc773edb/observed-trace.json",
+            "staged_path": "observed-trace.json"
+          },
+          {
+            "disposition": "included_unchanged",
+            "exclusion_reason": null,
+            "media_type": "application/json",
+            "required": true,
+            "role": "package_access",
+            "sensitive_findings": [],
+            "sha256": "4e8891c88fb4b1d141af0eb39511928ea4aa7f1eff8a3529a6b9b856e093c2b1",
+            "size_bytes": 2000,
+            "source_ref": "artifacts/runs/gh-e1-slack-gif-creator-evolution/evals/candidate-db0b9d19f0ff48b624ea03b6/train/workspaces/work-4019f9c03c551a54cc773edb/package-access.json",
+            "staged_path": "package-access.json"
+          },
+          {
+            "disposition": "excluded_optional",
+            "exclusion_reason": "optional diagnostic is retained in the immutable raw workspace; it is outside the required submission evidence set",
+            "media_type": "text/x-python",
+            "required": false,
+            "role": "optional_diagnostic",
+            "sensitive_findings": [],
+            "sha256": "059ce83576eab00d0a588d8161fdcbe3bb40ebc8d3c5f42f0743f6a25fad8c9d",
+            "size_bytes": 3885,
+            "source_ref": "artifacts/runs/gh-e1-slack-gif-creator-evolution/evals/candidate-db0b9d19f0ff48b624ea03b6/train/workspaces/work-4019f9c03c551a54cc773edb/create_meeting_gif.py",
+            "staged_path": "create_meeting_gif.py"
+          },
+          {
+            "disposition": "excluded_optional",
+            "exclusion_reason": "optional diagnostic is retained in the immutable raw workspace; it is outside the required submission evidence set",
+            "media_type": "application/json",
+            "required": false,
+            "role": "optional_diagnostic",
+            "sensitive_findings": [
+              "private_home_path"
+            ],
+            "sha256": "4aa7d1272b1fb95281a4250351717571fb205398c7bc9f5b8ef8e645e33538c9",
+            "size_bytes": 724,
+            "source_ref": "artifacts/runs/gh-e1-slack-gif-creator-evolution/evals/candidate-db0b9d19f0ff48b624ea03b6/train/workspaces/work-4019f9c03c551a54cc773edb/generation-report.json",
+            "staged_path": "generation-report.json"
+          },
+          {
+            "disposition": "excluded_optional",
+            "exclusion_reason": "optional diagnostic is retained in the immutable raw workspace; it is outside the required submission evidence set",
+            "media_type": "application/json",
+            "required": false,
+            "role": "optional_diagnostic",
+            "sensitive_findings": [
+              "private_home_path"
+            ],
+            "sha256": "26317ad83a94945978f125a6cf6666cb7ecf4fd5772d1e57d288b2d8a45cd22b",
+            "size_bytes": 1233,
+            "source_ref": "artifacts/runs/gh-e1-slack-gif-creator-evolution/evals/candidate-db0b9d19f0ff48b624ea03b6/train/workspaces/work-4019f9c03c551a54cc773edb/verification.json",
+            "staged_path": "verification.json"
+          },
+          {
+            "disposition": "excluded_optional",
+            "exclusion_reason": "optional diagnostic is retained in the immutable raw workspace; it is outside the required submission evidence set",
+            "media_type": "text/x-python",
+            "required": false,
+            "role": "optional_diagnostic",
+            "sensitive_findings": [],
+            "sha256": "42bd24046393a29c7da85961d60813ac2e9479ad278b347a96e1a0ea2fa5892a",
+            "size_bytes": 3818,
+            "source_ref": "artifacts/runs/gh-e1-slack-gif-creator-evolution/evals/candidate-db0b9d19f0ff48b624ea03b6/train/workspaces/work-4019f9c03c551a54cc773edb/verify_meeting_gif.py",
+            "staged_path": "verify_meeting_gif.py"
+          }
+        ],
+        "manifest_id": "evidence-manifest-7398ca4ce3fd4010406364d7",
+        "metadata_corrections": [],
+        "package_node_map_hash": "ffa149dad661367063f6bc37e71ae3c8ad9eda4c4339d61c758bb817b1bdbbe2",
+        "raw_workspace_ref": "artifacts/runs/gh-e1-slack-gif-creator-evolution/evals/candidate-db0b9d19f0ff48b624ea03b6/train/workspaces/work-4019f9c03c551a54cc773edb",
+        "raw_workspace_tree_hash": "5b1ac4372b0b8e491bd4d8fea9b3fea0b3fa08790b44a471e5e9c4538d275008",
+        "run_id": "gh-e1-slack-gif-creator-evolution",
+        "schema_version": "2.0.0",
+        "source_submission_ref": "artifacts/runs/gh-e1-slack-gif-creator-evolution/evals/candidate-db0b9d19f0ff48b624ea03b6/train/execution-submissions/work-4019f9c03c551a54cc773edb.json",
+        "source_submission_sha256": "9d379677874689d4dd4c37681f38468f9d1486846efd709e9917fd6805ea4f1a",
+        "task_id": "functional-train-text-readable-004",
+        "work_id": "work-4019f9c03c551a54cc773edb"
+      },
+      "reasons": [
+        "required evidence is complete and can be staged unchanged"
+      ],
+      "run_id": "gh-e1-slack-gif-creator-evolution",
+      "schema_version": "2.0.0",
+      "task_id": "functional-train-text-readable-004",
+      "work_id": "work-4019f9c03c551a54cc773edb",
+      "would_add_agent_calls": false,
+      "would_modify_raw_workspace": false
+    },
+    "readable_reexecution": {
+      "attempt_kind": "reexecution",
+      "audit_id": "recovery-audit-fedf7d506c0222f79d88c428",
+      "audited_at": "2026-07-29T07:26:47.921614Z",
+      "disposition": "terminal_failure_required",
+      "failure_kind_if_terminal": "partial_artifact",
+      "host_attempt_accounting_ids": [
+        "host-attempt-405f981208743ca7b9504052",
+        "host-attempt-894be87c29f89c4526f4a5bb"
+      ],
+      "manifest": {
+        "action_kinds": [
+          "deterministic_submission_packaging_correction"
+        ],
+        "attempt_binding": null,
+        "entries": [
+          {
+            "disposition": "included_unchanged",
+            "exclusion_reason": null,
+            "media_type": "image/gif",
+            "required": true,
+            "role": "task_output",
+            "sensitive_findings": [],
+            "sha256": "a4a5b47a1d5b31b628d9e49922dc9b11dbd6ad6cf8514cbda3419188d2be2030",
+            "size_bytes": 18002,
+            "source_ref": "artifacts/runs/gh-e1-slack-gif-creator-evolution/evals/candidate-db0b9d19f0ff48b624ea03b6/train/workspaces/work-4019f9c03c551a54cc773edb-repair-1/meeting_sync_reminder.gif",
+            "staged_path": "meeting_sync_reminder.gif"
+          },
+          {
+            "disposition": "missing_required",
+            "exclusion_reason": "required evidence is absent from immutable workspace",
+            "media_type": null,
+            "required": true,
+            "role": "transcript",
+            "sensitive_findings": [],
+            "sha256": null,
+            "size_bytes": null,
+            "source_ref": "artifacts/runs/gh-e1-slack-gif-creator-evolution/evals/candidate-db0b9d19f0ff48b624ea03b6/train/workspaces/work-4019f9c03c551a54cc773edb-repair-1/transcript.md",
+            "staged_path": "transcript.md"
+          },
+          {
+            "disposition": "missing_required",
+            "exclusion_reason": "required evidence is absent from immutable workspace",
+            "media_type": null,
+            "required": true,
+            "role": "observed_trace",
+            "sensitive_findings": [],
+            "sha256": null,
+            "size_bytes": null,
+            "source_ref": "artifacts/runs/gh-e1-slack-gif-creator-evolution/evals/candidate-db0b9d19f0ff48b624ea03b6/train/workspaces/work-4019f9c03c551a54cc773edb-repair-1/observed-trace.json",
+            "staged_path": "observed-trace.json"
+          },
+          {
+            "disposition": "missing_required",
+            "exclusion_reason": "required evidence is absent from immutable workspace",
+            "media_type": null,
+            "required": true,
+            "role": "package_access",
+            "sensitive_findings": [],
+            "sha256": null,
+            "size_bytes": null,
+            "source_ref": "artifacts/runs/gh-e1-slack-gif-creator-evolution/evals/candidate-db0b9d19f0ff48b624ea03b6/train/workspaces/work-4019f9c03c551a54cc773edb-repair-1/package-access.json",
+            "staged_path": "package-access.json"
+          },
+          {
+            "disposition": "excluded_optional",
+            "exclusion_reason": "optional diagnostic is retained in the immutable raw workspace; it is outside the required submission evidence set",
+            "media_type": "text/x-python",
+            "required": false,
+            "role": "optional_diagnostic",
+            "sensitive_findings": [],
+            "sha256": "3af1262c17bfecd74902bea973f8d7904f19cf1b00cc12a0f916cdd23ab391ff",
+            "size_bytes": 3467,
+            "source_ref": "artifacts/runs/gh-e1-slack-gif-creator-evolution/evals/candidate-db0b9d19f0ff48b624ea03b6/train/workspaces/work-4019f9c03c551a54cc773edb-repair-1/generate_meeting_sync_reminder.py",
+            "staged_path": "generate_meeting_sync_reminder.py"
+          }
+        ],
+        "manifest_id": "evidence-manifest-9041680676926aa4e7ffa0c0",
+        "metadata_corrections": [],
+        "package_node_map_hash": "ffa149dad661367063f6bc37e71ae3c8ad9eda4c4339d61c758bb817b1bdbbe2",
+        "raw_workspace_ref": "artifacts/runs/gh-e1-slack-gif-creator-evolution/evals/candidate-db0b9d19f0ff48b624ea03b6/train/workspaces/work-4019f9c03c551a54cc773edb-repair-1",
+        "raw_workspace_tree_hash": "61304f85d083eda26f7556f2d15742c0fbb32e7572da32175f0f5c5de4f06970",
+        "run_id": "gh-e1-slack-gif-creator-evolution",
+        "schema_version": "2.0.0",
+        "source_submission_ref": null,
+        "source_submission_sha256": null,
+        "task_id": "functional-train-text-readable-004",
+        "work_id": "work-4019f9c03c551a54cc773edb"
+      },
+      "reasons": [
+        "missing required evidence: transcript.md",
+        "missing required evidence: observed-trace.json",
+        "missing required evidence: package-access.json",
+        "no complete typed source submission exists for this attempt"
+      ],
+      "run_id": "gh-e1-slack-gif-creator-evolution",
+      "schema_version": "2.0.0",
+      "task_id": "functional-train-text-readable-004",
+      "work_id": "work-4019f9c03c551a54cc773edb",
+      "would_add_agent_calls": false,
+      "would_modify_raw_workspace": false
+    },
+    "status_initial": {
+      "attempt_kind": "initial_execution",
+      "audit_id": "recovery-audit-21b32cd61354f4451073264b",
+      "audited_at": "2026-07-29T07:26:47.921614Z",
+      "disposition": "recoverable_without_agent",
+      "failure_kind_if_terminal": null,
+      "host_attempt_accounting_ids": [
+        "host-attempt-d8d0114664db23e41331b002",
+        "host-attempt-562e44e43a4c2febe838cf47"
+      ],
+      "manifest": {
+        "action_kinds": [
+          "deterministic_submission_packaging_correction",
+          "deterministic_metadata_correction"
+        ],
+        "attempt_binding": {
+          "attempt_kind": "initial_execution",
+          "binding_valid": true,
+          "context_id": "/root/exec_status_train1",
+          "host_attempt_accounting_hashes": {
+            "host-attempt-562e44e43a4c2febe838cf47": "8b6b32fad96c0ad416e39ea6ef06bdc2dd383d939febb8fd0daf96571c11baf6",
+            "host-attempt-d8d0114664db23e41331b002": "37108c7deb8d014b94fed7cfbab4ba88acc0ca0f40f6f11478aa2b567fbaaeb8"
+          },
+          "host_attempt_accounting_ids": [
+            "host-attempt-d8d0114664db23e41331b002",
+            "host-attempt-562e44e43a4c2febe838cf47"
+          ],
+          "host_task_id": "/root/exec_status_train1",
+          "raw_workspace_ref": "artifacts/runs/gh-e1-slack-gif-creator-evolution/evals/candidate-db0b9d19f0ff48b624ea03b6/train/workspaces/work-2902fd854c96d694d92cbd84",
+          "raw_workspace_tree_hash": "e7342f5eb5bf4655b8bdd5e11f36836c7aa0e397f7d194b53dd1f93fa5d9c382",
+          "repair_attempt": false,
+          "run_id": "gh-e1-slack-gif-creator-evolution",
+          "schema_version": "1.0.0",
+          "selected_host_attempt_accounting_id": "host-attempt-d8d0114664db23e41331b002",
+          "source_artifact_root_ref": "artifacts/runs/gh-e1-slack-gif-creator-evolution/evals/candidate-db0b9d19f0ff48b624ea03b6/train/workspaces/work-2902fd854c96d694d92cbd84",
+          "source_submission_id": "submission-6a90dc6188fb74061abe5905",
+          "source_submission_ref": "artifacts/runs/gh-e1-slack-gif-creator-evolution/evals/candidate-db0b9d19f0ff48b624ea03b6/train/execution-submissions/work-2902fd854c96d694d92cbd84.json",
+          "source_submission_sha256": "ba1c6ee2a0bf01837b1d62693ced247e9a5dcb9dc55ff96d7960a7843fbaa53d",
+          "task_id": "functional-train-message-status-002",
+          "work_id": "work-2902fd854c96d694d92cbd84"
+        },
+        "entries": [
+          {
+            "disposition": "included_unchanged",
+            "exclusion_reason": null,
+            "media_type": "image/gif",
+            "required": true,
+            "role": "task_output",
+            "sensitive_findings": [],
+            "sha256": "8f74f03a5934bd27341a6dd2d996245e222fa3c495ff6328e5cbc967d9d4dfd9",
+            "size_bytes": 64235,
+            "source_ref": "artifacts/runs/gh-e1-slack-gif-creator-evolution/evals/candidate-db0b9d19f0ff48b624ea03b6/train/workspaces/work-2902fd854c96d694d92cbd84/deployment_status.gif",
+            "staged_path": "deployment_status.gif"
+          },
+          {
+            "disposition": "included_unchanged",
+            "exclusion_reason": null,
+            "media_type": "text/markdown",
+            "required": true,
+            "role": "transcript",
+            "sensitive_findings": [],
+            "sha256": "49646873d03b2b0947bc2d8f42d5dc6fe76063f3d4e3e2a8dc2bfdba7bf58062",
+            "size_bytes": 830,
+            "source_ref": "artifacts/runs/gh-e1-slack-gif-creator-evolution/evals/candidate-db0b9d19f0ff48b624ea03b6/train/workspaces/work-2902fd854c96d694d92cbd84/transcript.md",
+            "staged_path": "transcript.md"
+          },
+          {
+            "disposition": "included_unchanged",
+            "exclusion_reason": null,
+            "media_type": "application/json",
+            "required": true,
+            "role": "observed_trace",
+            "sensitive_findings": [],
+            "sha256": "dcc0a38842f6c35b9d4af1c84a9ec0e0b755f2a18d191e9cb837b2422c995f52",
+            "size_bytes": 2098,
+            "source_ref": "artifacts/runs/gh-e1-slack-gif-creator-evolution/evals/candidate-db0b9d19f0ff48b624ea03b6/train/workspaces/work-2902fd854c96d694d92cbd84/observed-trace.json",
+            "staged_path": "observed-trace.json"
+          },
+          {
+            "disposition": "included_corrected_metadata",
+            "exclusion_reason": null,
+            "media_type": "application/json",
+            "required": true,
+            "role": "package_access",
+            "sensitive_findings": [],
+            "sha256": "ba4558bb9d0a1dea2b40525a6d997a92236d8a7d5c01179432b8c2fc2700c587",
+            "size_bytes": 1821,
+            "source_ref": "artifacts/runs/gh-e1-slack-gif-creator-evolution/evals/candidate-db0b9d19f0ff48b624ea03b6/train/workspaces/work-2902fd854c96d694d92cbd84/package-access.json",
+            "staged_path": "package-access.json"
+          },
+          {
+            "disposition": "excluded_optional",
+            "exclusion_reason": "optional diagnostic is retained in the immutable raw workspace; it is outside the required submission evidence set",
+            "media_type": "text/x-python",
+            "required": false,
+            "role": "optional_diagnostic",
+            "sensitive_findings": [],
+            "sha256": "43e20fbe74e6a41eff8b3cc1a3cc6c07f40958c53db757095a41742822303877",
+            "size_bytes": 7596,
+            "source_ref": "artifacts/runs/gh-e1-slack-gif-creator-evolution/evals/candidate-db0b9d19f0ff48b624ea03b6/train/workspaces/work-2902fd854c96d694d92cbd84/create_deployment_status.py",
+            "staged_path": "create_deployment_status.py"
+          },
+          {
+            "disposition": "excluded_optional",
+            "exclusion_reason": "optional diagnostic is retained in the immutable raw workspace; it is outside the required submission evidence set",
+            "media_type": "application/json",
+            "required": false,
+            "role": "optional_diagnostic",
+            "sensitive_findings": [],
+            "sha256": "a76e58261d01eb9d99b00808d663a6bc965137fbdbeb2858332d93959046de01",
+            "size_bytes": 759,
+            "source_ref": "artifacts/runs/gh-e1-slack-gif-creator-evolution/evals/candidate-db0b9d19f0ff48b624ea03b6/train/workspaces/work-2902fd854c96d694d92cbd84/validation-result.json",
+            "staged_path": "validation-result.json"
+          },
+          {
+            "disposition": "excluded_optional",
+            "exclusion_reason": "optional diagnostic is retained in the immutable raw workspace; it is outside the required submission evidence set",
+            "media_type": "image/png",
+            "required": false,
+            "role": "optional_diagnostic",
+            "sensitive_findings": [],
+            "sha256": "bcb0346f6fc92a1a5bd2343e15c743b94d2a1994bb6eb8a5b02ddacd8182e783",
+            "size_bytes": 46000,
+            "source_ref": "artifacts/runs/gh-e1-slack-gif-creator-evolution/evals/candidate-db0b9d19f0ff48b624ea03b6/train/workspaces/work-2902fd854c96d694d92cbd84/verification_frames.png",
+            "staged_path": "verification_frames.png"
+          }
+        ],
+        "manifest_id": "evidence-manifest-e1c8cee27631878e07d0fbbb",
+        "metadata_corrections": [
+          {
+            "corrected_node_id": "node-2c61585b9d40c2df7343f499",
+            "original_node_id": "node-2c61585b9d40c2df734f499",
+            "package_node_map_hash": "ffa149dad661367063f6bc37e71ae3c8ad9eda4c4339d61c758bb817b1bdbbe2",
+            "path": "core/gif_builder.py",
+            "reason": "unique_exact_path_to_frozen_node_map",
+            "sequence": 1
+          },
+          {
+            "corrected_node_id": "node-2c61585b9d40c2df7343f499",
+            "original_node_id": "node-2c61585b9d40c2df734f499",
+            "package_node_map_hash": "ffa149dad661367063f6bc37e71ae3c8ad9eda4c4339d61c758bb817b1bdbbe2",
+            "path": "core/gif_builder.py",
+            "reason": "unique_exact_path_to_frozen_node_map",
+            "sequence": 8
+          }
+        ],
+        "package_node_map_hash": "ffa149dad661367063f6bc37e71ae3c8ad9eda4c4339d61c758bb817b1bdbbe2",
+        "raw_workspace_ref": "artifacts/runs/gh-e1-slack-gif-creator-evolution/evals/candidate-db0b9d19f0ff48b624ea03b6/train/workspaces/work-2902fd854c96d694d92cbd84",
+        "raw_workspace_tree_hash": "e7342f5eb5bf4655b8bdd5e11f36836c7aa0e397f7d194b53dd1f93fa5d9c382",
+        "run_id": "gh-e1-slack-gif-creator-evolution",
+        "schema_version": "2.0.0",
+        "source_submission_ref": "artifacts/runs/gh-e1-slack-gif-creator-evolution/evals/candidate-db0b9d19f0ff48b624ea03b6/train/execution-submissions/work-2902fd854c96d694d92cbd84.json",
+        "source_submission_sha256": "ba1c6ee2a0bf01837b1d62693ced247e9a5dcb9dc55ff96d7960a7843fbaa53d",
+        "task_id": "functional-train-message-status-002",
+        "work_id": "work-2902fd854c96d694d92cbd84"
+      },
+      "reasons": [
+        "required bytes are complete; node_id has an exact frozen-map correction"
+      ],
+      "run_id": "gh-e1-slack-gif-creator-evolution",
+      "schema_version": "2.0.0",
+      "task_id": "functional-train-message-status-002",
+      "work_id": "work-2902fd854c96d694d92cbd84",
+      "would_add_agent_calls": false,
+      "would_modify_raw_workspace": false
+    },
+    "status_reexecution": {
+      "attempt_kind": "reexecution",
+      "audit_id": "recovery-audit-acb1748403c3ad3b132a831d",
+      "audited_at": "2026-07-29T07:26:47.921614Z",
+      "disposition": "recoverable_without_agent",
+      "failure_kind_if_terminal": null,
+      "host_attempt_accounting_ids": [
+        "host-attempt-d8d0114664db23e41331b002",
+        "host-attempt-562e44e43a4c2febe838cf47"
+      ],
+      "manifest": {
+        "action_kinds": [
+          "deterministic_submission_packaging_correction"
+        ],
+        "attempt_binding": {
+          "attempt_kind": "reexecution",
+          "binding_valid": true,
+          "context_id": "/root/exec_status_train1_repair",
+          "host_attempt_accounting_hashes": {
+            "host-attempt-562e44e43a4c2febe838cf47": "8b6b32fad96c0ad416e39ea6ef06bdc2dd383d939febb8fd0daf96571c11baf6",
+            "host-attempt-d8d0114664db23e41331b002": "37108c7deb8d014b94fed7cfbab4ba88acc0ca0f40f6f11478aa2b567fbaaeb8"
+          },
+          "host_attempt_accounting_ids": [
+            "host-attempt-d8d0114664db23e41331b002",
+            "host-attempt-562e44e43a4c2febe838cf47"
+          ],
+          "host_task_id": "/root/exec_status_train1_repair",
+          "raw_workspace_ref": "artifacts/runs/gh-e1-slack-gif-creator-evolution/evals/candidate-db0b9d19f0ff48b624ea03b6/train/workspaces/work-2902fd854c96d694d92cbd84-repair-1",
+          "raw_workspace_tree_hash": "cc68e915766785bd7735f5e1703ba2ed0f67676f9a975e9aab3f79eb31b2ae3e",
+          "repair_attempt": true,
+          "run_id": "gh-e1-slack-gif-creator-evolution",
+          "schema_version": "1.0.0",
+          "selected_host_attempt_accounting_id": "host-attempt-562e44e43a4c2febe838cf47",
+          "source_artifact_root_ref": "artifacts/runs/gh-e1-slack-gif-creator-evolution/evals/candidate-db0b9d19f0ff48b624ea03b6/train/workspaces/work-2902fd854c96d694d92cbd84-repair-1",
+          "source_submission_id": "submission-91863bcdd70cd1130bd46e25",
+          "source_submission_ref": "artifacts/runs/gh-e1-slack-gif-creator-evolution/evals/candidate-db0b9d19f0ff48b624ea03b6/train/execution-submissions/work-2902fd854c96d694d92cbd84-repair-1.json",
+          "source_submission_sha256": "13afc3bfb631294457ecbea98385b3683d053be4c423db0a4e16aad96ce496aa",
+          "task_id": "functional-train-message-status-002",
+          "work_id": "work-2902fd854c96d694d92cbd84"
+        },
+        "entries": [
+          {
+            "disposition": "included_unchanged",
+            "exclusion_reason": null,
+            "media_type": "image/gif",
+            "required": true,
+            "role": "task_output",
+            "sensitive_findings": [],
+            "sha256": "41fd5944dbd66e4cfe43e4517c5c60f7cdf1e97fa3f06c35bd032c80bc9977e0",
+            "size_bytes": 330205,
+            "source_ref": "artifacts/runs/gh-e1-slack-gif-creator-evolution/evals/candidate-db0b9d19f0ff48b624ea03b6/train/workspaces/work-2902fd854c96d694d92cbd84-repair-1/deployment_status.gif",
+            "staged_path": "deployment_status.gif"
+          },
+          {
+            "disposition": "included_unchanged",
+            "exclusion_reason": null,
+            "media_type": "text/markdown",
+            "required": true,
+            "role": "transcript",
+            "sensitive_findings": [],
+            "sha256": "401ba4b196afb45450503f1bf86bd7088bb3d6d5b4e40b2df83434e89dae0113",
+            "size_bytes": 794,
+            "source_ref": "artifacts/runs/gh-e1-slack-gif-creator-evolution/evals/candidate-db0b9d19f0ff48b624ea03b6/train/workspaces/work-2902fd854c96d694d92cbd84-repair-1/transcript.md",
+            "staged_path": "transcript.md"
+          },
+          {
+            "disposition": "included_unchanged",
+            "exclusion_reason": null,
+            "media_type": "application/json",
+            "required": true,
+            "role": "observed_trace",
+            "sensitive_findings": [],
+            "sha256": "ab83656a2c492cee10bf10c615da29d141e94493dcc4d9a17130b1049cfaf3e9",
+            "size_bytes": 1395,
+            "source_ref": "artifacts/runs/gh-e1-slack-gif-creator-evolution/evals/candidate-db0b9d19f0ff48b624ea03b6/train/workspaces/work-2902fd854c96d694d92cbd84-repair-1/observed-trace.json",
+            "staged_path": "observed-trace.json"
+          },
+          {
+            "disposition": "included_unchanged",
+            "exclusion_reason": null,
+            "media_type": "application/json",
+            "required": true,
+            "role": "package_access",
+            "sensitive_findings": [],
+            "sha256": "86ec3c5ae647a574cd5731656361100e768ce8712cbb3629c0ab1b3ee369d4a1",
+            "size_bytes": 911,
+            "source_ref": "artifacts/runs/gh-e1-slack-gif-creator-evolution/evals/candidate-db0b9d19f0ff48b624ea03b6/train/workspaces/work-2902fd854c96d694d92cbd84-repair-1/package-access.json",
+            "staged_path": "package-access.json"
+          },
+          {
+            "disposition": "excluded_optional",
+            "exclusion_reason": "optional diagnostic is retained in the immutable raw workspace; it is outside the required submission evidence set",
+            "media_type": "text/x-python",
+            "required": false,
+            "role": "optional_diagnostic",
+            "sensitive_findings": [],
+            "sha256": "17991e091910a990cec4f3d6377b04b0cceff2bc55c5d43b4a70cbe3080ddaf0",
+            "size_bytes": 9644,
+            "source_ref": "artifacts/runs/gh-e1-slack-gif-creator-evolution/evals/candidate-db0b9d19f0ff48b624ea03b6/train/workspaces/work-2902fd854c96d694d92cbd84-repair-1/build_deployment_status.py",
+            "staged_path": "build_deployment_status.py"
+          },
+          {
+            "disposition": "excluded_optional",
+            "exclusion_reason": "optional diagnostic is retained in the immutable raw workspace; it is outside the required submission evidence set",
+            "media_type": "application/json",
+            "required": false,
+            "role": "optional_diagnostic",
+            "sensitive_findings": [
+              "private_home_path"
+            ],
+            "sha256": "ce9fd7a28a7b75fca1cc623eb3e54c43db80a253c40c8592bd4de1e6766d5c7c",
+            "size_bytes": 1557,
+            "source_ref": "artifacts/runs/gh-e1-slack-gif-creator-evolution/evals/candidate-db0b9d19f0ff48b624ea03b6/train/workspaces/work-2902fd854c96d694d92cbd84-repair-1/validation.json",
+            "staged_path": "validation.json"
+          },
+          {
+            "disposition": "excluded_optional",
+            "exclusion_reason": "optional diagnostic is retained in the immutable raw workspace; it is outside the required submission evidence set",
+            "media_type": "image/png",
+            "required": false,
+            "role": "optional_diagnostic",
+            "sensitive_findings": [],
+            "sha256": "5d1eeff3e1acbab0945748a46bc83fd67b7c28c753013877b629c44ef583514f",
+            "size_bytes": 31139,
+            "source_ref": "artifacts/runs/gh-e1-slack-gif-creator-evolution/evals/candidate-db0b9d19f0ff48b624ea03b6/train/workspaces/work-2902fd854c96d694d92cbd84-repair-1/verification_contact_sheet.png",
+            "staged_path": "verification_contact_sheet.png"
+          }
+        ],
+        "manifest_id": "evidence-manifest-71fba642692fe34f30862fd5",
+        "metadata_corrections": [],
+        "package_node_map_hash": "ffa149dad661367063f6bc37e71ae3c8ad9eda4c4339d61c758bb817b1bdbbe2",
+        "raw_workspace_ref": "artifacts/runs/gh-e1-slack-gif-creator-evolution/evals/candidate-db0b9d19f0ff48b624ea03b6/train/workspaces/work-2902fd854c96d694d92cbd84-repair-1",
+        "raw_workspace_tree_hash": "cc68e915766785bd7735f5e1703ba2ed0f67676f9a975e9aab3f79eb31b2ae3e",
+        "run_id": "gh-e1-slack-gif-creator-evolution",
+        "schema_version": "2.0.0",
+        "source_submission_ref": "artifacts/runs/gh-e1-slack-gif-creator-evolution/evals/candidate-db0b9d19f0ff48b624ea03b6/train/execution-submissions/work-2902fd854c96d694d92cbd84-repair-1.json",
+        "source_submission_sha256": "13afc3bfb631294457ecbea98385b3683d053be4c423db0a4e16aad96ce496aa",
+        "task_id": "functional-train-message-status-002",
+        "work_id": "work-2902fd854c96d694d92cbd84"
+      },
+      "reasons": [
+        "required evidence is complete and can be staged unchanged"
+      ],
+      "run_id": "gh-e1-slack-gif-creator-evolution",
+      "schema_version": "2.0.0",
+      "task_id": "functional-train-message-status-002",
+      "work_id": "work-2902fd854c96d694d92cbd84",
+      "would_add_agent_calls": false,
+      "would_modify_raw_workspace": false
+    }
+  },
+  "binding_fault_injection": {
+    "attempt_kind_rejected": "source repair_attempt disagrees with selected attempt kind",
+    "cross_work_accounting_rejected": "HostAttemptAccounting belongs to another run/work",
+    "cross_workspace_rejected": "source artifact_root does not equal the selected raw workspace",
+    "host_context_rejected": "source host_task/context must match exactly one cited HostAttemptAccounting"
+  },
+  "checkpoint_freshness_fixture": {
+    "export_rejection_before_fresh_checkpoint": "runtime is paused; a valid continuation decision is required before export",
+    "fresh_checkpoint_id": "budget-checkpoint-1332f4cacd3c4bdf489c3328",
+    "fresh_checkpoint_state_hash": "c935387d38c8b66e4d8668296932e44aedafd8afa75ffc8d0b31bed462d75afd",
+    "freshness_audit": {
+      "audit_id": "checkpoint-freshness-60d3e1a87bc542d0635dbbe3",
+      "audited_at": "2026-07-29T07:26:47.921614Z",
+      "checkpoint_id": "budget-checkpoint-1332f4cacd3c4bdf489c3328",
+      "checkpoint_ref": "budget-checkpoints/budget-checkpoint-1332f4cacd3c4bdf489c3328.json",
+      "checkpoint_sha256": "74e9bc64ec568f41d9fee3496b181f207af539e16dbc8b645eff8c99f573f08f",
+      "checkpoint_state_hash": "c935387d38c8b66e4d8668296932e44aedafd8afa75ffc8d0b31bed462d75afd",
+      "config_hash": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
+      "evidence_hash": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+      "is_latest_checkpoint": true,
+      "no_uncheckpointed_recovery": true,
+      "run_id": "gher-v2-fixture",
+      "runtime_state_hash": "c935387d38c8b66e4d8668296932e44aedafd8afa75ffc8d0b31bed462d75afd",
+      "schema_version": "1.0.0",
+      "valid": true
+    },
+    "new_agent_calls": 0,
+    "old_checkpoint_id": "budget-checkpoint-893a1627b19ad6e33b200564",
+    "old_checkpoint_rejection_after_fresh_checkpoint": "checkpoint is not the latest runtime checkpoint",
+    "pending_work_ids_before_fresh_checkpoint": [
+      "work-a",
+      "work-b"
+    ],
+    "persisted_runtime_state_hash": "c935387d38c8b66e4d8668296932e44aedafd8afa75ffc8d0b31bed462d75afd",
+    "post_recovery_checkpoint_required_after": false,
+    "stale_decision_rejection_before_fresh_checkpoint": "a fresh post-recovery checkpoint is required before continuation",
+    "uncheckpointed_recovery_work_ids_after": [],
+    "usage_unchanged_by_settlement": true
+  },
+  "config_hash": "64f73c49a10c92dcef02647682b75645ac1331e2f85d5fbedf4b567bd5f863c1",
+  "generated_at": "2026-07-29T07:26:47.921614+00:00",
+  "ledger_before": {
+    "cache_hits": 0,
+    "completed": 1,
+    "dispatches": 3,
+    "exported": 2,
+    "failed": 0,
+    "pending": 2,
+    "records": 2,
+    "submissions": 1
+  },
+  "mode": "zero_agent_read_only_correctness_stabilization",
+  "performed": {
+    "agent_calls": 0,
+    "candidate_gate": false,
+    "headless_api_calls": 0,
+    "ingest": false,
+    "staging": false,
+    "terminalization": false
+  },
+  "reference_reuse": {
+    "cache_hit": true,
+    "eligible": true,
+    "lifecycle": "complete",
+    "mismatches": [],
+    "reference_key_hash": "6be7fa67241de03e07f3b2a2b20bbc1740da06bd1751142da9cfa3032ad6917a",
+    "seal": {
+      "checked": 485,
+      "hash_mismatch": 0,
+      "missing": 0,
+      "schema_errors": 0,
+      "unindexed_files": 0,
+      "valid": true
+    }
+  },
+  "run_id": "gh-e1-slack-gif-creator-evolution",
+  "runtime_before": {
+    "active_accumulated_ms": 1814840,
+    "approved": {
+      "active_wall_clock_ms": 12060000,
+      "agent_calls": 84,
+      "candidates": 5,
+      "estimated_tokens": 2128000,
+      "proposals": 4,
+      "repairs": 84
+    },
+    "checkpoint_ids": [
+      "budget-checkpoint-d8c4e7b5f92c131e2178ba74",
+      "budget-checkpoint-80ae4f7e87b02d63f2544d84",
+      "budget-checkpoint-b7d51dae6b8326e0a56cbcdc",
+      "budget-checkpoint-5d23b80b3ea0123c444707dc"
+    ],
+    "completed_work_ids": [
+      "proposal-work-f93cb726b76fdd6a13ed28a5",
+      "proposal-work-a3b21d4876085cb058d516f9",
+      "proposal-work-f93cb726b76fdd6a13ed28a5-repair-1",
+      "proposal-work-a3b21d4876085cb058d516f9-repair-1",
+      "work-7bde15e8233bde28fa9c1297"
+    ],
+    "config_hash": "64f73c49a10c92dcef02647682b75645ac1331e2f85d5fbedf4b567bd5f863c1",
+    "created_at": "2026-07-28T17:12:31.439549Z",
+    "cumulative_agent_duration_ms": 5400000,
+    "internal_accounting_ids": [
+      "candidate:candidate-db0b9d19f0ff48b624ea03b6",
+      "candidate:candidate-c36eb3adc54c93e3233d59e0",
+      "host-attempt-d8d0114664db23e41331b002",
+      "host-attempt-405f981208743ca7b9504052",
+      "host-attempt-562e44e43a4c2febe838cf47",
+      "host-attempt-894be87c29f89c4526f4a5bb"
+    ],
+    "last_transition_at": "2026-07-29T03:30:22.533160Z",
+    "latest_checkpoint_id": "budget-checkpoint-5d23b80b3ea0123c444707dc",
+    "latest_decision_hash": "68550ffde3fa40b7f1cdb56be0e3f44059562cf2ab39049ad56c76ccace7cd89",
+    "open_reservations": [
+      {
+        "batch_id": "executor:dc1446829e79e232b754263a",
+        "created_at": "2026-07-29T03:12:34.578845Z",
+        "reservation_id": "reservation-5ba4f8d495209102a9adcad9",
+        "role": "executor",
+        "schema_version": "1.0.0",
+        "unsettled_work_ids": [
+          "work-2902fd854c96d694d92cbd84",
+          "work-4019f9c03c551a54cc773edb"
+        ],
+        "upper_bound": {
+          "active_wall_clock_ms": 600000,
+          "agent_calls": 3,
+          "candidates": 0,
+          "estimated_tokens": 96000,
+          "proposals": 0,
+          "repairs": 3
+        },
+        "work_ids": [
+          "work-2902fd854c96d694d92cbd84",
+          "work-4019f9c03c551a54cc773edb",
+          "work-7bde15e8233bde28fa9c1297"
+        ]
+      }
+    ],
+    "paused_accumulated_ms": 35256238,
+    "post_recovery_checkpoint_required": false,
+    "run_id": "gh-e1-slack-gif-creator-evolution",
+    "schema_version": "1.0.0",
+    "status": "awaiting_continuation",
+    "uncheckpointed_recovery_work_ids": [],
+    "used": {
+      "active_wall_clock_ms": 1814840,
+      "agent_calls": 9,
+      "candidates": 2,
+      "estimated_tokens": 288000,
+      "proposals": 4,
+      "repairs": 2
+    }
+  },
+  "schema_version": "2.0.0",
+  "selected_recovery": {
+    "readable": "readable_initial",
+    "status": "status_reexecution"
+  },
+  "stage_id": "GH-E1-recovery-correctness-v2",
+  "v1_calculation_defect": {
+    "gher_g04_was_literal_true": true,
+    "gher_g05_was_literal_true": true,
+    "historical_10_of_10_superseded": true,
+    "historical_index_sha256": "3b19671b7a0b0748cec326dd9c071743c293424a65ea18e0165e6b701f903a14",
+    "historical_indexed_objects": 25,
+    "historical_stage_preserved": true,
+    "reason": "GHER-G04/G05 were constants rather than computed correctness checks"
+  }
+}

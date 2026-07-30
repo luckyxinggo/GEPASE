@@ -1,0 +1,22 @@
+{
+  "schema_version": "1.0.0",
+  "decision_id": "continuation-3796efdadb5a00b6d996385e",
+  "run_id": "gh-e1-slack-gif-creator-evolution",
+  "config_hash": "64f73c49a10c92dcef02647682b75645ac1331e2f85d5fbedf4b567bd5f863c1",
+  "checkpoint_id": "budget-checkpoint-b7d51dae6b8326e0a56cbcdc",
+  "checkpoint_hash": "7580e89c79d2d1e595d6bfeb9adda52c859d4fc065ab0fd826fef06892dca5e5",
+  "evidence_hash": "f06b5681dacd28642262a8b6c96833520bf731d0076d3e0ddcedd77c4c4eb5a0",
+  "action": "continue",
+  "approved_increment": {
+    "agent_calls": 2,
+    "estimated_tokens": 64000,
+    "active_wall_clock_ms": 600000,
+    "proposals": 0,
+    "candidates": 0,
+    "repairs": 2
+  },
+  "reviewer": "user",
+  "comment_zh": "用户在当前对话明确授权：接下来的 GH-E1 运行先不用考虑用户侧预算，并继续向下执行；本决定只解除 E1.4 typed schema failure checkpoint，以导出并执行既有 2 个同 scope、最多一次的隔离 Proposer repair work。2 个 proposal slot 已在初始 tranche 的剩余 max_proposals=4 容量中冻结，本决定只追加 calls、Token、active-time 与 repair allowance；不改变 config、EvalPlan、评分、模型、Patch/Gate 或累计上限。",
+  "previous_decision_hash": "df6df3e95f17d006d10f38d052c3ed66d20281252fccbc3743b8ff77db94d5f7",
+  "decided_at": "2026-07-29T03:08:34.811695Z"
+}

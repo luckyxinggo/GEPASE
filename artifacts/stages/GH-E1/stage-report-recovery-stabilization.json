@@ -1,0 +1,26 @@
+{
+  "agent_calls": 0,
+  "conclusion_boundary": {
+    "algorithm_effect_validated": false,
+    "code_implemented": true,
+    "engineering_recovery_mechanism_tested": true
+  },
+  "current_run_mutated": false,
+  "effect_outcome": "budget_incomplete_provisional_unchanged",
+  "formal_gh_e1": "in_progress_4_of_10",
+  "generated_at": "2026-07-29T06:05:24.674997+00:00",
+  "headless_api_calls": 0,
+  "recommendation": {
+    "choice": "continue_current_run_after_explicit_user_confirmation",
+    "next_safe_boundary": "first perform only the two deterministic stage+preaccounted ingests; pause again before exporting either remaining Executor work",
+    "why": "both unsettled works have legal no-Agent recovery sources and the sealed reference remains a strict cache hit; a new evolution or full reference rerun is not technically required"
+  },
+  "reference_reusable": true,
+  "schema_version": "1.0.0",
+  "selected_recovery": {
+    "readable": "readable_initial",
+    "status": "status_reexecution"
+  },
+  "stage_id": "GH-E1-recovery-stabilization",
+  "status": "complete"
+}

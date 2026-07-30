@@ -1,0 +1,22 @@
+{
+  "action": "continue",
+  "approved_increment": {
+    "active_wall_clock_ms": 3600000,
+    "agent_calls": 16,
+    "candidates": 0,
+    "estimated_tokens": 400000,
+    "proposals": 0,
+    "repairs": 16
+  },
+  "checkpoint_hash": "4c47002add8e1813ded874c16a459642f28be2814b1b39398e99154c4c9cb548",
+  "checkpoint_id": "budget-checkpoint-fd1d955b47dd3085e362abb3",
+  "comment_zh": "用户在当前对话明确授权：继续执行 reference Executor tranche。",
+  "config_hash": "cf902e88f72c1d8c778e2cade2590b0254732d5824e15c5124a550355d579668",
+  "decided_at": "2026-07-28T14:38:13.219405Z",
+  "decision_id": "continuation-f882db246de74c4ba47a05e7",
+  "evidence_hash": "bab7eca735af1b5fe8c7b9ed23a1d59c61dd6e736e6d2e5a741ac65c6e1e8506",
+  "previous_decision_hash": null,
+  "reviewer": "user",
+  "run_id": "gh-e1-slack-gif-creator-reference",
+  "schema_version": "1.0.0"
+}

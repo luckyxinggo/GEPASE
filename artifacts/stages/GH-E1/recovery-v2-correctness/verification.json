@@ -1,0 +1,89 @@
+{
+  "agent_calls": 0,
+  "commands": [
+    {
+      "command": ".venv/bin/pytest -q tests/evals/test_recovery.py tests/budget/test_active_session_runtime.py tests/evals/test_engine_integration.py tests/evals/test_r4_candidate.py",
+      "exit_code": 0,
+      "ok": true,
+      "summary": "25 passed in 1.50s"
+    },
+    {
+      "command": ".venv/bin/pytest -q",
+      "exit_code": 0,
+      "ok": true,
+      "summary": "205 passed in 11.52s"
+    },
+    {
+      "command": ".venv/bin/ruff check .",
+      "exit_code": 0,
+      "ok": true,
+      "summary": "All checks passed!"
+    },
+    {
+      "command": ".venv/bin/pyright --pythonpath .venv/bin/python",
+      "exit_code": 0,
+      "ok": true,
+      "summary": "0 errors, 0 warnings, 0 informations"
+    },
+    {
+      "command": ".venv/bin/python scripts/export_core_schemas.py",
+      "exit_code": 0,
+      "ok": true,
+      "summary": "no output"
+    },
+    {
+      "command": ".venv/bin/python scripts/export_core_schemas.py",
+      "exit_code": 0,
+      "ok": true,
+      "summary": "no output"
+    },
+    {
+      "command": ".venv/bin/python scripts/check_markdown_links.py",
+      "exit_code": 0,
+      "ok": true,
+      "summary": "markdown links: ok"
+    },
+    {
+      "command": ".venv/bin/python scripts/check_license.py",
+      "exit_code": 0,
+      "ok": true,
+      "summary": "license policy: ok"
+    },
+    {
+      "command": "git diff --check",
+      "exit_code": 0,
+      "ok": true,
+      "summary": "no output"
+    }
+  ],
+  "current_run_unchanged": true,
+  "headless_api_calls": 0,
+  "historical_25_object_seal_unchanged": true,
+  "immutable_after": {
+    "evolution_tree": {
+      "exists": true,
+      "files": 181,
+      "sha256": "ef5db6f6471afb83c10850607babd5a9b4f9e2adb614df631291a407b47b8bbb"
+    },
+    "reference_tree": {
+      "exists": true,
+      "files": 486,
+      "sha256": "1c9ca32632d21228c0a8859b143ccb364981742dc5f33bbd1fd4d795281ccc0d"
+    }
+  },
+  "protected_tree_unchanged": true,
+  "schema_idempotent": true,
+  "schema_tree_hash": {
+    "exists": true,
+    "files": 63,
+    "sha256": "405f35bd9e486965b44fdb91fb16770eaa4326c4f17b81a1cdf4735064dc225b"
+  },
+  "schema_version": "2.0.0",
+  "security": {
+    "findings": [],
+    "raw_agent_workspaces_excluded": true,
+    "scanned_files": 837,
+    "valid": true
+  },
+  "valid": true
+}

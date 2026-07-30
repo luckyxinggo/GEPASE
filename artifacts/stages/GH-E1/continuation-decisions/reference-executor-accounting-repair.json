@@ -1,0 +1,22 @@
+{
+  "schema_version": "1.0.0",
+  "decision_id": "continuation-04514bdc81505f2965d494ae",
+  "run_id": "gh-e1-slack-gif-creator-reference",
+  "config_hash": "cf902e88f72c1d8c778e2cade2590b0254732d5824e15c5124a550355d579668",
+  "checkpoint_id": "budget-checkpoint-899cfbb5def48c429c7585cd",
+  "checkpoint_hash": "820297972a1e7466404dff27e0c1d06fc996c8b41199ec05a13c006babfb4f64",
+  "evidence_hash": "0066a5bbcfad3a7cc660939fa5f1f52a586324e6b3cddaf190979e619dc4b8d3",
+  "action": "continue",
+  "approved_increment": {
+    "agent_calls": 3,
+    "estimated_tokens": 96000,
+    "active_wall_clock_ms": 0,
+    "proposals": 0,
+    "candidates": 0,
+    "repairs": 1
+  },
+  "reviewer": "user",
+  "comment_zh": "用户在当前对话明确授权：修复未入账 Host context，并在账实一致后继续 GH-E1；本决定只批准对两个错误 Executor work-view 派发和一次损坏 GIF 重执行的追加式、保守估算记账。",
+  "previous_decision_hash": "07b2ec46b12633c146f62fb396aca870dd4b0dea14fd32415879bd3ba0ac9166",
+  "decided_at": "2026-07-28T15:54:00Z"
+}

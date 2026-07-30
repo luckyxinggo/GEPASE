@@ -1,0 +1,94 @@
+{
+  "formal_gh_e1_gate_unchanged": {
+    "passed": 4,
+    "status": "in_progress",
+    "total": 10
+  },
+  "gates": [
+    {
+      "evidence": [
+        "recovery-stabilization-audit.json",
+        "recovery-stabilization-verification.json"
+      ],
+      "gate_id": "GHER-G00",
+      "status": "passed"
+    },
+    {
+      "evidence": [
+        "recovery-stabilization-audit.json",
+        "recovery-stabilization-verification.json"
+      ],
+      "gate_id": "GHER-G01",
+      "status": "passed"
+    },
+    {
+      "evidence": [
+        "recovery-stabilization-audit.json",
+        "recovery-stabilization-verification.json"
+      ],
+      "gate_id": "GHER-G02",
+      "status": "passed"
+    },
+    {
+      "evidence": [
+        "recovery-stabilization-audit.json",
+        "recovery-stabilization-verification.json"
+      ],
+      "gate_id": "GHER-G03",
+      "status": "passed"
+    },
+    {
+      "evidence": [
+        "recovery-stabilization-audit.json",
+        "recovery-stabilization-verification.json"
+      ],
+      "gate_id": "GHER-G04",
+      "status": "passed"
+    },
+    {
+      "evidence": [
+        "recovery-stabilization-audit.json",
+        "recovery-stabilization-verification.json"
+      ],
+      "gate_id": "GHER-G05",
+      "status": "passed"
+    },
+    {
+      "evidence": [
+        "recovery-stabilization-audit.json",
+        "recovery-stabilization-verification.json"
+      ],
+      "gate_id": "GHER-G06",
+      "status": "passed"
+    },
+    {
+      "evidence": [
+        "recovery-stabilization-audit.json",
+        "recovery-stabilization-verification.json"
+      ],
+      "gate_id": "GHER-G07",
+      "status": "passed"
+    },
+    {
+      "evidence": [
+        "recovery-stabilization-audit.json",
+        "recovery-stabilization-verification.json"
+      ],
+      "gate_id": "GHER-G08",
+      "status": "passed"
+    },
+    {
+      "evidence": [
+        "recovery-stabilization-audit.json",
+        "recovery-stabilization-verification.json"
+      ],
+      "gate_id": "GHER-G09",
+      "status": "passed"
+    }
+  ],
+  "passed": 10,
+  "schema_version": "1.0.0",
+  "stage_id": "GH-E1-recovery-stabilization",
+  "status": "passed",
+  "total": 10
+}

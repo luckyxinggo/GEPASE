@@ -1,0 +1,11 @@
+{
+  "schema_version": "1.0.0",
+  "stage_id": "GH-E1",
+  "run_id": "gh-e1-slack-gif-creator-reference",
+  "status": "moved_not_deleted",
+  "source_path": "artifacts/runs/gh-e1-slack-gif-creator-reference/workspaces/work-8b18ac4a317bfa0522d70aca/attempt-0/.deps",
+  "quarantine_path": "artifacts/local/gh-e1-raw-workspace-quarantine/work-8b18-attempt-0-deps",
+  "file_count": 1689,
+  "size_bytes": 49185894,
+  "reason_zh": "该目录属于两次 artifact 安全检查 fail-closed 的未接受 submission；不构成已接受 E2/E3 的 evidence，不能纳入 reference terminal seal。目录已移动到本地可恢复隔离区，原始失败 submission 与此前审计仍保留。"
+}

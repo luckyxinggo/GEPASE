@@ -1,0 +1,55 @@
+{
+  "schema_version": "1.0.0",
+  "stage_id": "GH-E1",
+  "phase": "E1.9_chinese_report",
+  "generated_at": "2026-07-29T17:04:06Z",
+  "valid": true,
+  "checks": {
+    "chinese_self_contained_report_built": true,
+    "report_recomputed_from_sealed_inputs": true,
+    "outcome_matches_core": true,
+    "deployable_frontier_matches_core": true,
+    "task_native_gifs_hash_verified": true,
+    "typed_failed_asset_honestly_labeled": true,
+    "graph_patch_lineage_reflection_merge_present": true,
+    "authoritative_runtime_present": true,
+    "append_only_final_subdirectory_used": true
+  },
+  "report": {
+    "path": "artifacts/runs/gh-e1-slack-gif-creator-report/final/index.html",
+    "outcome": "no_strict_improvement",
+    "frontier_count": 0,
+    "gif_assets": 29,
+    "train_gif_assets": 20,
+    "validation_gif_assets": 9,
+    "typed_failed_gif_assets": 1,
+    "graph_layers": {
+      "static": 474,
+      "observed": 61,
+      "planned": 0,
+      "semantic_hypothesis": 0
+    },
+    "proposal_scopes": 2,
+    "patches": 2,
+    "reflections": 2,
+    "report_verify_checked": 32
+  },
+  "evidence": [
+    {
+      "ref": "artifacts/runs/gh-e1-slack-gif-creator-report/final/report-data.json",
+      "sha256": "7ae746c72cb920bd486c5441d4ddacd879811c0bf600ff5ab280c0450e8de73f"
+    },
+    {
+      "ref": "artifacts/runs/gh-e1-slack-gif-creator-report/final/evidence-manifest.json",
+      "sha256": "3c149f29e627259fb21e600fee80d5ac2c61fbc25ef57e6162fd6c20e104b0c2"
+    }
+  ],
+  "seal": {
+    "valid": true,
+    "checked": 32,
+    "missing": 0,
+    "hash_mismatch": 0,
+    "schema_errors": 0,
+    "unindexed_files": 0
+  }
+}

@@ -24,9 +24,9 @@ GEPASE 严格区分三类结论：
 
 | 结论层级 | 当前证据 |
 |---|---|
-| **代码已经实现** | 单一 Python Package 中已经包含 Package IR/Graph、E0/E2/E3 Eval Core、人工审核 EvalPlan、typed evidence、六维评分、GEPA adapter、结构化 Patch、Gate 0–3、lineage/merge、stores、report 和 deploy CLI。 |
+| **代码已经实现** | 单一 Python Package 中已经包含 Package IR/Graph、E0/E2/E3 Eval Core、人工审核 EvalPlan、typed evidence、六维评分、GEPA adapter/per-key Pareto 选择、结构化 Patch、Gate 0–3、lineage/merge、stores、report 和 deploy CLI。 |
 | **工程机制通过测试** | Core 具有 unit、integration、fault、contract、schema、artifact hash、resume/cache、角色隔离、merge conflict、secret 与 release 检查；R5 可独立重验封存的上游运行。 |
-| **算法效果已经观察到** | 在一次 frozen `slack-gif-creator` 运行中，deployable candidate 的 train 提升为 `+0.04190`，held-out validation 提升为 `+0.12427`，并在 `3/3` 个 validation case 上获胜。 |
+| **算法效果已经观察到** | v0.1 的一次 frozen `slack-gif-creator` 运行得到 deployable candidate：train `+0.04190`、held-out validation `+0.12427`、validation `3/3` wins。后续独立 GH-E1 图加固复现则得到可复算负结果 `no_strict_improvement`，不能用前一次正分补齐。 |
 
 ![封存的 canary 结果](docs/assets/canary-results.svg)
 
@@ -46,6 +46,29 @@ validation，最终一个进入 deployable frontier。一个 train 阶段看好�
 对照、六维评分、Package Graph、候选/merge DAG、Gate funnel、rejected edits、provenance 和
 deployable archive。
 
+### 图加固分支的独立复现
+
+`codex/graph-hardening` 上的 GH-E1 使用同一个 pinned Package 与 frozen EvalPlan，但从 fresh
+no-skill/original reference 开始建立隔离证据链。两个 graph-guided candidate 中，一个 train
+为 `+0.07083`、`5/5` wins，却因 held-out `quality_efficiency=-0.15972` 低于 `-0.05`
+category floor 被拒；另一个 train 为 `-0.16221`，直接被拒。最终 frontier 为 0，结果是
+`no_strict_improvement`。这证明框架能够保存并报告真实负结果，不证明图引导优于其他搜索策略。
+
+GH-E1 的实际搜索深度只有两个 seed-rooted generation-1 candidate。Reflection 被记录为
+task-level feedback，但没有生成 generation-2 child；被拒候选的 recovery 仍从 seed 建立新的
+generation-1 branch。因此 GH-E1 证明的是一次有界的 GEPA 式反思/Pareto 主链运行，不是已经
+完成多代迭代进化。未来若增加第二代，建议冻结为 `2` 个初始分支、至多 `2` 个
+refinement/recovery child 和至多 `1` 个条件 Merge child，继续服从 `max_candidates=5`。
+
+[GH-E1 中文自包含报告](artifacts/runs/gh-e1-slack-gif-creator-report/final/index.html)包含 29 个
+hash-verified 任务原生 GIF、Package Graph、两个 Patch、lineage、Reflection、条件 Merge、六维
+分数和以 ActiveSessionRuntime/HostAttempt 为权威的完整用量。
+
+公开 Git 只发布这份自包含报告、通过安全审核的 GH-E0.5/GH-E1/post-GH-E1 阶段证据、冻结
+配置、Core 与测试。保留原始字节的 GH-E1 reference/evolution run 含 Agent workspace 和本机
+诊断，因此继续作为本地 sealed research evidence，不进入 Git。干净 clone 可以验证公开报告与
+stage seal，但不声称包含或可重放未发布的完整 raw evolution seal。
+
 ## 工作流程
 
 ```mermaid
@@ -62,8 +85,10 @@ flowchart LR
     V -->|拒绝| A
 ```
 
-Package Graph 不是装饰：它用于 failure localization、mutation scope、blast radius、dependency
-closure 和 merge conflict 检查。cross-package merge 是硬错误。Agent Skill 只是薄适配层，
+Package Graph 不是装饰：当前 selector 的正式运行视图仅由 static + observed layer 组成，用于
+failure localization、mutation scope、blast radius、dependency closure 和 merge conflict
+检查。GH-P1 的 semantic-hypothesis 实验已封存为 stalled 历史证据，不再由 active runtime
+生成或消费。cross-package merge 是硬错误。Agent Skill 只是薄适配层，
 不能保存候选池、评分策略或 Gate 结论。
 
 ## 快速开始
@@ -118,7 +143,9 @@ artifact hash 完整一致时，才能复用已经封存的 reference。
 
 `TaskScoreVector` 分别保留 `task_correctness`、`output_quality`、`skill_gain`、
 `reliability`、`efficiency` 和 `package_quality`。确定性 assertion 即使为 1.0，也不会被描述为
-Skill 综合质量满分。
+Skill 综合质量满分。未来 Validation Gate 会从 paired TaskScoreVector 显式复算独立的
+`task_score_efficiency` secondary objective；它不是 case category `quality_efficiency`，也不与
+只使用 correctness/quality 的 primary utility 重复计数。
 
 ## Agent-native 与可选 Headless 角色
 
@@ -147,13 +174,14 @@ src/gepase/        Python Core、CLI 与公开 API
 .agents/skills/    Agent Host 薄编排适配层
 benchmarks/        公开 integration fixture 与 pinned canary
 schemas/           自动导出的公开交换 schema
-artifacts/runs/    精选的 R2–R5 可复现证据
-artifacts/stages/  阶段 Gate 与完成证据
+artifacts/runs/    精选的 R2–R5 证据与 GH-E1 自包含报告
+artifacts/stages/  通过安全审核的公开阶段 Gate 与完成证据
 tests/             unit、integration、contract、fault 与 release tests
 ```
 
-`skills_test/`、`.env`、`artifacts/local/` 与生成的 `results/` 均被 Git ignore。私有 Skill、
-凭据、生产 trace 和本机绝对路径不得进入公开 artifact。
+`skills_test/`、`.env`、`artifacts/local/`、生成的 `results/` 与 GH-E1 raw
+reference/evolution run 均被 Git ignore。私有 Skill、凭据、原始 Agent workspace、生产 trace
+和本机绝对路径不得进入公开 artifact。
 
 ## 文档
 

@@ -1,0 +1,22 @@
+{
+  "action": "continue",
+  "approved_increment": {
+    "active_wall_clock_ms": 420000,
+    "agent_calls": 1,
+    "candidates": 0,
+    "estimated_tokens": 12000,
+    "proposals": 0,
+    "repairs": 1
+  },
+  "checkpoint_hash": "ce2d4694832524b3379323cda5f0884d745687a159685565471ccddbbf35d4b3",
+  "checkpoint_id": "budget-checkpoint-9bea990345503764a50da55a",
+  "comment_zh": "用户明确授权 grader-work-81f28e928175a8830734a7e1 额外且仅额外一次全新隔离 Independent Grader context；不授权任何 Executor、其他 Grader、评分或冻结契约变化。",
+  "config_hash": "64f73c49a10c92dcef02647682b75645ac1331e2f85d5fbedf4b567bd5f863c1",
+  "decided_at": "2026-07-29T15:39:51.073081Z",
+  "decision_id": "continuation-5da79ceb9ab1958c167098a9",
+  "evidence_hash": "a0efd229642574430b856416afc9f41360e8c034cbbe0e1d6c567c49a361c86c",
+  "previous_decision_hash": "02d71633f8c31e7131b5939432983d66df712339ef167ac60858adc8d4294603",
+  "reviewer": "user-explicit-reexecution-authorization",
+  "run_id": "gh-e1-slack-gif-creator-evolution",
+  "schema_version": "1.0.0"
+}

@@ -1,0 +1,16 @@
+.venv/bin/pytest -q
+.venv/bin/ruff check .
+.venv/bin/pyright --pythonpath .venv/bin/python
+.venv/bin/python -m compileall -q src scripts
+.venv/bin/pytest -q
+.venv/bin/ruff check .
+.venv/bin/pyright --pythonpath .venv/bin/python
+.venv/bin/python -m compileall -q src scripts
+.venv/bin/python scripts/export_core_schemas.py
+.venv/bin/python scripts/export_core_schemas.py
+.venv/bin/python scripts/check_markdown_links.py
+.venv/bin/python scripts/check_license.py
+git diff --check
+.venv/bin/python scripts/run_gh_e1_gates.py
+.venv/bin/python scripts/check_secrets.py --format json --tracked-only
+.venv/bin/python scripts/check_secrets.py --format json

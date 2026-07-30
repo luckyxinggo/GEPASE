@@ -97,6 +97,22 @@ candidate outputs: one candidate passed frozen validation at mean delta `+0.1242
 branch and a merge child with a protected category regression were rejected. That is a
 single-canary held-out result; it must not be generalized beyond the frozen run.
 
+The independent GH-E1 graph-hardening run rebuilt the reference instead of reusing R3 scores. Its
+fresh original-vs-no-skill mean was `-0.0360890625`. Two bounded candidates then covered all five
+train cases: `candidate-db0b…` passed train at `+0.07083` with five wins, while `candidate-c36e…`
+failed train at `-0.16221`. The admitted candidate completed all three held-out cases at mean
+`+0.11635` (2 wins, 1 loss), but failed the frozen category floor because
+`quality_efficiency=-0.15972 < -0.05`. Therefore the run outcome is
+`no_strict_improvement`, with an empty deployable frontier. The positive overall validation mean
+does not override the protected-category regression.
+
+For future runs, the Validation Gate now derives a registered `task_score_efficiency` secondary
+objective as the mean paired delta of `TaskScoreVector.efficiency`, retaining every source vector
+reference. Primary paired utility remains `0.55 * task_correctness + 0.45 * output_quality`, so the
+secondary axis is not counted twice. `quality_efficiency` remains a case category used by the
+category floor; it is not a metric alias. Missing vector evidence and unknown secondary keys fail
+closed. The protected category/risk floor is evaluated before variance can defer a decision.
+
 ## R5 evidence presentation
 
 R5 does not introduce another evaluation tier and does not execute a role. It is a sealed,

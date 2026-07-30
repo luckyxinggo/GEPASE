@@ -1,0 +1,22 @@
+{
+  "action": "continue",
+  "approved_increment": {
+    "active_wall_clock_ms": 2400000,
+    "agent_calls": 5,
+    "candidates": 0,
+    "estimated_tokens": 100000,
+    "proposals": 0,
+    "repairs": 5
+  },
+  "checkpoint_hash": "ec43aec73a25339832f3b444c38844d8cda7cbf7841a88a3622ecb3903c605ba",
+  "checkpoint_id": "budget-checkpoint-43c2fac4562f4bcf58af0023",
+  "comment_zh": "依据用户对当前 GH-E1 剩余冻结流程的有界持续授权自动继续。当前 decision 仅批准 candidate-db0b9d19f0ff48b624ea03b6 的 5 个 blind Independent Grader work；不修改冻结 EvalPlan、scoring、model、seed、Patch、Gate、proposal/candidate 或 Merge 契约。",
+  "config_hash": "64f73c49a10c92dcef02647682b75645ac1331e2f85d5fbedf4b567bd5f863c1",
+  "decided_at": "2026-07-29T08:41:53.593308Z",
+  "decision_id": "continuation-f560ffa9d10660bed7f931f5",
+  "evidence_hash": "9a75c76840f44be59037cbaa88ca881e4d85d1b0d8f8fe52e106c861015cb312",
+  "previous_decision_hash": "d283e65a2f3290f87a20ae6b0b559dac1e6f0734a59a47932b9f20007e733cd3",
+  "reviewer": "user-continuous-authorization",
+  "run_id": "gh-e1-slack-gif-creator-evolution",
+  "schema_version": "1.0.0"
+}

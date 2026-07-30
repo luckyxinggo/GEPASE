@@ -1,0 +1,22 @@
+{
+  "action": "continue",
+  "approved_increment": {
+    "active_wall_clock_ms": 600000,
+    "agent_calls": 1,
+    "candidates": 0,
+    "estimated_tokens": 32000,
+    "proposals": 0,
+    "repairs": 1
+  },
+  "checkpoint_hash": "fd2b56800cc0aa08f72b560f89ba8db61f40bbbaded6fdb2dc576ed31abf7b13",
+  "checkpoint_id": "budget-checkpoint-8ca61af615309eef5e71865f",
+  "comment_zh": "依据用户对当前 GH-E1 剩余冻结流程的有界持续授权自动继续。本 decision 仅批准 held-out Gate 已拒绝的 candidate-db0b9d19f0ff48b624ea03b6 的唯一一次 Reflection；不批准 recovery Proposal、新 Candidate 或重跑 validation。",
+  "config_hash": "64f73c49a10c92dcef02647682b75645ac1331e2f85d5fbedf4b567bd5f863c1",
+  "decided_at": "2026-07-29T16:30:33.372444Z",
+  "decision_id": "continuation-9b9c77145f1237eb1239c36c",
+  "evidence_hash": "eca21e5c542bbbec4dd4c9a4f6638b195a39b74162cdb381525d1f3003b54201",
+  "previous_decision_hash": "e1dd573975a0f089246ac2be2bde49f12efd35a16fb840b3e0204ce7deee16bd",
+  "reviewer": "user-bounded-continuous-authorization",
+  "run_id": "gh-e1-slack-gif-creator-evolution",
+  "schema_version": "1.0.0"
+}

@@ -1,0 +1,66 @@
+{
+  "accepted_submission_count": 16,
+  "checkpoint": {
+    "checkpoint_id": "budget-checkpoint-899cfbb5def48c429c7585cd",
+    "evidence_hash": "0066a5bbcfad3a7cc660939fa5f1f52a586324e6b3cddaf190979e619dc4b8d3",
+    "next_batch_estimate": {
+      "active_wall_clock_ms": 2520000,
+      "agent_calls": 16,
+      "candidates": 0,
+      "estimated_tokens": 192000,
+      "proposals": 0,
+      "repairs": 16
+    },
+    "state_hash": "6d37b93864930c048f1b84f00a0aa9cbfa868ab109752327f8004cf9ee272b50"
+  },
+  "cumulative_agent_duration_ms": 3120000,
+  "evidence_checks": {
+    "all_16_work_items_completed": true,
+    "e2_e3_and_isolated_contexts": true,
+    "ledger_complete_and_paused": true,
+    "no_downstream_role_exported": true,
+    "package_access_variant_boundary": true,
+    "paired_variants_and_splits": true
+  },
+  "host_call_accounting": {
+    "accepted_e2_context_count": 16,
+    "accounting_consistent": false,
+    "continuation_increment_agent_call_limit": 16,
+    "core_used_agent_calls": 16,
+    "core_used_repairs": 0,
+    "extra_host_context_ids": [
+      "/root/executor_46dec",
+      "/root/executor_4d807",
+      "/root/executor_46dec_retry"
+    ],
+    "observed_host_context_count": 19,
+    "reason_zh": "Core 只对成功 ingest 的 16 个 work settlement；两次错误 work-view 派发和一次损坏 GIF 的重执行未进入 Core usage，实际 host context 为 19。"
+  },
+  "phase": "E1.2_reference_executor_tranche",
+  "refs": {
+    "checkpoint": "820297972a1e7466404dff27e0c1d06fc996c8b41199ec05a13c006babfb4f64",
+    "ledger_snapshot": "18f547a7344b14cf20a17296fd05ba41e3d35e39507f45ca4f7053ec2450d33c",
+    "runtime_session": "c17c8f79d3b2876c173b9de130dfeaad148a00562e22d56a4fe180543517ad37"
+  },
+  "repair_provenance": {
+    "work-46dec20be705aa5122c31a80": "first GIF failed full Pillow decode; accepted evidence comes from the single isolated repair context",
+    "work-8b18ac4a317bfa0522d70aca": "two submissions containing workspace dependency artifacts were fail-closed; accepted evidence uses the bounded clean repair workspace",
+    "work-b33fad8398ab056166627930": "one package node-id transcription typo was normalized against the frozen executor work-item map; raw access is retained"
+  },
+  "runtime_used": {
+    "active_wall_clock_ms": 3225386,
+    "agent_calls": 16,
+    "candidates": 0,
+    "estimated_tokens": 344034,
+    "proposals": 0,
+    "repairs": 0
+  },
+  "schema_version": "1.0.0",
+  "stage_id": "GH-E1",
+  "unaccepted_submission_refs": [
+    "artifacts/runs/gh-e1-slack-gif-creator-reference/execution-submissions/work-46dec20be705aa5122c31a80.json",
+    "artifacts/runs/gh-e1-slack-gif-creator-reference/execution-submissions/work-8b18ac4a317bfa0522d70aca-repair-1.json",
+    "artifacts/runs/gh-e1-slack-gif-creator-reference/execution-submissions/work-8b18ac4a317bfa0522d70aca.json"
+  ],
+  "valid": true
+}

@@ -1,0 +1,24 @@
+{
+  "schema_version": "1.0.0",
+  "pytest": {
+    "passed": 205,
+    "failed": 0,
+    "duration_seconds": 10.77
+  },
+  "ruff": {
+    "status": "passed"
+  },
+  "pyright": {
+    "errors": 0,
+    "warnings": 0
+  },
+  "git_diff_check": {
+    "status": "passed"
+  },
+  "checkpoint": {
+    "checkpoint_id": "budget-checkpoint-9bea990345503764a50da55a",
+    "sha256": "ce2d4694832524b3379323cda5f0884d745687a159685565471ccddbbf35d4b3"
+  },
+  "agent_calls_after_checkpoint": 0,
+  "blocker_seal_expected_checked": 4
+}

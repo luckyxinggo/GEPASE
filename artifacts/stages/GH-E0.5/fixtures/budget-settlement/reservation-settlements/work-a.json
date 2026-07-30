@@ -1,0 +1,26 @@
+{
+  "actual": {
+    "active_wall_clock_ms": 0,
+    "agent_calls": 1,
+    "candidates": 0,
+    "estimated_tokens": 33000,
+    "proposals": 0,
+    "repairs": 0
+  },
+  "agent_duration_ms": 12000,
+  "approved_tranche_exceeded_after_settlement": false,
+  "reservation_id": "reservation-46db7c7ae821bc385059fbd2",
+  "reserved_upper_bound_share": {
+    "active_wall_clock_ms": 300000,
+    "agent_calls": 1,
+    "candidates": 0,
+    "estimated_tokens": 32000,
+    "proposals": 0,
+    "repairs": 1
+  },
+  "role": "executor",
+  "schema_version": "1.0.0",
+  "settled_at": "2026-07-28T00:00:02Z",
+  "token_variance": 1000,
+  "work_id": "work-a"
+}

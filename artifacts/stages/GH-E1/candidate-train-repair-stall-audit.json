@@ -1,0 +1,76 @@
+{
+  "boundary": {
+    "merge_count": 0,
+    "new_algorithm_effect_scores": 0,
+    "outcome": "budget_incomplete",
+    "train_gate_count": 0,
+    "validation_count": 0
+  },
+  "candidate_train": {
+    "accepted_e2": 1,
+    "candidate_ids": [
+      "candidate-c36eb3adc54c93e3233d59e0",
+      "candidate-db0b9d19f0ff48b624ea03b6"
+    ],
+    "derived_e3": 1,
+    "pre_eval_gate_count": 2,
+    "unaccepted_executor_contexts": 4,
+    "unsettled_work_ids": [
+      "work-2902fd854c96d694d92cbd84",
+      "work-4019f9c03c551a54cc773edb"
+    ]
+  },
+  "checkpoint": {
+    "barrier": "budget_limit",
+    "checkpoint_id": "budget-checkpoint-5d23b80b3ea0123c444707dc",
+    "in_progress_work_ids": [
+      "work-2902fd854c96d694d92cbd84",
+      "work-4019f9c03c551a54cc773edb"
+    ],
+    "reserved": {
+      "active_wall_clock_ms": 400000,
+      "agent_calls": 2,
+      "candidates": 0,
+      "estimated_tokens": 64000,
+      "proposals": 0,
+      "repairs": 2
+    },
+    "used": {
+      "active_wall_clock_ms": 1814840,
+      "agent_calls": 9,
+      "candidates": 2,
+      "estimated_tokens": 288000,
+      "proposals": 4,
+      "repairs": 2
+    }
+  },
+  "checks": {
+    "all_unaccepted_executor_contexts_are_append_only_accounted": true,
+    "no_train_gate_validation_merge_or_effect_claim": true,
+    "only_orbit_e2_e3_is_core_accepted": true,
+    "repair_scope_is_not_automatically_expanded": true,
+    "two_bounded_candidates_passed_gate_0_1": true
+  },
+  "phase": "E1.5_executor_artifact_contract_repair_exhausted",
+  "refs": {
+    "artifacts/runs/gh-e1-slack-gif-creator-evolution/budget-checkpoints/budget-checkpoint-5d23b80b3ea0123c444707dc.json": "6f6718f23b69e1d73ef2f5dc5167451a19051cfba38d6f5b9353184a10f46ea8",
+    "artifacts/runs/gh-e1-slack-gif-creator-evolution/candidates/candidate-c36eb3adc54c93e3233d59e0/candidate.json": "e59e6110f1fe9a34fbf75b6576fcb53b020e583bbf824060c22c773bd199406b",
+    "artifacts/runs/gh-e1-slack-gif-creator-evolution/candidates/candidate-db0b9d19f0ff48b624ea03b6/candidate.json": "1e615e3e24dd63c2674a94b7905b9648e656d2b23b3aa4cc0afa9a3ebdc4e87d",
+    "artifacts/runs/gh-e1-slack-gif-creator-evolution/evals/candidate-db0b9d19f0ff48b624ea03b6/train/ledger-snapshot.json": "91d42fbc9ac1bb4bde118714b014c536600be9d0b0f420c14aaaddcad987d045",
+    "artifacts/runs/gh-e1-slack-gif-creator-evolution/evals/candidate-db0b9d19f0ff48b624ea03b6/train/records/record-1d3825934264544bfd0d78da.json": "eb5b54e9f9a637767aec2a67ada6212b75fc1947e6b7c2daab5c05fb1358ad64",
+    "artifacts/runs/gh-e1-slack-gif-creator-evolution/evals/candidate-db0b9d19f0ff48b624ea03b6/train/records/record-994af217dfd2127f55c9521a.json": "1d67a4d3786db085972c5bb30e7f07b3625ef8902288ac50f56348f374cecf00",
+    "artifacts/runs/gh-e1-slack-gif-creator-evolution/evolution-state.json": "a9775945df3cfefb4442cbd7617e9222cd8d0f3f041fefaa62c786555277e8f7",
+    "artifacts/runs/gh-e1-slack-gif-creator-evolution/host-attempt-accounting/host-attempt-405f981208743ca7b9504052.json": "7dc8e7c5f8b887be0ac7df0183ad2150d342356cf4a9f3c86eabf5bb86490ecd",
+    "artifacts/runs/gh-e1-slack-gif-creator-evolution/host-attempt-accounting/host-attempt-562e44e43a4c2febe838cf47.json": "8b6b32fad96c0ad416e39ea6ef06bdc2dd383d939febb8fd0daf96571c11baf6",
+    "artifacts/runs/gh-e1-slack-gif-creator-evolution/host-attempt-accounting/host-attempt-894be87c29f89c4526f4a5bb.json": "48183146fd22d2e696b10e7c612cdc03357bef5a792ef7fab0a3d7bdc09c3f98",
+    "artifacts/runs/gh-e1-slack-gif-creator-evolution/host-attempt-accounting/host-attempt-d8d0114664db23e41331b002.json": "37108c7deb8d014b94fed7cfbab4ba88acc0ca0f40f6f11478aa2b567fbaaeb8",
+    "artifacts/runs/gh-e1-slack-gif-creator-evolution/patches/patch-aad8721ff4a95a64ca42dfbb.json": "be2f51f5ec506ca66b5e23e393dc9d0b746117cf13e2a4409d61392885127241",
+    "artifacts/runs/gh-e1-slack-gif-creator-evolution/patches/patch-c5f9b6c3288c7b9293db3c3d.json": "f4e14a378067bf63e846da9e0afda3d1d59d01aa65302edfc2d482c46eea8c64",
+    "artifacts/runs/gh-e1-slack-gif-creator-evolution/pre-eval-gates/patch-aad8721ff4a95a64ca42dfbb.json": "37928480df9d648a3bfed934489c856b1c41b54c5ce65612d9dd9415454afdfa",
+    "artifacts/runs/gh-e1-slack-gif-creator-evolution/pre-eval-gates/patch-c5f9b6c3288c7b9293db3c3d.json": "1e2704e92ff04dce1e90e3d598005e4666b04738e9b6d3c4ee27d405de812dc5",
+    "artifacts/runs/gh-e1-slack-gif-creator-evolution/runtime-session.json": "e1a34ecbaab89c376f12b1e5fe16a84f4e7159a73d15b9d3aad02a3c326839ee"
+  },
+  "schema_version": "1.0.0",
+  "stage_id": "GH-E1",
+  "valid": true
+}

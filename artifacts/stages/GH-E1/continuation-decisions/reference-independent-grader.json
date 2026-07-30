@@ -1,0 +1,22 @@
+{
+  "schema_version": "1.0.0",
+  "decision_id": "continuation-00b89b7d000069d2d7874c35",
+  "run_id": "gh-e1-slack-gif-creator-reference",
+  "config_hash": "cf902e88f72c1d8c778e2cade2590b0254732d5824e15c5124a550355d579668",
+  "checkpoint_id": "budget-checkpoint-5e3dd0ed093d86955e20e2e8",
+  "checkpoint_hash": "80a0a1fa36799452a0cddc5028b0377e845334c17a1c5d23199ae63114eb30dc",
+  "evidence_hash": "0066a5bbcfad3a7cc660939fa5f1f52a586324e6b3cddaf190979e619dc4b8d3",
+  "action": "continue",
+  "approved_increment": {
+    "agent_calls": 16,
+    "estimated_tokens": 192000,
+    "active_wall_clock_ms": 2520000,
+    "proposals": 0,
+    "candidates": 0,
+    "repairs": 16
+  },
+  "reviewer": "user",
+  "comment_zh": "用户在当前对话明确授权：修复预算账实差异后，继续严格按 GH-E1 阶段执行；本决定只批准预注册的 16 个 blind Independent Grader work，不修改 EvalPlan、评分、模型或角色隔离。",
+  "previous_decision_hash": "4f15c86d9a90e985db79df6331fe8d97d7a2600a31c51a6dae1cf44b79326dd2",
+  "decided_at": "2026-07-28T15:55:44Z"
+}
