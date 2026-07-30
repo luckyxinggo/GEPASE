@@ -1,0 +1,79 @@
+{
+  "agent_calls": 0,
+  "budget_usage_unchanged": true,
+  "candidate_cap_status": "candidate_budget_exhausted",
+  "candidate_store_unchanged": true,
+  "conditional_merge_remains_separate": true,
+  "fault_test_refs": [
+    "tests/optimizer/test_generation2_planning.py",
+    "tests/evolution/test_parent_sets.py",
+    "tests/optimizer/merge/test_outcome.py"
+  ],
+  "formal_candidate_materialized": 0,
+  "generation_contract": {
+    "branch_id": "branch-f9cc38a6208173f02d06ffe2",
+    "branch_root_candidate_id": "candidate-db0b9d19f0ff48b624ea03b6",
+    "held_out_evidence_read": false,
+    "merge_path_used": false,
+    "parent_candidate_id": "candidate-db0b9d19f0ff48b624ea03b6",
+    "parent_generation": 1,
+    "planned_generation": 2,
+    "sibling_evidence_read": false,
+    "train_evolution_pool_refs": [
+      "artifacts/runs/gh-e1-slack-gif-creator-evolution/evals/candidate-db0b9d19f0ff48b624ea03b6/train/task-score-vectors/work-2902fd854c96d694d92cbd84.json",
+      "artifacts/runs/gh-e1-slack-gif-creator-evolution/evals/candidate-db0b9d19f0ff48b624ea03b6/train/task-score-vectors/work-4019f9c03c551a54cc773edb.json",
+      "artifacts/runs/gh-e1-slack-gif-creator-evolution/evals/candidate-db0b9d19f0ff48b624ea03b6/train/task-score-vectors/work-7bde15e8233bde28fa9c1297.json",
+      "artifacts/runs/gh-e1-slack-gif-creator-evolution/evals/candidate-db0b9d19f0ff48b624ea03b6/train/task-score-vectors/work-aadafebefc1e2d501cbe7db4.json",
+      "artifacts/runs/gh-e1-slack-gif-creator-evolution/evals/candidate-db0b9d19f0ff48b624ea03b6/train/task-score-vectors/work-f4822f29168045273356a3fc.json",
+      "artifacts/runs/gh-e1-slack-gif-creator-reference/task-score-vectors/work-229b28b7e4ec64d79ddc725d.json",
+      "artifacts/runs/gh-e1-slack-gif-creator-reference/task-score-vectors/work-4d807d3a99ff3d159ec6fb29.json",
+      "artifacts/runs/gh-e1-slack-gif-creator-reference/task-score-vectors/work-8b18ac4a317bfa0522d70aca.json",
+      "artifacts/runs/gh-e1-slack-gif-creator-reference/task-score-vectors/work-9a981b04ae2ac3fb91d31911.json",
+      "artifacts/runs/gh-e1-slack-gif-creator-reference/task-score-vectors/work-aeaea033cebc5f6b4e948b5e.json"
+    ],
+    "train_feedback_ref": "artifacts/local/post-finalization-gen2-dxvgpzne/planned/generation2-controller-fixture/generation2-feedback/candidate-db0b9d19f0ff48b624ea03b6.json"
+  },
+  "mode": "deterministic_temporary_fixture",
+  "no_eligible_parent_status": "no_eligible_parent",
+  "planned": {
+    "branch_id": "branch-f9cc38a6208173f02d06ffe2",
+    "candidate_materialized": false,
+    "held_out_evidence_read": false,
+    "merge_path_used": false,
+    "parent_candidate_id": "candidate-db0b9d19f0ff48b624ea03b6",
+    "parent_generation": 1,
+    "planned_generation": 2,
+    "proposal_intent_charged": false,
+    "proposal_work_id": "proposal-work-5879a35cc109b458e75ba1ed",
+    "reason_codes": [
+      "train_admitted_pareto_parent_refinement_planned"
+    ],
+    "rejected_memory_refs": [],
+    "schema_version": "1.0.0",
+    "selector_graph_ref": "artifacts/local/post-finalization-gen2-dxvgpzne/planned/generation2-controller-fixture/selector-graphs/candidate-db0b9d19f0ff48b624ea03b6/3fdee030af7601a01368f219726423db61eb2c325d154eb7c095e926f6d1b238/graph.json",
+    "sibling_evidence_read": false,
+    "status": "planned",
+    "train_evidence_refs": [
+      "artifacts/runs/gh-e1-slack-gif-creator-evolution/evals/candidate-db0b9d19f0ff48b624ea03b6/train/task-score-vectors/work-2902fd854c96d694d92cbd84.json",
+      "artifacts/runs/gh-e1-slack-gif-creator-evolution/evals/candidate-db0b9d19f0ff48b624ea03b6/train/task-score-vectors/work-4019f9c03c551a54cc773edb.json",
+      "artifacts/runs/gh-e1-slack-gif-creator-evolution/evals/candidate-db0b9d19f0ff48b624ea03b6/train/task-score-vectors/work-7bde15e8233bde28fa9c1297.json",
+      "artifacts/runs/gh-e1-slack-gif-creator-evolution/evals/candidate-db0b9d19f0ff48b624ea03b6/train/task-score-vectors/work-aadafebefc1e2d501cbe7db4.json",
+      "artifacts/runs/gh-e1-slack-gif-creator-evolution/evals/candidate-db0b9d19f0ff48b624ea03b6/train/task-score-vectors/work-f4822f29168045273356a3fc.json",
+      "artifacts/runs/gh-e1-slack-gif-creator-reference/task-score-vectors/work-229b28b7e4ec64d79ddc725d.json",
+      "artifacts/runs/gh-e1-slack-gif-creator-reference/task-score-vectors/work-4d807d3a99ff3d159ec6fb29.json",
+      "artifacts/runs/gh-e1-slack-gif-creator-reference/task-score-vectors/work-8b18ac4a317bfa0522d70aca.json",
+      "artifacts/runs/gh-e1-slack-gif-creator-reference/task-score-vectors/work-9a981b04ae2ac3fb91d31911.json",
+      "artifacts/runs/gh-e1-slack-gif-creator-reference/task-score-vectors/work-aeaea033cebc5f6b4e948b5e.json"
+    ],
+    "train_feedback_ref": "artifacts/local/post-finalization-gen2-dxvgpzne/planned/generation2-controller-fixture/generation2-feedback/candidate-db0b9d19f0ff48b624ea03b6.json"
+  },
+  "proposal_accounting_added": 0,
+  "proposal_cap_status": "proposal_budget_exhausted",
+  "repeat_exact": true,
+  "schema_version": "1.0.0",
+  "stage_id": "POST-GH-E1-FINALIZATION",
+  "train_diagnosis_count": 5,
+  "train_feedback_count": 5,
+  "valid": true,
+  "validation_ref_count": 0
+}

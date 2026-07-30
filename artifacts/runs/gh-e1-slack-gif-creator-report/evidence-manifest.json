@@ -1,0 +1,9 @@
+{
+  "agent_calls": 0,
+  "outputs": [],
+  "read_only_inputs": true,
+  "report_data_sha256": "f6682e543ab5da15c7c0288865228218bcba509d5d75bedf06f2edf5f59d24ea",
+  "schema_version": "1.0.0",
+  "source_ref": "artifacts/runs/gh-e1-slack-gif-creator-evolution/effect-outcome-report-input.json",
+  "source_sha256": "836b0f7db60ba8506d46fa6ef10b0f752ff5f7ce6f62a6f6950457acfcbb9c5b"
+}

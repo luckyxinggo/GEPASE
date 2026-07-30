@@ -1,0 +1,28 @@
+{
+  "allowed_consumers": [
+    "failure_localization",
+    "asi_explanation",
+    "selector_top_k",
+    "exploration_ordering"
+  ],
+  "allowed_relation_types": [
+    "implements",
+    "explains",
+    "constrains",
+    "consumes",
+    "produces",
+    "validates",
+    "conflicts_with"
+  ],
+  "analyzer_timeout_ms": 180000,
+  "analyzer_token_budget": 12000,
+  "config_id": "gh-p1-bounded-semantic-v1",
+  "max_agent_calls": 1,
+  "max_allowed_nodes": 12,
+  "max_proposals_per_work": 6,
+  "max_relations_per_node": 3,
+  "max_relations_per_node_pair": 2,
+  "min_confidence": 0.45,
+  "schema_version": "1.0.0",
+  "selector_weight_cap": 0.35
+}

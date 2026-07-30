@@ -1,0 +1,22 @@
+{
+  "schema_version": "1.0.0",
+  "decision_id": "continuation-2376fad21a328ee9be04aab6",
+  "run_id": "gh-e1-slack-gif-creator-evolution",
+  "config_hash": "64f73c49a10c92dcef02647682b75645ac1331e2f85d5fbedf4b567bd5f863c1",
+  "checkpoint_id": "budget-checkpoint-2330fc6f7f475ea64b7c6d80",
+  "checkpoint_hash": "4c42946084d455c199bea1824ca0b32bdffc8f2b537652a16127d7101c6734e3",
+  "evidence_hash": "d4caa9668e569eb30e66fba1dfa5462e583485eac1c6b7f24418008c3cd90129",
+  "action": "continue",
+  "approved_increment": {
+    "agent_calls": 1,
+    "estimated_tokens": 8000,
+    "active_wall_clock_ms": 300000,
+    "proposals": 0,
+    "candidates": 0,
+    "repairs": 1
+  },
+  "reviewer": "user-bounded-continuous-authorization",
+  "comment_zh": "依据用户对当前 GH-E1 剩余冻结流程的有界持续授权自动继续。本 decision 仅批准冻结最终 runtime、生成 no_strict_improvement 中文报告与完成 seal/GHE1 Gate；不调用任何 Agent，不增加 Proposal、Candidate 或效果证据。",
+  "previous_decision_hash": "831dc0999fe5a10b58849d1f26b4f0785434a342415666c2a833dddb56cf9d30",
+  "decided_at": "2026-07-29T16:38:10.069072Z"
+}

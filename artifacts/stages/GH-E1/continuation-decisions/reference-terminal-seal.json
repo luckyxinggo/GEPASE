@@ -1,0 +1,22 @@
+{
+  "schema_version": "1.0.0",
+  "decision_id": "continuation-1d3ab0ecaab524774df1fd87",
+  "run_id": "gh-e1-slack-gif-creator-reference",
+  "config_hash": "cf902e88f72c1d8c778e2cade2590b0254732d5824e15c5124a550355d579668",
+  "checkpoint_id": "budget-checkpoint-462a6807a061e930ca37e29b",
+  "checkpoint_hash": "eee56d43440c88ae75c9a2b51690b2363c09a6b7f63f01a553ba697d162fa9d0",
+  "evidence_hash": "0066a5bbcfad3a7cc660939fa5f1f52a586324e6b3cddaf190979e619dc4b8d3",
+  "action": "continue",
+  "approved_increment": {
+    "agent_calls": 0,
+    "estimated_tokens": 0,
+    "active_wall_clock_ms": 60000,
+    "proposals": 0,
+    "candidates": 0,
+    "repairs": 0
+  },
+  "reviewer": "user",
+  "comment_zh": "用户在当前对话明确授权：按 GH-E1 继续执行；本决定仅批准不发起 Agent 的 reference terminal seal 与 artifact index，不导出任何新的 role work。",
+  "previous_decision_hash": "e603c501a12cdda0f04d6ad1c886fbe5d41d3e9f17a99350c6d24c9c13881a65",
+  "decided_at": "2026-07-28T16:48:30Z"
+}

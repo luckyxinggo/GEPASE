@@ -1,0 +1,73 @@
+{
+  "checks": {
+    "full_pytest": {
+      "command": "uv run pytest -q --junitxml artifacts/stages/GH-P0/test-results.xml",
+      "exit_code": 0,
+      "ok": true,
+      "summary": "159 passed in 8.58s"
+    },
+    "git_diff_check": {
+      "command": "git diff --check",
+      "exit_code": 0,
+      "ok": true,
+      "summary": "no output"
+    },
+    "license": {
+      "command": "uv run python scripts/check_license.py",
+      "exit_code": 0,
+      "ok": true,
+      "summary": "license policy: ok"
+    },
+    "markdown_links": {
+      "command": "uv run python scripts/check_markdown_links.py",
+      "exit_code": 0,
+      "ok": true,
+      "summary": "markdown links: ok"
+    },
+    "post_generation_secret_and_private_path_scan": {
+      "command": "uv run python scripts/check_secrets.py --format json",
+      "exit_code": 0,
+      "ok": true,
+      "summary": "}"
+    },
+    "pyright": {
+      "command": "uv run pyright",
+      "exit_code": 0,
+      "ok": true,
+      "summary": "0 errors, 0 warnings, 0 informations"
+    },
+    "ruff": {
+      "command": "uv run ruff check .",
+      "exit_code": 0,
+      "ok": true,
+      "summary": "All checks passed!"
+    },
+    "schema_count": 36,
+    "schema_export_first": {
+      "command": "uv run python scripts/export_core_schemas.py",
+      "exit_code": 0,
+      "ok": true,
+      "summary": "no output"
+    },
+    "schema_export_second": {
+      "command": "uv run python scripts/export_core_schemas.py",
+      "exit_code": 0,
+      "ok": true,
+      "summary": "no output"
+    },
+    "schema_idempotent": true,
+    "secret_and_private_path_scan": {
+      "command": "uv run python scripts/check_secrets.py --format json",
+      "exit_code": 0,
+      "ok": true,
+      "summary": "}"
+    },
+    "targeted_pytest": {
+      "command": "uv run pytest -q tests/package/test_graph_hardening.py tests/package/test_graph_analysis.py tests/optimizer/test_selectors.py tests/mutation/test_target_set.py tests/mutation/test_schema_applier.py tests/mutation/test_proposer.py",
+      "exit_code": 0,
+      "ok": true,
+      "summary": "17 passed in 1.69s"
+    }
+  },
+  "schema_version": "1.0.0"
+}

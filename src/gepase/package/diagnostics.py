@@ -82,7 +82,7 @@ def diagnose(
                     package_id,
                     "orphan_node",
                     "warning",
-                    f"package file has no semantic incoming dependency: {node.path}",
+                    f"package file has no non-containment incoming dependency: {node.path}",
                     (node.node_id,),
                     node.path,
                 )
@@ -114,7 +114,7 @@ def diagnose(
                 )
             )
         if node.kind is NodeKind.ENTRYPOINT:
-            semantic_incoming = [
+            noncontainment_incoming = [
                 edge for edge in incoming[node.node_id] if edge.kind is not EdgeKind.CONTAINS
             ]
             file_parent = next(
@@ -147,7 +147,7 @@ def diagnose(
                 file_parent
                 and any(edge.kind is not EdgeKind.CONTAINS for edge in incoming[file_parent])
             )
-            if not semantic_incoming and not file_referenced:
+            if not noncontainment_incoming and not file_referenced:
                 diagnostics.append(
                     _diagnostic(
                         package_id,

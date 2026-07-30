@@ -1,0 +1,92 @@
+{
+  "all_replays_have_executable_alternative": true,
+  "executable_top10_net_change": 1,
+  "high_fan_out_ineligible": 0,
+  "high_fan_out_targets": 6,
+  "high_fan_out_with_full_validation": 6,
+  "ranking_risk_policy": {
+    "risk_is_eligibility": false,
+    "risk_maps_to_validation_intensity": true,
+    "risk_penalty_is_capped": true
+  },
+  "real_replay_script_reached_top1": true,
+  "replay": [
+    {
+      "executable_alternative_present": true,
+      "high_fan_out_ineligible": 0,
+      "high_fan_out_targets": 2,
+      "high_fan_out_with_full_validation": 2,
+      "new_executable_top10": 0,
+      "new_top1_eligible": true,
+      "new_top1_score_breakdown": {
+        "capped_ranking_risk_penalty": 0.00441176,
+        "exploration": 0.6,
+        "relevance": 7.3,
+        "risk": 0.02941176
+      },
+      "new_top1_validation_intensity": {
+        "level": "standard",
+        "reasons": [],
+        "required_checks": [
+          "targeted_static",
+          "package_reparse"
+        ]
+      },
+      "old_executable_top10": 0,
+      "work_id": "proposal-work-5a40b7944f1aeb8225714c6e"
+    },
+    {
+      "executable_alternative_present": true,
+      "high_fan_out_ineligible": 0,
+      "high_fan_out_targets": 2,
+      "high_fan_out_with_full_validation": 2,
+      "new_executable_top10": 3,
+      "new_top1_eligible": true,
+      "new_top1_score_breakdown": {
+        "capped_ranking_risk_penalty": 0.00441176,
+        "exploration": 0.6,
+        "relevance": 8.0,
+        "risk": 0.02941176
+      },
+      "new_top1_validation_intensity": {
+        "level": "elevated",
+        "reasons": [
+          "executable_component"
+        ],
+        "required_checks": [
+          "targeted_static",
+          "package_reparse",
+          "dependency_closure",
+          "security"
+        ]
+      },
+      "old_executable_top10": 2,
+      "work_id": "proposal-work-ab7f56118676006487a9edc3"
+    },
+    {
+      "executable_alternative_present": true,
+      "high_fan_out_ineligible": 0,
+      "high_fan_out_targets": 2,
+      "high_fan_out_with_full_validation": 2,
+      "new_executable_top10": 0,
+      "new_top1_eligible": true,
+      "new_top1_score_breakdown": {
+        "capped_ranking_risk_penalty": 0.0,
+        "exploration": 0.6,
+        "relevance": 7.3,
+        "risk": 0.0
+      },
+      "new_top1_validation_intensity": {
+        "level": "standard",
+        "reasons": [],
+        "required_checks": [
+          "targeted_static",
+          "package_reparse"
+        ]
+      },
+      "old_executable_top10": 0,
+      "work_id": "proposal-work-e4757dd9d456332c89c7670a"
+    }
+  ],
+  "schema_version": "1.0.0"
+}

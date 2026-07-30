@@ -1,0 +1,73 @@
+{
+  "$defs": {
+    "RunLifecycleStatus": {
+      "enum": [
+        "initializing",
+        "active",
+        "paused",
+        "complete",
+        "aborted"
+      ],
+      "title": "RunLifecycleStatus",
+      "type": "string"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "checkpoint_id": {
+      "title": "Checkpoint Id",
+      "type": "string"
+    },
+    "config_hash": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Config Hash",
+      "type": "string"
+    },
+    "created_at": {
+      "format": "date-time",
+      "title": "Created At",
+      "type": "string"
+    },
+    "critical_artifact_hashes": {
+      "additionalProperties": {
+        "type": "string"
+      },
+      "minProperties": 1,
+      "title": "Critical Artifact Hashes",
+      "type": "object"
+    },
+    "owner": {
+      "enum": [
+        "eval",
+        "evolution"
+      ],
+      "title": "Owner",
+      "type": "string"
+    },
+    "run_id": {
+      "minLength": 1,
+      "title": "Run Id",
+      "type": "string"
+    },
+    "schema_version": {
+      "const": "1.0.0",
+      "default": "1.0.0",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "status": {
+      "$ref": "#/$defs/RunLifecycleStatus"
+    }
+  },
+  "required": [
+    "checkpoint_id",
+    "run_id",
+    "owner",
+    "config_hash",
+    "status",
+    "critical_artifact_hashes",
+    "created_at"
+  ],
+  "title": "RunIntegrityCheckpoint",
+  "type": "object"
+}

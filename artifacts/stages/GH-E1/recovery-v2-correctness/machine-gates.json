@@ -1,0 +1,114 @@
+{
+  "formal_gh_e1_unchanged": {
+    "passed": 4,
+    "total": 10
+  },
+  "gates": [
+    {
+      "computed": true,
+      "evidence": [
+        "recovery-correctness-audit.json",
+        "checkpoint-freshness-fixture.json",
+        "verification.json"
+      ],
+      "gate_id": "GHER-G00",
+      "status": "passed"
+    },
+    {
+      "computed": true,
+      "evidence": [
+        "recovery-correctness-audit.json",
+        "checkpoint-freshness-fixture.json",
+        "verification.json"
+      ],
+      "gate_id": "GHER-G01",
+      "status": "passed"
+    },
+    {
+      "computed": true,
+      "evidence": [
+        "recovery-correctness-audit.json",
+        "checkpoint-freshness-fixture.json",
+        "verification.json"
+      ],
+      "gate_id": "GHER-G02",
+      "status": "passed"
+    },
+    {
+      "computed": true,
+      "evidence": [
+        "recovery-correctness-audit.json",
+        "checkpoint-freshness-fixture.json",
+        "verification.json"
+      ],
+      "gate_id": "GHER-G03",
+      "status": "passed"
+    },
+    {
+      "computed": true,
+      "evidence": [
+        "recovery-correctness-audit.json",
+        "checkpoint-freshness-fixture.json",
+        "verification.json"
+      ],
+      "gate_id": "GHER-G04",
+      "status": "passed"
+    },
+    {
+      "computed": true,
+      "evidence": [
+        "recovery-correctness-audit.json",
+        "checkpoint-freshness-fixture.json",
+        "verification.json"
+      ],
+      "gate_id": "GHER-G05",
+      "status": "passed"
+    },
+    {
+      "computed": true,
+      "evidence": [
+        "recovery-correctness-audit.json",
+        "checkpoint-freshness-fixture.json",
+        "verification.json"
+      ],
+      "gate_id": "GHER-G06",
+      "status": "passed"
+    },
+    {
+      "computed": true,
+      "evidence": [
+        "recovery-correctness-audit.json",
+        "checkpoint-freshness-fixture.json",
+        "verification.json"
+      ],
+      "gate_id": "GHER-G07",
+      "status": "passed"
+    },
+    {
+      "computed": true,
+      "evidence": [
+        "recovery-correctness-audit.json",
+        "checkpoint-freshness-fixture.json",
+        "verification.json"
+      ],
+      "gate_id": "GHER-G08",
+      "status": "passed"
+    },
+    {
+      "computed": true,
+      "evidence": [
+        "recovery-correctness-audit.json",
+        "checkpoint-freshness-fixture.json",
+        "verification.json"
+      ],
+      "gate_id": "GHER-G09",
+      "status": "passed"
+    }
+  ],
+  "passed": 10,
+  "schema_version": "2.0.0",
+  "stage_id": "GH-E1-recovery-correctness-v2",
+  "status": "passed",
+  "supersedes_historical_recovery_gate_calculation": true,
+  "total": 10
+}

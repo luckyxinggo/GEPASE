@@ -1,0 +1,24 @@
+{
+  "analyzer": {
+    "active_wall_clock_ms": 0,
+    "agent_calls": 0,
+    "estimated_tokens": 0,
+    "reason_zh": "现有 CandidateEvalPipeline 的 train 收口不导出 Analyzer；reference Analyzer/ASI 已封存且不在本批重跑。"
+  },
+  "comparator": {
+    "active_wall_clock_ms": 0,
+    "agent_calls": 0,
+    "estimated_tokens": 0,
+    "reason_zh": "冻结 scoring policy 的 comparator_case_ids 仅含 3 个 validation case，当前 5-case train split 不产生 Comparator work。"
+  },
+  "generated_at": "2026-07-29T08:13:07Z",
+  "independent_grader": {
+    "active_wall_clock_ms": 840000,
+    "agent_calls": 5,
+    "estimated_tokens": 60000,
+    "max_repairs": 5,
+    "reason_zh": "5 条成功 candidate E2 各需一个 blind Independent Grader；按 frozen max_concurrency=3、420,000ms/work 和 12,000 tokens/work 估算。"
+  },
+  "next_authorizable_batch": "independent_grader",
+  "schema_version": "1.0.0"
+}

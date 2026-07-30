@@ -1,0 +1,158 @@
+{
+  "evolution": {
+    "budget_policy": {
+      "cumulative_usage_never_resets": true,
+      "initial_tranche": {
+        "active_wall_clock_ms": 10800000,
+        "agent_calls": 80,
+        "candidates": 5,
+        "estimated_tokens": 2000000,
+        "proposals": 4,
+        "repairs": 80
+      },
+      "max_concurrency": 3,
+      "maximum_continuation_increment": {
+        "active_wall_clock_ms": 3600000,
+        "agent_calls": 20,
+        "candidates": 1,
+        "estimated_tokens": 500000,
+        "proposals": 1,
+        "repairs": 20
+      },
+      "require_user_continuation": true,
+      "required_barriers": [
+        "package_compiled",
+        "proposal_scope_ready",
+        "candidate_train_complete",
+        "candidate_validation_complete",
+        "merge_resolved",
+        "before_final_report",
+        "budget_limit"
+      ],
+      "role_estimates": {
+        "analyzer": {
+          "max_estimated_tokens_per_work": 12000,
+          "max_repair_attempts_per_work": 1,
+          "timeout_ms_per_work": 600000
+        },
+        "comparator": {
+          "max_estimated_tokens_per_work": 8000,
+          "max_repair_attempts_per_work": 1,
+          "timeout_ms_per_work": 300000
+        },
+        "executor": {
+          "max_estimated_tokens_per_work": 32000,
+          "max_repair_attempts_per_work": 1,
+          "timeout_ms_per_work": 600000
+        },
+        "independent_grader": {
+          "max_estimated_tokens_per_work": 12000,
+          "max_repair_attempts_per_work": 1,
+          "timeout_ms_per_work": 420000
+        },
+        "proposal": {
+          "max_estimated_tokens_per_work": 32000,
+          "max_repair_attempts_per_work": 1,
+          "timeout_ms_per_work": 600000
+        },
+        "reflection": {
+          "max_estimated_tokens_per_work": 32000,
+          "max_repair_attempts_per_work": 1,
+          "timeout_ms_per_work": 600000
+        }
+      },
+      "schema_version": "1.0.0"
+    },
+    "conditional_merge_policy": {
+      "allow_no_eligible_parent_set_terminal": true,
+      "enumerate_all_train_admitted_branches": true,
+      "forbid_cross_package_merge": true,
+      "forbid_held_out_selection": true,
+      "materialize_when_eligible": true,
+      "schema_version": "1.0.0"
+    },
+    "config_hash": "64f73c49a10c92dcef02647682b75645ac1331e2f85d5fbedf4b567bd5f863c1",
+    "lifecycle_policy": {
+      "initial_mode": "create_new",
+      "reject_terminal_resume": true,
+      "require_typed_checkpoint": true,
+      "schema_version": "1.0.0",
+      "strict_create_open_resume": true
+    },
+    "path": "configs/graph-hardening/slack-gif-creator-gh-e1-evolution.json",
+    "scope": {
+      "max_changed_files": 2,
+      "max_operations": 2,
+      "selector_target_limit": 2
+    },
+    "sha256": "92521d3a1edeeff901893a8d4d2fd215d3a515ea26d505aa56ea85261dd09ee2"
+  },
+  "formal_gh_e1_paths_absent": true,
+  "no_agent_calls": true,
+  "reference": {
+    "budget_policy": {
+      "cumulative_usage_never_resets": true,
+      "initial_tranche": {
+        "active_wall_clock_ms": 10800000,
+        "agent_calls": 50,
+        "candidates": 0,
+        "estimated_tokens": 850000,
+        "proposals": 0,
+        "repairs": 50
+      },
+      "max_concurrency": 3,
+      "maximum_continuation_increment": {
+        "active_wall_clock_ms": 3600000,
+        "agent_calls": 20,
+        "candidates": 0,
+        "estimated_tokens": 400000,
+        "proposals": 0,
+        "repairs": 20
+      },
+      "require_user_continuation": true,
+      "required_barriers": [
+        "package_compiled",
+        "reference_execution_complete",
+        "reference_sealed",
+        "budget_limit"
+      ],
+      "role_estimates": {
+        "analyzer": {
+          "max_estimated_tokens_per_work": 12000,
+          "max_repair_attempts_per_work": 1,
+          "timeout_ms_per_work": 600000
+        },
+        "comparator": {
+          "max_estimated_tokens_per_work": 8000,
+          "max_repair_attempts_per_work": 1,
+          "timeout_ms_per_work": 300000
+        },
+        "executor": {
+          "max_estimated_tokens_per_work": 32000,
+          "max_repair_attempts_per_work": 1,
+          "timeout_ms_per_work": 600000
+        },
+        "independent_grader": {
+          "max_estimated_tokens_per_work": 12000,
+          "max_repair_attempts_per_work": 1,
+          "timeout_ms_per_work": 420000
+        }
+      },
+      "schema_version": "1.0.0"
+    },
+    "config_hash": "cf902e88f72c1d8c778e2cade2590b0254732d5824e15c5124a550355d579668",
+    "lifecycle_mode": "create_new",
+    "path": "configs/graph-hardening/slack-gif-creator-gh-e1-reference.yaml",
+    "sha256": "99cb76737138de69a44ef61b32e919729d6b72bc9d3e92665e2d50040ddeab89"
+  },
+  "report": {
+    "input_refs": [
+      "artifacts/runs/gh-e1-slack-gif-creator-evolution/effect-outcome-report-input.json",
+      "artifacts/runs/gh-e1-slack-gif-creator-reference/effect-outcome-report-input.json"
+    ],
+    "mode": "multi_outcome",
+    "path": "configs/graph-hardening/slack-gif-creator-gh-e1-report.json",
+    "sha256": "69720136264d04e7fccf401606346dc774311dee7c5e98daa582c9579e4df07d"
+  },
+  "schema_version": "1.0.0"
+}

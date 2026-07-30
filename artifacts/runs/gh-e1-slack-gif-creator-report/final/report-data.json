@@ -1,0 +1,3151 @@
+{
+  "budget_checkpoints": [
+    "artifacts/runs/gh-e1-slack-gif-creator-evolution/budget-checkpoints/budget-checkpoint-12baef7ecb76f589c3158087.json",
+    "artifacts/runs/gh-e1-slack-gif-creator-evolution/budget-checkpoints/budget-checkpoint-2330fc6f7f475ea64b7c6d80.json",
+    "artifacts/runs/gh-e1-slack-gif-creator-evolution/budget-checkpoints/budget-checkpoint-376e332e803c57f44f49c1a1.json",
+    "artifacts/runs/gh-e1-slack-gif-creator-evolution/budget-checkpoints/budget-checkpoint-43c2fac4562f4bcf58af0023.json",
+    "artifacts/runs/gh-e1-slack-gif-creator-evolution/budget-checkpoints/budget-checkpoint-5d23b80b3ea0123c444707dc.json",
+    "artifacts/runs/gh-e1-slack-gif-creator-evolution/budget-checkpoints/budget-checkpoint-6b5e58c6842d19e135394ebf.json",
+    "artifacts/runs/gh-e1-slack-gif-creator-evolution/budget-checkpoints/budget-checkpoint-6f030ba4b022b6fe6386ffe1.json",
+    "artifacts/runs/gh-e1-slack-gif-creator-evolution/budget-checkpoints/budget-checkpoint-78eaab3b763b042ef5079bde.json",
+    "artifacts/runs/gh-e1-slack-gif-creator-evolution/budget-checkpoints/budget-checkpoint-80ae4f7e87b02d63f2544d84.json",
+    "artifacts/runs/gh-e1-slack-gif-creator-evolution/budget-checkpoints/budget-checkpoint-84bc125ec965c5d7d037ebed.json",
+    "artifacts/runs/gh-e1-slack-gif-creator-evolution/budget-checkpoints/budget-checkpoint-8ca61af615309eef5e71865f.json",
+    "artifacts/runs/gh-e1-slack-gif-creator-evolution/budget-checkpoints/budget-checkpoint-97cf12d35e60a867d9ad1aaa.json",
+    "artifacts/runs/gh-e1-slack-gif-creator-evolution/budget-checkpoints/budget-checkpoint-9bd6c98597643070d1a226b0.json",
+    "artifacts/runs/gh-e1-slack-gif-creator-evolution/budget-checkpoints/budget-checkpoint-9bea990345503764a50da55a.json",
+    "artifacts/runs/gh-e1-slack-gif-creator-evolution/budget-checkpoints/budget-checkpoint-a731ea0fab766bfedfce6209.json",
+    "artifacts/runs/gh-e1-slack-gif-creator-evolution/budget-checkpoints/budget-checkpoint-b7d51dae6b8326e0a56cbcdc.json",
+    "artifacts/runs/gh-e1-slack-gif-creator-evolution/budget-checkpoints/budget-checkpoint-d7536f9dcabffb3ff25f03ba.json",
+    "artifacts/runs/gh-e1-slack-gif-creator-evolution/budget-checkpoints/budget-checkpoint-d8c4e7b5f92c131e2178ba74.json"
+  ],
+  "candidates": [
+    {
+      "candidate_id": "candidate-db0b9d19f0ff48b624ea03b6",
+      "gate_status": "rejected",
+      "graph_path_refs": [
+        "artifacts/runs/gh-e1-slack-gif-creator-evolution/candidates/candidate-db0b9d19f0ff48b624ea03b6/graph.json"
+      ],
+      "parent_ids": [
+        "candidate-6216d41d096cf68cae667dac"
+      ],
+      "patch_refs": [
+        "artifacts/runs/gh-e1-slack-gif-creator-evolution/candidates/candidate-db0b9d19f0ff48b624ea03b6/patch.json"
+      ],
+      "rejection_reasons": [
+        "protected_objective_regression"
+      ],
+      "train_losses": 0,
+      "train_mean_delta": 0.07082999999999995,
+      "train_objective_deltas": {
+        "efficiency": -0.3567781083333333,
+        "output_quality": 0.04739999999999998,
+        "package_quality": 0.0,
+        "reliability": 0.0,
+        "skill_gain": 0.07082999999999995,
+        "task_correctness": 0.09
+      },
+      "train_ties": 0,
+      "train_wins": 0,
+      "validation_losses": 1,
+      "validation_mean_delta": 0.11635333333333327,
+      "validation_objective_deltas": {
+        "efficiency": -0.2963839791666667,
+        "output_quality": 0.028933333333333366,
+        "package_quality": 0.0,
+        "reliability": 0.0,
+        "skill_gain": 0.11635333333333327,
+        "task_correctness": 0.13333333333333333
+      },
+      "validation_ties": 0,
+      "validation_wins": 2
+    },
+    {
+      "candidate_id": "candidate-c36eb3adc54c93e3233d59e0",
+      "gate_status": "rejected",
+      "graph_path_refs": [
+        "artifacts/runs/gh-e1-slack-gif-creator-evolution/candidates/candidate-c36eb3adc54c93e3233d59e0/graph.json"
+      ],
+      "parent_ids": [
+        "candidate-6216d41d096cf68cae667dac"
+      ],
+      "patch_refs": [
+        "artifacts/runs/gh-e1-slack-gif-creator-evolution/candidates/candidate-c36eb3adc54c93e3233d59e0/patch.json"
+      ],
+      "rejection_reasons": [
+        "gate_2_minibatch_regression",
+        "minibatch_regression"
+      ],
+      "train_losses": 0,
+      "train_mean_delta": -0.16220500000000004,
+      "train_objective_deltas": {
+        "efficiency": -0.27017905833333333,
+        "output_quality": -0.16490000000000002,
+        "package_quality": 0.0,
+        "reliability": -0.18,
+        "skill_gain": -0.16220500000000004,
+        "task_correctness": -0.16
+      },
+      "train_ties": 0,
+      "train_wins": 0,
+      "validation_losses": 0,
+      "validation_mean_delta": null,
+      "validation_objective_deltas": null,
+      "validation_ties": 0,
+      "validation_wins": 0
+    }
+  ],
+  "claim_boundary_zh": "本报告只陈述当前 sealed run 的完整证据。",
+  "continuation_decisions": [
+    "artifacts/runs/gh-e1-slack-gif-creator-evolution/continuation-decisions/0001-continuation-6e9f80aed26b662ef20d8255.json",
+    "artifacts/runs/gh-e1-slack-gif-creator-evolution/continuation-decisions/0002-continuation-db11e6a40ccf1e49e1480951.json",
+    "artifacts/runs/gh-e1-slack-gif-creator-evolution/continuation-decisions/0003-continuation-3796efdadb5a00b6d996385e.json",
+    "artifacts/runs/gh-e1-slack-gif-creator-evolution/continuation-decisions/0004-continuation-4653c5a157027fd2c47f7205.json",
+    "artifacts/runs/gh-e1-slack-gif-creator-evolution/continuation-decisions/0005-continuation-f560ffa9d10660bed7f931f5.json",
+    "artifacts/runs/gh-e1-slack-gif-creator-evolution/continuation-decisions/0006-continuation-feed05593d10d92c37bca717.json",
+    "artifacts/runs/gh-e1-slack-gif-creator-evolution/continuation-decisions/0007-continuation-bce00800df838d42f6f3f667.json",
+    "artifacts/runs/gh-e1-slack-gif-creator-evolution/continuation-decisions/0008-continuation-5da79ceb9ab1958c167098a9.json",
+    "artifacts/runs/gh-e1-slack-gif-creator-evolution/continuation-decisions/0009-continuation-3a15778c6df3faa7307ea75b.json",
+    "artifacts/runs/gh-e1-slack-gif-creator-evolution/continuation-decisions/0010-continuation-e91a7644397f62d9ca55655b.json",
+    "artifacts/runs/gh-e1-slack-gif-creator-evolution/continuation-decisions/0011-continuation-0730fee5ea3c506df516bc3a.json",
+    "artifacts/runs/gh-e1-slack-gif-creator-evolution/continuation-decisions/0012-continuation-53e9817a28bf62c8c3839020.json",
+    "artifacts/runs/gh-e1-slack-gif-creator-evolution/continuation-decisions/0013-continuation-9b9c77145f1237eb1239c36c.json",
+    "artifacts/runs/gh-e1-slack-gif-creator-evolution/continuation-decisions/0014-continuation-698d23d1eb90a63c10f7f299.json",
+    "artifacts/runs/gh-e1-slack-gif-creator-evolution/continuation-decisions/0015-continuation-2376fad21a328ee9be04aab6.json"
+  ],
+  "deployable_frontier": [],
+  "evidence_gallery": [
+    {
+      "asset_id": "gif-5b0f0006c6173333775cc9bc",
+      "candidate_id": "candidate-c36eb3adc54c93e3233d59e0",
+      "execution_status": "completed",
+      "failure_kind": null,
+      "label_zh": "train · candidate · functional-train-easing-orbit-005 · candidate-c36eb3adc54c93e3233d59e0",
+      "media_type": "image/gif",
+      "report_path": "evidence/gifs/00-gif-5b0f0006c6173333775cc9bc.gif",
+      "sha256": "fda1b3554ae5d0cd30c93a6469f1bf516f7ec948d3b79648a5ded00d1f3c1834",
+      "size_bytes": 40434,
+      "source_ref": "artifacts/runs/gh-e1-slack-gif-creator-evolution/evals/candidate-c36eb3adc54c93e3233d59e0/train/workspaces/work-e4f6ac5c5df1e4ba29e9035f/satellite_orbit_ease.gif",
+      "split": "train",
+      "task_id": "functional-train-easing-orbit-005",
+      "variant": "candidate"
+    },
+    {
+      "asset_id": "gif-5c941fc2e76665bd8cc73259",
+      "candidate_id": "candidate-db0b9d19f0ff48b624ea03b6",
+      "execution_status": "completed",
+      "failure_kind": null,
+      "label_zh": "train · candidate · functional-train-easing-orbit-005 · candidate-db0b9d19f0ff48b624ea03b6",
+      "media_type": "image/gif",
+      "report_path": "evidence/gifs/01-gif-5c941fc2e76665bd8cc73259.gif",
+      "sha256": "2347240e08f63f2c1e61319554ac0ccbcb5925be852c03bb375c448e8f6712df",
+      "size_bytes": 31214,
+      "source_ref": "artifacts/runs/gh-e1-slack-gif-creator-evolution/evals/candidate-db0b9d19f0ff48b624ea03b6/train/workspaces/work-7bde15e8233bde28fa9c1297/satellite_orbit_ease.gif",
+      "split": "train",
+      "task_id": "functional-train-easing-orbit-005",
+      "variant": "candidate"
+    },
+    {
+      "asset_id": "gif-7d78f7b747438701e17070ec",
+      "candidate_id": null,
+      "execution_status": "completed",
+      "failure_kind": null,
+      "label_zh": "train · no-skill · functional-train-easing-orbit-005",
+      "media_type": "image/gif",
+      "report_path": "evidence/gifs/02-gif-7d78f7b747438701e17070ec.gif",
+      "sha256": "e8c3c2e11d6703d8411e7bcef426dda401c84985b48581df761496bfe0b16ee0",
+      "size_bytes": 153822,
+      "source_ref": "artifacts/runs/gh-e1-slack-gif-creator-reference/workspaces/work-ba5bed1fe1f6ee2b5cd0648b/satellite_orbit_ease.gif",
+      "split": "train",
+      "task_id": "functional-train-easing-orbit-005",
+      "variant": "no-skill"
+    },
+    {
+      "asset_id": "gif-b9e0166724415ae4580e428c",
+      "candidate_id": null,
+      "execution_status": "completed",
+      "failure_kind": null,
+      "label_zh": "train · original · functional-train-easing-orbit-005",
+      "media_type": "image/gif",
+      "report_path": "evidence/gifs/03-gif-b9e0166724415ae4580e428c.gif",
+      "sha256": "803f93af7831c443dd0d98075904a99cee54aaf9c7dac2f1446b0bbee635ed01",
+      "size_bytes": 30811,
+      "source_ref": "artifacts/runs/gh-e1-slack-gif-creator-reference/workspaces/work-8b18ac4a317bfa0522d70aca-repair-1/satellite_orbit_ease.gif",
+      "split": "train",
+      "task_id": "functional-train-easing-orbit-005",
+      "variant": "original"
+    },
+    {
+      "asset_id": "gif-bdf2fc67a2b3cc2eaeecf71b",
+      "candidate_id": "candidate-c36eb3adc54c93e3233d59e0",
+      "execution_status": "completed",
+      "failure_kind": null,
+      "label_zh": "train · candidate · functional-train-emoji-bounce-001 · candidate-c36eb3adc54c93e3233d59e0",
+      "media_type": "image/gif",
+      "report_path": "evidence/gifs/04-gif-bdf2fc67a2b3cc2eaeecf71b.gif",
+      "sha256": "b1b1719c80312767fd6e1b2496ec55ea115449ef9e0e40aa56c1ce71cb82c129",
+      "size_bytes": 53077,
+      "source_ref": "artifacts/runs/gh-e1-slack-gif-creator-evolution/evals/candidate-c36eb3adc54c93e3233d59e0/train/workspaces/work-eeeafb6b8ccacc9e4a2a5ecb/emoji_star_bounce.gif",
+      "split": "train",
+      "task_id": "functional-train-emoji-bounce-001",
+      "variant": "candidate"
+    },
+    {
+      "asset_id": "gif-8a8834e5cae0d25577191397",
+      "candidate_id": "candidate-db0b9d19f0ff48b624ea03b6",
+      "execution_status": "completed",
+      "failure_kind": null,
+      "label_zh": "train · candidate · functional-train-emoji-bounce-001 · candidate-db0b9d19f0ff48b624ea03b6",
+      "media_type": "image/gif",
+      "report_path": "evidence/gifs/05-gif-8a8834e5cae0d25577191397.gif",
+      "sha256": "6465f1fb9ebc48fca49c8a0dfb57d3dfb835b0b01acc4286d199909c68200ebe",
+      "size_bytes": 71850,
+      "source_ref": "artifacts/runs/gh-e1-slack-gif-creator-evolution/evals/candidate-db0b9d19f0ff48b624ea03b6/train/workspaces/work-f4822f29168045273356a3fc/emoji_star_bounce.gif",
+      "split": "train",
+      "task_id": "functional-train-emoji-bounce-001",
+      "variant": "candidate"
+    },
+    {
+      "asset_id": "gif-102b13e282de5a23e7be614f",
+      "candidate_id": null,
+      "execution_status": "completed",
+      "failure_kind": null,
+      "label_zh": "train · no-skill · functional-train-emoji-bounce-001",
+      "media_type": "image/gif",
+      "report_path": "evidence/gifs/06-gif-102b13e282de5a23e7be614f.gif",
+      "sha256": "aa83463b58a268c8df9c091423758279538373133c34e7c9fbcd89c709833eef",
+      "size_bytes": 71763,
+      "source_ref": "artifacts/runs/gh-e1-slack-gif-creator-reference/workspaces/work-46dec20be705aa5122c31a80/emoji_star_bounce.gif",
+      "split": "train",
+      "task_id": "functional-train-emoji-bounce-001",
+      "variant": "no-skill"
+    },
+    {
+      "asset_id": "gif-2ee7adcbe1262a431c6e1204",
+      "candidate_id": null,
+      "execution_status": "completed",
+      "failure_kind": null,
+      "label_zh": "train · original · functional-train-emoji-bounce-001",
+      "media_type": "image/gif",
+      "report_path": "evidence/gifs/07-gif-2ee7adcbe1262a431c6e1204.gif",
+      "sha256": "25b4a01f3cfd23bbe6e3cb30e9d251fa505a870761fae94d12a530082b4865f3",
+      "size_bytes": 43699,
+      "source_ref": "artifacts/runs/gh-e1-slack-gif-creator-reference/workspaces/work-aeaea033cebc5f6b4e948b5e/emoji_star_bounce.gif",
+      "split": "train",
+      "task_id": "functional-train-emoji-bounce-001",
+      "variant": "original"
+    },
+    {
+      "asset_id": "gif-4e86bec30761e76f64507bb4",
+      "candidate_id": "candidate-c36eb3adc54c93e3233d59e0",
+      "execution_status": "completed",
+      "failure_kind": null,
+      "label_zh": "train · candidate · functional-train-input-badge-003 · candidate-c36eb3adc54c93e3233d59e0",
+      "media_type": "image/gif",
+      "report_path": "evidence/gifs/08-gif-4e86bec30761e76f64507bb4.gif",
+      "sha256": "07ef91643a81d279578cb35098774847aab9852e98216ebf8bd1cc0064f82147",
+      "size_bytes": 56990,
+      "source_ref": "artifacts/runs/gh-e1-slack-gif-creator-evolution/evals/candidate-c36eb3adc54c93e3233d59e0/train/workspaces/work-9c5de73b1630cd6d00af1def-repair-1/uploaded_badge_lift.gif",
+      "split": "train",
+      "task_id": "functional-train-input-badge-003",
+      "variant": "candidate"
+    },
+    {
+      "asset_id": "gif-6d6f6a3c62dbe1266a4d822e",
+      "candidate_id": "candidate-db0b9d19f0ff48b624ea03b6",
+      "execution_status": "completed",
+      "failure_kind": null,
+      "label_zh": "train · candidate · functional-train-input-badge-003 · candidate-db0b9d19f0ff48b624ea03b6",
+      "media_type": "image/gif",
+      "report_path": "evidence/gifs/09-gif-6d6f6a3c62dbe1266a4d822e.gif",
+      "sha256": "10ab69eb6b3fda21efe9a41c6054bde15d5e149c4814a21f951387b3d77fd629",
+      "size_bytes": 62460,
+      "source_ref": "artifacts/runs/gh-e1-slack-gif-creator-evolution/evals/candidate-db0b9d19f0ff48b624ea03b6/train/workspaces/work-aadafebefc1e2d501cbe7db4/uploaded_badge_lift.gif",
+      "split": "train",
+      "task_id": "functional-train-input-badge-003",
+      "variant": "candidate"
+    },
+    {
+      "asset_id": "gif-e2a18747006b809d00eeecaa",
+      "candidate_id": null,
+      "execution_status": "completed",
+      "failure_kind": null,
+      "label_zh": "train · no-skill · functional-train-input-badge-003",
+      "media_type": "image/gif",
+      "report_path": "evidence/gifs/10-gif-e2a18747006b809d00eeecaa.gif",
+      "sha256": "2561e69d526a73788ec936667417c0eb10c3fa0542f1a65137684397a5d88c1a",
+      "size_bytes": 109927,
+      "source_ref": "artifacts/runs/gh-e1-slack-gif-creator-reference/workspaces/work-b836a5a0009428cefa51ce4f/uploaded_badge_lift.gif",
+      "split": "train",
+      "task_id": "functional-train-input-badge-003",
+      "variant": "no-skill"
+    },
+    {
+      "asset_id": "gif-51da6979c6ac7c8eb0ac0971",
+      "candidate_id": null,
+      "execution_status": "completed",
+      "failure_kind": null,
+      "label_zh": "train · original · functional-train-input-badge-003",
+      "media_type": "image/gif",
+      "report_path": "evidence/gifs/11-gif-51da6979c6ac7c8eb0ac0971.gif",
+      "sha256": "aecf997b410c885bab29f022e085669e8e92e7eec21efa468e1ad939beed32b0",
+      "size_bytes": 12414,
+      "source_ref": "artifacts/runs/gh-e1-slack-gif-creator-reference/workspaces/work-4d807d3a99ff3d159ec6fb29/uploaded_badge_lift.gif",
+      "split": "train",
+      "task_id": "functional-train-input-badge-003",
+      "variant": "original"
+    },
+    {
+      "asset_id": "gif-49723f88fce1cc14e47d3a44",
+      "candidate_id": "candidate-c36eb3adc54c93e3233d59e0",
+      "execution_status": "completed",
+      "failure_kind": null,
+      "label_zh": "train · candidate · functional-train-message-status-002 · candidate-c36eb3adc54c93e3233d59e0",
+      "media_type": "image/gif",
+      "report_path": "evidence/gifs/12-gif-49723f88fce1cc14e47d3a44.gif",
+      "sha256": "8f369f15f9910b09b3e27c9b87c24c122f0430d9869f708bad9c977d66a46bb8",
+      "size_bytes": 289553,
+      "source_ref": "artifacts/runs/gh-e1-slack-gif-creator-evolution/evals/candidate-c36eb3adc54c93e3233d59e0/train/workspaces/work-2dcad3b4ad2907f07ed7ef03/deployment_status.gif",
+      "split": "train",
+      "task_id": "functional-train-message-status-002",
+      "variant": "candidate"
+    },
+    {
+      "asset_id": "gif-9308883779c358c3aeb791db",
+      "candidate_id": "candidate-db0b9d19f0ff48b624ea03b6",
+      "execution_status": "completed",
+      "failure_kind": null,
+      "label_zh": "train · candidate · functional-train-message-status-002 · candidate-db0b9d19f0ff48b624ea03b6",
+      "media_type": "image/gif",
+      "report_path": "evidence/gifs/13-gif-9308883779c358c3aeb791db.gif",
+      "sha256": "41fd5944dbd66e4cfe43e4517c5c60f7cdf1e97fa3f06c35bd032c80bc9977e0",
+      "size_bytes": 330205,
+      "source_ref": "artifacts/runs/gh-e1-slack-gif-creator-evolution/evals/candidate-db0b9d19f0ff48b624ea03b6/train/recovery-staging/work-2902fd854c96d694d92cbd84-repair-1/deployment_status.gif",
+      "split": "train",
+      "task_id": "functional-train-message-status-002",
+      "variant": "candidate"
+    },
+    {
+      "asset_id": "gif-f9502963a43f159877cbad82",
+      "candidate_id": null,
+      "execution_status": "completed",
+      "failure_kind": null,
+      "label_zh": "train · no-skill · functional-train-message-status-002",
+      "media_type": "image/gif",
+      "report_path": "evidence/gifs/14-gif-f9502963a43f159877cbad82.gif",
+      "sha256": "2a6fc89d182d588bbc81c25796886530a7603cf80fef38cd61ad5cbd7c9687d6",
+      "size_bytes": 123476,
+      "source_ref": "artifacts/runs/gh-e1-slack-gif-creator-reference/workspaces/work-a2e2a2aedb4cf5049c623860/deployment_status.gif",
+      "split": "train",
+      "task_id": "functional-train-message-status-002",
+      "variant": "no-skill"
+    },
+    {
+      "asset_id": "gif-830692588400e13d2079de21",
+      "candidate_id": null,
+      "execution_status": "completed",
+      "failure_kind": null,
+      "label_zh": "train · original · functional-train-message-status-002",
+      "media_type": "image/gif",
+      "report_path": "evidence/gifs/15-gif-830692588400e13d2079de21.gif",
+      "sha256": "d473c3d9be4160deb8fd575152db3b3900c30d6b205cf1a666ec03a9eddbbd63",
+      "size_bytes": 63668,
+      "source_ref": "artifacts/runs/gh-e1-slack-gif-creator-reference/workspaces/work-9a981b04ae2ac3fb91d31911/deployment_status.gif",
+      "split": "train",
+      "task_id": "functional-train-message-status-002",
+      "variant": "original"
+    },
+    {
+      "asset_id": "gif-eb195d9b6dcbdc744e25d11a",
+      "candidate_id": "candidate-c36eb3adc54c93e3233d59e0",
+      "execution_status": "typed_failed",
+      "failure_kind": "task_failure",
+      "label_zh": "train · candidate · functional-train-text-readable-004 · candidate-c36eb3adc54c93e3233d59e0",
+      "media_type": "image/gif",
+      "report_path": "evidence/gifs/16-gif-eb195d9b6dcbdc744e25d11a.gif",
+      "sha256": "56614005911a0f99894d0e4ea296ab7a8649f817cda0fbaa021c33d80c08d273",
+      "size_bytes": 23045,
+      "source_ref": "artifacts/runs/gh-e1-slack-gif-creator-evolution/evals/candidate-c36eb3adc54c93e3233d59e0/train/workspaces/work-b2c007f69a50c6d02c2b0717-repair-1/meeting_sync_reminder.gif",
+      "split": "train",
+      "task_id": "functional-train-text-readable-004",
+      "variant": "candidate"
+    },
+    {
+      "asset_id": "gif-931c8655aa262a8b3d49be76",
+      "candidate_id": "candidate-db0b9d19f0ff48b624ea03b6",
+      "execution_status": "completed",
+      "failure_kind": null,
+      "label_zh": "train · candidate · functional-train-text-readable-004 · candidate-db0b9d19f0ff48b624ea03b6",
+      "media_type": "image/gif",
+      "report_path": "evidence/gifs/17-gif-931c8655aa262a8b3d49be76.gif",
+      "sha256": "34d77ac18d8ede08ca3fd39148f527d6459c558a983414f9985b99e44ecf40ca",
+      "size_bytes": 77269,
+      "source_ref": "artifacts/runs/gh-e1-slack-gif-creator-evolution/evals/candidate-db0b9d19f0ff48b624ea03b6/train/recovery-staging/work-4019f9c03c551a54cc773edb-initial/meeting_sync_reminder.gif",
+      "split": "train",
+      "task_id": "functional-train-text-readable-004",
+      "variant": "candidate"
+    },
+    {
+      "asset_id": "gif-d5ece240f0e9229b2afc6d22",
+      "candidate_id": null,
+      "execution_status": "completed",
+      "failure_kind": null,
+      "label_zh": "train · no-skill · functional-train-text-readable-004",
+      "media_type": "image/gif",
+      "report_path": "evidence/gifs/18-gif-d5ece240f0e9229b2afc6d22.gif",
+      "sha256": "ab96cbdd9e53eca313ba40550f30e182155235247e1f476af61a76aecda0f84c",
+      "size_bytes": 35102,
+      "source_ref": "artifacts/runs/gh-e1-slack-gif-creator-reference/workspaces/work-02f7b78398c181ede25632a6/meeting_sync_reminder.gif",
+      "split": "train",
+      "task_id": "functional-train-text-readable-004",
+      "variant": "no-skill"
+    },
+    {
+      "asset_id": "gif-4dfc76d07c9aa48e04a9e767",
+      "candidate_id": null,
+      "execution_status": "completed",
+      "failure_kind": null,
+      "label_zh": "train · original · functional-train-text-readable-004",
+      "media_type": "image/gif",
+      "report_path": "evidence/gifs/19-gif-4dfc76d07c9aa48e04a9e767.gif",
+      "sha256": "48c0c1fd0e2aa97082b6bf42914e4b7bfaf5cc57a4f96840bebca002c466ae10",
+      "size_bytes": 30459,
+      "source_ref": "artifacts/runs/gh-e1-slack-gif-creator-reference/workspaces/work-229b28b7e4ec64d79ddc725d/meeting_sync_reminder.gif",
+      "split": "train",
+      "task_id": "functional-train-text-readable-004",
+      "variant": "original"
+    },
+    {
+      "asset_id": "gif-81415c2fd84e828ee652fc1b",
+      "candidate_id": "candidate-db0b9d19f0ff48b624ea03b6",
+      "execution_status": "completed",
+      "failure_kind": null,
+      "label_zh": "validation · candidate · functional-validation-efficiency-007 · candidate-db0b9d19f0ff48b624ea03b6",
+      "media_type": "image/gif",
+      "report_path": "evidence/gifs/20-gif-81415c2fd84e828ee652fc1b.gif",
+      "sha256": "ee5f1bd5584e2d527695e4bce422b0c1ae47d39babad4314bd097abd50e74336",
+      "size_bytes": 758052,
+      "source_ref": "artifacts/runs/gh-e1-slack-gif-creator-evolution/evals/candidate-db0b9d19f0ff48b624ea03b6/validation/workspaces/work-be5275fba3389bad97a9245f/compact_check_burst.gif",
+      "split": "validation",
+      "task_id": "functional-validation-efficiency-007",
+      "variant": "candidate"
+    },
+    {
+      "asset_id": "gif-16773823b583f04c481fdafe",
+      "candidate_id": null,
+      "execution_status": "completed",
+      "failure_kind": null,
+      "label_zh": "validation · no-skill · functional-validation-efficiency-007",
+      "media_type": "image/gif",
+      "report_path": "evidence/gifs/21-gif-16773823b583f04c481fdafe.gif",
+      "sha256": "6f18934a5ec90e2d05e6f5511db607abefa71705a3ed07b04bd7063fadba590b",
+      "size_bytes": 88642,
+      "source_ref": "artifacts/runs/gh-e1-slack-gif-creator-reference/workspaces/work-18b797bfd1094a2c7da4ec6b/compact_check_burst.gif",
+      "split": "validation",
+      "task_id": "functional-validation-efficiency-007",
+      "variant": "no-skill"
+    },
+    {
+      "asset_id": "gif-7600fa6cd88e5bf1d96a8ff4",
+      "candidate_id": null,
+      "execution_status": "completed",
+      "failure_kind": null,
+      "label_zh": "validation · original · functional-validation-efficiency-007",
+      "media_type": "image/gif",
+      "report_path": "evidence/gifs/22-gif-7600fa6cd88e5bf1d96a8ff4.gif",
+      "sha256": "c8619afc0a2c1600386a900127c05cdfa6c098951b39d3edc1046eec93499f52",
+      "size_bytes": 101172,
+      "source_ref": "artifacts/runs/gh-e1-slack-gif-creator-reference/workspaces/work-06e0ca3901e49580a002d129/compact_check_burst.gif",
+      "split": "validation",
+      "task_id": "functional-validation-efficiency-007",
+      "variant": "original"
+    },
+    {
+      "asset_id": "gif-de4197bb0724fc41b737c0d7",
+      "candidate_id": "candidate-db0b9d19f0ff48b624ea03b6",
+      "execution_status": "completed",
+      "failure_kind": null,
+      "label_zh": "validation · candidate · functional-validation-loop-sparkles-006 · candidate-db0b9d19f0ff48b624ea03b6",
+      "media_type": "image/gif",
+      "report_path": "evidence/gifs/23-gif-de4197bb0724fc41b737c0d7.gif",
+      "sha256": "78a61f7cb56e449a1fb377189fd408520253e28b852ca581da54985777a5f940",
+      "size_bytes": 68757,
+      "source_ref": "artifacts/runs/gh-e1-slack-gif-creator-evolution/evals/candidate-db0b9d19f0ff48b624ea03b6/validation/workspaces/work-232e37fbed39fa841d967abc/sparkle_ring_loop.gif",
+      "split": "validation",
+      "task_id": "functional-validation-loop-sparkles-006",
+      "variant": "candidate"
+    },
+    {
+      "asset_id": "gif-1d584642ded70643312c62d0",
+      "candidate_id": null,
+      "execution_status": "completed",
+      "failure_kind": null,
+      "label_zh": "validation · no-skill · functional-validation-loop-sparkles-006",
+      "media_type": "image/gif",
+      "report_path": "evidence/gifs/24-gif-1d584642ded70643312c62d0.gif",
+      "sha256": "2266c6082384036dcc664079e9d3d903b2e9de32e2429ab51abdda558c43e2e3",
+      "size_bytes": 95461,
+      "source_ref": "artifacts/runs/gh-e1-slack-gif-creator-reference/workspaces/work-a90881ca08a8679475629c61/sparkle_ring_loop.gif",
+      "split": "validation",
+      "task_id": "functional-validation-loop-sparkles-006",
+      "variant": "no-skill"
+    },
+    {
+      "asset_id": "gif-8f0b28e5ff93afe5c61ae61e",
+      "candidate_id": null,
+      "execution_status": "completed",
+      "failure_kind": null,
+      "label_zh": "validation · original · functional-validation-loop-sparkles-006",
+      "media_type": "image/gif",
+      "report_path": "evidence/gifs/25-gif-8f0b28e5ff93afe5c61ae61e.gif",
+      "sha256": "262847bf3bb1e1395993035d111cadc14e0d75a0e9e3792f9bacbe405a2435de",
+      "size_bytes": 55274,
+      "source_ref": "artifacts/runs/gh-e1-slack-gif-creator-reference/workspaces/work-b33fad8398ab056166627930/sparkle_ring_loop.gif",
+      "split": "validation",
+      "task_id": "functional-validation-loop-sparkles-006",
+      "variant": "original"
+    },
+    {
+      "asset_id": "gif-e7c7aaf6ad1b3bedd065573b",
+      "candidate_id": "candidate-db0b9d19f0ff48b624ea03b6",
+      "execution_status": "completed",
+      "failure_kind": null,
+      "label_zh": "validation · candidate · functional-validation-pulse-text-008 · candidate-db0b9d19f0ff48b624ea03b6",
+      "media_type": "image/gif",
+      "report_path": "evidence/gifs/26-gif-e7c7aaf6ad1b3bedd065573b.gif",
+      "sha256": "a2b7af35603cda86255d150c37fa3cfbab6e870300f897654894fb2742e54301",
+      "size_bytes": 15949,
+      "source_ref": "artifacts/runs/gh-e1-slack-gif-creator-evolution/evals/candidate-db0b9d19f0ff48b624ea03b6/validation/workspaces/work-d45c605660952e1c97204e0d/go_alert_pulse.gif",
+      "split": "validation",
+      "task_id": "functional-validation-pulse-text-008",
+      "variant": "candidate"
+    },
+    {
+      "asset_id": "gif-2f9d6ddd8d0632fd89473935",
+      "candidate_id": null,
+      "execution_status": "completed",
+      "failure_kind": null,
+      "label_zh": "validation · no-skill · functional-validation-pulse-text-008",
+      "media_type": "image/gif",
+      "report_path": "evidence/gifs/27-gif-2f9d6ddd8d0632fd89473935.gif",
+      "sha256": "1dae7602ae6a9cc54631f3c03b13c2ae1d40510854978ed0589db15e7525094b",
+      "size_bytes": 36361,
+      "source_ref": "artifacts/runs/gh-e1-slack-gif-creator-reference/workspaces/work-9eea3d6a86124113c1f705e6/go_alert_pulse.gif",
+      "split": "validation",
+      "task_id": "functional-validation-pulse-text-008",
+      "variant": "no-skill"
+    },
+    {
+      "asset_id": "gif-8ab0b9b6891c3ce2572818b2",
+      "candidate_id": null,
+      "execution_status": "completed",
+      "failure_kind": null,
+      "label_zh": "validation · original · functional-validation-pulse-text-008",
+      "media_type": "image/gif",
+      "report_path": "evidence/gifs/28-gif-8ab0b9b6891c3ce2572818b2.gif",
+      "sha256": "4db9a66260d97f6f20fee8bb3e66cef3e7bc055832652cb8683376a599ebe95c",
+      "size_bytes": 11316,
+      "source_ref": "artifacts/runs/gh-e1-slack-gif-creator-reference/workspaces/work-f659fabc30459ff0d09ad348/go_alert_pulse.gif",
+      "split": "validation",
+      "task_id": "functional-validation-pulse-text-008",
+      "variant": "original"
+    }
+  ],
+  "frontier_count": 0,
+  "gate_funnel": {
+    "deployable": 0,
+    "proposed": 2,
+    "train_admitted": 1,
+    "validation_completed": 1
+  },
+  "merge": {
+    "build_record_ref": null,
+    "considered_parent_candidate_ids": [
+      "candidate-db0b9d19f0ff48b624ea03b6"
+    ],
+    "considered_parent_set_count": 0,
+    "cross_package_pair_count": 0,
+    "eligible_parent_set_count": 0,
+    "enumeration_ref": "artifacts/runs/gh-e1-slack-gif-creator-evolution/merge/parent-set-enumeration.json",
+    "evaluation_complete": false,
+    "merge_candidate_id": null,
+    "rejected_parent_set_count": 0,
+    "rejection_reason_counts": {
+      "insufficient_parents": 1
+    },
+    "schema_version": "1.0.0",
+    "selected_parent_set_id": null,
+    "status": "no_eligible_parent_set"
+  },
+  "outcome": "no_strict_improvement",
+  "outcome_input_ref": "artifacts/runs/gh-e1-slack-gif-creator-evolution/effect-outcome-report-input.json",
+  "package_id": "slack-gif-creator",
+  "pending_work_ids": [],
+  "process_evidence": {
+    "lineage": {
+      "branch_refs": [
+        "artifacts/runs/gh-e1-slack-gif-creator-evolution/branches/branch-432bdd58ee82598e5a77bc75.json",
+        "artifacts/runs/gh-e1-slack-gif-creator-evolution/branches/branch-f9cc38a6208173f02d06ffe2.json"
+      ],
+      "gepa_state": {
+        "candidate_ids": [
+          "candidate-6216d41d096cf68cae667dac",
+          "candidate-db0b9d19f0ff48b624ea03b6"
+        ],
+        "current_best_candidate_id": "candidate-db0b9d19f0ff48b624ea03b6",
+        "current_best_index": 1,
+        "frontier_type": "instance",
+        "gepa_version": "0.1.4",
+        "official_state_consistent": true,
+        "pareto_selected_candidate_id": "candidate-db0b9d19f0ff48b624ea03b6",
+        "pareto_selected_index": 1,
+        "schema_version": "1.0.0",
+        "task_level_scores_preserved": true
+      },
+      "gepa_state_ref": "artifacts/runs/gh-e1-slack-gif-creator-evolution/gepa-state-snapshot.json"
+    },
+    "merge": {
+      "enumeration_ref": "artifacts/runs/gh-e1-slack-gif-creator-evolution/merge/parent-set-enumeration.json",
+      "outcome_ref": "artifacts/runs/gh-e1-slack-gif-creator-evolution/merge/outcome.json"
+    },
+    "package_graph": {
+      "accepted_work_ids": [
+        "work-229b28b7e4ec64d79ddc725d",
+        "work-4d807d3a99ff3d159ec6fb29",
+        "work-8b18ac4a317bfa0522d70aca",
+        "work-8b18ac4a317bfa0522d70aca",
+        "work-8b18ac4a317bfa0522d70aca",
+        "work-9a981b04ae2ac3fb91d31911",
+        "work-aeaea033cebc5f6b4e948b5e"
+      ],
+      "binding_ref": "artifacts/runs/gh-e1-slack-gif-creator-evolution/selector-graphs/candidate-6216d41d096cf68cae667dac/8fd8f917db94447fc79df55cc71ae82600ea1bd35c467017fcdbf8d1cdcef987/binding.json",
+      "filtered_work_ids": [
+        "work-02f7b78398c181ede25632a6",
+        "work-06e0ca3901e49580a002d129",
+        "work-18b797bfd1094a2c7da4ec6b",
+        "work-46dec20be705aa5122c31a80",
+        "work-46dec20be705aa5122c31a80",
+        "work-9eea3d6a86124113c1f705e6",
+        "work-a2e2a2aedb4cf5049c623860",
+        "work-a90881ca08a8679475629c61",
+        "work-b33fad8398ab056166627930",
+        "work-b836a5a0009428cefa51ce4f",
+        "work-ba5bed1fe1f6ee2b5cd0648b",
+        "work-f659fabc30459ff0d09ad348"
+      ],
+      "layer_counts": {
+        "observed": 61,
+        "planned": 0,
+        "semantic_hypothesis": 0,
+        "static": 474
+      },
+      "mapped_access_events": 61,
+      "mode": "static_observed",
+      "selector_graph_ref": "artifacts/runs/gh-e1-slack-gif-creator-evolution/selector-graphs/candidate-6216d41d096cf68cae667dac/8fd8f917db94447fc79df55cc71ae82600ea1bd35c467017fcdbf8d1cdcef987/graph.json",
+      "semantic_hypothesis_edges": 0
+    },
+    "patches": [
+      {
+        "operations": [
+          {
+            "evidence_refs": [
+              "artifacts/runs/gh-e1-slack-gif-creator-reference/analyzer-submissions/analyzer-work-9fdb3bdecd6e87afd9f6ad4d.json"
+            ],
+            "expected_benefit": "Makes full-path orbit motion and terminal deceleration separately inspectable, addressing the observed zero early-frame arc distance while retaining the intended ease-out stop.",
+            "op": "replace_markdown_block",
+            "operation_id": "op-orbit-continuous-path-self-check",
+            "path": "SKILL.md",
+            "precondition_hash": "07696c8e0fdb5ceb26b94a6625c98211fb31a3a8cd4a58b115bee7c7580e8a84",
+            "rationale": "The supplied failure evidence reports no arc movement in the first eight frames and recommends continuous 2D path generation, easing only the path progress, and sampling early, middle, and late frames before export.",
+            "regression_risk": "low",
+            "replacement": "- Use a continuous, non-zero 2D path for every visible frame (for an orbit, compute both coordinates from the same progress value), then apply `easing='ease_out'` only to that progress so the endpoint decelerates.\n- Before export, inspect early, middle, and final frames: the arc is visible from the start, late-frame displacement decreases, and the moving object does not remain over its docking ring.\n",
+            "target_node_id": "node-69ea814aac72a6c557485ef0"
+          }
+        ],
+        "patch_id": "patch-c5f9b6c3288c7b9293db3c3d",
+        "patch_ref": "artifacts/runs/gh-e1-slack-gif-creator-evolution/candidates/candidate-c36eb3adc54c93e3233d59e0/patch.json",
+        "summary": "Replace the selected Slide instruction with an executable orbit-path and frame-sampling self-check that addresses the supplied evidence of zero early arc distance while preserving ease-out stopping behavior."
+      },
+      {
+        "operations": [
+          {
+            "evidence_refs": [
+              "artifacts/runs/gh-e1-slack-gif-creator-reference/analyzer-submissions/analyzer-work-d73a34bb35f67f90f2db475d.json"
+            ],
+            "expected_benefit": "使验证流程在原有 GIF 元数据检查之外明确覆盖 DEPLOY/DONE 的逐帧可辨识性，从而改善该任务的 task_correctness、output_quality 和 skill_gain。",
+            "op": "replace_markdown_block",
+            "operation_id": "op-add-status-text-visual-acceptance",
+            "path": "SKILL.md",
+            "precondition_hash": "951bd4e2b513b7780d40bda28c1ccf3e51c2945e2375f6a21a665517af6803f7",
+            "rationale": "导出的失败证据表明原始执行只完成了 480×480、24 帧、2.4 秒等元数据校验，而 DEPLOY/DONE 的 glyph similarity 仍然偏低。该变更只扩展同一 Validators 示例中的完成前检查，不改变公共接口或未导出的包内容。",
+            "regression_risk": "low",
+            "replacement": "```python\nfrom core.validators import validate_gif, is_slack_ready\n\n# Required technical validation\npasses, info = validate_gif('my.gif', is_emoji=True, verbose=True)\n\n# Required visual acceptance: metadata validation does not verify status text.\n# Inspect the rendered GIF frame by frame at Slack's small preview size:\n# - the first two stages must show \"DEPLOY\" legibly;\n# - the final stage must show \"DONE\" legibly.\n# If either label is clipped, too small, low-contrast, or unreadable,\n# revise the render before delivery.\nif passes and is_slack_ready('my.gif'):\n    print(\"Ready after visual status-text acceptance.\")\n```\n",
+            "target_node_id": "node-46d940221fa8caf3b6c22d2c"
+          }
+        ],
+        "patch_id": "patch-aad8721ff4a95a64ca42dfbb",
+        "patch_ref": "artifacts/runs/gh-e1-slack-gif-creator-evolution/candidates/candidate-db0b9d19f0ff48b624ea03b6/patch.json",
+        "summary": "针对 functional-train-message-status-002 的独立失败证据，在现有 Validators 示例中加入与元数据校验并列的逐帧状态文本可辨识性验收，要求在 Slack 小尺寸预览下确认前两阶段的 DEPLOY 和完成阶段的 DONE。"
+      }
+    ],
+    "reflections": [
+      {
+        "diagnosis_count": 8,
+        "reflection_ref": "artifacts/runs/gh-e1-slack-gif-creator-evolution/reflection-submissions/reflection-work-0b853eabe6b47d1aca4f9a38.json",
+        "summary_zh": "该候选在 8 个任务中有 7 个 skill_gain 上升，尤其 loop-sparkles 与 pulse-text 分别获得 +0.23110、+0.27768；validation-efficiency 则回归 -0.15972。所有任务的 package_quality 与 reliability 不变，而 efficiency 全部下降，说明视觉验收带来的正确性/质量收益伴随系统性成本。后续应把 Validators 节点中的逐帧固定状态词检查收窄为按任务触发、关键帧抽样和有界检查。平台未提供精确 token 计数，故 token_estimate=0 表示 unavailable；duration_ms 为本次隔离工作的诚实估算值，并非平台 reported timing。",
+        "work_id": "reflection-work-0b853eabe6b47d1aca4f9a38"
+      },
+      {
+        "diagnosis_count": 5,
+        "reflection_ref": "artifacts/runs/gh-e1-slack-gif-creator-evolution/reflection-submissions/reflection-work-ce88cb197e7454878ad1c5b5.json",
+        "summary_zh": "该候选的 orbit 定向修改带来 +0.018 的小幅增益，具体体现为视觉质量提高，但正确性仍停留在 0.75 且效率下降；input-badge 与 message-status 的正向 delta 缺乏到 orbit patch 的直接语义链，不能据此确认迁移收益。emoji-bounce 虽总体近乎持平，却暴露出显著效率回归。最关键的 text-readable 样本出现 correctness、quality、reliability、efficiency 全零且候选证据链不完整，更应优先判为执行/评分异常并复验，而不是误归因后修改 Package。总体上应保留 orbit 指令的窄范围价值、强化可判定而低成本的自检，并在解决 text-readable 证据链和跨任务效率问题前避免扩大改动。",
+        "work_id": "reflection-work-ce88cb197e7454878ad1c5b5"
+      }
+    ],
+    "search": {
+      "branch_plan": {
+        "branches": [
+          {
+            "branch_index": 0,
+            "target_node_ids": [
+              "node-46d940221fa8caf3b6c22d2c",
+              "node-390c19b0fbd4439b006d6a79"
+            ],
+            "task_id": "functional-train-message-status-002",
+            "work_id": "proposal-work-f93cb726b76fdd6a13ed28a5"
+          },
+          {
+            "branch_index": 1,
+            "target_node_ids": [
+              "node-69ea814aac72a6c557485ef0",
+              "node-fddc99453114c3a40363b219"
+            ],
+            "task_id": "functional-train-easing-orbit-005",
+            "work_id": "proposal-work-a3b21d4876085cb058d516f9"
+          }
+        ],
+        "held_out_feedback_read": false,
+        "schema_version": "1.0.0",
+        "train_feedback_only": true
+      },
+      "branch_plan_ref": "artifacts/runs/gh-e1-slack-gif-creator-evolution/branch-plan.json",
+      "proposal_scopes": [
+        {
+          "edit_budget": {
+            "allow_file_topology_edits": false,
+            "allow_script_edits": true,
+            "max_added_files": 0,
+            "max_changed_files": 2,
+            "max_deleted_files": 0,
+            "max_operations": 2,
+            "max_total_replacement_chars": 24000
+          },
+          "executable_alternative": {
+            "contributions": [
+              {
+                "contribution": 0.0,
+                "feature": "failure_coverage",
+                "group": "relevance",
+                "raw_value": 0.0,
+                "weight": 3.0
+              },
+              {
+                "contribution": 0.66666667,
+                "feature": "inverse_distance",
+                "group": "relevance",
+                "raw_value": 0.33333333,
+                "weight": 2.0
+              },
+              {
+                "contribution": 1.4,
+                "feature": "dynamic_access",
+                "group": "relevance",
+                "raw_value": 1.0,
+                "weight": 1.4
+              },
+              {
+                "contribution": 0.0,
+                "feature": "diagnostic_severity",
+                "group": "relevance",
+                "raw_value": 0.0,
+                "weight": 1.2
+              },
+              {
+                "contribution": 0.4,
+                "feature": "historical_yield",
+                "group": "relevance",
+                "raw_value": 0.5,
+                "weight": 0.8
+              },
+              {
+                "contribution": 0.0,
+                "feature": "semantic_hypothesis_support",
+                "group": "relevance",
+                "raw_value": 0.0,
+                "weight": 0.35
+              },
+              {
+                "contribution": 0.6,
+                "feature": "exploration_bonus",
+                "group": "exploration",
+                "raw_value": 1.0,
+                "weight": 0.6
+              },
+              {
+                "contribution": 0.02941176,
+                "feature": "fan_out_risk",
+                "group": "risk",
+                "raw_value": 0.02941176,
+                "weight": 1.0
+              },
+              {
+                "contribution": 0.0,
+                "feature": "historical_regression",
+                "group": "risk",
+                "raw_value": 0.0,
+                "weight": 1.5
+              }
+            ],
+            "eligibility_reasons": [
+              "mutable_and_typed",
+              "risk_is_not_eligibility"
+            ],
+            "eligible": true,
+            "evidence_refs": [
+              "artifacts/runs/gh-e1-slack-gif-creator-reference/analyzer-submissions/analyzer-work-9fdb3bdecd6e87afd9f6ad4d.json"
+            ],
+            "high_blast_radius": false,
+            "locator": "file",
+            "node_id": "node-dbf396ac6852bf4706f33ebf",
+            "path": "core/easing.py",
+            "rank": 120,
+            "reason_code": "graph_failure_impact_priority",
+            "score": 3.06225491,
+            "score_breakdown": {
+              "capped_ranking_risk_penalty": 0.00441176,
+              "exploration": 0.6,
+              "relevance": 2.46666667,
+              "risk": 0.02941176
+            },
+            "validation_intensity": {
+              "level": "elevated",
+              "reasons": [
+                "executable_component"
+              ],
+              "required_checks": [
+                "targeted_static",
+                "package_reparse",
+                "dependency_closure",
+                "security"
+              ]
+            }
+          },
+          "selected_node_ids": [
+            "node-69ea814aac72a6c557485ef0",
+            "node-fddc99453114c3a40363b219"
+          ],
+          "target_set": {
+            "causal_path_edge_ids": [
+              "edge-c36bd8c12528045bbbcc6d1a",
+              "edge-ca3ff589879d9696ec246b78",
+              "edge-e5e3d8cd2c867367f1579906",
+              "edge-3d507bca12e6ce79d70427d4"
+            ],
+            "causal_path_node_ids": [
+              "node-69ea814aac72a6c557485ef0",
+              "node-d2a7a73a7a812652291bae3d",
+              "node-aeab6f88cd3429a6d5130037",
+              "node-ce609b198696eee0ac59fa35",
+              "node-fddc99453114c3a40363b219"
+            ],
+            "companion_target_ids": [
+              "node-fddc99453114c3a40363b219"
+            ],
+            "evidence_refs": [
+              "artifacts/runs/gh-e1-slack-gif-creator-reference/analyzer-submissions/analyzer-work-9fdb3bdecd6e87afd9f6ad4d.json"
+            ],
+            "parent_candidate_id": "candidate-6216d41d096cf68cae667dac",
+            "primary_target_id": "node-69ea814aac72a6c557485ef0",
+            "schema_version": "1.0.0",
+            "scope_reason": "One failure hypothesis may expose one graph-connected companion; otherwise the primary remains a single-target patch."
+          },
+          "top_k": [
+            {
+              "contributions": [
+                {
+                  "contribution": 3.0,
+                  "feature": "failure_coverage",
+                  "group": "relevance",
+                  "raw_value": 1.0,
+                  "weight": 3.0
+                },
+                {
+                  "contribution": 2.0,
+                  "feature": "inverse_distance",
+                  "group": "relevance",
+                  "raw_value": 1.0,
+                  "weight": 2.0
+                },
+                {
+                  "contribution": 0.7,
+                  "feature": "dynamic_access",
+                  "group": "relevance",
+                  "raw_value": 0.5,
+                  "weight": 1.4
+                },
+                {
+                  "contribution": 1.2,
+                  "feature": "diagnostic_severity",
+                  "group": "relevance",
+                  "raw_value": 1.0,
+                  "weight": 1.2
+                },
+                {
+                  "contribution": 0.4,
+                  "feature": "historical_yield",
+                  "group": "relevance",
+                  "raw_value": 0.5,
+                  "weight": 0.8
+                },
+                {
+                  "contribution": 0.0,
+                  "feature": "semantic_hypothesis_support",
+                  "group": "relevance",
+                  "raw_value": 0.0,
+                  "weight": 0.35
+                },
+                {
+                  "contribution": 0.6,
+                  "feature": "exploration_bonus",
+                  "group": "exploration",
+                  "raw_value": 1.0,
+                  "weight": 0.6
+                },
+                {
+                  "contribution": 0.0,
+                  "feature": "fan_out_risk",
+                  "group": "risk",
+                  "raw_value": 0.0,
+                  "weight": 1.0
+                },
+                {
+                  "contribution": 0.0,
+                  "feature": "historical_regression",
+                  "group": "risk",
+                  "raw_value": 0.0,
+                  "weight": 1.5
+                }
+              ],
+              "eligibility_reasons": [
+                "mutable_and_typed",
+                "risk_is_not_eligibility"
+              ],
+              "eligible": true,
+              "evidence_refs": [
+                "artifacts/runs/gh-e1-slack-gif-creator-reference/analyzer-submissions/analyzer-work-9fdb3bdecd6e87afd9f6ad4d.json"
+              ],
+              "high_blast_radius": false,
+              "locator": "section/slack-gif-creator#1/animation-concepts#1/slide#1/block#4",
+              "node_id": "node-69ea814aac72a6c557485ef0",
+              "path": "SKILL.md",
+              "rank": 1,
+              "reason_code": "graph_failure_impact_priority",
+              "score": 7.9,
+              "score_breakdown": {
+                "capped_ranking_risk_penalty": 0.0,
+                "exploration": 0.6,
+                "relevance": 7.3,
+                "risk": 0.0
+              },
+              "validation_intensity": {
+                "level": "standard",
+                "reasons": [],
+                "required_checks": [
+                  "targeted_static",
+                  "package_reparse"
+                ]
+              }
+            },
+            {
+              "contributions": [
+                {
+                  "contribution": 3.0,
+                  "feature": "failure_coverage",
+                  "group": "relevance",
+                  "raw_value": 1.0,
+                  "weight": 3.0
+                },
+                {
+                  "contribution": 2.0,
+                  "feature": "inverse_distance",
+                  "group": "relevance",
+                  "raw_value": 1.0,
+                  "weight": 2.0
+                },
+                {
+                  "contribution": 0.7,
+                  "feature": "dynamic_access",
+                  "group": "relevance",
+                  "raw_value": 0.5,
+                  "weight": 1.4
+                },
+                {
+                  "contribution": 1.2,
+                  "feature": "diagnostic_severity",
+                  "group": "relevance",
+                  "raw_value": 1.0,
+                  "weight": 1.2
+                },
+                {
+                  "contribution": 0.4,
+                  "feature": "historical_yield",
+                  "group": "relevance",
+                  "raw_value": 0.5,
+                  "weight": 0.8
+                },
+                {
+                  "contribution": 0.0,
+                  "feature": "semantic_hypothesis_support",
+                  "group": "relevance",
+                  "raw_value": 0.0,
+                  "weight": 0.35
+                },
+                {
+                  "contribution": 0.6,
+                  "feature": "exploration_bonus",
+                  "group": "exploration",
+                  "raw_value": 1.0,
+                  "weight": 0.6
+                },
+                {
+                  "contribution": 0.05882353,
+                  "feature": "fan_out_risk",
+                  "group": "risk",
+                  "raw_value": 0.05882353,
+                  "weight": 1.0
+                },
+                {
+                  "contribution": 0.0,
+                  "feature": "historical_regression",
+                  "group": "risk",
+                  "raw_value": 0.0,
+                  "weight": 1.5
+                }
+              ],
+              "eligibility_reasons": [
+                "mutable_and_typed",
+                "risk_is_not_eligibility"
+              ],
+              "eligible": true,
+              "evidence_refs": [
+                "artifacts/runs/gh-e1-slack-gif-creator-reference/analyzer-submissions/analyzer-work-9fdb3bdecd6e87afd9f6ad4d.json"
+              ],
+              "high_blast_radius": false,
+              "locator": "file",
+              "node_id": "node-fddc99453114c3a40363b219",
+              "path": "SKILL.md",
+              "rank": 2,
+              "reason_code": "graph_failure_impact_priority",
+              "score": 7.89117647,
+              "score_breakdown": {
+                "capped_ranking_risk_penalty": 0.00882353,
+                "exploration": 0.6,
+                "relevance": 7.3,
+                "risk": 0.05882353
+              },
+              "validation_intensity": {
+                "level": "standard",
+                "reasons": [],
+                "required_checks": [
+                  "targeted_static",
+                  "package_reparse"
+                ]
+              }
+            },
+            {
+              "contributions": [
+                {
+                  "contribution": 3.0,
+                  "feature": "failure_coverage",
+                  "group": "relevance",
+                  "raw_value": 1.0,
+                  "weight": 3.0
+                },
+                {
+                  "contribution": 1.0,
+                  "feature": "inverse_distance",
+                  "group": "relevance",
+                  "raw_value": 0.5,
+                  "weight": 2.0
+                },
+                {
+                  "contribution": 0.7,
+                  "feature": "dynamic_access",
+                  "group": "relevance",
+                  "raw_value": 0.5,
+                  "weight": 1.4
+                },
+                {
+                  "contribution": 1.2,
+                  "feature": "diagnostic_severity",
+                  "group": "relevance",
+                  "raw_value": 1.0,
+                  "weight": 1.2
+                },
+                {
+                  "contribution": 0.4,
+                  "feature": "historical_yield",
+                  "group": "relevance",
+                  "raw_value": 0.5,
+                  "weight": 0.8
+                },
+                {
+                  "contribution": 0.0,
+                  "feature": "semantic_hypothesis_support",
+                  "group": "relevance",
+                  "raw_value": 0.0,
+                  "weight": 0.35
+                },
+                {
+                  "contribution": 0.6,
+                  "feature": "exploration_bonus",
+                  "group": "exploration",
+                  "raw_value": 1.0,
+                  "weight": 0.6
+                },
+                {
+                  "contribution": 0.0,
+                  "feature": "fan_out_risk",
+                  "group": "risk",
+                  "raw_value": 0.0,
+                  "weight": 1.0
+                },
+                {
+                  "contribution": 0.0,
+                  "feature": "historical_regression",
+                  "group": "risk",
+                  "raw_value": 0.0,
+                  "weight": 1.5
+                }
+              ],
+              "eligibility_reasons": [
+                "mutable_and_typed",
+                "risk_is_not_eligibility"
+              ],
+              "eligible": true,
+              "evidence_refs": [
+                "artifacts/runs/gh-e1-slack-gif-creator-reference/analyzer-submissions/analyzer-work-9fdb3bdecd6e87afd9f6ad4d.json"
+              ],
+              "high_blast_radius": false,
+              "locator": "frontmatter",
+              "node_id": "node-0845c922c9c9b1f43f4a48b9",
+              "path": "SKILL.md",
+              "rank": 3,
+              "reason_code": "graph_failure_impact_priority",
+              "score": 6.9,
+              "score_breakdown": {
+                "capped_ranking_risk_penalty": 0.0,
+                "exploration": 0.6,
+                "relevance": 6.3,
+                "risk": 0.0
+              },
+              "validation_intensity": {
+                "level": "standard",
+                "reasons": [],
+                "required_checks": [
+                  "targeted_static",
+                  "package_reparse"
+                ]
+              }
+            },
+            {
+              "contributions": [
+                {
+                  "contribution": 3.0,
+                  "feature": "failure_coverage",
+                  "group": "relevance",
+                  "raw_value": 1.0,
+                  "weight": 3.0
+                },
+                {
+                  "contribution": 1.0,
+                  "feature": "inverse_distance",
+                  "group": "relevance",
+                  "raw_value": 0.5,
+                  "weight": 2.0
+                },
+                {
+                  "contribution": 0.7,
+                  "feature": "dynamic_access",
+                  "group": "relevance",
+                  "raw_value": 0.5,
+                  "weight": 1.4
+                },
+                {
+                  "contribution": 1.2,
+                  "feature": "diagnostic_severity",
+                  "group": "relevance",
+                  "raw_value": 1.0,
+                  "weight": 1.2
+                },
+                {
+                  "contribution": 0.4,
+                  "feature": "historical_yield",
+                  "group": "relevance",
+                  "raw_value": 0.5,
+                  "weight": 0.8
+                },
+                {
+                  "contribution": 0.0,
+                  "feature": "semantic_hypothesis_support",
+                  "group": "relevance",
+                  "raw_value": 0.0,
+                  "weight": 0.35
+                },
+                {
+                  "contribution": 0.6,
+                  "feature": "exploration_bonus",
+                  "group": "exploration",
+                  "raw_value": 1.0,
+                  "weight": 0.6
+                },
+                {
+                  "contribution": 0.14705882,
+                  "feature": "fan_out_risk",
+                  "group": "risk",
+                  "raw_value": 0.14705882,
+                  "weight": 1.0
+                },
+                {
+                  "contribution": 0.0,
+                  "feature": "historical_regression",
+                  "group": "risk",
+                  "raw_value": 0.0,
+                  "weight": 1.5
+                }
+              ],
+              "eligibility_reasons": [
+                "mutable_and_typed",
+                "risk_is_not_eligibility"
+              ],
+              "eligible": true,
+              "evidence_refs": [
+                "artifacts/runs/gh-e1-slack-gif-creator-reference/analyzer-submissions/analyzer-work-9fdb3bdecd6e87afd9f6ad4d.json"
+              ],
+              "high_blast_radius": false,
+              "locator": "section/slack-gif-creator#1/animation-concepts#1/slide#1",
+              "node_id": "node-d2a7a73a7a812652291bae3d",
+              "path": "SKILL.md",
+              "rank": 4,
+              "reason_code": "graph_failure_impact_priority",
+              "score": 6.87794118,
+              "score_breakdown": {
+                "capped_ranking_risk_penalty": 0.02205882,
+                "exploration": 0.6,
+                "relevance": 6.3,
+                "risk": 0.14705882
+              },
+              "validation_intensity": {
+                "level": "standard",
+                "reasons": [],
+                "required_checks": [
+                  "targeted_static",
+                  "package_reparse"
+                ]
+              }
+            },
+            {
+              "contributions": [
+                {
+                  "contribution": 3.0,
+                  "feature": "failure_coverage",
+                  "group": "relevance",
+                  "raw_value": 1.0,
+                  "weight": 3.0
+                },
+                {
+                  "contribution": 1.0,
+                  "feature": "inverse_distance",
+                  "group": "relevance",
+                  "raw_value": 0.5,
+                  "weight": 2.0
+                },
+                {
+                  "contribution": 0.7,
+                  "feature": "dynamic_access",
+                  "group": "relevance",
+                  "raw_value": 0.5,
+                  "weight": 1.4
+                },
+                {
+                  "contribution": 1.2,
+                  "feature": "diagnostic_severity",
+                  "group": "relevance",
+                  "raw_value": 1.0,
+                  "weight": 1.2
+                },
+                {
+                  "contribution": 0.4,
+                  "feature": "historical_yield",
+                  "group": "relevance",
+                  "raw_value": 0.5,
+                  "weight": 0.8
+                },
+                {
+                  "contribution": 0.0,
+                  "feature": "semantic_hypothesis_support",
+                  "group": "relevance",
+                  "raw_value": 0.0,
+                  "weight": 0.35
+                },
+                {
+                  "contribution": 0.6,
+                  "feature": "exploration_bonus",
+                  "group": "exploration",
+                  "raw_value": 1.0,
+                  "weight": 0.6
+                },
+                {
+                  "contribution": 0.26470588,
+                  "feature": "fan_out_risk",
+                  "group": "risk",
+                  "raw_value": 0.26470588,
+                  "weight": 1.0
+                },
+                {
+                  "contribution": 0.0,
+                  "feature": "historical_regression",
+                  "group": "risk",
+                  "raw_value": 0.0,
+                  "weight": 1.5
+                }
+              ],
+              "eligibility_reasons": [
+                "mutable_and_typed",
+                "risk_is_not_eligibility"
+              ],
+              "eligible": true,
+              "evidence_refs": [
+                "artifacts/runs/gh-e1-slack-gif-creator-reference/analyzer-submissions/analyzer-work-9fdb3bdecd6e87afd9f6ad4d.json"
+              ],
+              "high_blast_radius": false,
+              "locator": "section/slack-gif-creator#1",
+              "node_id": "node-ce609b198696eee0ac59fa35",
+              "path": "SKILL.md",
+              "rank": 5,
+              "reason_code": "graph_failure_impact_priority",
+              "score": 6.86029412,
+              "score_breakdown": {
+                "capped_ranking_risk_penalty": 0.03970588,
+                "exploration": 0.6,
+                "relevance": 6.3,
+                "risk": 0.26470588
+              },
+              "validation_intensity": {
+                "level": "standard",
+                "reasons": [],
+                "required_checks": [
+                  "targeted_static",
+                  "package_reparse"
+                ]
+              }
+            },
+            {
+              "contributions": [
+                {
+                  "contribution": 3.0,
+                  "feature": "failure_coverage",
+                  "group": "relevance",
+                  "raw_value": 1.0,
+                  "weight": 3.0
+                },
+                {
+                  "contribution": 0.66666667,
+                  "feature": "inverse_distance",
+                  "group": "relevance",
+                  "raw_value": 0.33333333,
+                  "weight": 2.0
+                },
+                {
+                  "contribution": 0.7,
+                  "feature": "dynamic_access",
+                  "group": "relevance",
+                  "raw_value": 0.5,
+                  "weight": 1.4
+                },
+                {
+                  "contribution": 1.2,
+                  "feature": "diagnostic_severity",
+                  "group": "relevance",
+                  "raw_value": 1.0,
+                  "weight": 1.2
+                },
+                {
+                  "contribution": 0.4,
+                  "feature": "historical_yield",
+                  "group": "relevance",
+                  "raw_value": 0.5,
+                  "weight": 0.8
+                },
+                {
+                  "contribution": 0.0,
+                  "feature": "semantic_hypothesis_support",
+                  "group": "relevance",
+                  "raw_value": 0.0,
+                  "weight": 0.35
+                },
+                {
+                  "contribution": 0.6,
+                  "feature": "exploration_bonus",
+                  "group": "exploration",
+                  "raw_value": 1.0,
+                  "weight": 0.6
+                },
+                {
+                  "contribution": 0.0,
+                  "feature": "fan_out_risk",
+                  "group": "risk",
+                  "raw_value": 0.0,
+                  "weight": 1.0
+                },
+                {
+                  "contribution": 0.0,
+                  "feature": "historical_regression",
+                  "group": "risk",
+                  "raw_value": 0.0,
+                  "weight": 1.5
+                }
+              ],
+              "eligibility_reasons": [
+                "mutable_and_typed",
+                "risk_is_not_eligibility"
+              ],
+              "eligible": true,
+              "evidence_refs": [
+                "artifacts/runs/gh-e1-slack-gif-creator-reference/analyzer-submissions/analyzer-work-9fdb3bdecd6e87afd9f6ad4d.json"
+              ],
+              "high_blast_radius": false,
+              "locator": "section/slack-gif-creator#1/animation-concepts#1/slide#1/block#1",
+              "node_id": "node-3f371377f0e30b8b3c8d1693",
+              "path": "SKILL.md",
+              "rank": 6,
+              "reason_code": "graph_failure_impact_priority",
+              "score": 6.56666667,
+              "score_breakdown": {
+                "capped_ranking_risk_penalty": 0.0,
+                "exploration": 0.6,
+                "relevance": 5.96666667,
+                "risk": 0.0
+              },
+              "validation_intensity": {
+                "level": "standard",
+                "reasons": [],
+                "required_checks": [
+                  "targeted_static",
+                  "package_reparse"
+                ]
+              }
+            },
+            {
+              "contributions": [
+                {
+                  "contribution": 3.0,
+                  "feature": "failure_coverage",
+                  "group": "relevance",
+                  "raw_value": 1.0,
+                  "weight": 3.0
+                },
+                {
+                  "contribution": 0.66666667,
+                  "feature": "inverse_distance",
+                  "group": "relevance",
+                  "raw_value": 0.33333333,
+                  "weight": 2.0
+                },
+                {
+                  "contribution": 0.7,
+                  "feature": "dynamic_access",
+                  "group": "relevance",
+                  "raw_value": 0.5,
+                  "weight": 1.4
+                },
+                {
+                  "contribution": 1.2,
+                  "feature": "diagnostic_severity",
+                  "group": "relevance",
+                  "raw_value": 1.0,
+                  "weight": 1.2
+                },
+                {
+                  "contribution": 0.4,
+                  "feature": "historical_yield",
+                  "group": "relevance",
+                  "raw_value": 0.5,
+                  "weight": 0.8
+                },
+                {
+                  "contribution": 0.0,
+                  "feature": "semantic_hypothesis_support",
+                  "group": "relevance",
+                  "raw_value": 0.0,
+                  "weight": 0.35
+                },
+                {
+                  "contribution": 0.6,
+                  "feature": "exploration_bonus",
+                  "group": "exploration",
+                  "raw_value": 1.0,
+                  "weight": 0.6
+                },
+                {
+                  "contribution": 0.0,
+                  "feature": "fan_out_risk",
+                  "group": "risk",
+                  "raw_value": 0.0,
+                  "weight": 1.0
+                },
+                {
+                  "contribution": 0.0,
+                  "feature": "historical_regression",
+                  "group": "risk",
+                  "raw_value": 0.0,
+                  "weight": 1.5
+                }
+              ],
+              "eligibility_reasons": [
+                "mutable_and_typed",
+                "risk_is_not_eligibility"
+              ],
+              "eligible": true,
+              "evidence_refs": [
+                "artifacts/runs/gh-e1-slack-gif-creator-reference/analyzer-submissions/analyzer-work-9fdb3bdecd6e87afd9f6ad4d.json"
+              ],
+              "high_blast_radius": false,
+              "locator": "section/slack-gif-creator#1/animation-concepts#1/slide#1/block#3",
+              "node_id": "node-8da463a03309f68f34453e74",
+              "path": "SKILL.md",
+              "rank": 7,
+              "reason_code": "graph_failure_impact_priority",
+              "score": 6.56666667,
+              "score_breakdown": {
+                "capped_ranking_risk_penalty": 0.0,
+                "exploration": 0.6,
+                "relevance": 5.96666667,
+                "risk": 0.0
+              },
+              "validation_intensity": {
+                "level": "standard",
+                "reasons": [],
+                "required_checks": [
+                  "targeted_static",
+                  "package_reparse"
+                ]
+              }
+            },
+            {
+              "contributions": [
+                {
+                  "contribution": 3.0,
+                  "feature": "failure_coverage",
+                  "group": "relevance",
+                  "raw_value": 1.0,
+                  "weight": 3.0
+                },
+                {
+                  "contribution": 0.66666667,
+                  "feature": "inverse_distance",
+                  "group": "relevance",
+                  "raw_value": 0.33333333,
+                  "weight": 2.0
+                },
+                {
+                  "contribution": 0.7,
+                  "feature": "dynamic_access",
+                  "group": "relevance",
+                  "raw_value": 0.5,
+                  "weight": 1.4
+                },
+                {
+                  "contribution": 1.2,
+                  "feature": "diagnostic_severity",
+                  "group": "relevance",
+                  "raw_value": 1.0,
+                  "weight": 1.2
+                },
+                {
+                  "contribution": 0.4,
+                  "feature": "historical_yield",
+                  "group": "relevance",
+                  "raw_value": 0.5,
+                  "weight": 0.8
+                },
+                {
+                  "contribution": 0.0,
+                  "feature": "semantic_hypothesis_support",
+                  "group": "relevance",
+                  "raw_value": 0.0,
+                  "weight": 0.35
+                },
+                {
+                  "contribution": 0.6,
+                  "feature": "exploration_bonus",
+                  "group": "exploration",
+                  "raw_value": 1.0,
+                  "weight": 0.6
+                },
+                {
+                  "contribution": 0.0,
+                  "feature": "fan_out_risk",
+                  "group": "risk",
+                  "raw_value": 0.0,
+                  "weight": 1.0
+                },
+                {
+                  "contribution": 0.0,
+                  "feature": "historical_regression",
+                  "group": "risk",
+                  "raw_value": 0.0,
+                  "weight": 1.5
+                }
+              ],
+              "eligibility_reasons": [
+                "mutable_and_typed",
+                "risk_is_not_eligibility"
+              ],
+              "eligible": true,
+              "evidence_refs": [
+                "artifacts/runs/gh-e1-slack-gif-creator-reference/analyzer-submissions/analyzer-work-9fdb3bdecd6e87afd9f6ad4d.json"
+              ],
+              "high_blast_radius": false,
+              "locator": "section/slack-gif-creator#1/block#1",
+              "node_id": "node-bfe7a27f3800c8a7ff26aa66",
+              "path": "SKILL.md",
+              "rank": 8,
+              "reason_code": "graph_failure_impact_priority",
+              "score": 6.56666667,
+              "score_breakdown": {
+                "capped_ranking_risk_penalty": 0.0,
+                "exploration": 0.6,
+                "relevance": 5.96666667,
+                "risk": 0.0
+              },
+              "validation_intensity": {
+                "level": "standard",
+                "reasons": [],
+                "required_checks": [
+                  "targeted_static",
+                  "package_reparse"
+                ]
+              }
+            },
+            {
+              "contributions": [
+                {
+                  "contribution": 3.0,
+                  "feature": "failure_coverage",
+                  "group": "relevance",
+                  "raw_value": 1.0,
+                  "weight": 3.0
+                },
+                {
+                  "contribution": 0.66666667,
+                  "feature": "inverse_distance",
+                  "group": "relevance",
+                  "raw_value": 0.33333333,
+                  "weight": 2.0
+                },
+                {
+                  "contribution": 0.7,
+                  "feature": "dynamic_access",
+                  "group": "relevance",
+                  "raw_value": 0.5,
+                  "weight": 1.4
+                },
+                {
+                  "contribution": 1.2,
+                  "feature": "diagnostic_severity",
+                  "group": "relevance",
+                  "raw_value": 1.0,
+                  "weight": 1.2
+                },
+                {
+                  "contribution": 0.4,
+                  "feature": "historical_yield",
+                  "group": "relevance",
+                  "raw_value": 0.5,
+                  "weight": 0.8
+                },
+                {
+                  "contribution": 0.0,
+                  "feature": "semantic_hypothesis_support",
+                  "group": "relevance",
+                  "raw_value": 0.0,
+                  "weight": 0.35
+                },
+                {
+                  "contribution": 0.6,
+                  "feature": "exploration_bonus",
+                  "group": "exploration",
+                  "raw_value": 1.0,
+                  "weight": 0.6
+                },
+                {
+                  "contribution": 0.0,
+                  "feature": "fan_out_risk",
+                  "group": "risk",
+                  "raw_value": 0.0,
+                  "weight": 1.0
+                },
+                {
+                  "contribution": 0.0,
+                  "feature": "historical_regression",
+                  "group": "risk",
+                  "raw_value": 0.0,
+                  "weight": 1.5
+                }
+              ],
+              "eligibility_reasons": [
+                "mutable_and_typed",
+                "risk_is_not_eligibility"
+              ],
+              "eligible": true,
+              "evidence_refs": [
+                "artifacts/runs/gh-e1-slack-gif-creator-reference/analyzer-submissions/analyzer-work-9fdb3bdecd6e87afd9f6ad4d.json"
+              ],
+              "high_blast_radius": false,
+              "locator": "section/slack-gif-creator#1/animation-concepts#1/slide#1/block#5",
+              "node_id": "node-c4a93d0a071130977a0c77ff",
+              "path": "SKILL.md",
+              "rank": 9,
+              "reason_code": "graph_failure_impact_priority",
+              "score": 6.56666667,
+              "score_breakdown": {
+                "capped_ranking_risk_penalty": 0.0,
+                "exploration": 0.6,
+                "relevance": 5.96666667,
+                "risk": 0.0
+              },
+              "validation_intensity": {
+                "level": "standard",
+                "reasons": [],
+                "required_checks": [
+                  "targeted_static",
+                  "package_reparse"
+                ]
+              }
+            },
+            {
+              "contributions": [
+                {
+                  "contribution": 3.0,
+                  "feature": "failure_coverage",
+                  "group": "relevance",
+                  "raw_value": 1.0,
+                  "weight": 3.0
+                },
+                {
+                  "contribution": 0.66666667,
+                  "feature": "inverse_distance",
+                  "group": "relevance",
+                  "raw_value": 0.33333333,
+                  "weight": 2.0
+                },
+                {
+                  "contribution": 0.7,
+                  "feature": "dynamic_access",
+                  "group": "relevance",
+                  "raw_value": 0.5,
+                  "weight": 1.4
+                },
+                {
+                  "contribution": 1.2,
+                  "feature": "diagnostic_severity",
+                  "group": "relevance",
+                  "raw_value": 1.0,
+                  "weight": 1.2
+                },
+                {
+                  "contribution": 0.4,
+                  "feature": "historical_yield",
+                  "group": "relevance",
+                  "raw_value": 0.5,
+                  "weight": 0.8
+                },
+                {
+                  "contribution": 0.0,
+                  "feature": "semantic_hypothesis_support",
+                  "group": "relevance",
+                  "raw_value": 0.0,
+                  "weight": 0.35
+                },
+                {
+                  "contribution": 0.6,
+                  "feature": "exploration_bonus",
+                  "group": "exploration",
+                  "raw_value": 1.0,
+                  "weight": 0.6
+                },
+                {
+                  "contribution": 0.0,
+                  "feature": "fan_out_risk",
+                  "group": "risk",
+                  "raw_value": 0.0,
+                  "weight": 1.0
+                },
+                {
+                  "contribution": 0.0,
+                  "feature": "historical_regression",
+                  "group": "risk",
+                  "raw_value": 0.0,
+                  "weight": 1.5
+                }
+              ],
+              "eligibility_reasons": [
+                "mutable_and_typed",
+                "risk_is_not_eligibility"
+              ],
+              "eligible": true,
+              "evidence_refs": [
+                "artifacts/runs/gh-e1-slack-gif-creator-reference/analyzer-submissions/analyzer-work-9fdb3bdecd6e87afd9f6ad4d.json"
+              ],
+              "high_blast_radius": false,
+              "locator": "section/slack-gif-creator#1/animation-concepts#1/slide#1/block#2",
+              "node_id": "node-e599fc53c62085141446b48b",
+              "path": "SKILL.md",
+              "rank": 10,
+              "reason_code": "graph_failure_impact_priority",
+              "score": 6.56666667,
+              "score_breakdown": {
+                "capped_ranking_risk_penalty": 0.0,
+                "exploration": 0.6,
+                "relevance": 5.96666667,
+                "risk": 0.0
+              },
+              "validation_intensity": {
+                "level": "standard",
+                "reasons": [],
+                "required_checks": [
+                  "targeted_static",
+                  "package_reparse"
+                ]
+              }
+            }
+          ],
+          "work_id": "proposal-work-a3b21d4876085cb058d516f9",
+          "work_item_ref": "artifacts/runs/gh-e1-slack-gif-creator-evolution/proposal-work-items/proposal-work-a3b21d4876085cb058d516f9.json"
+        },
+        {
+          "edit_budget": {
+            "allow_file_topology_edits": false,
+            "allow_script_edits": true,
+            "max_added_files": 0,
+            "max_changed_files": 2,
+            "max_deleted_files": 0,
+            "max_operations": 2,
+            "max_total_replacement_chars": 24000
+          },
+          "executable_alternative": {
+            "contributions": [
+              {
+                "contribution": 0.0,
+                "feature": "failure_coverage",
+                "group": "relevance",
+                "raw_value": 0.0,
+                "weight": 3.0
+              },
+              {
+                "contribution": 1.0,
+                "feature": "inverse_distance",
+                "group": "relevance",
+                "raw_value": 0.5,
+                "weight": 2.0
+              },
+              {
+                "contribution": 1.4,
+                "feature": "dynamic_access",
+                "group": "relevance",
+                "raw_value": 1.0,
+                "weight": 1.4
+              },
+              {
+                "contribution": 0.0,
+                "feature": "diagnostic_severity",
+                "group": "relevance",
+                "raw_value": 0.0,
+                "weight": 1.2
+              },
+              {
+                "contribution": 0.4,
+                "feature": "historical_yield",
+                "group": "relevance",
+                "raw_value": 0.5,
+                "weight": 0.8
+              },
+              {
+                "contribution": 0.0,
+                "feature": "semantic_hypothesis_support",
+                "group": "relevance",
+                "raw_value": 0.0,
+                "weight": 0.35
+              },
+              {
+                "contribution": 0.6,
+                "feature": "exploration_bonus",
+                "group": "exploration",
+                "raw_value": 1.0,
+                "weight": 0.6
+              },
+              {
+                "contribution": 0.02941176,
+                "feature": "fan_out_risk",
+                "group": "risk",
+                "raw_value": 0.02941176,
+                "weight": 1.0
+              },
+              {
+                "contribution": 0.0,
+                "feature": "historical_regression",
+                "group": "risk",
+                "raw_value": 0.0,
+                "weight": 1.5
+              }
+            ],
+            "eligibility_reasons": [
+              "mutable_and_typed",
+              "risk_is_not_eligibility"
+            ],
+            "eligible": true,
+            "evidence_refs": [
+              "artifacts/runs/gh-e1-slack-gif-creator-reference/analyzer-submissions/analyzer-work-d73a34bb35f67f90f2db475d.json"
+            ],
+            "high_blast_radius": false,
+            "locator": "file",
+            "node_id": "node-0f241aa06504163be33132f8",
+            "path": "core/validators.py",
+            "rank": 122,
+            "reason_code": "graph_failure_impact_priority",
+            "score": 3.39558824,
+            "score_breakdown": {
+              "capped_ranking_risk_penalty": 0.00441176,
+              "exploration": 0.6,
+              "relevance": 2.8,
+              "risk": 0.02941176
+            },
+            "validation_intensity": {
+              "level": "elevated",
+              "reasons": [
+                "executable_component"
+              ],
+              "required_checks": [
+                "targeted_static",
+                "package_reparse",
+                "dependency_closure",
+                "security"
+              ]
+            }
+          },
+          "selected_node_ids": [
+            "node-46d940221fa8caf3b6c22d2c",
+            "node-390c19b0fbd4439b006d6a79"
+          ],
+          "target_set": {
+            "causal_path_edge_ids": [
+              "edge-def9a876af04c43ed0e1e113"
+            ],
+            "causal_path_node_ids": [
+              "node-46d940221fa8caf3b6c22d2c",
+              "node-390c19b0fbd4439b006d6a79"
+            ],
+            "companion_target_ids": [
+              "node-390c19b0fbd4439b006d6a79"
+            ],
+            "evidence_refs": [
+              "artifacts/runs/gh-e1-slack-gif-creator-reference/analyzer-submissions/analyzer-work-d73a34bb35f67f90f2db475d.json"
+            ],
+            "parent_candidate_id": "candidate-6216d41d096cf68cae667dac",
+            "primary_target_id": "node-46d940221fa8caf3b6c22d2c",
+            "schema_version": "1.0.0",
+            "scope_reason": "One failure hypothesis may expose one graph-connected companion; otherwise the primary remains a single-target patch."
+          },
+          "top_k": [
+            {
+              "contributions": [
+                {
+                  "contribution": 3.0,
+                  "feature": "failure_coverage",
+                  "group": "relevance",
+                  "raw_value": 1.0,
+                  "weight": 3.0
+                },
+                {
+                  "contribution": 2.0,
+                  "feature": "inverse_distance",
+                  "group": "relevance",
+                  "raw_value": 1.0,
+                  "weight": 2.0
+                },
+                {
+                  "contribution": 0.7,
+                  "feature": "dynamic_access",
+                  "group": "relevance",
+                  "raw_value": 0.5,
+                  "weight": 1.4
+                },
+                {
+                  "contribution": 1.2,
+                  "feature": "diagnostic_severity",
+                  "group": "relevance",
+                  "raw_value": 1.0,
+                  "weight": 1.2
+                },
+                {
+                  "contribution": 0.4,
+                  "feature": "historical_yield",
+                  "group": "relevance",
+                  "raw_value": 0.5,
+                  "weight": 0.8
+                },
+                {
+                  "contribution": 0.0,
+                  "feature": "semantic_hypothesis_support",
+                  "group": "relevance",
+                  "raw_value": 0.0,
+                  "weight": 0.35
+                },
+                {
+                  "contribution": 0.6,
+                  "feature": "exploration_bonus",
+                  "group": "exploration",
+                  "raw_value": 1.0,
+                  "weight": 0.6
+                },
+                {
+                  "contribution": 0.02941176,
+                  "feature": "fan_out_risk",
+                  "group": "risk",
+                  "raw_value": 0.02941176,
+                  "weight": 1.0
+                },
+                {
+                  "contribution": 0.0,
+                  "feature": "historical_regression",
+                  "group": "risk",
+                  "raw_value": 0.0,
+                  "weight": 1.5
+                }
+              ],
+              "eligibility_reasons": [
+                "mutable_and_typed",
+                "risk_is_not_eligibility"
+              ],
+              "eligible": true,
+              "evidence_refs": [
+                "artifacts/runs/gh-e1-slack-gif-creator-reference/analyzer-submissions/analyzer-work-d73a34bb35f67f90f2db475d.json"
+              ],
+              "high_blast_radius": false,
+              "locator": "section/slack-gif-creator#1/available-utilities#1/validators-core-validators#1/block#2",
+              "node_id": "node-46d940221fa8caf3b6c22d2c",
+              "path": "SKILL.md",
+              "rank": 1,
+              "reason_code": "graph_failure_impact_priority",
+              "score": 7.89558824,
+              "score_breakdown": {
+                "capped_ranking_risk_penalty": 0.00441176,
+                "exploration": 0.6,
+                "relevance": 7.3,
+                "risk": 0.02941176
+              },
+              "validation_intensity": {
+                "level": "standard",
+                "reasons": [],
+                "required_checks": [
+                  "targeted_static",
+                  "package_reparse"
+                ]
+              }
+            },
+            {
+              "contributions": [
+                {
+                  "contribution": 3.0,
+                  "feature": "failure_coverage",
+                  "group": "relevance",
+                  "raw_value": 1.0,
+                  "weight": 3.0
+                },
+                {
+                  "contribution": 1.0,
+                  "feature": "inverse_distance",
+                  "group": "relevance",
+                  "raw_value": 0.5,
+                  "weight": 2.0
+                },
+                {
+                  "contribution": 0.7,
+                  "feature": "dynamic_access",
+                  "group": "relevance",
+                  "raw_value": 0.5,
+                  "weight": 1.4
+                },
+                {
+                  "contribution": 1.2,
+                  "feature": "diagnostic_severity",
+                  "group": "relevance",
+                  "raw_value": 1.0,
+                  "weight": 1.2
+                },
+                {
+                  "contribution": 0.4,
+                  "feature": "historical_yield",
+                  "group": "relevance",
+                  "raw_value": 0.5,
+                  "weight": 0.8
+                },
+                {
+                  "contribution": 0.0,
+                  "feature": "semantic_hypothesis_support",
+                  "group": "relevance",
+                  "raw_value": 0.0,
+                  "weight": 0.35
+                },
+                {
+                  "contribution": 0.6,
+                  "feature": "exploration_bonus",
+                  "group": "exploration",
+                  "raw_value": 1.0,
+                  "weight": 0.6
+                },
+                {
+                  "contribution": 0.05882353,
+                  "feature": "fan_out_risk",
+                  "group": "risk",
+                  "raw_value": 0.05882353,
+                  "weight": 1.0
+                },
+                {
+                  "contribution": 0.0,
+                  "feature": "historical_regression",
+                  "group": "risk",
+                  "raw_value": 0.0,
+                  "weight": 1.5
+                }
+              ],
+              "eligibility_reasons": [
+                "mutable_and_typed",
+                "risk_is_not_eligibility"
+              ],
+              "eligible": true,
+              "evidence_refs": [
+                "artifacts/runs/gh-e1-slack-gif-creator-reference/analyzer-submissions/analyzer-work-d73a34bb35f67f90f2db475d.json"
+              ],
+              "high_blast_radius": false,
+              "locator": "section/slack-gif-creator#1/available-utilities#1/validators-core-validators#1",
+              "node_id": "node-390c19b0fbd4439b006d6a79",
+              "path": "SKILL.md",
+              "rank": 2,
+              "reason_code": "graph_failure_impact_priority",
+              "score": 6.89117647,
+              "score_breakdown": {
+                "capped_ranking_risk_penalty": 0.00882353,
+                "exploration": 0.6,
+                "relevance": 6.3,
+                "risk": 0.05882353
+              },
+              "validation_intensity": {
+                "level": "standard",
+                "reasons": [],
+                "required_checks": [
+                  "targeted_static",
+                  "package_reparse"
+                ]
+              }
+            },
+            {
+              "contributions": [
+                {
+                  "contribution": 3.0,
+                  "feature": "failure_coverage",
+                  "group": "relevance",
+                  "raw_value": 1.0,
+                  "weight": 3.0
+                },
+                {
+                  "contribution": 0.66666667,
+                  "feature": "inverse_distance",
+                  "group": "relevance",
+                  "raw_value": 0.33333333,
+                  "weight": 2.0
+                },
+                {
+                  "contribution": 0.7,
+                  "feature": "dynamic_access",
+                  "group": "relevance",
+                  "raw_value": 0.5,
+                  "weight": 1.4
+                },
+                {
+                  "contribution": 1.2,
+                  "feature": "diagnostic_severity",
+                  "group": "relevance",
+                  "raw_value": 1.0,
+                  "weight": 1.2
+                },
+                {
+                  "contribution": 0.4,
+                  "feature": "historical_yield",
+                  "group": "relevance",
+                  "raw_value": 0.5,
+                  "weight": 0.8
+                },
+                {
+                  "contribution": 0.0,
+                  "feature": "semantic_hypothesis_support",
+                  "group": "relevance",
+                  "raw_value": 0.0,
+                  "weight": 0.35
+                },
+                {
+                  "contribution": 0.6,
+                  "feature": "exploration_bonus",
+                  "group": "exploration",
+                  "raw_value": 1.0,
+                  "weight": 0.6
+                },
+                {
+                  "contribution": 0.0,
+                  "feature": "fan_out_risk",
+                  "group": "risk",
+                  "raw_value": 0.0,
+                  "weight": 1.0
+                },
+                {
+                  "contribution": 0.0,
+                  "feature": "historical_regression",
+                  "group": "risk",
+                  "raw_value": 0.0,
+                  "weight": 1.5
+                }
+              ],
+              "eligibility_reasons": [
+                "mutable_and_typed",
+                "risk_is_not_eligibility"
+              ],
+              "eligible": true,
+              "evidence_refs": [
+                "artifacts/runs/gh-e1-slack-gif-creator-reference/analyzer-submissions/analyzer-work-d73a34bb35f67f90f2db475d.json"
+              ],
+              "high_blast_radius": false,
+              "locator": "section/slack-gif-creator#1/available-utilities#1/validators-core-validators#1/block#1",
+              "node_id": "node-ecc7bba352a5b7625ee91599",
+              "path": "SKILL.md",
+              "rank": 3,
+              "reason_code": "graph_failure_impact_priority",
+              "score": 6.56666667,
+              "score_breakdown": {
+                "capped_ranking_risk_penalty": 0.0,
+                "exploration": 0.6,
+                "relevance": 5.96666667,
+                "risk": 0.0
+              },
+              "validation_intensity": {
+                "level": "standard",
+                "reasons": [],
+                "required_checks": [
+                  "targeted_static",
+                  "package_reparse"
+                ]
+              }
+            },
+            {
+              "contributions": [
+                {
+                  "contribution": 3.0,
+                  "feature": "failure_coverage",
+                  "group": "relevance",
+                  "raw_value": 1.0,
+                  "weight": 3.0
+                },
+                {
+                  "contribution": 0.66666667,
+                  "feature": "inverse_distance",
+                  "group": "relevance",
+                  "raw_value": 0.33333333,
+                  "weight": 2.0
+                },
+                {
+                  "contribution": 0.7,
+                  "feature": "dynamic_access",
+                  "group": "relevance",
+                  "raw_value": 0.5,
+                  "weight": 1.4
+                },
+                {
+                  "contribution": 1.2,
+                  "feature": "diagnostic_severity",
+                  "group": "relevance",
+                  "raw_value": 1.0,
+                  "weight": 1.2
+                },
+                {
+                  "contribution": 0.4,
+                  "feature": "historical_yield",
+                  "group": "relevance",
+                  "raw_value": 0.5,
+                  "weight": 0.8
+                },
+                {
+                  "contribution": 0.0,
+                  "feature": "semantic_hypothesis_support",
+                  "group": "relevance",
+                  "raw_value": 0.0,
+                  "weight": 0.35
+                },
+                {
+                  "contribution": 0.6,
+                  "feature": "exploration_bonus",
+                  "group": "exploration",
+                  "raw_value": 1.0,
+                  "weight": 0.6
+                },
+                {
+                  "contribution": 0.11764706,
+                  "feature": "fan_out_risk",
+                  "group": "risk",
+                  "raw_value": 0.11764706,
+                  "weight": 1.0
+                },
+                {
+                  "contribution": 0.0,
+                  "feature": "historical_regression",
+                  "group": "risk",
+                  "raw_value": 0.0,
+                  "weight": 1.5
+                }
+              ],
+              "eligibility_reasons": [
+                "mutable_and_typed",
+                "risk_is_not_eligibility"
+              ],
+              "eligible": true,
+              "evidence_refs": [
+                "artifacts/runs/gh-e1-slack-gif-creator-reference/analyzer-submissions/analyzer-work-d73a34bb35f67f90f2db475d.json"
+              ],
+              "high_blast_radius": false,
+              "locator": "section/slack-gif-creator#1/available-utilities#1",
+              "node_id": "node-44a9519223abe9c140f2eb20",
+              "path": "SKILL.md",
+              "rank": 4,
+              "reason_code": "graph_failure_impact_priority",
+              "score": 6.54901961,
+              "score_breakdown": {
+                "capped_ranking_risk_penalty": 0.01764706,
+                "exploration": 0.6,
+                "relevance": 5.96666667,
+                "risk": 0.11764706
+              },
+              "validation_intensity": {
+                "level": "standard",
+                "reasons": [],
+                "required_checks": [
+                  "targeted_static",
+                  "package_reparse"
+                ]
+              }
+            },
+            {
+              "contributions": [
+                {
+                  "contribution": 3.0,
+                  "feature": "failure_coverage",
+                  "group": "relevance",
+                  "raw_value": 1.0,
+                  "weight": 3.0
+                },
+                {
+                  "contribution": 0.5,
+                  "feature": "inverse_distance",
+                  "group": "relevance",
+                  "raw_value": 0.25,
+                  "weight": 2.0
+                },
+                {
+                  "contribution": 0.7,
+                  "feature": "dynamic_access",
+                  "group": "relevance",
+                  "raw_value": 0.5,
+                  "weight": 1.4
+                },
+                {
+                  "contribution": 1.2,
+                  "feature": "diagnostic_severity",
+                  "group": "relevance",
+                  "raw_value": 1.0,
+                  "weight": 1.2
+                },
+                {
+                  "contribution": 0.4,
+                  "feature": "historical_yield",
+                  "group": "relevance",
+                  "raw_value": 0.5,
+                  "weight": 0.8
+                },
+                {
+                  "contribution": 0.0,
+                  "feature": "semantic_hypothesis_support",
+                  "group": "relevance",
+                  "raw_value": 0.0,
+                  "weight": 0.35
+                },
+                {
+                  "contribution": 0.6,
+                  "feature": "exploration_bonus",
+                  "group": "exploration",
+                  "raw_value": 1.0,
+                  "weight": 0.6
+                },
+                {
+                  "contribution": 0.05882353,
+                  "feature": "fan_out_risk",
+                  "group": "risk",
+                  "raw_value": 0.05882353,
+                  "weight": 1.0
+                },
+                {
+                  "contribution": 0.0,
+                  "feature": "historical_regression",
+                  "group": "risk",
+                  "raw_value": 0.0,
+                  "weight": 1.5
+                }
+              ],
+              "eligibility_reasons": [
+                "mutable_and_typed",
+                "risk_is_not_eligibility"
+              ],
+              "eligible": true,
+              "evidence_refs": [
+                "artifacts/runs/gh-e1-slack-gif-creator-reference/analyzer-submissions/analyzer-work-d73a34bb35f67f90f2db475d.json"
+              ],
+              "high_blast_radius": false,
+              "locator": "section/slack-gif-creator#1/available-utilities#1/frame-helpers-core-frame-composer#1",
+              "node_id": "node-2bdc297f52669b42d134781c",
+              "path": "SKILL.md",
+              "rank": 5,
+              "reason_code": "graph_failure_impact_priority",
+              "score": 6.39117647,
+              "score_breakdown": {
+                "capped_ranking_risk_penalty": 0.00882353,
+                "exploration": 0.6,
+                "relevance": 5.8,
+                "risk": 0.05882353
+              },
+              "validation_intensity": {
+                "level": "standard",
+                "reasons": [],
+                "required_checks": [
+                  "targeted_static",
+                  "package_reparse"
+                ]
+              }
+            },
+            {
+              "contributions": [
+                {
+                  "contribution": 3.0,
+                  "feature": "failure_coverage",
+                  "group": "relevance",
+                  "raw_value": 1.0,
+                  "weight": 3.0
+                },
+                {
+                  "contribution": 0.5,
+                  "feature": "inverse_distance",
+                  "group": "relevance",
+                  "raw_value": 0.25,
+                  "weight": 2.0
+                },
+                {
+                  "contribution": 0.7,
+                  "feature": "dynamic_access",
+                  "group": "relevance",
+                  "raw_value": 0.5,
+                  "weight": 1.4
+                },
+                {
+                  "contribution": 1.2,
+                  "feature": "diagnostic_severity",
+                  "group": "relevance",
+                  "raw_value": 1.0,
+                  "weight": 1.2
+                },
+                {
+                  "contribution": 0.4,
+                  "feature": "historical_yield",
+                  "group": "relevance",
+                  "raw_value": 0.5,
+                  "weight": 0.8
+                },
+                {
+                  "contribution": 0.0,
+                  "feature": "semantic_hypothesis_support",
+                  "group": "relevance",
+                  "raw_value": 0.0,
+                  "weight": 0.35
+                },
+                {
+                  "contribution": 0.6,
+                  "feature": "exploration_bonus",
+                  "group": "exploration",
+                  "raw_value": 1.0,
+                  "weight": 0.6
+                },
+                {
+                  "contribution": 0.05882353,
+                  "feature": "fan_out_risk",
+                  "group": "risk",
+                  "raw_value": 0.05882353,
+                  "weight": 1.0
+                },
+                {
+                  "contribution": 0.0,
+                  "feature": "historical_regression",
+                  "group": "risk",
+                  "raw_value": 0.0,
+                  "weight": 1.5
+                }
+              ],
+              "eligibility_reasons": [
+                "mutable_and_typed",
+                "risk_is_not_eligibility"
+              ],
+              "eligible": true,
+              "evidence_refs": [
+                "artifacts/runs/gh-e1-slack-gif-creator-reference/analyzer-submissions/analyzer-work-d73a34bb35f67f90f2db475d.json"
+              ],
+              "high_blast_radius": false,
+              "locator": "section/slack-gif-creator#1/available-utilities#1/gifbuilder-core-gif-builder#1",
+              "node_id": "node-dfb8719a1ab35fab6111e36b",
+              "path": "SKILL.md",
+              "rank": 6,
+              "reason_code": "graph_failure_impact_priority",
+              "score": 6.39117647,
+              "score_breakdown": {
+                "capped_ranking_risk_penalty": 0.00882353,
+                "exploration": 0.6,
+                "relevance": 5.8,
+                "risk": 0.05882353
+              },
+              "validation_intensity": {
+                "level": "standard",
+                "reasons": [],
+                "required_checks": [
+                  "targeted_static",
+                  "package_reparse"
+                ]
+              }
+            },
+            {
+              "contributions": [
+                {
+                  "contribution": 3.0,
+                  "feature": "failure_coverage",
+                  "group": "relevance",
+                  "raw_value": 1.0,
+                  "weight": 3.0
+                },
+                {
+                  "contribution": 0.5,
+                  "feature": "inverse_distance",
+                  "group": "relevance",
+                  "raw_value": 0.25,
+                  "weight": 2.0
+                },
+                {
+                  "contribution": 0.7,
+                  "feature": "dynamic_access",
+                  "group": "relevance",
+                  "raw_value": 0.5,
+                  "weight": 1.4
+                },
+                {
+                  "contribution": 1.2,
+                  "feature": "diagnostic_severity",
+                  "group": "relevance",
+                  "raw_value": 1.0,
+                  "weight": 1.2
+                },
+                {
+                  "contribution": 0.4,
+                  "feature": "historical_yield",
+                  "group": "relevance",
+                  "raw_value": 0.5,
+                  "weight": 0.8
+                },
+                {
+                  "contribution": 0.0,
+                  "feature": "semantic_hypothesis_support",
+                  "group": "relevance",
+                  "raw_value": 0.0,
+                  "weight": 0.35
+                },
+                {
+                  "contribution": 0.6,
+                  "feature": "exploration_bonus",
+                  "group": "exploration",
+                  "raw_value": 1.0,
+                  "weight": 0.6
+                },
+                {
+                  "contribution": 0.05882353,
+                  "feature": "fan_out_risk",
+                  "group": "risk",
+                  "raw_value": 0.05882353,
+                  "weight": 1.0
+                },
+                {
+                  "contribution": 0.0,
+                  "feature": "historical_regression",
+                  "group": "risk",
+                  "raw_value": 0.0,
+                  "weight": 1.5
+                }
+              ],
+              "eligibility_reasons": [
+                "mutable_and_typed",
+                "risk_is_not_eligibility"
+              ],
+              "eligible": true,
+              "evidence_refs": [
+                "artifacts/runs/gh-e1-slack-gif-creator-reference/analyzer-submissions/analyzer-work-d73a34bb35f67f90f2db475d.json"
+              ],
+              "high_blast_radius": false,
+              "locator": "section/slack-gif-creator#1/available-utilities#1/easing-functions-core-easing#1",
+              "node_id": "node-e57ae2a699a373f3228a5ff0",
+              "path": "SKILL.md",
+              "rank": 7,
+              "reason_code": "graph_failure_impact_priority",
+              "score": 6.39117647,
+              "score_breakdown": {
+                "capped_ranking_risk_penalty": 0.00882353,
+                "exploration": 0.6,
+                "relevance": 5.8,
+                "risk": 0.05882353
+              },
+              "validation_intensity": {
+                "level": "standard",
+                "reasons": [],
+                "required_checks": [
+                  "targeted_static",
+                  "package_reparse"
+                ]
+              }
+            },
+            {
+              "contributions": [
+                {
+                  "contribution": 3.0,
+                  "feature": "failure_coverage",
+                  "group": "relevance",
+                  "raw_value": 1.0,
+                  "weight": 3.0
+                },
+                {
+                  "contribution": 0.5,
+                  "feature": "inverse_distance",
+                  "group": "relevance",
+                  "raw_value": 0.25,
+                  "weight": 2.0
+                },
+                {
+                  "contribution": 0.7,
+                  "feature": "dynamic_access",
+                  "group": "relevance",
+                  "raw_value": 0.5,
+                  "weight": 1.4
+                },
+                {
+                  "contribution": 1.2,
+                  "feature": "diagnostic_severity",
+                  "group": "relevance",
+                  "raw_value": 1.0,
+                  "weight": 1.2
+                },
+                {
+                  "contribution": 0.4,
+                  "feature": "historical_yield",
+                  "group": "relevance",
+                  "raw_value": 0.5,
+                  "weight": 0.8
+                },
+                {
+                  "contribution": 0.0,
+                  "feature": "semantic_hypothesis_support",
+                  "group": "relevance",
+                  "raw_value": 0.0,
+                  "weight": 0.35
+                },
+                {
+                  "contribution": 0.6,
+                  "feature": "exploration_bonus",
+                  "group": "exploration",
+                  "raw_value": 1.0,
+                  "weight": 0.6
+                },
+                {
+                  "contribution": 0.05882353,
+                  "feature": "fan_out_risk",
+                  "group": "risk",
+                  "raw_value": 0.05882353,
+                  "weight": 1.0
+                },
+                {
+                  "contribution": 0.0,
+                  "feature": "historical_regression",
+                  "group": "risk",
+                  "raw_value": 0.0,
+                  "weight": 1.5
+                }
+              ],
+              "eligibility_reasons": [
+                "mutable_and_typed",
+                "risk_is_not_eligibility"
+              ],
+              "eligible": true,
+              "evidence_refs": [
+                "artifacts/runs/gh-e1-slack-gif-creator-reference/analyzer-submissions/analyzer-work-d73a34bb35f67f90f2db475d.json"
+              ],
+              "high_blast_radius": false,
+              "locator": "file",
+              "node_id": "node-fddc99453114c3a40363b219",
+              "path": "SKILL.md",
+              "rank": 8,
+              "reason_code": "graph_failure_impact_priority",
+              "score": 6.39117647,
+              "score_breakdown": {
+                "capped_ranking_risk_penalty": 0.00882353,
+                "exploration": 0.6,
+                "relevance": 5.8,
+                "risk": 0.05882353
+              },
+              "validation_intensity": {
+                "level": "standard",
+                "reasons": [],
+                "required_checks": [
+                  "targeted_static",
+                  "package_reparse"
+                ]
+              }
+            },
+            {
+              "contributions": [
+                {
+                  "contribution": 3.0,
+                  "feature": "failure_coverage",
+                  "group": "relevance",
+                  "raw_value": 1.0,
+                  "weight": 3.0
+                },
+                {
+                  "contribution": 0.5,
+                  "feature": "inverse_distance",
+                  "group": "relevance",
+                  "raw_value": 0.25,
+                  "weight": 2.0
+                },
+                {
+                  "contribution": 0.7,
+                  "feature": "dynamic_access",
+                  "group": "relevance",
+                  "raw_value": 0.5,
+                  "weight": 1.4
+                },
+                {
+                  "contribution": 1.2,
+                  "feature": "diagnostic_severity",
+                  "group": "relevance",
+                  "raw_value": 1.0,
+                  "weight": 1.2
+                },
+                {
+                  "contribution": 0.4,
+                  "feature": "historical_yield",
+                  "group": "relevance",
+                  "raw_value": 0.5,
+                  "weight": 0.8
+                },
+                {
+                  "contribution": 0.0,
+                  "feature": "semantic_hypothesis_support",
+                  "group": "relevance",
+                  "raw_value": 0.0,
+                  "weight": 0.35
+                },
+                {
+                  "contribution": 0.6,
+                  "feature": "exploration_bonus",
+                  "group": "exploration",
+                  "raw_value": 1.0,
+                  "weight": 0.6
+                },
+                {
+                  "contribution": 0.26470588,
+                  "feature": "fan_out_risk",
+                  "group": "risk",
+                  "raw_value": 0.26470588,
+                  "weight": 1.0
+                },
+                {
+                  "contribution": 0.0,
+                  "feature": "historical_regression",
+                  "group": "risk",
+                  "raw_value": 0.0,
+                  "weight": 1.5
+                }
+              ],
+              "eligibility_reasons": [
+                "mutable_and_typed",
+                "risk_is_not_eligibility"
+              ],
+              "eligible": true,
+              "evidence_refs": [
+                "artifacts/runs/gh-e1-slack-gif-creator-reference/analyzer-submissions/analyzer-work-d73a34bb35f67f90f2db475d.json"
+              ],
+              "high_blast_radius": false,
+              "locator": "section/slack-gif-creator#1",
+              "node_id": "node-ce609b198696eee0ac59fa35",
+              "path": "SKILL.md",
+              "rank": 9,
+              "reason_code": "graph_failure_impact_priority",
+              "score": 6.36029412,
+              "score_breakdown": {
+                "capped_ranking_risk_penalty": 0.03970588,
+                "exploration": 0.6,
+                "relevance": 5.8,
+                "risk": 0.26470588
+              },
+              "validation_intensity": {
+                "level": "standard",
+                "reasons": [],
+                "required_checks": [
+                  "targeted_static",
+                  "package_reparse"
+                ]
+              }
+            },
+            {
+              "contributions": [
+                {
+                  "contribution": 3.0,
+                  "feature": "failure_coverage",
+                  "group": "relevance",
+                  "raw_value": 1.0,
+                  "weight": 3.0
+                },
+                {
+                  "contribution": 0.4,
+                  "feature": "inverse_distance",
+                  "group": "relevance",
+                  "raw_value": 0.2,
+                  "weight": 2.0
+                },
+                {
+                  "contribution": 0.7,
+                  "feature": "dynamic_access",
+                  "group": "relevance",
+                  "raw_value": 0.5,
+                  "weight": 1.4
+                },
+                {
+                  "contribution": 1.2,
+                  "feature": "diagnostic_severity",
+                  "group": "relevance",
+                  "raw_value": 1.0,
+                  "weight": 1.2
+                },
+                {
+                  "contribution": 0.4,
+                  "feature": "historical_yield",
+                  "group": "relevance",
+                  "raw_value": 0.5,
+                  "weight": 0.8
+                },
+                {
+                  "contribution": 0.0,
+                  "feature": "semantic_hypothesis_support",
+                  "group": "relevance",
+                  "raw_value": 0.0,
+                  "weight": 0.35
+                },
+                {
+                  "contribution": 0.6,
+                  "feature": "exploration_bonus",
+                  "group": "exploration",
+                  "raw_value": 1.0,
+                  "weight": 0.6
+                },
+                {
+                  "contribution": 0.0,
+                  "feature": "fan_out_risk",
+                  "group": "risk",
+                  "raw_value": 0.0,
+                  "weight": 1.0
+                },
+                {
+                  "contribution": 0.0,
+                  "feature": "historical_regression",
+                  "group": "risk",
+                  "raw_value": 0.0,
+                  "weight": 1.5
+                }
+              ],
+              "eligibility_reasons": [
+                "mutable_and_typed",
+                "risk_is_not_eligibility"
+              ],
+              "eligible": true,
+              "evidence_refs": [
+                "artifacts/runs/gh-e1-slack-gif-creator-reference/analyzer-submissions/analyzer-work-d73a34bb35f67f90f2db475d.json"
+              ],
+              "high_blast_radius": false,
+              "locator": "section/slack-gif-creator#1/available-utilities#1/easing-functions-core-easing#1/block#1",
+              "node_id": "node-02ce06d8bc852ab9ed787671",
+              "path": "SKILL.md",
+              "rank": 10,
+              "reason_code": "graph_failure_impact_priority",
+              "score": 6.3,
+              "score_breakdown": {
+                "capped_ranking_risk_penalty": 0.0,
+                "exploration": 0.6,
+                "relevance": 5.7,
+                "risk": 0.0
+              },
+              "validation_intensity": {
+                "level": "standard",
+                "reasons": [],
+                "required_checks": [
+                  "targeted_static",
+                  "package_reparse"
+                ]
+              }
+            }
+          ],
+          "work_id": "proposal-work-f93cb726b76fdd6a13ed28a5",
+          "work_item_ref": "artifacts/runs/gh-e1-slack-gif-creator-evolution/proposal-work-items/proposal-work-f93cb726b76fdd6a13ed28a5.json"
+        }
+      ]
+    }
+  },
+  "provenance": {
+    "config_hash": "64f73c49a10c92dcef02647682b75645ac1331e2f85d5fbedf4b567bd5f863c1",
+    "merge_outcome_ref": "artifacts/runs/gh-e1-slack-gif-creator-evolution/merge/outcome.json",
+    "run_lifecycle_ref": "artifacts/runs/gh-e1-slack-gif-creator-evolution/run-lifecycle.json"
+  },
+  "reference": {
+    "reference_cache_audit_ref": "artifacts/runs/gh-e1-slack-gif-creator-evolution/reference-cache-audit.json",
+    "reference_evidence_key_ref": "artifacts/runs/gh-e1-slack-gif-creator-evolution/reference-evidence-key.json"
+  },
+  "rejected_memory_refs": [
+    "artifacts/runs/gh-e1-slack-gif-creator-evolution/rejected.sqlite3"
+  ],
+  "report_id": "gh-e1-slack-gif-creator-report",
+  "runtime": {
+    "accounting": {
+      "accepted_projection_for_comparison": {
+        "agent_calls": 37,
+        "cache_hits": 4,
+        "cache_misses": 0,
+        "candidates": 2,
+        "cumulative_agent_duration_ms": 15423289,
+        "estimated_tokens": 920100,
+        "proposals": 4,
+        "queue_wait_ms": 0,
+        "repairs": 2,
+        "wall_clock_duration_ms": 9958177
+      },
+      "accepted_role_settlement_count": 37,
+      "accepted_role_settlement_duration_ms": 14223289,
+      "accepted_role_settlement_usage": {
+        "active_wall_clock_ms": 0,
+        "agent_calls": 35,
+        "candidates": 0,
+        "estimated_tokens": 856100,
+        "proposals": 4,
+        "repairs": 5
+      },
+      "authoritative_cumulative_agent_duration_ms": 18266831,
+      "authoritative_session_usage": {
+        "active_wall_clock_ms": 9958177,
+        "agent_calls": 43,
+        "candidates": 2,
+        "estimated_tokens": 984100,
+        "proposals": 4,
+        "repairs": 6
+      },
+      "authority": "ActiveSessionRuntime + ReservationSettlement + HostAttemptAccounting",
+      "candidate_internal_accounting_count": 2,
+      "host_attempt_count": 8,
+      "host_attempt_duration_ms": 4043542,
+      "host_attempt_refs": [
+        "artifacts/runs/gh-e1-slack-gif-creator-evolution/host-attempt-accounting/host-attempt-0460feddb504c6ec22ef5915.json",
+        "artifacts/runs/gh-e1-slack-gif-creator-evolution/host-attempt-accounting/host-attempt-405f981208743ca7b9504052.json",
+        "artifacts/runs/gh-e1-slack-gif-creator-evolution/host-attempt-accounting/host-attempt-562e44e43a4c2febe838cf47.json",
+        "artifacts/runs/gh-e1-slack-gif-creator-evolution/host-attempt-accounting/host-attempt-88984fd83207a7bd765a9f8c.json",
+        "artifacts/runs/gh-e1-slack-gif-creator-evolution/host-attempt-accounting/host-attempt-894be87c29f89c4526f4a5bb.json",
+        "artifacts/runs/gh-e1-slack-gif-creator-evolution/host-attempt-accounting/host-attempt-bce569a7b699123be440c84c.json",
+        "artifacts/runs/gh-e1-slack-gif-creator-evolution/host-attempt-accounting/host-attempt-d8d0114664db23e41331b002.json",
+        "artifacts/runs/gh-e1-slack-gif-creator-evolution/host-attempt-accounting/host-attempt-e72a48143c4ae7f9fbc9f4dc.json"
+      ],
+      "host_attempt_usage": {
+        "active_wall_clock_ms": 0,
+        "agent_calls": 8,
+        "candidates": 0,
+        "estimated_tokens": 128000,
+        "proposals": 0,
+        "repairs": 1
+      },
+      "preaccounted_host_attempt_count": 4,
+      "reconciled": true,
+      "settlement_refs": [
+        "artifacts/runs/gh-e1-slack-gif-creator-evolution/reservation-settlements/candidate-comparator-work-4f0060b817991e053cbc261a.json",
+        "artifacts/runs/gh-e1-slack-gif-creator-evolution/reservation-settlements/candidate-comparator-work-56afd46fd486931a4ed82fc3.json",
+        "artifacts/runs/gh-e1-slack-gif-creator-evolution/reservation-settlements/candidate-comparator-work-86c8f3055d31370c1b1aaee3.json",
+        "artifacts/runs/gh-e1-slack-gif-creator-evolution/reservation-settlements/candidate-comparator-work-98ff9bc407a54b4085a9cbf8.json",
+        "artifacts/runs/gh-e1-slack-gif-creator-evolution/reservation-settlements/candidate-comparator-work-a67050248d9e8b28e9beb613.json",
+        "artifacts/runs/gh-e1-slack-gif-creator-evolution/reservation-settlements/candidate-comparator-work-e27352b5dc3e33d679e4ecc7.json",
+        "artifacts/runs/gh-e1-slack-gif-creator-evolution/reservation-settlements/grader-work-0ff779511156b69a5727640c.json",
+        "artifacts/runs/gh-e1-slack-gif-creator-evolution/reservation-settlements/grader-work-16d018d9de5b63ba0a1797dc.json",
+        "artifacts/runs/gh-e1-slack-gif-creator-evolution/reservation-settlements/grader-work-61941d0f2efc0bc812688977.json",
+        "artifacts/runs/gh-e1-slack-gif-creator-evolution/reservation-settlements/grader-work-622e98b440107a227efb39f3.json",
+        "artifacts/runs/gh-e1-slack-gif-creator-evolution/reservation-settlements/grader-work-6d6b885e99ba19062f93374a.json",
+        "artifacts/runs/gh-e1-slack-gif-creator-evolution/reservation-settlements/grader-work-81f28e928175a8830734a7e1.json",
+        "artifacts/runs/gh-e1-slack-gif-creator-evolution/reservation-settlements/grader-work-85d2bc061c42aded659dc72b.json",
+        "artifacts/runs/gh-e1-slack-gif-creator-evolution/reservation-settlements/grader-work-b1f9126cb0c4bb999894a9ec.json",
+        "artifacts/runs/gh-e1-slack-gif-creator-evolution/reservation-settlements/grader-work-b9443236a76c76165079e03c.json",
+        "artifacts/runs/gh-e1-slack-gif-creator-evolution/reservation-settlements/grader-work-d0d8b35dae0193b8b2722653.json",
+        "artifacts/runs/gh-e1-slack-gif-creator-evolution/reservation-settlements/grader-work-e9c9862268fc39e78cc4c21f.json",
+        "artifacts/runs/gh-e1-slack-gif-creator-evolution/reservation-settlements/grader-work-f333d45b930c72fd0672433a.json",
+        "artifacts/runs/gh-e1-slack-gif-creator-evolution/reservation-settlements/proposal-work-a3b21d4876085cb058d516f9-repair-1.json",
+        "artifacts/runs/gh-e1-slack-gif-creator-evolution/reservation-settlements/proposal-work-a3b21d4876085cb058d516f9.json",
+        "artifacts/runs/gh-e1-slack-gif-creator-evolution/reservation-settlements/proposal-work-f93cb726b76fdd6a13ed28a5-repair-1.json",
+        "artifacts/runs/gh-e1-slack-gif-creator-evolution/reservation-settlements/proposal-work-f93cb726b76fdd6a13ed28a5.json",
+        "artifacts/runs/gh-e1-slack-gif-creator-evolution/reservation-settlements/reflection-work-0b853eabe6b47d1aca4f9a38.json",
+        "artifacts/runs/gh-e1-slack-gif-creator-evolution/reservation-settlements/reflection-work-ce88cb197e7454878ad1c5b5.json",
+        "artifacts/runs/gh-e1-slack-gif-creator-evolution/reservation-settlements/work-232e37fbed39fa841d967abc.json",
+        "artifacts/runs/gh-e1-slack-gif-creator-evolution/reservation-settlements/work-2902fd854c96d694d92cbd84.json",
+        "artifacts/runs/gh-e1-slack-gif-creator-evolution/reservation-settlements/work-2dcad3b4ad2907f07ed7ef03.json",
+        "artifacts/runs/gh-e1-slack-gif-creator-evolution/reservation-settlements/work-4019f9c03c551a54cc773edb.json",
+        "artifacts/runs/gh-e1-slack-gif-creator-evolution/reservation-settlements/work-7bde15e8233bde28fa9c1297.json",
+        "artifacts/runs/gh-e1-slack-gif-creator-evolution/reservation-settlements/work-9c5de73b1630cd6d00af1def.json",
+        "artifacts/runs/gh-e1-slack-gif-creator-evolution/reservation-settlements/work-aadafebefc1e2d501cbe7db4.json",
+        "artifacts/runs/gh-e1-slack-gif-creator-evolution/reservation-settlements/work-b2c007f69a50c6d02c2b0717.json",
+        "artifacts/runs/gh-e1-slack-gif-creator-evolution/reservation-settlements/work-be5275fba3389bad97a9245f.json",
+        "artifacts/runs/gh-e1-slack-gif-creator-evolution/reservation-settlements/work-d45c605660952e1c97204e0d.json",
+        "artifacts/runs/gh-e1-slack-gif-creator-evolution/reservation-settlements/work-e4f6ac5c5df1e4ba29e9035f.json",
+        "artifacts/runs/gh-e1-slack-gif-creator-evolution/reservation-settlements/work-eeeafb6b8ccacc9e4a2a5ecb.json",
+        "artifacts/runs/gh-e1-slack-gif-creator-evolution/reservation-settlements/work-f4822f29168045273356a3fc.json"
+      ]
+    },
+    "active_wall_clock_ms": 9958177,
+    "budget": {
+      "max_agent_calls": 80,
+      "max_candidates": 5,
+      "max_concurrency": 3,
+      "max_estimated_tokens": 2000000,
+      "max_proposals": 4,
+      "max_repair_attempts_per_work": 1,
+      "max_wall_clock_seconds": 10800,
+      "role_timeout_seconds": {
+        "comparator": 300,
+        "executor": 600,
+        "independent_grader": 420,
+        "proposal": 600,
+        "reflection": 600
+      },
+      "stop_semantics": "finish exported atomic batch, checkpoint cumulative usage, require hash-bound user continuation before new export"
+    },
+    "calendar_elapsed_ms": 84651334,
+    "completed_at": "2026-07-29T16:43:22.772559+00:00",
+    "cumulative_agent_duration_ms": 18266831,
+    "dependency_barriers": [
+      "executor",
+      "independent_grader",
+      "comparator"
+    ],
+    "evaluation_calls": 31,
+    "evaluation_failures": 1,
+    "exhausted_axes": [],
+    "max_concurrency": 3,
+    "parallelism_saved_wall_clock_is_not_usage_reduction": true,
+    "paused_ms": 74693098,
+    "proposal_and_reflection_calls": 6,
+    "queue_wait_ms": 0,
+    "queue_wait_note": "Agent Host did not expose enqueue timestamps; no estimate was invented.",
+    "queue_wait_observed": false,
+    "reference_cache": {
+      "fresh_candidate_only": true,
+      "hits": 4,
+      "misses": 0,
+      "reused_reference_agent_calls": 0
+    },
+    "roles": {
+      "analyzer": {
+        "calls": 0,
+        "duration_ms": 0,
+        "failures": 0,
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "tool_calls": 0
+      },
+      "comparator": {
+        "calls": 6,
+        "duration_ms": 2392000,
+        "failures": 0,
+        "input_tokens": 30000,
+        "output_tokens": 5000,
+        "tool_calls": 61
+      },
+      "executor": {
+        "calls": 13,
+        "duration_ms": 5579741,
+        "failures": 1,
+        "input_tokens": 247500,
+        "output_tokens": 89500,
+        "tool_calls": 222
+      },
+      "independent_grader": {
+        "calls": 12,
+        "duration_ms": 4151548,
+        "failures": 0,
+        "input_tokens": 366400,
+        "output_tokens": 31700,
+        "tool_calls": 142
+      }
+    },
+    "schema_version": "1.0.0",
+    "start_time_source": "resolved-config.json filesystem mtime",
+    "started_at": "2026-07-28T17:12:31.437915+00:00",
+    "stop_semantics": "finish exported atomic batch, checkpoint cumulative usage, require hash-bound user continuation before new export",
+    "usage": {
+      "agent_calls": 43,
+      "cache_hits": 4,
+      "cache_misses": 0,
+      "candidates": 2,
+      "cumulative_agent_duration_ms": 18266831,
+      "estimated_tokens": 984100,
+      "proposals": 4,
+      "queue_wait_ms": 0,
+      "repairs": 6,
+      "wall_clock_duration_ms": 9958177
+    },
+    "usage_authority": "ActiveSessionRuntime + ReservationSettlement + HostAttemptAccounting",
+    "usage_report_refs": [
+      "artifacts/runs/gh-e1-slack-gif-creator-evolution/evals/candidate-c36eb3adc54c93e3233d59e0/train/usage-report.json",
+      "artifacts/runs/gh-e1-slack-gif-creator-evolution/evals/candidate-db0b9d19f0ff48b624ea03b6/train/usage-report.json",
+      "artifacts/runs/gh-e1-slack-gif-creator-evolution/evals/candidate-db0b9d19f0ff48b624ea03b6/validation/usage-report.json"
+    ],
+    "wall_clock_duration_ms": 9958177
+  },
+  "schema_version": "1.0.0",
+  "search_complete": true,
+  "title_zh": "GEPASE GH-E1 图加固独立效果复现"
+}

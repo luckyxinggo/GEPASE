@@ -1,0 +1,15 @@
+.venv/bin/python scripts/export_core_schemas.py
+.venv/bin/python scripts/export_core_schemas.py
+.venv/bin/pytest -q tests/budget/test_active_session_runtime.py tests/reporting/test_multi_outcome_report.py tests/optimizer/merge/test_outcome.py tests/evals/test_recovery.py tests/unit/test_run_lifecycle.py
+.venv/bin/pytest -q
+.venv/bin/pytest -q --junitxml artifacts/stages/GH-E1/test-results.xml
+.venv/bin/ruff check .
+.venv/bin/pyright --pythonpath .venv/bin/python
+.venv/bin/python -m compileall -q src scripts
+.venv/bin/gepase report verify --config configs/graph-hardening/slack-gif-creator-gh-e1-report.json --report-dir artifacts/runs/gh-e1-slack-gif-creator-report/final --format json
+.venv/bin/python scripts/check_secrets.py --tracked-only --format json
+.venv/bin/python scripts/check_secrets.py --format json
+.venv/bin/python scripts/check_markdown_links.py
+.venv/bin/python scripts/check_license.py
+git diff --check
+.venv/bin/python scripts/run_gh_e1_gates.py

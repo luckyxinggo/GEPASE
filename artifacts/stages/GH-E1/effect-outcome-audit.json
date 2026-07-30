@@ -1,0 +1,51 @@
+{
+  "schema_version": "1.0.0",
+  "stage_id": "GH-E1",
+  "phase": "E1.9_effect_outcome",
+  "generated_at": "2026-07-29T17:04:06Z",
+  "valid": true,
+  "checks": {
+    "search_run_complete": true,
+    "no_pending_work": true,
+    "outcome_enum_valid": true,
+    "negative_result_preserved": true,
+    "old_r5_effect_not_reused": true,
+    "deployable_frontier_empty": true,
+    "runtime_accounting_reconciled": true,
+    "runtime_uses_active_session_authority": true,
+    "budget_usage_not_underreported_from_old_projection": true
+  },
+  "outcome": "no_strict_improvement",
+  "gate_funnel": {
+    "proposed": 2,
+    "train_admitted": 1,
+    "validation_completed": 1,
+    "deployable": 0
+  },
+  "runtime": {
+    "authority": "ActiveSessionRuntime + ReservationSettlement + HostAttemptAccounting",
+    "agent_calls": 43,
+    "estimated_tokens": 984100,
+    "active_wall_clock_ms": 9958177,
+    "paused_ms": 74693098,
+    "cumulative_agent_duration_ms": 18266831,
+    "repairs": 6,
+    "proposals": 4,
+    "candidates": 2,
+    "accepted_role_settlements": 37,
+    "host_attempts": 8,
+    "candidate_internal_accounting": 2,
+    "reconciled": true
+  },
+  "claim_boundary_zh": "该结果仅适用于一个 pinned 公开 Skill、一个 frozen EvalPlan、一个模型/Agent Host 配置和一次 GH-E1 搜索运行；它验证了本次运行得到可复算负结果，不证明跨 Skill 普遍性，也不证明图引导优于其他搜索策略。",
+  "evidence": [
+    {
+      "ref": "artifacts/runs/gh-e1-slack-gif-creator-evolution/effect-outcome-report-input.json",
+      "sha256": "836b0f7db60ba8506d46fa6ef10b0f752ff5f7ce6f62a6f6950457acfcbb9c5b"
+    },
+    {
+      "ref": "artifacts/runs/gh-e1-slack-gif-creator-evolution/scheduler/runtime-report.json",
+      "sha256": "89a00128fd0936dfeb0530b9d790d16d3d77a8f43720883a7b02beea9c8a2b21"
+    }
+  ]
+}

@@ -1,0 +1,14 @@
+{
+  "cases": [
+    "unknown node",
+    "stale content hash",
+    "evidence outside work item",
+    "invalid relation type",
+    "below confidence threshold",
+    "high-confidence false relation cannot authorize TargetSet or merge closure",
+    "no semantic input preserves trusted graph behavior"
+  ],
+  "schema_version": "1.0.0",
+  "source": "tests/package/test_semantic_hypotheses.py",
+  "status": "passed"
+}

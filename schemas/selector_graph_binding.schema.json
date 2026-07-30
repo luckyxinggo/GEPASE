@@ -1,0 +1,197 @@
+{
+  "additionalProperties": false,
+  "description": "Immutable provenance for the exact graph consumed by one selector.",
+  "properties": {
+    "accepted_work_ids": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Accepted Work Ids",
+      "type": "array"
+    },
+    "cache_key": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Cache Key",
+      "type": "string"
+    },
+    "coverage_ref": {
+      "title": "Coverage Ref",
+      "type": "string"
+    },
+    "coverage_sha256": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Coverage Sha256",
+      "type": "string"
+    },
+    "evidence_run_ref": {
+      "title": "Evidence Run Ref",
+      "type": "string"
+    },
+    "evidence_scope_hash": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Evidence Scope Hash",
+      "type": "string"
+    },
+    "evidence_task_ids": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Evidence Task Ids",
+      "type": "array"
+    },
+    "evidence_variant": {
+      "enum": [
+        "original",
+        "candidate"
+      ],
+      "title": "Evidence Variant",
+      "type": "string"
+    },
+    "filtered_work_ids": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Filtered Work Ids",
+      "type": "array"
+    },
+    "graph_policy_hash": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Graph Policy Hash",
+      "type": "string"
+    },
+    "layer_counts": {
+      "additionalProperties": {
+        "type": "integer"
+      },
+      "title": "Layer Counts",
+      "type": "object"
+    },
+    "mapped_access_events": {
+      "minimum": 0,
+      "title": "Mapped Access Events",
+      "type": "integer"
+    },
+    "mode": {
+      "const": "static_observed",
+      "title": "Mode",
+      "type": "string"
+    },
+    "observed_edges": {
+      "minimum": 0,
+      "title": "Observed Edges",
+      "type": "integer"
+    },
+    "overlay_audit_ref": {
+      "title": "Overlay Audit Ref",
+      "type": "string"
+    },
+    "overlay_audit_sha256": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Overlay Audit Sha256",
+      "type": "string"
+    },
+    "package_ir_ref": {
+      "title": "Package Ir Ref",
+      "type": "string"
+    },
+    "package_ir_sha256": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Package Ir Sha256",
+      "type": "string"
+    },
+    "package_ref": {
+      "title": "Package Ref",
+      "type": "string"
+    },
+    "parent_candidate_id": {
+      "title": "Parent Candidate Id",
+      "type": "string"
+    },
+    "parent_content_hash": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Parent Content Hash",
+      "type": "string"
+    },
+    "parent_snapshot_hash": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Parent Snapshot Hash",
+      "type": "string"
+    },
+    "rejected_access_events": {
+      "minimum": 0,
+      "title": "Rejected Access Events",
+      "type": "integer"
+    },
+    "schema_version": {
+      "default": "1.0.0",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "selector_graph_ref": {
+      "title": "Selector Graph Ref",
+      "type": "string"
+    },
+    "selector_graph_sha256": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Selector Graph Sha256",
+      "type": "string"
+    },
+    "semantic_hypothesis_edges": {
+      "const": 0,
+      "default": 0,
+      "title": "Semantic Hypothesis Edges",
+      "type": "integer"
+    },
+    "snapshot_ref": {
+      "title": "Snapshot Ref",
+      "type": "string"
+    },
+    "snapshot_sha256": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Snapshot Sha256",
+      "type": "string"
+    },
+    "static_graph_ref": {
+      "title": "Static Graph Ref",
+      "type": "string"
+    },
+    "static_graph_sha256": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Static Graph Sha256",
+      "type": "string"
+    }
+  },
+  "required": [
+    "mode",
+    "parent_candidate_id",
+    "parent_snapshot_hash",
+    "parent_content_hash",
+    "package_ref",
+    "snapshot_ref",
+    "snapshot_sha256",
+    "package_ir_ref",
+    "package_ir_sha256",
+    "static_graph_ref",
+    "static_graph_sha256",
+    "selector_graph_ref",
+    "selector_graph_sha256",
+    "coverage_ref",
+    "coverage_sha256",
+    "overlay_audit_ref",
+    "overlay_audit_sha256",
+    "layer_counts",
+    "evidence_run_ref",
+    "evidence_variant",
+    "evidence_task_ids",
+    "evidence_scope_hash",
+    "graph_policy_hash",
+    "cache_key",
+    "accepted_work_ids",
+    "filtered_work_ids",
+    "mapped_access_events",
+    "rejected_access_events",
+    "observed_edges"
+  ],
+  "title": "SelectorGraphBinding",
+  "type": "object"
+}

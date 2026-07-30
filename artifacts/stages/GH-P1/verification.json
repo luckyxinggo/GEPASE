@@ -1,0 +1,125 @@
+{
+  "checks": {
+    "fixture_gates": {
+      "gates": [
+        {
+          "detail": "GH-P0 passed; one public failure cluster, bounded nodes and one Analyzer call are frozen.",
+          "evidence": [
+            "preflight.json",
+            "analyzer-work-item.json",
+            "resolved-config.json"
+          ],
+          "gate_id": "GHP1-G00-preflight_and_scope",
+          "status": "passed"
+        },
+        {
+          "detail": "Relation enum, existing-node, snapshot/content/evidence/provenance checks passed fixtures.",
+          "evidence": [
+            "fixture-gates.json",
+            "resolved-relation-schema.json"
+          ],
+          "gate_id": "GHP1-G01-typed_relation_rejection",
+          "status": "passed"
+        },
+        {
+          "detail": "Semantic hypotheses remain a separate dashed Agent 假设 layer.",
+          "evidence": [
+            "fixture-gates.json"
+          ],
+          "gate_id": "GHP1-G02-layer_and_display",
+          "status": "passed"
+        },
+        {
+          "detail": "Only localization/explanation/top-k/exploration consumers are enabled.",
+          "evidence": [
+            "fixture-gates.json",
+            "resolved-relation-schema.json"
+          ],
+          "gate_id": "GHP1-G03-consumer_allowlist",
+          "status": "passed"
+        },
+        {
+          "detail": "Exact cache identity and touched-node-only invalidation passed fixtures.",
+          "evidence": [
+            "fixture-gates.json"
+          ],
+          "gate_id": "GHP1-G04-exact_cache",
+          "status": "passed"
+        },
+        {
+          "detail": "False high-confidence relations lack authority; absent semantic input preserves trusted behavior.",
+          "evidence": [
+            "fixture-gates.json"
+          ],
+          "gate_id": "GHP1-G05-adversarial_and_degradation",
+          "status": "passed"
+        }
+      ],
+      "schema_version": "1.0.0",
+      "valid": true
+    },
+    "full_pytest": {
+      "command": "uv --cache-dir /private/tmp/gepase-ghp1-uv-cache run pytest -q --junitxml artifacts/stages/GH-P1/test-results.xml",
+      "exit_code": 0,
+      "ok": true,
+      "summary": "165 passed in 8.65s"
+    },
+    "git_diff_check": {
+      "command": "git diff --check",
+      "exit_code": 0,
+      "ok": true,
+      "summary": "no output"
+    },
+    "license": {
+      "command": "uv --cache-dir /private/tmp/gepase-ghp1-uv-cache run python scripts/check_license.py",
+      "exit_code": 0,
+      "ok": true,
+      "summary": "license policy: ok"
+    },
+    "markdown_links": {
+      "command": "uv --cache-dir /private/tmp/gepase-ghp1-uv-cache run python scripts/check_markdown_links.py",
+      "exit_code": 0,
+      "ok": true,
+      "summary": "markdown links: ok"
+    },
+    "post_generation_secret_and_private_path_scan": {
+      "command": "uv --cache-dir /private/tmp/gepase-ghp1-uv-cache run python scripts/check_secrets.py --format json",
+      "exit_code": 0,
+      "ok": true,
+      "summary": "}"
+    },
+    "pyright": {
+      "command": "uv --cache-dir /private/tmp/gepase-ghp1-uv-cache run pyright",
+      "exit_code": 0,
+      "ok": true,
+      "summary": "0 errors, 0 warnings, 0 informations"
+    },
+    "ruff": {
+      "command": "uv --cache-dir /private/tmp/gepase-ghp1-uv-cache run ruff check .",
+      "exit_code": 0,
+      "ok": true,
+      "summary": "All checks passed!"
+    },
+    "schema_count": 41,
+    "schema_export_first": {
+      "command": "uv --cache-dir /private/tmp/gepase-ghp1-uv-cache run python scripts/export_core_schemas.py",
+      "exit_code": 0,
+      "ok": true,
+      "summary": "no output"
+    },
+    "schema_export_second": {
+      "command": "uv --cache-dir /private/tmp/gepase-ghp1-uv-cache run python scripts/export_core_schemas.py",
+      "exit_code": 0,
+      "ok": true,
+      "summary": "no output"
+    },
+    "schema_idempotent": true,
+    "secret_and_private_path_scan": {
+      "command": "uv --cache-dir /private/tmp/gepase-ghp1-uv-cache run python scripts/check_secrets.py --format json",
+      "exit_code": 0,
+      "ok": true,
+      "summary": "}"
+    }
+  },
+  "schema_version": "1.0.0"
+}

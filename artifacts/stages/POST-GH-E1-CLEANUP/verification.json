@@ -1,0 +1,214 @@
+{
+  "rows": [
+    {
+      "command": ".venv/bin/pytest -q",
+      "exit_code": 0,
+      "ok": true,
+      "round": 1,
+      "summary": "209 passed in 14.19s"
+    },
+    {
+      "command": ".venv/bin/ruff check .",
+      "exit_code": 0,
+      "ok": true,
+      "round": 1,
+      "summary": "All checks passed!"
+    },
+    {
+      "command": ".venv/bin/pyright --pythonpath .venv/bin/python",
+      "exit_code": 0,
+      "ok": true,
+      "round": 1,
+      "summary": "0 errors, 0 warnings, 0 informations"
+    },
+    {
+      "command": ".venv/bin/python -m compileall -q src scripts",
+      "exit_code": 0,
+      "ok": true,
+      "round": 1,
+      "summary": "no output"
+    },
+    {
+      "command": ".venv/bin/pytest -q",
+      "exit_code": 0,
+      "ok": true,
+      "round": 2,
+      "summary": "209 passed in 11.96s"
+    },
+    {
+      "command": ".venv/bin/ruff check .",
+      "exit_code": 0,
+      "ok": true,
+      "round": 2,
+      "summary": "All checks passed!"
+    },
+    {
+      "command": ".venv/bin/pyright --pythonpath .venv/bin/python",
+      "exit_code": 0,
+      "ok": true,
+      "round": 2,
+      "summary": "0 errors, 0 warnings, 0 informations"
+    },
+    {
+      "command": ".venv/bin/python -m compileall -q src scripts",
+      "exit_code": 0,
+      "ok": true,
+      "round": 2,
+      "summary": "no output"
+    },
+    {
+      "command": ".venv/bin/python scripts/export_core_schemas.py",
+      "exit_code": 0,
+      "ok": true,
+      "summary": "no output"
+    },
+    {
+      "command": ".venv/bin/python scripts/export_core_schemas.py",
+      "exit_code": 0,
+      "ok": true,
+      "summary": "no output"
+    },
+    {
+      "command": ".venv/bin/python scripts/check_markdown_links.py",
+      "exit_code": 0,
+      "ok": true,
+      "summary": "markdown links: ok"
+    },
+    {
+      "command": ".venv/bin/python scripts/check_license.py",
+      "exit_code": 0,
+      "ok": true,
+      "summary": "license policy: ok"
+    },
+    {
+      "command": "git diff --check",
+      "exit_code": 0,
+      "ok": true,
+      "summary": "no output"
+    },
+    {
+      "command": ".venv/bin/python scripts/run_gh_e1_gates.py",
+      "exit_code": 0,
+      "ok": true,
+      "summary": "}"
+    },
+    {
+      "command": ".venv/bin/python scripts/check_secrets.py --format json --tracked-only",
+      "exit_code": 1,
+      "expected_quarantined_findings": true,
+      "ok": true,
+      "summary": "valid=False; findings=6"
+    },
+    {
+      "command": ".venv/bin/python scripts/check_secrets.py --format json",
+      "exit_code": 1,
+      "expected_quarantined_findings": true,
+      "ok": true,
+      "summary": "valid=False; findings=6"
+    }
+  ],
+  "schema_version": "1.0.0",
+  "schemas": {
+    "before": {
+      "exists": true,
+      "files": 59,
+      "sha256": "e7905263e4b8f7e121c3c1df9ab4095547b498611bc4759b7b4c889feb649492"
+    },
+    "count": 59,
+    "first": {
+      "exists": true,
+      "files": 59,
+      "sha256": "e7905263e4b8f7e121c3c1df9ab4095547b498611bc4759b7b4c889feb649492"
+    },
+    "idempotent": true,
+    "second": {
+      "exists": true,
+      "files": 59,
+      "sha256": "e7905263e4b8f7e121c3c1df9ab4095547b498611bc4759b7b4c889feb649492"
+    }
+  },
+  "security": {
+    "accepted_required_evidence_findings": 0,
+    "raw": {
+      "findings": [
+        {
+          "kind": "private_path",
+          "line": 21,
+          "path": "artifacts/runs/gh-e1-slack-gif-creator-evolution/evals/candidate-db0b9d19f0ff48b624ea03b6/train/workspaces/work-2902fd854c96d694d92cbd84-repair-1/validation.json"
+        },
+        {
+          "kind": "private_path",
+          "line": 31,
+          "path": "artifacts/runs/gh-e1-slack-gif-creator-evolution/evals/candidate-db0b9d19f0ff48b624ea03b6/train/workspaces/work-2902fd854c96d694d92cbd84-repair-1/validation.json"
+        },
+        {
+          "kind": "private_path",
+          "line": 3,
+          "path": "artifacts/runs/gh-e1-slack-gif-creator-evolution/evals/candidate-db0b9d19f0ff48b624ea03b6/train/workspaces/work-4019f9c03c551a54cc773edb/generation-report.json"
+        },
+        {
+          "kind": "private_path",
+          "line": 3,
+          "path": "artifacts/runs/gh-e1-slack-gif-creator-evolution/evals/candidate-db0b9d19f0ff48b624ea03b6/train/workspaces/work-4019f9c03c551a54cc773edb/verification.json"
+        },
+        {
+          "kind": "private_path",
+          "line": 3,
+          "path": "artifacts/runs/gh-e1-slack-gif-creator-evolution/evals/candidate-db0b9d19f0ff48b624ea03b6/validation/workspaces/work-232e37fbed39fa841d967abc/validation-report.json"
+        },
+        {
+          "kind": "private_path",
+          "line": 15,
+          "path": "artifacts/runs/gh-e1-slack-gif-creator-evolution/evals/candidate-db0b9d19f0ff48b624ea03b6/validation/workspaces/work-232e37fbed39fa841d967abc/validation-report.json"
+        }
+      ],
+      "include_generated": true,
+      "scanned_files": 3387,
+      "tracked_skills_test_files": 0,
+      "tracked_skills_test_paths": [],
+      "valid": false
+    },
+    "raw_expected_quarantined_findings": true,
+    "tracked": {
+      "findings": [
+        {
+          "kind": "private_path",
+          "line": 21,
+          "path": "artifacts/runs/gh-e1-slack-gif-creator-evolution/evals/candidate-db0b9d19f0ff48b624ea03b6/train/workspaces/work-2902fd854c96d694d92cbd84-repair-1/validation.json"
+        },
+        {
+          "kind": "private_path",
+          "line": 31,
+          "path": "artifacts/runs/gh-e1-slack-gif-creator-evolution/evals/candidate-db0b9d19f0ff48b624ea03b6/train/workspaces/work-2902fd854c96d694d92cbd84-repair-1/validation.json"
+        },
+        {
+          "kind": "private_path",
+          "line": 3,
+          "path": "artifacts/runs/gh-e1-slack-gif-creator-evolution/evals/candidate-db0b9d19f0ff48b624ea03b6/train/workspaces/work-4019f9c03c551a54cc773edb/generation-report.json"
+        },
+        {
+          "kind": "private_path",
+          "line": 3,
+          "path": "artifacts/runs/gh-e1-slack-gif-creator-evolution/evals/candidate-db0b9d19f0ff48b624ea03b6/train/workspaces/work-4019f9c03c551a54cc773edb/verification.json"
+        },
+        {
+          "kind": "private_path",
+          "line": 3,
+          "path": "artifacts/runs/gh-e1-slack-gif-creator-evolution/evals/candidate-db0b9d19f0ff48b624ea03b6/validation/workspaces/work-232e37fbed39fa841d967abc/validation-report.json"
+        },
+        {
+          "kind": "private_path",
+          "line": 15,
+          "path": "artifacts/runs/gh-e1-slack-gif-creator-evolution/evals/candidate-db0b9d19f0ff48b624ea03b6/validation/workspaces/work-232e37fbed39fa841d967abc/validation-report.json"
+        }
+      ],
+      "include_generated": false,
+      "scanned_files": 3381,
+      "tracked_skills_test_files": 0,
+      "tracked_skills_test_paths": [],
+      "valid": false
+    },
+    "tracked_expected_quarantined_findings": true
+  },
+  "valid": true
+}

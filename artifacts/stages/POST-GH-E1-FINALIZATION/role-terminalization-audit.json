@@ -1,0 +1,51 @@
+{
+  "analyzer_semantics": "scores unchanged; no localization or patch seed synthesized",
+  "append_only_correction": {
+    "cleanup_artifact_mutated": false,
+    "corrected_fact": "role-level Grader/Comparator/Analyzer exhaustion is first completed in F.1",
+    "superseded_statement": "POST-GH-E1-CLEANUP broadly described Grader typed terminalization"
+  },
+  "fault_test_ref": "tests/evals/test_role_terminalization.py",
+  "frozen_policy_has_role_failure_penalty": false,
+  "held_out_semantics": "required role evidence incomplete => not deployable",
+  "rows": [
+    {
+      "disposition": "evidence_incomplete",
+      "fake_asi": false,
+      "fake_score": false,
+      "fake_submission": false,
+      "fake_winner": false,
+      "initial_plus_one_repair_terminalized": true,
+      "preaccounted_host_attempt_usage_added": false,
+      "reservation_settled_once": true,
+      "role": "independent_grader"
+    },
+    {
+      "disposition": "evidence_incomplete",
+      "fake_asi": false,
+      "fake_score": false,
+      "fake_submission": false,
+      "fake_winner": false,
+      "initial_plus_one_repair_terminalized": true,
+      "preaccounted_host_attempt_usage_added": false,
+      "reservation_settled_once": true,
+      "role": "comparator"
+    },
+    {
+      "disposition": "analysis_unavailable",
+      "fake_asi": false,
+      "fake_score": false,
+      "fake_submission": false,
+      "fake_winner": false,
+      "initial_plus_one_repair_terminalized": true,
+      "preaccounted_host_attempt_usage_added": false,
+      "reservation_settled_once": true,
+      "role": "analyzer"
+    }
+  ],
+  "schema_version": "1.0.0",
+  "single_runtime_and_ledger": true,
+  "stage_id": "POST-GH-E1-FINALIZATION",
+  "train_failure_semantics": "evidence_incomplete; remaining independent cases continue",
+  "valid": true
+}

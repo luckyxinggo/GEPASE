@@ -1,0 +1,22 @@
+{
+  "action": "continue",
+  "approved_increment": {
+    "active_wall_clock_ms": 2400000,
+    "agent_calls": 10,
+    "candidates": 0,
+    "estimated_tokens": 320000,
+    "proposals": 0,
+    "repairs": 10
+  },
+  "checkpoint_hash": "df68426c22815407bdf5bbfd83c09a83a61d11f162539580fbda2d909e21f2a4",
+  "checkpoint_id": "budget-checkpoint-d7536f9dcabffb3ff25f03ba",
+  "comment_zh": "依据用户对当前 GH-E1 剩余冻结流程的有界持续授权自动继续。当前 decision 仅批准 candidate-c36eb3adc54c93e3233d59e0 的 5 个 frozen train Executor work；以 Core 下一批估算的 2 倍作为安全余量，不修改 EvalPlan、scoring、model/provider、seed、Patch、Gate、split、proposal/candidate 或 Merge 契约。",
+  "config_hash": "64f73c49a10c92dcef02647682b75645ac1331e2f85d5fbedf4b567bd5f863c1",
+  "decided_at": "2026-07-29T08:56:51.508841Z",
+  "decision_id": "continuation-feed05593d10d92c37bca717",
+  "evidence_hash": "a9775945df3cfefb4442cbd7617e9222cd8d0f3f041fefaa62c786555277e8f7",
+  "previous_decision_hash": "197a6e45688b1e0d762b569d959016394120a137ad2b1784e17d0086e3b9319c",
+  "reviewer": "user-continuous-authorization",
+  "run_id": "gh-e1-slack-gif-creator-evolution",
+  "schema_version": "1.0.0"
+}

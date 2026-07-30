@@ -107,6 +107,41 @@ uv run gepase eval finalize-functional --run-dir <run-dir>
 - Write each raw role response outside another role's workspace. Core validates and stores the
   canonical copy; the host never computes TaskScoreVector or reconciles side identities.
 
+## Semantic relation proposals in AnalyzerSubmission
+
+When `semantic_enrichment` is present, the same isolated Analyzer may also return
+`semantic_relation_proposals`. Do not expose the full repository or graph beyond the work item's
+bounded references. Every proposal must use one configured relation type and this shape:
+
+```json
+{
+  "proposal_id": "stable-within-submission",
+  "source": {
+    "node_id": "exact allowed node id",
+    "content_hash": "exact allowed node content hash",
+    "excerpt": "non-empty substring of the exported node excerpt"
+  },
+  "target": {
+    "node_id": "different exact allowed node id",
+    "content_hash": "exact allowed node content hash",
+    "excerpt": "non-empty substring of the exported node excerpt"
+  },
+  "relation_type": "implements",
+  "task_id": "exact work task id",
+  "failure_cluster_id": "exact semantic scope failure cluster id",
+  "evidence_refs": ["exact evidence_artifacts path"],
+  "rationale_zh": "简洁说明这条关系如何帮助当前失败定位",
+  "confidence": 0.72,
+  "generated_at": "ISO-8601 timestamp"
+}
+```
+
+Allowed relation values are `implements`, `explains`, `constrains`, `consumes`, `produces`,
+`validates`, and `conflicts_with`. The Analyzer may return an empty tuple when evidence does not
+support a relationship. It must not create node IDs, cite unlisted evidence, return a Patch, or
+describe a hypothesis as a trusted dependency. Core may accept or reject each row independently;
+only the canonical Core result may be consumed downstream.
+
 ## Host compatibility
 
 - Codex: delegate isolated evaluation and reflection tasks to subagents and use the returned task

@@ -1,0 +1,85 @@
+{
+  "boundary": {
+    "candidate_count": 0,
+    "new_algorithm_effect_scores": 0,
+    "outcome": "budget_incomplete",
+    "package_patch_count": 0,
+    "train_gate_count": 0,
+    "validation_count": 0
+  },
+  "checkpoint": {
+    "checkpoint_id": "budget-checkpoint-b7d51dae6b8326e0a56cbcdc",
+    "next_batch_estimate": {
+      "active_wall_clock_ms": 600000,
+      "agent_calls": 2,
+      "candidates": 0,
+      "estimated_tokens": 64000,
+      "proposals": 2,
+      "repairs": 2
+    },
+    "used": {
+      "active_wall_clock_ms": 523110,
+      "agent_calls": 2,
+      "candidates": 0,
+      "estimated_tokens": 64000,
+      "proposals": 2,
+      "repairs": 0
+    }
+  },
+  "checks": {
+    "failures_were_not_host_normalized_into_patches": true,
+    "next_repair_batch_is_frozen_and_unexported": true,
+    "no_patch_candidate_train_or_effect_claim": true,
+    "proposal_queue_and_budget_are_reconciled": true,
+    "runtime_is_paused_before_repair_export": true,
+    "two_raw_outputs_and_two_typed_failures_preserved": true,
+    "two_same_scope_bounded_repairs_created": true
+  },
+  "phase": "E1.4_proposer_typed_failures_and_repair_checkpoint",
+  "refs": {
+    "artifacts/runs/gh-e1-slack-gif-creator-evolution/agent/proposer-raw/proposal-work-a3b21d4876085cb058d516f9.json": "f1137ddf4cba9ff4d408c8f3a22c647ce0a63159fbbba4032e819ca34241c0d6",
+    "artifacts/runs/gh-e1-slack-gif-creator-evolution/agent/proposer-raw/proposal-work-f93cb726b76fdd6a13ed28a5.json": "97833ad59bf6957be47b3b860be540e74558fc758b304c85ec17a7b59c70299f",
+    "artifacts/runs/gh-e1-slack-gif-creator-evolution/budget-checkpoints/budget-checkpoint-b7d51dae6b8326e0a56cbcdc.json": "7580e89c79d2d1e595d6bfeb9adda52c859d4fc065ab0fd826fef06892dca5e5",
+    "artifacts/runs/gh-e1-slack-gif-creator-evolution/evolution-state.json": "f06b5681dacd28642262a8b6c96833520bf731d0076d3e0ddcedd77c4c4eb5a0",
+    "artifacts/runs/gh-e1-slack-gif-creator-evolution/proposal-checkpoint.json": "b18775b8173d546f9b656355918b28b431b91500eed7718077543137d3b437b6",
+    "artifacts/runs/gh-e1-slack-gif-creator-evolution/proposal-submissions/proposal-work-a3b21d4876085cb058d516f9.json": "b2db6ddc6cf4bcabe3dcf6252c9ae06ccbdca68231d9d22bbea011509136aa90",
+    "artifacts/runs/gh-e1-slack-gif-creator-evolution/proposal-submissions/proposal-work-f93cb726b76fdd6a13ed28a5.json": "f57905f8c51038ff4786c010504a4dfcb84b8e730413bff8812684a8db153e44",
+    "artifacts/runs/gh-e1-slack-gif-creator-evolution/proposal-work-items/proposal-work-a3b21d4876085cb058d516f9-repair-1.json": "5a0c219071b7eb739a582f867e63922fe67b53a4d7c6d47174f27b298da1d318",
+    "artifacts/runs/gh-e1-slack-gif-creator-evolution/proposal-work-items/proposal-work-f93cb726b76fdd6a13ed28a5-repair-1.json": "cb712d7d066c9f8991fc038cf26503ba386ab0a275106bd94fcbbc97b8aba0d5",
+    "artifacts/runs/gh-e1-slack-gif-creator-evolution/run-lifecycle.json": "c23e5ff75266bcf59067b725f1c7ed4824d6c525689f4a41e5586643ddfb77aa",
+    "artifacts/runs/gh-e1-slack-gif-creator-evolution/runtime-session.json": "ec18bd53bf7425e5c88799b32c1e4739ea174d4ea1afbac162a8e48320a7f224"
+  },
+  "repair_scope": {
+    "exported": false,
+    "max_repair_attempt": 1,
+    "repair_work_ids": [
+      "proposal-work-a3b21d4876085cb058d516f9-repair-1",
+      "proposal-work-f93cb726b76fdd6a13ed28a5-repair-1"
+    ],
+    "repair_work_refs": [
+      "artifacts/runs/gh-e1-slack-gif-creator-evolution/proposal-work-items/proposal-work-a3b21d4876085cb058d516f9-repair-1.json",
+      "artifacts/runs/gh-e1-slack-gif-creator-evolution/proposal-work-items/proposal-work-f93cb726b76fdd6a13ed28a5-repair-1.json"
+    ]
+  },
+  "schema_version": "1.0.0",
+  "stage_id": "GH-E1",
+  "typed_failures": {
+    "failure_kinds": [
+      "submission_validation_failure"
+    ],
+    "host_task_ids": [
+      "/root/proposer_orbit",
+      "/root/proposer_status"
+    ],
+    "package_patches_constructed": 0,
+    "raw_response_refs": [
+      "artifacts/runs/gh-e1-slack-gif-creator-evolution/agent/proposer-raw/proposal-work-a3b21d4876085cb058d516f9.json",
+      "artifacts/runs/gh-e1-slack-gif-creator-evolution/agent/proposer-raw/proposal-work-f93cb726b76fdd6a13ed28a5.json"
+    ],
+    "submission_refs": [
+      "artifacts/runs/gh-e1-slack-gif-creator-evolution/proposal-submissions/proposal-work-a3b21d4876085cb058d516f9.json",
+      "artifacts/runs/gh-e1-slack-gif-creator-evolution/proposal-submissions/proposal-work-f93cb726b76fdd6a13ed28a5.json"
+    ]
+  },
+  "valid": true
+}

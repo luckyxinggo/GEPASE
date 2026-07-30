@@ -26,8 +26,6 @@ _REVERSE_KINDS = {
     EdgeKind.OBSERVED_EXECUTE,
     EdgeKind.FAILED_AT,
 }
-
-
 def reverse_slice(
     graph: PackageGraph,
     seed_node_ids: tuple[str, ...],
@@ -41,7 +39,8 @@ def reverse_slice(
         raise ValueError(f"unknown failure slice seeds: {sorted(unknown)}")
     predecessors: defaultdict[str, list[tuple[str, EdgeKind, float]]] = defaultdict(list)
     for edge in graph.edges:
-        if edge.kind in _REVERSE_KINDS:
+        trusted = edge.layer in {"static", "planned", "observed"} and edge.kind in _REVERSE_KINDS
+        if trusted:
             predecessors[edge.target].append((edge.source, edge.kind, edge.confidence))
     distance: dict[str, int] = {node_id: 0 for node_id in seed_node_ids}
     reason: dict[str, str] = {node_id: "failure seed" for node_id in seed_node_ids}

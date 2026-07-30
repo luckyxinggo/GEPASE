@@ -25,6 +25,8 @@ htmlcov/
 /artifacts/runs/s7-5-repaired-loop/private/
 /artifacts/runs/s7-5-no-headroom/
 /artifacts/manual_external_validation/
+/artifacts/runs/gh-e1-slack-gif-creator-reference/
+/artifacts/runs/gh-e1-slack-gif-creator-evolution/
 
 # OS/editor files
 .DS_Store

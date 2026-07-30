@@ -1,0 +1,11 @@
+{
+  "schema_version": "1.0.0",
+  "report_mode": "multi_outcome",
+  "report_id": "gh-e1-slack-gif-creator-report",
+  "title_zh": "GEPASE GH-E1 图加固独立效果复现",
+  "package_id": "slack-gif-creator",
+  "outcome_input_refs": [
+    "artifacts/runs/gh-e1-slack-gif-creator-evolution/effect-outcome-report-input.json",
+    "artifacts/runs/gh-e1-slack-gif-creator-reference/effect-outcome-report-input.json"
+  ]
+}

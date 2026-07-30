@@ -1,0 +1,14 @@
+{
+  "agent_calls": 0,
+  "outputs": [
+    {
+      "path": "packages/typed-fixture-budget-0.zip",
+      "sha256": "7faecb1450d87f3cd7066d33ca896dd36f121b27c50b53323e2a0462715feb84"
+    }
+  ],
+  "read_only_inputs": true,
+  "report_data_sha256": "3f4b2f23d51925f8f00444fb965f4deb7749163f08043cb10fce39aa786a474c",
+  "schema_version": "1.0.0",
+  "source_ref": "artifacts/stages/GH-E0.5/fixtures/report/budget/effect-outcome-report-input.json",
+  "source_sha256": "21f3bc39a0c9e7d8152a87891e3b75f222355b4e04a9c3a6d281f31f68d4149b"
+}

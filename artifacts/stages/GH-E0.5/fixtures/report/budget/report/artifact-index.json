@@ -1,0 +1,29 @@
+{
+  "artifacts": [
+    {
+      "media_type": "application/zip",
+      "path": "packages/typed-fixture-budget-0.zip",
+      "sha256": "7faecb1450d87f3cd7066d33ca896dd36f121b27c50b53323e2a0462715feb84",
+      "size_bytes": 141
+    },
+    {
+      "media_type": "application/json",
+      "path": "report-data.json",
+      "sha256": "3f4b2f23d51925f8f00444fb965f4deb7749163f08043cb10fce39aa786a474c",
+      "size_bytes": 3354
+    },
+    {
+      "media_type": "application/json",
+      "path": "evidence-manifest.json",
+      "sha256": "673e662d214ee606941551ac48173e9f565bf199efbeeb6b20818b2f581f453a",
+      "size_bytes": 527
+    },
+    {
+      "media_type": "text/html",
+      "path": "index.html",
+      "sha256": "05dfcc25b68a99b45ce52d6700d6488187e5ebb3acc92a8e24f2c8439dba17e3",
+      "size_bytes": 6817
+    }
+  ],
+  "schema_version": "1.0.0"
+}

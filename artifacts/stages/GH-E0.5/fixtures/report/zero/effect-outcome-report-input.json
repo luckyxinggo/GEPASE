@@ -1,0 +1,77 @@
+{
+  "budget_checkpoint_refs": [
+    "artifacts/stages/GH-E0.5/fixtures/report/zero-checkpoint.json"
+  ],
+  "candidates": [
+    {
+      "candidate_id": "typed-fixture-zero-rejected",
+      "gate_status": "rejected",
+      "graph_path_refs": [
+        "artifacts/stages/GH-E0.5/fixtures/report/typed-fixture-zero-rejected-graph.json"
+      ],
+      "parent_ids": [
+        "typed-fixture-seed"
+      ],
+      "patch_refs": [
+        "artifacts/stages/GH-E0.5/fixtures/report/typed-fixture-zero-rejected-patch.json"
+      ],
+      "rejection_reasons": [
+        "typed_fixture_rejected"
+      ],
+      "train_mean_delta": null,
+      "train_objective_deltas": null,
+      "validation_losses": 0,
+      "validation_mean_delta": null,
+      "validation_objective_deltas": null,
+      "validation_ties": 0,
+      "validation_wins": 0
+    }
+  ],
+  "continuation_decision_refs": [
+    "artifacts/stages/GH-E0.5/fixtures/report/zero-decision.json"
+  ],
+  "deployable_frontier": [],
+  "gate_funnel": {
+    "deployable": 0,
+    "proposed": 1
+  },
+  "merge_outcome": {
+    "build_record_ref": null,
+    "considered_parent_candidate_ids": [
+      "typed-fixture-parent"
+    ],
+    "considered_parent_set_count": 0,
+    "cross_package_pair_count": 0,
+    "eligible_parent_set_count": 0,
+    "enumeration_ref": "artifacts/stages/GH-E0.5/fixtures/report/zero-enumeration.json",
+    "evaluation_complete": false,
+    "merge_candidate_id": null,
+    "rejected_parent_set_count": 0,
+    "rejection_reason_counts": {
+      "insufficient_parents": 1
+    },
+    "schema_version": "1.0.0",
+    "selected_parent_set_id": null,
+    "status": "no_eligible_parent_set"
+  },
+  "outcome": "no_strict_improvement",
+  "package_id": "slack-gif-creator",
+  "pending_work_ids": [],
+  "provenance": {
+    "agent_calls": 0,
+    "fixture_only": true
+  },
+  "reference_summary": {
+    "fixture": "zero-agent typed reporting contract"
+  },
+  "rejected_memory_refs": [
+    "artifacts/stages/GH-E0.5/fixtures/report/zero-rejected.json"
+  ],
+  "run_id": "gh-e05-report-fixture-zero",
+  "runtime": {
+    "active_wall_clock_ms": 0,
+    "paused_ms": 0
+  },
+  "schema_version": "1.0.0",
+  "search_complete": true
+}

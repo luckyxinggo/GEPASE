@@ -1,0 +1,124 @@
+{
+  "$defs": {
+    "MergeOutcomeStatus": {
+      "enum": [
+        "materialized_pending_evaluation",
+        "materialized_and_evaluated",
+        "no_eligible_parent_set",
+        "not_reached_budget_incomplete"
+      ],
+      "title": "MergeOutcomeStatus",
+      "type": "string"
+    }
+  },
+  "additionalProperties": false,
+  "description": "Typed terminal/pending result of exhaustive train-only parent enumeration.",
+  "properties": {
+    "build_record_ref": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Build Record Ref"
+    },
+    "considered_parent_candidate_ids": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Considered Parent Candidate Ids",
+      "type": "array"
+    },
+    "considered_parent_set_count": {
+      "minimum": 0,
+      "title": "Considered Parent Set Count",
+      "type": "integer"
+    },
+    "cross_package_pair_count": {
+      "minimum": 0,
+      "title": "Cross Package Pair Count",
+      "type": "integer"
+    },
+    "eligible_parent_set_count": {
+      "minimum": 0,
+      "title": "Eligible Parent Set Count",
+      "type": "integer"
+    },
+    "enumeration_ref": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Enumeration Ref"
+    },
+    "evaluation_complete": {
+      "default": false,
+      "title": "Evaluation Complete",
+      "type": "boolean"
+    },
+    "merge_candidate_id": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Merge Candidate Id"
+    },
+    "rejected_parent_set_count": {
+      "minimum": 0,
+      "title": "Rejected Parent Set Count",
+      "type": "integer"
+    },
+    "rejection_reason_counts": {
+      "additionalProperties": {
+        "type": "integer"
+      },
+      "title": "Rejection Reason Counts",
+      "type": "object"
+    },
+    "schema_version": {
+      "default": "1.0.0",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "selected_parent_set_id": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Selected Parent Set Id"
+    },
+    "status": {
+      "$ref": "#/$defs/MergeOutcomeStatus"
+    }
+  },
+  "required": [
+    "status",
+    "considered_parent_candidate_ids",
+    "considered_parent_set_count",
+    "eligible_parent_set_count",
+    "rejected_parent_set_count",
+    "rejection_reason_counts",
+    "cross_package_pair_count"
+  ],
+  "title": "MergeOutcome",
+  "type": "object"
+}

@@ -72,3 +72,17 @@ def test_validation_requires_minimum_tier_and_strict_gain() -> None:
 def test_regression_floor_and_variance_diagnostics() -> None:
     assert regression_floor_diagnostic()["valid"] is True
     assert variance_policy_diagnostic()["valid"] is True
+
+
+def test_category_floor_precedes_any_variance_route() -> None:
+    decision = run_validation_gate(
+        (
+            _row("validation-risk", 0.9, 0.7, category="quality_efficiency"),
+            _row("validation-win", 0.4, 0.9, category="behavior"),
+        ),
+        policy=ValidationPolicy(bootstrap_samples=500),
+        secondary_objective_improvements={"task_score_efficiency": 0.2},
+    )
+    assert decision.statistics.mean_delta > 0
+    assert decision.gate.outcome is GateOutcome.FAILED
+    assert decision.gate.reason_codes == ("protected_objective_regression",)

@@ -1,0 +1,22 @@
+{
+  "schema_version": "1.0.0",
+  "decision_id": "continuation-3a15778c6df3faa7307ea75b",
+  "run_id": "gh-e1-slack-gif-creator-evolution",
+  "config_hash": "64f73c49a10c92dcef02647682b75645ac1331e2f85d5fbedf4b567bd5f863c1",
+  "checkpoint_id": "budget-checkpoint-78eaab3b763b042ef5079bde",
+  "checkpoint_hash": "5283f71183653e590e8d79704a162a2b5af07a101259f39923545b861b884b8d",
+  "evidence_hash": "a9775945df3cfefb4442cbd7617e9222cd8d0f3f041fefaa62c786555277e8f7",
+  "action": "continue",
+  "approved_increment": {
+    "agent_calls": 1,
+    "estimated_tokens": 32000,
+    "active_wall_clock_ms": 600000,
+    "proposals": 0,
+    "candidates": 0,
+    "repairs": 1
+  },
+  "reviewer": "user-bounded-continuous-authorization",
+  "comment_zh": "依据用户对当前 GH-E1 剩余冻结流程的有界持续授权自动继续。本 decision 仅批准 candidate-c36eb3adc54c93e3233d59e0 的冻结单次 Reflection，不增加 Proposal 或 Candidate 预算。",
+  "previous_decision_hash": "38626e6359108b4ce9a56aa866cb813f2542231106fbfff6bbe2b25e393e8c1e",
+  "decided_at": "2026-07-29T15:47:38.512890Z"
+}

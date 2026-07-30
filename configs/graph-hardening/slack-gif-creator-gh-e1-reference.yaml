@@ -1,0 +1,62 @@
+schema_version: 1.0.0
+run_id: gh-e1-slack-gif-creator-reference
+lifecycle_mode: create_new
+frozen_eval_plan_ref: artifacts/runs/r2-slack-gif-creator-evalplan/frozen-eval-plan.json
+scoring_policy_ref: configs/canaries/slack-gif-creator-r3-scoring.json
+skill_ref: benchmarks/canaries/slack-gif-creator/package
+package_graph_ref: artifacts/runs/gh-e1-slack-gif-creator-reference/package/graph.json
+variants: [no-skill, original]
+splits: [train, validation]
+evidence_tiers: [E0, E2, E3]
+seed: 42
+timeout_seconds: 600
+isolation:
+  host: codex
+  model: gpt-5.6-sol
+  fresh_context_per_role_work_item: true
+  share_role_conversation_history: false
+  max_concurrency: 3
+headless_enabled: false
+active_session_budget_policy:
+  schema_version: 1.0.0
+  initial_tranche:
+    agent_calls: 50
+    estimated_tokens: 850000
+    active_wall_clock_ms: 10800000
+    proposals: 0
+    candidates: 0
+    repairs: 50
+  maximum_continuation_increment:
+    agent_calls: 20
+    estimated_tokens: 400000
+    active_wall_clock_ms: 3600000
+    proposals: 0
+    candidates: 0
+    repairs: 20
+  max_concurrency: 3
+  role_estimates:
+    executor:
+      max_estimated_tokens_per_work: 32000
+      timeout_ms_per_work: 600000
+      max_repair_attempts_per_work: 1
+    independent_grader:
+      max_estimated_tokens_per_work: 12000
+      timeout_ms_per_work: 420000
+      max_repair_attempts_per_work: 1
+    comparator:
+      max_estimated_tokens_per_work: 8000
+      timeout_ms_per_work: 300000
+      max_repair_attempts_per_work: 1
+    analyzer:
+      max_estimated_tokens_per_work: 12000
+      timeout_ms_per_work: 600000
+      max_repair_attempts_per_work: 1
+  required_barriers:
+    - package_compiled
+    - reference_execution_complete
+    - reference_sealed
+    - budget_limit
+  require_user_continuation: true
+  cumulative_usage_never_resets: true
+checkpoint_schema: gepase.BudgetCheckpoint/1.0.0
+continuation_schema: gepase.BudgetContinuationDecision/1.0.0

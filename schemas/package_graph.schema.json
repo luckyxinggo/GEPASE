@@ -80,7 +80,13 @@
         "observed_read",
         "observed_execute",
         "observed_produce",
-        "failed_at"
+        "failed_at",
+        "implements",
+        "explains",
+        "constrains",
+        "consumes",
+        "validates",
+        "conflicts_with"
       ],
       "title": "EdgeKind",
       "type": "string"
@@ -137,7 +143,8 @@
           "enum": [
             "static",
             "planned",
-            "observed"
+            "observed",
+            "semantic_hypothesis"
           ],
           "title": "Layer",
           "type": "string"
@@ -279,6 +286,7 @@
         "binary",
         "capability",
         "dependency",
+        "config_key",
         "external",
         "unknown",
         "error",

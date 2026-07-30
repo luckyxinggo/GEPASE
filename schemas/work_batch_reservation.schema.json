@@ -1,0 +1,107 @@
+{
+  "$defs": {
+    "UsageAllowance": {
+      "additionalProperties": false,
+      "properties": {
+        "active_wall_clock_ms": {
+          "minimum": 0,
+          "title": "Active Wall Clock Ms",
+          "type": "integer"
+        },
+        "agent_calls": {
+          "minimum": 0,
+          "title": "Agent Calls",
+          "type": "integer"
+        },
+        "candidates": {
+          "default": 0,
+          "minimum": 0,
+          "title": "Candidates",
+          "type": "integer"
+        },
+        "estimated_tokens": {
+          "minimum": 0,
+          "title": "Estimated Tokens",
+          "type": "integer"
+        },
+        "proposals": {
+          "default": 0,
+          "minimum": 0,
+          "title": "Proposals",
+          "type": "integer"
+        },
+        "repairs": {
+          "default": 0,
+          "minimum": 0,
+          "title": "Repairs",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "agent_calls",
+        "estimated_tokens",
+        "active_wall_clock_ms"
+      ],
+      "title": "UsageAllowance",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "batch_id": {
+      "minLength": 1,
+      "title": "Batch Id",
+      "type": "string"
+    },
+    "created_at": {
+      "format": "date-time",
+      "title": "Created At",
+      "type": "string"
+    },
+    "reservation_id": {
+      "title": "Reservation Id",
+      "type": "string"
+    },
+    "role": {
+      "minLength": 1,
+      "title": "Role",
+      "type": "string"
+    },
+    "schema_version": {
+      "const": "1.0.0",
+      "default": "1.0.0",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "unsettled_work_ids": {
+      "items": {
+        "type": "string"
+      },
+      "minItems": 1,
+      "title": "Unsettled Work Ids",
+      "type": "array"
+    },
+    "upper_bound": {
+      "$ref": "#/$defs/UsageAllowance"
+    },
+    "work_ids": {
+      "items": {
+        "type": "string"
+      },
+      "minItems": 1,
+      "title": "Work Ids",
+      "type": "array"
+    }
+  },
+  "required": [
+    "reservation_id",
+    "batch_id",
+    "role",
+    "work_ids",
+    "unsettled_work_ids",
+    "upper_bound",
+    "created_at"
+  ],
+  "title": "WorkBatchReservation",
+  "type": "object"
+}

@@ -1,0 +1,78 @@
+{
+  "schema_version": "1.0.0",
+  "stage_id": "GH-E1",
+  "status": "blocked_role_repair_exhaustion_terminalization_gap",
+  "effect_outcome": "budget_incomplete",
+  "candidate_db0b": {
+    "candidate_id": "candidate-db0b9d19f0ff48b624ea03b6",
+    "train_cases": 5,
+    "executor_completed": 5,
+    "grader_completed": 5,
+    "mean_paired_delta": 0.07082999999999995,
+    "strict_wins": 5,
+    "ties": 0,
+    "losses": 0,
+    "protected_floor_satisfied": true,
+    "train_gate": "admitted",
+    "validation_started": false
+  },
+  "candidate_c36e": {
+    "candidate_id": "candidate-c36eb3adc54c93e3233d59e0",
+    "executor_terminal": 5,
+    "executor_completed": 4,
+    "executor_typed_failed": 1,
+    "successful_case_graders_completed": 3,
+    "successful_case_grader_repair_exhausted": 1,
+    "typed_failure_case_graders_skipped": 1,
+    "grader_scores": {
+      "functional-train-easing-orbit-005": 0.947,
+      "functional-train-emoji-bounce-001": 0.8735,
+      "functional-train-message-status-002": 0.9045
+    },
+    "unsettled_grader_work_id": "grader-work-81f28e928175a8830734a7e1",
+    "train_gate_started": false
+  },
+  "repair_exhaustion": {
+    "initial_context": "/root/grader_badge_c36e",
+    "initial_accounting_id": "host-attempt-bce569a7b699123be440c84c",
+    "repair_context": "/root/grader_badge_c36e_repair",
+    "repair_accounting_id": "host-attempt-88984fd83207a7bd765a9f8c",
+    "max_repair_attempts_per_work": 1,
+    "additional_agent_reexecution_authorized": false,
+    "fabricated_zero_score_submission": false,
+    "reservation_released": false
+  },
+  "core_gap": {
+    "executor_eval_work_terminalization_available": true,
+    "independent_grader_role_terminalization_available": false,
+    "missing_behavior": "A repair-exhausted IndependentGrader role work cannot be typed failed, settle its role reservation, and supply the preregistered failure score without fabricating an IndependentGraderSubmission.",
+    "stop_condition": "current code error prevents normal typed-failure closure"
+  },
+  "runtime": {
+    "status": "awaiting_continuation",
+    "agent_calls": 28,
+    "estimated_tokens": 717300,
+    "active_wall_clock_ms": 7168476,
+    "cumulative_agent_duration_ms": 12609696,
+    "repairs": 5,
+    "proposals": 4,
+    "candidates": 2,
+    "open_reservation_id": "reservation-7145a052b9d45ed7475c011a"
+  },
+  "checkpoint": {
+    "checkpoint_id": "budget-checkpoint-9bea990345503764a50da55a",
+    "checkpoint_sha256": "ce2d4694832524b3379323cda5f0884d745687a159685565471ccddbbf35d4b3",
+    "state_hash": "80aeb6df7ed118c5198552c9df0c960e27902541f74db492aa46110d0834fb69",
+    "evidence_hash": "a0efd229642574430b856416afc9f41360e8c034cbbe0e1d6c567c49a361c86c",
+    "barrier": "budget_limit"
+  },
+  "not_started": [
+    "candidate_c36e_train_finalize",
+    "candidate_c36e_train_gate",
+    "reflection_pareto",
+    "held_out_validation",
+    "conditional_merge",
+    "final_report",
+    "final_stage_seal"
+  ]
+}

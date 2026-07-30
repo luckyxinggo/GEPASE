@@ -1,0 +1,37 @@
+{
+  "category_floor_precedes_variance": true,
+  "future_recomputed_evidence": {
+    "aggregate": "mean_paired_delta",
+    "evidence_refs": [
+      "artifacts/runs/gh-e1-slack-gif-creator-evolution/evals/candidate-db0b9d19f0ff48b624ea03b6/validation/task-score-vectors/work-232e37fbed39fa841d967abc.json",
+      "artifacts/runs/gh-e1-slack-gif-creator-evolution/evals/candidate-db0b9d19f0ff48b624ea03b6/validation/task-score-vectors/work-be5275fba3389bad97a9245f.json",
+      "artifacts/runs/gh-e1-slack-gif-creator-evolution/evals/candidate-db0b9d19f0ff48b624ea03b6/validation/task-score-vectors/work-d45c605660952e1c97204e0d.json",
+      "artifacts/runs/gh-e1-slack-gif-creator-reference/task-score-vectors/work-06e0ca3901e49580a002d129.json",
+      "artifacts/runs/gh-e1-slack-gif-creator-reference/task-score-vectors/work-b33fad8398ab056166627930.json",
+      "artifacts/runs/gh-e1-slack-gif-creator-reference/task-score-vectors/work-f659fabc30459ff0d09ad348.json"
+    ],
+    "improvements": {
+      "task_score_efficiency": -0.2963839791666667
+    },
+    "per_task_deltas": {
+      "functional-validation-efficiency-007": -0.22762916666666677,
+      "functional-validation-loop-sparkles-006": -0.243917375,
+      "functional-validation-pulse-text-008": -0.4176053958333333
+    },
+    "primary_axes": [
+      "task_correctness",
+      "output_quality"
+    ],
+    "schema_version": "1.0.0",
+    "source_axis": "TaskScoreVector.efficiency"
+  },
+  "historical_gate_unchanged": {
+    "efficiency_regression": 0.0,
+    "secondary_objective_improvements": {},
+    "verdict": "rejected"
+  },
+  "primary_axes_do_not_include_efficiency": true,
+  "quality_efficiency_is_category_not_axis": true,
+  "schema_version": "1.0.0",
+  "valid": true
+}

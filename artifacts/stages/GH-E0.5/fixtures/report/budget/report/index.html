@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1"><title>GEPASE 多结局报告 Core fixture</title>
+<style>
+:root{--paper:#f4f0e8;--surface:#fffdf8;--ink:#202823;--muted:#687069;--line:#d8d4c8;
+--accent:#17685b;--warn:#9a6214}*{box-sizing:border-box}body{margin:0;background:var(--paper);
+color:var(--ink);font:15px/1.65 -apple-system,BlinkMacSystemFont,"PingFang SC",sans-serif}
+header,main{max-width:1180px;margin:auto;padding:48px 28px}header{padding-top:82px}
+h1{font:500 clamp(36px,6vw,70px)/1.08 Georgia,"Songti SC",serif;margin:12px 0}
+h2{font:500 34px/1.2 Georgia,"Songti SC",serif}.eyebrow{color:var(--accent);
+font:700 12px/1.2 ui-monospace;letter-spacing:.13em}section{padding:42px 0;border-top:1px solid var(--line)}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:14px}
+article,.panel{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:20px}
+table{width:100%;border-collapse:collapse;background:var(--surface)}th,td{padding:12px;
+border:1px solid var(--line);text-align:left;vertical-align:top}code{font:12px/1.5 ui-monospace;
+overflow-wrap:anywhere}.boundary{border-left:4px solid var(--warn);padding:14px 18px;background:#f4e7cf}
+.metric{font:500 28px Georgia,serif}a{color:var(--accent)}
+</style></head><body><header id="outcome"><div class="eyebrow">GEPASE / SEALED OUTCOME</div>
+<h1>预算检查点：搜索尚未完成</h1><p>GEPASE 多结局报告 Core fixture</p>
+<p class="boundary">本轮预注册搜索尚未收口; 已验证条目仅作 provisional evidence。</p></header><main>
+<section id="deployable"><div class="eyebrow">DEPLOYABLE FRONTIER</div><h2>产物与效果边界</h2>
+<div class="cards"><article><h3>typed-fixture-budget-0</h3><p>临时验证证据</p><code>7faecb1450d87f3cd7066d33ca896dd36f121b27c50b53323e2a0462715feb84</code><p><a href="packages/typed-fixture-budget-0.zip">下载确定性 Package 归档</a></p></article></div></section>
+<section id="candidates"><div class="eyebrow">CANDIDATES</div><h2>候选与 Gate 漏斗</h2>
+<div class="panel"><p><span class="metric">1</span> 个候选; frontier 1 个</p>
+<table><thead><tr><th>Candidate</th><th>Gate</th><th>Train Δ</th><th>Validation Δ</th>
+<th>拒绝理由</th></tr></thead><tbody><tr><td>typed-fixture-budget-0</td><td>accepted</td><td>None</td><td>None</td><td>—<details><summary>六维、Patch 与 Graph path</summary><pre>{
+  &quot;candidate_id&quot;: &quot;typed-fixture-budget-0&quot;,
+  &quot;parent_ids&quot;: [
+    &quot;typed-fixture-seed&quot;
+  ],
+  &quot;patch_refs&quot;: [
+    &quot;artifacts/stages/GH-E0.5/fixtures/report/typed-fixture-budget-0-patch.json&quot;
+  ],
+  &quot;graph_path_refs&quot;: [
+    &quot;artifacts/stages/GH-E0.5/fixtures/report/typed-fixture-budget-0-graph.json&quot;
+  ],
+  &quot;train_mean_delta&quot;: null,
+  &quot;validation_mean_delta&quot;: null,
+  &quot;train_objective_deltas&quot;: null,
+  &quot;validation_objective_deltas&quot;: null,
+  &quot;validation_wins&quot;: 0,
+  &quot;validation_ties&quot;: 0,
+  &quot;validation_losses&quot;: 0,
+  &quot;gate_status&quot;: &quot;accepted&quot;,
+  &quot;rejection_reasons&quot;: []
+}</pre></details></td></tr></tbody></table></div></section>
+<section id="merge"><div class="eyebrow">CONDITIONAL MERGE</div><h2>多父 Merge 终态</h2>
+<div class="panel"><p>状态: <code>no_eligible_parent_set</code></p>
+<p>拒绝理由计数: {&quot;insufficient_parents&quot;: 1}</p>
+<p>枚举证据: <code>artifacts/stages/GH-E0.5/fixtures/report/budget-enumeration.json</code></p></div></section>
+<section id="runtime"><div class="eyebrow">ACTIVE SESSION</div><h2>运行时、预算与恢复</h2>
+<div class="panel"><pre>{
+  &quot;active_wall_clock_ms&quot;: 0,
+  &quot;paused_ms&quot;: 0
+}</pre>
+<p>待处理 work: <code>typed-fixture-pending-work</code></p>
+<h3>Provenance</h3><pre>{
+  &quot;agent_calls&quot;: 0,
+  &quot;fixture_only&quot;: true
+}</pre></div></section>
+<script type="application/json" id="report-data">{"schema_version":"1.0.0","report_id":"gh-e05-report-fixture-budget","title_zh":"GEPASE 多结局报告 Core fixture","package_id":"slack-gif-creator","outcome_input_ref":"artifacts/stages/GH-E0.5/fixtures/report/budget/effect-outcome-report-input.json","outcome":"budget_incomplete","search_complete":false,"frontier_count":1,"deployable_frontier":[{"candidate_id":"typed-fixture-budget-0","package_ref":"artifacts/stages/GH-E0.5/fixtures/report/budget/packages/typed-fixture-budget-0","provisional":true,"lineage_refs":["artifacts/stages/GH-E0.5/fixtures/report/budget-lineage.json"],"patch_refs":["artifacts/stages/GH-E0.5/fixtures/report/budget-patch.json"],"validation_summary_ref":"artifacts/stages/GH-E0.5/fixtures/report/budget-validation.json","gate_decision_ref":"artifacts/stages/GH-E0.5/fixtures/report/budget-gate.json","archive_path":"packages/typed-fixture-budget-0.zip","archive_sha256":"7faecb1450d87f3cd7066d33ca896dd36f121b27c50b53323e2a0462715feb84","files":[{"path":"SKILL.md","sha256":"83a02bbc047ca48c287c1ce753a06385f8abbeea2a453f7af0734f4873f8a6cb","size_bytes":25}]}],"reference":{"fixture":"zero-agent typed reporting contract"},"candidates":[{"candidate_id":"typed-fixture-budget-0","parent_ids":["typed-fixture-seed"],"patch_refs":["artifacts/stages/GH-E0.5/fixtures/report/typed-fixture-budget-0-patch.json"],"graph_path_refs":["artifacts/stages/GH-E0.5/fixtures/report/typed-fixture-budget-0-graph.json"],"train_mean_delta":null,"validation_mean_delta":null,"train_objective_deltas":null,"validation_objective_deltas":null,"validation_wins":0,"validation_ties":0,"validation_losses":0,"gate_status":"accepted","rejection_reasons":[]}],"merge":{"schema_version":"1.0.0","status":"no_eligible_parent_set","considered_parent_candidate_ids":["typed-fixture-parent"],"considered_parent_set_count":0,"eligible_parent_set_count":0,"rejected_parent_set_count":0,"rejection_reason_counts":{"insufficient_parents":1},"cross_package_pair_count":0,"selected_parent_set_id":null,"merge_candidate_id":null,"evaluation_complete":false,"enumeration_ref":"artifacts/stages/GH-E0.5/fixtures/report/budget-enumeration.json","build_record_ref":null},"gate_funnel":{"deployable":1,"proposed":1},"rejected_memory_refs":["artifacts/stages/GH-E0.5/fixtures/report/budget-rejected.json"],"runtime":{"active_wall_clock_ms":0,"paused_ms":0},"budget_checkpoints":["artifacts/stages/GH-E0.5/fixtures/report/budget-checkpoint.json"],"continuation_decisions":["artifacts/stages/GH-E0.5/fixtures/report/budget-decision.json"],"pending_work_ids":["typed-fixture-pending-work"],"provenance":{"agent_calls":0,"fixture_only":true},"claim_boundary_zh":"本轮预注册搜索尚未收口; 已验证条目仅作 provisional evidence。"}</script></main></body></html>

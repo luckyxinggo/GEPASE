@@ -1,0 +1,37 @@
+{
+  "config_hash_identical": true,
+  "config_ref": "configs/canaries/slack-gif-creator-r4.json",
+  "default_mode": "static",
+  "fresh_config_hash": "3a224bcb9f3887b6af9974915b51407be7d757535b71b18913af70ebcc757572",
+  "fresh_static_targets": {
+    "functional-train-easing-orbit-005": [
+      "node-69ea814aac72a6c557485ef0"
+    ],
+    "functional-train-input-badge-003": [
+      "node-46d940221fa8caf3b6c22d2c"
+    ]
+  },
+  "proposal_selector_graph_fields": [
+    null,
+    null
+  ],
+  "proposal_selector_ranking_fields": [
+    null,
+    null
+  ],
+  "schema_version": "1.0.0",
+  "sealed_config_hash": "3a224bcb9f3887b6af9974915b51407be7d757535b71b18913af70ebcc757572",
+  "sealed_r4_initial_targets": {
+    "functional-train-easing-orbit-005": [
+      "node-69ea814aac72a6c557485ef0"
+    ],
+    "functional-train-input-badge-003": [
+      "node-46d940221fa8caf3b6c22d2c"
+    ]
+  },
+  "second_graph_store_created": false,
+  "second_search_or_evaluator_created": false,
+  "selector_graph_artifacts_created": false,
+  "single_controller_class": "gepase.optimizer.evolution_controller.R4EvolutionController",
+  "target_behavior_identical": true
+}

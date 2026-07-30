@@ -1,0 +1,104 @@
+{
+  "budget_checkpoints": [
+    "artifacts/stages/GH-E0.5/fixtures/report/budget-checkpoint.json"
+  ],
+  "candidates": [
+    {
+      "candidate_id": "typed-fixture-budget-0",
+      "gate_status": "accepted",
+      "graph_path_refs": [
+        "artifacts/stages/GH-E0.5/fixtures/report/typed-fixture-budget-0-graph.json"
+      ],
+      "parent_ids": [
+        "typed-fixture-seed"
+      ],
+      "patch_refs": [
+        "artifacts/stages/GH-E0.5/fixtures/report/typed-fixture-budget-0-patch.json"
+      ],
+      "rejection_reasons": [],
+      "train_mean_delta": null,
+      "train_objective_deltas": null,
+      "validation_losses": 0,
+      "validation_mean_delta": null,
+      "validation_objective_deltas": null,
+      "validation_ties": 0,
+      "validation_wins": 0
+    }
+  ],
+  "claim_boundary_zh": "本轮预注册搜索尚未收口; 已验证条目仅作 provisional evidence。",
+  "continuation_decisions": [
+    "artifacts/stages/GH-E0.5/fixtures/report/budget-decision.json"
+  ],
+  "deployable_frontier": [
+    {
+      "archive_path": "packages/typed-fixture-budget-0.zip",
+      "archive_sha256": "7faecb1450d87f3cd7066d33ca896dd36f121b27c50b53323e2a0462715feb84",
+      "candidate_id": "typed-fixture-budget-0",
+      "files": [
+        {
+          "path": "SKILL.md",
+          "sha256": "83a02bbc047ca48c287c1ce753a06385f8abbeea2a453f7af0734f4873f8a6cb",
+          "size_bytes": 25
+        }
+      ],
+      "gate_decision_ref": "artifacts/stages/GH-E0.5/fixtures/report/budget-gate.json",
+      "lineage_refs": [
+        "artifacts/stages/GH-E0.5/fixtures/report/budget-lineage.json"
+      ],
+      "package_ref": "artifacts/stages/GH-E0.5/fixtures/report/budget/packages/typed-fixture-budget-0",
+      "patch_refs": [
+        "artifacts/stages/GH-E0.5/fixtures/report/budget-patch.json"
+      ],
+      "provisional": true,
+      "validation_summary_ref": "artifacts/stages/GH-E0.5/fixtures/report/budget-validation.json"
+    }
+  ],
+  "frontier_count": 1,
+  "gate_funnel": {
+    "deployable": 1,
+    "proposed": 1
+  },
+  "merge": {
+    "build_record_ref": null,
+    "considered_parent_candidate_ids": [
+      "typed-fixture-parent"
+    ],
+    "considered_parent_set_count": 0,
+    "cross_package_pair_count": 0,
+    "eligible_parent_set_count": 0,
+    "enumeration_ref": "artifacts/stages/GH-E0.5/fixtures/report/budget-enumeration.json",
+    "evaluation_complete": false,
+    "merge_candidate_id": null,
+    "rejected_parent_set_count": 0,
+    "rejection_reason_counts": {
+      "insufficient_parents": 1
+    },
+    "schema_version": "1.0.0",
+    "selected_parent_set_id": null,
+    "status": "no_eligible_parent_set"
+  },
+  "outcome": "budget_incomplete",
+  "outcome_input_ref": "artifacts/stages/GH-E0.5/fixtures/report/budget/effect-outcome-report-input.json",
+  "package_id": "slack-gif-creator",
+  "pending_work_ids": [
+    "typed-fixture-pending-work"
+  ],
+  "provenance": {
+    "agent_calls": 0,
+    "fixture_only": true
+  },
+  "reference": {
+    "fixture": "zero-agent typed reporting contract"
+  },
+  "rejected_memory_refs": [
+    "artifacts/stages/GH-E0.5/fixtures/report/budget-rejected.json"
+  ],
+  "report_id": "gh-e05-report-fixture-budget",
+  "runtime": {
+    "active_wall_clock_ms": 0,
+    "paused_ms": 0
+  },
+  "schema_version": "1.0.0",
+  "search_complete": false,
+  "title_zh": "GEPASE 多结局报告 Core fixture"
+}

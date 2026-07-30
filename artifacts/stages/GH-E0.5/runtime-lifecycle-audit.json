@@ -1,0 +1,19 @@
+{
+  "fixture_kind": "zero_agent_core_contract",
+  "rejections": {
+    "critical_artifact_tamper": true,
+    "duplicate_create": true,
+    "half_initialized": true,
+    "missing_required_state": true,
+    "terminal_resume": true,
+    "wrong_config_hash": true
+  },
+  "resume_idempotent": true,
+  "schema_version": "1.0.0",
+  "typed_lifecycle_refs": [
+    "src/gepase/run_lifecycle.py",
+    "src/gepase/evals/engine.py",
+    "src/gepase/optimizer/evolution_controller.py"
+  ],
+  "valid_open_and_resume": true
+}

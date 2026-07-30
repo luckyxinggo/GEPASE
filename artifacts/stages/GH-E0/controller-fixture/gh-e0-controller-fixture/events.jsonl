@@ -1,0 +1,2 @@
+{"entity_id": "candidate-19a78e0afc08234d2d7f23c6", "event_id": 1, "event_type": "candidate_added", "payload": {"status": "seed"}}
+{"entity_id": "run", "event_id": 2, "event_type": "run_state_saved", "payload": {}}

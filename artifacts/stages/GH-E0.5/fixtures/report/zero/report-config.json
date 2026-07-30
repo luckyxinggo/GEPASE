@@ -1,0 +1,9 @@
+{
+  "outcome_input_ref": "artifacts/stages/GH-E0.5/fixtures/report/zero/effect-outcome-report-input.json",
+  "outcome_input_refs": [],
+  "package_id": "slack-gif-creator",
+  "report_id": "gh-e05-report-fixture-zero",
+  "report_mode": "multi_outcome",
+  "schema_version": "1.0.0",
+  "title_zh": "GEPASE 多结局报告 Core fixture"
+}

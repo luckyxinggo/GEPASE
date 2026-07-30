@@ -1,0 +1,53 @@
+uv --cache-dir /private/tmp/gepase-ghp1-uv-cache run pytest -q tests/package/test_semantic_hypotheses.py
+uv --cache-dir /private/tmp/gepase-ghp1-uv-cache run ruff check src/gepase/package/semantic.py src/gepase/package/semantic_models.py tests/package/test_semantic_hypotheses.py
+uv --cache-dir /private/tmp/gepase-ghp1-uv-cache run pyright src/gepase/package/semantic.py src/gepase/package/semantic_models.py tests/package/test_semantic_hypotheses.py
+uv --cache-dir /private/tmp/gepase-ghp1-uv-cache run pytest -q --junitxml artifacts/stages/GH-P1/test-results.xml
+uv --cache-dir /private/tmp/gepase-ghp1-uv-cache run ruff check .
+uv --cache-dir /private/tmp/gepase-ghp1-uv-cache run pyright
+uv --cache-dir /private/tmp/gepase-ghp1-uv-cache run python scripts/export_core_schemas.py
+uv --cache-dir /private/tmp/gepase-ghp1-uv-cache run python scripts/export_core_schemas.py
+uv --cache-dir /private/tmp/gepase-ghp1-uv-cache run python scripts/check_secrets.py --format json
+uv --cache-dir /private/tmp/gepase-ghp1-uv-cache run python scripts/check_markdown_links.py
+uv --cache-dir /private/tmp/gepase-ghp1-uv-cache run python scripts/check_license.py
+git diff --check
+uv --cache-dir /private/tmp/gepase-ghp1-uv-cache run python scripts/check_secrets.py --format json
+uv --cache-dir /private/tmp/gepase-ghp1-uv-cache run pytest -q --junitxml artifacts/stages/GH-P1/test-results.xml
+uv --cache-dir /private/tmp/gepase-ghp1-uv-cache run ruff check .
+uv --cache-dir /private/tmp/gepase-ghp1-uv-cache run pyright
+uv --cache-dir /private/tmp/gepase-ghp1-uv-cache run python scripts/export_core_schemas.py
+uv --cache-dir /private/tmp/gepase-ghp1-uv-cache run python scripts/export_core_schemas.py
+uv --cache-dir /private/tmp/gepase-ghp1-uv-cache run python scripts/check_secrets.py --format json
+uv --cache-dir /private/tmp/gepase-ghp1-uv-cache run python scripts/check_markdown_links.py
+uv --cache-dir /private/tmp/gepase-ghp1-uv-cache run python scripts/check_license.py
+git diff --check
+uv --cache-dir /private/tmp/gepase-ghp1-uv-cache run python scripts/check_secrets.py --format json
+uv --cache-dir /private/tmp/gepase-ghp1-uv-cache run pytest -q --junitxml artifacts/stages/GH-P1/test-results.xml
+uv --cache-dir /private/tmp/gepase-ghp1-uv-cache run ruff check .
+uv --cache-dir /private/tmp/gepase-ghp1-uv-cache run pyright
+uv --cache-dir /private/tmp/gepase-ghp1-uv-cache run python scripts/export_core_schemas.py
+uv --cache-dir /private/tmp/gepase-ghp1-uv-cache run python scripts/export_core_schemas.py
+uv --cache-dir /private/tmp/gepase-ghp1-uv-cache run python scripts/check_secrets.py --format json
+uv --cache-dir /private/tmp/gepase-ghp1-uv-cache run python scripts/check_markdown_links.py
+uv --cache-dir /private/tmp/gepase-ghp1-uv-cache run python scripts/check_license.py
+git diff --check
+uv --cache-dir /private/tmp/gepase-ghp1-uv-cache run python scripts/check_secrets.py --format json
+uv --cache-dir /private/tmp/gepase-ghp1-uv-cache run pytest -q --junitxml artifacts/stages/GH-P1/test-results.xml
+uv --cache-dir /private/tmp/gepase-ghp1-uv-cache run ruff check .
+uv --cache-dir /private/tmp/gepase-ghp1-uv-cache run pyright
+uv --cache-dir /private/tmp/gepase-ghp1-uv-cache run python scripts/export_core_schemas.py
+uv --cache-dir /private/tmp/gepase-ghp1-uv-cache run python scripts/export_core_schemas.py
+uv --cache-dir /private/tmp/gepase-ghp1-uv-cache run python scripts/check_secrets.py --format json
+uv --cache-dir /private/tmp/gepase-ghp1-uv-cache run python scripts/check_markdown_links.py
+uv --cache-dir /private/tmp/gepase-ghp1-uv-cache run python scripts/check_license.py
+git diff --check
+uv --cache-dir /private/tmp/gepase-ghp1-uv-cache run python scripts/check_secrets.py --format json
+uv --cache-dir /private/tmp/gepase-ghp1-uv-cache run pytest -q --junitxml artifacts/stages/GH-P1/test-results.xml
+uv --cache-dir /private/tmp/gepase-ghp1-uv-cache run ruff check .
+uv --cache-dir /private/tmp/gepase-ghp1-uv-cache run pyright
+uv --cache-dir /private/tmp/gepase-ghp1-uv-cache run python scripts/export_core_schemas.py
+uv --cache-dir /private/tmp/gepase-ghp1-uv-cache run python scripts/export_core_schemas.py
+uv --cache-dir /private/tmp/gepase-ghp1-uv-cache run python scripts/check_secrets.py --format json
+uv --cache-dir /private/tmp/gepase-ghp1-uv-cache run python scripts/check_markdown_links.py
+uv --cache-dir /private/tmp/gepase-ghp1-uv-cache run python scripts/check_license.py
+git diff --check
+uv --cache-dir /private/tmp/gepase-ghp1-uv-cache run python scripts/check_secrets.py --format json

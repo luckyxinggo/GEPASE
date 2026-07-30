@@ -1,0 +1,49 @@
+{
+  "gates": [
+    {
+      "gate_id": "PGEC-G00",
+      "status": "passed"
+    },
+    {
+      "gate_id": "PGEC-G01",
+      "status": "passed"
+    },
+    {
+      "gate_id": "PGEC-G02",
+      "status": "passed"
+    },
+    {
+      "gate_id": "PGEC-G03",
+      "status": "passed"
+    },
+    {
+      "gate_id": "PGEC-G04",
+      "status": "passed"
+    },
+    {
+      "gate_id": "PGEC-G05",
+      "status": "passed"
+    },
+    {
+      "gate_id": "PGEC-G06",
+      "status": "passed"
+    },
+    {
+      "gate_id": "PGEC-G07",
+      "status": "passed"
+    },
+    {
+      "gate_id": "PGEC-G08",
+      "status": "passed"
+    },
+    {
+      "gate_id": "PGEC-G09",
+      "status": "passed"
+    }
+  ],
+  "passed": 10,
+  "schema_version": "1.0.0",
+  "stage_id": "POST-GH-E1-CLEANUP",
+  "status": "passed",
+  "total": 10
+}

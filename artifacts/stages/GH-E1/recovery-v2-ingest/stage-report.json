@@ -1,0 +1,39 @@
+{
+  "agent_calls": 0,
+  "checkpoint_id": "budget-checkpoint-6b5e58c6842d19e135394ebf",
+  "checkpoint_state_hash": "812e6d3c8e6322881444a9151510c39775a37eebef12b2082d80cab716b0d34e",
+  "conclusion_boundary": {
+    "algorithm_effect_validated": false,
+    "code_implemented": true,
+    "engineering_recovery_mechanism_tested": true
+  },
+  "formal_gh_e1": "in_progress_4_of_10",
+  "generated_at": "2026-07-29T07:32:13.676023+00:00",
+  "headless_api_calls": 0,
+  "ledger_status": {
+    "cache_hits": 0,
+    "completed": 3,
+    "dispatches": 3,
+    "exported": 0,
+    "failed": 0,
+    "pending": 2,
+    "records": 6,
+    "submissions": 3
+  },
+  "next_batch_work_ids": [
+    "work-aadafebefc1e2d501cbe7db4",
+    "work-f4822f29168045273356a3fc"
+  ],
+  "runtime_used": {
+    "active_wall_clock_ms": 1814840,
+    "agent_calls": 9,
+    "candidates": 2,
+    "estimated_tokens": 288000,
+    "proposals": 4,
+    "repairs": 2
+  },
+  "schema_version": "1.0.0",
+  "stage_id": "GH-E1-recovery-v2-ingest",
+  "status": "complete_paused",
+  "stopped_before_export": true
+}

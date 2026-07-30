@@ -22,42 +22,17 @@ from gepase.mutation.schema import (
     package_patch_from_proposal,
 )
 from gepase.optimizer.candidate import build_seed_candidate
+from gepase.optimizer.graph_selector import eligible_mutation_targets
 from gepase.optimizer.selectors import (
     SelectionContext,
-    SelectionTarget,
     SelectorKind,
     selector_for,
 )
 from gepase.package.analyzer import PackageAnalyzer
 from gepase.package.faults import apply_fault, load_fault_cases
-from gepase.package.ir import NodeKind, PackageGraph
+from gepase.package.ir import NodeKind
 from gepase.package.loader import load_package
 from gepase.package.slicing import reverse_slice
-
-
-def _eligible_targets(graph: PackageGraph) -> tuple[SelectionTarget, ...]:
-    return tuple(
-        SelectionTarget(
-            node_id=node.node_id,
-            path=node.path,
-            locator=node.locator,
-            node_kind=node.kind.value,
-            content_hash=node.content_hash,
-            token_estimate=max(1, (len(node.label) + len(str(node.metadata))) // 4),
-        )
-        for node in graph.nodes
-        if node.mutable
-        and (node.span is not None or node.kind is NodeKind.FILE)
-        and node.kind
-        in {
-            NodeKind.FILE,
-            NodeKind.FRONTMATTER,
-            NodeKind.SECTION,
-            NodeKind.INSTRUCTION,
-            NodeKind.REFERENCE_CHUNK,
-            NodeKind.FUNCTION,
-        }
-    )
 
 
 def selector_benchmark(project_root: Path, corpus: Path, *, seed: int = 42) -> dict[str, Any]:
@@ -82,7 +57,7 @@ def selector_benchmark(project_root: Path, corpus: Path, *, seed: int = 42) -> d
             failure_slice = reverse_slice(graph, seeds, max_nodes=30, max_tokens=3_000)
             context = SelectionContext(
                 graph=graph,
-                targets=_eligible_targets(graph),
+            targets=eligible_mutation_targets(graph),
                 failure_slices=(failure_slice,),
                 evidence_refs=(f"fault:{case.case_id}",),
                 diagnostic_severity={node_id: 1.0 for node_id in seeds},
@@ -396,7 +371,7 @@ def selector_viability(run_dir: Path) -> dict[str, Any]:
     total = len(rows)
     graph_hits = sum(any(item["path"] in truth for item in row["selected"]) for row in rows)
     parent_graph = PackageAnalyzer().analyze(run_dir / "parent/package").graph
-    targets = _eligible_targets(parent_graph)
+    targets = eligible_mutation_targets(parent_graph)
     seeds = tuple(
         node.node_id
         for node in parent_graph.nodes

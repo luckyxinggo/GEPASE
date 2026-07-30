@@ -1,0 +1,29 @@
+{
+  "artifacts": [
+    {
+      "media_type": "application/json",
+      "path": "recovery-ingest-audit.json",
+      "sha256": "4d611778095aa590ce68e0b28538f93b6a2bd5c5e2830f7529c4feb21e913a09",
+      "size_bytes": 7796
+    },
+    {
+      "media_type": "application/json",
+      "path": "verification.json",
+      "sha256": "79e3b08947f5c27a22f5fe043604fa4a410e8f1d7a4493e3d49f4dd7793fe055",
+      "size_bytes": 1876
+    },
+    {
+      "media_type": "application/json",
+      "path": "machine-gates.json",
+      "sha256": "71df1a70d60e7824350976e463e0bc450dcfa0d72323564f9eaa9487cf9748d0",
+      "size_bytes": 1842
+    },
+    {
+      "media_type": "application/json",
+      "path": "stage-report.json",
+      "sha256": "efc13e062e55216dfc6f644fc56cdfd98a6f584b05222f9ddecc9605e4b24d49",
+      "size_bytes": 1053
+    }
+  ],
+  "schema_version": "1.0.0"
+}

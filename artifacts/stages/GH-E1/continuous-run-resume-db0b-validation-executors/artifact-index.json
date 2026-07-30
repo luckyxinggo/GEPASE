@@ -1,0 +1,11 @@
+{
+  "artifacts": [
+    {
+      "media_type": "application/json",
+      "path": "continuation-decision.json",
+      "sha256": "de86634b500b02c8faca489e3aa4b86748e107caa16110e32835c98bf9c69154",
+      "size_bytes": 1143
+    }
+  ],
+  "schema_version": "1.0.0"
+}

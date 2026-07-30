@@ -62,6 +62,30 @@ Executor before Core reports `execution_ready`.
 8. Check `status`, `aggregate`, and `replay`. On interruption, run `gepase eval resume`, then
    re-export pending work; completed work must not be rerun.
 
+## Bounded semantic Analyzer enrichment
+
+Use this path only when Core exports an `AnalyzerWorkItem` with a non-null
+`semantic_enrichment` scope. It extends the existing Analyzer role; it is not a second graph,
+retrieval service, or experiment system.
+
+1. Run all deterministic semantic fixture Gates before launching an Agent. If they fail, stop;
+   do not spend the single Analyzer call.
+2. Launch one fresh Analyzer context with only its typed work item, the exact
+   `evidence_artifacts`, `prompt_ref`, and `schema_ref`. The bounded `allowed_nodes` excerpts are
+   the only graph neighborhood it may inspect.
+3. The Analyzer may propose only the configured relation enum between existing same-snapshot
+   nodes. It must preserve node content hashes, task/failure identity, evidence refs, rationale,
+   confidence, timing, model, context, prompt, schema, and config provenance.
+4. Treat every proposal as an untrusted `semantic_hypothesis`. The host must not add nodes/edges,
+   deduplicate relations, change selector scores, or promote confidence to fact. Core performs
+   validation, caching, overlay construction, and consumer filtering.
+5. Semantic hypotheses may inform failure localization, ASI explanation, selector top-k, and
+   exploration ordering only. They cannot authorize Patch operations, TargetSet expansion,
+   dependency/safety closure, Merge eligibility/conflict handling, or Validation Gate decisions.
+6. A touched node invalidates only matching semantic cache entries. If Core finds no accepted
+   proposal with explainable bounded localization value, preserve the stalled outcome; do not
+   launch a repair Analyzer unless a later stage explicitly budgets one.
+
 ## Structured PackagePatch workflow
 
 1. Inspect `gepase mutation status`, then export exactly one item with `gepase mutation next-work`.
@@ -84,8 +108,8 @@ not exposed by this thin adapter until R4 reconnects evaluation, Patch, Gate, an
 Core-owned state machine.
 
 Read `references/work-submission.md` for exact Eval Designer, ExecutionBundle, Independent Grader,
-Comparator, and Analyzer submission protocols, workspace conventions, failure handling, and
-cross-host notes.
+Comparator, Analyzer, semantic-enrichment, and PackagePatch submission protocols, workspace
+conventions, failure handling, and cross-host notes.
 
 ## Boundaries
 
@@ -97,5 +121,7 @@ cross-host notes.
 - Do not simulate E2 with prose. If execution is unavailable, submit the typed environment or
   unsupported failure and preserve the sample.
 - Do not call an external LLM API unless the run explicitly selects a Headless Provider.
+- Do not let semantic-only edges authorize edits, dependency closure, Merge, or Gate outcomes,
+  regardless of their confidence.
 - Keep credentials, private absolute paths, raw private traces, and hidden labels out of all work
   bundles and submissions.

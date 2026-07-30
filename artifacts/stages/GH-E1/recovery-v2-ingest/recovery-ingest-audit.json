@@ -1,0 +1,188 @@
+{
+  "checkpoint": {
+    "checkpoint_id": "budget-checkpoint-6b5e58c6842d19e135394ebf",
+    "checkpoint_sha256": "de14ae8046f582b9964108aea419572c4172e89fc3628a719867d73307893f1e",
+    "evidence_hash": "d9fc37e0abb30a4176b8b5f46262fc60d30d9f70aebd719f452da5a8436cab22",
+    "evidence_ref": "artifacts/runs/gh-e1-slack-gif-creator-evolution/post-recovery-checkpoints/evidence-d9fc37e0abb30a4176b8b5f4.json",
+    "freshness_audit": {
+      "audit_id": "checkpoint-freshness-6978ae856e97855fd05e9ba8",
+      "audited_at": "2026-07-29T07:32:13.676023Z",
+      "checkpoint_id": "budget-checkpoint-6b5e58c6842d19e135394ebf",
+      "checkpoint_ref": "budget-checkpoints/budget-checkpoint-6b5e58c6842d19e135394ebf.json",
+      "checkpoint_sha256": "de14ae8046f582b9964108aea419572c4172e89fc3628a719867d73307893f1e",
+      "checkpoint_state_hash": "812e6d3c8e6322881444a9151510c39775a37eebef12b2082d80cab716b0d34e",
+      "config_hash": "64f73c49a10c92dcef02647682b75645ac1331e2f85d5fbedf4b567bd5f863c1",
+      "evidence_hash": "d9fc37e0abb30a4176b8b5f46262fc60d30d9f70aebd719f452da5a8436cab22",
+      "is_latest_checkpoint": true,
+      "no_uncheckpointed_recovery": true,
+      "run_id": "gh-e1-slack-gif-creator-evolution",
+      "runtime_state_hash": "812e6d3c8e6322881444a9151510c39775a37eebef12b2082d80cab716b0d34e",
+      "schema_version": "1.0.0",
+      "valid": true
+    },
+    "new_checkpoint_continuation_decisions": 0,
+    "prior_checkpoint_id": "budget-checkpoint-5d23b80b3ea0123c444707dc",
+    "prior_checkpoint_rejection": "checkpoint is not the latest runtime checkpoint",
+    "runtime_state_hash": "812e6d3c8e6322881444a9151510c39775a37eebef12b2082d80cab716b0d34e",
+    "state_hash": "812e6d3c8e6322881444a9151510c39775a37eebef12b2082d80cab716b0d34e"
+  },
+  "formal_gh_e1": {
+    "algorithm_effect_validated": false,
+    "candidate_train_gate_run": false,
+    "passed": 4,
+    "total": 10
+  },
+  "generated_at": "2026-07-29T07:32:13.676023+00:00",
+  "ledger": {
+    "expected_pending_work_ids": [
+      "work-aadafebefc1e2d501cbe7db4",
+      "work-f4822f29168045273356a3fc"
+    ],
+    "status": {
+      "cache_hits": 0,
+      "completed": 3,
+      "dispatches": 3,
+      "exported": 0,
+      "failed": 0,
+      "pending": 2,
+      "records": 6,
+      "submissions": 3
+    },
+    "work_statuses": {
+      "work-2902fd854c96d694d92cbd84": "completed",
+      "work-4019f9c03c551a54cc773edb": "completed",
+      "work-7bde15e8233bde28fa9c1297": "completed",
+      "work-aadafebefc1e2d501cbe7db4": "pending",
+      "work-f4822f29168045273356a3fc": "pending"
+    }
+  },
+  "mode": "zero_agent_deterministic_recovery_ingest_then_pause",
+  "next_batch": {
+    "estimate": {
+      "active_wall_clock_ms": 600000,
+      "agent_calls": 2,
+      "candidates": 0,
+      "estimated_tokens": 64000,
+      "proposals": 0,
+      "repairs": 2
+    },
+    "exported": false,
+    "role": "executor",
+    "work_ids": [
+      "work-aadafebefc1e2d501cbe7db4",
+      "work-f4822f29168045273356a3fc"
+    ]
+  },
+  "recovery_audits": [
+    {
+      "attempt_kind": "reexecution",
+      "audit_id": "recovery-audit-acb1748403c3ad3b132a831d",
+      "committed_audit_ref": "artifacts/runs/gh-e1-slack-gif-creator-evolution/evals/candidate-db0b9d19f0ff48b624ea03b6/train/recovery-audits/recovery-audit-acb1748403c3ad3b132a831d.json",
+      "committed_audit_sha256": "60de2261d2802f01f11da55bfe0488053809249bb18c9cae6c38f672f885d3d9",
+      "selected_host_attempt_accounting_id": "host-attempt-562e44e43a4c2febe838cf47",
+      "source_workspace_tree_hash": "cc68e915766785bd7735f5e1703ba2ed0f67676f9a975e9aab3f79eb31b2ae3e",
+      "work_id": "work-2902fd854c96d694d92cbd84"
+    },
+    {
+      "attempt_kind": "initial_execution",
+      "audit_id": "recovery-audit-2c85fda34992c4d825868ff7",
+      "committed_audit_ref": "artifacts/runs/gh-e1-slack-gif-creator-evolution/evals/candidate-db0b9d19f0ff48b624ea03b6/train/recovery-audits/recovery-audit-2c85fda34992c4d825868ff7.json",
+      "committed_audit_sha256": "99e5d8425e6fedd19385ec61b2c3fe6b8a296009b122fa851fdcb083643a7ad9",
+      "selected_host_attempt_accounting_id": "host-attempt-405f981208743ca7b9504052",
+      "source_workspace_tree_hash": "5b1ac4372b0b8e491bd4d8fea9b3fea0b3fa08790b44a471e5e9c4538d275008",
+      "work_id": "work-4019f9c03c551a54cc773edb"
+    }
+  ],
+  "reservation_settlements": [
+    {
+      "accounting_mode": "preaccounted_host_attempts",
+      "actual": {
+        "active_wall_clock_ms": 0,
+        "agent_calls": 0,
+        "candidates": 0,
+        "estimated_tokens": 0,
+        "proposals": 0,
+        "repairs": 0
+      },
+      "ref": "artifacts/runs/gh-e1-slack-gif-creator-evolution/reservation-settlements/work-2902fd854c96d694d92cbd84.json",
+      "sha256": "163caef316e5714d6d57d7628455fcf7927a6894debecb7f241fcf68bbd59982",
+      "work_id": "work-2902fd854c96d694d92cbd84"
+    },
+    {
+      "accounting_mode": "preaccounted_host_attempts",
+      "actual": {
+        "active_wall_clock_ms": 0,
+        "agent_calls": 0,
+        "candidates": 0,
+        "estimated_tokens": 0,
+        "proposals": 0,
+        "repairs": 0
+      },
+      "ref": "artifacts/runs/gh-e1-slack-gif-creator-evolution/reservation-settlements/work-4019f9c03c551a54cc773edb.json",
+      "sha256": "84e0293b18dbe500d8c20aed1fda252fafaed1753716ef573e71d134ab4f019a",
+      "work_id": "work-4019f9c03c551a54cc773edb"
+    }
+  ],
+  "runtime": {
+    "cumulative_agent_duration_ms": 5400000,
+    "open_reservations": 0,
+    "post_recovery_checkpoint_required": false,
+    "status": "awaiting_continuation",
+    "uncheckpointed_recovery_work_ids": [],
+    "used": {
+      "active_wall_clock_ms": 1814840,
+      "agent_calls": 9,
+      "candidates": 2,
+      "estimated_tokens": 288000,
+      "proposals": 4,
+      "repairs": 2
+    }
+  },
+  "schema_version": "1.0.0",
+  "stage_id": "GH-E1-recovery-v2-ingest",
+  "staged_submissions": [
+    {
+      "excluded_optional_files": [
+        "build_deployment_status.py",
+        "validation.json",
+        "verification_contact_sheet.png"
+      ],
+      "required_files": [
+        "deployment_status.gif",
+        "transcript.md",
+        "observed-trace.json",
+        "package-access.json"
+      ],
+      "staging_root_ref": "artifacts/runs/gh-e1-slack-gif-creator-evolution/evals/candidate-db0b9d19f0ff48b624ea03b6/train/recovery-staging/work-2902fd854c96d694d92cbd84-repair-1",
+      "submission_ref": "artifacts/runs/gh-e1-slack-gif-creator-evolution/evals/candidate-db0b9d19f0ff48b624ea03b6/train/recovered-submissions/work-2902fd854c96d694d92cbd84.json",
+      "submission_sha256": "d122a389e3bfcc0e3c61dc02be143f971d0adb1b33a2188b0fa718860d07ac3a",
+      "task_output_bytes_unchanged": true,
+      "work_id": "work-2902fd854c96d694d92cbd84"
+    },
+    {
+      "excluded_optional_files": [
+        "create_meeting_gif.py",
+        "generation-report.json",
+        "verification.json",
+        "verify_meeting_gif.py"
+      ],
+      "required_files": [
+        "meeting_sync_reminder.gif",
+        "transcript.md",
+        "observed-trace.json",
+        "package-access.json"
+      ],
+      "staging_root_ref": "artifacts/runs/gh-e1-slack-gif-creator-evolution/evals/candidate-db0b9d19f0ff48b624ea03b6/train/recovery-staging/work-4019f9c03c551a54cc773edb-initial",
+      "submission_ref": "artifacts/runs/gh-e1-slack-gif-creator-evolution/evals/candidate-db0b9d19f0ff48b624ea03b6/train/recovered-submissions/work-4019f9c03c551a54cc773edb.json",
+      "submission_sha256": "b31ec928ee3b2171a7bf69c78630f297ef473470834db94067ef58af2e363129",
+      "task_output_bytes_unchanged": true,
+      "work_id": "work-4019f9c03c551a54cc773edb"
+    }
+  ],
+  "zero_agent_proof": {
+    "agent_calls": 0,
+    "headless_api_calls": 0,
+    "runtime_usage_equals_pre_recovery": true,
+    "settlement_added_agent_usage": false
+  }
+}

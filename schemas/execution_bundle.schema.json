@@ -329,6 +329,11 @@
       "default": null,
       "title": "Proxy Score Method"
     },
+    "repair_attempt": {
+      "default": false,
+      "title": "Repair Attempt",
+      "type": "boolean"
+    },
     "schema_version": {
       "default": "1.0.0",
       "title": "Schema Version",

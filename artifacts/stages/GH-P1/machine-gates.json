@@ -1,0 +1,91 @@
+{
+  "failed": 1,
+  "gates": [
+    {
+      "detail": "GH-P0 passed; one public failure cluster, bounded nodes and one Analyzer call are frozen.",
+      "evidence": [
+        "preflight.json",
+        "analyzer-work-item.json",
+        "resolved-config.json"
+      ],
+      "gate_id": "GHP1-G00-preflight_and_scope",
+      "status": "passed"
+    },
+    {
+      "detail": "Relation enum, existing-node, snapshot/content/evidence/provenance checks passed fixtures.",
+      "evidence": [
+        "fixture-gates.json",
+        "resolved-relation-schema.json"
+      ],
+      "gate_id": "GHP1-G01-typed_relation_rejection",
+      "status": "passed"
+    },
+    {
+      "detail": "Semantic hypotheses remain a separate dashed Agent 假设 layer.",
+      "evidence": [
+        "fixture-gates.json"
+      ],
+      "gate_id": "GHP1-G02-layer_and_display",
+      "status": "passed"
+    },
+    {
+      "detail": "Only localization/explanation/top-k/exploration consumers are enabled.",
+      "evidence": [
+        "fixture-gates.json",
+        "resolved-relation-schema.json"
+      ],
+      "gate_id": "GHP1-G03-consumer_allowlist",
+      "status": "passed"
+    },
+    {
+      "detail": "Exact cache identity and touched-node-only invalidation passed fixtures.",
+      "evidence": [
+        "fixture-gates.json"
+      ],
+      "gate_id": "GHP1-G04-exact_cache",
+      "status": "passed"
+    },
+    {
+      "detail": "False high-confidence relations lack authority; absent semantic input preserves trusted behavior.",
+      "evidence": [
+        "fixture-gates.json"
+      ],
+      "gate_id": "GHP1-G05-adversarial_and_degradation",
+      "status": "passed"
+    },
+    {
+      "detail": "One isolated Analyzer produced 4 accepted and 0 rejected hypotheses; bounded location value=True; usage within frozen budget=False.",
+      "evidence": [
+        "analyzer-work-item.json",
+        "agent/analyzer-raw-submission.json",
+        "accepted-proposals.json",
+        "rejected-proposals.json",
+        "consumer-trace.json"
+      ],
+      "gate_id": "GHP1-G06-single_analyzer_viability_and_value",
+      "status": "failed"
+    },
+    {
+      "detail": "Full tests/Ruff/Pyright/41 schemas/security/docs/license/diff passed=True; sealed inputs unchanged=True.",
+      "evidence": [
+        "verification.json",
+        "preflight.json",
+        "artifact-index.json"
+      ],
+      "gate_id": "GHP1-G07-regression_seal_and_immutability",
+      "status": "passed"
+    }
+  ],
+  "offline_value_gate": {
+    "accepted_semantic_hypotheses": 4,
+    "does_not_claim_skill_improvement": true,
+    "selector_nodes_with_bounded_semantic_contribution": 5,
+    "status": "passed",
+    "valid": true
+  },
+  "outcome": "stalled",
+  "passed": 7,
+  "schema_version": "1.0.0",
+  "stage_id": "GH-P1",
+  "valid": false
+}

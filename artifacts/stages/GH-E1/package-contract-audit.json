@@ -1,0 +1,49 @@
+{
+  "checks": {
+    "complete_paired_work_planned": true,
+    "fresh_snapshot_matches_frozen": true,
+    "frozen_plan_and_scoring_bound": true,
+    "paused_before_agent_export": true,
+    "reference_identity": true,
+    "resolved_config_matches_frozen": true,
+    "source_provenance": true,
+    "static_graph_complete": true
+  },
+  "gate_id": "GHE1-G01",
+  "refs": {
+    "budget-checkpoints/budget-checkpoint-fd1d955b47dd3085e362abb3.json": "4c47002add8e1813ded874c16a459642f28be2814b1b39398e99154c4c9cb548",
+    "ledger-snapshot.json": "e5fbc06a76594b8f50f94ac668fa1a3f0123fd731c93170dc2cc4a41f4d1ffe0",
+    "package/diagnostics.json": "83dfc9887d81f382111af740369610312e1f01eabae00746d3c703c9cb18ee3c",
+    "package/graph.json": "8fee934d85b75c2cd29df5e1273b6871b4c6910895ce6faed1382c48adda7ff1",
+    "package/package-ir.json": "80b5755847c78277027223f7d01e66e7129fd2be30b5877e7e24ad32127710e0",
+    "package/snapshot.json": "56ddcd6e1cece6c5f7c6d3e4ef4d9e713d09df01cfe15ef3c25a984d106f7575",
+    "resolved-reference-config.json": "cf902e88f72c1d8c778e2cade2590b0254732d5824e15c5124a550355d579668",
+    "run-lifecycle.json": "107da213777d08e6f96524643e066f99dbdc297890a9dce22a0f2918d3b79a8e",
+    "run-metadata.json": "e96ecac1f516dcce1db63b7be911be3fb8481c589ae0f4efcb32080a72d37c30",
+    "runtime-session.json": "218427ad80165819b5d256281bde0202235b48f4d98d2ac52c36a9d8235db71e"
+  },
+  "schema_version": "1.0.0",
+  "stage_id": "GH-E1",
+  "summary": {
+    "checkpoint_id": "budget-checkpoint-fd1d955b47dd3085e362abb3",
+    "file_count": 7,
+    "graph_edges": 474,
+    "graph_layers": [
+      "static"
+    ],
+    "graph_nodes": 380,
+    "next_batch_estimate": {
+      "active_wall_clock_ms": 3600000,
+      "agent_calls": 16,
+      "candidates": 0,
+      "estimated_tokens": 512000,
+      "proposals": 0,
+      "repairs": 16
+    },
+    "package_snapshot_hash": "ce42d8a837acf9feda9706a3418fc26a77c497d9615079e616b5fdc6870ef64e",
+    "planned_work_items": 16,
+    "runtime_status": "awaiting_continuation"
+  },
+  "upstream_problems": [],
+  "valid": true
+}

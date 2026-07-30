@@ -1,0 +1,77 @@
+{
+  "artifacts": [
+    {
+      "media_type": "application/json",
+      "path": "cleanup-scope-audit.json",
+      "sha256": "f25f134d7cc4e9ec9328b73cb6820c01f117c21e6d3916da6d6a16978607092d",
+      "size_bytes": 1297
+    },
+    {
+      "media_type": "application/json",
+      "path": "mainline-audit.json",
+      "sha256": "21091dc30a76711b75725d909080570e6066eadcc455e2b81dbbc732074a9e30",
+      "size_bytes": 895
+    },
+    {
+      "media_type": "application/json",
+      "path": "proposal-accounting-audit.json",
+      "sha256": "910a730a97bb7082c9c018357cd77674254eeddaffa7526dcfe29bffb75e9130",
+      "size_bytes": 625
+    },
+    {
+      "media_type": "application/json",
+      "path": "secondary-objective-audit.json",
+      "sha256": "0211c39ba1ad09be8af62d9d5ebbc3f512f7fe3d37188f1cb0702d5cac7fb22c",
+      "size_bytes": 1736
+    },
+    {
+      "media_type": "application/json",
+      "path": "selector-replay-audit.json",
+      "sha256": "409095f51b14a4bb11b8cc297ccba10a40aa35d5facfd5b225ed4fd63dd55ab1",
+      "size_bytes": 17424
+    },
+    {
+      "media_type": "application/json",
+      "path": "semantic-retirement-audit.json",
+      "sha256": "d731798e97f614fb52e722445cd21cfd18488d0652ecedfc635b53cbc3dfafbb",
+      "size_bytes": 434
+    },
+    {
+      "media_type": "application/json",
+      "path": "gepa-depth-audit.json",
+      "sha256": "0877fa28fc5424a61a3ee1e0a4101b1c4426594fe6b5a00629a6ab0dd342149e",
+      "size_bytes": 865
+    },
+    {
+      "media_type": "application/json",
+      "path": "protected-tree-audit.json",
+      "sha256": "415d1d14bfda93dce7ff15ae105c41ebfb9dcaebbeea273ee9b619eab6c9226b",
+      "size_bytes": 4851
+    },
+    {
+      "media_type": "application/json",
+      "path": "verification.json",
+      "sha256": "af2bcd5436bb2cc8e4ace25238e0879429675ec29f5ccb4beabab12b2ab7717b",
+      "size_bytes": 6893
+    },
+    {
+      "media_type": "application/json",
+      "path": "machine-gates.json",
+      "sha256": "e3b8d3c8c715ee875a7e3f7363e4277f0cfdff61547f2bd32bdeb067f269a8f9",
+      "size_bytes": 808
+    },
+    {
+      "media_type": "application/json",
+      "path": "stage_report.json",
+      "sha256": "e5b2ee26a06ef9827fa2c94d9d42220b10ca0a4616cf97231fc8cca2a606f3a7",
+      "size_bytes": 573
+    },
+    {
+      "media_type": "text/plain",
+      "path": "commands.log",
+      "sha256": "dcd6e0edb543653cdfe4aad1404cd52f01c5e3c6fbd617547157626e70a1dc16",
+      "size_bytes": 649
+    }
+  ],
+  "schema_version": "1.0.0"
+}

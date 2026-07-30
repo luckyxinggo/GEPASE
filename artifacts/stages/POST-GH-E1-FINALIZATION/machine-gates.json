@@ -1,0 +1,52 @@
+{
+  "gates": [
+    {
+      "evidence_refs": [
+        "preflight.json",
+        "verification.json"
+      ],
+      "gate_id": "PGEF-G00",
+      "status": "passed"
+    },
+    {
+      "evidence_refs": [
+        "role-terminalization-audit.json"
+      ],
+      "gate_id": "PGEF-G01",
+      "status": "passed"
+    },
+    {
+      "evidence_refs": [
+        "role-terminalization-audit.json"
+      ],
+      "gate_id": "PGEF-G02",
+      "status": "passed"
+    },
+    {
+      "evidence_refs": [
+        "selector-attribution-replay.json"
+      ],
+      "gate_id": "PGEF-G03",
+      "status": "passed"
+    },
+    {
+      "evidence_refs": [
+        "generation2-fixture-audit.json"
+      ],
+      "gate_id": "PGEF-G04",
+      "status": "passed"
+    },
+    {
+      "evidence_refs": [
+        "verification.json"
+      ],
+      "gate_id": "PGEF-G05",
+      "status": "passed"
+    }
+  ],
+  "passed": 6,
+  "schema_version": "1.0.0",
+  "stage_id": "POST-GH-E1-FINALIZATION",
+  "status": "passed",
+  "total": 6
+}

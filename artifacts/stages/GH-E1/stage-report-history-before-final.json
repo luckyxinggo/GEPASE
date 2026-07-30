@@ -1,0 +1,15 @@
+{
+  "schema_version": "1.0.0",
+  "stage_id": "GH-E1",
+  "status": "in_progress",
+  "preserved_reason": "Append-only summary of the recovery-era projection before final completion.",
+  "started_from_commit": "7fa0a110b254e05319699a79ec44da2bf2014409",
+  "latest_checkpoint_at_projection": "budget-checkpoint-5d23b80b3ea0123c444707dc",
+  "next_barrier": "E1.5_executor_repair_contract_exhausted_requires_user_direction",
+  "conclusion_boundary": {
+    "code_implemented": true,
+    "engineering_mechanism_tested": true,
+    "new_algorithm_effect_validated": false
+  },
+  "note": "The original detailed projection remains in the artifact-index history; this compact copy prevents the final current-view update from erasing its semantic status."
+}

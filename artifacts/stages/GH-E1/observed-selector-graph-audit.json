@@ -1,0 +1,100 @@
+{
+  "binding": {
+    "accepted_unique_work_ids": [
+      "work-229b28b7e4ec64d79ddc725d",
+      "work-4d807d3a99ff3d159ec6fb29",
+      "work-8b18ac4a317bfa0522d70aca",
+      "work-9a981b04ae2ac3fb91d31911",
+      "work-aeaea033cebc5f6b4e948b5e"
+    ],
+    "cache_key": "8fd8f917db94447fc79df55cc71ae82600ea1bd35c467017fcdbf8d1cdcef987",
+    "filtered_unique_work_ids": [
+      "work-02f7b78398c181ede25632a6",
+      "work-06e0ca3901e49580a002d129",
+      "work-18b797bfd1094a2c7da4ec6b",
+      "work-46dec20be705aa5122c31a80",
+      "work-9eea3d6a86124113c1f705e6",
+      "work-a2e2a2aedb4cf5049c623860",
+      "work-a90881ca08a8679475629c61",
+      "work-b33fad8398ab056166627930",
+      "work-b836a5a0009428cefa51ce4f",
+      "work-ba5bed1fe1f6ee2b5cd0648b",
+      "work-f659fabc30459ff0d09ad348"
+    ],
+    "layer_counts": {
+      "observed": 61,
+      "planned": 0,
+      "semantic_hypothesis": 0,
+      "static": 474
+    },
+    "mapped_access_events": 61,
+    "parent_candidate_id": "candidate-6216d41d096cf68cae667dac",
+    "parent_snapshot_hash": "ce42d8a837acf9feda9706a3418fc26a77c497d9615079e616b5fdc6870ef64e"
+  },
+  "checks": {
+    "evolution_is_paused_at_scope_barrier": true,
+    "fresh_export_manifest_and_typed_items_are_auditable": true,
+    "fresh_reference_remains_terminal_sealed": true,
+    "graph_guided_scope_is_bounded_and_consumes_dynamic_access": true,
+    "no_skill_validation_and_other_evidence_filtered_pre_edge": true,
+    "parent_bound_static_observed_binding": true,
+    "reference_cache_is_exact_and_read_only_verified": true,
+    "scope_only_has_no_proposer_candidate_or_effect": true,
+    "semantic_and_planned_layers_closed": true,
+    "typed_observed_edges_from_original_train_only": true
+  },
+  "gate_id": "GHE1-G03",
+  "phase": "E1.3_parent_bound_static_observed_graph_and_proposal_scope",
+  "proposal_scope": {
+    "edit_budget": {
+      "max_changed_files": 2,
+      "max_operations": 2,
+      "max_targets": 2
+    },
+    "exported_to_proposer": false,
+    "target_node_ids": [
+      [
+        "node-69ea814aac72a6c557485ef0",
+        "node-fddc99453114c3a40363b219"
+      ],
+      [
+        "node-46d940221fa8caf3b6c22d2c",
+        "node-390c19b0fbd4439b006d6a79"
+      ]
+    ],
+    "task_ids": [
+      "functional-train-easing-orbit-005",
+      "functional-train-message-status-002"
+    ],
+    "work_ids": [
+      "proposal-work-a3b21d4876085cb058d516f9",
+      "proposal-work-f93cb726b76fdd6a13ed28a5"
+    ]
+  },
+  "refs": {
+    "artifacts/runs/gh-e1-slack-gif-creator-evolution/branch-plan.json": "d13b35d426fff9aa1375005ae0329672c236cb624d6d7138572520f8743888a9",
+    "artifacts/runs/gh-e1-slack-gif-creator-evolution/budget-checkpoints/budget-checkpoint-80ae4f7e87b02d63f2544d84.json": "0cd44864340c8197d6c6dc74918c1b0adf1aee25224ce1c99e160ce5004be913",
+    "artifacts/runs/gh-e1-slack-gif-creator-evolution/proposal-checkpoint.json": "5a02b77fb8b69bcf0e6b9f5cd50401a64d53fd357f3bb247f639f705cf977b98",
+    "artifacts/runs/gh-e1-slack-gif-creator-evolution/proposal-work-items/proposal-work-a3b21d4876085cb058d516f9.json": "3514093972d2f260cf86bb9d316009e6a9681dcf722c96c3d2b3f523ac84f66d",
+    "artifacts/runs/gh-e1-slack-gif-creator-evolution/proposal-work-items/proposal-work-f93cb726b76fdd6a13ed28a5.json": "66fa96e71cc1c036d0a3c05f35939158d3138fb6e06ca82ae2b8e57265e385d7",
+    "artifacts/runs/gh-e1-slack-gif-creator-evolution/reference-cache-audit.json": "ce9bf59082600ffb350f342e89bc02c19a1599be9e79d7cd39b88650446258c2",
+    "artifacts/runs/gh-e1-slack-gif-creator-evolution/reference-evidence-key.json": "6be7fa67241de03e07f3b2a2b20bbc1740da06bd1751142da9cfa3032ad6917a",
+    "artifacts/runs/gh-e1-slack-gif-creator-evolution/run-lifecycle.json": "fd32fb191fb957a3d209ceb922a6f5d288d9a0c5c3b7be1034719719d81f9af5",
+    "artifacts/runs/gh-e1-slack-gif-creator-evolution/runtime-session.json": "dc5b176d9af0fd51bcf046d61436cc16823493b872ac35c6ee9f93d8aa076bec",
+    "artifacts/runs/gh-e1-slack-gif-creator-evolution/selector-graphs/candidate-6216d41d096cf68cae667dac/8fd8f917db94447fc79df55cc71ae82600ea1bd35c467017fcdbf8d1cdcef987/binding.json": "42f07e942a315181090fb51d6ba8008a24d41e4f25e4d25a7970b84b160e1476",
+    "artifacts/runs/gh-e1-slack-gif-creator-evolution/selector-graphs/candidate-6216d41d096cf68cae667dac/8fd8f917db94447fc79df55cc71ae82600ea1bd35c467017fcdbf8d1cdcef987/coverage.json": "44454420e61dd1cb10fe101d900e24cf261fc294bbe1d17cde6d0060ee571562",
+    "artifacts/runs/gh-e1-slack-gif-creator-evolution/selector-graphs/candidate-6216d41d096cf68cae667dac/8fd8f917db94447fc79df55cc71ae82600ea1bd35c467017fcdbf8d1cdcef987/overlay-audit.json": "a349aaf47d911f076d4441a8478372f1d94486a3ed0c0e61dc6c4703dc09b367"
+  },
+  "repair_history": {
+    "evidence_boundary_zh": "两次失败均未产生 Agent、Proposal、Candidate 或效果分数。",
+    "failed_initialization_stubs_moved_not_deleted": [
+      "artifacts/local/gh-e1-evolution-initialize-failed/attempt-1-wal-sidecar-blocked",
+      "artifacts/local/gh-e1-evolution-initialize-failed/attempt-2-work-manifest-blocked"
+    ],
+    "repair_1": "immutable SQLite read-only verification prevents WAL/SHM sidecars",
+    "repair_2": "overlay consumes fresh exports/executor-batch.json plus typed work items"
+  },
+  "schema_version": "1.0.0",
+  "stage_id": "GH-E1",
+  "valid": true
+}

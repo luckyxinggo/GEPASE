@@ -1,0 +1,91 @@
+{
+  "gates": [
+    {
+      "evidence": [
+        "preflight.json",
+        "verification.json"
+      ],
+      "gate_id": "GHE05-G00-preflight_and_immutability",
+      "status": "passed"
+    },
+    {
+      "evidence": [
+        "runtime-lifecycle-audit.json"
+      ],
+      "gate_id": "GHE05-G01-single_mainline_and_lifecycle",
+      "status": "passed"
+    },
+    {
+      "evidence": [
+        "active-session-fixture.json",
+        "checkpoint-review-fixture.html",
+        "continuation-decision-fixture.json"
+      ],
+      "gate_id": "GHE05-G02-active_clock_and_pause_resume",
+      "status": "passed"
+    },
+    {
+      "evidence": [
+        "budget-policy.json",
+        "budget-reservation-fixture.json",
+        "continuation-decision-fixture.json"
+      ],
+      "gate_id": "GHE05-G03-budget_reservation_and_user_control",
+      "status": "passed"
+    },
+    {
+      "evidence": [
+        "budget-policy.json",
+        "gh-e1-config-audit.json"
+      ],
+      "gate_id": "GHE05-G04-runtime_efficiency_preserved",
+      "status": "passed"
+    },
+    {
+      "evidence": [
+        "merge-outcome-fixture.json"
+      ],
+      "gate_id": "GHE05-G05-conditional_merge_outcome",
+      "status": "passed"
+    },
+    {
+      "evidence": [
+        "report-outcome-fixture.json"
+      ],
+      "gate_id": "GHE05-G06-multi_outcome_multi_frontier_report",
+      "status": "passed"
+    },
+    {
+      "evidence": [
+        "gh-e1-config-audit.json",
+        "gh-e1-gate-dry-run.json"
+      ],
+      "gate_id": "GHE05-G07-gh_e1_configs_and_gate_dry_run",
+      "status": "passed"
+    },
+    {
+      "evidence": [
+        "preflight.json"
+      ],
+      "gate_id": "GHE05-G08-no_agent_or_effect_claim",
+      "status": "passed"
+    },
+    {
+      "evidence": [
+        "verification.json",
+        "commands.log",
+        "test-results.xml",
+        "artifact-index.json"
+      ],
+      "gate_id": "GHE05-G09-regression_verification_and_seal",
+      "status": "passed"
+    }
+  ],
+  "gh_e1_started": false,
+  "gh_e1_unlocked": true,
+  "passed": 10,
+  "schema_version": "1.0.0",
+  "stage_id": "GH-E0.5",
+  "status": "passed",
+  "total": 10
+}

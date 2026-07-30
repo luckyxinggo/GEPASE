@@ -1,0 +1,94 @@
+{
+  "$defs": {
+    "ProviderFailureKind": {
+      "enum": [
+        "invalid_submission",
+        "duplicate",
+        "timeout",
+        "partial_artifact",
+        "interrupted",
+        "unsupported_capability",
+        "task_failure",
+        "environment_unavailable"
+      ],
+      "title": "ProviderFailureKind",
+      "type": "string"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "config_hash": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Config Hash",
+      "type": "string"
+    },
+    "failure_detail": {
+      "minLength": 1,
+      "title": "Failure Detail",
+      "type": "string"
+    },
+    "failure_kind": {
+      "$ref": "#/$defs/ProviderFailureKind"
+    },
+    "host_attempt_accounting_ids": {
+      "items": {
+        "type": "string"
+      },
+      "minItems": 1,
+      "title": "Host Attempt Accounting Ids",
+      "type": "array"
+    },
+    "requested_at": {
+      "format": "date-time",
+      "title": "Requested At",
+      "type": "string"
+    },
+    "run_id": {
+      "title": "Run Id",
+      "type": "string"
+    },
+    "schema_version": {
+      "const": "1.0.0",
+      "default": "1.0.0",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "source_submission_ref": {
+      "title": "Source Submission Ref",
+      "type": "string"
+    },
+    "source_submission_sha256": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Source Submission Sha256",
+      "type": "string"
+    },
+    "terminalization_id": {
+      "title": "Terminalization Id",
+      "type": "string"
+    },
+    "usage_already_accounted": {
+      "const": true,
+      "default": true,
+      "title": "Usage Already Accounted",
+      "type": "boolean"
+    },
+    "work_id": {
+      "title": "Work Id",
+      "type": "string"
+    }
+  },
+  "required": [
+    "terminalization_id",
+    "run_id",
+    "config_hash",
+    "work_id",
+    "failure_kind",
+    "failure_detail",
+    "source_submission_ref",
+    "source_submission_sha256",
+    "host_attempt_accounting_ids",
+    "requested_at"
+  ],
+  "title": "RepairExhaustionTerminalization",
+  "type": "object"
+}

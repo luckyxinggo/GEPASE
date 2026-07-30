@@ -41,6 +41,24 @@ def test_loader_rejects_symlink_escape(tmp_path: Path) -> None:
         load_package(package)
 
 
+def test_runtime_python_cache_does_not_change_package_identity(tmp_path: Path) -> None:
+    package = tmp_path / "package"
+    core = package / "core"
+    core.mkdir(parents=True)
+    (package / "SKILL.md").write_text("# Stable\n", encoding="utf-8")
+    (core / "tool.py").write_text("VALUE = 1\n", encoding="utf-8")
+    before = load_package(package)
+
+    cache = core / "__pycache__"
+    cache.mkdir()
+    (cache / "tool.cpython-313.pyc").write_bytes(b"runtime cache")
+    (core / "loose.pyc").write_bytes(b"runtime cache")
+
+    after = load_package(package)
+    assert after.snapshot_hash == before.snapshot_hash
+    assert after.files == before.files
+
+
 def test_markdown_semantic_node_ids_ignore_line_offsets(tmp_path: Path) -> None:
     source = PUBLIC_SKILLS / "structured-report-builder"
     first_root = tmp_path / "first"

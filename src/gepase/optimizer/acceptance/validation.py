@@ -3,10 +3,12 @@
 from __future__ import annotations
 
 from collections import defaultdict
+from pathlib import Path
 
 from pydantic import Field
 
 from gepase.evals.schema import EvidenceTier
+from gepase.evals.scores import TaskScoreVector
 from gepase.evals.statistics import PairedScore, PairedStatistics, paired_statistics
 from gepase.optimizer.acceptance.models import (
     GateLevel,
@@ -37,6 +39,9 @@ class ValidationPolicy(FrozenModel):
             "complexity": 0.02,
         }
     )
+    task_score_secondary_minimum_effect: dict[str, float] = Field(
+        default_factory=lambda: {"task_score_efficiency": 0.02}
+    )
     secondary_regression_floor: float = Field(default=-0.01, le=0)
     bootstrap_samples: int = Field(default=5_000, ge=100)
     seed: int = 42
@@ -47,6 +52,65 @@ class ValidationGateDecision(FrozenModel):
     statistics: PairedStatistics
     category_deltas: dict[str, float]
     minimum_tier_complete: bool
+
+
+class TaskScoreSecondaryEvidence(FrozenModel):
+    """Recomputable mapping from paired vectors to Gate secondary objectives."""
+
+    schema_version: str = "1.0.0"
+    source_axis: str = "TaskScoreVector.efficiency"
+    aggregate: str = "mean_paired_delta"
+    primary_axes: tuple[str, str] = ("task_correctness", "output_quality")
+    improvements: dict[str, float]
+    per_task_deltas: dict[str, float]
+    evidence_refs: tuple[str, ...]
+
+
+def _task_score_vector(project_root: Path, reference: str) -> TaskScoreVector:
+    relative = Path(reference)
+    if relative.is_absolute() or ".." in relative.parts:
+        raise ValueError("TaskScoreVector evidence ref must be repository-relative")
+    path = (project_root.resolve() / relative).resolve(strict=True)
+    if not path.is_relative_to(project_root.resolve()):
+        raise ValueError("TaskScoreVector evidence ref escapes the project")
+    return TaskScoreVector.model_validate_json(path.read_text(encoding="utf-8"))
+
+
+def derive_task_score_secondary_evidence(
+    project_root: Path,
+    rows: tuple[PairedScore, ...],
+) -> TaskScoreSecondaryEvidence:
+    """Derive the registered efficiency objective without reusing primary quality axes."""
+
+    if not rows:
+        raise ValueError("secondary objective derivation requires paired TaskScoreVectors")
+    per_task: dict[str, float] = {}
+    evidence_refs: set[str] = set()
+    for row in rows:
+        parent = _task_score_vector(project_root, row.parent_record_id)
+        candidate = _task_score_vector(project_root, row.candidate_record_id)
+        if parent.task_id != row.task_id or candidate.task_id != row.task_id:
+            raise ValueError("TaskScoreVector task does not match its PairedScore")
+        # The parent reference and candidate are separate executions and therefore
+        # normally have different execution pair ids.  Their typed PairedScore refs
+        # are the binding; task, variant, and scoring-policy checks keep that binding
+        # fail-closed without inventing a shared execution identity.
+        if row.parent_record_id == row.candidate_record_id:
+            raise ValueError("secondary evidence cannot reuse one TaskScoreVector twice")
+        if candidate.variant != "candidate" or parent.variant == "no-skill":
+            raise ValueError("secondary evidence requires candidate versus Skill parent vectors")
+        if parent.scoring_policy_ref != candidate.scoring_policy_ref:
+            raise ValueError("paired TaskScoreVectors use different scoring policies")
+        if row.task_id in per_task:
+            raise ValueError("secondary evidence contains duplicate task ids")
+        per_task[row.task_id] = candidate.efficiency - parent.efficiency
+        evidence_refs.update((row.parent_record_id, row.candidate_record_id))
+    improvement = _mean(list(per_task.values()))
+    return TaskScoreSecondaryEvidence(
+        improvements={"task_score_efficiency": improvement},
+        per_task_deltas=dict(sorted(per_task.items())),
+        evidence_refs=tuple(sorted(evidence_refs)),
+    )
 
 
 def _mean(values: list[float]) -> float:
@@ -87,7 +151,11 @@ def run_validation_gate(
         if key in {"high", "critical"}
     )
     secondary = secondary_objective_improvements or {}
-    unknown_secondary = set(secondary) - set(policy.secondary_minimum_effect)
+    registered_secondary = {
+        **policy.secondary_minimum_effect,
+        **policy.task_score_secondary_minimum_effect,
+    }
+    unknown_secondary = set(secondary) - set(registered_secondary)
     if unknown_secondary:
         raise ValueError(f"unregistered secondary objectives: {sorted(unknown_secondary)}")
     secondary_regression = any(
@@ -95,7 +163,7 @@ def run_validation_gate(
     )
     secondary_wins = tuple(
         sorted(
-            key for key, value in secondary.items() if value >= policy.secondary_minimum_effect[key]
+            key for key, value in secondary.items() if value >= registered_secondary[key]
         )
     )
     quality_noninferior = statistics.mean_delta >= -policy.quality_noninferiority_margin
@@ -159,7 +227,11 @@ def run_validation_gate(
                 "quality_noninferiority_margin": policy.quality_noninferiority_margin,
                 "quality_noninferior": quality_noninferior,
                 "secondary_objective_improvements": secondary,
-                "secondary_minimum_effect": policy.secondary_minimum_effect,
+                "secondary_minimum_effect": registered_secondary,
+                "secondary_axis_distinct_from_category": {
+                    "axis": "TaskScoreVector.efficiency",
+                    "category_example": "quality_efficiency",
+                },
                 "secondary_regression_floor": policy.secondary_regression_floor,
                 "secondary_wins": secondary_wins,
                 "pareto_route": (

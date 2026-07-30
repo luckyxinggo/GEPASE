@@ -1,0 +1,13 @@
+{
+  "amends": "seal-amendment.json#final_expected_seal",
+  "final_expected_seal": {
+    "checked": 14,
+    "hash_mismatch": 0,
+    "missing": 0,
+    "schema_errors": 0,
+    "unindexed_files": 0,
+    "valid": true
+  },
+  "reason_zh": "在发现 barrier 语义过强后，append-only 增加 checkpoint supersession、final progress summary 与本 amendment；最终 tranche seal 因而从 11 增至 14，不覆盖早期快照。",
+  "schema_version": "1.0.0"
+}

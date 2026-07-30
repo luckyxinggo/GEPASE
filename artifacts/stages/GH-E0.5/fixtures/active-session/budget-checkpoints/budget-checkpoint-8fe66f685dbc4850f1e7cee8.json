@@ -1,0 +1,50 @@
+{
+  "approved": {
+    "active_wall_clock_ms": 10800000,
+    "agent_calls": 50,
+    "candidates": 0,
+    "estimated_tokens": 850000,
+    "proposals": 0,
+    "repairs": 50
+  },
+  "barrier": "package_compiled",
+  "candidate_gate_summary": {},
+  "checkpoint_id": "budget-checkpoint-8fe66f685dbc4850f1e7cee8",
+  "completed_work_ids": [],
+  "config_hash": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+  "continuation_risk_zh": "继续后才会导出一个有界 Executor work。",
+  "created_at": "2026-07-28T01:00:00Z",
+  "evidence_hash": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+  "in_progress_work_ids": [],
+  "next_batch_estimate": {
+    "active_wall_clock_ms": 600000,
+    "agent_calls": 1,
+    "candidates": 0,
+    "estimated_tokens": 32000,
+    "proposals": 0,
+    "repairs": 1
+  },
+  "not_exported_work_ids": [
+    "reference-executor-001"
+  ],
+  "previous_decision_hash": null,
+  "reserved": {
+    "active_wall_clock_ms": 0,
+    "agent_calls": 0,
+    "candidates": 0,
+    "estimated_tokens": 0,
+    "proposals": 0,
+    "repairs": 0
+  },
+  "run_id": "gh-e05-active-session-fixture",
+  "schema_version": "1.0.0",
+  "state_hash": "2e529b12923e18068b81a14bef14ac79d289d8294a7b1aa03be3927dfcfdc8b2",
+  "used": {
+    "active_wall_clock_ms": 3600000,
+    "agent_calls": 0,
+    "candidates": 0,
+    "estimated_tokens": 0,
+    "proposals": 0,
+    "repairs": 0
+  }
+}

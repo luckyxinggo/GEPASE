@@ -1,0 +1,25 @@
+{
+  "branches": [
+    {
+      "branch_index": 0,
+      "target_node_ids": [
+        "node-69ea814aac72a6c557485ef0",
+        "node-1df0f46ff9f534ba3af39670"
+      ],
+      "task_id": "functional-train-easing-orbit-005",
+      "work_id": "proposal-work-4d7eee87556f7c4cc43e4195"
+    },
+    {
+      "branch_index": 1,
+      "target_node_ids": [
+        "node-0f241aa06504163be33132f8",
+        "node-46d940221fa8caf3b6c22d2c"
+      ],
+      "task_id": "functional-train-input-badge-003",
+      "work_id": "proposal-work-c0e29b68f326c7f5fa1d0475"
+    }
+  ],
+  "held_out_feedback_read": false,
+  "schema_version": "1.0.0",
+  "train_feedback_only": true
+}

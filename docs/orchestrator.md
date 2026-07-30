@@ -30,6 +30,21 @@ artifact-hash, or graph-node check is returned to the same role context for corr
 ingests the corrected submission. The adapter cannot compute TaskScoreVectors, reconcile AB/BA,
 change the frozen plan, or declare a candidate accepted.
 
+正式调用顺序中，耗尽的角色 work 先以 `gepase eval terminalize-role-attempts` 交给现有 Functional Core 收口，随后才准备其余 case 的 Comparator/Analyzer；完成 train admission 与 Reflection ingest 后，可用 `gepase optimizer r4-plan-generation2` 调用唯一 Controller 的有界 generation-2 planner。
+
+GH-E1 further distinguishes deterministic evidence packaging/metadata correction from real Agent
+re-execution. Deterministic correction preserves the original workspace bytes and does not consume
+an Agent repair; an additional real re-execution requires a hash-bound authorization. Required
+evidence containing sensitive data fails closed, while optional diagnostics may be excluded only
+with their original hash and reason retained. Final usage is reconciled from ActiveSessionRuntime,
+reservation settlements, and HostAttemptAccounting, including contexts that never produced an
+accepted submission.
+
+The GH-P1 semantic-hypothesis Analyzer extension is retired from active orchestration. Historical
+work/submission models remain readable for sealed-evidence verification, but new Analyzer work
+cannot request semantic enrichment and Core no longer creates semantic overlays or lets them affect
+selector ranking, failure slices, Patch authorization, Merge, or Gate decisions.
+
 To inspect the adapter:
 
 ```bash

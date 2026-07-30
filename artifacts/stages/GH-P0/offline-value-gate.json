@@ -1,0 +1,22 @@
+{
+  "conclusion_zh": "同一 sealed evidence/failure slice 下, typed observed edge 已进入 selector; parse status、排名/脚本可达性和风险解释出现可审计变化。",
+  "does_not_claim_skill_improvement": true,
+  "metrics": {
+    "common_target_rank_changes": 457,
+    "executable_top10_net_change": 1,
+    "explicit_parse_status_gain": 7,
+    "observed_edges_added": 46,
+    "targets_with_nonzero_dynamic": 483,
+    "top1_changes": 1,
+    "typed_mapping_rate": 1.0
+  },
+  "pre_registered_changes": {
+    "coverage": true,
+    "ranking": true,
+    "reachability": true,
+    "risk_explanation": true
+  },
+  "schema_version": "1.0.0",
+  "status": "passed",
+  "valid": true
+}

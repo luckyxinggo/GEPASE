@@ -7,6 +7,7 @@ from pathlib import Path
 import pytest
 
 from gepase.evals.engine import MultiFidelityEvalEngine
+from gepase.evals.functional_pipeline import independently_verify_functional_scores
 from gepase.evals.statistics import PairedScore
 from gepase.optimizer.acceptance.minibatch import MinibatchPolicy, run_minibatch_gate
 from gepase.optimizer.evolution_controller import R4EvolutionController
@@ -40,6 +41,19 @@ def test_reference_anchor_rehashes_all_r3_artifacts_and_rejects_partial_match() 
     assert "run-metadata.json" in stale_audit.mismatches
     assert not stale_audit.partial_match_used
     assert not stale_audit.stale_evidence_used
+
+
+def test_read_only_score_verification_never_mutates_sealed_reference() -> None:
+    reference = ROOT / "artifacts/runs/r3-slack-gif-creator-paired"
+    tracked = (
+        reference / "artifact-index.json",
+        reference / "ledger.sqlite3",
+        reference / "score-independent-verification.json",
+    )
+    before = {path.name: path.read_bytes() for path in tracked}
+    result = independently_verify_functional_scores(ROOT, reference)
+    assert result == json.loads((reference / "score-independent-verification.json").read_text())
+    assert {path.name: path.read_bytes() for path in tracked} == before
 
 
 def test_candidate_plan_exports_only_fresh_oracle_free_train_work() -> None:
@@ -98,8 +112,7 @@ def test_candidate_plan_rejects_cross_model_reference_reuse() -> None:
         with MultiFidelityEvalEngine(ROOT, run_dir) as engine:
             with pytest.raises(ValueError, match="host/model/seed/timeout"):
                 engine.plan_frozen_candidate(
-                    ROOT
-                    / "artifacts/runs/r2-slack-gif-creator-evalplan/frozen-eval-plan.json",
+                    ROOT / "artifacts/runs/r2-slack-gif-creator-evalplan/frozen-eval-plan.json",
                     ROOT / "configs/canaries/slack-gif-creator-r3-scoring.json",
                     key_path,
                     candidate_id="candidate-r4-cross-model",
@@ -128,9 +141,7 @@ def test_train_gate_rejects_equal_candidate() -> None:
         parent_record_id="reference-vector",
         candidate_record_id="candidate-vector",
     )
-    decision = run_minibatch_gate(
-        (row,), policy=MinibatchPolicy(minimum_mean_delta=0.005)
-    )
+    decision = run_minibatch_gate((row,), policy=MinibatchPolicy(minimum_mean_delta=0.005))
     assert decision.gate.outcome.value == "failed"
     assert not decision.promote_to_validation
     assert decision.gate.reason_codes == ("train_no_strict_improvement",)
@@ -149,13 +160,16 @@ def test_r4_controller_initializes_two_distinct_train_only_graph_branches() -> N
         assert branch_plan["train_feedback_only"]
         assert not branch_plan["held_out_feedback_read"]
         assert len(branch_plan["branches"]) == 2
-        assert len(
-            {
-                node_id
-                for branch in branch_plan["branches"]
-                for node_id in branch["target_node_ids"]
-            }
-        ) == 2
+        assert (
+            len(
+                {
+                    node_id
+                    for branch in branch_plan["branches"]
+                    for node_id in branch["target_node_ids"]
+                }
+            )
+            == 2
+        )
         assert all(
             str(branch["task_id"]).startswith("functional-train-")
             for branch in branch_plan["branches"]

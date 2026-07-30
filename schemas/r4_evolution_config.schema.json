@@ -1,5 +1,107 @@
 {
   "$defs": {
+    "ActiveSessionBudgetPolicy": {
+      "additionalProperties": false,
+      "properties": {
+        "cumulative_usage_never_resets": {
+          "const": true,
+          "default": true,
+          "title": "Cumulative Usage Never Resets",
+          "type": "boolean"
+        },
+        "initial_tranche": {
+          "$ref": "#/$defs/UsageAllowance"
+        },
+        "max_concurrency": {
+          "default": 3,
+          "maximum": 32,
+          "minimum": 1,
+          "title": "Max Concurrency",
+          "type": "integer"
+        },
+        "maximum_continuation_increment": {
+          "$ref": "#/$defs/UsageAllowance"
+        },
+        "require_user_continuation": {
+          "const": true,
+          "default": true,
+          "title": "Require User Continuation",
+          "type": "boolean"
+        },
+        "required_barriers": {
+          "items": {
+            "$ref": "#/$defs/RuntimeBarrier"
+          },
+          "title": "Required Barriers",
+          "type": "array"
+        },
+        "role_estimates": {
+          "additionalProperties": {
+            "$ref": "#/$defs/RoleBatchEstimate"
+          },
+          "minProperties": 1,
+          "title": "Role Estimates",
+          "type": "object"
+        },
+        "schema_version": {
+          "const": "1.0.0",
+          "default": "1.0.0",
+          "title": "Schema Version",
+          "type": "string"
+        }
+      },
+      "required": [
+        "initial_tranche",
+        "maximum_continuation_increment",
+        "role_estimates",
+        "required_barriers"
+      ],
+      "title": "ActiveSessionBudgetPolicy",
+      "type": "object"
+    },
+    "ConditionalMergePolicy": {
+      "additionalProperties": false,
+      "properties": {
+        "allow_no_eligible_parent_set_terminal": {
+          "const": true,
+          "default": true,
+          "title": "Allow No Eligible Parent Set Terminal",
+          "type": "boolean"
+        },
+        "enumerate_all_train_admitted_branches": {
+          "const": true,
+          "default": true,
+          "title": "Enumerate All Train Admitted Branches",
+          "type": "boolean"
+        },
+        "forbid_cross_package_merge": {
+          "const": true,
+          "default": true,
+          "title": "Forbid Cross Package Merge",
+          "type": "boolean"
+        },
+        "forbid_held_out_selection": {
+          "const": true,
+          "default": true,
+          "title": "Forbid Held Out Selection",
+          "type": "boolean"
+        },
+        "materialize_when_eligible": {
+          "const": true,
+          "default": true,
+          "title": "Materialize When Eligible",
+          "type": "boolean"
+        },
+        "schema_version": {
+          "const": "1.0.0",
+          "default": "1.0.0",
+          "title": "Schema Version",
+          "type": "string"
+        }
+      },
+      "title": "ConditionalMergePolicy",
+      "type": "object"
+    },
     "MinibatchPolicy": {
       "additionalProperties": false,
       "properties": {
@@ -88,6 +190,34 @@
       "title": "PatchEditBudget",
       "type": "object"
     },
+    "RoleBatchEstimate": {
+      "additionalProperties": false,
+      "properties": {
+        "max_estimated_tokens_per_work": {
+          "minimum": 1,
+          "title": "Max Estimated Tokens Per Work",
+          "type": "integer"
+        },
+        "max_repair_attempts_per_work": {
+          "default": 0,
+          "maximum": 2,
+          "minimum": 0,
+          "title": "Max Repair Attempts Per Work",
+          "type": "integer"
+        },
+        "timeout_ms_per_work": {
+          "minimum": 1,
+          "title": "Timeout Ms Per Work",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "max_estimated_tokens_per_work",
+        "timeout_ms_per_work"
+      ],
+      "title": "RoleBatchEstimate",
+      "type": "object"
+    },
     "RoleTimeouts": {
       "additionalProperties": false,
       "properties": {
@@ -126,6 +256,59 @@
       ],
       "title": "RoleTimeouts",
       "type": "object"
+    },
+    "RunLifecyclePolicy": {
+      "additionalProperties": false,
+      "properties": {
+        "initial_mode": {
+          "const": "create_new",
+          "default": "create_new",
+          "title": "Initial Mode",
+          "type": "string"
+        },
+        "reject_terminal_resume": {
+          "const": true,
+          "default": true,
+          "title": "Reject Terminal Resume",
+          "type": "boolean"
+        },
+        "require_typed_checkpoint": {
+          "const": true,
+          "default": true,
+          "title": "Require Typed Checkpoint",
+          "type": "boolean"
+        },
+        "schema_version": {
+          "const": "1.0.0",
+          "default": "1.0.0",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "strict_create_open_resume": {
+          "const": true,
+          "default": true,
+          "title": "Strict Create Open Resume",
+          "type": "boolean"
+        }
+      },
+      "title": "RunLifecyclePolicy",
+      "type": "object"
+    },
+    "RuntimeBarrier": {
+      "enum": [
+        "package_compiled",
+        "reference_execution_complete",
+        "reference_sealed",
+        "proposal_scope_ready",
+        "candidate_train_complete",
+        "candidate_validation_complete",
+        "merge_resolved",
+        "before_final_report",
+        "budget_limit",
+        "post_recovery_checkpoint"
+      ],
+      "title": "RuntimeBarrier",
+      "type": "string"
     },
     "RuntimeBudget": {
       "additionalProperties": false,
@@ -190,6 +373,100 @@
       "title": "RuntimeBudget",
       "type": "object"
     },
+    "SelectorGraphPolicy": {
+      "additionalProperties": false,
+      "description": "Controls which trusted graph layers the mutation selector may consume.",
+      "properties": {
+        "mode": {
+          "default": "static",
+          "enum": [
+            "static",
+            "static_observed"
+          ],
+          "title": "Mode",
+          "type": "string"
+        },
+        "require_observed_when_access_present": {
+          "const": true,
+          "default": true,
+          "title": "Require Observed When Access Present",
+          "type": "boolean"
+        },
+        "require_sealed_typed_access": {
+          "const": true,
+          "default": true,
+          "title": "Require Sealed Typed Access",
+          "type": "boolean"
+        },
+        "schema_version": {
+          "const": "1.0.0",
+          "default": "1.0.0",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "semantic_hypotheses_enabled": {
+          "const": false,
+          "default": false,
+          "description": "Deprecated compatibility sentinel. Active selector graphs are static+observed only; sealed GH-P1 semantic artifacts are read-only.",
+          "title": "Semantic Hypotheses Enabled",
+          "type": "boolean"
+        },
+        "top_k_audit_limit": {
+          "default": 10,
+          "maximum": 50,
+          "minimum": 1,
+          "title": "Top K Audit Limit",
+          "type": "integer"
+        }
+      },
+      "title": "SelectorGraphPolicy",
+      "type": "object"
+    },
+    "UsageAllowance": {
+      "additionalProperties": false,
+      "properties": {
+        "active_wall_clock_ms": {
+          "minimum": 0,
+          "title": "Active Wall Clock Ms",
+          "type": "integer"
+        },
+        "agent_calls": {
+          "minimum": 0,
+          "title": "Agent Calls",
+          "type": "integer"
+        },
+        "candidates": {
+          "default": 0,
+          "minimum": 0,
+          "title": "Candidates",
+          "type": "integer"
+        },
+        "estimated_tokens": {
+          "minimum": 0,
+          "title": "Estimated Tokens",
+          "type": "integer"
+        },
+        "proposals": {
+          "default": 0,
+          "minimum": 0,
+          "title": "Proposals",
+          "type": "integer"
+        },
+        "repairs": {
+          "default": 0,
+          "minimum": 0,
+          "title": "Repairs",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "agent_calls",
+        "estimated_tokens",
+        "active_wall_clock_ms"
+      ],
+      "title": "UsageAllowance",
+      "type": "object"
+    },
     "ValidationPolicy": {
       "additionalProperties": false,
       "properties": {
@@ -239,6 +516,13 @@
           "default": 42,
           "title": "Seed",
           "type": "integer"
+        },
+        "task_score_secondary_minimum_effect": {
+          "additionalProperties": {
+            "type": "number"
+          },
+          "title": "Task Score Secondary Minimum Effect",
+          "type": "object"
         }
       },
       "title": "ValidationPolicy",
@@ -247,6 +531,17 @@
   },
   "additionalProperties": false,
   "properties": {
+    "active_session_budget_policy": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/ActiveSessionBudgetPolicy"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null
+    },
     "branch_count": {
       "minimum": 2,
       "title": "Branch Count",
@@ -257,6 +552,17 @@
       "default": 1,
       "title": "Candidate Reflection Limit",
       "type": "integer"
+    },
+    "conditional_merge_policy": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/ConditionalMergePolicy"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null
     },
     "enable_e1": {
       "const": false,
@@ -281,6 +587,17 @@
     "host_policy": {
       "title": "Host Policy",
       "type": "string"
+    },
+    "lifecycle_policy": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/RunLifecyclePolicy"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null
     },
     "model": {
       "title": "Model",
@@ -360,7 +677,19 @@
       "title": "Selector",
       "type": "string"
     },
+    "selector_graph_policy": {
+      "$ref": "#/$defs/SelectorGraphPolicy",
+      "default": {
+        "mode": "static",
+        "require_observed_when_access_present": true,
+        "require_sealed_typed_access": true,
+        "schema_version": "1.0.0",
+        "semantic_hypotheses_enabled": false,
+        "top_k_audit_limit": 10
+      }
+    },
     "selector_target_limit": {
+      "maximum": 2,
       "minimum": 1,
       "title": "Selector Target Limit",
       "type": "integer"

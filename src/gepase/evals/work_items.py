@@ -183,6 +183,7 @@ class ExecutionBundle(FrozenModel):
     uncertainty: float = Field(default=0, ge=0, le=1)
     proxy_score: float | None = Field(default=None, ge=0, le=1)
     proxy_score_method: str | None = None
+    repair_attempt: bool = False
     failure_kind: ProviderFailureKind | None = None
     failure_detail: str | None = None
     started_at: datetime

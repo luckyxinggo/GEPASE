@@ -1,0 +1,52 @@
+{
+  "approved_increment": {
+    "active_wall_clock_ms": 600000,
+    "agent_calls": 2,
+    "candidates": 0,
+    "estimated_tokens": 64000,
+    "proposals": 0,
+    "repairs": 2
+  },
+  "continuation_decision_id": "continuation-4653c5a157027fd2c47f7205",
+  "continuation_decision_sha256": "d283e65a2f3290f87a20ae6b0b559dac1e6f0734a59a47932b9f20007e733cd3",
+  "generated_at": "2026-07-29T08:13:07Z",
+  "new_checkpoint_id": "budget-checkpoint-376e332e803c57f44f49c1a1",
+  "new_checkpoint_used": {
+    "active_wall_clock_ms": 2790748,
+    "agent_calls": 11,
+    "candidates": 2,
+    "estimated_tokens": 354500,
+    "proposals": 4,
+    "repairs": 2
+  },
+  "open_reservations_after": 0,
+  "previous_checkpoint_id": "budget-checkpoint-6b5e58c6842d19e135394ebf",
+  "previous_checkpoint_used": {
+    "active_wall_clock_ms": 1814840,
+    "agent_calls": 9,
+    "candidates": 2,
+    "estimated_tokens": 288000,
+    "proposals": 4,
+    "repairs": 2
+  },
+  "runtime_status_after": "awaiting_continuation",
+  "schema_version": "1.0.0",
+  "tranche_actual_increment": {
+    "active_wall_clock_ms": 975908,
+    "agent_calls": 2,
+    "candidates": 0,
+    "estimated_tokens": 66500,
+    "proposals": 0,
+    "repairs": 0
+  },
+  "tranche_variance": {
+    "active_wall_clock_ms": 375908,
+    "agent_calls": 0,
+    "candidates": 0,
+    "estimated_tokens": 2500,
+    "proposals": 0,
+    "repairs": -2
+  },
+  "usage_authority": "ActiveSessionRuntime + HostAttemptAccounting",
+  "variance_note_zh": "两个已授权 Agent context 均未新增 repair context；estimated tokens 超预留 2,500。ActiveSession 统计从 continuation checkpoint 到新 barrier checkpoint 的全部 active wall-clock，因此包括 export、Agent 并发执行、Core submit/ingest 与 checkpoint 审计，最终超预留 375,908ms。该 variance 原样保留，不用 evolution-state.json 的较小旧 projection 覆盖。"
+}

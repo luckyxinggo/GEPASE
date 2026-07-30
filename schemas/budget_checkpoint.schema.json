@@ -1,0 +1,191 @@
+{
+  "$defs": {
+    "RuntimeBarrier": {
+      "enum": [
+        "package_compiled",
+        "reference_execution_complete",
+        "reference_sealed",
+        "proposal_scope_ready",
+        "candidate_train_complete",
+        "candidate_validation_complete",
+        "merge_resolved",
+        "before_final_report",
+        "budget_limit",
+        "post_recovery_checkpoint"
+      ],
+      "title": "RuntimeBarrier",
+      "type": "string"
+    },
+    "UsageAllowance": {
+      "additionalProperties": false,
+      "properties": {
+        "active_wall_clock_ms": {
+          "minimum": 0,
+          "title": "Active Wall Clock Ms",
+          "type": "integer"
+        },
+        "agent_calls": {
+          "minimum": 0,
+          "title": "Agent Calls",
+          "type": "integer"
+        },
+        "candidates": {
+          "default": 0,
+          "minimum": 0,
+          "title": "Candidates",
+          "type": "integer"
+        },
+        "estimated_tokens": {
+          "minimum": 0,
+          "title": "Estimated Tokens",
+          "type": "integer"
+        },
+        "proposals": {
+          "default": 0,
+          "minimum": 0,
+          "title": "Proposals",
+          "type": "integer"
+        },
+        "repairs": {
+          "default": 0,
+          "minimum": 0,
+          "title": "Repairs",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "agent_calls",
+        "estimated_tokens",
+        "active_wall_clock_ms"
+      ],
+      "title": "UsageAllowance",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "approved": {
+      "$ref": "#/$defs/UsageAllowance"
+    },
+    "barrier": {
+      "$ref": "#/$defs/RuntimeBarrier"
+    },
+    "candidate_gate_summary": {
+      "additionalProperties": {
+        "type": "string"
+      },
+      "title": "Candidate Gate Summary",
+      "type": "object"
+    },
+    "checkpoint_id": {
+      "title": "Checkpoint Id",
+      "type": "string"
+    },
+    "completed_work_ids": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Completed Work Ids",
+      "type": "array"
+    },
+    "config_hash": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Config Hash",
+      "type": "string"
+    },
+    "continuation_risk_zh": {
+      "minLength": 1,
+      "title": "Continuation Risk Zh",
+      "type": "string"
+    },
+    "created_at": {
+      "format": "date-time",
+      "title": "Created At",
+      "type": "string"
+    },
+    "evidence_hash": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Evidence Hash",
+      "type": "string"
+    },
+    "in_progress_work_ids": {
+      "items": {
+        "type": "string"
+      },
+      "title": "In Progress Work Ids",
+      "type": "array"
+    },
+    "next_batch_estimate": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/UsageAllowance"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null
+    },
+    "not_exported_work_ids": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Not Exported Work Ids",
+      "type": "array"
+    },
+    "previous_decision_hash": {
+      "anyOf": [
+        {
+          "pattern": "^[0-9a-f]{64}$",
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Previous Decision Hash"
+    },
+    "reserved": {
+      "$ref": "#/$defs/UsageAllowance"
+    },
+    "run_id": {
+      "minLength": 1,
+      "title": "Run Id",
+      "type": "string"
+    },
+    "schema_version": {
+      "const": "1.0.0",
+      "default": "1.0.0",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "state_hash": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "State Hash",
+      "type": "string"
+    },
+    "used": {
+      "$ref": "#/$defs/UsageAllowance"
+    }
+  },
+  "required": [
+    "checkpoint_id",
+    "run_id",
+    "config_hash",
+    "barrier",
+    "state_hash",
+    "evidence_hash",
+    "used",
+    "reserved",
+    "approved",
+    "completed_work_ids",
+    "in_progress_work_ids",
+    "not_exported_work_ids",
+    "candidate_gate_summary",
+    "continuation_risk_zh",
+    "created_at"
+  ],
+  "title": "BudgetCheckpoint",
+  "type": "object"
+}

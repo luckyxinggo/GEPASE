@@ -1,0 +1,189 @@
+{
+  "available": true,
+  "changed_content_key": {
+    "config_hash": "f89bda2f86b65a2a3767fe8ec36fc3617f889d7a0472e64d2bb725180ccb13a7",
+    "failure_cluster_id": "loop-seam-validation-and-gifbuilder-path",
+    "key_id": "8f8d1c190d5f9e792ce1876b189f798aa57fa098eaf36693e61c43d604cfdd79",
+    "model": "gpt-5.6-sol",
+    "node_content_hashes": [
+      [
+        "node-0f241aa06504163be33132f8",
+        "70f8746182532f75be193365431565d53dd52b611da3ff97822ed5e5ff3d566a"
+      ],
+      [
+        "node-2c61585b9d40c2df7343f499",
+        "0000000000000000000000000000000000000000000000000000000000000000"
+      ],
+      [
+        "node-39e1aff632e5776f04740a41",
+        "909e6b40aa32665de44c0f9423d90d7d32ee7543a83d05c55bb18235686d8357"
+      ],
+      [
+        "node-46d940221fa8caf3b6c22d2c",
+        "951bd4e2b513b7780d40bda28c1ccf3e51c2945e2375f6a21a665517af6803f7"
+      ],
+      [
+        "node-774bca90618f6a6cbf560caa",
+        "4080ba5e453f5fb1dac476e5b0c49fc98f39db39787e5b23029ea8452a089241"
+      ],
+      [
+        "node-a464c33893d3283bf7b3ea7f",
+        "cb519b9ea3155768699cccdefb1a5a66211fd85c5361ade9c0df5ccf15cd2a79"
+      ],
+      [
+        "node-f592ff3e34f1b63061471b9c",
+        "fb3f48193df7f6f4077873b65813544de5cf67026729043e4aa1d67a78b9f8d4"
+      ]
+    ],
+    "package_id": "slack-gif-creator",
+    "package_snapshot_hash": "ce42d8a837acf9feda9706a3418fc26a77c497d9615079e616b5fdc6870ef64e",
+    "prompt_hash": "a134b21decd37b48e9cc8ba0c1f26bd231c3503ce398f992139e6b0727ccf082",
+    "schema_hash": "6c3a4b4e0b104ffbf1bac9733e12bdceacfbdc6e0a57996fee78d81bdf05521b"
+  },
+  "changed_content_lookup": {
+    "key_id": "8f8d1c190d5f9e792ce1876b189f798aa57fa098eaf36693e61c43d604cfdd79",
+    "reason": "cache_key_absent_or_content_changed",
+    "result": null,
+    "status": "miss"
+  },
+  "exact_key": {
+    "config_hash": "f89bda2f86b65a2a3767fe8ec36fc3617f889d7a0472e64d2bb725180ccb13a7",
+    "failure_cluster_id": "loop-seam-validation-and-gifbuilder-path",
+    "key_id": "cc121f4ec1e06bc409f815b45ff3cd173f33b28e5eab61bae06f61864cefbff1",
+    "model": "gpt-5.6-sol",
+    "node_content_hashes": [
+      [
+        "node-0f241aa06504163be33132f8",
+        "70f8746182532f75be193365431565d53dd52b611da3ff97822ed5e5ff3d566a"
+      ],
+      [
+        "node-2c61585b9d40c2df7343f499",
+        "b81722e99d5666ba6d1bc91c1dbd1bdcb2c2edcf53d86b601691d505cc7572a1"
+      ],
+      [
+        "node-39e1aff632e5776f04740a41",
+        "909e6b40aa32665de44c0f9423d90d7d32ee7543a83d05c55bb18235686d8357"
+      ],
+      [
+        "node-46d940221fa8caf3b6c22d2c",
+        "951bd4e2b513b7780d40bda28c1ccf3e51c2945e2375f6a21a665517af6803f7"
+      ],
+      [
+        "node-774bca90618f6a6cbf560caa",
+        "4080ba5e453f5fb1dac476e5b0c49fc98f39db39787e5b23029ea8452a089241"
+      ],
+      [
+        "node-a464c33893d3283bf7b3ea7f",
+        "cb519b9ea3155768699cccdefb1a5a66211fd85c5361ade9c0df5ccf15cd2a79"
+      ],
+      [
+        "node-f592ff3e34f1b63061471b9c",
+        "fb3f48193df7f6f4077873b65813544de5cf67026729043e4aa1d67a78b9f8d4"
+      ]
+    ],
+    "package_id": "slack-gif-creator",
+    "package_snapshot_hash": "ce42d8a837acf9feda9706a3418fc26a77c497d9615079e616b5fdc6870ef64e",
+    "prompt_hash": "a134b21decd37b48e9cc8ba0c1f26bd231c3503ce398f992139e6b0727ccf082",
+    "schema_hash": "6c3a4b4e0b104ffbf1bac9733e12bdceacfbdc6e0a57996fee78d81bdf05521b"
+  },
+  "first_lookup": {
+    "key_id": "cc121f4ec1e06bc409f815b45ff3cd173f33b28e5eab61bae06f61864cefbff1",
+    "reason": "cache_key_absent_or_content_changed",
+    "result": null,
+    "status": "miss"
+  },
+  "invalidation": {
+    "invalidated_key_ids": [
+      "cc121f4ec1e06bc409f815b45ff3cd173f33b28e5eab61bae06f61864cefbff1"
+    ],
+    "retained_key_ids": [],
+    "touched_node_ids": [
+      "node-2c61585b9d40c2df7343f499"
+    ]
+  },
+  "schema_version": "1.0.0",
+  "second_lookup": {
+    "key_id": "cc121f4ec1e06bc409f815b45ff3cd173f33b28e5eab61bae06f61864cefbff1",
+    "reason": "exact_snapshot_content_failure_prompt_schema_model_config_match",
+    "result": {
+      "accepted": [
+        {
+          "confidence": 0.99,
+          "edge_id": "edge-1fb048a09e003df55fdf3db2",
+          "proposal_id": "gh-p1-rel-gifbuilder-consumes-imageio",
+          "reason_codes": [
+            "bounded_hypothesis_accepted"
+          ],
+          "relation_type": "consumes",
+          "source_node_id": "node-2c61585b9d40c2df7343f499",
+          "status": "accepted",
+          "target_node_id": "node-a464c33893d3283bf7b3ea7f"
+        },
+        {
+          "confidence": 0.97,
+          "edge_id": "edge-f568bb0507d3bdfc61ea0a2f",
+          "proposal_id": "gh-p1-rel-workflow-explains-save",
+          "reason_codes": [
+            "bounded_hypothesis_accepted"
+          ],
+          "relation_type": "explains",
+          "source_node_id": "node-39e1aff632e5776f04740a41",
+          "status": "accepted",
+          "target_node_id": "node-f592ff3e34f1b63061471b9c"
+        },
+        {
+          "confidence": 0.98,
+          "edge_id": "edge-944704f25acb06b378663f62",
+          "proposal_id": "gh-p1-rel-validator-example-explains-function",
+          "reason_codes": [
+            "bounded_hypothesis_accepted"
+          ],
+          "relation_type": "explains",
+          "source_node_id": "node-46d940221fa8caf3b6c22d2c",
+          "status": "accepted",
+          "target_node_id": "node-774bca90618f6a6cbf560caa"
+        },
+        {
+          "confidence": 0.82,
+          "edge_id": "edge-5d4b442afe4281defc35bf70",
+          "proposal_id": "gh-p1-rel-validator-validates-save-output",
+          "reason_codes": [
+            "bounded_hypothesis_accepted"
+          ],
+          "relation_type": "validates",
+          "source_node_id": "node-774bca90618f6a6cbf560caa",
+          "status": "accepted",
+          "target_node_id": "node-f592ff3e34f1b63061471b9c"
+        }
+      ],
+      "analyzer_work_id": "analyzer-work-gh-p1-input-badge-loop-seam",
+      "failure_cluster_id": "loop-seam-validation-and-gifbuilder-path",
+      "layer_counts_after": {
+        "observed": 46,
+        "semantic_hypothesis": 4,
+        "static": 474
+      },
+      "layer_counts_before": {
+        "observed": 46,
+        "static": 474
+      },
+      "layered_graph_fingerprint": "c491885581a928dd9c94cfb3b7cbdad67d5477cc59734814fc5dd7fd2d2c3546",
+      "package_id": "slack-gif-creator",
+      "package_snapshot_hash": "ce42d8a837acf9feda9706a3418fc26a77c497d9615079e616b5fdc6870ef64e",
+      "rejected": [],
+      "schema_version": "1.0.0",
+      "semantic_edge_ids": [
+        "edge-1fb048a09e003df55fdf3db2",
+        "edge-5d4b442afe4281defc35bf70",
+        "edge-944704f25acb06b378663f62",
+        "edge-f568bb0507d3bdfc61ea0a2f"
+      ],
+      "source_graph_fingerprint": "e91f53515cae651a2c3e816c1ec2afbb03d2ec4aba317ad56736066837ab1e57",
+      "source_node_count_unchanged": true,
+      "submission_id": "analyzer-submission-gh-p1-input-badge-loop-seam",
+      "trusted_graph_unchanged": true
+    },
+    "status": "hit"
+  },
+  "valid": true
+}

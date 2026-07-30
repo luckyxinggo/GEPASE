@@ -1,0 +1,20 @@
+{
+  "authoritative_chain": {
+    "candidate": "src/gepase/optimizer/candidate.py:PackageCandidate",
+    "controller": "src/gepase/optimizer/evolution_controller.py:R4EvolutionController",
+    "eval_core": "src/gepase/evals/engine.py:MultiFidelityEvalEngine",
+    "gate": "src/gepase/optimizer/acceptance/engine.py:ValidationGatedAcceptance",
+    "patch": "src/gepase/mutation/schema.py:PackagePatch",
+    "report_dispatch": "src/gepase/cli/report.py:_builder"
+  },
+  "class_definition_counts": {
+    "MultiFidelityEvalEngine": 1,
+    "PackageCandidate": 1,
+    "PackagePatch": 1,
+    "R4EvolutionController": 1,
+    "ValidationGatedAcceptance": 1
+  },
+  "report_compatibility": "CanaryReportBuilder preserves sealed v0.1; EvolutionOutcomeReportBuilder handles multi-outcome runs. Both are selected by the same report CLI and own no search state.",
+  "schema_version": "1.0.0",
+  "valid": true
+}

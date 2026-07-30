@@ -3,4 +3,9 @@
 from gepase.package.analyzer import PackageAnalyzer
 from gepase.package.ir import PackageGraph, PackageIR, PackageSnapshot
 
-__all__ = ["PackageAnalyzer", "PackageGraph", "PackageIR", "PackageSnapshot"]
+__all__ = [
+    "PackageAnalyzer",
+    "PackageGraph",
+    "PackageIR",
+    "PackageSnapshot",
+]

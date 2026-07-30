@@ -1,0 +1,23 @@
+{
+  "schema_version": "1.0.0",
+  "stage_id": "GH-E1",
+  "status": "blocked_role_repair_exhaustion_terminalization_gap",
+  "passed": 4,
+  "total": 10,
+  "gates": [
+    {"gate_id": "GHE1-G00", "status": "passed"},
+    {"gate_id": "GHE1-G01", "status": "passed"},
+    {"gate_id": "GHE1-G02", "status": "passed"},
+    {"gate_id": "GHE1-G03", "status": "passed"},
+    {"gate_id": "GHE1-G04", "status": "pending"},
+    {"gate_id": "GHE1-G05", "status": "pending"},
+    {"gate_id": "GHE1-G06", "status": "pending"},
+    {"gate_id": "GHE1-G07", "status": "pending"},
+    {"gate_id": "GHE1-G08", "status": "pending"},
+    {"gate_id": "GHE1-G09", "status": "pending"}
+  ],
+  "current_progress_ref": "blocker-audit.json",
+  "candidate_db0b_train_gate": "admitted",
+  "candidate_c36e_train_gate": "not_started",
+  "algorithm_effect_verified": false
+}

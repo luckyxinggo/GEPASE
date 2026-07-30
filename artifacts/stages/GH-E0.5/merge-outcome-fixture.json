@@ -1,0 +1,54 @@
+{
+  "all_parent_combinations_enumerated": true,
+  "all_train_admitted_parents": 2,
+  "considered_parent_sets": 1,
+  "cross_package_pairs_counted_as_merge": 0,
+  "cross_package_pairs_observed": 0,
+  "eligible_parent_sets": 1,
+  "fault_test_refs": [
+    "tests/evolution/test_parent_sets.py",
+    "tests/optimizer/merge/test_outcome.py",
+    "tests/evolution/test_parent_contract.py"
+  ],
+  "fixture_kind": "zero_agent_train_only_merge_contract",
+  "legacy_first_two_slice_absent": true,
+  "materialized_and_evaluated_terminal": {
+    "build_record_ref": "artifacts/stages/GH-E0.5/fixtures/merge/build-record.json",
+    "considered_parent_candidate_ids": [
+      "candidate-04b26dff2bc83b82334bf184",
+      "candidate-2dad7a05ce4a6460dd71f470"
+    ],
+    "considered_parent_set_count": 1,
+    "cross_package_pair_count": 0,
+    "eligible_parent_set_count": 1,
+    "enumeration_ref": "artifacts/stages/GH-E0.5/fixtures/merge/parent-set-enumeration.json",
+    "evaluation_complete": true,
+    "merge_candidate_id": "typed-fixture-merge-child",
+    "rejected_parent_set_count": 0,
+    "rejection_reason_counts": {},
+    "schema_version": "1.0.0",
+    "selected_parent_set_id": "merge-parent-set-872d56c45a560e17a2902340",
+    "status": "materialized_and_evaluated"
+  },
+  "no_eligible_terminal": {
+    "build_record_ref": null,
+    "considered_parent_candidate_ids": [
+      "single-train-admitted-parent"
+    ],
+    "considered_parent_set_count": 0,
+    "cross_package_pair_count": 0,
+    "eligible_parent_set_count": 0,
+    "enumeration_ref": "artifacts/stages/GH-E0.5/fixtures/merge/parent-set-enumeration.json",
+    "evaluation_complete": false,
+    "merge_candidate_id": null,
+    "rejected_parent_set_count": 0,
+    "rejection_reason_counts": {
+      "insufficient_parents": 1
+    },
+    "schema_version": "1.0.0",
+    "selected_parent_set_id": null,
+    "status": "no_eligible_parent_set"
+  },
+  "schema_version": "1.0.0",
+  "sealed_r4_breeding_snapshot_ref": "artifacts/runs/r4-slack-gif-creator-evolution/merge/breeding-snapshot.json"
+}

@@ -1,0 +1,113 @@
+{
+  "agent_calls": 0,
+  "commands": [
+    {
+      "command": ".venv/bin/pytest -q tests/evals/test_recovery.py tests/budget/test_active_session_runtime.py tests/evals/test_engine_integration.py tests/evals/test_r4_candidate.py",
+      "exit_code": 0,
+      "ok": true,
+      "summary": "23 passed in 1.48s"
+    },
+    {
+      "command": ".venv/bin/pytest -q",
+      "exit_code": 0,
+      "ok": true,
+      "summary": "203 passed in 11.61s"
+    },
+    {
+      "command": ".venv/bin/ruff check .",
+      "exit_code": 0,
+      "ok": true,
+      "summary": "All checks passed!"
+    },
+    {
+      "command": ".venv/bin/pyright --pythonpath .venv/bin/python",
+      "exit_code": 0,
+      "ok": true,
+      "summary": "0 errors, 0 warnings, 0 informations"
+    },
+    {
+      "command": ".venv/bin/python scripts/export_core_schemas.py",
+      "exit_code": 0,
+      "ok": true,
+      "summary": "no output"
+    },
+    {
+      "command": ".venv/bin/python scripts/export_core_schemas.py",
+      "exit_code": 0,
+      "ok": true,
+      "summary": "no output"
+    },
+    {
+      "command": ".venv/bin/python scripts/check_markdown_links.py",
+      "exit_code": 0,
+      "ok": true,
+      "summary": "markdown links: ok"
+    },
+    {
+      "command": ".venv/bin/python scripts/check_license.py",
+      "exit_code": 0,
+      "ok": true,
+      "summary": "license policy: ok"
+    },
+    {
+      "command": "git diff --check",
+      "exit_code": 0,
+      "ok": true,
+      "summary": "no output"
+    }
+  ],
+  "current_run_unchanged": true,
+  "evolution_mid_run_inventory": {
+    "checked": 4,
+    "hash_mismatch": 0,
+    "missing": 0,
+    "schema_errors": 0,
+    "unindexed_files": 176,
+    "valid": true
+  },
+  "evolution_mid_run_inventory_is_not_a_terminal_seal": true,
+  "headless_api_calls": 0,
+  "immutability_after": {
+    "candidate_ledger": "6df1fb68e35b4b371541166b89e1b6b30b2659ee139cfd9036c23128d4d527b4",
+    "candidate_workspaces": {
+      "exists": true,
+      "files": 30,
+      "sha256": "c090b406aead4840242c7e62944053b233a52a35b21feb222cccd41bdc2dce0f"
+    },
+    "evolution_tree": {
+      "exists": true,
+      "files": 181,
+      "sha256": "ef5db6f6471afb83c10850607babd5a9b4f9e2adb614df631291a407b47b8bbb"
+    },
+    "reference_tree": {
+      "exists": true,
+      "files": 486,
+      "sha256": "1c9ca32632d21228c0a8859b143ccb364981742dc5f33bbd1fd4d795281ccc0d"
+    },
+    "runtime_session": "e1a34ecbaab89c376f12b1e5fe16a84f4e7159a73d15b9d3aad02a3c326839ee"
+  },
+  "protected_unchanged": true,
+  "reference_seal": {
+    "checked": 485,
+    "hash_mismatch": 0,
+    "missing": 0,
+    "schema_errors": 0,
+    "unindexed_files": 0,
+    "valid": true
+  },
+  "schema_idempotent": true,
+  "schema_tree": {
+    "exists": true,
+    "files": 61,
+    "sha256": "40bc66fd9f8841478a53b948cf119406711dc0ea2a8b9b264f24789118d77915"
+  },
+  "schema_version": "1.0.0",
+  "security": {
+    "findings": [],
+    "raw_agent_workspaces_excluded": true,
+    "reason": "raw workspaces are immutable execution evidence; required/optional sensitivity is audited separately by EvidenceStagingManifest",
+    "scanned_files": 834,
+    "valid": true
+  },
+  "valid": true
+}

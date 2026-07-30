@@ -1,0 +1,38 @@
+{
+  "append_only_idempotent": true,
+  "bounded_increment": {
+    "active_wall_clock_ms": 600000,
+    "agent_calls": 1,
+    "candidates": 0,
+    "estimated_tokens": 10000,
+    "proposals": 0,
+    "repairs": 0
+  },
+  "checkpoint_ref": "artifacts/stages/GH-E0.5/fixtures/active-session/budget-checkpoints/budget-checkpoint-8fe66f685dbc4850f1e7cee8.json",
+  "cumulative_usage_not_reset": true,
+  "decision": {
+    "action": "continue",
+    "approved_increment": {
+      "active_wall_clock_ms": 600000,
+      "agent_calls": 1,
+      "candidates": 0,
+      "estimated_tokens": 10000,
+      "proposals": 0,
+      "repairs": 0
+    },
+    "checkpoint_hash": "e951b97820ccfa5d06962b1286b0013d964f9078ca8405841d36fab9a5b72111",
+    "checkpoint_id": "budget-checkpoint-8fe66f685dbc4850f1e7cee8",
+    "comment_zh": "仅批准下一个有界批次; 不修改冻结评测或评分。",
+    "config_hash": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+    "decided_at": "2026-07-29T01:00:00Z",
+    "decision_id": "continuation-98892743acb37c989970fde6",
+    "evidence_hash": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+    "previous_decision_hash": null,
+    "reviewer": "stage-fixture-reviewer",
+    "run_id": "gh-e05-active-session-fixture",
+    "schema_version": "1.0.0"
+  },
+  "decision_ref": "artifacts/stages/GH-E0.5/fixtures/active-session/continuation-decisions/0001-continuation-98892743acb37c989970fde6.json",
+  "fixture_kind": "zero_agent_user_governance_contract",
+  "schema_version": "1.0.0"
+}

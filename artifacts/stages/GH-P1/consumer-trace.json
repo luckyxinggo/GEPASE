@@ -1,0 +1,231 @@
+{
+  "allowed_and_forbidden_consumers": [
+    {
+      "allowed": true,
+      "consumer": "failure_localization",
+      "reason": "bounded_semantic_consumer_allowlist",
+      "semantic_edge_ids": [
+        "edge-1fb048a09e003df55fdf3db2",
+        "edge-5d4b442afe4281defc35bf70",
+        "edge-944704f25acb06b378663f62",
+        "edge-f568bb0507d3bdfc61ea0a2f"
+      ]
+    },
+    {
+      "allowed": true,
+      "consumer": "asi_explanation",
+      "reason": "bounded_semantic_consumer_allowlist",
+      "semantic_edge_ids": [
+        "edge-1fb048a09e003df55fdf3db2",
+        "edge-5d4b442afe4281defc35bf70",
+        "edge-944704f25acb06b378663f62",
+        "edge-f568bb0507d3bdfc61ea0a2f"
+      ]
+    },
+    {
+      "allowed": true,
+      "consumer": "selector_top_k",
+      "reason": "bounded_semantic_consumer_allowlist",
+      "semantic_edge_ids": [
+        "edge-1fb048a09e003df55fdf3db2",
+        "edge-5d4b442afe4281defc35bf70",
+        "edge-944704f25acb06b378663f62",
+        "edge-f568bb0507d3bdfc61ea0a2f"
+      ]
+    },
+    {
+      "allowed": true,
+      "consumer": "exploration_ordering",
+      "reason": "bounded_semantic_consumer_allowlist",
+      "semantic_edge_ids": [
+        "edge-1fb048a09e003df55fdf3db2",
+        "edge-5d4b442afe4281defc35bf70",
+        "edge-944704f25acb06b378663f62",
+        "edge-f568bb0507d3bdfc61ea0a2f"
+      ]
+    },
+    {
+      "allowed": false,
+      "consumer": "patch_authorization",
+      "reason": "semantic_only_edges_forbidden_for_high_impact_consumer",
+      "semantic_edge_ids": []
+    },
+    {
+      "allowed": false,
+      "consumer": "target_set_expansion",
+      "reason": "semantic_only_edges_forbidden_for_high_impact_consumer",
+      "semantic_edge_ids": []
+    },
+    {
+      "allowed": false,
+      "consumer": "trusted_dependency_closure",
+      "reason": "semantic_only_edges_forbidden_for_high_impact_consumer",
+      "semantic_edge_ids": []
+    },
+    {
+      "allowed": false,
+      "consumer": "safety_closure",
+      "reason": "semantic_only_edges_forbidden_for_high_impact_consumer",
+      "semantic_edge_ids": []
+    },
+    {
+      "allowed": false,
+      "consumer": "merge_eligibility",
+      "reason": "semantic_only_edges_forbidden_for_high_impact_consumer",
+      "semantic_edge_ids": []
+    },
+    {
+      "allowed": false,
+      "consumer": "merge_conflict_resolution",
+      "reason": "semantic_only_edges_forbidden_for_high_impact_consumer",
+      "semantic_edge_ids": []
+    },
+    {
+      "allowed": false,
+      "consumer": "validation_gate",
+      "reason": "semantic_only_edges_forbidden_for_high_impact_consumer",
+      "semantic_edge_ids": []
+    }
+  ],
+  "asi_explanation": [
+    {
+      "proposal_id": "gh-p1-rel-gifbuilder-consumes-imageio",
+      "relation_type": "consumes",
+      "source_node_id": "node-2c61585b9d40c2df7343f499",
+      "status": "accepted",
+      "target_node_id": "node-a464c33893d3283bf7b3ea7f"
+    },
+    {
+      "proposal_id": "gh-p1-rel-workflow-explains-save",
+      "relation_type": "explains",
+      "source_node_id": "node-39e1aff632e5776f04740a41",
+      "status": "accepted",
+      "target_node_id": "node-f592ff3e34f1b63061471b9c"
+    },
+    {
+      "proposal_id": "gh-p1-rel-validator-example-explains-function",
+      "relation_type": "explains",
+      "source_node_id": "node-46d940221fa8caf3b6c22d2c",
+      "status": "accepted",
+      "target_node_id": "node-774bca90618f6a6cbf560caa"
+    },
+    {
+      "proposal_id": "gh-p1-rel-validator-validates-save-output",
+      "relation_type": "validates",
+      "source_node_id": "node-774bca90618f6a6cbf560caa",
+      "status": "accepted",
+      "target_node_id": "node-f592ff3e34f1b63061471b9c"
+    }
+  ],
+  "bounded_location_value": true,
+  "high_impact_authority_granted": false,
+  "localization": {
+    "semantic_only_reached_node_ids": [],
+    "semantic_opt_in_node_count": 12,
+    "trusted_node_count": 12
+  },
+  "schema_version": "1.0.0",
+  "selector_semantic_rows": [
+    {
+      "eligible_unchanged": true,
+      "locator": "section/slack-gif-creator#1/available-utilities#1/validators-core-validators#1/block#2",
+      "node_id": "node-46d940221fa8caf3b6c22d2c",
+      "path": "SKILL.md",
+      "rank_after": 2,
+      "rank_before": 2,
+      "rank_delta": 0,
+      "score_after": 8.0861438,
+      "score_before": 7.89558824,
+      "score_delta": 0.19055556,
+      "semantic_feature": {
+        "contribution": 0.19055556,
+        "feature": "semantic_hypothesis_support",
+        "group": "relevance",
+        "raw_value": 0.54444444,
+        "weight": 0.35
+      },
+      "validation_intensity_unchanged": true
+    },
+    {
+      "eligible_unchanged": true,
+      "locator": "function/module/validate_gif#1",
+      "node_id": "node-774bca90618f6a6cbf560caa",
+      "path": "core/validators.py",
+      "rank_after": 3,
+      "rank_before": 4,
+      "rank_delta": 1,
+      "score_after": 7.53284314,
+      "score_before": 7.18284314,
+      "score_delta": 0.35,
+      "semantic_feature": {
+        "contribution": 0.35,
+        "feature": "semantic_hypothesis_support",
+        "group": "relevance",
+        "raw_value": 1.0,
+        "weight": 0.35
+      },
+      "validation_intensity_unchanged": true
+    },
+    {
+      "eligible_unchanged": true,
+      "locator": "section/slack-gif-creator#1/core-workflow#1/block#1",
+      "node_id": "node-39e1aff632e5776f04740a41",
+      "path": "SKILL.md",
+      "rank_after": 6,
+      "rank_before": 11,
+      "rank_delta": 5,
+      "score_after": 6.58419935,
+      "score_before": 6.39558824,
+      "score_delta": 0.18861111,
+      "semantic_feature": {
+        "contribution": 0.18861111,
+        "feature": "semantic_hypothesis_support",
+        "group": "relevance",
+        "raw_value": 0.53888889,
+        "weight": 0.35
+      },
+      "validation_intensity_unchanged": true
+    },
+    {
+      "eligible_unchanged": true,
+      "locator": "file",
+      "node_id": "node-2c61585b9d40c2df7343f499",
+      "path": "core/gif_builder.py",
+      "rank_after": 125,
+      "rank_before": 127,
+      "rank_delta": 2,
+      "score_after": 3.11475491,
+      "score_before": 2.92225491,
+      "score_delta": 0.1925,
+      "semantic_feature": {
+        "contribution": 0.1925,
+        "feature": "semantic_hypothesis_support",
+        "group": "relevance",
+        "raw_value": 0.55,
+        "weight": 0.35
+      },
+      "validation_intensity_unchanged": true
+    },
+    {
+      "eligible_unchanged": true,
+      "locator": "function/module.GIFBuilder/save#1",
+      "node_id": "node-f592ff3e34f1b63061471b9c",
+      "path": "core/gif_builder.py",
+      "rank_after": 142,
+      "rank_before": 159,
+      "rank_delta": 17,
+      "score_after": 2.79138889,
+      "score_before": 2.44333333,
+      "score_delta": 0.34805556,
+      "semantic_feature": {
+        "contribution": 0.34805556,
+        "feature": "semantic_hypothesis_support",
+        "group": "relevance",
+        "raw_value": 0.99444444,
+        "weight": 0.35
+      },
+      "validation_intensity_unchanged": true
+    }
+  ],
+  "semantic_score_cap_respected": true
+}

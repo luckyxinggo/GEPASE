@@ -297,6 +297,7 @@ class RoleRunProvenance(FrozenModel):
     context_id: str = Field(min_length=1)
     host_task_id: str = Field(min_length=1)
     usage: UsageRecord
+    repair_attempt: bool = False
     started_at: datetime
     finished_at: datetime
 

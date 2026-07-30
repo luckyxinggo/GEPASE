@@ -1,0 +1,65 @@
+{
+  "evolution_tranche": {
+    "approved": {
+      "active_wall_clock_ms": 10800000,
+      "agent_calls": 80,
+      "candidates": 5,
+      "estimated_tokens": 2000000,
+      "proposals": 4,
+      "repairs": 80
+    },
+    "max_concurrency": 3,
+    "runtime_budget": {
+      "max_agent_calls": 80,
+      "max_candidates": 5,
+      "max_concurrency": 3,
+      "max_estimated_tokens": 2000000,
+      "max_proposals": 4,
+      "max_repair_attempts_per_work": 1,
+      "max_wall_clock_seconds": 10800,
+      "role_timeout_seconds": {
+        "comparator": 300,
+        "executor": 600,
+        "independent_grader": 420,
+        "proposal": 600,
+        "reflection": 600
+      },
+      "stop_semantics": "finish exported atomic batch, checkpoint cumulative usage, require hash-bound user continuation before new export"
+    },
+    "scope": {
+      "max_changed_files": 2,
+      "max_operations": 2,
+      "selector_target_limit": 2
+    }
+  },
+  "historical_reference": {
+    "r3_calls": 46,
+    "r3_cumulative_agent_duration_ms": 9406011,
+    "r3_estimated_tokens": 744770,
+    "r4_calls": 77,
+    "r4_estimated_tokens": 1649370,
+    "r4_wall_clock_duration_ms": 10311052
+  },
+  "no_currency_budget": true,
+  "reference_tranche": {
+    "approved": {
+      "active_wall_clock_ms": 10800000,
+      "agent_calls": 50,
+      "candidates": 0,
+      "estimated_tokens": 850000,
+      "proposals": 0,
+      "repairs": 50
+    },
+    "estimated_active_wall_clock_ms": 8520000,
+    "estimated_calls": 46,
+    "estimated_tokens": 848000,
+    "estimated_work_counts": {
+      "analyzer": 8,
+      "comparator": 6,
+      "executor": 16,
+      "independent_grader": 16
+    },
+    "fits_initial_tranche": true
+  },
+  "schema_version": "1.0.0"
+}

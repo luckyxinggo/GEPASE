@@ -1,0 +1,94 @@
+{
+  "additionalProperties": false,
+  "description": "Proof that a checkpoint names the exact currently persisted runtime state.",
+  "properties": {
+    "audit_id": {
+      "minLength": 1,
+      "title": "Audit Id",
+      "type": "string"
+    },
+    "audited_at": {
+      "format": "date-time",
+      "title": "Audited At",
+      "type": "string"
+    },
+    "checkpoint_id": {
+      "minLength": 1,
+      "title": "Checkpoint Id",
+      "type": "string"
+    },
+    "checkpoint_ref": {
+      "minLength": 1,
+      "title": "Checkpoint Ref",
+      "type": "string"
+    },
+    "checkpoint_sha256": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Checkpoint Sha256",
+      "type": "string"
+    },
+    "checkpoint_state_hash": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Checkpoint State Hash",
+      "type": "string"
+    },
+    "config_hash": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Config Hash",
+      "type": "string"
+    },
+    "evidence_hash": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Evidence Hash",
+      "type": "string"
+    },
+    "is_latest_checkpoint": {
+      "const": true,
+      "default": true,
+      "title": "Is Latest Checkpoint",
+      "type": "boolean"
+    },
+    "no_uncheckpointed_recovery": {
+      "const": true,
+      "default": true,
+      "title": "No Uncheckpointed Recovery",
+      "type": "boolean"
+    },
+    "run_id": {
+      "minLength": 1,
+      "title": "Run Id",
+      "type": "string"
+    },
+    "runtime_state_hash": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Runtime State Hash",
+      "type": "string"
+    },
+    "schema_version": {
+      "const": "1.0.0",
+      "default": "1.0.0",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "valid": {
+      "const": true,
+      "default": true,
+      "title": "Valid",
+      "type": "boolean"
+    }
+  },
+  "required": [
+    "audit_id",
+    "run_id",
+    "config_hash",
+    "checkpoint_id",
+    "checkpoint_ref",
+    "checkpoint_sha256",
+    "checkpoint_state_hash",
+    "runtime_state_hash",
+    "evidence_hash",
+    "audited_at"
+  ],
+  "title": "CheckpointFreshnessAudit",
+  "type": "object"
+}

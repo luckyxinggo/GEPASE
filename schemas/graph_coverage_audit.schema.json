@@ -1,0 +1,210 @@
+{
+  "$defs": {
+    "FileCoverage": {
+      "additionalProperties": false,
+      "properties": {
+        "file_kind": {
+          "title": "File Kind",
+          "type": "string"
+        },
+        "file_node_id": {
+          "title": "File Node Id",
+          "type": "string"
+        },
+        "incoming_edge_count": {
+          "minimum": 0,
+          "title": "Incoming Edge Count",
+          "type": "integer"
+        },
+        "internal_node_count": {
+          "minimum": 0,
+          "title": "Internal Node Count",
+          "type": "integer"
+        },
+        "isolated_mutable": {
+          "title": "Isolated Mutable",
+          "type": "boolean"
+        },
+        "mutation_capabilities": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Mutation Capabilities",
+          "type": "array"
+        },
+        "outgoing_edge_count": {
+          "minimum": 0,
+          "title": "Outgoing Edge Count",
+          "type": "integer"
+        },
+        "parse_detail": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Parse Detail"
+        },
+        "parse_status": {
+          "$ref": "#/$defs/ParseStatus"
+        },
+        "parse_status_explicit": {
+          "title": "Parse Status Explicit",
+          "type": "boolean"
+        },
+        "parser": {
+          "title": "Parser",
+          "type": "string"
+        },
+        "path": {
+          "title": "Path",
+          "type": "string"
+        }
+      },
+      "required": [
+        "path",
+        "file_kind",
+        "parse_status",
+        "parse_status_explicit",
+        "parser",
+        "file_node_id",
+        "internal_node_count",
+        "incoming_edge_count",
+        "outgoing_edge_count",
+        "isolated_mutable",
+        "mutation_capabilities"
+      ],
+      "title": "FileCoverage",
+      "type": "object"
+    },
+    "ParseStatus": {
+      "description": "Auditable depth/status for every PackageSnapshot file.",
+      "enum": [
+        "deep",
+        "shallow",
+        "opaque",
+        "error"
+      ],
+      "title": "ParseStatus",
+      "type": "string"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "ambiguous_symbols": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Ambiguous Symbols",
+      "type": "array"
+    },
+    "edge_kind_counts": {
+      "additionalProperties": {
+        "type": "integer"
+      },
+      "title": "Edge Kind Counts",
+      "type": "object"
+    },
+    "error_paths": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Error Paths",
+      "type": "array"
+    },
+    "file_node_count": {
+      "minimum": 0,
+      "title": "File Node Count",
+      "type": "integer"
+    },
+    "file_node_coverage": {
+      "maximum": 1,
+      "minimum": 0,
+      "title": "File Node Coverage",
+      "type": "number"
+    },
+    "files": {
+      "items": {
+        "$ref": "#/$defs/FileCoverage"
+      },
+      "title": "Files",
+      "type": "array"
+    },
+    "isolated_mutable_components": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Isolated Mutable Components",
+      "type": "array"
+    },
+    "layer_counts": {
+      "additionalProperties": {
+        "type": "integer"
+      },
+      "title": "Layer Counts",
+      "type": "object"
+    },
+    "node_kind_counts": {
+      "additionalProperties": {
+        "type": "integer"
+      },
+      "title": "Node Kind Counts",
+      "type": "object"
+    },
+    "package_id": {
+      "title": "Package Id",
+      "type": "string"
+    },
+    "parse_status_counts": {
+      "additionalProperties": {
+        "type": "integer"
+      },
+      "title": "Parse Status Counts",
+      "type": "object"
+    },
+    "schema_version": {
+      "default": "1.0.0",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "snapshot_file_count": {
+      "minimum": 0,
+      "title": "Snapshot File Count",
+      "type": "integer"
+    },
+    "snapshot_hash": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Snapshot Hash",
+      "type": "string"
+    },
+    "unresolved_symbols": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Unresolved Symbols",
+      "type": "array"
+    }
+  },
+  "required": [
+    "package_id",
+    "snapshot_hash",
+    "snapshot_file_count",
+    "file_node_count",
+    "file_node_coverage",
+    "files",
+    "parse_status_counts",
+    "node_kind_counts",
+    "edge_kind_counts",
+    "layer_counts",
+    "isolated_mutable_components",
+    "unresolved_symbols",
+    "ambiguous_symbols",
+    "error_paths"
+  ],
+  "title": "GraphCoverageAudit",
+  "type": "object"
+}

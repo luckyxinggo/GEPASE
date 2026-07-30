@@ -74,3 +74,128 @@ $('#deployable-files').innerHTML=D.deployable.files.map(f=>`<div>${{esc(f.path)}
 const commandRows=[D.commands.rebuild_report,D.commands.verify_report,D.commands.recompute_gates,...D.commands.verify_upstream];$('#commands').innerHTML=commandRows.map((c,i)=>`<div class="command"><code>${{esc(c)}}</code><button class="copy" data-i="${{i}}">复制</button></div>`).join('');$$('.copy').forEach(b=>b.onclick=async()=>{{try{{await navigator.clipboard.writeText(commandRows[Number(b.dataset.i)]);b.textContent='已复制'}}catch{{b.textContent='请手动复制'}}}});
 const sections=$$('main section');const nav=$$('.topbar nav a');const observer=new IntersectionObserver(entries=>entries.forEach(e=>{{if(e.isIntersecting)nav.forEach(a=>a.classList.toggle('active',a.getAttribute('href')==='#'+e.target.id))}}),{{rootMargin:'-25% 0px -65%'}});sections.forEach(s=>observer.observe(s));
 </script></body></html>"""
+
+
+def render_outcome_report(data: dict[str, Any]) -> str:
+    """Render a compact report for complete and budget-incomplete outcomes."""
+
+    title = html.escape(str(data["title_zh"]))
+    outcome = str(data["outcome"])
+    outcome_labels = {
+        "strict_improvement": "找到 held-out strict improvement",
+        "no_strict_improvement": "未找到 strict improvement",
+        "budget_incomplete": "预算检查点：搜索尚未完成",
+    }
+    frontier = list(data["deployable_frontier"])
+    candidates = list(data["candidates"])
+    gallery = list(data.get("evidence_gallery", []))
+    merge = dict(data["merge"])
+    runtime = dict(data["runtime"])
+    frontier_html = "".join(
+        (
+            "<article><h3>"
+            + html.escape(str(item["candidate_id"]))
+            + "</h3><p>"
+            + ("临时验证证据" if item["provisional"] else "可部署 frontier")
+            + "</p><code>"
+            + html.escape(str(item["archive_sha256"]))
+            + "</code><p><a href=\""
+            + html.escape(str(item["archive_path"]))
+            + "\">下载确定性 Package 归档</a></p></article>"
+        )
+        for item in frontier
+    )
+    if not frontier_html:
+        frontier_html = (
+            "<article><h3>没有可部署 Package 归档</h3>"
+            "<p>完整证据链中没有通过 held-out strict Gate 的候选; "
+            "报告不会为负结果合成业务产物。</p></article>"
+        )
+    candidate_rows = "".join(
+        "<tr><td>"
+        + html.escape(str(item["candidate_id"]))
+        + "</td><td>"
+        + html.escape(str(item["gate_status"]))
+        + "</td><td>"
+        + html.escape(str(item["train_mean_delta"]))
+        + f"<br><small>{item.get('train_wins', 0)}W / {item.get('train_ties', 0)}T / {item.get('train_losses', 0)}L</small>"
+        + "</td><td>"
+        + html.escape(str(item["validation_mean_delta"]))
+        + f"<br><small>{item.get('validation_wins', 0)}W / {item.get('validation_ties', 0)}T / {item.get('validation_losses', 0)}L</small>"
+        + "</td><td>"
+        + html.escape(", ".join(item["rejection_reasons"]) or "—")
+        + "<details><summary>六维、Patch 与 Graph path</summary><pre>"
+        + html.escape(json.dumps(item, ensure_ascii=False, indent=2))
+        + "</pre></details></td></tr>"
+        for item in candidates
+    )
+    gallery_html = "".join(
+        "<article class=\"gif-card\"><h3>"
+        + html.escape(str(item["task_id"]))
+        + "</h3><p>"
+        + html.escape(
+            f"{item['split']} · {item['variant']}"
+            + (f" · {item['candidate_id']}" if item.get("candidate_id") else "")
+            + f" · {item['execution_status']}"
+            + (f" ({item['failure_kind']})" if item.get("failure_kind") else "")
+        )
+        + "</p><img src=\""
+        + html.escape(str(item["report_path"]))
+        + "\" alt=\""
+        + html.escape(str(item["label_zh"]))
+        + "\"><details><summary>原始证据</summary><code>"
+        + html.escape(str(item["source_ref"]))
+        + "</code><br><code>sha256: "
+        + html.escape(str(item["sha256"]))
+        + "</code></details></article>"
+        for item in gallery
+    )
+    if not gallery_html:
+        gallery_html = "<p>当前结局没有 Core-accepted task-native GIF。</p>"
+    pending = ", ".join(str(item) for item in data["pending_work_ids"]) or "无"
+    merge_rejections = json.dumps(
+        merge.get("rejection_reason_counts", {}), ensure_ascii=False
+    )
+    embedded = _script_json(data)
+    return f"""<!doctype html>
+<html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1"><title>{title}</title>
+<style>
+:root{{--paper:#f4f0e8;--surface:#fffdf8;--ink:#202823;--muted:#687069;--line:#d8d4c8;
+--accent:#17685b;--warn:#9a6214}}*{{box-sizing:border-box}}body{{margin:0;background:var(--paper);
+color:var(--ink);font:15px/1.65 -apple-system,BlinkMacSystemFont,"PingFang SC",sans-serif}}
+header,main{{max-width:1180px;margin:auto;padding:48px 28px}}header{{padding-top:82px}}
+h1{{font:500 clamp(36px,6vw,70px)/1.08 Georgia,"Songti SC",serif;margin:12px 0}}
+h2{{font:500 34px/1.2 Georgia,"Songti SC",serif}}.eyebrow{{color:var(--accent);
+font:700 12px/1.2 ui-monospace;letter-spacing:.13em}}section{{padding:42px 0;border-top:1px solid var(--line)}}
+.cards{{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:14px}}
+article,.panel{{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:20px}}
+.gallery{{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px}}
+.gif-card img{{display:block;width:100%;height:240px;object-fit:contain;background:#eee9df;border-radius:10px}}
+table{{width:100%;border-collapse:collapse;background:var(--surface)}}th,td{{padding:12px;
+border:1px solid var(--line);text-align:left;vertical-align:top}}code{{font:12px/1.5 ui-monospace;
+overflow-wrap:anywhere}}.boundary{{border-left:4px solid var(--warn);padding:14px 18px;background:#f4e7cf}}
+.metric{{font:500 28px Georgia,serif}}a{{color:var(--accent)}}
+</style></head><body><header id="outcome"><div class="eyebrow">GEPASE / SEALED OUTCOME</div>
+<h1>{html.escape(outcome_labels[outcome])}</h1><p>{title}</p>
+<p class="boundary">{html.escape(str(data["claim_boundary_zh"]))}</p></header><main>
+<section id="deployable"><div class="eyebrow">DEPLOYABLE FRONTIER</div><h2>产物与效果边界</h2>
+<div class="cards">{frontier_html}</div></section>
+<section id="evidence"><div class="eyebrow">CORE-ACCEPTED GIF EVIDENCE</div><h2>fresh no-skill / original / candidate 真实产物</h2>
+<p>以下 GIF 全部来自本轮 TaskScoreVector 回链的 E2 ExecutionBundle，并按原始 SHA-256 复制进报告 seal；失败或未被 Core 接受的 raw workspace 不会混入。</p>
+<div class="gallery">{gallery_html}</div></section>
+<section id="candidates"><div class="eyebrow">CANDIDATES</div><h2>候选与 Gate 漏斗</h2>
+<div class="panel"><p><span class="metric">{len(candidates)}</span> 个候选; frontier {len(frontier)} 个</p>
+<table><thead><tr><th>Candidate</th><th>Gate</th><th>Train Δ</th><th>Validation Δ</th>
+<th>拒绝理由</th></tr></thead><tbody>{candidate_rows}</tbody></table></div></section>
+<section id="merge"><div class="eyebrow">CONDITIONAL MERGE</div><h2>多父 Merge 终态</h2>
+<div class="panel"><p>状态: <code>{html.escape(str(merge["status"]))}</code></p>
+<p>拒绝理由计数: {html.escape(merge_rejections)}</p>
+<p>枚举证据: <code>{html.escape(str(merge.get("enumeration_ref")))}</code></p></div></section>
+<section id="process"><div class="eyebrow">GRAPH / PATCH / LINEAGE</div><h2>图引导搜索与进化证据</h2>
+<div class="panel"><pre>{html.escape(json.dumps(data.get("process_evidence", dict()), ensure_ascii=False, indent=2))}</pre></div></section>
+<section id="runtime"><div class="eyebrow">ACTIVE SESSION</div><h2>运行时、预算与恢复</h2>
+<div class="panel"><pre>{html.escape(json.dumps(runtime, ensure_ascii=False, indent=2))}</pre>
+<p>待处理 work: <code>{html.escape(pending)}</code></p>
+<h3>Provenance</h3><pre>{html.escape(json.dumps(data["provenance"], ensure_ascii=False, indent=2))}</pre></div></section>
+<script type="application/json" id="report-data">{embedded}</script></main></body></html>"""

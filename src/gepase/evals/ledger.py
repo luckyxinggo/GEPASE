@@ -11,14 +11,42 @@ from gepase.evals.work_items import EvalWorkItem, WorkStatus, WorkSubmission, ca
 
 
 class EvalLedger:
-    def __init__(self, path: Path) -> None:
-        path.parent.mkdir(parents=True, exist_ok=True)
+    def __init__(self, path: Path, *, create: bool = True, read_only: bool = False) -> None:
+        if read_only and create:
+            raise ValueError("a read-only ledger cannot be created")
+        if create:
+            path.parent.mkdir(parents=True, exist_ok=True)
+        elif not path.is_file():
+            raise FileNotFoundError(f"evaluation ledger does not exist: {path}")
         self.path = path
-        self.connection = sqlite3.connect(path)
+        self.read_only = read_only
+        if read_only:
+            # Terminal-sealed ledgers must not create WAL/SHM sidecars merely
+            # because an independent verifier opens them.  ``immutable=1`` is
+            # safe here because this branch is used only after the caller has
+            # resolved a sealed existing database.
+            self.connection = sqlite3.connect(f"file:{path}?mode=ro&immutable=1", uri=True)
+        else:
+            self.connection = sqlite3.connect(path)
         self.connection.row_factory = sqlite3.Row
-        self.connection.execute("PRAGMA journal_mode=WAL")
-        self.connection.execute("PRAGMA synchronous=FULL")
-        self._initialize()
+        if not read_only:
+            self.connection.execute("PRAGMA journal_mode=WAL")
+            self.connection.execute("PRAGMA synchronous=FULL")
+        if create:
+            self._initialize()
+        else:
+            self._validate_schema()
+
+    def _validate_schema(self) -> None:
+        required = {"work_items", "records", "submissions", "cache", "events"}
+        rows = self.connection.execute(
+            "SELECT name FROM sqlite_master WHERE type = 'table'"
+        ).fetchall()
+        present = {str(row["name"]) for row in rows}
+        if not required <= present:
+            raise ValueError(
+                f"evaluation ledger schema is incomplete: {sorted(required - present)}"
+            )
 
     def _initialize(self) -> None:
         self.connection.executescript(
@@ -123,6 +151,17 @@ class EvalLedger:
                 )
                 self._event("dispatched", item.work_id)
         return items
+
+    def ready_items(self, limit: int | None = None) -> list[EvalWorkItem]:
+        """Inspect the next atomic export batch without mutating work status."""
+
+        query = "SELECT payload FROM work_items WHERE status = ? ORDER BY work_id"
+        parameters: tuple[object, ...] = (WorkStatus.PENDING.value,)
+        if limit is not None:
+            query += " LIMIT ?"
+            parameters = (WorkStatus.PENDING.value, limit)
+        rows = self.connection.execute(query, parameters).fetchall()
+        return [EvalWorkItem.model_validate_json(row["payload"]) for row in rows]
 
     def resume_interrupted(self) -> int:
         with self.connection:
@@ -242,10 +281,14 @@ class EvalLedger:
         return WorkSubmission.model_validate_json(row["payload"]) if row else None
 
     def work_items(self) -> list[EvalWorkItem]:
-        rows = self.connection.execute(
-            "SELECT payload FROM work_items ORDER BY work_id"
-        ).fetchall()
+        rows = self.connection.execute("SELECT payload FROM work_items ORDER BY work_id").fetchall()
         return [EvalWorkItem.model_validate_json(row["payload"]) for row in rows]
+
+    def work_statuses(self) -> dict[str, WorkStatus]:
+        rows = self.connection.execute(
+            "SELECT work_id, status FROM work_items ORDER BY work_id"
+        ).fetchall()
+        return {str(row["work_id"]): WorkStatus(str(row["status"])) for row in rows}
 
     def status(self) -> dict[str, int]:
         counts = {status.value: 0 for status in WorkStatus}

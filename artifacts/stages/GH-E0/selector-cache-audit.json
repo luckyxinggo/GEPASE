@@ -1,0 +1,13 @@
+{
+  "access_refs": [
+    "artifacts/stages/GH-E0/controller-fixture/gh-e0-controller-fixture/selector-graph-cache-audits/candidate-19a78e0afc08234d2d7f23c6/29ce56c4f21ccefd9841bb5c842709ffbb31f38df9c86cfc259730627bac5be1/access-0001.json",
+    "artifacts/stages/GH-E0/controller-fixture/gh-e0-controller-fixture/selector-graph-cache-audits/candidate-19a78e0afc08234d2d7f23c6/29ce56c4f21ccefd9841bb5c842709ffbb31f38df9c86cfc259730627bac5be1/access-0002.json"
+  ],
+  "accesses": 2,
+  "cache_key": "29ce56c4f21ccefd9841bb5c842709ffbb31f38df9c86cfc259730627bac5be1",
+  "hits": 1,
+  "last_access_ref": "artifacts/stages/GH-E0/controller-fixture/gh-e0-controller-fixture/selector-graph-cache-audits/candidate-19a78e0afc08234d2d7f23c6/29ce56c4f21ccefd9841bb5c842709ffbb31f38df9c86cfc259730627bac5be1/access-0002.json",
+  "miss_then_hit": true,
+  "misses": 1,
+  "schema_version": "1.0.0"
+}

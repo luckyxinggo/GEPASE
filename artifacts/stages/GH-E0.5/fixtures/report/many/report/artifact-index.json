@@ -1,0 +1,35 @@
+{
+  "artifacts": [
+    {
+      "media_type": "application/zip",
+      "path": "packages/typed-fixture-many-0.zip",
+      "sha256": "131727a6b151a23021bbb6a4a8dce202ade32845bc6a952c009f4ad8d3370acd",
+      "size_bytes": 139
+    },
+    {
+      "media_type": "application/zip",
+      "path": "packages/typed-fixture-many-1.zip",
+      "sha256": "da8c5e3c949ecb8344c9285c9a1a02b74248666764e85cf78694ca49eebe9c6a",
+      "size_bytes": 139
+    },
+    {
+      "media_type": "application/json",
+      "path": "report-data.json",
+      "sha256": "af057bbb1c747fe6adbf5fd9218bcdc273c14b8bb0aa8cc6f95b5ef83ed89492",
+      "size_bytes": 4821
+    },
+    {
+      "media_type": "application/json",
+      "path": "evidence-manifest.json",
+      "sha256": "edcdad2ab68f40426c6d2685036efb6541a193f3bce78fc8783f4fde8a5e67bc",
+      "size_bytes": 670
+    },
+    {
+      "media_type": "text/html",
+      "path": "index.html",
+      "sha256": "bac68d298f4f92b78186fd46b75ca47bca6955a1f280a56f54e73d351fcd40b0",
+      "size_bytes": 9033
+    }
+  ],
+  "schema_version": "1.0.0"
+}

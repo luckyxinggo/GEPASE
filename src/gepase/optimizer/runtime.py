@@ -23,6 +23,7 @@ from gepase.mutation.schema import PatchEditBudget
 from gepase.optimizer.acceptance.minibatch import MinibatchPolicy
 from gepase.optimizer.acceptance.validation import ValidationPolicy
 from gepase.optimizer.candidate import build_seed_candidate
+from gepase.optimizer.session_runtime import ActiveSessionBudgetPolicy
 from gepase.schemas.common import FrozenModel
 from gepase.store.artifacts import canonical_json_bytes, sha256_bytes
 
@@ -47,6 +48,44 @@ class RuntimeBudget(FrozenModel):
     stop_semantics: str = Field(min_length=1)
 
 
+class SelectorGraphPolicy(FrozenModel):
+    """Controls which trusted graph layers the mutation selector may consume."""
+
+    schema_version: Literal["1.0.0"] = "1.0.0"
+    mode: Literal["static", "static_observed"] = "static"
+    require_sealed_typed_access: Literal[True] = True
+    require_observed_when_access_present: Literal[True] = True
+    semantic_hypotheses_enabled: Literal[False] = Field(
+        default=False,
+        description=(
+            "Deprecated compatibility sentinel. Active selector graphs are static+observed only; "
+            "sealed GH-P1 semantic artifacts are read-only."
+        ),
+    )
+    top_k_audit_limit: int = Field(default=10, ge=1, le=50)
+
+    @property
+    def policy_hash(self) -> str:
+        return canonical_fingerprint(self.model_dump(mode="json"))
+
+
+class RunLifecyclePolicy(FrozenModel):
+    schema_version: Literal["1.0.0"] = "1.0.0"
+    initial_mode: Literal["create_new"] = "create_new"
+    strict_create_open_resume: Literal[True] = True
+    require_typed_checkpoint: Literal[True] = True
+    reject_terminal_resume: Literal[True] = True
+
+
+class ConditionalMergePolicy(FrozenModel):
+    schema_version: Literal["1.0.0"] = "1.0.0"
+    enumerate_all_train_admitted_branches: Literal[True] = True
+    materialize_when_eligible: Literal[True] = True
+    allow_no_eligible_parent_set_terminal: Literal[True] = True
+    forbid_held_out_selection: Literal[True] = True
+    forbid_cross_package_merge: Literal[True] = True
+
+
 class R4EvolutionConfig(FrozenModel):
     schema_version: Literal["1.0.0"] = "1.0.0"
     run_id: str
@@ -66,7 +105,11 @@ class R4EvolutionConfig(FrozenModel):
     timeout_seconds: int = Field(ge=1)
     branch_count: int = Field(ge=2)
     selector: Literal["graph", "trace", "round_robin", "random"]
-    selector_target_limit: int = Field(ge=1)
+    selector_target_limit: int = Field(ge=1, le=2)
+    selector_graph_policy: SelectorGraphPolicy = SelectorGraphPolicy()
+    lifecycle_policy: RunLifecyclePolicy | None = None
+    active_session_budget_policy: ActiveSessionBudgetPolicy | None = None
+    conditional_merge_policy: ConditionalMergePolicy | None = None
     runtime_budget: RuntimeBudget
     patch_budget: PatchEditBudget
     train_policy: MinibatchPolicy
@@ -93,6 +136,38 @@ class R4EvolutionConfig(FrozenModel):
             raise ValueError("proposal budget cannot cover the required mutation branches")
         if self.runtime_budget.max_candidates < self.branch_count + 1:
             raise ValueError("candidate budget must reserve one same-package merge child")
+        if self.selector_graph_policy.mode == "static_observed":
+            if self.selector != "graph":
+                raise ValueError("static_observed graph policy requires graph selector")
+            if self.reference_variant != "original":
+                raise ValueError("seed static_observed graph must bind original reference evidence")
+        policies = (
+            self.lifecycle_policy,
+            self.active_session_budget_policy,
+            self.conditional_merge_policy,
+        )
+        if any(item is not None for item in policies) and not all(
+            item is not None for item in policies
+        ):
+            raise ValueError(
+                "strict lifecycle, active-session budget, and conditional Merge "
+                "policies must be enabled together"
+            )
+        if self.active_session_budget_policy is not None:
+            policy = self.active_session_budget_policy
+            if policy.max_concurrency != self.runtime_budget.max_concurrency:
+                raise ValueError("active-session concurrency differs from RuntimeBudget")
+            initial = policy.initial_tranche
+            if initial.agent_calls != self.runtime_budget.max_agent_calls:
+                raise ValueError("initial call tranche differs from RuntimeBudget")
+            if initial.estimated_tokens != self.runtime_budget.max_estimated_tokens:
+                raise ValueError("initial token tranche differs from RuntimeBudget")
+            if initial.active_wall_clock_ms != self.runtime_budget.max_wall_clock_seconds * 1000:
+                raise ValueError("initial active-time tranche differs from RuntimeBudget")
+            if initial.proposals != self.runtime_budget.max_proposals:
+                raise ValueError("initial proposal tranche differs from RuntimeBudget")
+            if initial.candidates != self.runtime_budget.max_candidates:
+                raise ValueError("initial candidate tranche differs from RuntimeBudget")
         return self
 
 
@@ -118,6 +193,8 @@ class ReferenceEvidenceKey(FrozenModel):
     host_policy: str
     source_run_artifact_index_hash: str = Field(pattern=r"^[0-9a-f]{64}$")
     bound_artifact_hashes: dict[str, str]
+    score_verification_source: Literal["sealed_artifact", "read_only_recompute"] | None = None
+    score_verification_hash: str | None = None
 
     @model_validator(mode="after")
     def complete_anchor(self) -> ReferenceEvidenceKey:
@@ -126,18 +203,39 @@ class ReferenceEvidenceKey(FrozenModel):
         required_suffixes = {
             "run-metadata.json",
             "functional-run-summary.json",
-            "score-independent-verification.json",
+            "score-recomputation-audit.json",
             "package-access-audit.json",
             "isolation-audit.json",
         }
         if not required_suffixes <= set(self.bound_artifact_hashes):
             missing = sorted(required_suffixes - set(self.bound_artifact_hashes))
             raise ValueError(f"reference key misses sealed artifacts: {missing}")
+        has_score_identity = (
+            self.score_verification_source is not None or self.score_verification_hash is not None
+        )
+        if has_score_identity and (
+            self.score_verification_source is None
+            or self.score_verification_hash is None
+            or len(self.score_verification_hash) != 64
+            or any(char not in "0123456789abcdef" for char in self.score_verification_hash)
+        ):
+            raise ValueError("score verification identity must be a complete SHA-256 anchor")
+        if (
+            self.score_verification_source == "sealed_artifact"
+            and "score-independent-verification.json" not in self.bound_artifact_hashes
+        ):
+            raise ValueError("sealed score verification artifact is absent from the anchor")
         return self
 
     @property
     def key_hash(self) -> str:
-        return sha256_bytes(canonical_json_bytes(self.model_dump(mode="json")))
+        payload = self.model_dump(mode="json")
+        # Sealed R4 evidence predates this optional score-verification identity.
+        # Preserve its cache key exactly; new keys always bind the new fields.
+        if self.score_verification_source is None:
+            payload.pop("score_verification_source")
+            payload.pop("score_verification_hash")
+        return sha256_bytes(canonical_json_bytes(payload))
 
 
 class ReferenceCacheAudit(FrozenModel):
@@ -202,7 +300,21 @@ def load_r4_config(project_root: Path, path: Path) -> tuple[str, R4EvolutionConf
     if not resolved.is_relative_to(root):
         raise ValueError("R4 config must remain inside the project")
     config = R4EvolutionConfig.model_validate_json(resolved.read_text(encoding="utf-8"))
-    return sha256_bytes(canonical_json_bytes(config.model_dump(mode="json"))), config
+    payload = config.model_dump(mode="json")
+    # A field added with a backward-compatible default must not silently change
+    # the fingerprint of a sealed legacy config that never declared it.  New
+    # graph-aware configs include the explicit policy in their fingerprint.
+    for field_name in (
+        "selector_graph_policy",
+        "lifecycle_policy",
+        "active_session_budget_policy",
+        "conditional_merge_policy",
+    ):
+        if field_name not in config.model_fields_set:
+            payload.pop(field_name)
+    if "task_score_secondary_minimum_effect" not in config.validation_policy.model_fields_set:
+        payload["validation_policy"].pop("task_score_secondary_minimum_effect")
+    return sha256_bytes(canonical_json_bytes(payload)), config
 
 
 def canonical_fingerprint(value: object) -> str:
@@ -217,6 +329,44 @@ def _safe_project_path(project_root: Path, reference: str, *, directory: bool = 
     if directory and not path.is_dir():
         raise ValueError(f"reference is not a directory: {reference}")
     return path
+
+
+def _read_only_score_verification(project_root: Path, run: Path) -> dict[str, object]:
+    """Recompute sealed functional vectors without reopening the run for writing."""
+
+    # Local import avoids the runtime <-> functional coordinator import cycle:
+    # the coordinator itself owns ActiveSessionRuntime role settlement.
+    from gepase.evals.functional_pipeline import independently_verify_functional_scores
+
+    result = independently_verify_functional_scores(project_root, run)
+    if result.get("valid") is not True:
+        raise ValueError("reference independent score recomputation failed")
+    return result
+
+
+def _score_verification_identity(
+    project_root: Path,
+    run: Path,
+    bound: dict[str, str],
+) -> tuple[Literal["sealed_artifact", "read_only_recompute"], str]:
+    """Return an immutable score-verification anchor for a sealed reference.
+
+    Historical R3 runs contain the persisted verification artifact.  A strict
+    lifecycle run that was sealed before that artifact was written is verified
+    read-only and binds the recomputation payload hash in the evolution key;
+    it is never reopened or mutated merely to satisfy cache anchoring.
+    """
+
+    recomputed = _read_only_score_verification(project_root, run)
+    path = run / "score-independent-verification.json"
+    if path.is_file():
+        if "score-independent-verification.json" not in bound:
+            raise ValueError("unindexed score verification artifact cannot anchor a reference")
+        stored = json.loads(path.read_text(encoding="utf-8"))
+        if not isinstance(stored, dict) or stored != recomputed:
+            raise ValueError("sealed score verification differs from read-only recomputation")
+        return "sealed_artifact", sha256_bytes(path.read_bytes())
+    return "read_only_recompute", sha256_bytes(canonical_json_bytes(recomputed))
 
 
 def build_reference_evidence_key(
@@ -247,9 +397,7 @@ def build_reference_evidence_key(
     plan_path = _safe_project_path(root, config.frozen_plan_ref)
     plan = FrozenEvalPlan.model_validate_json(plan_path.read_text(encoding="utf-8"))
     policy_path = _safe_project_path(root, config.scoring_policy_ref)
-    policy = FunctionalScoringPolicy.model_validate_json(
-        policy_path.read_text(encoding="utf-8")
-    )
+    policy = FunctionalScoringPolicy.model_validate_json(policy_path.read_text(encoding="utf-8"))
     policy_hash = canonical_fingerprint(policy.model_dump(mode="json"))
     if policy.frozen_plan_hash != plan.plan_hash:
         raise ValueError("R4 scoring policy is not bound to the frozen EvalPlan")
@@ -296,14 +444,15 @@ def build_reference_evidence_key(
         raise ValueError("R3 reference vectors do not cover the complete frozen Functional plan")
 
     fixture_hashes = {
-        binding.ref: binding.sha256
-        for case in plan.functional_cases
-        for binding in case.fixtures
+        binding.ref: binding.sha256 for case in plan.functional_cases for binding in case.fixtures
     }
     for reference, expected in fixture_hashes.items():
         actual = sha256_bytes(_safe_project_path(root, reference).read_bytes())
         if actual != expected:
             raise ValueError(f"frozen fixture hash mismatch: {reference}")
+    score_verification_source, score_verification_hash = _score_verification_identity(
+        root, run, bound
+    )
     return ReferenceEvidenceKey(
         reference_run_ref=config.reference_run_ref,
         reference_variant=config.reference_variant,
@@ -320,9 +469,7 @@ def build_reference_evidence_key(
         provider_snapshot=config.provider_snapshot,
         host=config.host,
         model=config.model,
-        host_model_snapshot=canonical_fingerprint(
-            {"host": config.host, "model": config.model}
-        ),
+        host_model_snapshot=canonical_fingerprint({"host": config.host, "model": config.model}),
         runtime_environment_fingerprint=config.runtime_environment_fingerprint,
         tool_policy_fingerprint=config.tool_policy_fingerprint,
         seed=config.seed,
@@ -330,6 +477,8 @@ def build_reference_evidence_key(
         host_policy=config.host_policy,
         source_run_artifact_index_hash=sha256_bytes(index_path.read_bytes()),
         bound_artifact_hashes=bound,
+        score_verification_source=score_verification_source,
+        score_verification_hash=score_verification_hash,
     )
 
 
@@ -367,6 +516,18 @@ def audit_reference_cache(
             mismatches.append(relative)
             continue
         verified.append(relative)
+    try:
+        score_source, score_hash = _score_verification_identity(
+            root, run, key.bound_artifact_hashes
+        )
+    except (OSError, ValueError, json.JSONDecodeError) as error:
+        mismatches.append(f"score_verification:{error}")
+    else:
+        if key.score_verification_source is not None and (
+            score_source != key.score_verification_source
+            or score_hash != key.score_verification_hash
+        ):
+            mismatches.append("score-independent-verification")
     return ReferenceCacheAudit(
         requested_key_hash=key.key_hash,
         source_run_ref=key.reference_run_ref,

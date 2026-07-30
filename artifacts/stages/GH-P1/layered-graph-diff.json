@@ -1,0 +1,125 @@
+{
+  "bounded_location_value": true,
+  "edge_counts_after": {
+    "observed": 46,
+    "semantic_hypothesis": 4,
+    "static": 474
+  },
+  "edge_counts_before": {
+    "observed": 46,
+    "static": 474
+  },
+  "layered_graph_fingerprint": "c491885581a928dd9c94cfb3b7cbdad67d5477cc59734814fc5dd7fd2d2c3546",
+  "node_set_unchanged": true,
+  "schema_version": "1.0.0",
+  "selector_rows_with_semantic_value": [
+    {
+      "eligible_unchanged": true,
+      "locator": "section/slack-gif-creator#1/available-utilities#1/validators-core-validators#1/block#2",
+      "node_id": "node-46d940221fa8caf3b6c22d2c",
+      "path": "SKILL.md",
+      "rank_after": 2,
+      "rank_before": 2,
+      "rank_delta": 0,
+      "score_after": 8.0861438,
+      "score_before": 7.89558824,
+      "score_delta": 0.19055556,
+      "semantic_feature": {
+        "contribution": 0.19055556,
+        "feature": "semantic_hypothesis_support",
+        "group": "relevance",
+        "raw_value": 0.54444444,
+        "weight": 0.35
+      },
+      "validation_intensity_unchanged": true
+    },
+    {
+      "eligible_unchanged": true,
+      "locator": "function/module/validate_gif#1",
+      "node_id": "node-774bca90618f6a6cbf560caa",
+      "path": "core/validators.py",
+      "rank_after": 3,
+      "rank_before": 4,
+      "rank_delta": 1,
+      "score_after": 7.53284314,
+      "score_before": 7.18284314,
+      "score_delta": 0.35,
+      "semantic_feature": {
+        "contribution": 0.35,
+        "feature": "semantic_hypothesis_support",
+        "group": "relevance",
+        "raw_value": 1.0,
+        "weight": 0.35
+      },
+      "validation_intensity_unchanged": true
+    },
+    {
+      "eligible_unchanged": true,
+      "locator": "section/slack-gif-creator#1/core-workflow#1/block#1",
+      "node_id": "node-39e1aff632e5776f04740a41",
+      "path": "SKILL.md",
+      "rank_after": 6,
+      "rank_before": 11,
+      "rank_delta": 5,
+      "score_after": 6.58419935,
+      "score_before": 6.39558824,
+      "score_delta": 0.18861111,
+      "semantic_feature": {
+        "contribution": 0.18861111,
+        "feature": "semantic_hypothesis_support",
+        "group": "relevance",
+        "raw_value": 0.53888889,
+        "weight": 0.35
+      },
+      "validation_intensity_unchanged": true
+    },
+    {
+      "eligible_unchanged": true,
+      "locator": "file",
+      "node_id": "node-2c61585b9d40c2df7343f499",
+      "path": "core/gif_builder.py",
+      "rank_after": 125,
+      "rank_before": 127,
+      "rank_delta": 2,
+      "score_after": 3.11475491,
+      "score_before": 2.92225491,
+      "score_delta": 0.1925,
+      "semantic_feature": {
+        "contribution": 0.1925,
+        "feature": "semantic_hypothesis_support",
+        "group": "relevance",
+        "raw_value": 0.55,
+        "weight": 0.35
+      },
+      "validation_intensity_unchanged": true
+    },
+    {
+      "eligible_unchanged": true,
+      "locator": "function/module.GIFBuilder/save#1",
+      "node_id": "node-f592ff3e34f1b63061471b9c",
+      "path": "core/gif_builder.py",
+      "rank_after": 142,
+      "rank_before": 159,
+      "rank_delta": 17,
+      "score_after": 2.79138889,
+      "score_before": 2.44333333,
+      "score_delta": 0.34805556,
+      "semantic_feature": {
+        "contribution": 0.34805556,
+        "feature": "semantic_hypothesis_support",
+        "group": "relevance",
+        "raw_value": 0.99444444,
+        "weight": 0.35
+      },
+      "validation_intensity_unchanged": true
+    }
+  ],
+  "semantic_edge_ids": [
+    "edge-1fb048a09e003df55fdf3db2",
+    "edge-f568bb0507d3bdfc61ea0a2f",
+    "edge-944704f25acb06b378663f62",
+    "edge-5d4b442afe4281defc35bf70"
+  ],
+  "source_graph_fingerprint": "e91f53515cae651a2c3e816c1ec2afbb03d2ec4aba317ad56736066837ab1e57",
+  "trusted_graph_unchanged": true
+}

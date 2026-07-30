@@ -1,0 +1,96 @@
+{
+  "gates": [
+    {
+      "evidence": [
+        "preflight.json"
+      ],
+      "gate_id": "GHE1-G00",
+      "status": "passed"
+    },
+    {
+      "evidence": [
+        "package-contract-audit.json"
+      ],
+      "gate_id": "GHE1-G01",
+      "status": "passed"
+    },
+    {
+      "evidence": [
+        "fresh-reference-audit.json"
+      ],
+      "gate_id": "GHE1-G02",
+      "status": "passed"
+    },
+    {
+      "evidence": [
+        "observed-selector-graph-audit.json"
+      ],
+      "gate_id": "GHE1-G03",
+      "status": "passed"
+    },
+    {
+      "evidence": [
+        "search-reachability-audit.json"
+      ],
+      "gate_id": "GHE1-G04",
+      "status": "passed"
+    },
+    {
+      "evidence": [
+        "candidate-train-gate-audit.json"
+      ],
+      "gate_id": "GHE1-G05",
+      "status": "passed"
+    },
+    {
+      "evidence": [
+        "held-out-merge-audit.json"
+      ],
+      "gate_id": "GHE1-G06",
+      "status": "passed"
+    },
+    {
+      "evidence": [
+        "effect-outcome-audit.json"
+      ],
+      "gate_id": "GHE1-G07",
+      "status": "passed"
+    },
+    {
+      "evidence": [
+        "report-reproduction-audit.json"
+      ],
+      "gate_id": "GHE1-G08",
+      "status": "passed"
+    },
+    {
+      "evidence": [
+        "verification.json",
+        "protected-tree-audit.json"
+      ],
+      "gate_id": "GHE1-G09",
+      "status": "passed"
+    }
+  ],
+  "passed": 10,
+  "progress": {
+    "status": "complete",
+    "outcome": "no_strict_improvement",
+    "pending_work": 0,
+    "gate_funnel": {
+      "proposed": 2,
+      "train_admitted": 1,
+      "validation_completed": 1,
+      "deployable": 0
+    },
+    "reference_seal_checked": 485,
+    "evolution_seal_checked": 579,
+    "report_seal_checked": 36,
+    "final_report_seal_checked": 32,
+    "usage_authority": "ActiveSessionRuntime + ReservationSettlement + HostAttemptAccounting"
+  },
+  "schema_version": "1.0.0",
+  "stage_id": "GH-E1",
+  "status": "passed",
+  "total": 10
+}

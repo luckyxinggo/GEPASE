@@ -5,6 +5,7 @@ from __future__ import annotations
 import hashlib
 import json
 from enum import StrEnum
+from pathlib import Path
 
 from pydantic import Field, model_validator
 
@@ -152,3 +153,75 @@ class MergeBuildRecord(FrozenModel):
     held_out_features_read: int = Field(default=0, ge=0, le=0)
     status: str
     reason: str | None = None
+
+
+class MergeOutcomeStatus(StrEnum):
+    MATERIALIZED_PENDING_EVALUATION = "materialized_pending_evaluation"
+    MATERIALIZED_AND_EVALUATED = "materialized_and_evaluated"
+    NO_ELIGIBLE_PARENT_SET = "no_eligible_parent_set"
+    NOT_REACHED_BUDGET_INCOMPLETE = "not_reached_budget_incomplete"
+
+
+class MergeOutcome(FrozenModel):
+    """Typed terminal/pending result of exhaustive train-only parent enumeration."""
+
+    schema_version: str = MERGE_SCHEMA_VERSION
+    status: MergeOutcomeStatus
+    considered_parent_candidate_ids: tuple[str, ...]
+    considered_parent_set_count: int = Field(ge=0)
+    eligible_parent_set_count: int = Field(ge=0)
+    rejected_parent_set_count: int = Field(ge=0)
+    rejection_reason_counts: dict[str, int]
+    cross_package_pair_count: int = Field(ge=0)
+    selected_parent_set_id: str | None = None
+    merge_candidate_id: str | None = None
+    evaluation_complete: bool = False
+    enumeration_ref: str | None = None
+    build_record_ref: str | None = None
+
+    @model_validator(mode="after")
+    def outcome_consistency(self) -> MergeOutcome:
+        if len(self.considered_parent_candidate_ids) != len(
+            set(self.considered_parent_candidate_ids)
+        ):
+            raise ValueError("considered Merge parents must be unique")
+        if self.considered_parent_set_count != (
+            self.eligible_parent_set_count + self.rejected_parent_set_count
+        ):
+            raise ValueError("Merge considered set count is incomplete")
+        for value in (self.enumeration_ref, self.build_record_ref):
+            if value is None:
+                continue
+            path = Path(value)
+            if path.is_absolute() or ".." in path.parts:
+                raise ValueError("Merge evidence refs must be repository-relative")
+        if self.status is MergeOutcomeStatus.NOT_REACHED_BUDGET_INCOMPLETE:
+            if any(
+                (
+                    self.eligible_parent_set_count,
+                    self.selected_parent_set_id is not None,
+                    self.merge_candidate_id is not None,
+                    self.evaluation_complete,
+                    self.build_record_ref is not None,
+                )
+            ):
+                raise ValueError("budget-incomplete Merge cannot claim enumeration/child")
+        elif self.status is MergeOutcomeStatus.NO_ELIGIBLE_PARENT_SET:
+            if self.eligible_parent_set_count != 0:
+                raise ValueError("no_eligible_parent_set cannot contain an eligible set")
+            if self.selected_parent_set_id or self.merge_candidate_id or self.evaluation_complete:
+                raise ValueError("ineligible Merge outcome cannot claim a child")
+            if not self.enumeration_ref:
+                raise ValueError("ineligible Merge outcome requires enumeration evidence")
+        else:
+            if self.eligible_parent_set_count < 1 or not self.selected_parent_set_id:
+                raise ValueError("materialized Merge outcome requires an eligible selected set")
+            if not self.merge_candidate_id or not self.build_record_ref:
+                raise ValueError("materialized Merge outcome requires a child/build record")
+            if not self.enumeration_ref:
+                raise ValueError("materialized Merge outcome requires enumeration evidence")
+            if (
+                self.status is MergeOutcomeStatus.MATERIALIZED_AND_EVALUATED
+            ) != self.evaluation_complete:
+                raise ValueError("Merge evaluation status is inconsistent")
+        return self

@@ -91,3 +91,9 @@ def test_parent_sets_are_same_package_same_root_and_cross_package_is_never_merge
     )
     assert audit["valid"]
     assert audit["all_compatible_sets_pass_contract"]
+    assert len(report.considered_parent_sets) == 6
+    assert sum(item.eligible for item in report.considered_parent_sets) == 2
+    assert sum(
+        item.reason_codes == ("cross_package",)
+        for item in report.considered_parent_sets
+    ) == 4

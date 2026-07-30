@@ -1,0 +1,45 @@
+{
+  "artifact_seals": {
+    "executor_tranche_2": {
+      "checked": 8,
+      "hash_mismatch": 0,
+      "missing": 0,
+      "schema_errors": 0,
+      "unindexed_files": 0,
+      "valid": true
+    },
+    "reference": {
+      "checked": 485,
+      "hash_mismatch": 0,
+      "missing": 0,
+      "schema_errors": 0,
+      "unindexed_files": 0,
+      "valid": true
+    }
+  },
+  "commands": [
+    {"command": ".venv/bin/python -m pytest -q", "ok": true, "summary": "205 passed in 13.03s"},
+    {"command": ".venv/bin/ruff check .", "ok": true, "summary": "All checks passed!"},
+    {"command": ".venv/bin/pyright --pythonpath .venv/bin/python", "ok": true, "summary": "0 errors, 0 warnings, 0 informations"},
+    {"command": ".venv/bin/python scripts/export_core_schemas.py (twice)", "ok": true, "summary": "63 schemas; second export idempotent"},
+    {"command": ".venv/bin/python scripts/check_markdown_links.py", "ok": true, "summary": "markdown links: ok"},
+    {"command": ".venv/bin/python scripts/check_license.py", "ok": true, "summary": "license policy: ok"},
+    {"command": "git diff --check", "ok": true, "summary": "no output"}
+  ],
+  "generated_at": "2026-07-29T08:13:07Z",
+  "in_progress_seal_note_zh": "evolution run 与 GH-E1 根 stage 仍是进行中 append-only 树，因此不把其历史根 artifact-index 的 unindexed 计数冒充终态 seal；本 tranche 使用独立 8-object seal，reference 终态 seal 仍为 485/485。",
+  "protected_tree_unchanged": true,
+  "schema_version": "1.0.0",
+  "security": {
+    "current_execution_submissions": {"findings": 0, "scanned_files": 6, "valid": true},
+    "executor_tranche_2": {"findings": 0, "scanned_files": 9, "valid": true},
+    "new_input_badge_workspace": {"findings": 0, "scanned_files": 4, "valid": true},
+    "new_star_bounce_workspace": {"findings": 0, "scanned_files": 4, "valid": true},
+    "whole_dirty_tree": {
+      "known_preserved_findings": 4,
+      "valid": false,
+      "reason_zh": "仅命中此前已审计并要求保留的两个原始 Agent workspace 中 optional generation/verification/validation 诊断；它们未进入 recovered submission 或本 tranche submission。"
+    }
+  },
+  "valid": true
+}

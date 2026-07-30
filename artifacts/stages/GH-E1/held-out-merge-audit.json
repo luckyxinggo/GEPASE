@@ -1,0 +1,53 @@
+{
+  "schema_version": "1.0.0",
+  "stage_id": "GH-E1",
+  "phase": "E1.6_E1.8_held_out_and_merge",
+  "generated_at": "2026-07-29T17:04:06Z",
+  "valid": true,
+  "checks": {
+    "validation_only_for_train_admitted_candidate": true,
+    "three_frozen_validation_cases_complete": true,
+    "independent_e2_e3_and_blind_grading_complete": true,
+    "ab_ba_comparators_complete": true,
+    "validation_did_not_modify_patch_or_training": true,
+    "category_risk_and_secondary_floors_applied": true,
+    "all_train_admitted_branches_enumerated_for_merge": true,
+    "cross_package_merge_forbidden": true,
+    "typed_no_eligible_parent_set_written": true
+  },
+  "validation": {
+    "candidate_id": "candidate-db0b9d19f0ff48b624ea03b6",
+    "cases": 3,
+    "mean_paired_delta": 0.11635333333333327,
+    "wins": 2,
+    "ties": 0,
+    "losses": 1,
+    "category_deltas": {
+      "looping_timing": 0.23109999999999997,
+      "emoji_animation": 0.2776799999999999,
+      "quality_efficiency": -0.15972000000000008
+    },
+    "category_regression_floor": -0.05,
+    "gate_3": "failed",
+    "reason": "protected_objective_regression",
+    "frontier_eligible": false
+  },
+  "merge": {
+    "status": "no_eligible_parent_set",
+    "considered_parent_candidate_ids": ["candidate-db0b9d19f0ff48b624ea03b6"],
+    "eligible_parent_set_count": 0,
+    "cross_package_pair_count": 0,
+    "reason": "insufficient_parents",
+    "merge_child_created": false
+  },
+  "evidence": [
+    {
+      "ref": "artifacts/runs/gh-e1-slack-gif-creator-evolution/evals/candidate-db0b9d19f0ff48b624ea03b6/validation/candidate-run-summary.json",
+      "sha256": "b40e90ff7465c5d7fdcc098cc485bed4e9497481ddc1755fcb1bb8e3ba9f9f57"
+    },
+    {
+      "ref": "artifacts/runs/gh-e1-slack-gif-creator-evolution/merge/outcome.json",
+      "sha256": "af3555af6ce1fc307e5d923a105fb9c090090a093cadc117370a945988fa94a1"
+    }
+  ]
+}

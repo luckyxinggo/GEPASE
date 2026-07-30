@@ -1,0 +1,40 @@
+{
+  "controller_ref": "src/gepase/optimizer/evolution_controller.py",
+  "direct_package_analyzer_lines": [
+    373,
+    473,
+    944,
+    1006,
+    1097,
+    1354,
+    1397,
+    1879,
+    1939
+  ],
+  "duplicated_selector_assembly_paths": 0,
+  "proposal_entry_paths_using_shared_scope": 2,
+  "proposal_shared_scope_call_lines": [
+    739,
+    1739
+  ],
+  "remaining_direct_analyzer_purposes": [
+    "selector graph builder static/fresh compile",
+    "Gate 0 source graph",
+    "candidate structural graph persistence",
+    "Gate 1 baseline/current reparse",
+    "Merge/child structural graph and validation"
+  ],
+  "schema_version": "1.0.0",
+  "second_controller_or_selector_system": false,
+  "selector_call_lines": [
+    681
+  ],
+  "selector_calls": 1,
+  "selector_calls_bypassing_parent_bound_view": 0,
+  "selector_calls_supplied_by_parent_bound_view": 1,
+  "selector_graph_builder_definition_and_call_lines": [
+    352,
+    844,
+    1691
+  ]
+}

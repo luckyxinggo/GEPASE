@@ -1,0 +1,148 @@
+{
+  "branch": "codex/graph-hardening",
+  "calls": {
+    "agent": 0,
+    "analyzer": 0,
+    "comparator": 0,
+    "eval": 0,
+    "executor": 0,
+    "grader": 0,
+    "headless_api": 0,
+    "mutation_candidates": 0,
+    "new_skill_effect_scores": 0,
+    "proposer": 0
+  },
+  "commands": [
+    ".venv/bin/pytest -q --junitxml artifacts/stages/GH-E0/test-results.xml",
+    ".venv/bin/ruff check .",
+    ".venv/bin/pyright --pythonpath .venv/bin/python",
+    ".venv/bin/python scripts/export_core_schemas.py",
+    ".venv/bin/python scripts/export_core_schemas.py",
+    ".venv/bin/python scripts/check_secrets.py --format json",
+    ".venv/bin/python scripts/check_markdown_links.py",
+    ".venv/bin/python scripts/check_license.py",
+    "git diff --check"
+  ],
+  "conclusion_boundary": {
+    "code_implemented": true,
+    "engineering_mechanism_tested": true,
+    "new_algorithm_effect_validated": false
+  },
+  "finished_commit": "c9ff12f8bf40920e29a7dbd45a95c90af167ae7b",
+  "gate_results": [
+    {
+      "evidence": [
+        "preflight.json",
+        "verification.json"
+      ],
+      "gate_id": "GHE0-G00-preflight_and_immutability",
+      "status": "passed"
+    },
+    {
+      "evidence": [
+        "compatibility-audit.json",
+        "controller-graph-consumption-audit.json"
+      ],
+      "gate_id": "GHE0-G01-backward_compatible_single_mainline",
+      "status": "passed"
+    },
+    {
+      "evidence": [
+        "fresh-graph-rebuild.json"
+      ],
+      "gate_id": "GHE0-G02-fresh_graph_rebuild_deterministic",
+      "status": "passed"
+    },
+    {
+      "evidence": [
+        "parent-evidence-overlay-audit.json"
+      ],
+      "gate_id": "GHE0-G03-parent_observed_binding",
+      "status": "passed"
+    },
+    {
+      "evidence": [
+        "selector-integration-replay.json",
+        "controller-graph-consumption-audit.json"
+      ],
+      "gate_id": "GHE0-G04-controller_really_consumes_layered_graph",
+      "status": "passed"
+    },
+    {
+      "evidence": [
+        "target-set-live-fixture.json"
+      ],
+      "gate_id": "GHE0-G05-bounded_scope_and_executable_opportunity",
+      "status": "passed"
+    },
+    {
+      "evidence": [
+        "preflight.json"
+      ],
+      "gate_id": "GHE0-G06-no_eval_or_effect_claim",
+      "status": "passed"
+    },
+    {
+      "evidence": [
+        "selector-cache-audit.json",
+        "test-results.xml",
+        "verification.json"
+      ],
+      "gate_id": "GHE0-G07-regression_and_fault_containment",
+      "status": "passed"
+    },
+    {
+      "evidence": [
+        "verification.json",
+        "commands.log",
+        "artifact-index.json"
+      ],
+      "gate_id": "GHE0-G08-verification_and_seal",
+      "status": "passed"
+    }
+  ],
+  "generated_at": "2026-07-28T08:40:08.318599+00:00",
+  "input_artifacts": [
+    {
+      "path": "artifacts/runs/r3-slack-gif-creator-paired/artifact-index.json",
+      "role": "sealed seed-original train package access",
+      "sha256": "09a959e759eadfb5e8b6ebd5b8e0c7d7c99886baf9d4784427905db1d776c648"
+    },
+    {
+      "path": "artifacts/runs/r4-slack-gif-creator-evolution/artifact-index.json",
+      "role": "read-only candidate-parent/recovery fixture",
+      "sha256": "61bb6ede5757d8afe3b6ab9ea5ea5ee272d34dd74ff68a3571ee6dfa365e7d36"
+    },
+    {
+      "path": "configs/graph-hardening/slack-gif-creator-gh-e0.json",
+      "role": "explicit GH-E0 static+observed graph policy",
+      "sha256": "a2b312b73cad81269480dc3df61df35734437033d6768b8f06e3c884ac0d17b2"
+    }
+  ],
+  "known_issues": [
+    "GH-E0 initializes only an ephemeral seed descriptor and exports no Agent work.",
+    "No mutated candidate, TaskScoreVector, held-out result or new Skill-effect claim was produced.",
+    "GH-P1 remains stalled and its semantic layer is explicitly disabled here.",
+    "Real end-to-end effect remains GH-E1 work and is not inferred from this stage."
+  ],
+  "metrics": {
+    "candidate_parent_observed_edges": 45,
+    "initialize_work_items": 2,
+    "machine_gates_passed": 9,
+    "machine_gates_total": 9,
+    "mutation_candidates": 0,
+    "new_skill_effect_scores": 0,
+    "pytest_tests": 171,
+    "seed_filtered_work_items": 11,
+    "seed_mapped_access_events": 46,
+    "seed_observed_edges": 46,
+    "selected_targets": 4,
+    "selected_targets_with_dynamic": 4,
+    "selector_graph_cache_hits": 1,
+    "selector_graph_cache_misses": 1
+  },
+  "schema_version": "1.0.0",
+  "stage_id": "GH-E0",
+  "started_from_commit": "c9ff12f8bf40920e29a7dbd45a95c90af167ae7b",
+  "status": "complete"
+}

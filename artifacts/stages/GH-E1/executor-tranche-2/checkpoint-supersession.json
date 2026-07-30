@@ -1,0 +1,18 @@
+{
+  "current_checkpoint": {
+    "barrier": "budget_limit",
+    "checkpoint_id": "budget-checkpoint-43c2fac4562f4bcf58af0023",
+    "checkpoint_ref": "artifacts/runs/gh-e1-slack-gif-creator-evolution/budget-checkpoints/budget-checkpoint-43c2fac4562f4bcf58af0023.json",
+    "checkpoint_sha256": "ec43aec73a25339832f3b444c38844d8cda7cbf7841a88a3622ecb3903c605ba",
+    "evidence_hash": "9a75c76840f44be59037cbaa88ca881e4d85d1b0d8f8fe52e106c861015cb312",
+    "state_hash": "b5ab56b8b9b42adb78ae99be54ae852a35081ea9bdcf5c4d2404e46c823c304a"
+  },
+  "reason_zh": "前一 checkpoint 在 Executor E2/E3 完成但 blind grading/TaskScoreVector/strict train Gate 尚未完成时使用 candidate_train_complete barrier，语义过强。它不删除、不覆盖，只作为 non-latest 历史保留；最新 checkpoint 改用 budget_limit，usage 与 evidence hash 不变。",
+  "schema_version": "1.0.0",
+  "superseded_checkpoint": {
+    "barrier": "candidate_train_complete",
+    "checkpoint_id": "budget-checkpoint-376e332e803c57f44f49c1a1",
+    "checkpoint_sha256": "a36d8e8b848a0cee491517fd8a1ac7cdb66d9047c8b68ccc0823bafa03fafb87",
+    "status": "stale_non_latest"
+  }
+}

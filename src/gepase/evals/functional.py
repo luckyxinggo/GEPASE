@@ -18,6 +18,7 @@ from pydantic import Field, model_validator
 from gepase.evals.eval_plan import RoleRunProvenance, RubricCriterion
 from gepase.evals.evidence import AssertionResult, ProviderFailureKind, UsageRecord
 from gepase.evals.work_items import Variant
+from gepase.package.semantic_models import SemanticEnrichmentScope, SemanticRelationProposal
 from gepase.schemas.common import SCHEMA_VERSION, ArtifactRef, FrozenModel
 
 
@@ -31,6 +32,84 @@ class FunctionalRunState(StrEnum):
     ANALYSIS_READY = "analysis_ready"
     ANALYSIS_COMPLETE = "analysis_complete"
     SCORED = "scored"
+
+
+class FunctionalRole(StrEnum):
+    INDEPENDENT_GRADER = "independent_grader"
+    COMPARATOR = "comparator"
+    ANALYZER = "analyzer"
+
+
+class RoleAttemptKind(StrEnum):
+    INITIAL = "initial"
+    REPAIR = "repair"
+
+
+class RoleFailureKind(StrEnum):
+    TIMEOUT = "timeout"
+    INVALID_SUBMISSION = "invalid_submission"
+    PARTIAL_ARTIFACT = "partial_artifact"
+    INTERRUPTED = "interrupted"
+
+
+class RoleAttemptFailure(FrozenModel):
+    """One already-accounted Agent-host attempt that produced no valid submission."""
+
+    attempt_kind: RoleAttemptKind
+    host_attempt_accounting_id: str = Field(min_length=1)
+    host_task_id: str = Field(min_length=1)
+    context_id: str = Field(min_length=1)
+    evidence_sha256: str = Field(pattern=r"^[0-9a-f]{64}$")
+    failure_kind: RoleFailureKind
+    source_refs: tuple[str, ...] = Field(min_length=1)
+
+    @model_validator(mode="after")
+    def relative_sources(self) -> RoleAttemptFailure:
+        for reference in self.source_refs:
+            path = Path(reference)
+            if path.is_absolute() or ".." in path.parts:
+                raise ValueError("role failure source refs must be repository-relative")
+        return self
+
+
+class RoleAttemptTerminalization(FrozenModel):
+    """Append-only terminal result for an exhausted non-Executor role work item."""
+
+    schema_version: str = SCHEMA_VERSION
+    terminalization_id: str = Field(min_length=1)
+    run_id: str = Field(min_length=1)
+    task_id: str = Field(min_length=1)
+    work_id: str = Field(min_length=1)
+    role: FunctionalRole
+    attempts: tuple[RoleAttemptFailure, ...] = Field(min_length=1, max_length=3)
+    allowed_repair_attempts: int = Field(ge=0, le=2)
+    disposition: Literal["evidence_incomplete", "analysis_unavailable"]
+    scoring_penalty_applied: Literal[False] = False
+    synthetic_submission_created: Literal[False] = False
+    synthetic_score_created: Literal[False] = False
+    synthetic_winner_created: Literal[False] = False
+    terminalized_at: datetime
+
+    @model_validator(mode="after")
+    def exhausted_and_role_safe(self) -> RoleAttemptTerminalization:
+        if len(self.attempts) != self.allowed_repair_attempts + 1:
+            raise ValueError("role terminalization requires the initial and every allowed repair")
+        if self.attempts[0].attempt_kind is not RoleAttemptKind.INITIAL:
+            raise ValueError("the first role attempt must be initial")
+        if any(item.attempt_kind is not RoleAttemptKind.REPAIR for item in self.attempts[1:]):
+            raise ValueError("all later role attempts must be repairs")
+        if len({item.host_attempt_accounting_id for item in self.attempts}) != len(self.attempts):
+            raise ValueError("role terminalization HostAttempt IDs must be unique")
+        if len({item.context_id for item in self.attempts}) != len(self.attempts):
+            raise ValueError("role terminalization contexts must be isolated")
+        expected = (
+            "analysis_unavailable"
+            if self.role is FunctionalRole.ANALYZER
+            else "evidence_incomplete"
+        )
+        if self.disposition != expected:
+            raise ValueError("role failure disposition disagrees with frozen role semantics")
+        return self
 
 
 class FunctionalScoringPolicy(FrozenModel):
@@ -236,6 +315,7 @@ class AnalyzerWorkItem(FrozenModel):
     package_graph_ref: str
     node_hints: tuple[AnalysisNodeHint, ...]
     submission_schema_ref: str
+    semantic_enrichment: SemanticEnrichmentScope | None = None
     forbidden_inputs: tuple[str, ...] = (
         "candidate identity",
         "search history",
@@ -262,6 +342,7 @@ class AnalyzerSubmission(FrozenModel):
     role_run: RoleRunProvenance
     analyses: tuple[FailureAnalysis, ...]
     summary_zh: str = Field(min_length=1)
+    semantic_relation_proposals: tuple[SemanticRelationProposal, ...] = ()
 
 
 class PackageAccessAuditItem(FrozenModel):
@@ -331,6 +412,37 @@ class FunctionalRunSummary(FrozenModel):
 def stable_role_id(prefix: str, payload: object) -> str:
     canonical = json.dumps(payload, ensure_ascii=False, sort_keys=True, separators=(",", ":"))
     return f"{prefix}-{hashlib.sha256(canonical.encode()).hexdigest()[:24]}"
+
+
+def build_role_attempt_terminalization(
+    *,
+    run_id: str,
+    task_id: str,
+    work_id: str,
+    role: FunctionalRole,
+    attempts: tuple[RoleAttemptFailure, ...],
+    allowed_repair_attempts: int,
+    terminalized_at: datetime | None = None,
+) -> RoleAttemptTerminalization:
+    """Build the immutable terminal record without inventing role output."""
+
+    draft = RoleAttemptTerminalization(
+        terminalization_id="pending",
+        run_id=run_id,
+        task_id=task_id,
+        work_id=work_id,
+        role=role,
+        attempts=attempts,
+        allowed_repair_attempts=allowed_repair_attempts,
+        disposition=(
+            "analysis_unavailable" if role is FunctionalRole.ANALYZER else "evidence_incomplete"
+        ),
+        terminalized_at=terminalized_at or datetime.now(UTC),
+    )
+    identity = draft.model_dump(mode="json", exclude={"terminalization_id"})
+    return draft.model_copy(
+        update={"terminalization_id": stable_role_id("role-terminal", identity)}
+    )
 
 
 def clamp(value: float, minimum: float = -1.0, maximum: float = 1.0) -> float:

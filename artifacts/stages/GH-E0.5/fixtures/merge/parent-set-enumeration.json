@@ -1,0 +1,322 @@
+{
+  "breeding_snapshot_id": "breeding-efd73d7b9761542af9ec8c08",
+  "considered_parent_sets": [
+    {
+      "eligible": true,
+      "package_ids": [
+        "slack-gif-creator"
+      ],
+      "parent_candidate_ids": [
+        "candidate-04b26dff2bc83b82334bf184",
+        "candidate-2dad7a05ce4a6460dd71f470"
+      ],
+      "parent_set_id": "merge-parent-set-872d56c45a560e17a2902340",
+      "reason_codes": [
+        "compatible"
+      ]
+    }
+  ],
+  "consumer_validated": true,
+  "cross_package_pairs_counted_as_merge": 0,
+  "cross_package_pairs_observed": 0,
+  "merge_compatible_package_count": 1,
+  "merge_compatible_parent_set_count": 1,
+  "ranked_parent_sets": [
+    {
+      "contribution_overlap_size": 7,
+      "contribution_union_size": 67,
+      "exclusive_contribution_size": 60,
+      "lineage_distance": 2,
+      "parent_set": {
+        "compatibility_report": {
+          "ancestor_relation": false,
+          "consumer_contract_version": "1.0.0",
+          "contribution_distinct": true,
+          "different_branches": true,
+          "distinct_content": true,
+          "exclusive_contribution_nonempty": true,
+          "first_divergent_child_ids": [
+            "candidate-04b26dff2bc83b82334bf184",
+            "candidate-2dad7a05ce4a6460dd71f470"
+          ],
+          "lca_candidate_id": "candidate-21242a10bcbaeb9631f3b2da",
+          "lca_exists": true,
+          "merge_input_compatible": true,
+          "parent_candidate_ids": [
+            "candidate-04b26dff2bc83b82334bf184",
+            "candidate-2dad7a05ce4a6460dd71f470"
+          ],
+          "reason_codes": [
+            "compatible"
+          ],
+          "same_lineage_root": true,
+          "same_package": true,
+          "same_snapshot": true,
+          "same_source_package": true,
+          "schema_version": "2.0.0",
+          "structural_gates_passed": true,
+          "train_floor_satisfied": true,
+          "train_only_evidence": true
+        },
+        "consumer_contract_version": "1.0.0",
+        "lineage": [
+          {
+            "branch_id": null,
+            "branch_root_candidate_id": null,
+            "candidate_id": "candidate-21242a10bcbaeb9631f3b2da",
+            "content_hash": "ce42d8a837acf9feda9706a3418fc26a77c497d9615079e616b5fdc6870ef64e",
+            "failure_cluster_ids": [],
+            "generation": 0,
+            "lineage_root_candidate_id": "candidate-21242a10bcbaeb9631f3b2da",
+            "operator": "seed",
+            "package_id": "slack-gif-creator",
+            "parent_ids": [],
+            "schema_version": "2.0.0",
+            "source_package_ref": "benchmarks/canaries/slack-gif-creator/package",
+            "source_snapshot_hash": "ce42d8a837acf9feda9706a3418fc26a77c497d9615079e616b5fdc6870ef64e"
+          },
+          {
+            "branch_id": "branch-48996a086347c74b7237758c",
+            "branch_root_candidate_id": "candidate-04b26dff2bc83b82334bf184",
+            "candidate_id": "candidate-04b26dff2bc83b82334bf184",
+            "content_hash": "30b52f2cab481f75926545479d2fff8bd907d716c0fe241e8f4014369e0d867c",
+            "failure_cluster_ids": [
+              "train-feedback:functional-train-easing-orbit-005"
+            ],
+            "generation": 1,
+            "lineage_root_candidate_id": "candidate-21242a10bcbaeb9631f3b2da",
+            "operator": "graph_guided_package_patch",
+            "package_id": "slack-gif-creator",
+            "parent_ids": [
+              "candidate-21242a10bcbaeb9631f3b2da"
+            ],
+            "schema_version": "2.0.0",
+            "source_package_ref": "benchmarks/canaries/slack-gif-creator/package",
+            "source_snapshot_hash": "ce42d8a837acf9feda9706a3418fc26a77c497d9615079e616b5fdc6870ef64e"
+          },
+          {
+            "branch_id": "branch-f9a4828bb2527567448594ca",
+            "branch_root_candidate_id": "candidate-2dad7a05ce4a6460dd71f470",
+            "candidate_id": "candidate-2dad7a05ce4a6460dd71f470",
+            "content_hash": "cf3c66eb21afcbcfc3518927b5572624075866213c16717d03010ccc25074525",
+            "failure_cluster_ids": [
+              "reflected-train:functional-train-easing-orbit-005"
+            ],
+            "generation": 1,
+            "lineage_root_candidate_id": "candidate-21242a10bcbaeb9631f3b2da",
+            "operator": "graph_guided_package_patch",
+            "package_id": "slack-gif-creator",
+            "parent_ids": [
+              "candidate-21242a10bcbaeb9631f3b2da"
+            ],
+            "schema_version": "2.0.0",
+            "source_package_ref": "benchmarks/canaries/slack-gif-creator/package",
+            "source_snapshot_hash": "ce42d8a837acf9feda9706a3418fc26a77c497d9615079e616b5fdc6870ef64e"
+          }
+        ],
+        "parent_set_id": "merge-parent-set-872d56c45a560e17a2902340",
+        "parents": [
+          {
+            "ancestor_chain": [
+              "candidate-21242a10bcbaeb9631f3b2da",
+              "candidate-04b26dff2bc83b82334bf184"
+            ],
+            "contribution": {
+              "closure_ids": [
+                "node-69ea814aac72a6c557485ef0",
+                "node-ad0ec7c5b1cfab9dc320d69b",
+                "node-aeab6f88cd3429a6d5130037",
+                "node-ce609b198696eee0ac59fa35",
+                "node-d2a7a73a7a812652291bae3d",
+                "node-fddc99453114c3a40363b219"
+              ],
+              "component_ids": [
+                "node-69ea814aac72a6c557485ef0"
+              ],
+              "objective_keys": [],
+              "task_keys": [
+                "functional-train-easing-orbit-005",
+                "functional-train-emoji-bounce-001",
+                "functional-train-input-badge-003",
+                "functional-train-message-status-002"
+              ]
+            },
+            "gate_0_1_passed": true,
+            "identity": {
+              "branch_id": "branch-48996a086347c74b7237758c",
+              "branch_root_candidate_id": "candidate-04b26dff2bc83b82334bf184",
+              "candidate_id": "candidate-04b26dff2bc83b82334bf184",
+              "content_hash": "30b52f2cab481f75926545479d2fff8bd907d716c0fe241e8f4014369e0d867c",
+              "failure_cluster_ids": [
+                "train-feedback:functional-train-easing-orbit-005"
+              ],
+              "generation": 1,
+              "lineage_root_candidate_id": "candidate-21242a10bcbaeb9631f3b2da",
+              "operator": "graph_guided_package_patch",
+              "package_id": "slack-gif-creator",
+              "parent_ids": [
+                "candidate-21242a10bcbaeb9631f3b2da"
+              ],
+              "schema_version": "2.0.0",
+              "source_package_ref": "benchmarks/canaries/slack-gif-creator/package",
+              "source_snapshot_hash": "ce42d8a837acf9feda9706a3418fc26a77c497d9615079e616b5fdc6870ef64e"
+            },
+            "merge_eligibility": "eligible",
+            "not_deployable": true,
+            "patch_id": "patch-109aa9e370eb22e668878393",
+            "train_evidence_refs": [
+              "artifacts/runs/r3-slack-gif-creator-paired/task-score-vectors/work-229b28b7e4ec64d79ddc725d.json",
+              "artifacts/runs/r3-slack-gif-creator-paired/task-score-vectors/work-4d807d3a99ff3d159ec6fb29.json",
+              "artifacts/runs/r3-slack-gif-creator-paired/task-score-vectors/work-8b18ac4a317bfa0522d70aca.json",
+              "artifacts/runs/r3-slack-gif-creator-paired/task-score-vectors/work-9a981b04ae2ac3fb91d31911.json",
+              "artifacts/runs/r3-slack-gif-creator-paired/task-score-vectors/work-aeaea033cebc5f6b4e948b5e.json",
+              "artifacts/runs/r4-slack-gif-creator-evolution/evals/candidate-04b26dff2bc83b82334bf184/train/task-score-vectors/work-2feaa3a4dbb47f95a5b9aefa.json",
+              "artifacts/runs/r4-slack-gif-creator-evolution/evals/candidate-04b26dff2bc83b82334bf184/train/task-score-vectors/work-3a3525d61988b3d58944acd0.json",
+              "artifacts/runs/r4-slack-gif-creator-evolution/evals/candidate-04b26dff2bc83b82334bf184/train/task-score-vectors/work-3a3dd2e7f87dd8a32785d7c0.json",
+              "artifacts/runs/r4-slack-gif-creator-evolution/evals/candidate-04b26dff2bc83b82334bf184/train/task-score-vectors/work-9ecf15590215f5ff1128beba.json",
+              "artifacts/runs/r4-slack-gif-creator-evolution/evals/candidate-04b26dff2bc83b82334bf184/train/task-score-vectors/work-c0ff710d24f738bfb0ae36c6.json"
+            ],
+            "train_floor_satisfied": true
+          },
+          {
+            "ancestor_chain": [
+              "candidate-21242a10bcbaeb9631f3b2da",
+              "candidate-2dad7a05ce4a6460dd71f470"
+            ],
+            "contribution": {
+              "closure_ids": [
+                "node-07cfe3527161ffb22c125b9b",
+                "node-0862ef4ee6cdd2c556b152fe",
+                "node-0f241aa06504163be33132f8",
+                "node-147e0c90b3693120aa72ab76",
+                "node-1bf6365826c381c7f5a2409d",
+                "node-28737672e37897a5e151c9f2",
+                "node-2a5cc870ea50c9583af1ace8",
+                "node-2a6a874a6cf74626fc7fa467",
+                "node-2bdc297f52669b42d134781c",
+                "node-2bdef85c5e358a238dc3f0d7",
+                "node-2c61585b9d40c2df7343f499",
+                "node-32294870cb58e78dfcb0ba2e",
+                "node-33a204a805c015e904408c13",
+                "node-390c19b0fbd4439b006d6a79",
+                "node-39e1aff632e5776f04740a41",
+                "node-3b97505fdb139d1223138157",
+                "node-41a07c49787675fb06d225da",
+                "node-44a9519223abe9c140f2eb20",
+                "node-46d940221fa8caf3b6c22d2c",
+                "node-4a7c2800d4ec63b15454adf0",
+                "node-4a85a68cbdb79c00cec79085",
+                "node-4b5c8a8085aea955868d9a4d",
+                "node-4e4accf671316240af17ba03",
+                "node-5baca365c4feef076b3894e9",
+                "node-629ef4d92d30bd40a69a81cf",
+                "node-681dbd762f0ed5979b100a6d",
+                "node-696af46b9faabc5ea99dc6c7",
+                "node-69ff7263e4e314e8d682f14d",
+                "node-774bca90618f6a6cbf560caa",
+                "node-78a53d4695c55bc496c79095",
+                "node-808339aa2156e4f31feba973",
+                "node-81ced3f192a002852fb5bc44",
+                "node-8eb08b268c01868fb5649a9b",
+                "node-92036653b9d236084c1eff63",
+                "node-938e6175ba065e23c2ec4e21",
+                "node-9422a8dcbc39d0acdf64f4c9",
+                "node-9965a8402ac545f994d95d60",
+                "node-a017055ae976967b6a7dd680",
+                "node-a54499c1f984cc4afc73ce43",
+                "node-a7da88ba99b8b8091a33bf3e",
+                "node-aa55b129f8f9424119c67101",
+                "node-ace140e681b554cae5ee51a3",
+                "node-ad0ec7c5b1cfab9dc320d69b",
+                "node-ba61f1aff933ca77da36193f",
+                "node-bd3bececef13aaeef0c22570",
+                "node-c7f4709d99898f06bb8be5b2",
+                "node-cc27fb4d7208967c86b1a7e8",
+                "node-ce609b198696eee0ac59fa35",
+                "node-d6b82162668345e012dc6a34",
+                "node-d8de61002a609c6a3f04b140",
+                "node-e3135b10ef69ca58fb64b4c4",
+                "node-e70f3350ce44155d1498271e",
+                "node-eda140dbb38a9cd413c24044",
+                "node-eed169fb5555466ea7f87a01",
+                "node-f8e569155a700e2a739804c3",
+                "node-fddc99453114c3a40363b219",
+                "node-fee3f7eb3074a3bc339ddc44"
+              ],
+              "component_ids": [
+                "node-46d940221fa8caf3b6c22d2c"
+              ],
+              "objective_keys": [],
+              "task_keys": [
+                "functional-train-easing-orbit-005",
+                "functional-train-emoji-bounce-001",
+                "functional-train-input-badge-003",
+                "functional-train-message-status-002",
+                "functional-train-text-readable-004"
+              ]
+            },
+            "gate_0_1_passed": true,
+            "identity": {
+              "branch_id": "branch-f9a4828bb2527567448594ca",
+              "branch_root_candidate_id": "candidate-2dad7a05ce4a6460dd71f470",
+              "candidate_id": "candidate-2dad7a05ce4a6460dd71f470",
+              "content_hash": "cf3c66eb21afcbcfc3518927b5572624075866213c16717d03010ccc25074525",
+              "failure_cluster_ids": [
+                "reflected-train:functional-train-easing-orbit-005"
+              ],
+              "generation": 1,
+              "lineage_root_candidate_id": "candidate-21242a10bcbaeb9631f3b2da",
+              "operator": "graph_guided_package_patch",
+              "package_id": "slack-gif-creator",
+              "parent_ids": [
+                "candidate-21242a10bcbaeb9631f3b2da"
+              ],
+              "schema_version": "2.0.0",
+              "source_package_ref": "benchmarks/canaries/slack-gif-creator/package",
+              "source_snapshot_hash": "ce42d8a837acf9feda9706a3418fc26a77c497d9615079e616b5fdc6870ef64e"
+            },
+            "merge_eligibility": "eligible",
+            "not_deployable": true,
+            "patch_id": "patch-f020633b73a3b4b14d5d5321",
+            "train_evidence_refs": [
+              "artifacts/runs/r3-slack-gif-creator-paired/task-score-vectors/work-229b28b7e4ec64d79ddc725d.json",
+              "artifacts/runs/r3-slack-gif-creator-paired/task-score-vectors/work-4d807d3a99ff3d159ec6fb29.json",
+              "artifacts/runs/r3-slack-gif-creator-paired/task-score-vectors/work-8b18ac4a317bfa0522d70aca.json",
+              "artifacts/runs/r3-slack-gif-creator-paired/task-score-vectors/work-9a981b04ae2ac3fb91d31911.json",
+              "artifacts/runs/r3-slack-gif-creator-paired/task-score-vectors/work-aeaea033cebc5f6b4e948b5e.json",
+              "artifacts/runs/r4-slack-gif-creator-evolution/evals/candidate-2dad7a05ce4a6460dd71f470/train/task-score-vectors/work-39e35e699ecb6bd467c783c9.json",
+              "artifacts/runs/r4-slack-gif-creator-evolution/evals/candidate-2dad7a05ce4a6460dd71f470/train/task-score-vectors/work-478e69ea53372e0edb2e0123.json",
+              "artifacts/runs/r4-slack-gif-creator-evolution/evals/candidate-2dad7a05ce4a6460dd71f470/train/task-score-vectors/work-60eaba3feb92a47166f14645.json",
+              "artifacts/runs/r4-slack-gif-creator-evolution/evals/candidate-2dad7a05ce4a6460dd71f470/train/task-score-vectors/work-692901e392962f5b5393520d.json",
+              "artifacts/runs/r4-slack-gif-creator-evolution/evals/candidate-2dad7a05ce4a6460dd71f470/train/task-score-vectors/work-a577fbd89f0d6020522f6512.json"
+            ],
+            "train_floor_satisfied": true
+          }
+        ],
+        "schema_version": "2.0.0",
+        "selection_config_hash": "3a224bcb9f3887b6af9974915b51407be7d757535b71b18913af70ebcc757572",
+        "train_selection_evidence_refs": [
+          "artifacts/runs/r3-slack-gif-creator-paired/task-score-vectors/work-229b28b7e4ec64d79ddc725d.json",
+          "artifacts/runs/r3-slack-gif-creator-paired/task-score-vectors/work-4d807d3a99ff3d159ec6fb29.json",
+          "artifacts/runs/r3-slack-gif-creator-paired/task-score-vectors/work-8b18ac4a317bfa0522d70aca.json",
+          "artifacts/runs/r3-slack-gif-creator-paired/task-score-vectors/work-9a981b04ae2ac3fb91d31911.json",
+          "artifacts/runs/r3-slack-gif-creator-paired/task-score-vectors/work-aeaea033cebc5f6b4e948b5e.json",
+          "artifacts/runs/r4-slack-gif-creator-evolution/evals/candidate-04b26dff2bc83b82334bf184/train/task-score-vectors/work-2feaa3a4dbb47f95a5b9aefa.json",
+          "artifacts/runs/r4-slack-gif-creator-evolution/evals/candidate-04b26dff2bc83b82334bf184/train/task-score-vectors/work-3a3525d61988b3d58944acd0.json",
+          "artifacts/runs/r4-slack-gif-creator-evolution/evals/candidate-04b26dff2bc83b82334bf184/train/task-score-vectors/work-3a3dd2e7f87dd8a32785d7c0.json",
+          "artifacts/runs/r4-slack-gif-creator-evolution/evals/candidate-04b26dff2bc83b82334bf184/train/task-score-vectors/work-9ecf15590215f5ff1128beba.json",
+          "artifacts/runs/r4-slack-gif-creator-evolution/evals/candidate-04b26dff2bc83b82334bf184/train/task-score-vectors/work-c0ff710d24f738bfb0ae36c6.json",
+          "artifacts/runs/r4-slack-gif-creator-evolution/evals/candidate-2dad7a05ce4a6460dd71f470/train/task-score-vectors/work-39e35e699ecb6bd467c783c9.json",
+          "artifacts/runs/r4-slack-gif-creator-evolution/evals/candidate-2dad7a05ce4a6460dd71f470/train/task-score-vectors/work-478e69ea53372e0edb2e0123.json",
+          "artifacts/runs/r4-slack-gif-creator-evolution/evals/candidate-2dad7a05ce4a6460dd71f470/train/task-score-vectors/work-60eaba3feb92a47166f14645.json",
+          "artifacts/runs/r4-slack-gif-creator-evolution/evals/candidate-2dad7a05ce4a6460dd71f470/train/task-score-vectors/work-692901e392962f5b5393520d.json",
+          "artifacts/runs/r4-slack-gif-creator-evolution/evals/candidate-2dad7a05ce4a6460dd71f470/train/task-score-vectors/work-a577fbd89f0d6020522f6512.json"
+        ]
+      },
+      "pareto_rank": 1
+    }
+  ],
+  "rejected_pair_count": 0,
+  "rejection_reasons": {},
+  "schema_version": "1.0.0"
+}

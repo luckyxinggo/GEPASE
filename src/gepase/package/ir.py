@@ -43,11 +43,21 @@ class NodeKind(StrEnum):
     BINARY = "binary"
     CAPABILITY = "capability"
     DEPENDENCY = "dependency"
+    CONFIG_KEY = "config_key"
     EXTERNAL = "external"
     UNKNOWN = "unknown"
     ERROR = "error"
     EVIDENCE = "evidence"
     ARTIFACT = "artifact"
+
+
+class ParseStatus(StrEnum):
+    """Auditable depth/status for every PackageSnapshot file."""
+
+    DEEP = "deep"
+    SHALLOW = "shallow"
+    OPAQUE = "opaque"
+    ERROR = "error"
 
 
 class EdgeKind(StrEnum):
@@ -71,6 +81,14 @@ class EdgeKind(StrEnum):
     OBSERVED_EXECUTE = "observed_execute"
     OBSERVED_PRODUCE = "observed_produce"
     FAILED_AT = "failed_at"
+    # GH-P1 bounded semantic-hypothesis relation vocabulary.  These kinds do
+    # not become trusted structural facts merely by appearing in the graph.
+    IMPLEMENTS = "implements"
+    EXPLAINS = "explains"
+    CONSTRAINS = "constrains"
+    CONSUMES = "consumes"
+    VALIDATES = "validates"
+    CONFLICTS_WITH = "conflicts_with"
 
 
 class SourceSpan(FrozenModel):
@@ -130,7 +148,7 @@ class GraphEdge(FrozenModel):
     source: str
     target: str
     kind: EdgeKind
-    layer: Literal["static", "planned", "observed"] = "static"
+    layer: Literal["static", "planned", "observed", "semantic_hypothesis"] = "static"
     evidence_tier: str | None = None
     evaluation_id: str | None = None
     task_id: str | None = None
@@ -139,6 +157,51 @@ class GraphEdge(FrozenModel):
     count: int = Field(default=1, ge=1)
     trace_completeness: str | None = None
     metadata: dict[str, Any] = Field(default_factory=dict)
+
+    @model_validator(mode="after")
+    def semantic_layer_is_explicitly_untrusted(self) -> GraphEdge:
+        semantic_only = {
+            EdgeKind.IMPLEMENTS,
+            EdgeKind.EXPLAINS,
+            EdgeKind.CONSTRAINS,
+            EdgeKind.CONSUMES,
+            EdgeKind.VALIDATES,
+            EdgeKind.CONFLICTS_WITH,
+        }
+        if self.layer != "semantic_hypothesis":
+            if self.kind in semantic_only:
+                raise ValueError("semantic-only relation kind requires semantic_hypothesis layer")
+            return self
+        if self.kind not in {*semantic_only, EdgeKind.PRODUCES}:
+            raise ValueError("semantic_hypothesis edge uses a relation outside the allowlist")
+        required = {
+            "trust_label",
+            "relation_type",
+            "failure_cluster_id",
+            "evidence_refs",
+            "source_content_hash",
+            "target_content_hash",
+            "analyzer_work_id",
+            "context_id",
+            "host_task_id",
+            "host",
+            "model",
+            "prompt_hash",
+            "schema_hash",
+            "config_hash",
+            "allowed_consumers",
+            "generated_at",
+        }
+        missing = sorted(required - set(self.metadata))
+        if missing:
+            raise ValueError(f"semantic_hypothesis edge lacks provenance: {missing}")
+        if self.evidence_tier != "semantic_hypothesis":
+            raise ValueError("semantic_hypothesis edge requires explicit evidence tier")
+        if not self.evaluation_id or not self.task_id or not self.provider:
+            raise ValueError("semantic_hypothesis edge requires work/task/provider provenance")
+        if self.metadata.get("trust_label") != "Agent 假设":
+            raise ValueError("semantic_hypothesis edge must retain its Agent 假设 label")
+        return self
 
 
 class PackageIR(FrozenModel):
@@ -257,7 +320,7 @@ def make_edge(
     target: str,
     kind: EdgeKind,
     *,
-    layer: Literal["static", "planned", "observed"] = "static",
+    layer: Literal["static", "planned", "observed", "semantic_hypothesis"] = "static",
     identity: object | None = None,
     **kwargs: Any,
 ) -> GraphEdge:

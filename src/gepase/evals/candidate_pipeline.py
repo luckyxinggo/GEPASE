@@ -20,13 +20,18 @@ from gepase.evals.functional import (
     ComparatorSide,
     ComparatorSubmission,
     ComparatorWorkItem,
+    FunctionalRole,
     FunctionalScoringPolicy,
     IndependentGraderSubmission,
     IndependentGraderWorkItem,
     clamp,
     stable_role_id,
 )
-from gepase.evals.functional_pipeline import FunctionalEvalCoordinator, _weighted_score
+from gepase.evals.functional_pipeline import (
+    FunctionalEvalCoordinator,
+    RoleEvidenceIncompleteError,
+    _weighted_score,
+)
 from gepase.evals.scores import TaskScoreVector
 from gepase.evals.statistics import PairedScore
 from gepase.evals.work_items import EvalWorkItem, Variant
@@ -165,12 +170,14 @@ class CandidateFunctionalCoordinator(FunctionalEvalCoordinator):
                 {
                     "schema_version": "1.0.0",
                     "grader_work_id": grader_id,
+                    "task_id": item.task_id,
                     "source_work_id": item.work_id,
                     "variant": item.variant,
                     "blind_id": blind.blind_id,
                 },
             )
             work_ids.append(grader_id)
+        self._reserve_role_batch("independent_grader", work_ids)
         return {
             "prepared": len(work_ids),
             "grader_work_ids": sorted(work_ids),
@@ -179,6 +186,7 @@ class CandidateFunctionalCoordinator(FunctionalEvalCoordinator):
 
     def prepare_comparators(self) -> dict[str, Any]:
         work_ids: list[str] = []
+        incomplete_task_ids: list[str] = []
         selected = {item.task_id for item in self._items()}
         for task_id in self.policy.comparator_case_ids:
             if task_id not in selected:
@@ -216,7 +224,11 @@ class CandidateFunctionalCoordinator(FunctionalEvalCoordinator):
                     },
                 )
                 continue
-            candidate_blind = self._grader_for_source(candidate_item.work_id)[2]
+            try:
+                candidate_blind = self._grader_for_source(candidate_item.work_id)[2]
+            except RoleEvidenceIncompleteError:
+                incomplete_task_ids.append(task_id)
+                continue
             _vector, _grader, reference_blind, _source = self._reference_models(task_id)
             for order in ("AB", "BA"):
                 left_kind = "reference" if order == "AB" else "candidate"
@@ -258,13 +270,25 @@ class CandidateFunctionalCoordinator(FunctionalEvalCoordinator):
                     },
                 )
                 work_ids.append(comparator_id)
-        return {"prepared": len(work_ids), "comparator_work_ids": sorted(work_ids)}
+        self._reserve_role_batch("comparator", work_ids)
+        return {
+            "prepared": len(work_ids),
+            "comparator_work_ids": sorted(work_ids),
+            "evidence_incomplete_task_ids": sorted(incomplete_task_ids),
+        }
 
     def reconcile_comparators(self) -> dict[str, Any]:
         task_ids: list[str] = []
+        incomplete_task_ids: list[str] = []
         selected = {item.task_id for item in self._items()}
         for task_id in self.policy.comparator_case_ids:
             if task_id not in selected:
+                continue
+            if self._role_terminalization_for_task(
+                FunctionalRole.INDEPENDENT_GRADER,
+                task_id,
+            ):
+                incomplete_task_ids.append(task_id)
                 continue
             existing = self.run_dir / f"comparator-reconciliation/{task_id}.json"
             if existing.is_file():
@@ -272,11 +296,15 @@ class CandidateFunctionalCoordinator(FunctionalEvalCoordinator):
                 continue
             outcomes: dict[str, Literal["win", "loss", "tie"]] = {}
             refs: dict[str, str] = {}
+            role_incomplete = False
             for path in sorted((self.run_dir / "role-state/comparator").glob("*.json")):
                 mapping = self._read_json(path)
                 if mapping.get("task_id") != task_id:
                     continue
                 comparator_id = str(mapping["comparator_work_id"])
+                if self._role_terminalization(FunctionalRole.COMPARATOR, comparator_id):
+                    role_incomplete = True
+                    continue
                 submission = self._run_model(
                     f"comparator-submissions/{comparator_id}.json", ComparatorSubmission
                 )
@@ -289,6 +317,9 @@ class CandidateFunctionalCoordinator(FunctionalEvalCoordinator):
                 refs[str(mapping["order"])] = self._project_ref(
                     f"comparator-submissions/{comparator_id}.json"
                 )
+            if role_incomplete:
+                incomplete_task_ids.append(task_id)
+                continue
             if set(outcomes) != {"AB", "BA"}:
                 raise ValueError(f"candidate AB/BA comparators are incomplete: {task_id}")
             numeric = {"win": 1.0, "loss": -1.0, "tie": 0.0}
@@ -307,7 +338,13 @@ class CandidateFunctionalCoordinator(FunctionalEvalCoordinator):
                 reconciliation.model_dump(mode="json"),
             )
             task_ids.append(task_id)
-        return {"reconciled": len(task_ids), "task_ids": sorted(task_ids)}
+        result = {
+            "reconciled": len(task_ids),
+            "task_ids": sorted(task_ids),
+            "evidence_incomplete_task_ids": sorted(incomplete_task_ids),
+        }
+        self.store.write_json("role-evidence/comparator-reconciliation.json", result)
+        return result
 
     def _candidate_comparison(self, task_id: str) -> CandidateComparatorReconciliation | None:
         path = self.run_dir / f"comparator-reconciliation/{task_id}.json"
@@ -352,6 +389,12 @@ class CandidateFunctionalCoordinator(FunctionalEvalCoordinator):
         }
         comparison = self._candidate_comparison(task_id)
         if task_id in self.policy.comparator_case_ids and comparison is None:
+            terminal = self._role_terminalization_for_task(
+                FunctionalRole.COMPARATOR,
+                task_id,
+            )
+            if terminal is not None:
+                raise RoleEvidenceIncompleteError(terminal)
             raise ValueError(f"fresh candidate comparator is required: {task_id}")
         if comparison is not None:
             candidate_preference = (comparison.candidate_margin + 1.0) / 2.0
@@ -545,8 +588,21 @@ class CandidateFunctionalCoordinator(FunctionalEvalCoordinator):
         summaries: list[CandidatePairSummary] = []
         pairs: list[PairedScore] = []
         audits: list[dict[str, Any]] = []
+        incomplete: list[dict[str, Any]] = []
         for task_id in sorted({item.task_id for item in self._items()}):
-            vector, summary, paired, audit = self._score_task(task_id)
+            try:
+                vector, summary, paired, audit = self._score_task(task_id)
+            except RoleEvidenceIncompleteError as error:
+                incomplete.append(
+                    {
+                        "task_id": task_id,
+                        "work_id": error.terminalization.work_id,
+                        "role": error.terminalization.role.value,
+                        "terminalization_id": error.terminalization.terminalization_id,
+                        "disposition": error.terminalization.disposition,
+                    }
+                )
+                continue
             item = self._case_items(task_id)["candidate"]
             self.store.write_json(
                 f"task-score-vectors/{item.work_id}.json", vector.model_dump(mode="json")
@@ -568,6 +624,8 @@ class CandidateFunctionalCoordinator(FunctionalEvalCoordinator):
             summaries.append(summary)
             pairs.append(paired)
             audits.append(audit)
+        complete = not incomplete
+        mean_delta = mean(item.paired_delta for item in summaries) if complete else None
         self.store.write_json(
             "candidate-run-summary.json",
             {
@@ -576,8 +634,12 @@ class CandidateFunctionalCoordinator(FunctionalEvalCoordinator):
                 "candidate_content_hash": self.metadata["candidate_content_hash"],
                 "reference_key_hash": self.reference_key.key_hash,
                 "split": self.metadata["split"],
+                "status": "scored" if complete else "evidence_incomplete",
+                "evidence_complete": complete,
+                "gate_eligible": complete,
+                "incomplete_cases": incomplete,
                 "pair_summaries": [item.model_dump(mode="json") for item in summaries],
-                "mean_paired_delta": mean(item.paired_delta for item in summaries),
+                "mean_paired_delta": mean_delta,
                 "strict_wins": sum(item.paired_delta > 0 for item in summaries),
                 "ties": sum(item.paired_delta == 0 for item in summaries),
                 "losses": sum(item.paired_delta < 0 for item in summaries),
@@ -591,7 +653,9 @@ class CandidateFunctionalCoordinator(FunctionalEvalCoordinator):
             "score-recomputation-audit.json",
             {
                 "schema_version": "1.0.0",
-                "valid": True,
+                "valid": complete,
+                "evidence_complete": complete,
+                "incomplete_cases": incomplete,
                 "rows": audits,
                 "vector_count": len(vectors),
                 "trigger_mixed": False,
@@ -604,7 +668,10 @@ class CandidateFunctionalCoordinator(FunctionalEvalCoordinator):
             "candidate_id": self.metadata["candidate_id"],
             "split": self.metadata["split"],
             "vectors": len(vectors),
-            "mean_paired_delta": mean(item.paired_delta for item in summaries),
+            "status": "scored" if complete else "evidence_incomplete",
+            "gate_eligible": complete,
+            "incomplete_cases": incomplete,
+            "mean_paired_delta": mean_delta,
             "isolation_valid": isolation.valid,
             "package_access_valid": access["valid"],
             "reference_cache_hit": True,

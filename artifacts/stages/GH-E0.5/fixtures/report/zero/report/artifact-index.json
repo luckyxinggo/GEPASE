@@ -1,0 +1,23 @@
+{
+  "artifacts": [
+    {
+      "media_type": "application/json",
+      "path": "report-data.json",
+      "sha256": "a286bc6b898cdd60c28e222cc1348ed0d507e9b2ac74fe2f7f72b3086370e686",
+      "size_bytes": 2410
+    },
+    {
+      "media_type": "application/json",
+      "path": "evidence-manifest.json",
+      "sha256": "d5b7f8356171a2dc715767ac9ac4cf40c795c1eecbde509e39ab9edec872149e",
+      "size_bytes": 374
+    },
+    {
+      "media_type": "text/html",
+      "path": "index.html",
+      "sha256": "1bd626fed4896dc7e078cd8cdddfe7be58eb949be051828826c547e4ebf27b42",
+      "size_bytes": 6007
+    }
+  ],
+  "schema_version": "1.0.0"
+}

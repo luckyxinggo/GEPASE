@@ -1,0 +1,38 @@
+{
+  "allowed_consumers": [
+    "failure_localization",
+    "asi_explanation",
+    "selector_top_k",
+    "exploration_ordering"
+  ],
+  "forbidden_consumers": [
+    "merge_conflict_resolution",
+    "merge_eligibility",
+    "patch_authorization",
+    "safety_closure",
+    "target_set_expansion",
+    "trusted_dependency_closure",
+    "validation_gate"
+  ],
+  "layer": "semantic_hypothesis",
+  "relation_types": [
+    "implements",
+    "explains",
+    "constrains",
+    "consumes",
+    "produces",
+    "validates",
+    "conflicts_with"
+  ],
+  "required_proposal_fields": [
+    "existing source/target node",
+    "content hash and excerpt/span anchor",
+    "task and failure cluster",
+    "bounded evidence references",
+    "rationale, confidence, timestamp",
+    "work/context/model/prompt/schema/config provenance"
+  ],
+  "schema_version": "1.0.0",
+  "semantic_edge_is_never_trusted_fact": true,
+  "trust_label": "Agent 假设"
+}

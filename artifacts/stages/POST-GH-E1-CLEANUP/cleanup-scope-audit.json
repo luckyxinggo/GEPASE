@@ -1,0 +1,39 @@
+{
+  "after": {
+    "gh_e1_verifier_loc": 90,
+    "implementation_loc_src_scripts": 39820,
+    "implementation_python_files": 173,
+    "shared_stage_helper_loc": 189,
+    "test_loc": 6884,
+    "test_python_files": 73
+  },
+  "before": {
+    "historical_stage_script_loc": 4777,
+    "implementation_loc_src_scripts": 46288,
+    "python_files_src_scripts_tests": 252,
+    "test_loc": 7247,
+    "tracked_diff_deletions": 260,
+    "tracked_diff_insertions": 3809,
+    "tracked_modified_files": 43,
+    "untracked_expanded_files": 1297,
+    "untracked_top_level_items": 44
+  },
+  "deleted": [
+    "GH-P1 semantic engine/cache/prompt/standalone schemas/tests/gate script",
+    "three untracked historical one-off GH-E0.5/GH-E1 recovery stage scripts",
+    "unused PackageLocalParetoFrontier/refinement helpers"
+  ],
+  "implementation_loc_delta": -6468,
+  "kept": [
+    "strict lifecycle/ActiveSession/HostAttempt/reservation recovery contracts",
+    "typed Executor/Grader terminalization",
+    "conditional Merge and multi-outcome report",
+    "minimal sealed GH-P1 model/graph compatibility"
+  ],
+  "merged": [
+    "stage Gate/seal helpers into scripts/stage_gate_support.py",
+    "duplicate editable-target projection into eligible_mutation_targets"
+  ],
+  "schema_version": "1.0.0",
+  "valid": true
+}

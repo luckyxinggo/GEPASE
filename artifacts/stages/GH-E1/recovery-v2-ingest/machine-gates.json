@@ -1,0 +1,93 @@
+{
+  "formal_gh_e1_unchanged": {
+    "passed": 4,
+    "total": 10
+  },
+  "gates": [
+    {
+      "evidence": [
+        "recovery-ingest-audit.json",
+        "verification.json"
+      ],
+      "gate_id": "GHERI-G00",
+      "status": "passed"
+    },
+    {
+      "evidence": [
+        "recovery-ingest-audit.json",
+        "verification.json"
+      ],
+      "gate_id": "GHERI-G01",
+      "status": "passed"
+    },
+    {
+      "evidence": [
+        "recovery-ingest-audit.json",
+        "verification.json"
+      ],
+      "gate_id": "GHERI-G02",
+      "status": "passed"
+    },
+    {
+      "evidence": [
+        "recovery-ingest-audit.json",
+        "verification.json"
+      ],
+      "gate_id": "GHERI-G03",
+      "status": "passed"
+    },
+    {
+      "evidence": [
+        "recovery-ingest-audit.json",
+        "verification.json"
+      ],
+      "gate_id": "GHERI-G04",
+      "status": "passed"
+    },
+    {
+      "evidence": [
+        "recovery-ingest-audit.json",
+        "verification.json"
+      ],
+      "gate_id": "GHERI-G05",
+      "status": "passed"
+    },
+    {
+      "evidence": [
+        "recovery-ingest-audit.json",
+        "verification.json"
+      ],
+      "gate_id": "GHERI-G06",
+      "status": "passed"
+    },
+    {
+      "evidence": [
+        "recovery-ingest-audit.json",
+        "verification.json"
+      ],
+      "gate_id": "GHERI-G07",
+      "status": "passed"
+    },
+    {
+      "evidence": [
+        "recovery-ingest-audit.json",
+        "verification.json"
+      ],
+      "gate_id": "GHERI-G08",
+      "status": "passed"
+    },
+    {
+      "evidence": [
+        "recovery-ingest-audit.json",
+        "verification.json"
+      ],
+      "gate_id": "GHERI-G09",
+      "status": "passed"
+    }
+  ],
+  "passed": 10,
+  "schema_version": "1.0.0",
+  "stage_id": "GH-E1-recovery-v2-ingest",
+  "status": "passed",
+  "total": 10
+}

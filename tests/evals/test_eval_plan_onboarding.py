@@ -257,3 +257,22 @@ def test_executor_view_does_not_expose_functional_oracles() -> None:
         {"expectations", "rubric", "expected_output_zh", "candidate_identity", "sibling_output"}
     )
     assert view["evidence_tier"] == "E2"
+
+
+def test_role_run_provenance_marks_a_bounded_repair_explicitly() -> None:
+    now = datetime.now(UTC)
+    run = RoleRunProvenance(
+        host="test-agent",
+        model="test-model",
+        context_id="repair-context",
+        host_task_id="repair-task",
+        usage=UsageRecord(
+            output_tokens=1,
+            duration_ms=1,
+            token_count_kind="estimated",
+        ),
+        repair_attempt=True,
+        started_at=now,
+        finished_at=now,
+    )
+    assert run.repair_attempt is True

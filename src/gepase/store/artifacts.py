@@ -76,6 +76,21 @@ class ArtifactStore:
     def write_json(self, relative_path: str, value: Any) -> ArtifactRef:
         return self.write_bytes(relative_path, canonical_json_bytes(value), "application/json")
 
+    def write_json_append_only(self, relative_path: str, value: Any) -> ArtifactRef:
+        """Write a new JSON artifact without permitting historical replacement.
+
+        Stage progress projections legitimately extend an existing store, but a
+        recovery audit must never replace evidence from an earlier execution.
+        Content-identical retries are idempotent; a different payload at the
+        same path fails closed.
+        """
+
+        return self.write_bytes_append_only(
+            relative_path,
+            canonical_json_bytes(value),
+            "application/json",
+        )
+
     def write_text(
         self,
         relative_path: str,
@@ -98,6 +113,35 @@ class ArtifactStore:
         self._refs[relative_path] = ref
         self._write_index()
         return ref
+
+    def write_bytes_append_only(
+        self,
+        relative_path: str,
+        data: bytes,
+        media_type: str,
+    ) -> ArtifactRef:
+        path = (self.root / relative_path).resolve()
+        if not path.is_relative_to(self.root):
+            raise ValueError("artifact path escapes store root")
+        if path.exists():
+            if not path.is_file() or path.read_bytes() != data:
+                raise FileExistsError(
+                    f"append-only artifact already exists with different content: {relative_path}"
+                )
+            existing = self._refs.get(relative_path)
+            expected = ArtifactRef(
+                path=relative_path,
+                sha256=sha256_bytes(data),
+                media_type=media_type,
+                size_bytes=len(data),
+            )
+            if existing is not None and existing != expected:
+                raise ValueError("append-only artifact index disagrees with existing content")
+            if existing is None:
+                self._refs[relative_path] = expected
+                self._write_index()
+            return expected
+        return self.write_bytes(relative_path, data, media_type)
 
     def index_existing(
         self,
@@ -178,3 +222,30 @@ class ArtifactStore:
             checked=checked,
             unindexed_files=len(existing - indexed),
         )
+
+
+def resolve_scoped_artifact_index(run_dir: Path) -> tuple[Path, dict[str, str]]:
+    """Resolve a complete local or ancestor seal for one nested artifact scope."""
+
+    run = run_dir.resolve()
+    for owner in (run, *run.parents):
+        index_path = owner / INDEX_NAME
+        if not index_path.is_file():
+            continue
+        verification = ArtifactStore(owner).verify()
+        if not verification.valid or verification.unindexed_files:
+            continue
+        raw = json.loads(index_path.read_text(encoding="utf-8"))
+        hashes = {str(item["path"]): str(item["sha256"]) for item in raw["artifacts"]}
+        if owner == run:
+            scoped = hashes
+        else:
+            prefix = f"{run.relative_to(owner).as_posix()}/"
+            scoped = {
+                path[len(prefix) :]: digest
+                for path, digest in hashes.items()
+                if path.startswith(prefix)
+            }
+        if scoped.get("run-metadata.json"):
+            return index_path, scoped
+    raise ValueError("artifact scope has no complete local or ancestor seal")
