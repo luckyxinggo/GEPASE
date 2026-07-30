@@ -103,6 +103,51 @@ def test_e2_ingest_produces_replayable_e3_assertions() -> None:
             assert engine.store.verify().valid is True
 
 
+def test_repair_attempt_is_distinct_in_execution_submission_identity() -> None:
+    root = Path.cwd()
+    local = root / "artifacts/local"
+    local.mkdir(parents=True, exist_ok=True)
+    with tempfile.TemporaryDirectory(prefix="engine-repair-", dir=local) as temporary:
+        run_dir = Path(temporary) / "run"
+        with MultiFidelityEvalEngine(root, run_dir) as engine:
+            engine.plan_cases(
+                Path("benchmarks/manifest-draft.json"),
+                splits=("validation",),
+                tiers=(EvidenceTier.E1_SIMULATED,),
+                variants=("no-skill",),
+                host="test-host",
+                model="test-model",
+                case_ids={"policy-evidence-06-00"},
+            )
+            item = engine.ledger.export_ready()[0]
+            first = build_submission(
+                root,
+                item,
+                host="test-host",
+                model="test-model",
+                host_task_id="first-context",
+                duration_ms=250,
+                artifact_root=None,
+                planned_trace=(TraceStep(sequence=0, action="plan"),),
+                observed_trace=(),
+            )
+            repaired = build_submission(
+                root,
+                item,
+                host="test-host",
+                model="test-model",
+                host_task_id="repair-context",
+                duration_ms=250,
+                artifact_root=None,
+                planned_trace=(TraceStep(sequence=0, action="plan"),),
+                observed_trace=(),
+                repair_attempt=True,
+            )
+            assert first.repair_attempt is False
+            assert repaired.repair_attempt is True
+            assert first.submission_id != repaired.submission_id
+
+
 def test_exported_work_hides_assertions_and_expected_labels() -> None:
     root = Path.cwd()
     local = root / "artifacts/local"

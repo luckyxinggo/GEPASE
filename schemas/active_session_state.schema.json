@@ -1,0 +1,258 @@
+{
+  "$defs": {
+    "RuntimeSessionStatus": {
+      "enum": [
+        "active",
+        "paused",
+        "awaiting_continuation",
+        "stopped",
+        "aborted",
+        "complete"
+      ],
+      "title": "RuntimeSessionStatus",
+      "type": "string"
+    },
+    "UsageAllowance": {
+      "additionalProperties": false,
+      "properties": {
+        "active_wall_clock_ms": {
+          "minimum": 0,
+          "title": "Active Wall Clock Ms",
+          "type": "integer"
+        },
+        "agent_calls": {
+          "minimum": 0,
+          "title": "Agent Calls",
+          "type": "integer"
+        },
+        "candidates": {
+          "default": 0,
+          "minimum": 0,
+          "title": "Candidates",
+          "type": "integer"
+        },
+        "estimated_tokens": {
+          "minimum": 0,
+          "title": "Estimated Tokens",
+          "type": "integer"
+        },
+        "proposals": {
+          "default": 0,
+          "minimum": 0,
+          "title": "Proposals",
+          "type": "integer"
+        },
+        "repairs": {
+          "default": 0,
+          "minimum": 0,
+          "title": "Repairs",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "agent_calls",
+        "estimated_tokens",
+        "active_wall_clock_ms"
+      ],
+      "title": "UsageAllowance",
+      "type": "object"
+    },
+    "WorkBatchReservation": {
+      "additionalProperties": false,
+      "properties": {
+        "batch_id": {
+          "minLength": 1,
+          "title": "Batch Id",
+          "type": "string"
+        },
+        "created_at": {
+          "format": "date-time",
+          "title": "Created At",
+          "type": "string"
+        },
+        "reservation_id": {
+          "title": "Reservation Id",
+          "type": "string"
+        },
+        "role": {
+          "minLength": 1,
+          "title": "Role",
+          "type": "string"
+        },
+        "schema_version": {
+          "const": "1.0.0",
+          "default": "1.0.0",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "unsettled_work_ids": {
+          "items": {
+            "type": "string"
+          },
+          "minItems": 1,
+          "title": "Unsettled Work Ids",
+          "type": "array"
+        },
+        "upper_bound": {
+          "$ref": "#/$defs/UsageAllowance"
+        },
+        "work_ids": {
+          "items": {
+            "type": "string"
+          },
+          "minItems": 1,
+          "title": "Work Ids",
+          "type": "array"
+        }
+      },
+      "required": [
+        "reservation_id",
+        "batch_id",
+        "role",
+        "work_ids",
+        "unsettled_work_ids",
+        "upper_bound",
+        "created_at"
+      ],
+      "title": "WorkBatchReservation",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "active_accumulated_ms": {
+      "default": 0,
+      "minimum": 0,
+      "title": "Active Accumulated Ms",
+      "type": "integer"
+    },
+    "approved": {
+      "$ref": "#/$defs/UsageAllowance"
+    },
+    "checkpoint_ids": {
+      "default": [],
+      "items": {
+        "type": "string"
+      },
+      "title": "Checkpoint Ids",
+      "type": "array"
+    },
+    "completed_work_ids": {
+      "default": [],
+      "items": {
+        "type": "string"
+      },
+      "title": "Completed Work Ids",
+      "type": "array"
+    },
+    "config_hash": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Config Hash",
+      "type": "string"
+    },
+    "created_at": {
+      "format": "date-time",
+      "title": "Created At",
+      "type": "string"
+    },
+    "cumulative_agent_duration_ms": {
+      "default": 0,
+      "minimum": 0,
+      "title": "Cumulative Agent Duration Ms",
+      "type": "integer"
+    },
+    "internal_accounting_ids": {
+      "default": [],
+      "items": {
+        "type": "string"
+      },
+      "title": "Internal Accounting Ids",
+      "type": "array"
+    },
+    "last_transition_at": {
+      "format": "date-time",
+      "title": "Last Transition At",
+      "type": "string"
+    },
+    "latest_checkpoint_id": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Latest Checkpoint Id"
+    },
+    "latest_decision_hash": {
+      "anyOf": [
+        {
+          "pattern": "^[0-9a-f]{64}$",
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Latest Decision Hash"
+    },
+    "open_reservations": {
+      "default": [],
+      "items": {
+        "$ref": "#/$defs/WorkBatchReservation"
+      },
+      "title": "Open Reservations",
+      "type": "array"
+    },
+    "paused_accumulated_ms": {
+      "default": 0,
+      "minimum": 0,
+      "title": "Paused Accumulated Ms",
+      "type": "integer"
+    },
+    "post_recovery_checkpoint_required": {
+      "default": false,
+      "title": "Post Recovery Checkpoint Required",
+      "type": "boolean"
+    },
+    "run_id": {
+      "minLength": 1,
+      "title": "Run Id",
+      "type": "string"
+    },
+    "schema_version": {
+      "const": "1.0.0",
+      "default": "1.0.0",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "status": {
+      "$ref": "#/$defs/RuntimeSessionStatus"
+    },
+    "uncheckpointed_recovery_work_ids": {
+      "default": [],
+      "items": {
+        "type": "string"
+      },
+      "title": "Uncheckpointed Recovery Work Ids",
+      "type": "array"
+    },
+    "used": {
+      "$ref": "#/$defs/UsageAllowance"
+    }
+  },
+  "required": [
+    "run_id",
+    "config_hash",
+    "status",
+    "created_at",
+    "last_transition_at",
+    "used",
+    "approved"
+  ],
+  "title": "ActiveSessionState",
+  "type": "object"
+}

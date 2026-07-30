@@ -203,6 +203,14 @@
       "minimum": 0,
       "title": "Weak Fallback Events",
       "type": "integer"
+    },
+    "work_item_source_refs": {
+      "default": [],
+      "items": {
+        "type": "string"
+      },
+      "title": "Work Item Source Refs",
+      "type": "array"
     }
   },
   "required": [

@@ -6,7 +6,7 @@ from pathlib import Path
 import pytest
 
 from gepase.optimizer.graph_selector import GraphGuidedComponentSelector
-from gepase.optimizer.selectors import SelectionContext, SelectionTarget
+from gepase.optimizer.selectors import AttributionScope, SelectionContext, SelectionTarget
 from gepase.package.analyzer import PackageAnalyzer
 from gepase.package.coverage import audit_graph_coverage
 from gepase.package.dynamic_graph import overlay_package_access
@@ -20,11 +20,7 @@ GRAPH_REF = "artifacts/runs/r2-slack-gif-creator-evalplan/package/graph.json"
 
 def _train_tasks() -> set[str]:
     summary = json.loads((R3 / "functional-run-summary.json").read_text(encoding="utf-8"))
-    return {
-        str(row["task_id"])
-        for row in summary["pair_summaries"]
-        if row["split"] == "train"
-    }
+    return {str(row["task_id"]) for row in summary["pair_summaries"] if row["split"] == "train"}
 
 
 def test_every_file_has_explicit_parse_status_and_mutation_capability() -> None:
@@ -33,8 +29,7 @@ def test_every_file_has_explicit_parse_status_and_mutation_capability() -> None:
     assert audit.file_node_count == audit.snapshot_file_count == 7
     assert audit.file_node_coverage == 1.0
     assert all(
-        row.parse_status.value in {"deep", "shallow", "opaque", "error"}
-        for row in audit.files
+        row.parse_status.value in {"deep", "shallow", "opaque", "error"} for row in audit.files
     )
     assert all(row.mutation_capabilities for row in audit.files)
 
@@ -127,9 +122,7 @@ def test_sealed_train_package_access_binds_to_observed_graph_and_selector() -> N
 
 
 def test_overlay_rejects_cross_snapshot_binding() -> None:
-    graph = PackageAnalyzer().analyze(PACKAGE).graph.model_copy(
-        update={"snapshot_hash": "0" * 64}
-    )
+    graph = PackageAnalyzer().analyze(PACKAGE).graph.model_copy(update={"snapshot_hash": "0" * 64})
     with pytest.raises(ValueError, match="snapshot hash mismatch"):
         overlay_package_access(
             graph,
@@ -137,6 +130,79 @@ def test_overlay_rejects_cross_snapshot_binding() -> None:
             allowed_task_ids=_train_tasks(),
             expected_graph_ref=GRAPH_REF,
         )
+
+
+def test_selector_prefers_exact_node_and_bounds_same_path_fallback() -> None:
+    graph = PackageAnalyzer().analyze(PACKAGE).graph
+    seed = next(
+        node
+        for node in graph.nodes
+        if node.kind is NodeKind.INSTRUCTION and node.path == "SKILL.md"
+    )
+    same_path = tuple(
+        node
+        for node in graph.nodes
+        if node.path == seed.path
+        and node.node_id != seed.node_id
+        and node.mutable
+        and (node.span is not None or node.kind is NodeKind.FILE)
+        and node.kind
+        in {
+            NodeKind.FILE,
+            NodeKind.FRONTMATTER,
+            NodeKind.SECTION,
+            NodeKind.INSTRUCTION,
+        }
+    )
+    assert same_path
+    targets = (seed, *same_path)
+    failure_slice = FailureSlice(
+        package_id=graph.package_id,
+        seed_node_ids=(seed.node_id,),
+        nodes=(
+            FailureSliceNode(
+                node_id=seed.node_id,
+                rank=1,
+                distance=0,
+                score=1.0,
+                reason="exact diagnostic fixture",
+            ),
+        ),
+        omitted_nodes=0,
+        token_estimate=1,
+    )
+    result = GraphGuidedComponentSelector().select(
+        SelectionContext(
+            graph=graph,
+            targets=tuple(
+                SelectionTarget(
+                    node_id=node.node_id,
+                    path=node.path,
+                    locator=node.locator,
+                    node_kind=node.kind.value,
+                    content_hash=node.content_hash,
+                    token_estimate=10,
+                )
+                for node in targets
+            ),
+            failure_slices=(failure_slice,),
+            evidence_refs=("fixture:exact-node",),
+            diagnostic_severity={seed.node_id: 1.0},
+        ),
+        limit=len(targets),
+    )
+    rows = {item.node_id: item for item in result.selected}
+    exact = {item.feature: item for item in rows[seed.node_id].contributions}
+    assert exact["failure_coverage"].raw_value == 1.0
+    assert exact["failure_coverage"].attribution_scope is AttributionScope.EXACT_NODE
+    assert exact["diagnostic_severity"].raw_value == 1.0
+    for node in same_path:
+        contributions = {item.feature: item for item in rows[node.node_id].contributions}
+        assert contributions["failure_coverage"].raw_value == 0.25
+        assert contributions["failure_coverage"].attribution_scope is AttributionScope.PATH_FALLBACK
+        assert contributions["failure_coverage"].source_node_ids == (seed.node_id,)
+        assert contributions["diagnostic_severity"].raw_value == 0.25
+        assert rows[node.node_id].eligible
 
 
 def test_config_keys_local_refs_and_python_imports_are_deterministic(tmp_path: Path) -> None:

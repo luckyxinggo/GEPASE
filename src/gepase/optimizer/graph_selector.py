@@ -7,6 +7,7 @@ from collections import Counter, defaultdict, deque
 from pydantic import Field
 
 from gepase.optimizer.selectors import (
+    AttributionScope,
     ComponentSelector,
     FeatureContribution,
     FeatureGroup,
@@ -14,14 +15,18 @@ from gepase.optimizer.selectors import (
     SelectionContext,
     SelectionResult,
     SelectionScoreBreakdown,
+    SelectionTarget,
     SelectorKind,
     ValidationIntensity,
     ValidationLevel,
     _evidence,
     _result,
 )
-from gepase.package.ir import EdgeKind
+from gepase.package.ir import EdgeKind, NodeKind, PackageGraph
 from gepase.schemas.common import FrozenModel
+
+_PATH_FALLBACK_DECAY = 0.25
+_PATH_FALLBACK_DISTANCE_PENALTY = 2
 
 
 class GraphSelectorWeights(FrozenModel):
@@ -30,8 +35,6 @@ class GraphSelectorWeights(FrozenModel):
     dynamic_access: float = Field(default=1.4, ge=0)
     diagnostic_severity: float = Field(default=1.2, ge=0)
     historical_yield: float = Field(default=0.8, ge=0)
-    semantic_hypothesis_support: float = Field(default=0.35, ge=0, le=0.5)
-    max_semantic_contribution: float = Field(default=0.35, ge=0, le=0.5)
     exploration_bonus: float = Field(default=0.6, ge=0)
     fan_out_risk: float = Field(default=1.0, ge=0)
     historical_regression: float = Field(default=1.5, ge=0)
@@ -52,11 +55,34 @@ class LegacyGraphSelectorWeights(FrozenModel):
     historical_regression: float = -1.5
 
 
-def _distances(
-    context: SelectionContext,
-    *,
-    include_semantic_hypotheses: bool = False,
-) -> dict[str, int]:
+def eligible_mutation_targets(graph: PackageGraph) -> tuple[SelectionTarget, ...]:
+    """Project one PackageGraph into the sole mutable selector target contract."""
+
+    kinds = {
+        NodeKind.FILE,
+        NodeKind.FRONTMATTER,
+        NodeKind.SECTION,
+        NodeKind.INSTRUCTION,
+        NodeKind.REFERENCE_CHUNK,
+        NodeKind.FUNCTION,
+    }
+    return tuple(
+        SelectionTarget(
+            node_id=node.node_id,
+            path=node.path,
+            locator=node.locator,
+            node_kind=node.kind.value,
+            content_hash=node.content_hash,
+            token_estimate=max(1, (len(node.label) + len(str(node.metadata))) // 4),
+        )
+        for node in graph.nodes
+        if node.mutable
+        and (node.span is not None or node.kind is NodeKind.FILE)
+        and node.kind in kinds
+    )
+
+
+def _distances(context: SelectionContext) -> dict[str, int]:
     seeds = {seed for item in context.failure_slices for seed in item.seed_node_ids}
     adjacency: defaultdict[str, set[str]] = defaultdict(set)
     traversable = {
@@ -73,24 +99,9 @@ def _distances(
         EdgeKind.OBSERVED_EXECUTE,
         EdgeKind.FAILED_AT,
     }
-    semantic_traversable = {
-        EdgeKind.IMPLEMENTS,
-        EdgeKind.EXPLAINS,
-        EdgeKind.CONSTRAINS,
-        EdgeKind.CONSUMES,
-        EdgeKind.PRODUCES,
-        EdgeKind.VALIDATES,
-        EdgeKind.CONFLICTS_WITH,
-    }
     for edge in context.graph.edges:
         trusted = edge.layer in {"static", "planned", "observed"} and edge.kind in traversable
-        semantic = (
-            include_semantic_hypotheses
-            and edge.layer == "semantic_hypothesis"
-            and edge.kind in semantic_traversable
-            and "selector_top_k" in set(edge.metadata.get("allowed_consumers", []))
-        )
-        if trusted or semantic:
+        if trusted:
             adjacency[edge.source].add(edge.target)
             adjacency[edge.target].add(edge.source)
     distance = {seed: 0 for seed in seeds}
@@ -114,69 +125,121 @@ class GraphGuidedComponentSelector(ComponentSelector):
         if limit < 1:
             raise ValueError("selection limit must be positive")
         by_id = {node.node_id: node for node in context.graph.nodes}
-        # Keep structural distance trusted-only.  Semantic hypotheses have one
-        # separately capped feature and must not amplify another relevance term.
         distances = _distances(context)
         fan_out: Counter[str] = Counter()
         dynamic: Counter[str] = Counter()
-        semantic: defaultdict[str, float] = defaultdict(float)
         for edge in context.graph.edges:
             if edge.layer != "semantic_hypothesis":
                 fan_out[edge.source] += 1
             if edge.layer == "observed":
                 dynamic[edge.source] += edge.count
                 dynamic[edge.target] += edge.count
-            elif edge.layer == "semantic_hypothesis" and "selector_top_k" in set(
-                edge.metadata.get("allowed_consumers", [])
-            ):
-                semantic[edge.source] += edge.confidence
-                semantic[edge.target] += edge.confidence
         max_fan = max(fan_out.values(), default=1)
         max_dynamic = max(dynamic.values(), default=1)
-        max_semantic = max(semantic.values(), default=1.0)
-        slice_paths: list[set[str]] = []
-        for failure_slice in context.failure_slices:
-            slice_paths.append(
-                {by_id[item.node_id].path for item in failure_slice.nodes if item.node_id in by_id}
-            )
+        slice_seeds = [
+            tuple(seed for seed in failure_slice.seed_node_ids if seed in by_id)
+            for failure_slice in context.failure_slices
+        ]
         evidence = _evidence(context)
         scored: list[tuple[float, str, str, RankedSelection]] = []
         for target in context.targets:
-            coverage = (
-                sum(target.path in paths for paths in slice_paths) / len(slice_paths)
-                if slice_paths
-                else 0.0
+            coverage_values: list[float] = []
+            coverage_sources: set[str] = set()
+            coverage_fallback = False
+            for seeds in slice_seeds:
+                if target.node_id in seeds:
+                    coverage_values.append(1.0)
+                    coverage_sources.add(target.node_id)
+                    continue
+                same_path = tuple(seed for seed in seeds if by_id[seed].path == target.path)
+                if same_path:
+                    coverage_values.append(_PATH_FALLBACK_DECAY)
+                    coverage_sources.update(same_path)
+                    coverage_fallback = True
+                else:
+                    coverage_values.append(0.0)
+            coverage = sum(coverage_values) / len(coverage_values) if coverage_values else 0.0
+            coverage_scope = (
+                AttributionScope.EXACT_NODE
+                if target.node_id in coverage_sources
+                else AttributionScope.PATH_FALLBACK
+                if coverage_fallback
+                else AttributionScope.NONE
             )
             distance = distances.get(target.node_id)
+            distance_sources: tuple[str, ...] = (target.node_id,) if distance is not None else ()
+            distance_scope = (
+                AttributionScope.EXACT_NODE if distance is not None else AttributionScope.NONE
+            )
             if distance is None:
                 path_distances = [
-                    value
+                    (node_id, value)
                     for node_id, value in distances.items()
                     if by_id.get(node_id) is not None and by_id[node_id].path == target.path
                 ]
-                distance = min(path_distances) if path_distances else 100
+                if path_distances:
+                    source_id, source_distance = min(
+                        path_distances,
+                        key=lambda item: (item[1], item[0]),
+                    )
+                    distance = source_distance + _PATH_FALLBACK_DISTANCE_PENALTY
+                    distance_sources = (source_id,)
+                    distance_scope = AttributionScope.PATH_FALLBACK
+                else:
+                    distance = 100
             inverse_distance = 1.0 / (1.0 + distance) if distance < 100 else 0.0
-            path_access = sum(
-                value
-                for node_id, value in dynamic.items()
-                if by_id.get(node_id) is not None and by_id[node_id].path == target.path
-            )
-            access = path_access / max_dynamic
-            # Unlike observed file access, an Analyzer hypothesis is anchored
-            # to exact nodes.  Do not fan its score across every mutable node
-            # that happens to share the same file path.
-            semantic_support = semantic[target.node_id] / max_semantic
-            severity = max(
-                context.diagnostic_severity.get(target.node_id, 0.0),
-                max(
+            exact_access = dynamic[target.node_id]
+            access_sources: tuple[str, ...] = ()
+            access_scope = AttributionScope.NONE
+            access_decay = 1.0
+            if exact_access:
+                access = exact_access / max_dynamic
+                access_sources = (target.node_id,)
+                access_scope = AttributionScope.EXACT_NODE
+            else:
+                same_path_access = sorted(
                     (
-                        context.diagnostic_severity.get(node_id, 0.0)
-                        for node_id, node in by_id.items()
-                        if node.path == target.path
+                        (node_id, value)
+                        for node_id, value in dynamic.items()
+                        if value
+                        and by_id.get(node_id) is not None
+                        and by_id[node_id].path == target.path
                     ),
-                    default=0.0,
-                ),
-            )
+                    key=lambda item: (-item[1], item[0]),
+                )
+                if same_path_access:
+                    access = same_path_access[0][1] / max_dynamic * _PATH_FALLBACK_DECAY
+                    access_sources = (same_path_access[0][0],)
+                    access_scope = AttributionScope.PATH_FALLBACK
+                    access_decay = _PATH_FALLBACK_DECAY
+                else:
+                    access = 0.0
+            exact_severity = context.diagnostic_severity.get(target.node_id, 0.0)
+            severity_sources: tuple[str, ...] = ()
+            severity_scope = AttributionScope.NONE
+            severity_decay = 1.0
+            if exact_severity:
+                severity = exact_severity
+                severity_sources = (target.node_id,)
+                severity_scope = AttributionScope.EXACT_NODE
+            else:
+                same_path_severity = sorted(
+                    (
+                        (node_id, value)
+                        for node_id, value in context.diagnostic_severity.items()
+                        if value
+                        and by_id.get(node_id) is not None
+                        and by_id[node_id].path == target.path
+                    ),
+                    key=lambda item: (-item[1], item[0]),
+                )
+                if same_path_severity:
+                    severity = same_path_severity[0][1] * _PATH_FALLBACK_DECAY
+                    severity_sources = (same_path_severity[0][0],)
+                    severity_scope = AttributionScope.PATH_FALLBACK
+                    severity_decay = _PATH_FALLBACK_DECAY
+                else:
+                    severity = 0.0
             attempts = context.total_attempts.get(target.node_id, 0)
             accepted = context.accepted_attempts.get(target.node_id, 0)
             historical_yield = accepted / attempts if attempts else 0.5
@@ -189,7 +252,6 @@ class GraphGuidedComponentSelector(ComponentSelector):
                 "dynamic_access": access,
                 "diagnostic_severity": severity,
                 "historical_yield": historical_yield,
-                "semantic_hypothesis_support": semantic_support,
             }
             exploration_values = {
                 "exploration_bonus": exploration,
@@ -198,21 +260,39 @@ class GraphGuidedComponentSelector(ComponentSelector):
                 "fan_out_risk": risk,
                 "historical_regression": regression,
             }
+            attribution = {
+                "failure_coverage": (
+                    coverage_scope,
+                    tuple(sorted(coverage_sources)),
+                    _PATH_FALLBACK_DECAY if coverage_fallback else 1.0,
+                ),
+                "inverse_distance": (distance_scope, distance_sources, 1.0),
+                "dynamic_access": (access_scope, access_sources, access_decay),
+                "diagnostic_severity": (
+                    severity_scope,
+                    severity_sources,
+                    severity_decay,
+                ),
+            }
             contributions = tuple(
                 FeatureContribution(
                     feature=name,
                     raw_value=round(value, 8),
                     weight=float(getattr(self.weights, name)),
-                    contribution=round(
-                        min(
-                            value * float(getattr(self.weights, name)),
-                            self.weights.max_semantic_contribution,
-                        )
-                        if name == "semantic_hypothesis_support"
-                        else value * float(getattr(self.weights, name)),
-                        8,
-                    ),
+                    contribution=round(value * float(getattr(self.weights, name)), 8),
                     group=group,
+                    attribution_scope=attribution.get(
+                        name,
+                        (AttributionScope.NONE, (), 1.0),
+                    )[0],
+                    source_node_ids=attribution.get(
+                        name,
+                        (AttributionScope.NONE, (), 1.0),
+                    )[1],
+                    fallback_decay=attribution.get(
+                        name,
+                        (AttributionScope.NONE, (), 1.0),
+                    )[2],
                 )
                 for group, values in (
                     (FeatureGroup.RELEVANCE, relevance_values),
@@ -222,9 +302,7 @@ class GraphGuidedComponentSelector(ComponentSelector):
                 for name, value in values.items()
             )
             relevance_score = sum(
-                item.contribution
-                for item in contributions
-                if item.group is FeatureGroup.RELEVANCE
+                item.contribution for item in contributions if item.group is FeatureGroup.RELEVANCE
             )
             exploration_score = sum(
                 item.contribution
@@ -232,9 +310,7 @@ class GraphGuidedComponentSelector(ComponentSelector):
                 if item.group is FeatureGroup.EXPLORATION
             )
             risk_score = sum(
-                item.contribution
-                for item in contributions
-                if item.group is FeatureGroup.RISK
+                item.contribution for item in contributions if item.group is FeatureGroup.RISK
             )
             risk_penalty = min(
                 self.weights.max_ranking_risk_penalty,
@@ -298,8 +374,7 @@ class GraphGuidedComponentSelector(ComponentSelector):
             scored.append((total, target.path, target.node_id, row))
         scored.sort(key=lambda item: (-item[0], item[1], item[2]))
         all_ranked = tuple(
-            item[3].model_copy(update={"rank": index})
-            for index, item in enumerate(scored, 1)
+            item[3].model_copy(update={"rank": index}) for index, item in enumerate(scored, 1)
         )
         chosen = all_ranked[: min(limit, len(all_ranked))]
         alternatives = list(all_ranked[len(chosen) : len(chosen) + 5])
@@ -311,10 +386,9 @@ class GraphGuidedComponentSelector(ComponentSelector):
             ),
             None,
         )
-        if (
-            executable_alternative is not None
-            and executable_alternative.node_id not in {item.node_id for item in alternatives}
-        ):
+        if executable_alternative is not None and executable_alternative.node_id not in {
+            item.node_id for item in alternatives
+        }:
             alternatives.append(executable_alternative)
         return _result(
             self.kind,
@@ -390,12 +464,9 @@ class LegacyGraphGuidedComponentSelector(ComponentSelector):
                     if context.total_attempts.get(target.node_id, 0)
                     else 0.5
                 ),
-                "exploration_bonus": 1.0
-                / (1.0 + context.exploration_count.get(target.node_id, 0)),
+                "exploration_bonus": 1.0 / (1.0 + context.exploration_count.get(target.node_id, 0)),
                 "fan_out_risk": fan_out[target.node_id] / max_fan,
-                "historical_regression": max(
-                    0.0, context.regression_loss.get(target.node_id, 0.0)
-                ),
+                "historical_regression": max(0.0, context.regression_loss.get(target.node_id, 0.0)),
             }
             contributions = tuple(
                 FeatureContribution(

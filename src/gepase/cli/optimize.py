@@ -12,6 +12,7 @@ from gepase.cli.app_support import emit
 from gepase.mutation.proposer import (
     PatchProposalStore,
     PatchProposalSubmission,
+    build_failed_patch_submission,
     build_patch_submission,
 )
 from gepase.optimizer.candidate import build_seed_candidate
@@ -25,6 +26,11 @@ from gepase.optimizer.evolution_controller import (
     R4EvolutionController,
 )
 from gepase.optimizer.materialize import materialize_candidate
+from gepase.optimizer.session_runtime import (
+    BudgetContinuationDecision,
+    RuntimeBarrier,
+)
+from gepase.run_lifecycle import RunLifecycleMode
 from gepase.store.artifacts import atomic_write, canonical_json_bytes
 
 candidate_app = typer.Typer(no_args_is_help=True, help="Inspect package candidates.")
@@ -32,8 +38,12 @@ optimizer_app = typer.Typer(no_args_is_help=True, help="Run optimizer contract d
 asi_app = typer.Typer(no_args_is_help=True, help="Audit reflective ASI datasets.")
 
 
-def _r4(run_dir: Path, config: Path) -> R4EvolutionController:
-    return R4EvolutionController(Path.cwd(), run_dir, config)
+def _r4(
+    run_dir: Path,
+    config: Path,
+    mode: RunLifecycleMode = RunLifecycleMode.OPEN_EXISTING,
+) -> R4EvolutionController:
+    return R4EvolutionController(Path.cwd(), run_dir, config, lifecycle_mode=mode)
 
 
 @candidate_app.command("roundtrip")
@@ -116,7 +126,21 @@ def r4_init(
     config: Annotated[Path, typer.Option("--config")],
     output_format: Annotated[str, typer.Option("--format")] = "json",
 ) -> None:
-    emit(_r4(run_dir, config).initialize(), output_format)
+    emit(
+        _r4(run_dir, config, RunLifecycleMode.CREATE_NEW).initialize(),
+        output_format,
+    )
+
+
+@optimizer_app.command("r4-prepare-proposals")
+def r4_prepare_proposals(
+    run_dir: Annotated[Path, typer.Option("--run-dir")],
+    config: Annotated[Path, typer.Option("--config")],
+    output_format: Annotated[str, typer.Option("--format")] = "json",
+) -> None:
+    """Build bounded proposal scope after package-compile approval."""
+
+    emit(_r4(run_dir, config).prepare_initial_proposals(), output_format)
 
 
 @optimizer_app.command("r4-next-proposal")
@@ -127,13 +151,41 @@ def r4_next_proposal(
     output_format: Annotated[str, typer.Option("--format")] = "json",
 ) -> None:
     controller = _r4(run_dir, config)
-    with PatchProposalStore(controller.run_dir / "proposal-work.sqlite3") as store:
-        work = store.next_work()
-        store.write_snapshot(controller.run_dir)
+    work = controller.export_next_proposal()
     payload = work.model_dump(mode="json") if work else {"work_type": "none"}
     if output is not None:
         atomic_write(output, canonical_json_bytes(payload))
     emit(payload, output_format)
+
+
+@optimizer_app.command("r4-resume")
+def r4_resume(
+    run_dir: Annotated[Path, typer.Option("--run-dir")],
+    config: Annotated[Path, typer.Option("--config")],
+    output_format: Annotated[str, typer.Option("--format")] = "json",
+) -> None:
+    emit(_r4(run_dir, config, RunLifecycleMode.RESUME).resume(), output_format)
+
+
+@optimizer_app.command("r4-checkpoint")
+def r4_checkpoint(
+    run_dir: Annotated[Path, typer.Option("--run-dir")],
+    config: Annotated[Path, typer.Option("--config")],
+    barrier: Annotated[RuntimeBarrier, typer.Option("--barrier")],
+    output_format: Annotated[str, typer.Option("--format")] = "json",
+) -> None:
+    emit(_r4(run_dir, config).pause_at_barrier(barrier), output_format)
+
+
+@optimizer_app.command("r4-continue")
+def r4_continue(
+    run_dir: Annotated[Path, typer.Option("--run-dir")],
+    config: Annotated[Path, typer.Option("--config")],
+    decision: Annotated[Path, typer.Option("--decision")],
+    output_format: Annotated[str, typer.Option("--format")] = "json",
+) -> None:
+    value = BudgetContinuationDecision.model_validate_json(decision.read_text(encoding="utf-8"))
+    emit(_r4(run_dir, config).apply_continuation_decision(value), output_format)
 
 
 @optimizer_app.command("r4-ingest-proposal")
@@ -189,6 +241,72 @@ def r4_build_proposal_submission(
     )
 
 
+@optimizer_app.command("r4-build-failed-proposal-submission")
+def r4_build_failed_proposal_submission(
+    run_dir: Annotated[Path, typer.Option("--run-dir")],
+    config: Annotated[Path, typer.Option("--config")],
+    work_id: Annotated[str, typer.Option("--work-id")],
+    output: Annotated[Path, typer.Option("--output")],
+    host: Annotated[str, typer.Option("--host")],
+    model: Annotated[str, typer.Option("--model")],
+    host_task_id: Annotated[str, typer.Option("--host-task-id")],
+    duration_ms: Annotated[int, typer.Option("--duration-ms")],
+    token_estimate: Annotated[int, typer.Option("--token-estimate")] = 0,
+    failure_kind: Annotated[str, typer.Option("--failure-kind")] = "submission_validation_failure",
+    failure_detail: Annotated[str, typer.Option("--failure-detail")] = "",
+    output_format: Annotated[str, typer.Option("--format")] = "json",
+) -> None:
+    """Build a typed failed submission without fabricating a PackagePatch."""
+
+    if not failure_detail:
+        raise typer.BadParameter("failure-detail must describe the raw response failure")
+    controller = _r4(run_dir, config)
+    with PatchProposalStore(controller.run_dir / "proposal-work.sqlite3") as store:
+        work = store.get_work(work_id)
+    submission = build_failed_patch_submission(
+        work,
+        host=host,
+        model=model,
+        host_task_id=host_task_id,
+        duration_ms=duration_ms,
+        token_estimate=token_estimate,
+        failure_kind=failure_kind,
+        failure_detail=failure_detail,
+    )
+    atomic_write(output, canonical_json_bytes(submission.model_dump(mode="json")))
+    emit(
+        {"submission_id": submission.submission_id, "output": output.as_posix()},
+        output_format,
+    )
+
+
+@optimizer_app.command("r4-prepare-proposal-repair")
+def r4_prepare_proposal_repair(
+    run_dir: Annotated[Path, typer.Option("--run-dir")],
+    config: Annotated[Path, typer.Option("--config")],
+    failed_work_id: Annotated[str, typer.Option("--failed-work-id")],
+    output_format: Annotated[str, typer.Option("--format")] = "json",
+) -> None:
+    """Append a bounded repair work item after an ingested proposer failure."""
+
+    emit(_r4(run_dir, config).prepare_proposal_repair(failed_work_id), output_format)
+
+
+@optimizer_app.command("r4-prepare-proposal-repairs")
+def r4_prepare_proposal_repairs(
+    run_dir: Annotated[Path, typer.Option("--run-dir")],
+    config: Annotated[Path, typer.Option("--config")],
+    failed_work_id: Annotated[list[str], typer.Option("--failed-work-id")],
+    output_format: Annotated[str, typer.Option("--format")] = "json",
+) -> None:
+    """Append one atomic bounded repair batch for failed proposer work."""
+
+    emit(
+        _r4(run_dir, config).prepare_proposal_repairs(tuple(failed_work_id)),
+        output_format,
+    )
+
+
 @optimizer_app.command("r4-apply-proposals")
 def r4_apply_proposals(
     run_dir: Annotated[Path, typer.Option("--run-dir")],
@@ -235,6 +353,21 @@ def r4_plan_candidate(
         _r4(run_dir, config).plan_candidate(
             candidate_id, cast(Literal["train", "validation"], split)
         ),
+        output_format,
+    )
+
+
+@optimizer_app.command("r4-plan-generation2")
+def r4_plan_generation2(
+    run_dir: Annotated[Path, typer.Option("--run-dir")],
+    config: Annotated[Path, typer.Option("--config")],
+    parent_candidate_id: Annotated[str | None, typer.Option("--parent-candidate-id")] = None,
+    output_format: Annotated[str, typer.Option("--format")] = "json",
+) -> None:
+    """Plan one bounded generation-2 refinement without running an Agent."""
+
+    emit(
+        _r4(run_dir, config).plan_generation2_refinement(parent_candidate_id),
         output_format,
     )
 

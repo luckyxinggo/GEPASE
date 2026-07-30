@@ -1,0 +1,59 @@
+{
+  "additionalProperties": false,
+  "properties": {
+    "outcome_input_ref": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Outcome Input Ref"
+    },
+    "outcome_input_refs": {
+      "default": [],
+      "items": {
+        "type": "string"
+      },
+      "title": "Outcome Input Refs",
+      "type": "array"
+    },
+    "package_id": {
+      "minLength": 1,
+      "title": "Package Id",
+      "type": "string"
+    },
+    "report_id": {
+      "minLength": 1,
+      "title": "Report Id",
+      "type": "string"
+    },
+    "report_mode": {
+      "const": "multi_outcome",
+      "default": "multi_outcome",
+      "title": "Report Mode",
+      "type": "string"
+    },
+    "schema_version": {
+      "const": "1.0.0",
+      "default": "1.0.0",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "title_zh": {
+      "minLength": 1,
+      "title": "Title Zh",
+      "type": "string"
+    }
+  },
+  "required": [
+    "report_id",
+    "title_zh",
+    "package_id"
+  ],
+  "title": "EvolutionOutcomeReportConfig",
+  "type": "object"
+}

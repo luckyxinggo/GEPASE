@@ -1,4 +1,9 @@
-"""Typed contracts for bounded Analyzer-proposed semantic graph hypotheses."""
+"""Read-only compatibility contracts for sealed GH-P1 semantic evidence.
+
+The active runtime no longer generates or consumes semantic hypotheses.  These
+models remain only so historical Analyzer work/submission artifacts can be
+parsed and independently verified without changing their bytes.
+"""
 
 from __future__ import annotations
 
@@ -69,7 +74,6 @@ class SemanticHypothesisConfig(FrozenModel):
         if not set(self.allowed_consumers) <= set(ALLOWED_SEMANTIC_CONSUMERS):
             raise ValueError("semantic config cannot enable a high-impact consumer")
         return self
-
     @property
     def config_hash(self) -> str:
         payload = self.model_dump(mode="json", exclude={"schema_version"})
@@ -151,80 +155,3 @@ class SemanticEnrichmentScope(FrozenModel):
             if path.is_absolute() or ".." in path.parts:
                 raise ValueError("semantic scope refs must be repository-relative")
         return self
-
-
-class SemanticDecisionStatus(StrEnum):
-    ACCEPTED = "accepted"
-    REJECTED = "rejected"
-
-
-class SemanticRelationDecision(FrozenModel):
-    proposal_id: str
-    status: SemanticDecisionStatus
-    relation_type: SemanticRelationType
-    source_node_id: str
-    target_node_id: str
-    confidence: float = Field(ge=0, le=1)
-    reason_codes: tuple[str, ...] = Field(min_length=1)
-    edge_id: str | None = None
-
-
-class SemanticOverlayResult(FrozenModel):
-    schema_version: str = SCHEMA_VERSION
-    analyzer_work_id: str
-    submission_id: str
-    package_id: str
-    package_snapshot_hash: str
-    failure_cluster_id: str
-    accepted: tuple[SemanticRelationDecision, ...]
-    rejected: tuple[SemanticRelationDecision, ...]
-    semantic_edge_ids: tuple[str, ...]
-    layer_counts_before: dict[str, int]
-    layer_counts_after: dict[str, int]
-    trusted_graph_unchanged: bool
-    source_node_count_unchanged: bool
-    source_graph_fingerprint: str = Field(pattern=r"^[0-9a-f]{64}$")
-    layered_graph_fingerprint: str = Field(pattern=r"^[0-9a-f]{64}$")
-
-
-class SemanticCacheKey(FrozenModel):
-    key_id: str = Field(pattern=r"^[0-9a-f]{64}$")
-    package_id: str
-    package_snapshot_hash: str = Field(pattern=r"^[0-9a-f]{64}$")
-    failure_cluster_id: str
-    node_content_hashes: tuple[tuple[str, str], ...]
-    prompt_hash: str = Field(pattern=r"^[0-9a-f]{64}$")
-    schema_hash: str = Field(pattern=r"^[0-9a-f]{64}$")
-    model: str
-    config_hash: str = Field(pattern=r"^[0-9a-f]{64}$")
-
-
-class SemanticCacheEntry(FrozenModel):
-    key: SemanticCacheKey
-    result: SemanticOverlayResult
-    touched_node_ids: tuple[str, ...]
-
-
-class SemanticCacheState(FrozenModel):
-    schema_version: str = SCHEMA_VERSION
-    entries: tuple[SemanticCacheEntry, ...] = ()
-
-
-class SemanticCacheLookup(FrozenModel):
-    key_id: str
-    status: str
-    result: SemanticOverlayResult | None = None
-    reason: str
-
-
-class SemanticCacheInvalidation(FrozenModel):
-    touched_node_ids: tuple[str, ...]
-    invalidated_key_ids: tuple[str, ...]
-    retained_key_ids: tuple[str, ...]
-
-
-class SemanticConsumerDecision(FrozenModel):
-    consumer: SemanticConsumer
-    allowed: bool
-    semantic_edge_ids: tuple[str, ...]
-    reason: str

@@ -7,7 +7,7 @@ from collections import defaultdict, deque
 from pydantic import Field, model_validator
 
 from gepase.optimizer.selectors import RankedSelection
-from gepase.package.ir import EdgeKind, PackageGraph
+from gepase.package.ir import EdgeKind, IRNode, PackageGraph
 from gepase.schemas.common import FrozenModel
 
 _CAUSAL_EDGE_KINDS = {
@@ -87,6 +87,18 @@ def _causal_path(
     return tuple(reversed(nodes)), tuple(reversed(edges))
 
 
+def _same_mutation_locus(left: IRNode, right: IRNode) -> bool:
+    """Reject overlapping selectors that would edit the same physical locus."""
+
+    if left.path != right.path:
+        return False
+    if left.span is None or right.span is None:
+        return True
+    return not (
+        left.span.end_line < right.span.start_line or right.span.end_line < left.span.start_line
+    )
+
+
 def choose_bounded_target_set(
     graph: PackageGraph,
     ranked: tuple[RankedSelection, ...],
@@ -105,7 +117,11 @@ def choose_bounded_target_set(
     primary = ranked[0]
     if max_targets == 1:
         return (primary,), None
+    nodes = {node.node_id: node for node in graph.nodes}
+    primary_node = nodes[primary.node_id]
     for companion in ranked[1:]:
+        if _same_mutation_locus(primary_node, nodes[companion.node_id]):
+            continue
         path = _causal_path(graph, primary.node_id, companion.node_id)
         if path is None:
             continue

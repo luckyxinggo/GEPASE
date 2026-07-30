@@ -1,0 +1,67 @@
+{
+  "additionalProperties": false,
+  "description": "Recomputable mapping from paired vectors to Gate secondary objectives.",
+  "properties": {
+    "aggregate": {
+      "default": "mean_paired_delta",
+      "title": "Aggregate",
+      "type": "string"
+    },
+    "evidence_refs": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Evidence Refs",
+      "type": "array"
+    },
+    "improvements": {
+      "additionalProperties": {
+        "type": "number"
+      },
+      "title": "Improvements",
+      "type": "object"
+    },
+    "per_task_deltas": {
+      "additionalProperties": {
+        "type": "number"
+      },
+      "title": "Per Task Deltas",
+      "type": "object"
+    },
+    "primary_axes": {
+      "default": [
+        "task_correctness",
+        "output_quality"
+      ],
+      "maxItems": 2,
+      "minItems": 2,
+      "prefixItems": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "string"
+        }
+      ],
+      "title": "Primary Axes",
+      "type": "array"
+    },
+    "schema_version": {
+      "default": "1.0.0",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "source_axis": {
+      "default": "TaskScoreVector.efficiency",
+      "title": "Source Axis",
+      "type": "string"
+    }
+  },
+  "required": [
+    "improvements",
+    "per_task_deltas",
+    "evidence_refs"
+  ],
+  "title": "TaskScoreSecondaryEvidence",
+  "type": "object"
+}

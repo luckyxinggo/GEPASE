@@ -11,12 +11,72 @@ import typer
 
 from gepase.cli.app_support import emit
 from gepase.reporting.canary import CanaryReportBuilder, ReportEvidenceError
+from gepase.reporting.outcome import (
+    EvolutionOutcomeCompiler,
+    EvolutionOutcomeReportBuilder,
+    ReferenceOutcomeCompiler,
+)
 from gepase.store.artifacts import sha256_bytes
 
 report_app = typer.Typer(
     no_args_is_help=True,
     help="Build reproducible static reports from sealed evaluation/evolution evidence.",
 )
+
+
+def _builder(config: Path) -> CanaryReportBuilder | EvolutionOutcomeReportBuilder:
+    raw = json.loads(config.read_text(encoding="utf-8"))
+    if raw.get("report_mode") == "multi_outcome":
+        return EvolutionOutcomeReportBuilder.from_config(Path.cwd(), config)
+    return CanaryReportBuilder.from_config(Path.cwd(), config)
+
+
+@report_app.command("compile-outcome")
+def compile_outcome(
+    run_dir: Annotated[Path, typer.Option("--run-dir")],
+    output: Annotated[Path | None, typer.Option("--output")] = None,
+    output_format: Annotated[str, typer.Option("--format")] = "json",
+) -> None:
+    """Compile one typed report input from the existing evolution Core state."""
+
+    try:
+        value = EvolutionOutcomeCompiler(Path.cwd(), run_dir).compile(output)
+    except (OSError, ValueError) as error:
+        emit({"valid": False, "error": str(error)}, output_format)
+        raise typer.Exit(2) from error
+    emit(
+        {
+            "valid": True,
+            "run_id": value.run_id,
+            "outcome": value.outcome.value,
+            "frontier_count": len(value.deployable_frontier),
+        },
+        output_format,
+    )
+
+
+@report_app.command("compile-reference-outcome")
+def compile_reference_outcome(
+    run_dir: Annotated[Path, typer.Option("--run-dir")],
+    output: Annotated[Path | None, typer.Option("--output")] = None,
+    output_format: Annotated[str, typer.Option("--format")] = "json",
+) -> None:
+    """Compile a budget-incomplete report input from a stopped reference run."""
+
+    try:
+        value = ReferenceOutcomeCompiler(Path.cwd(), run_dir).compile(output)
+    except (OSError, ValueError) as error:
+        emit({"valid": False, "error": str(error)}, output_format)
+        raise typer.Exit(2) from error
+    emit(
+        {
+            "valid": True,
+            "run_id": value.run_id,
+            "outcome": value.outcome.value,
+            "frontier_count": 0,
+        },
+        output_format,
+    )
 
 
 @report_app.command("build")
@@ -28,7 +88,7 @@ def build_report(
     """Build a new report directory without rerunning evaluation or search."""
 
     try:
-        result = CanaryReportBuilder.from_config(Path.cwd(), config).build(output)
+        result = _builder(config).build(output)
     except (OSError, ValueError, ReportEvidenceError) as error:
         emit({"valid": False, "error": str(error)}, output_format)
         raise typer.Exit(2) from error
@@ -44,7 +104,7 @@ def verify_report(
     """Recompute the report view from sealed inputs and compare every copied output."""
 
     try:
-        result = CanaryReportBuilder.from_config(Path.cwd(), config).verify(report_dir)
+        result = _builder(config).verify(report_dir)
     except (OSError, ValueError, ReportEvidenceError) as error:
         emit({"valid": False, "error": str(error)}, output_format)
         raise typer.Exit(2) from error

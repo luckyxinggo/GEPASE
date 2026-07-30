@@ -1,0 +1,558 @@
+{
+  "$defs": {
+    "CandidateOutcomeRow": {
+      "additionalProperties": false,
+      "properties": {
+        "candidate_id": {
+          "minLength": 1,
+          "title": "Candidate Id",
+          "type": "string"
+        },
+        "gate_status": {
+          "minLength": 1,
+          "title": "Gate Status",
+          "type": "string"
+        },
+        "graph_path_refs": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Graph Path Refs",
+          "type": "array"
+        },
+        "parent_ids": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Parent Ids",
+          "type": "array"
+        },
+        "patch_refs": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Patch Refs",
+          "type": "array"
+        },
+        "rejection_reasons": {
+          "default": [],
+          "items": {
+            "type": "string"
+          },
+          "title": "Rejection Reasons",
+          "type": "array"
+        },
+        "train_losses": {
+          "default": 0,
+          "minimum": 0,
+          "title": "Train Losses",
+          "type": "integer"
+        },
+        "train_mean_delta": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Train Mean Delta"
+        },
+        "train_objective_deltas": {
+          "anyOf": [
+            {
+              "additionalProperties": {
+                "type": "number"
+              },
+              "type": "object"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Train Objective Deltas"
+        },
+        "train_ties": {
+          "default": 0,
+          "minimum": 0,
+          "title": "Train Ties",
+          "type": "integer"
+        },
+        "train_wins": {
+          "default": 0,
+          "minimum": 0,
+          "title": "Train Wins",
+          "type": "integer"
+        },
+        "validation_losses": {
+          "default": 0,
+          "minimum": 0,
+          "title": "Validation Losses",
+          "type": "integer"
+        },
+        "validation_mean_delta": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Validation Mean Delta"
+        },
+        "validation_objective_deltas": {
+          "anyOf": [
+            {
+              "additionalProperties": {
+                "type": "number"
+              },
+              "type": "object"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Validation Objective Deltas"
+        },
+        "validation_ties": {
+          "default": 0,
+          "minimum": 0,
+          "title": "Validation Ties",
+          "type": "integer"
+        },
+        "validation_wins": {
+          "default": 0,
+          "minimum": 0,
+          "title": "Validation Wins",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "candidate_id",
+        "parent_ids",
+        "patch_refs",
+        "graph_path_refs",
+        "gate_status"
+      ],
+      "title": "CandidateOutcomeRow",
+      "type": "object"
+    },
+    "EffectOutcome": {
+      "enum": [
+        "strict_improvement",
+        "no_strict_improvement",
+        "budget_incomplete"
+      ],
+      "title": "EffectOutcome",
+      "type": "string"
+    },
+    "FrontierReportEntry": {
+      "additionalProperties": false,
+      "properties": {
+        "candidate_id": {
+          "minLength": 1,
+          "title": "Candidate Id",
+          "type": "string"
+        },
+        "gate_decision_ref": {
+          "title": "Gate Decision Ref",
+          "type": "string"
+        },
+        "lineage_refs": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Lineage Refs",
+          "type": "array"
+        },
+        "package_ref": {
+          "minLength": 1,
+          "title": "Package Ref",
+          "type": "string"
+        },
+        "patch_refs": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Patch Refs",
+          "type": "array"
+        },
+        "provisional": {
+          "default": false,
+          "title": "Provisional",
+          "type": "boolean"
+        },
+        "validation_summary_ref": {
+          "title": "Validation Summary Ref",
+          "type": "string"
+        }
+      },
+      "required": [
+        "candidate_id",
+        "package_ref",
+        "lineage_refs",
+        "patch_refs",
+        "validation_summary_ref",
+        "gate_decision_ref"
+      ],
+      "title": "FrontierReportEntry",
+      "type": "object"
+    },
+    "MergeOutcome": {
+      "additionalProperties": false,
+      "description": "Typed terminal/pending result of exhaustive train-only parent enumeration.",
+      "properties": {
+        "build_record_ref": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Build Record Ref"
+        },
+        "considered_parent_candidate_ids": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Considered Parent Candidate Ids",
+          "type": "array"
+        },
+        "considered_parent_set_count": {
+          "minimum": 0,
+          "title": "Considered Parent Set Count",
+          "type": "integer"
+        },
+        "cross_package_pair_count": {
+          "minimum": 0,
+          "title": "Cross Package Pair Count",
+          "type": "integer"
+        },
+        "eligible_parent_set_count": {
+          "minimum": 0,
+          "title": "Eligible Parent Set Count",
+          "type": "integer"
+        },
+        "enumeration_ref": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Enumeration Ref"
+        },
+        "evaluation_complete": {
+          "default": false,
+          "title": "Evaluation Complete",
+          "type": "boolean"
+        },
+        "merge_candidate_id": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Merge Candidate Id"
+        },
+        "rejected_parent_set_count": {
+          "minimum": 0,
+          "title": "Rejected Parent Set Count",
+          "type": "integer"
+        },
+        "rejection_reason_counts": {
+          "additionalProperties": {
+            "type": "integer"
+          },
+          "title": "Rejection Reason Counts",
+          "type": "object"
+        },
+        "schema_version": {
+          "default": "1.0.0",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "selected_parent_set_id": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Selected Parent Set Id"
+        },
+        "status": {
+          "$ref": "#/$defs/MergeOutcomeStatus"
+        }
+      },
+      "required": [
+        "status",
+        "considered_parent_candidate_ids",
+        "considered_parent_set_count",
+        "eligible_parent_set_count",
+        "rejected_parent_set_count",
+        "rejection_reason_counts",
+        "cross_package_pair_count"
+      ],
+      "title": "MergeOutcome",
+      "type": "object"
+    },
+    "MergeOutcomeStatus": {
+      "enum": [
+        "materialized_pending_evaluation",
+        "materialized_and_evaluated",
+        "no_eligible_parent_set",
+        "not_reached_budget_incomplete"
+      ],
+      "title": "MergeOutcomeStatus",
+      "type": "string"
+    },
+    "ReportEvidenceAsset": {
+      "additionalProperties": false,
+      "properties": {
+        "asset_id": {
+          "pattern": "^[a-zA-Z0-9._-]+$",
+          "title": "Asset Id",
+          "type": "string"
+        },
+        "candidate_id": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Candidate Id"
+        },
+        "execution_status": {
+          "enum": [
+            "completed",
+            "typed_failed"
+          ],
+          "title": "Execution Status",
+          "type": "string"
+        },
+        "failure_kind": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Failure Kind"
+        },
+        "label_zh": {
+          "minLength": 1,
+          "title": "Label Zh",
+          "type": "string"
+        },
+        "media_type": {
+          "const": "image/gif",
+          "title": "Media Type",
+          "type": "string"
+        },
+        "sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Sha256",
+          "type": "string"
+        },
+        "size_bytes": {
+          "minimum": 1,
+          "title": "Size Bytes",
+          "type": "integer"
+        },
+        "source_ref": {
+          "minLength": 1,
+          "title": "Source Ref",
+          "type": "string"
+        },
+        "split": {
+          "enum": [
+            "train",
+            "validation"
+          ],
+          "title": "Split",
+          "type": "string"
+        },
+        "task_id": {
+          "minLength": 1,
+          "title": "Task Id",
+          "type": "string"
+        },
+        "variant": {
+          "enum": [
+            "no-skill",
+            "original",
+            "candidate"
+          ],
+          "title": "Variant",
+          "type": "string"
+        }
+      },
+      "required": [
+        "asset_id",
+        "task_id",
+        "split",
+        "variant",
+        "execution_status",
+        "source_ref",
+        "sha256",
+        "media_type",
+        "size_bytes",
+        "label_zh"
+      ],
+      "title": "ReportEvidenceAsset",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "budget_checkpoint_refs": {
+      "default": [],
+      "items": {
+        "type": "string"
+      },
+      "title": "Budget Checkpoint Refs",
+      "type": "array"
+    },
+    "candidates": {
+      "items": {
+        "$ref": "#/$defs/CandidateOutcomeRow"
+      },
+      "title": "Candidates",
+      "type": "array"
+    },
+    "continuation_decision_refs": {
+      "default": [],
+      "items": {
+        "type": "string"
+      },
+      "title": "Continuation Decision Refs",
+      "type": "array"
+    },
+    "deployable_frontier": {
+      "items": {
+        "$ref": "#/$defs/FrontierReportEntry"
+      },
+      "title": "Deployable Frontier",
+      "type": "array"
+    },
+    "evidence_gallery": {
+      "default": [],
+      "items": {
+        "$ref": "#/$defs/ReportEvidenceAsset"
+      },
+      "title": "Evidence Gallery",
+      "type": "array"
+    },
+    "gate_funnel": {
+      "additionalProperties": {
+        "type": "integer"
+      },
+      "title": "Gate Funnel",
+      "type": "object"
+    },
+    "merge_outcome": {
+      "$ref": "#/$defs/MergeOutcome"
+    },
+    "outcome": {
+      "$ref": "#/$defs/EffectOutcome"
+    },
+    "package_id": {
+      "minLength": 1,
+      "title": "Package Id",
+      "type": "string"
+    },
+    "pending_work_ids": {
+      "default": [],
+      "items": {
+        "type": "string"
+      },
+      "title": "Pending Work Ids",
+      "type": "array"
+    },
+    "process_evidence": {
+      "additionalProperties": true,
+      "title": "Process Evidence",
+      "type": "object"
+    },
+    "provenance": {
+      "additionalProperties": true,
+      "title": "Provenance",
+      "type": "object"
+    },
+    "reference_summary": {
+      "additionalProperties": true,
+      "title": "Reference Summary",
+      "type": "object"
+    },
+    "rejected_memory_refs": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Rejected Memory Refs",
+      "type": "array"
+    },
+    "run_id": {
+      "minLength": 1,
+      "title": "Run Id",
+      "type": "string"
+    },
+    "runtime": {
+      "additionalProperties": true,
+      "title": "Runtime",
+      "type": "object"
+    },
+    "schema_version": {
+      "const": "1.0.0",
+      "default": "1.0.0",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "search_complete": {
+      "title": "Search Complete",
+      "type": "boolean"
+    }
+  },
+  "required": [
+    "run_id",
+    "package_id",
+    "outcome",
+    "search_complete",
+    "reference_summary",
+    "candidates",
+    "deployable_frontier",
+    "merge_outcome",
+    "gate_funnel",
+    "rejected_memory_refs",
+    "runtime",
+    "provenance"
+  ],
+  "title": "EvolutionOutcomeReportInput",
+  "type": "object"
+}

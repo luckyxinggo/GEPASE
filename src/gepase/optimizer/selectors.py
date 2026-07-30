@@ -27,6 +27,12 @@ class FeatureGroup(StrEnum):
     CONTROL = "control"
 
 
+class AttributionScope(StrEnum):
+    EXACT_NODE = "exact_node"
+    PATH_FALLBACK = "path_fallback"
+    NONE = "none"
+
+
 class ValidationLevel(StrEnum):
     STANDARD = "standard"
     ELEVATED = "elevated"
@@ -75,6 +81,9 @@ class FeatureContribution(FrozenModel):
     weight: float
     contribution: float
     group: FeatureGroup = FeatureGroup.RELEVANCE
+    attribution_scope: AttributionScope = AttributionScope.NONE
+    source_node_ids: tuple[str, ...] = ()
+    fallback_decay: float = Field(default=1.0, ge=0, le=1)
 
 
 class SelectionScoreBreakdown(FrozenModel):
@@ -102,12 +111,8 @@ class RankedSelection(FrozenModel):
     high_blast_radius: bool = False
     eligible: bool = True
     eligibility_reasons: tuple[str, ...] = ("mutable_and_typed",)
-    score_breakdown: SelectionScoreBreakdown = Field(
-        default_factory=SelectionScoreBreakdown
-    )
-    validation_intensity: ValidationIntensity = Field(
-        default_factory=ValidationIntensity
-    )
+    score_breakdown: SelectionScoreBreakdown = Field(default_factory=SelectionScoreBreakdown)
+    validation_intensity: ValidationIntensity = Field(default_factory=ValidationIntensity)
 
 
 class SelectionResult(FrozenModel):

@@ -1,0 +1,415 @@
+{
+  "$defs": {
+    "AgentAttemptKind": {
+      "enum": [
+        "initial_execution",
+        "reexecution"
+      ],
+      "title": "AgentAttemptKind",
+      "type": "string"
+    },
+    "EvidenceDisposition": {
+      "enum": [
+        "included_unchanged",
+        "included_corrected_metadata",
+        "excluded_optional",
+        "missing_required",
+        "rejected_required_sensitive",
+        "rejected_invalid_metadata"
+      ],
+      "title": "EvidenceDisposition",
+      "type": "string"
+    },
+    "EvidenceManifestEntry": {
+      "additionalProperties": false,
+      "properties": {
+        "disposition": {
+          "$ref": "#/$defs/EvidenceDisposition"
+        },
+        "exclusion_reason": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Exclusion Reason"
+        },
+        "media_type": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Media Type"
+        },
+        "required": {
+          "title": "Required",
+          "type": "boolean"
+        },
+        "role": {
+          "$ref": "#/$defs/EvidenceRole"
+        },
+        "sensitive_findings": {
+          "default": [],
+          "items": {
+            "type": "string"
+          },
+          "title": "Sensitive Findings",
+          "type": "array"
+        },
+        "sha256": {
+          "anyOf": [
+            {
+              "pattern": "^[0-9a-f]{64}$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Sha256"
+        },
+        "size_bytes": {
+          "anyOf": [
+            {
+              "minimum": 0,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Size Bytes"
+        },
+        "source_ref": {
+          "title": "Source Ref",
+          "type": "string"
+        },
+        "staged_path": {
+          "title": "Staged Path",
+          "type": "string"
+        }
+      },
+      "required": [
+        "source_ref",
+        "staged_path",
+        "role",
+        "required",
+        "disposition"
+      ],
+      "title": "EvidenceManifestEntry",
+      "type": "object"
+    },
+    "EvidenceRole": {
+      "enum": [
+        "task_output",
+        "transcript",
+        "package_access",
+        "observed_trace",
+        "optional_diagnostic"
+      ],
+      "title": "EvidenceRole",
+      "type": "string"
+    },
+    "PackageAccessMetadataCorrection": {
+      "additionalProperties": false,
+      "properties": {
+        "corrected_node_id": {
+          "title": "Corrected Node Id",
+          "type": "string"
+        },
+        "original_node_id": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Original Node Id"
+        },
+        "package_node_map_hash": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Package Node Map Hash",
+          "type": "string"
+        },
+        "path": {
+          "title": "Path",
+          "type": "string"
+        },
+        "reason": {
+          "const": "unique_exact_path_to_frozen_node_map",
+          "default": "unique_exact_path_to_frozen_node_map",
+          "title": "Reason",
+          "type": "string"
+        },
+        "sequence": {
+          "minimum": 0,
+          "title": "Sequence",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "sequence",
+        "path",
+        "corrected_node_id",
+        "package_node_map_hash"
+      ],
+      "title": "PackageAccessMetadataCorrection",
+      "type": "object"
+    },
+    "RecoveryActionKind": {
+      "enum": [
+        "deterministic_submission_packaging_correction",
+        "deterministic_metadata_correction",
+        "agent_reexecution"
+      ],
+      "title": "RecoveryActionKind",
+      "type": "string"
+    },
+    "RecoveryAttemptBinding": {
+      "additionalProperties": false,
+      "description": "Bind one immutable submission/workspace to one observed Host attempt.",
+      "properties": {
+        "attempt_kind": {
+          "$ref": "#/$defs/AgentAttemptKind"
+        },
+        "binding_valid": {
+          "const": true,
+          "default": true,
+          "title": "Binding Valid",
+          "type": "boolean"
+        },
+        "context_id": {
+          "minLength": 1,
+          "title": "Context Id",
+          "type": "string"
+        },
+        "host_attempt_accounting_hashes": {
+          "additionalProperties": {
+            "type": "string"
+          },
+          "minProperties": 1,
+          "title": "Host Attempt Accounting Hashes",
+          "type": "object"
+        },
+        "host_attempt_accounting_ids": {
+          "items": {
+            "type": "string"
+          },
+          "minItems": 1,
+          "title": "Host Attempt Accounting Ids",
+          "type": "array"
+        },
+        "host_task_id": {
+          "minLength": 1,
+          "title": "Host Task Id",
+          "type": "string"
+        },
+        "raw_workspace_ref": {
+          "title": "Raw Workspace Ref",
+          "type": "string"
+        },
+        "raw_workspace_tree_hash": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Raw Workspace Tree Hash",
+          "type": "string"
+        },
+        "repair_attempt": {
+          "title": "Repair Attempt",
+          "type": "boolean"
+        },
+        "run_id": {
+          "minLength": 1,
+          "title": "Run Id",
+          "type": "string"
+        },
+        "schema_version": {
+          "const": "1.0.0",
+          "default": "1.0.0",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "selected_host_attempt_accounting_id": {
+          "minLength": 1,
+          "title": "Selected Host Attempt Accounting Id",
+          "type": "string"
+        },
+        "source_artifact_root_ref": {
+          "title": "Source Artifact Root Ref",
+          "type": "string"
+        },
+        "source_submission_id": {
+          "minLength": 1,
+          "title": "Source Submission Id",
+          "type": "string"
+        },
+        "source_submission_ref": {
+          "title": "Source Submission Ref",
+          "type": "string"
+        },
+        "source_submission_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Source Submission Sha256",
+          "type": "string"
+        },
+        "task_id": {
+          "minLength": 1,
+          "title": "Task Id",
+          "type": "string"
+        },
+        "work_id": {
+          "minLength": 1,
+          "title": "Work Id",
+          "type": "string"
+        }
+      },
+      "required": [
+        "run_id",
+        "work_id",
+        "task_id",
+        "attempt_kind",
+        "repair_attempt",
+        "source_submission_ref",
+        "source_submission_sha256",
+        "source_submission_id",
+        "source_artifact_root_ref",
+        "raw_workspace_ref",
+        "raw_workspace_tree_hash",
+        "host_task_id",
+        "context_id",
+        "selected_host_attempt_accounting_id",
+        "host_attempt_accounting_ids",
+        "host_attempt_accounting_hashes"
+      ],
+      "title": "RecoveryAttemptBinding",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "action_kinds": {
+      "items": {
+        "$ref": "#/$defs/RecoveryActionKind"
+      },
+      "minItems": 1,
+      "title": "Action Kinds",
+      "type": "array"
+    },
+    "attempt_binding": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/RecoveryAttemptBinding"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null
+    },
+    "entries": {
+      "items": {
+        "$ref": "#/$defs/EvidenceManifestEntry"
+      },
+      "minItems": 1,
+      "title": "Entries",
+      "type": "array"
+    },
+    "manifest_id": {
+      "title": "Manifest Id",
+      "type": "string"
+    },
+    "metadata_corrections": {
+      "default": [],
+      "items": {
+        "$ref": "#/$defs/PackageAccessMetadataCorrection"
+      },
+      "title": "Metadata Corrections",
+      "type": "array"
+    },
+    "package_node_map_hash": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Package Node Map Hash",
+      "type": "string"
+    },
+    "raw_workspace_ref": {
+      "title": "Raw Workspace Ref",
+      "type": "string"
+    },
+    "raw_workspace_tree_hash": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Raw Workspace Tree Hash",
+      "type": "string"
+    },
+    "run_id": {
+      "minLength": 1,
+      "title": "Run Id",
+      "type": "string"
+    },
+    "schema_version": {
+      "const": "2.0.0",
+      "default": "2.0.0",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "source_submission_ref": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Source Submission Ref"
+    },
+    "source_submission_sha256": {
+      "anyOf": [
+        {
+          "pattern": "^[0-9a-f]{64}$",
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Source Submission Sha256"
+    },
+    "task_id": {
+      "minLength": 1,
+      "title": "Task Id",
+      "type": "string"
+    },
+    "work_id": {
+      "title": "Work Id",
+      "type": "string"
+    }
+  },
+  "required": [
+    "manifest_id",
+    "run_id",
+    "work_id",
+    "task_id",
+    "raw_workspace_ref",
+    "raw_workspace_tree_hash",
+    "package_node_map_hash",
+    "entries",
+    "action_kinds"
+  ],
+  "title": "EvidenceStagingManifest",
+  "type": "object"
+}

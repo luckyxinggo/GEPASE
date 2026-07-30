@@ -85,6 +85,34 @@
       "title": "Schema Version",
       "type": "string"
     },
+    "score_verification_hash": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Score Verification Hash"
+    },
+    "score_verification_source": {
+      "anyOf": [
+        {
+          "enum": [
+            "sealed_artifact",
+            "read_only_recompute"
+          ],
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Score Verification Source"
+    },
     "scoring_policy_hash": {
       "pattern": "^[0-9a-f]{64}$",
       "title": "Scoring Policy Hash",

@@ -1,0 +1,188 @@
+{
+  "$defs": {
+    "ActiveSessionBudgetPolicy": {
+      "additionalProperties": false,
+      "properties": {
+        "cumulative_usage_never_resets": {
+          "const": true,
+          "default": true,
+          "title": "Cumulative Usage Never Resets",
+          "type": "boolean"
+        },
+        "initial_tranche": {
+          "$ref": "#/$defs/UsageAllowance"
+        },
+        "max_concurrency": {
+          "default": 3,
+          "maximum": 32,
+          "minimum": 1,
+          "title": "Max Concurrency",
+          "type": "integer"
+        },
+        "maximum_continuation_increment": {
+          "$ref": "#/$defs/UsageAllowance"
+        },
+        "require_user_continuation": {
+          "const": true,
+          "default": true,
+          "title": "Require User Continuation",
+          "type": "boolean"
+        },
+        "required_barriers": {
+          "items": {
+            "$ref": "#/$defs/RuntimeBarrier"
+          },
+          "title": "Required Barriers",
+          "type": "array"
+        },
+        "role_estimates": {
+          "additionalProperties": {
+            "$ref": "#/$defs/RoleBatchEstimate"
+          },
+          "minProperties": 1,
+          "title": "Role Estimates",
+          "type": "object"
+        },
+        "schema_version": {
+          "const": "1.0.0",
+          "default": "1.0.0",
+          "title": "Schema Version",
+          "type": "string"
+        }
+      },
+      "required": [
+        "initial_tranche",
+        "maximum_continuation_increment",
+        "role_estimates",
+        "required_barriers"
+      ],
+      "title": "ActiveSessionBudgetPolicy",
+      "type": "object"
+    },
+    "RoleBatchEstimate": {
+      "additionalProperties": false,
+      "properties": {
+        "max_estimated_tokens_per_work": {
+          "minimum": 1,
+          "title": "Max Estimated Tokens Per Work",
+          "type": "integer"
+        },
+        "max_repair_attempts_per_work": {
+          "default": 0,
+          "maximum": 2,
+          "minimum": 0,
+          "title": "Max Repair Attempts Per Work",
+          "type": "integer"
+        },
+        "timeout_ms_per_work": {
+          "minimum": 1,
+          "title": "Timeout Ms Per Work",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "max_estimated_tokens_per_work",
+        "timeout_ms_per_work"
+      ],
+      "title": "RoleBatchEstimate",
+      "type": "object"
+    },
+    "RuntimeBarrier": {
+      "enum": [
+        "package_compiled",
+        "reference_execution_complete",
+        "reference_sealed",
+        "proposal_scope_ready",
+        "candidate_train_complete",
+        "candidate_validation_complete",
+        "merge_resolved",
+        "before_final_report",
+        "budget_limit",
+        "post_recovery_checkpoint"
+      ],
+      "title": "RuntimeBarrier",
+      "type": "string"
+    },
+    "UsageAllowance": {
+      "additionalProperties": false,
+      "properties": {
+        "active_wall_clock_ms": {
+          "minimum": 0,
+          "title": "Active Wall Clock Ms",
+          "type": "integer"
+        },
+        "agent_calls": {
+          "minimum": 0,
+          "title": "Agent Calls",
+          "type": "integer"
+        },
+        "candidates": {
+          "default": 0,
+          "minimum": 0,
+          "title": "Candidates",
+          "type": "integer"
+        },
+        "estimated_tokens": {
+          "minimum": 0,
+          "title": "Estimated Tokens",
+          "type": "integer"
+        },
+        "proposals": {
+          "default": 0,
+          "minimum": 0,
+          "title": "Proposals",
+          "type": "integer"
+        },
+        "repairs": {
+          "default": 0,
+          "minimum": 0,
+          "title": "Repairs",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "agent_calls",
+        "estimated_tokens",
+        "active_wall_clock_ms"
+      ],
+      "title": "UsageAllowance",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "description": "Bind a nested Eval run to its owning active-session runtime.",
+  "properties": {
+    "config_hash": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Config Hash",
+      "type": "string"
+    },
+    "owner_run_id": {
+      "minLength": 1,
+      "title": "Owner Run Id",
+      "type": "string"
+    },
+    "owner_run_ref": {
+      "minLength": 1,
+      "title": "Owner Run Ref",
+      "type": "string"
+    },
+    "policy": {
+      "$ref": "#/$defs/ActiveSessionBudgetPolicy"
+    },
+    "schema_version": {
+      "const": "1.0.0",
+      "default": "1.0.0",
+      "title": "Schema Version",
+      "type": "string"
+    }
+  },
+  "required": [
+    "owner_run_id",
+    "owner_run_ref",
+    "config_hash",
+    "policy"
+  ],
+  "title": "RuntimeBudgetBinding",
+  "type": "object"
+}

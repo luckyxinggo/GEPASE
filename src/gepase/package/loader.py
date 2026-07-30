@@ -38,6 +38,9 @@ _BINARY_SUFFIXES = {
     ".zip",
 }
 
+_RUNTIME_CACHE_DIRECTORY_NAMES = {"__pycache__"}
+_RUNTIME_CACHE_SUFFIXES = {".pyc"}
+
 
 def _kind(path: Path) -> tuple[FileKind, str | None]:
     relative = path.as_posix()
@@ -123,6 +126,13 @@ def load_package(package_root: Path) -> PackageSnapshot:
     files: list[PackageFile] = []
     for current, directory_names, file_names in os.walk(root, followlinks=False):
         current_path = Path(current)
+        # Importing a candidate during delegated execution may materialize
+        # interpreter caches inside its read-only package view.  These files
+        # are execution by-products, not Package components, and therefore
+        # must not change the content-addressed candidate identity.
+        directory_names[:] = [
+            name for name in directory_names if name not in _RUNTIME_CACHE_DIRECTORY_NAMES
+        ]
         for name in sorted(directory_names):
             child = current_path / name
             if child.is_symlink() and not child.resolve().is_relative_to(root):
@@ -130,6 +140,8 @@ def load_package(package_root: Path) -> PackageSnapshot:
         for name in sorted(file_names):
             path = current_path / name
             relative = path.relative_to(root)
+            if relative.suffix.lower() in _RUNTIME_CACHE_SUFFIXES:
+                continue
             if path.is_symlink():
                 target = path.resolve(strict=True)
                 if not target.is_relative_to(root):

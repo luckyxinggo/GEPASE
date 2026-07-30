@@ -1,0 +1,84 @@
+{
+  "$defs": {
+    "RunLifecycleStatus": {
+      "enum": [
+        "initializing",
+        "active",
+        "paused",
+        "complete",
+        "aborted"
+      ],
+      "title": "RunLifecycleStatus",
+      "type": "string"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "checkpoint_id": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Checkpoint Id"
+    },
+    "config_hash": {
+      "anyOf": [
+        {
+          "pattern": "^[0-9a-f]{64}$",
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Config Hash"
+    },
+    "created_at": {
+      "format": "date-time",
+      "title": "Created At",
+      "type": "string"
+    },
+    "owner": {
+      "enum": [
+        "eval",
+        "evolution"
+      ],
+      "title": "Owner",
+      "type": "string"
+    },
+    "run_id": {
+      "minLength": 1,
+      "title": "Run Id",
+      "type": "string"
+    },
+    "schema_version": {
+      "const": "1.0.0",
+      "default": "1.0.0",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "status": {
+      "$ref": "#/$defs/RunLifecycleStatus"
+    },
+    "updated_at": {
+      "format": "date-time",
+      "title": "Updated At",
+      "type": "string"
+    }
+  },
+  "required": [
+    "run_id",
+    "owner",
+    "status",
+    "created_at",
+    "updated_at"
+  ],
+  "title": "RunLifecycleRecord",
+  "type": "object"
+}

@@ -1,0 +1,127 @@
+{
+  "$defs": {
+    "UsageAllowance": {
+      "additionalProperties": false,
+      "properties": {
+        "active_wall_clock_ms": {
+          "minimum": 0,
+          "title": "Active Wall Clock Ms",
+          "type": "integer"
+        },
+        "agent_calls": {
+          "minimum": 0,
+          "title": "Agent Calls",
+          "type": "integer"
+        },
+        "candidates": {
+          "default": 0,
+          "minimum": 0,
+          "title": "Candidates",
+          "type": "integer"
+        },
+        "estimated_tokens": {
+          "minimum": 0,
+          "title": "Estimated Tokens",
+          "type": "integer"
+        },
+        "proposals": {
+          "default": 0,
+          "minimum": 0,
+          "title": "Proposals",
+          "type": "integer"
+        },
+        "repairs": {
+          "default": 0,
+          "minimum": 0,
+          "title": "Repairs",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "agent_calls",
+        "estimated_tokens",
+        "active_wall_clock_ms"
+      ],
+      "title": "UsageAllowance",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "accounting_mode": {
+      "default": "direct_submission",
+      "enum": [
+        "direct_submission",
+        "preaccounted_host_attempts"
+      ],
+      "title": "Accounting Mode",
+      "type": "string"
+    },
+    "actual": {
+      "$ref": "#/$defs/UsageAllowance"
+    },
+    "agent_duration_ms": {
+      "minimum": 0,
+      "title": "Agent Duration Ms",
+      "type": "integer"
+    },
+    "approved_tranche_exceeded_after_settlement": {
+      "title": "Approved Tranche Exceeded After Settlement",
+      "type": "boolean"
+    },
+    "host_attempt_accounting_ids": {
+      "default": [],
+      "items": {
+        "type": "string"
+      },
+      "title": "Host Attempt Accounting Ids",
+      "type": "array"
+    },
+    "reservation_id": {
+      "minLength": 1,
+      "title": "Reservation Id",
+      "type": "string"
+    },
+    "reserved_upper_bound_share": {
+      "$ref": "#/$defs/UsageAllowance"
+    },
+    "role": {
+      "minLength": 1,
+      "title": "Role",
+      "type": "string"
+    },
+    "schema_version": {
+      "const": "1.0.0",
+      "default": "1.0.0",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "settled_at": {
+      "format": "date-time",
+      "title": "Settled At",
+      "type": "string"
+    },
+    "token_variance": {
+      "title": "Token Variance",
+      "type": "integer"
+    },
+    "work_id": {
+      "minLength": 1,
+      "title": "Work Id",
+      "type": "string"
+    }
+  },
+  "required": [
+    "reservation_id",
+    "work_id",
+    "role",
+    "reserved_upper_bound_share",
+    "actual",
+    "token_variance",
+    "agent_duration_ms",
+    "approved_tranche_exceeded_after_settlement",
+    "settled_at"
+  ],
+  "title": "ReservationSettlement",
+  "type": "object"
+}

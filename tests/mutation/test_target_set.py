@@ -8,6 +8,7 @@ from gepase.mutation.proposer import PatchProposalWorkItem, PatchTargetSnapshot
 from gepase.mutation.schema import (
     PatchApplicationStatus,
     PatchEditBudget,
+    PatchOperationKind,
     package_patch_from_proposal,
 )
 from gepase.mutation.target_set import choose_bounded_target_set
@@ -29,9 +30,7 @@ def _rank(node_id: str, path: str, locator: str, rank: int) -> RankedSelection:
         locator=locator,
         score=2.0 - rank,
         contributions=(
-            FeatureContribution(
-                feature="fixture", raw_value=1.0, weight=1.0, contribution=1.0
-            ),
+            FeatureContribution(feature="fixture", raw_value=1.0, weight=1.0, contribution=1.0),
         ),
         evidence_refs=("fixture:failure",),
         reason_code="fixture",
@@ -93,7 +92,10 @@ def test_two_target_set_is_graph_connected_bounded_and_fault_atomic() -> None:
         selector="graph_guided",
         targets=targets,
         target_set=target_set,
-        allowed_operations=("replace_markdown_block", "replace_python_function"),
+        allowed_operations=(
+            PatchOperationKind.REPLACE_MARKDOWN_BLOCK,
+            PatchOperationKind.REPLACE_PYTHON_FUNCTION,
+        ),
         edit_budget=budget,
         evidence_refs=("fixture:failure",),
         actionable_side_information={"causal_contract": {"required": False}},
@@ -127,8 +129,7 @@ def test_two_target_set_is_graph_connected_bounded_and_fault_atomic() -> None:
                     "path": function.path,
                     "precondition_hash": function.content_hash,
                     "replacement": (
-                        "def render(value: str) -> str:\n"
-                        "    return value.strip().lower()\n"
+                        "def render(value: str) -> str:\n    return value.strip().lower()\n"
                     ),
                     "evidence_refs": ["fixture:failure"],
                     "expected_benefit": "Make implementation deterministic.",
@@ -157,4 +158,38 @@ def test_two_target_set_is_graph_connected_bounded_and_fault_atomic() -> None:
         assert application.error_code == "injected_failure"
         assert child is None
         assert not (Path(temporary) / "applications").exists()
-    assert load_package(package).snapshot_hash == before
+        assert load_package(package).snapshot_hash == before
+
+
+def test_target_set_skips_overlapping_same_file_locus_before_companion() -> None:
+    graph = PackageAnalyzer().analyze(ROOT / PACKAGE_REF).graph
+    instruction = next(
+        node
+        for node in graph.nodes
+        if node.kind is NodeKind.INSTRUCTION and "worker.py" in node.label
+    )
+    overlapping = next(
+        node
+        for node in graph.nodes
+        if node.path == instruction.path
+        and node.node_id != instruction.node_id
+        and node.kind is NodeKind.FILE
+    )
+    function = next(node for node in graph.nodes if node.kind is NodeKind.FUNCTION)
+    selected, target_set = choose_bounded_target_set(
+        graph,
+        (
+            _rank(instruction.node_id, instruction.path, instruction.locator, 1),
+            _rank(overlapping.node_id, overlapping.path, overlapping.locator, 2),
+            _rank(function.node_id, function.path, function.locator, 3),
+        ),
+        parent_candidate_id="candidate-fixture",
+        evidence_refs=("fixture:failure",),
+        scope_reason="deduplicate physical mutation loci",
+        max_targets=2,
+    )
+    assert tuple(item.node_id for item in selected) == (
+        instruction.node_id,
+        function.node_id,
+    )
+    assert target_set is not None

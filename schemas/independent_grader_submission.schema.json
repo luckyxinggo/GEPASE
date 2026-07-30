@@ -64,6 +64,11 @@
           "title": "Model",
           "type": "string"
         },
+        "repair_attempt": {
+          "default": false,
+          "title": "Repair Attempt",
+          "type": "boolean"
+        },
         "started_at": {
           "format": "date-time",
           "title": "Started At",

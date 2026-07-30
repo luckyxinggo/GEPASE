@@ -47,6 +47,14 @@ class RankedParentSet(FrozenModel):
     lineage_distance: int = Field(ge=0)
 
 
+class ParentSetConsideration(FrozenModel):
+    parent_candidate_ids: tuple[str, ...] = Field(min_length=2)
+    package_ids: tuple[str, ...] = Field(min_length=1)
+    eligible: bool
+    reason_codes: tuple[str, ...] = Field(min_length=1)
+    parent_set_id: str | None = None
+
+
 class ParentSetEnumerationReport(FrozenModel):
     schema_version: str = "1.0.0"
     breeding_snapshot_id: str
@@ -58,6 +66,7 @@ class ParentSetEnumerationReport(FrozenModel):
     rejected_pair_count: int = Field(ge=0)
     rejection_reasons: dict[str, int]
     consumer_validated: bool
+    considered_parent_sets: tuple[ParentSetConsideration, ...] = ()
 
 
 def _pareto_layers(
@@ -183,6 +192,39 @@ def enumerate_parent_sets(
         for row in _pareto_layers(compatible_rows)
     )
     packages = {item.parent_set.parents[0].identity.package_id for item in ranked}
+    ranked_by_parents = {
+        tuple(
+            sorted(parent.identity.candidate_id for parent in item.parent_set.parents)
+        ): item.parent_set.parent_set_id
+        for item in ranked
+    }
+    considerations: list[ParentSetConsideration] = []
+    for parents in itertools.combinations(
+        sorted(snapshot.candidates, key=lambda item: item.identity.candidate_id),
+        parent_count,
+    ):
+        parent_ids = tuple(sorted(parent.identity.candidate_id for parent in parents))
+        package_ids = tuple(sorted({parent.identity.package_id for parent in parents}))
+        if len(package_ids) != 1:
+            considerations.append(
+                ParentSetConsideration(
+                    parent_candidate_ids=parent_ids,
+                    package_ids=package_ids,
+                    eligible=False,
+                    reason_codes=("cross_package",),
+                )
+            )
+            continue
+        compatibility = validator.validate(parents)
+        considerations.append(
+            ParentSetConsideration(
+                parent_candidate_ids=parent_ids,
+                package_ids=package_ids,
+                eligible=compatibility.merge_input_compatible,
+                reason_codes=tuple(reason.value for reason in compatibility.reason_codes),
+                parent_set_id=ranked_by_parents.get(parent_ids),
+            )
+        )
     return ParentSetEnumerationReport(
         breeding_snapshot_id=snapshot.snapshot_id,
         ranked_parent_sets=ranked,
@@ -197,6 +239,7 @@ def enumerate_parent_sets(
             and item.parent_set.compatibility_report.merge_input_compatible
             for item in ranked
         ),
+        considered_parent_sets=tuple(considerations),
     )
 
 

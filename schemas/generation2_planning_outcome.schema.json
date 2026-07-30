@@ -1,0 +1,168 @@
+{
+  "additionalProperties": false,
+  "description": "Train-only, zero-execution plan for one bounded second-generation intent.",
+  "properties": {
+    "branch_id": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Branch Id"
+    },
+    "candidate_materialized": {
+      "const": false,
+      "default": false,
+      "title": "Candidate Materialized",
+      "type": "boolean"
+    },
+    "held_out_evidence_read": {
+      "const": false,
+      "default": false,
+      "title": "Held Out Evidence Read",
+      "type": "boolean"
+    },
+    "merge_path_used": {
+      "const": false,
+      "default": false,
+      "title": "Merge Path Used",
+      "type": "boolean"
+    },
+    "parent_candidate_id": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Parent Candidate Id"
+    },
+    "parent_generation": {
+      "anyOf": [
+        {
+          "minimum": 1,
+          "type": "integer"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Parent Generation"
+    },
+    "planned_generation": {
+      "anyOf": [
+        {
+          "minimum": 2,
+          "type": "integer"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Planned Generation"
+    },
+    "proposal_intent_charged": {
+      "const": false,
+      "default": false,
+      "title": "Proposal Intent Charged",
+      "type": "boolean"
+    },
+    "proposal_work_id": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Proposal Work Id"
+    },
+    "reason_codes": {
+      "items": {
+        "type": "string"
+      },
+      "minItems": 1,
+      "title": "Reason Codes",
+      "type": "array"
+    },
+    "rejected_memory_refs": {
+      "default": [],
+      "items": {
+        "type": "string"
+      },
+      "title": "Rejected Memory Refs",
+      "type": "array"
+    },
+    "schema_version": {
+      "const": "1.0.0",
+      "default": "1.0.0",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "selector_graph_ref": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Selector Graph Ref"
+    },
+    "sibling_evidence_read": {
+      "const": false,
+      "default": false,
+      "title": "Sibling Evidence Read",
+      "type": "boolean"
+    },
+    "status": {
+      "enum": [
+        "planned",
+        "no_eligible_parent",
+        "proposal_budget_exhausted",
+        "candidate_budget_exhausted"
+      ],
+      "title": "Status",
+      "type": "string"
+    },
+    "train_evidence_refs": {
+      "default": [],
+      "items": {
+        "type": "string"
+      },
+      "title": "Train Evidence Refs",
+      "type": "array"
+    },
+    "train_feedback_ref": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Train Feedback Ref"
+    }
+  },
+  "required": [
+    "status",
+    "reason_codes"
+  ],
+  "title": "Generation2PlanningOutcome",
+  "type": "object"
+}

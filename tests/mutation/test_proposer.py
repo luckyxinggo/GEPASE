@@ -2,11 +2,16 @@ from __future__ import annotations
 
 from pathlib import Path
 
+import pytest
+
 from gepase.mutation.proposer import (
     PatchProposalStore,
     PatchProposalWorkItem,
     PatchTargetSnapshot,
+    ProposalWorkStatus,
+    build_failed_patch_submission,
     build_patch_submission,
+    proposal_accounting_increments,
 )
 from gepase.mutation.schema import PatchEditBudget, PatchOperationKind
 from gepase.optimizer.selectors import (
@@ -93,3 +98,43 @@ def test_proposal_store_resume_and_idempotent_ingest(tmp_path: Path) -> None:
         assert store.ingest(submission)
         assert not store.ingest(submission)
         assert store.status()["completed"] == 1
+
+
+def test_failed_proposal_is_preserved_before_one_bounded_repair(tmp_path: Path) -> None:
+    work = _work()
+    with PatchProposalStore(tmp_path / "proposals.sqlite3") as store:
+        assert store.add_work(work)
+        assert store.next_work() == work
+        failed = build_failed_patch_submission(
+            work,
+            host="codex",
+            model="agent-host",
+            host_task_id="task-agent-invalid-json",
+            duration_ms=10,
+            token_estimate=100,
+            failure_kind="submission_validation_failure",
+            failure_detail="raw response used operation instead of op",
+        )
+        assert failed.status is ProposalWorkStatus.FAILED
+        assert store.ingest(failed)
+        repair = store.plan_repair(work.work_id, max_repair_attempts=1)
+        assert repair.work_id == "patch-work-test-repair-1"
+        assert repair.repair_attempt == 1
+        assert repair.rejected_history[-1]["failed_work_id"] == work.work_id
+        assert proposal_accounting_increments(work) == (1, 0)
+        assert proposal_accounting_increments(repair) == (0, 1)
+        assert store.next_work() == repair
+        assert store.ingest(
+            build_failed_patch_submission(
+                repair,
+                host="codex",
+                model="agent-host",
+                host_task_id="task-agent-repair-invalid-json",
+                duration_ms=10,
+                token_estimate=100,
+                failure_kind="submission_validation_failure",
+                failure_detail="repair raw response is still invalid",
+            )
+        )
+        with pytest.raises(ValueError, match="proposal repair budget"):
+            store.plan_repair(repair.work_id, max_repair_attempts=1)

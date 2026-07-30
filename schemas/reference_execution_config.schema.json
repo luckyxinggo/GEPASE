@@ -1,0 +1,316 @@
+{
+  "$defs": {
+    "ActiveSessionBudgetPolicy": {
+      "additionalProperties": false,
+      "properties": {
+        "cumulative_usage_never_resets": {
+          "const": true,
+          "default": true,
+          "title": "Cumulative Usage Never Resets",
+          "type": "boolean"
+        },
+        "initial_tranche": {
+          "$ref": "#/$defs/UsageAllowance"
+        },
+        "max_concurrency": {
+          "default": 3,
+          "maximum": 32,
+          "minimum": 1,
+          "title": "Max Concurrency",
+          "type": "integer"
+        },
+        "maximum_continuation_increment": {
+          "$ref": "#/$defs/UsageAllowance"
+        },
+        "require_user_continuation": {
+          "const": true,
+          "default": true,
+          "title": "Require User Continuation",
+          "type": "boolean"
+        },
+        "required_barriers": {
+          "items": {
+            "$ref": "#/$defs/RuntimeBarrier"
+          },
+          "title": "Required Barriers",
+          "type": "array"
+        },
+        "role_estimates": {
+          "additionalProperties": {
+            "$ref": "#/$defs/RoleBatchEstimate"
+          },
+          "minProperties": 1,
+          "title": "Role Estimates",
+          "type": "object"
+        },
+        "schema_version": {
+          "const": "1.0.0",
+          "default": "1.0.0",
+          "title": "Schema Version",
+          "type": "string"
+        }
+      },
+      "required": [
+        "initial_tranche",
+        "maximum_continuation_increment",
+        "role_estimates",
+        "required_barriers"
+      ],
+      "title": "ActiveSessionBudgetPolicy",
+      "type": "object"
+    },
+    "ReferenceIsolationPolicy": {
+      "additionalProperties": false,
+      "properties": {
+        "fresh_context_per_role_work_item": {
+          "const": true,
+          "default": true,
+          "title": "Fresh Context Per Role Work Item",
+          "type": "boolean"
+        },
+        "host": {
+          "minLength": 1,
+          "title": "Host",
+          "type": "string"
+        },
+        "max_concurrency": {
+          "default": 3,
+          "maximum": 32,
+          "minimum": 1,
+          "title": "Max Concurrency",
+          "type": "integer"
+        },
+        "model": {
+          "minLength": 1,
+          "title": "Model",
+          "type": "string"
+        },
+        "share_role_conversation_history": {
+          "const": false,
+          "default": false,
+          "title": "Share Role Conversation History",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "host",
+        "model"
+      ],
+      "title": "ReferenceIsolationPolicy",
+      "type": "object"
+    },
+    "RoleBatchEstimate": {
+      "additionalProperties": false,
+      "properties": {
+        "max_estimated_tokens_per_work": {
+          "minimum": 1,
+          "title": "Max Estimated Tokens Per Work",
+          "type": "integer"
+        },
+        "max_repair_attempts_per_work": {
+          "default": 0,
+          "maximum": 2,
+          "minimum": 0,
+          "title": "Max Repair Attempts Per Work",
+          "type": "integer"
+        },
+        "timeout_ms_per_work": {
+          "minimum": 1,
+          "title": "Timeout Ms Per Work",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "max_estimated_tokens_per_work",
+        "timeout_ms_per_work"
+      ],
+      "title": "RoleBatchEstimate",
+      "type": "object"
+    },
+    "RuntimeBarrier": {
+      "enum": [
+        "package_compiled",
+        "reference_execution_complete",
+        "reference_sealed",
+        "proposal_scope_ready",
+        "candidate_train_complete",
+        "candidate_validation_complete",
+        "merge_resolved",
+        "before_final_report",
+        "budget_limit",
+        "post_recovery_checkpoint"
+      ],
+      "title": "RuntimeBarrier",
+      "type": "string"
+    },
+    "UsageAllowance": {
+      "additionalProperties": false,
+      "properties": {
+        "active_wall_clock_ms": {
+          "minimum": 0,
+          "title": "Active Wall Clock Ms",
+          "type": "integer"
+        },
+        "agent_calls": {
+          "minimum": 0,
+          "title": "Agent Calls",
+          "type": "integer"
+        },
+        "candidates": {
+          "default": 0,
+          "minimum": 0,
+          "title": "Candidates",
+          "type": "integer"
+        },
+        "estimated_tokens": {
+          "minimum": 0,
+          "title": "Estimated Tokens",
+          "type": "integer"
+        },
+        "proposals": {
+          "default": 0,
+          "minimum": 0,
+          "title": "Proposals",
+          "type": "integer"
+        },
+        "repairs": {
+          "default": 0,
+          "minimum": 0,
+          "title": "Repairs",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "agent_calls",
+        "estimated_tokens",
+        "active_wall_clock_ms"
+      ],
+      "title": "UsageAllowance",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "description": "Pre-registered inputs; execution still uses MultiFidelityEvalEngine.",
+  "properties": {
+    "active_session_budget_policy": {
+      "$ref": "#/$defs/ActiveSessionBudgetPolicy"
+    },
+    "checkpoint_schema": {
+      "const": "gepase.BudgetCheckpoint/1.0.0",
+      "title": "Checkpoint Schema",
+      "type": "string"
+    },
+    "continuation_schema": {
+      "const": "gepase.BudgetContinuationDecision/1.0.0",
+      "title": "Continuation Schema",
+      "type": "string"
+    },
+    "evidence_tiers": {
+      "items": {
+        "enum": [
+          "E0",
+          "E2",
+          "E3"
+        ],
+        "type": "string"
+      },
+      "title": "Evidence Tiers",
+      "type": "array"
+    },
+    "frozen_eval_plan_ref": {
+      "minLength": 1,
+      "title": "Frozen Eval Plan Ref",
+      "type": "string"
+    },
+    "headless_enabled": {
+      "const": false,
+      "default": false,
+      "title": "Headless Enabled",
+      "type": "boolean"
+    },
+    "isolation": {
+      "$ref": "#/$defs/ReferenceIsolationPolicy"
+    },
+    "lifecycle_mode": {
+      "const": "create_new",
+      "default": "create_new",
+      "title": "Lifecycle Mode",
+      "type": "string"
+    },
+    "package_graph_ref": {
+      "minLength": 1,
+      "title": "Package Graph Ref",
+      "type": "string"
+    },
+    "run_id": {
+      "minLength": 1,
+      "title": "Run Id",
+      "type": "string"
+    },
+    "schema_version": {
+      "const": "1.0.0",
+      "default": "1.0.0",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "scoring_policy_ref": {
+      "minLength": 1,
+      "title": "Scoring Policy Ref",
+      "type": "string"
+    },
+    "seed": {
+      "title": "Seed",
+      "type": "integer"
+    },
+    "skill_ref": {
+      "minLength": 1,
+      "title": "Skill Ref",
+      "type": "string"
+    },
+    "splits": {
+      "items": {
+        "enum": [
+          "train",
+          "validation"
+        ],
+        "type": "string"
+      },
+      "title": "Splits",
+      "type": "array"
+    },
+    "timeout_seconds": {
+      "minimum": 1,
+      "title": "Timeout Seconds",
+      "type": "integer"
+    },
+    "variants": {
+      "items": {
+        "enum": [
+          "no-skill",
+          "original"
+        ],
+        "type": "string"
+      },
+      "title": "Variants",
+      "type": "array"
+    }
+  },
+  "required": [
+    "run_id",
+    "frozen_eval_plan_ref",
+    "scoring_policy_ref",
+    "skill_ref",
+    "package_graph_ref",
+    "variants",
+    "splits",
+    "evidence_tiers",
+    "seed",
+    "timeout_seconds",
+    "isolation",
+    "active_session_budget_policy",
+    "checkpoint_schema",
+    "continuation_schema"
+  ],
+  "title": "ReferenceExecutionConfig",
+  "type": "object"
+}

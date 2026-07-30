@@ -4,7 +4,7 @@ from __future__ import annotations
 
 import json
 from pathlib import Path
-from typing import Literal
+from typing import Any, Literal
 
 from pydantic import Field, model_validator
 
@@ -20,7 +20,7 @@ from gepase.package.ir import (
     make_node,
 )
 from gepase.schemas.common import FrozenModel
-from gepase.store.artifacts import ArtifactStore, sha256_bytes
+from gepase.store.artifacts import resolve_scoped_artifact_index, sha256_bytes
 
 
 class PackageAccessMapping(FrozenModel):
@@ -48,6 +48,7 @@ class PackageAccessOverlayAudit(FrozenModel):
     snapshot_hash: str = Field(pattern=r"^[0-9a-f]{64}$")
     source_run: str
     source_run_seal_valid: bool
+    work_item_source_refs: tuple[str, ...] = ()
     allowed_task_ids: tuple[str, ...]
     accepted_work_ids: tuple[str, ...]
     filtered_work_ids: tuple[str, ...]
@@ -136,8 +137,7 @@ def overlay_evidence(graph: PackageGraph, run_dir: Path) -> tuple[PackageGraph, 
         if record.skill_id == graph.package_id:
             records.append((record, path))
     all_record_ids = {
-        json.loads(path.read_text(encoding="utf-8")).get("record_id")
-        for path in record_paths
+        json.loads(path.read_text(encoding="utf-8")).get("record_id") for path in record_paths
     }
     nodes = {node.node_id: node for node in graph.nodes}
     edges = {edge.edge_id: edge for edge in graph.edges}
@@ -177,11 +177,7 @@ def overlay_evidence(graph: PackageGraph, run_dir: Path) -> tuple[PackageGraph, 
             if record.evidence_tier is EvidenceTier.E1_SIMULATED
             else record.observed_trace
         )
-        layer = (
-            "planned"
-            if record.evidence_tier is EvidenceTier.E1_SIMULATED
-            else "observed"
-        )
+        layer = "planned" if record.evidence_tier is EvidenceTier.E1_SIMULATED else "observed"
         for step in trace:
             kind = _step_kind(step, layer)
             target = _map_package_node(graph, step)
@@ -233,9 +229,7 @@ def overlay_evidence(graph: PackageGraph, run_dir: Path) -> tuple[PackageGraph, 
             planned_edges += int(layer == "planned")
             observed_edges += int(layer == "observed")
             mapped_read += int(kind in {EdgeKind.PLANNED_READ, EdgeKind.OBSERVED_READ})
-            mapped_execute += int(
-                kind in {EdgeKind.PLANNED_EXECUTE, EdgeKind.OBSERVED_EXECUTE}
-            )
+            mapped_execute += int(kind in {EdgeKind.PLANNED_EXECUTE, EdgeKind.OBSERVED_EXECUTE})
     overlaid = PackageGraph(
         package_id=graph.package_id,
         snapshot_hash=graph.snapshot_hash,
@@ -286,11 +280,7 @@ def overlay_package_access(
     """
 
     run = run_dir.resolve()
-    seal = ArtifactStore(run).verify()
-    if not seal.valid or seal.unindexed_files:
-        raise ValueError(f"source run artifact seal is invalid: {seal.as_dict()}")
-    raw_index = json.loads((run / "artifact-index.json").read_text(encoding="utf-8"))
-    indexed = {str(item["path"]): str(item["sha256"]) for item in raw_index["artifacts"]}
+    _index_path, indexed = resolve_scoped_artifact_index(run)
     metadata_path = run / "run-metadata.json"
     if indexed.get("run-metadata.json") != sha256_bytes(metadata_path.read_bytes()):
         raise ValueError("source run metadata is not sealed or hash-matched")
@@ -307,9 +297,7 @@ def overlay_package_access(
         if expected is not None and metadata.get(key) != expected
     ]
     if mismatched_metadata:
-        raise ValueError(
-            f"source run provider/runtime mismatch: {sorted(mismatched_metadata)}"
-        )
+        raise ValueError(f"source run provider/runtime mismatch: {sorted(mismatched_metadata)}")
     if metadata.get("split") not in {None, "train"}:
         raise ValueError("observed selector evidence must come from the train split")
     if expected_candidate_id is not None:
@@ -319,30 +307,56 @@ def overlay_package_access(
             raise ValueError("candidate evidence content hash mismatch")
     elif metadata.get("mode") != "frozen-functional":
         raise ValueError("seed observed evidence must come from a functional reference run")
-    if (
-        expected_reference_key_hash is not None
-        and metadata.get("reference_key_hash") not in {None, expected_reference_key_hash}
-    ):
+    if expected_reference_key_hash is not None and metadata.get("reference_key_hash") not in {
+        None,
+        expected_reference_key_hash,
+    }:
         raise ValueError("candidate evidence reference/runtime key mismatch")
-    work_manifest_path = run / "executor-work-items.json"
-    manifest_ref = "executor-work-items.json"
-    if indexed.get(manifest_ref) != sha256_bytes(work_manifest_path.read_bytes()):
-        raise ValueError("executor-work-items manifest is not sealed or hash-matched")
-    work_rows = json.loads(work_manifest_path.read_text(encoding="utf-8"))["work_items"]
+    # Historical R3 exports one legacy manifest at the run root.  The strict
+    # fresh reference lifecycle exports the same canonical executor view under
+    # ``exports/`` and separately seals every typed work item.  Both are Core
+    # formats; either must be content-addressed before it can bind access.
+    work_manifest_path = next(
+        (
+            path
+            for path in (
+                run / "executor-work-items.json",
+                run / "exports/executor-batch.json",
+            )
+            if path.is_file()
+        ),
+        None,
+    )
+    work_item_source_refs: list[str] = []
+    work_rows: list[dict[str, Any]] = []
+    if work_manifest_path is not None:
+        manifest_ref = work_manifest_path.relative_to(run).as_posix()
+        if indexed.get(manifest_ref) != sha256_bytes(work_manifest_path.read_bytes()):
+            raise ValueError("executor-work-items manifest is not sealed or hash-matched")
+        manifest = json.loads(work_manifest_path.read_text(encoding="utf-8"))
+        raw_rows = manifest.get("work_items") if isinstance(manifest, dict) else None
+        if not isinstance(raw_rows, list) or not all(isinstance(row, dict) for row in raw_rows):
+            raise ValueError("executor-work-items manifest has invalid work rows")
+        work_rows = list(raw_rows)
+        work_item_source_refs.append(manifest_ref)
     by_work = {str(row["work_id"]): row for row in work_rows}
-    for work_path in sorted((run / "executor-work-items").glob("*.json")):
+    typed_work_paths = sorted((run / "executor-work-items").glob("*.json"))
+    if work_manifest_path is None and not typed_work_paths:
+        raise ValueError("sealed executor work item export is absent")
+    for work_path in typed_work_paths:
         relative = work_path.relative_to(run).as_posix()
         if indexed.get(relative) != sha256_bytes(work_path.read_bytes()):
             raise ValueError(f"executor work item is not sealed: {relative}")
         row = json.loads(work_path.read_text(encoding="utf-8"))
+        if not isinstance(row, dict):
+            raise ValueError(f"executor work item is not an object: {relative}")
         work_id = str(row["work_id"])
         if work_id in by_work and by_work[work_id] != row:
             raise ValueError(f"executor work manifest disagrees with typed item: {work_id}")
         by_work[work_id] = row
+        work_item_source_refs.append(relative)
     nodes = {node.node_id: node for node in graph.nodes}
-    file_nodes = {
-        node.path: node for node in graph.nodes if node.kind is NodeKind.FILE
-    }
+    file_nodes = {node.path: node for node in graph.nodes if node.kind is NodeKind.FILE}
     edges = {edge.edge_id: edge for edge in graph.edges}
     mappings: list[PackageAccessMapping] = []
     accepted: list[str] = []
@@ -370,9 +384,7 @@ def overlay_package_access(
             continue
         graph_relative = referenced_graph.relative_to(graph_run).as_posix()
         graph_index = json.loads(graph_index_path.read_text(encoding="utf-8"))
-        graph_hashes = {
-            str(item["path"]): str(item["sha256"]) for item in graph_index["artifacts"]
-        }
+        graph_hashes = {str(item["path"]): str(item["sha256"]) for item in graph_index["artifacts"]}
         if graph_hashes.get(graph_relative) == sha256_bytes(referenced_graph.read_bytes()):
             graph_seal = graph_run, graph_relative
             break
@@ -405,8 +417,7 @@ def overlay_package_access(
         sequences = [event.sequence for event in submission.package_access]
         if sequences != sorted(set(sequences)):
             raise ValueError(
-                "package access sequence is not unique and ordered: "
-                f"{submission.work_id}"
+                f"package access sequence is not unique and ordered: {submission.work_id}"
             )
         access_summary_path = run / "package-access" / f"{submission.work_id}.json"
         access_summary_ref = access_summary_path.relative_to(run).as_posix()
@@ -466,9 +477,7 @@ def overlay_package_access(
                 mapped_node_id=target.node_id if valid and target is not None else None,
                 mapping_strength="typed" if valid else "rejected",
                 reason=(
-                    "node_id/path/snapshot binding verified"
-                    if valid
-                    else "typed binding mismatch"
+                    "node_id/path/snapshot binding verified" if valid else "typed binding mismatch"
                 ),
                 bytes_loaded=event.bytes_loaded,
                 tokens_loaded=event.tokens_loaded,
@@ -525,15 +534,14 @@ def overlay_package_access(
     source_run = run.name
     for ancestor in run.parents:
         if ancestor.name == "runs" and ancestor.parent.name == "artifacts":
-            source_run = (
-                Path("artifacts/runs") / run.relative_to(ancestor)
-            ).as_posix()
+            source_run = (Path("artifacts/runs") / run.relative_to(ancestor)).as_posix()
             break
     audit = PackageAccessOverlayAudit(
         package_id=graph.package_id,
         snapshot_hash=graph.snapshot_hash,
         source_run=source_run,
         source_run_seal_valid=True,
+        work_item_source_refs=tuple(work_item_source_refs),
         allowed_task_ids=tuple(sorted(allowed_task_ids)),
         accepted_work_ids=tuple(sorted(accepted)),
         filtered_work_ids=tuple(sorted(filtered)),

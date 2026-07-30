@@ -29,6 +29,7 @@ from gepase.evals.functional import (
     ComparatorWorkItem,
     DeterministicGradingBundle,
     FunctionalPairSummary,
+    FunctionalRole,
     FunctionalRunSummary,
     FunctionalScoringPolicy,
     IndependentGraderSubmission,
@@ -36,6 +37,8 @@ from gepase.evals.functional import (
     IsolationAudit,
     PackageAccessAuditItem,
     ReliabilitySummary,
+    RoleAttemptKind,
+    RoleAttemptTerminalization,
     clamp,
     stable_role_id,
 )
@@ -47,12 +50,29 @@ from gepase.evals.work_items import (
     Variant,
     executor_view,
 )
+from gepase.optimizer.session_runtime import (
+    ActiveSessionRuntime,
+    HostAttemptAccounting,
+    HostAttemptReason,
+    ReservationSettlement,
+    RuntimeBudgetBinding,
+)
 from gepase.package.ir import NodeKind, PackageGraph
-from gepase.package.semantic import SemanticHypothesisEngine
-from gepase.store.artifacts import ArtifactStore
+from gepase.run_lifecycle import RunLifecycle, RunLifecycleRecord, RunLifecycleStatus
+from gepase.store.artifacts import ArtifactStore, sha256_bytes
 
 ModelT = TypeVar("ModelT", bound=BaseModel)
 ComparatorOutcome = Literal["win", "loss", "tie"]
+
+
+class RoleEvidenceIncompleteError(ValueError):
+    """A required non-Executor role exhausted its bounded attempts."""
+
+    def __init__(self, terminalization: RoleAttemptTerminalization) -> None:
+        self.terminalization = terminalization
+        super().__init__(
+            f"{terminalization.role.value} evidence is incomplete for {terminalization.work_id}"
+        )
 
 
 def _weighted_score(case: FunctionalEvalCase, scores: dict[str, float]) -> float:
@@ -157,6 +177,259 @@ class FunctionalEvalCoordinator:
         if context_id in self._context_ids():
             raise ValueError(f"role context was reused: {context_id}")
 
+    def _budget_runtime(self) -> ActiveSessionRuntime | None:
+        path = self.run_dir / "runtime-budget-binding.json"
+        if not path.is_file():
+            return None
+        binding = RuntimeBudgetBinding.model_validate_json(path.read_text(encoding="utf-8"))
+        owner = (self.project_root / binding.owner_run_ref).resolve(strict=True)
+        if not owner.is_relative_to(self.project_root):
+            raise ValueError("runtime budget binding escapes the project")
+        return ActiveSessionRuntime(
+            owner,
+            run_id=binding.owner_run_id,
+            config_hash=binding.config_hash,
+            policy=binding.policy,
+        )
+
+    def _sync_runtime_lifecycle(self) -> None:
+        record_path = self.run_dir / RunLifecycle.RECORD_NAME
+        if not record_path.is_file():
+            return
+        record = RunLifecycleRecord.model_validate_json(record_path.read_text(encoding="utf-8"))
+        if record.config_hash is None:
+            raise ValueError("strict Functional run lifecycle lacks config hash")
+        self.store.write_json("ledger-snapshot.json", self.ledger.status())
+        self.ledger.checkpoint()
+        runtime = self._budget_runtime()
+        status = RunLifecycleStatus.ACTIVE
+        if runtime is not None and runtime.state().status.value in {
+            "paused",
+            "awaiting_continuation",
+            "stopped",
+        }:
+            status = RunLifecycleStatus.PAUSED
+        critical = ["run-metadata.json", "ledger.sqlite3", "ledger-snapshot.json"]
+        for relative in (
+            "resolved-reference-config.json",
+            "runtime-budget-binding.json",
+            "runtime-session.json",
+        ):
+            if (self.run_dir / relative).is_file():
+                critical.append(relative)
+        RunLifecycle(
+            self.run_dir,
+            run_id=record.run_id,
+            owner="eval",
+            expected_config_hash=record.config_hash,
+        ).checkpoint(
+            config_hash=record.config_hash,
+            status=status,
+            critical_files=tuple(critical),
+        )
+
+    @staticmethod
+    def _role_paths(role: FunctionalRole) -> tuple[str, str, type[BaseModel]]:
+        if role is FunctionalRole.INDEPENDENT_GRADER:
+            return "grader-work-items", "grader-submissions", IndependentGraderWorkItem
+        if role is FunctionalRole.COMPARATOR:
+            return "comparator-work-items", "comparator-submissions", ComparatorWorkItem
+        return "analyzer-work-items", "analyzer-submissions", AnalyzerWorkItem
+
+    def _role_terminalization(
+        self,
+        role: FunctionalRole,
+        work_id: str,
+    ) -> RoleAttemptTerminalization | None:
+        path = self.run_dir / f"role-terminalizations/{role.value}/{work_id}.json"
+        if not path.is_file():
+            return None
+        terminal = RoleAttemptTerminalization.model_validate_json(path.read_text(encoding="utf-8"))
+        if terminal.role is not role or terminal.work_id != work_id:
+            raise ValueError("role terminalization path and identity disagree")
+        runtime = self._budget_runtime()
+        if runtime is None:
+            raise ValueError("role terminalization requires the authoritative runtime")
+        settlement_path = runtime.run_dir / "reservation-settlements" / f"{work_id}.json"
+        if not settlement_path.is_file():
+            raise ValueError("role terminalization lacks its reservation settlement")
+        settlement = ReservationSettlement.model_validate_json(
+            settlement_path.read_text(encoding="utf-8")
+        )
+        attempt_ids = tuple(item.host_attempt_accounting_id for item in terminal.attempts)
+        if (
+            settlement.role != role.value
+            or settlement.accounting_mode != "preaccounted_host_attempts"
+            or settlement.host_attempt_accounting_ids != attempt_ids
+        ):
+            raise ValueError("role terminalization settlement binding is inconsistent")
+        return terminal
+
+    def _role_terminalization_for_task(
+        self,
+        role: FunctionalRole,
+        task_id: str,
+    ) -> RoleAttemptTerminalization | None:
+        state_dir = {
+            FunctionalRole.INDEPENDENT_GRADER: "grader",
+            FunctionalRole.COMPARATOR: "comparator",
+            FunctionalRole.ANALYZER: "analyzer",
+        }[role]
+        work_key = {
+            FunctionalRole.INDEPENDENT_GRADER: "grader_work_id",
+            FunctionalRole.COMPARATOR: "comparator_work_id",
+            FunctionalRole.ANALYZER: "analyzer_work_id",
+        }[role]
+        for path in sorted((self.run_dir / f"role-state/{state_dir}").glob("*.json")):
+            mapping = self._read_json(path)
+            mapped_task_id = mapping.get("task_id")
+            if mapped_task_id is None and role is FunctionalRole.INDEPENDENT_GRADER:
+                source_work_id = mapping.get("source_work_id")
+                source_tasks = {
+                    item.task_id for item in self._items() if item.work_id == source_work_id
+                }
+                if len(source_tasks) > 1:
+                    raise ValueError("grader source work maps to multiple tasks")
+                mapped_task_id = next(iter(source_tasks), None)
+            if mapped_task_id != task_id:
+                continue
+            terminal = self._role_terminalization(role, str(mapping[work_key]))
+            if terminal is not None:
+                return terminal
+        return None
+
+    def terminalize_role_attempts(
+        self,
+        terminalization: RoleAttemptTerminalization,
+    ) -> dict[str, Any]:
+        """Settle an exhausted Grader/Comparator/Analyzer without fake evidence."""
+
+        role = terminalization.role
+        work_dir, submission_dir, work_model = self._role_paths(role)
+        work: Any = self._run_model(
+            f"{work_dir}/{terminalization.work_id}.json",
+            work_model,
+        )
+        if str(work.task_id) != terminalization.task_id:
+            raise ValueError("role terminalization belongs to another task")
+        if str(work.role) != role.value:
+            raise ValueError("role terminalization belongs to another role")
+        if (self.run_dir / f"{submission_dir}/{terminalization.work_id}.json").is_file():
+            raise ValueError("a successful role submission cannot be terminalized")
+        runtime = self._budget_runtime()
+        if runtime is None:
+            raise ValueError("role terminalization requires an ActiveSessionRuntime binding")
+        if terminalization.run_id != runtime.run_id:
+            raise ValueError("role terminalization belongs to another owner run")
+        expected_id = stable_role_id(
+            "role-terminal",
+            terminalization.model_dump(mode="json", exclude={"terminalization_id"}),
+        )
+        if terminalization.terminalization_id != expected_id:
+            raise ValueError("role terminalization ID is not content-addressed")
+
+        successful_contexts = self._context_ids()
+        terminal_contexts = {
+            attempt.context_id
+            for path in (self.run_dir / "role-terminalizations").glob("*/*.json")
+            for record in [
+                RoleAttemptTerminalization.model_validate_json(path.read_text(encoding="utf-8"))
+            ]
+            if record.work_id != terminalization.work_id
+            for attempt in record.attempts
+        }
+        accounting_ids: list[str] = []
+        for attempt in terminalization.attempts:
+            host_path = (
+                runtime.run_dir
+                / "host-attempt-accounting"
+                / f"{attempt.host_attempt_accounting_id}.json"
+            )
+            if not host_path.is_file():
+                raise ValueError("role failure HostAttempt is missing")
+            raw = host_path.read_bytes()
+            if sha256_bytes(raw) != attempt.evidence_sha256:
+                raise ValueError("role failure HostAttempt evidence hash differs")
+            accounting = HostAttemptAccounting.model_validate_json(raw)
+            expected_reason = (
+                HostAttemptReason.EXECUTION_REPAIR
+                if attempt.attempt_kind is RoleAttemptKind.REPAIR
+                else None
+            )
+            if (
+                accounting.accounting_id != attempt.host_attempt_accounting_id
+                or accounting.work_id != terminalization.work_id
+                or accounting.role != role.value
+                or accounting.host_task_id != attempt.host_task_id
+                or accounting.context_id != attempt.context_id
+                or (
+                    expected_reason is None
+                    and accounting.reason is HostAttemptReason.EXECUTION_REPAIR
+                )
+                or (expected_reason is not None and accounting.reason is not expected_reason)
+            ):
+                raise ValueError("role failure HostAttempt binding is inconsistent")
+            if not set(attempt.source_refs) <= set(accounting.evidence_refs):
+                raise ValueError("role failure cites evidence outside its HostAttempt")
+            if attempt.context_id in successful_contexts or attempt.context_id in terminal_contexts:
+                raise ValueError("role terminalization reused another role context")
+            accounting_ids.append(accounting.accounting_id)
+
+        runtime.validate_preaccounted_failure(
+            work_id=terminalization.work_id,
+            host_attempt_accounting_ids=tuple(accounting_ids),
+        )
+        relative = f"role-terminalizations/{role.value}/{terminalization.work_id}.json"
+        duplicate = (self.run_dir / relative).is_file()
+        self.store.write_json_append_only(relative, terminalization.model_dump(mode="json"))
+        runtime.settle_preaccounted_failure(
+            work_id=terminalization.work_id,
+            host_attempt_accounting_ids=tuple(accounting_ids),
+            now=terminalization.terminalized_at,
+        )
+        self._sync_runtime_lifecycle()
+        stored = self._role_terminalization(role, terminalization.work_id)
+        if stored != terminalization:
+            raise ValueError("role terminalization did not round-trip")
+        return {
+            "duplicate": duplicate,
+            "terminalization_id": terminalization.terminalization_id,
+            "work_id": terminalization.work_id,
+            "role": role.value,
+            "disposition": terminalization.disposition,
+            "agent_usage_added": False,
+        }
+
+    def _reserve_role_batch(self, role: str, work_ids: list[str]) -> None:
+        runtime = self._budget_runtime()
+        if runtime is None or not work_ids:
+            return
+        batch_hash = stable_role_id("budget-batch", {"role": role, "work": sorted(work_ids)})
+        runtime.reserve(
+            batch_id=f"{role}:{batch_hash}",
+            role=role,
+            work_ids=tuple(sorted(work_ids)),
+        )
+        self._sync_runtime_lifecycle()
+
+    def _settle_role_work(
+        self,
+        work_id: str,
+        usage: UsageRecord,
+        *,
+        repair_attempt: bool = False,
+    ) -> None:
+        runtime = self._budget_runtime()
+        if runtime is None:
+            return
+        runtime.settle(
+            work_id=work_id,
+            actual_tokens=(usage.input_tokens or 0) + (usage.output_tokens or 0),
+            actual_duration_ms=usage.duration_ms,
+            repairs=1 if repair_attempt else 0,
+        )
+        self._sync_runtime_lifecycle()
+
     def _blind_artifact(
         self,
         item: EvalWorkItem,
@@ -208,7 +481,7 @@ class FunctionalEvalCoordinator:
         )
 
     def prepare_graders(self) -> dict[str, Any]:
-        work_ids: list[str] = []
+        rows: list[tuple[IndependentGraderWorkItem, dict[str, Any]]] = []
         for item in self._items():
             source = self._source_record(item)
             deterministic = self._deterministic(item)
@@ -230,15 +503,20 @@ class FunctionalEvalCoordinator:
             mapping = {
                 "schema_version": "1.0.0",
                 "grader_work_id": grader_id,
+                "task_id": item.task_id,
                 "source_work_id": item.work_id,
                 "variant": item.variant,
                 "blind_id": blind.blind_id,
             }
+            rows.append((work, mapping))
+        work_ids = [work.grader_work_id for work, _mapping in rows]
+        self._reserve_role_batch("independent_grader", work_ids)
+        for work, mapping in rows:
             self.store.write_json(
-                f"grader-work-items/{grader_id}.json", work.model_dump(mode="json")
+                f"grader-work-items/{work.grader_work_id}.json",
+                work.model_dump(mode="json"),
             )
-            self.store.write_json(f"role-state/grader/{grader_id}.json", mapping)
-            work_ids.append(grader_id)
+            self.store.write_json(f"role-state/grader/{work.grader_work_id}.json", mapping)
         return {"prepared": len(work_ids), "grader_work_ids": sorted(work_ids)}
 
     def ingest_grader(self, submission: IndependentGraderSubmission) -> dict[str, Any]:
@@ -273,6 +551,11 @@ class FunctionalEvalCoordinator:
         if abs(recomputed - submission.overall_score) > 1e-6:
             raise ValueError("grader overall_score is not reproducible from rubric grades")
         self.store.write_json(relative, submission.model_dump(mode="json"))
+        self._settle_role_work(
+            submission.grader_work_id,
+            submission.role_run.usage,
+            repair_attempt=submission.role_run.repair_attempt,
+        )
         return {"duplicate": False, "submission_id": submission.submission_id}
 
     def _grader_for_source(
@@ -284,6 +567,12 @@ class FunctionalEvalCoordinator:
                 continue
             grader_id = str(mapping["grader_work_id"])
             work = self._run_model(f"grader-work-items/{grader_id}.json", IndependentGraderWorkItem)
+            terminal = self._role_terminalization(
+                FunctionalRole.INDEPENDENT_GRADER,
+                grader_id,
+            )
+            if terminal is not None:
+                raise RoleEvidenceIncompleteError(terminal)
             submission = self._run_model(
                 f"grader-submissions/{grader_id}.json", IndependentGraderSubmission
             )
@@ -291,15 +580,21 @@ class FunctionalEvalCoordinator:
         raise ValueError(f"grader mapping is unavailable: {source_work_id}")
 
     def prepare_comparators(self) -> dict[str, Any]:
-        work_ids: list[str] = []
+        rows: list[tuple[ComparatorWorkItem, dict[str, Any]]] = []
+        incomplete_task_ids: list[str] = []
         for task_id in self.policy.comparator_case_ids:
             case = self.cases.get(task_id)
             if case is None:
                 raise ValueError(f"unknown comparator case: {task_id}")
             items = self._case_items(task_id)
-            blind = {
-                variant: self._grader_for_source(item.work_id)[2] for variant, item in items.items()
-            }
+            try:
+                blind = {
+                    variant: self._grader_for_source(item.work_id)[2]
+                    for variant, item in items.items()
+                }
+            except RoleEvidenceIncompleteError:
+                incomplete_task_ids.append(task_id)
+                continue
             for order in ("AB", "BA"):
                 left_variant: Literal["no-skill", "original"] = (
                     "no-skill" if order == "AB" else "original"
@@ -330,13 +625,20 @@ class FunctionalEvalCoordinator:
                     "left_variant": left_variant,
                     "right_variant": right_variant,
                 }
-                self.store.write_json(
-                    f"comparator-work-items/{comparator_id}.json",
-                    work.model_dump(mode="json"),
-                )
-                self.store.write_json(f"role-state/comparator/{comparator_id}.json", mapping)
-                work_ids.append(comparator_id)
-        return {"prepared": len(work_ids), "comparator_work_ids": sorted(work_ids)}
+                rows.append((work, mapping))
+        work_ids = [work.comparator_work_id for work, _mapping in rows]
+        self._reserve_role_batch("comparator", work_ids)
+        for work, mapping in rows:
+            self.store.write_json(
+                f"comparator-work-items/{work.comparator_work_id}.json",
+                work.model_dump(mode="json"),
+            )
+            self.store.write_json(f"role-state/comparator/{work.comparator_work_id}.json", mapping)
+        return {
+            "prepared": len(work_ids),
+            "comparator_work_ids": sorted(work_ids),
+            "evidence_incomplete_task_ids": sorted(incomplete_task_ids),
+        }
 
     def ingest_comparator(self, submission: ComparatorSubmission) -> dict[str, Any]:
         relative = f"comparator-submissions/{submission.comparator_work_id}.json"
@@ -356,19 +658,35 @@ class FunctionalEvalCoordinator:
         if len(criteria) != len(submission.criteria) or set(criteria) != expected_ids:
             raise ValueError("comparator criterion IDs differ from the frozen rubric")
         self.store.write_json(relative, submission.model_dump(mode="json"))
+        self._settle_role_work(
+            submission.comparator_work_id,
+            submission.role_run.usage,
+            repair_attempt=submission.role_run.repair_attempt,
+        )
         return {"duplicate": False, "submission_id": submission.submission_id}
 
     def reconcile_comparators(self) -> dict[str, Any]:
         task_ids: list[str] = []
+        incomplete_task_ids: list[str] = []
         for task_id in self.policy.comparator_case_ids:
+            if self._role_terminalization_for_task(
+                FunctionalRole.INDEPENDENT_GRADER,
+                task_id,
+            ):
+                incomplete_task_ids.append(task_id)
+                continue
             outcomes: dict[str, tuple[ComparatorOutcome, str]] = {}
             refs: dict[str, str] = {}
             pair_id = self._case_items(task_id)["original"].pair_id
+            role_incomplete = False
             for mapping_path in (self.run_dir / "role-state/comparator").glob("*.json"):
                 mapping = self._read_json(mapping_path)
                 if mapping.get("task_id") != task_id:
                     continue
                 comparator_id = str(mapping["comparator_work_id"])
+                if self._role_terminalization(FunctionalRole.COMPARATOR, comparator_id):
+                    role_incomplete = True
+                    continue
                 submission = self._run_model(
                     f"comparator-submissions/{comparator_id}.json", ComparatorSubmission
                 )
@@ -381,6 +699,9 @@ class FunctionalEvalCoordinator:
                 order = str(mapping["order"])
                 outcomes[order] = (original_outcome, comparator_id)
                 refs[order] = self._project_ref(f"comparator-submissions/{comparator_id}.json")
+            if role_incomplete:
+                incomplete_task_ids.append(task_id)
+                continue
             if set(outcomes) != {"AB", "BA"}:
                 raise ValueError(f"AB/BA comparator submissions are incomplete: {task_id}")
             numeric = {"win": 1.0, "loss": -1.0, "tie": 0.0}
@@ -401,7 +722,13 @@ class FunctionalEvalCoordinator:
                 reconciliation.model_dump(mode="json"),
             )
             task_ids.append(task_id)
-        return {"reconciled": len(task_ids), "task_ids": sorted(task_ids)}
+        result = {
+            "reconciled": len(task_ids),
+            "task_ids": sorted(task_ids),
+            "evidence_incomplete_task_ids": sorted(incomplete_task_ids),
+        }
+        self.store.write_json("role-evidence/comparator-reconciliation.json", result)
+        return result
 
     def audit_package_access(self) -> dict[str, Any]:
         audit_items: list[PackageAccessAuditItem] = []
@@ -527,40 +854,50 @@ class FunctionalEvalCoordinator:
         access = self.audit_package_access()
         if not access["valid"]:
             raise ValueError("package access audit must pass before Analyzer dispatch")
-        work_ids: list[str] = []
+        works: list[AnalyzerWorkItem] = []
+        incomplete_task_ids: list[str] = []
         for task_id in sorted({item.task_id for item in self._items()}):
             case = self.cases[task_id]
             items = self._case_items(task_id)
             summaries: dict[str, AnalyzerEvidenceSummary] = {}
-            for variant in ("no-skill", "original"):
-                item = items[variant]
-                source = self._source_record(item)
-                deterministic = self._deterministic(item)
-                grader, grader_id, _blind = self._grader_for_source(item.work_id)
-                summaries[variant] = AnalyzerEvidenceSummary(
-                    variant=variant,
-                    execution_record_ref=self._project_ref(f"records/{source.record_id}.json"),
-                    deterministic_bundle_ref=self._project_ref(
-                        f"deterministic/{item.work_id}.json"
-                    ),
-                    independent_grade_ref=self._project_ref(f"grader-submissions/{grader_id}.json"),
-                    task_correctness=deterministic.weighted_score,
-                    output_quality=grader.overall_score,
-                    failed_expectation_ids=tuple(
-                        result.assertion_id
-                        for result in deterministic.assertion_results
-                        if not result.passed
-                    ),
-                    grader_feedback_zh=grader.feedback_zh,
-                    failure_kind=source.failure_kind,
-                    package_access_ref=(
-                        self._project_ref(f"package-access/{item.work_id}.json")
-                        if variant == "original"
-                        else None
-                    ),
-                )
+            try:
+                for variant in ("no-skill", "original"):
+                    item = items[variant]
+                    source = self._source_record(item)
+                    deterministic = self._deterministic(item)
+                    grader, grader_id, _blind = self._grader_for_source(item.work_id)
+                    summaries[variant] = AnalyzerEvidenceSummary(
+                        variant=variant,
+                        execution_record_ref=self._project_ref(f"records/{source.record_id}.json"),
+                        deterministic_bundle_ref=self._project_ref(
+                            f"deterministic/{item.work_id}.json"
+                        ),
+                        independent_grade_ref=self._project_ref(
+                            f"grader-submissions/{grader_id}.json"
+                        ),
+                        task_correctness=deterministic.weighted_score,
+                        output_quality=grader.overall_score,
+                        failed_expectation_ids=tuple(
+                            result.assertion_id
+                            for result in deterministic.assertion_results
+                            if not result.passed
+                        ),
+                        grader_feedback_zh=grader.feedback_zh,
+                        failure_kind=source.failure_kind,
+                        package_access_ref=(
+                            self._project_ref(f"package-access/{item.work_id}.json")
+                            if variant == "original"
+                            else None
+                        ),
+                    )
+            except RoleEvidenceIncompleteError:
+                incomplete_task_ids.append(task_id)
+                continue
             comparator_ref = None
             if task_id in self.policy.comparator_case_ids:
+                if self._role_terminalization_for_task(FunctionalRole.COMPARATOR, task_id):
+                    incomplete_task_ids.append(task_id)
+                    continue
                 comparator_ref = self._project_ref(f"comparator-reconciliation/{task_id}.json")
                 self._run_model(
                     f"comparator-reconciliation/{task_id}.json",
@@ -582,20 +919,28 @@ class FunctionalEvalCoordinator:
                 node_hints=self._node_hints(items["original"]),
                 submission_schema_ref="schemas/analyzer_submission.schema.json",
             )
+            works.append(work)
+        work_ids = [work.analyzer_work_id for work in works]
+        self._reserve_role_batch("analyzer", work_ids)
+        for work in works:
             self.store.write_json(
-                f"analyzer-work-items/{analyzer_id}.json", work.model_dump(mode="json")
+                f"analyzer-work-items/{work.analyzer_work_id}.json",
+                work.model_dump(mode="json"),
             )
             self.store.write_json(
-                f"role-state/analyzer/{analyzer_id}.json",
+                f"role-state/analyzer/{work.analyzer_work_id}.json",
                 {
                     "schema_version": "1.0.0",
-                    "analyzer_work_id": analyzer_id,
-                    "task_id": task_id,
-                    "pair_id": items["original"].pair_id,
+                    "analyzer_work_id": work.analyzer_work_id,
+                    "task_id": work.task_id,
+                    "pair_id": work.pair_id,
                 },
             )
-            work_ids.append(analyzer_id)
-        return {"prepared": len(work_ids), "analyzer_work_ids": work_ids}
+        return {
+            "prepared": len(work_ids),
+            "analyzer_work_ids": work_ids,
+            "evidence_incomplete_task_ids": sorted(incomplete_task_ids),
+        }
 
     def ingest_analyzer(self, submission: AnalyzerSubmission) -> dict[str, Any]:
         relative = f"analyzer-submissions/{submission.analyzer_work_id}.json"
@@ -608,6 +953,10 @@ class FunctionalEvalCoordinator:
         work = self._run_model(
             f"analyzer-work-items/{submission.analyzer_work_id}.json", AnalyzerWorkItem
         )
+        if work.semantic_enrichment is not None or submission.semantic_relation_proposals:
+            raise ValueError(
+                "semantic hypothesis generation is retired; sealed GH-P1 evidence is read-only"
+            )
         self._assert_new_context(submission.role_run.context_id)
         known_nodes = {node.node_id for node in self.graph.nodes}
         allowed_refs = {
@@ -623,10 +972,6 @@ class FunctionalEvalCoordinator:
             allowed_refs.add(work.original.package_access_ref)
         if work.comparator_ref:
             allowed_refs.add(work.comparator_ref)
-        if work.semantic_enrichment is not None:
-            allowed_refs.update(
-                item.path for item in work.semantic_enrichment.evidence_artifacts
-            )
         for analysis in submission.analyses:
             if not set(analysis.evidence_refs).issubset(allowed_refs):
                 raise ValueError("Analyzer cited evidence outside its typed work item")
@@ -635,34 +980,15 @@ class FunctionalEvalCoordinator:
         imperfect = min(work.original.task_correctness, work.original.output_quality) < 1.0
         if imperfect and not submission.analyses:
             raise ValueError("imperfect original output requires at least one failure analysis")
-        semantic_result: dict[str, Any] | None = None
-        if submission.semantic_relation_proposals and work.semantic_enrichment is None:
-            raise ValueError("semantic proposals require a bounded Analyzer work scope")
-        if work.semantic_enrichment is not None:
-            layered_graph, overlay = SemanticHypothesisEngine().evaluate(
-                work,
-                submission,
-                self.graph,
-                project_root=self.project_root,
-            )
-            self.store.write_json(
-                f"semantic-overlays/{submission.analyzer_work_id}.json",
-                overlay.model_dump(mode="json"),
-            )
-            self.store.write_json(
-                f"semantic-graphs/{submission.analyzer_work_id}.json",
-                layered_graph.model_dump(mode="json"),
-            )
-            semantic_result = {
-                "accepted": len(overlay.accepted),
-                "rejected": len(overlay.rejected),
-                "layered_graph_fingerprint": overlay.layered_graph_fingerprint,
-            }
         self.store.write_json(relative, submission.model_dump(mode="json"))
+        self._settle_role_work(
+            submission.analyzer_work_id,
+            submission.role_run.usage,
+            repair_attempt=submission.role_run.repair_attempt,
+        )
         return {
             "duplicate": False,
             "submission_id": submission.submission_id,
-            "semantic_overlay": semantic_result,
         }
 
     def audit_isolation(self) -> IsolationAudit:
@@ -682,9 +1008,31 @@ class FunctionalEvalCoordinator:
             AnalyzerSubmission.model_validate_json(path.read_text(encoding="utf-8"))
             for path in sorted((self.run_dir / "analyzer-submissions").glob("*.json"))
         ]
-        grader_contexts = tuple(item.role_run.context_id for item in grader_submissions)
-        comparator_contexts = tuple(item.role_run.context_id for item in comparator_submissions)
-        analyzer_contexts = tuple(item.role_run.context_id for item in analyzer_submissions)
+        terminalizations = [
+            RoleAttemptTerminalization.model_validate_json(path.read_text(encoding="utf-8"))
+            for path in sorted((self.run_dir / "role-terminalizations").glob("*/*.json"))
+        ]
+        failed_contexts = {
+            role: tuple(
+                attempt.context_id
+                for item in terminalizations
+                if item.role is role
+                for attempt in item.attempts
+            )
+            for role in FunctionalRole
+        }
+        grader_contexts = (
+            tuple(item.role_run.context_id for item in grader_submissions)
+            + failed_contexts[FunctionalRole.INDEPENDENT_GRADER]
+        )
+        comparator_contexts = (
+            tuple(item.role_run.context_id for item in comparator_submissions)
+            + failed_contexts[FunctionalRole.COMPARATOR]
+        )
+        analyzer_contexts = (
+            tuple(item.role_run.context_id for item in analyzer_submissions)
+            + failed_contexts[FunctionalRole.ANALYZER]
+        )
         all_contexts = executor_contexts + grader_contexts + comparator_contexts + analyzer_contexts
         duplicate_contexts = tuple(
             sorted(key for key, count in Counter(all_contexts).items() if count > 1)
@@ -802,6 +1150,14 @@ class FunctionalEvalCoordinator:
                 "grader_score": grader_score,
             }
         comparison = self._comparison(task_id)
+        if comparison is None and task_id in self.policy.comparator_case_ids:
+            terminal = self._role_terminalization_for_task(
+                FunctionalRole.COMPARATOR,
+                task_id,
+            )
+            if terminal is not None:
+                raise RoleEvidenceIncompleteError(terminal)
+            raise ValueError(f"fresh comparator evidence is required: {task_id}")
         quality = {
             variant: float(raw[variant]["grader_score"]) for variant in ("no-skill", "original")
         }
@@ -964,8 +1320,22 @@ class FunctionalEvalCoordinator:
         if not access["valid"] or not isolation.valid:
             raise ValueError("access and isolation audits must pass before scoring")
         task_ids = sorted({item.task_id for item in self._items()})
+        analysis_unavailable: list[dict[str, str]] = []
         for path in (self.run_dir / "analyzer-work-items").glob("*.json"):
             work = AnalyzerWorkItem.model_validate_json(path.read_text(encoding="utf-8"))
+            terminal = self._role_terminalization(
+                FunctionalRole.ANALYZER,
+                work.analyzer_work_id,
+            )
+            if terminal is not None:
+                analysis_unavailable.append(
+                    {
+                        "task_id": work.task_id,
+                        "work_id": work.analyzer_work_id,
+                        "terminalization_id": terminal.terminalization_id,
+                    }
+                )
+                continue
             self._run_model(
                 f"analyzer-submissions/{work.analyzer_work_id}.json", AnalyzerSubmission
             )
@@ -1046,6 +1416,8 @@ class FunctionalEvalCoordinator:
             {
                 "schema_version": "1.0.0",
                 "source": "typed R3 Analyzer submissions",
+                "analysis_complete": not analysis_unavailable,
+                "analysis_unavailable": analysis_unavailable,
                 "rows": [item.model_dump(mode="json") for item in analyzer_submissions],
                 "target_node_ids": sorted(
                     {
@@ -1065,6 +1437,8 @@ class FunctionalEvalCoordinator:
             "skill_gain_mean": mean(item.skill_gain for item in pair_summaries),
             "isolation_valid": isolation.valid,
             "package_access_valid": access["valid"],
+            "analysis_complete": not analysis_unavailable,
+            "analysis_unavailable": analysis_unavailable,
             "usage": usage_report,
         }
 
@@ -1162,8 +1536,8 @@ class FunctionalEvalCoordinator:
             )
         return vectors
 
-    def verify_scores(self) -> dict[str, Any]:
-        """Independently rebuild every vector from raw evidence and compare it."""
+    def score_verification_result(self) -> dict[str, Any]:
+        """Independently rebuild every vector without mutating run evidence."""
         mismatches: list[dict[str, Any]] = []
         task_ids = sorted({item.task_id for item in self._items()})
         recomputed = 0
@@ -1192,5 +1566,35 @@ class FunctionalEvalCoordinator:
             "mismatches": mismatches,
             "trigger_mixed": False,
         }
+        return result
+
+    def verify_scores(self) -> dict[str, Any]:
+        """Persist the independent score verification for an open run."""
+
+        result = self.score_verification_result()
         self.store.write_json("score-independent-verification.json", result)
         return result
+
+
+def independently_verify_functional_scores(
+    project_root: Path,
+    run_dir: Path,
+) -> dict[str, Any]:
+    """Read-only score recomputation suitable for a terminal-sealed run.
+
+    It reuses the same isolated Functional coordinator's deliberately separate
+    scoring formula, but opens the SQLite ledger in ``mode=ro`` and never
+    writes an artifact.  This makes a missing pre-seal verification artifact a
+    fail-closed cache concern rather than a reason to mutate sealed evidence.
+    """
+
+    root = project_root.resolve()
+    run = run_dir.resolve(strict=True)
+    if not run.is_relative_to(root):
+        raise ValueError("functional score verification run escapes the project")
+    ledger = EvalLedger(run / "ledger.sqlite3", create=False, read_only=True)
+    try:
+        coordinator = FunctionalEvalCoordinator(root, run, ledger, ArtifactStore(run))
+        return coordinator.score_verification_result()
+    finally:
+        ledger.close()

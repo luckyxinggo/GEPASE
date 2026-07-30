@@ -141,6 +141,12 @@ class PatchProposalSubmission(FrozenModel):
         return self
 
 
+def proposal_accounting_increments(work: PatchProposalWorkItem) -> tuple[int, int]:
+    """Return (new mutation intents, Agent repairs) for one proposal work item."""
+
+    return (0, 1) if work.repair_attempt > 0 else (1, 0)
+
+
 def _submission_id(work_id: str, patch: PackagePatch | None, task_id: str) -> str:
     payload = f"{work_id}:{patch.patch_id if patch else 'failed'}:{task_id}"
     return f"proposal-submission-{hashlib.sha256(payload.encode()).hexdigest()[:24]}"
@@ -470,6 +476,69 @@ class PatchProposalStore:
             )
             self._event("proposal_exported", work.work_id)
         return work
+
+    def pending_work(self) -> PatchProposalWorkItem | None:
+        """Inspect the next exportable work item without changing its status."""
+
+        row = self.connection.execute(
+            "SELECT payload FROM work WHERE status = ? ORDER BY rowid LIMIT 1",
+            (ProposalWorkStatus.PENDING.value,),
+        ).fetchone()
+        return PatchProposalWorkItem.model_validate_json(row["payload"]) if row else None
+
+    def plan_repair(
+        self,
+        failed_work_id: str,
+        *,
+        max_repair_attempts: int,
+    ) -> PatchProposalWorkItem:
+        """Append one bounded retry after a typed failed proposer submission.
+
+        A malformed raw Agent response is first preserved as a failed
+        ``PatchProposalSubmission``.  The retry receives a distinct work id
+        and an explicit repair counter, so it cannot overwrite that failure or
+        silently reuse the original exported context.
+        """
+
+        row = self.connection.execute(
+            "SELECT status, submission_payload, payload FROM work WHERE work_id = ?",
+            (failed_work_id,),
+        ).fetchone()
+        if not row:
+            raise KeyError(failed_work_id)
+        if row["status"] != ProposalWorkStatus.FAILED.value or not row["submission_payload"]:
+            raise ValueError("proposal repair requires an ingested failed work item")
+        failed = PatchProposalSubmission.model_validate_json(row["submission_payload"])
+        if failed.patch is not None:
+            raise ValueError("proposal repair cannot replace a completed patch")
+        work = PatchProposalWorkItem.model_validate_json(row["payload"])
+        next_attempt = work.repair_attempt + 1
+        if next_attempt > max_repair_attempts:
+            raise ValueError("proposal repair budget is exhausted")
+        repair = work.model_copy(
+            update={
+                "work_id": f"{work.work_id}-repair-{next_attempt}",
+                "repair_attempt": next_attempt,
+                "rejected_history": (
+                    *work.rejected_history,
+                    {
+                        "failed_work_id": work.work_id,
+                        "failed_submission_id": failed.submission_id,
+                        "failure_kind": failed.failure_kind,
+                        "failure_detail": failed.failure_detail,
+                    },
+                ),
+            }
+        )
+        if not self.add_work(repair):
+            return repair
+        with self.connection:
+            self._event(
+                "proposal_repair_planned",
+                repair.work_id,
+                {"failed_work_id": failed_work_id, "repair_attempt": next_attempt},
+            )
+        return repair
 
     def ingest(self, submission: PatchProposalSubmission) -> bool:
         row = self.connection.execute(

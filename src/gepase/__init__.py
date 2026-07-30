@@ -18,26 +18,46 @@ from gepase.evals.functional import (
     IndependentGraderWorkItem,
     IsolationAudit,
 )
+from gepase.evals.recovery import (
+    EvidenceStagingManifest,
+    RecoveryAttemptBinding,
+    ReexecutionAuthorization,
+    RepairExhaustionTerminalization,
+    WorkRecoveryAudit,
+)
+from gepase.evals.reference_runtime import ReferenceExecutionConfig
 from gepase.evals.scores import TaskScoreVector
 from gepase.evals.work_items import EvalWorkItem, ExecutionBundle, ExecutorWorkItem
 from gepase.mutation.schema import PackagePatch
 from gepase.optimizer.acceptance.models import GateDecision
 from gepase.optimizer.candidate import PackageCandidate
 from gepase.optimizer.evolution.models import MergeParentSetSnapshot
-from gepase.package.ir import PackageGraph
-from gepase.package.semantic import SemanticHypothesisCache, SemanticHypothesisEngine
-from gepase.package.semantic_models import (
-    SemanticEnrichmentScope,
-    SemanticHypothesisConfig,
-    SemanticRelationProposal,
+from gepase.optimizer.merge.models import MergeOutcome
+from gepase.optimizer.session_runtime import (
+    ActiveSessionState,
+    BudgetCheckpoint,
+    BudgetContinuationDecision,
+    CheckpointFreshnessAudit,
+    HostAttemptAccounting,
+    RuntimeBudgetBinding,
 )
+from gepase.package.ir import PackageGraph
+from gepase.reporting.outcome import (
+    EvolutionOutcomeReportConfig,
+    EvolutionOutcomeReportInput,
+)
+from gepase.run_lifecycle import RunIntegrityCheckpoint, RunLifecycleRecord
 from gepase.schemas.common import SCHEMA_VERSION
 from gepase.store.evolution_pool import EvolutionPoolEntry
 
 __all__ = [
     "SCHEMA_VERSION",
+    "ActiveSessionState",
     "AnalyzerSubmission",
     "AnalyzerWorkItem",
+    "BudgetCheckpoint",
+    "BudgetContinuationDecision",
+    "CheckpointFreshnessAudit",
     "ComparatorReconciliation",
     "ComparatorSubmission",
     "ComparatorWorkItem",
@@ -46,25 +66,33 @@ __all__ = [
     "EvalPlanDraft",
     "EvalReviewSubmission",
     "EvalWorkItem",
+    "EvidenceStagingManifest",
+    "EvolutionOutcomeReportConfig",
+    "EvolutionOutcomeReportInput",
     "EvolutionPoolEntry",
     "ExecutionBundle",
     "ExecutorWorkItem",
     "FrozenEvalPlan",
     "FunctionalRunSummary",
     "GateDecision",
+    "HostAttemptAccounting",
     "IndependentGraderSubmission",
     "IndependentGraderWorkItem",
     "IsolationAudit",
+    "MergeOutcome",
     "MergeParentSetSnapshot",
     "PackageCandidate",
     "PackageGraph",
     "PackagePatch",
-    "SemanticEnrichmentScope",
-    "SemanticHypothesisCache",
-    "SemanticHypothesisConfig",
-    "SemanticHypothesisEngine",
-    "SemanticRelationProposal",
+    "RecoveryAttemptBinding",
+    "ReexecutionAuthorization",
+    "ReferenceExecutionConfig",
+    "RepairExhaustionTerminalization",
+    "RunIntegrityCheckpoint",
+    "RunLifecycleRecord",
+    "RuntimeBudgetBinding",
     "TaskScoreVector",
+    "WorkRecoveryAudit",
     "__version__",
 ]
 __version__ = "0.1.0"
