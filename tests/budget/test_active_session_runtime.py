@@ -81,10 +81,20 @@ def test_cross_day_pause_does_not_consume_active_time_or_reset_usage(tmp_path) -
         completed_work_ids=(),
         not_exported_work_ids=("work-1",),
         candidate_gate_summary={},
+        config_policy_provenance={
+            "mode": "relative_v2",
+            "policy_version": "2.0.0",
+            "max_relative_cost_ratio": 2.0,
+        },
         next_batch_estimate=runtime.estimate_batch("executor", 1),
         continuation_risk_zh="继续后将导出一个 Executor work。",
         now=started + timedelta(hours=1),
     )
+    assert checkpoint.config_policy_provenance == {
+        "mode": "relative_v2",
+        "policy_version": "2.0.0",
+        "max_relative_cost_ratio": 2.0,
+    }
     next_day = started + timedelta(days=1, hours=1)
     paused_clock = runtime.clock(now=next_day)
     assert paused_clock == {
@@ -243,6 +253,39 @@ def test_reservation_settlement_and_internal_candidate_usage_are_idempotent(tmp_
         now=started,
     )
     assert charged.used.candidates == repeated_charge.used.candidates == 1
+
+
+def test_unavailable_token_telemetry_settles_to_frozen_reservation_share(tmp_path) -> None:
+    runtime = ActiveSessionRuntime(
+        tmp_path,
+        run_id="run",
+        config_hash="a" * 64,
+        policy=_policy(),
+    )
+    started = datetime(2026, 7, 30, tzinfo=UTC)
+    runtime.create(now=started)
+    runtime.reserve(
+        batch_id="executor:unknown-token-telemetry",
+        role="executor",
+        work_ids=("work-a",),
+        now=started,
+    )
+
+    state = runtime.settle(
+        work_id="work-a",
+        actual_tokens=0,
+        actual_duration_ms=2_000,
+        token_count_kind=MeasurementKind.UNAVAILABLE,
+        now=started,
+    )
+
+    assert state.used.agent_calls == 1
+    assert state.used.estimated_tokens == 10_000
+    settlement = next((tmp_path / "reservation-settlements").glob("*.json"))
+    payload = settlement.read_text(encoding="utf-8")
+    assert '"estimated_tokens": 10000' in payload
+    assert '"token_variance": 0' in payload
+
 
 
 def test_host_attempt_accounting_is_append_only_and_charges_one_context(tmp_path) -> None:

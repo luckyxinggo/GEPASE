@@ -54,6 +54,7 @@ from gepase.optimizer.session_runtime import (
     ActiveSessionRuntime,
     HostAttemptAccounting,
     HostAttemptReason,
+    MeasurementKind,
     ReservationSettlement,
     RuntimeBudgetBinding,
 )
@@ -427,6 +428,7 @@ class FunctionalEvalCoordinator:
             actual_tokens=(usage.input_tokens or 0) + (usage.output_tokens or 0),
             actual_duration_ms=usage.duration_ms,
             repairs=1 if repair_attempt else 0,
+            token_count_kind=MeasurementKind(usage.token_count_kind),
         )
         self._sync_runtime_lifecycle()
 
@@ -1098,7 +1100,23 @@ class FunctionalEvalCoordinator:
             return None
         return ComparatorReconciliation.model_validate_json(path.read_text(encoding="utf-8"))
 
-    def _efficiency(self, source: EvaluationRecord, item: EvalWorkItem) -> float:
+    @staticmethod
+    def _common_token_count_kind(*sources: EvaluationRecord) -> str | None:
+        """Return the shared usable token basis, or exclude the axis for every side."""
+
+        kinds = {source.usage.token_count_kind for source in sources}
+        if len(kinds) != 1:
+            return None
+        kind = next(iter(kinds))
+        return None if kind == "unavailable" else kind
+
+    def _efficiency(
+        self,
+        source: EvaluationRecord,
+        item: EvalWorkItem,
+        *,
+        include_token_usage: bool,
+    ) -> float:
         case = self.cases[item.task_id]
         output_sizes = [
             artifact.size_bytes
@@ -1106,12 +1124,18 @@ class FunctionalEvalCoordinator:
             if artifact.path == case.requested_output.filename
         ]
         artifact_size = output_sizes[0] if len(output_sizes) == 1 else sum(output_sizes)
-        ratios = (
+        ratios = [
             source.usage.duration_ms / self.policy.duration_budget_ms,
-            (source.usage.input_tokens + source.usage.output_tokens) / self.policy.token_budget,
             source.usage.tool_calls / self.policy.tool_call_budget,
             artifact_size / self.policy.artifact_size_budget_bytes,
-        )
+        ]
+        if include_token_usage:
+            if source.usage.token_count_kind == "unavailable":
+                raise ValueError("unavailable token telemetry cannot enter efficiency scoring")
+            ratios.append(
+                (source.usage.input_tokens + source.usage.output_tokens)
+                / self.policy.token_budget
+            )
         return mean(max(0.0, 1.0 - ratio) for ratio in ratios)
 
     def _pair_scores(
@@ -1181,6 +1205,10 @@ class FunctionalEvalCoordinator:
         )
         e0 = self._read_json(self.run_dir / "e0-package-record.json")
         package_quality = float(e0["package_quality"])
+        common_token_kind = self._common_token_count_kind(
+            *(raw[variant]["source"] for variant in ("no-skill", "original"))
+        )
+        include_token_usage = common_token_kind is not None
         vectors: dict[Variant, TaskScoreVector] = {}
         for variant in ("no-skill", "original"):
             value = raw[variant]
@@ -1206,7 +1234,11 @@ class FunctionalEvalCoordinator:
                 output_quality=quality[variant],
                 skill_gain=paired_basis if variant == "original" else 0.0,
                 reliability=max(0.0, 1.0 - source.uncertainty),
-                efficiency=self._efficiency(source, item),
+                efficiency=self._efficiency(
+                    source,
+                    item,
+                    include_token_usage=include_token_usage,
+                ),
                 # Package quality is pair-level static context. Copying the same
                 # value keeps it neutral in no-skill/original deltas.
                 package_quality=package_quality,
@@ -1232,6 +1264,11 @@ class FunctionalEvalCoordinator:
         )
         audit = {
             "task_id": task_id,
+            "efficiency_token_basis": (
+                f"paired_telemetry:{common_token_kind}"
+                if include_token_usage
+                else "excluded_unavailable_or_incompatible_pair"
+            ),
             "assertion_recomputed": {
                 variant: raw[variant]["task_correctness"] for variant in ("no-skill", "original")
             },
@@ -1504,6 +1541,10 @@ class FunctionalEvalCoordinator:
         package_quality = float(
             self._read_json(self.run_dir / "e0-package-record.json")["package_quality"]
         )
+        common_token_kind = self._common_token_count_kind(
+            *(raw[variant]["source"] for variant in ("no-skill", "original"))
+        )
+        include_token_usage = common_token_kind is not None
 
         vectors: dict[Variant, TaskScoreVector] = {}
         for variant in ("no-skill", "original"):
@@ -1529,7 +1570,11 @@ class FunctionalEvalCoordinator:
                 output_quality=quality[variant],
                 skill_gain=paired_basis if variant == "original" else 0.0,
                 reliability=max(0.0, 1.0 - source.uncertainty),
-                efficiency=self._efficiency(source, item),
+                efficiency=self._efficiency(
+                    source,
+                    item,
+                    include_token_usage=include_token_usage,
+                ),
                 package_quality=package_quality,
                 evidence_refs=tuple(evidence_refs),
                 scoring_policy_ref=str(self.metadata["scoring_policy_ref"]),

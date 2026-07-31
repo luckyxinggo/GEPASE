@@ -15,6 +15,7 @@ from gepase.reporting.outcome import (
     EvolutionOutcomeCompiler,
     EvolutionOutcomeReportBuilder,
     ReferenceOutcomeCompiler,
+    RelativeEfficiencyReplayCompiler,
 )
 from gepase.store.artifacts import sha256_bytes
 
@@ -74,6 +75,31 @@ def compile_reference_outcome(
             "run_id": value.run_id,
             "outcome": value.outcome.value,
             "frontier_count": 0,
+        },
+        output_format,
+    )
+
+
+@report_app.command("replay-relative-efficiency")
+def replay_relative_efficiency(
+    run_dir: Annotated[Path, typer.Option("--run-dir")],
+    output: Annotated[Path, typer.Option("--output")],
+    output_format: Annotated[str, typer.Option("--format")] = "json",
+) -> None:
+    """Recompute v2 relative efficiency from one sealed COMPLETE evolution."""
+
+    try:
+        value = RelativeEfficiencyReplayCompiler(Path.cwd(), run_dir).compile(output)
+    except (OSError, ValueError) as error:
+        emit({"valid": False, "error": str(error)}, output_format)
+        raise typer.Exit(2) from error
+    emit(
+        {
+            "valid": True,
+            "run_id": value.run_id,
+            "outcome": value.outcome.value,
+            "frontier_count": len(value.deployable_frontier),
+            "agent_calls": 0,
         },
         output_format,
     )

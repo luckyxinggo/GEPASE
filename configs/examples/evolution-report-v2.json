@@ -1,0 +1,8 @@
+{
+  "schema_version": "2.0.0",
+  "report_mode": "multi_outcome",
+  "report_id": "example-skill-evolution-report",
+  "title_zh": "示例 Skill Package 进化报告",
+  "package_id": "example-skill",
+  "outcome_input_ref": "artifacts/runs/example-evolution/effect-outcome-report-input.json"
+}

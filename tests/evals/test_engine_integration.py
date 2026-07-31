@@ -148,6 +148,63 @@ def test_repair_attempt_is_distinct_in_execution_submission_identity() -> None:
             assert first.submission_id != repaired.submission_id
 
 
+def test_task_native_binary_bytes_never_become_submission_tokens() -> None:
+    root = Path.cwd()
+    local = root / "artifacts/local"
+    local.mkdir(parents=True, exist_ok=True)
+    with tempfile.TemporaryDirectory(prefix="binary-telemetry-", dir=local) as temporary:
+        run_dir = Path(temporary) / "run"
+        with MultiFidelityEvalEngine(root, run_dir) as engine:
+            engine.plan_cases(
+                Path("benchmarks/manifest-draft.json"),
+                splits=("validation",),
+                tiers=(EvidenceTier.E1_SIMULATED,),
+                variants=("no-skill",),
+                host="test-host",
+                model="test-model",
+                case_ids={"policy-evidence-06-00"},
+            )
+            item = engine.ledger.export_ready()[0]
+            workspace = run_dir / "workspaces" / item.work_id
+            workspace.mkdir(parents=True)
+            output = workspace / "large.gif"
+            output.write_bytes(b"GIF89a" + b"\x00" * 3_500_000)
+
+            unavailable = build_submission(
+                root,
+                item,
+                host="test-host",
+                model="test-model",
+                host_task_id="binary-unavailable",
+                duration_ms=100,
+                artifact_root=workspace,
+                artifact_relative_paths=("large.gif",),
+                planned_trace=(),
+                observed_trace=(),
+                token_count_kind="unavailable",
+            )
+            estimated = build_submission(
+                root,
+                item,
+                host="test-host",
+                model="test-model",
+                host_task_id="binary-estimated",
+                duration_ms=100,
+                artifact_root=workspace,
+                artifact_relative_paths=("large.gif",),
+                planned_trace=(),
+                observed_trace=(),
+                token_count_kind="estimated",
+            )
+
+    assert unavailable.usage.token_count_kind == "unavailable"
+    assert unavailable.usage.input_tokens == 0
+    assert unavailable.usage.output_tokens == 0
+    assert unavailable.artifacts[0].size_bytes == 3_500_006
+    assert estimated.usage.output_tokens < 1_000
+
+
+
 def test_exported_work_hides_assertions_and_expected_labels() -> None:
     root = Path.cwd()
     local = root / "artifacts/local"

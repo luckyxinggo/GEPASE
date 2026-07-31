@@ -37,6 +37,7 @@ def decide_acceptance(
     variance: VarianceDecision | None = None,
     efficiency_regression: float = 0.0,
     complexity_regression: float = 0.0,
+    relative_efficiency_v2_active: bool = False,
 ) -> PolicyVerdict:
     by_level = {item.level: item for item in gates}
     gate0 = by_level.get(GateLevel.GATE_0_SCHEMA)
@@ -77,7 +78,10 @@ def decide_acceptance(
     elif variance and variance.action is not VarianceAction.STABLE:
         verdict = CandidateStatus.INCONCLUSIVE
         reasons = tuple(variance.reason_codes)
-    elif efficiency_regression > policy.maximum_efficiency_regression:
+    elif (
+        not relative_efficiency_v2_active
+        and efficiency_regression > policy.maximum_efficiency_regression
+    ):
         verdict = CandidateStatus.REJECTED
         reasons = ("efficiency_regression",)
     elif complexity_regression > policy.maximum_complexity_regression:
@@ -125,6 +129,8 @@ def decide_acceptance(
             checks={
                 "policy": policy.kind.value,
                 "efficiency_regression": efficiency_regression,
+                "relative_efficiency_v2_active": relative_efficiency_v2_active,
+                "v1_maximum_efficiency_regression_used": not relative_efficiency_v2_active,
                 "complexity_regression": complexity_regression,
                 "frontier_eligible": frontier,
                 "exploration_pool_eligible": exploration,

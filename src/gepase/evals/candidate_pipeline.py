@@ -15,6 +15,7 @@ from typing import Any, Literal
 from pydantic import Field
 
 from gepase.evals.eval_plan import FrozenEvalPlan
+from gepase.evals.evidence import EvaluationRecord
 from gepase.evals.functional import (
     BlindArtifact,
     ComparatorSide,
@@ -24,6 +25,7 @@ from gepase.evals.functional import (
     FunctionalScoringPolicy,
     IndependentGraderSubmission,
     IndependentGraderWorkItem,
+    RoleAttemptTerminalization,
     clamp,
     stable_role_id,
 )
@@ -38,6 +40,7 @@ from gepase.evals.work_items import EvalWorkItem, Variant
 from gepase.optimizer.runtime import ReferenceEvidenceKey
 from gepase.package.ir import PackageGraph
 from gepase.schemas.common import FrozenModel
+from gepase.store.artifacts import canonical_json_bytes, sha256_bytes
 
 
 class CandidateComparatorReconciliation(FrozenModel):
@@ -66,6 +69,132 @@ class CandidatePairSummary(FrozenModel):
     quality_delta: float = Field(ge=-1, le=1)
     comparator_margin: float | None = Field(default=None, ge=-1, le=1)
     comparator_consistent: bool | None = None
+
+
+class ValidationIncompleteCase(FrozenModel):
+    task_id: str
+    role: Literal["independent_grader", "comparator"]
+    work_id: str
+    terminalization_id: str
+    terminalization_ref: str
+    terminalization_sha256: str = Field(pattern=r"^[0-9a-f]{64}$")
+    disposition: Literal["evidence_incomplete"] = "evidence_incomplete"
+
+
+class CandidateValidationIncompleteResolution(FrozenModel):
+    """Fail-closed terminal projection for incomplete held-out role evidence."""
+
+    schema_version: Literal["1.0.0"] = "1.0.0"
+    resolution_id: str
+    run_id: str
+    candidate_id: str
+    split: Literal["validation"] = "validation"
+    status: Literal["validation_evidence_incomplete"] = "validation_evidence_incomplete"
+    gate_eligible: Literal[False] = False
+    deployable: Literal[False] = False
+    required_task_ids: tuple[str, ...] = Field(min_length=1)
+    scored_task_ids: tuple[str, ...]
+    incomplete_cases: tuple[ValidationIncompleteCase, ...] = Field(min_length=1)
+    candidate_run_summary_ref: str
+    candidate_run_summary_sha256: str = Field(pattern=r"^[0-9a-f]{64}$")
+
+    def identity_payload(self) -> dict[str, object]:
+        return self.model_dump(mode="json", exclude={"resolution_id"})
+
+
+def build_validation_incomplete_resolution(
+    project_root: Path,
+    run_dir: Path,
+    *,
+    owner_run_id: str,
+    candidate_id: str,
+    required_task_ids: tuple[str, ...],
+) -> CandidateValidationIncompleteResolution:
+    """Validate an immutable candidate summary and project no synthetic evidence."""
+
+    root = project_root.resolve()
+    candidate_run = run_dir.resolve(strict=True)
+    if not candidate_run.is_relative_to(root):
+        raise ValueError("candidate validation run escapes the project")
+    metadata = CandidateFunctionalCoordinator._read_json(candidate_run / "run-metadata.json")
+    summary_path = candidate_run / "candidate-run-summary.json"
+    summary = CandidateFunctionalCoordinator._read_json(summary_path)
+    selected = tuple(str(item) for item in metadata.get("selected_case_ids", []))
+    if (
+        metadata.get("mode") != "frozen-candidate"
+        or metadata.get("split") != "validation"
+        or metadata.get("candidate_id") != candidate_id
+        or summary.get("candidate_id") != candidate_id
+        or summary.get("split") != "validation"
+        or summary.get("status") != "evidence_incomplete"
+        or summary.get("evidence_complete") is not False
+        or summary.get("gate_eligible") is not False
+    ):
+        raise ValueError("candidate summary is not a typed validation-incomplete result")
+    if len(selected) != len(set(selected)) or set(selected) != set(required_task_ids):
+        raise ValueError("validation-incomplete summary does not match the frozen task split")
+
+    scored = tuple(sorted(str(item["task_id"]) for item in summary.get("pair_summaries", [])))
+    raw_incomplete = summary.get("incomplete_cases", [])
+    incomplete_task_ids = tuple(sorted(str(item["task_id"]) for item in raw_incomplete))
+    if len(scored) != len(set(scored)) or len(incomplete_task_ids) != len(
+        set(incomplete_task_ids)
+    ):
+        raise ValueError("validation-incomplete summary repeats a task")
+    if set(scored) & set(incomplete_task_ids) or set(scored) | set(incomplete_task_ids) != set(
+        required_task_ids
+    ):
+        raise ValueError("scored and incomplete tasks do not partition the frozen split")
+
+    cases: list[ValidationIncompleteCase] = []
+    for raw in raw_incomplete:
+        role = str(raw["role"])
+        work_id = str(raw["work_id"])
+        if role not in {"independent_grader", "comparator"}:
+            raise ValueError("only required grading/comparison evidence may resolve validation")
+        terminalization_path = candidate_run / "role-terminalizations" / role / f"{work_id}.json"
+        terminalization = RoleAttemptTerminalization.model_validate_json(
+            terminalization_path.read_text(encoding="utf-8")
+        )
+        if (
+            terminalization.run_id != owner_run_id
+            or terminalization.task_id != raw["task_id"]
+            or terminalization.work_id != work_id
+            or terminalization.role.value != role
+            or terminalization.terminalization_id != raw["terminalization_id"]
+            or terminalization.disposition != "evidence_incomplete"
+            or terminalization.scoring_penalty_applied
+            or terminalization.synthetic_submission_created
+            or terminalization.synthetic_score_created
+            or terminalization.synthetic_winner_created
+        ):
+            raise ValueError("candidate summary and role terminalization disagree")
+        cases.append(
+            ValidationIncompleteCase(
+                task_id=terminalization.task_id,
+                role=role,  # type: ignore[arg-type]
+                work_id=work_id,
+                terminalization_id=terminalization.terminalization_id,
+                terminalization_ref=terminalization_path.relative_to(root).as_posix(),
+                terminalization_sha256=sha256_bytes(terminalization_path.read_bytes()),
+            )
+        )
+
+    draft = CandidateValidationIncompleteResolution(
+        resolution_id="pending",
+        run_id=owner_run_id,
+        candidate_id=candidate_id,
+        required_task_ids=tuple(sorted(required_task_ids)),
+        scored_task_ids=scored,
+        incomplete_cases=tuple(sorted(cases, key=lambda item: (item.task_id, item.role))),
+        candidate_run_summary_ref=summary_path.relative_to(root).as_posix(),
+        candidate_run_summary_sha256=sha256_bytes(summary_path.read_bytes()),
+    )
+    resolution_id = (
+        "validation-resolution-"
+        + sha256_bytes(canonical_json_bytes(draft.identity_payload()))[:24]
+    )
+    return draft.model_copy(update={"resolution_id": resolution_id})
 
 
 class CandidateFunctionalCoordinator(FunctionalEvalCoordinator):
@@ -135,6 +264,26 @@ class CandidateFunctionalCoordinator(FunctionalEvalCoordinator):
             (self.reference_run / f"grader-work-items/{grader_id}.json").read_text(encoding="utf-8")
         )
         return vector, grader, grader_work.blind_artifact, source_work_id
+
+    def _reference_source_record(
+        self,
+        vector: TaskScoreVector,
+        source_work_id: str,
+    ) -> EvaluationRecord:
+        matches: list[EvaluationRecord] = []
+        for reference in vector.evidence_refs:
+            path = (self.project_root / reference).resolve()
+            if not path.is_relative_to(self.reference_run) or not path.is_file():
+                continue
+            try:
+                record = EvaluationRecord.model_validate_json(path.read_text(encoding="utf-8"))
+            except ValueError:
+                continue
+            if record.work_id == source_work_id:
+                matches.append(record)
+        if len(matches) != 1:
+            raise ValueError(f"reference source record is not unique: {source_work_id}")
+        return matches[0]
 
     def prepare_graders(self) -> dict[str, Any]:
         work_ids: list[str] = []
@@ -377,6 +526,15 @@ class CandidateFunctionalCoordinator(FunctionalEvalCoordinator):
         reference_vector, reference_grader, _ref_blind, source_work_id = self._reference_models(
             task_id
         )
+        no_skill_vector, _no_skill_grader, _no_skill_blind, no_skill_work_id = (
+            self._reference_models(task_id, "no-skill")
+        )
+        reference_sources = (
+            self._reference_source_record(reference_vector, source_work_id),
+            self._reference_source_record(no_skill_vector, no_skill_work_id),
+        )
+        common_token_kind = self._common_token_count_kind(source, *reference_sources)
+        include_token_usage = common_token_kind is not None
         reference_grader_score = _weighted_score(
             case,
             {grade.criterion_id: grade.score for grade in reference_grader.criterion_grades},
@@ -439,7 +597,11 @@ class CandidateFunctionalCoordinator(FunctionalEvalCoordinator):
             output_quality=quality["candidate"],
             skill_gain=clamp(reference_vector.skill_gain + delta),
             reliability=max(0.0, 1.0 - source.uncertainty),
-            efficiency=self._efficiency(source, item),
+            efficiency=self._efficiency(
+                source,
+                item,
+                include_token_usage=include_token_usage,
+            ),
             package_quality=float(e0["package_quality"]),
             evidence_refs=tuple(evidence_refs),
             scoring_policy_ref=str(self.metadata["scoring_policy_ref"]),
@@ -476,6 +638,16 @@ class CandidateFunctionalCoordinator(FunctionalEvalCoordinator):
         )
         audit = {
             "task_id": task_id,
+            "efficiency_token_basis": (
+                f"paired_telemetry:{common_token_kind}"
+                if include_token_usage
+                else "excluded_unavailable_or_incompatible_pair"
+            ),
+            "efficiency_token_count_kinds": {
+                "candidate": source.usage.token_count_kind,
+                "original": reference_sources[0].usage.token_count_kind,
+                "no_skill": reference_sources[1].usage.token_count_kind,
+            },
             "reference_correctness": reference_correctness,
             "candidate_correctness": candidate_correctness,
             "reference_grader_score": reference_grader_score,

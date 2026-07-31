@@ -6,6 +6,7 @@ import json
 from pathlib import Path
 
 from gepase.config.models import ProjectConfig
+from gepase.evals.candidate_pipeline import CandidateValidationIncompleteResolution
 from gepase.evals.eval_plan import (
     EvalDesignerSubmission,
     EvalDesignerWorkItem,
@@ -41,7 +42,12 @@ from gepase.evals.work_items import EvalWorkItem, ExecutionBundle, ExecutorWorkI
 from gepase.mutation.schema import PackagePatch
 from gepase.mutation.target_set import TargetSet
 from gepase.optimizer.acceptance.models import GateDecision
-from gepase.optimizer.acceptance.validation import TaskScoreSecondaryEvidence
+from gepase.optimizer.acceptance.validation import (
+    RelativeEfficiencyEvidence,
+    RelativeEfficiencyFrontierRanking,
+    RelativeEfficiencyPolicy,
+    TaskScoreSecondaryEvidence,
+)
 from gepase.optimizer.candidate import PackageCandidate
 from gepase.optimizer.evolution.models import MergeParentSetSnapshot
 from gepase.optimizer.evolution.parent_sets import ParentSetEnumerationReport
@@ -87,6 +93,9 @@ def main() -> None:
         "host_attempt_accounting.schema.json": HostAttemptAccounting,
         "candidate_reflection_submission.schema.json": CandidateReflectionSubmission,
         "candidate_reflection_work_item.schema.json": CandidateReflectionWorkItem,
+        "candidate_validation_incomplete_resolution.schema.json": (
+            CandidateValidationIncompleteResolution
+        ),
         "generation2_planning_outcome.schema.json": Generation2PlanningOutcome,
         "comparator_reconciliation.schema.json": ComparatorReconciliation,
         "comparator_submission.schema.json": ComparatorSubmission,
@@ -121,6 +130,11 @@ def main() -> None:
         "r4_evolution_config.schema.json": R4EvolutionConfig,
         "reference_execution_config.schema.json": ReferenceExecutionConfig,
         "reference_evidence_key.schema.json": ReferenceEvidenceKey,
+        "relative_efficiency_evidence.schema.json": RelativeEfficiencyEvidence,
+        "relative_efficiency_frontier_ranking.schema.json": (
+            RelativeEfficiencyFrontierRanking
+        ),
+        "relative_efficiency_policy.schema.json": RelativeEfficiencyPolicy,
         "recovery_attempt_binding.schema.json": RecoveryAttemptBinding,
         "reexecution_authorization.schema.json": ReexecutionAuthorization,
         "repair_exhaustion_terminalization.schema.json": RepairExhaustionTerminalization,

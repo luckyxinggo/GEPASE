@@ -20,7 +20,12 @@ from gepase.package.ir import (
     make_node,
 )
 from gepase.schemas.common import FrozenModel
-from gepase.store.artifacts import resolve_scoped_artifact_index, sha256_bytes
+from gepase.store.artifacts import (
+    resolve_scoped_artifact_index,
+    resolve_verified_artifact,
+    sha256_bytes,
+    verify_candidate_bundle_artifact,
+)
 
 
 class PackageAccessMapping(FrozenModel):
@@ -59,6 +64,9 @@ class PackageAccessOverlayAudit(FrozenModel):
     typed_mapping_rate: float = Field(ge=0, le=1)
     planned_edges_added: int = Field(default=0, ge=0)
     weak_fallback_events: int = Field(default=0, ge=0)
+    model_correction_ref: str | None = None
+    model_correction_sha256: str | None = Field(default=None, pattern=r"^[0-9a-f]{64}$")
+    model_corrected_submission_ids: tuple[str, ...] = ()
 
 
 class SelectorGraphBinding(FrozenModel):
@@ -271,6 +279,7 @@ def overlay_package_access(
     expected_candidate_id: str | None = None,
     expected_content_hash: str | None = None,
     expected_reference_key_hash: str | None = None,
+    model_correction_ref: str | None = None,
 ) -> tuple[PackageGraph, PackageAccessOverlayAudit]:
     """Bind sealed typed PackageAccessEvent rows to one snapshot-scoped graph.
 
@@ -285,6 +294,10 @@ def overlay_package_access(
     if indexed.get("run-metadata.json") != sha256_bytes(metadata_path.read_bytes()):
         raise ValueError("source run metadata is not sealed or hash-matched")
     metadata = json.loads(metadata_path.read_text(encoding="utf-8"))
+    model_corrections, correction_hash = _load_model_corrections(
+        run,
+        model_correction_ref,
+    )
     expected_metadata = {
         "host": expected_host,
         "model": expected_model,
@@ -377,28 +390,46 @@ def overlay_package_access(
     )
     if referenced_graph is None:
         raise ValueError("expected sealed graph ref cannot be resolved")
-    graph_seal: tuple[Path, str] | None = None
-    for graph_run in referenced_graph.parents:
-        graph_index_path = graph_run / "artifact-index.json"
-        if not graph_index_path.is_file():
-            continue
-        graph_relative = referenced_graph.relative_to(graph_run).as_posix()
-        graph_index = json.loads(graph_index_path.read_text(encoding="utf-8"))
-        graph_hashes = {str(item["path"]): str(item["sha256"]) for item in graph_index["artifacts"]}
-        if graph_hashes.get(graph_relative) == sha256_bytes(referenced_graph.read_bytes()):
-            graph_seal = graph_run, graph_relative
-            break
-    if graph_seal is None:
-        raise ValueError("referenced PackageGraph is not sealed or hash-matched")
+    try:
+        if expected_candidate_id is not None:
+            try:
+                verify_candidate_bundle_artifact(
+                    referenced_graph,
+                    expected_candidate_id=expected_candidate_id,
+                    expected_package_id=graph.package_id,
+                    expected_content_hash=expected_content_hash or graph.snapshot_hash,
+                )
+            except ValueError:
+                # Terminal historical runs predate Candidate sub-stores; their
+                # complete evolution-level ArtifactStore remains authoritative.
+                resolve_verified_artifact(referenced_graph)
+        else:
+            resolve_verified_artifact(referenced_graph)
+    except (FileNotFoundError, ValueError, json.JSONDecodeError) as error:
+        raise ValueError(
+            "referenced PackageGraph is not sealed or hash-matched"
+        ) from error
     graph_payload = json.loads(referenced_graph.read_text(encoding="utf-8"))
     if graph_payload.get("snapshot_hash") != graph.snapshot_hash:
         raise ValueError("snapshot hash mismatch for referenced PackageGraph")
+    canonical_submission_ids: set[str] = set()
+    for record_path in sorted((run / "records").glob("*.json")):
+        record_ref = record_path.relative_to(run).as_posix()
+        if indexed.get(record_ref) != sha256_bytes(record_path.read_bytes()):
+            raise ValueError(f"evaluation record is not sealed: {record_ref}")
+        record = EvaluationRecord.model_validate_json(record_path.read_text(encoding="utf-8"))
+        submission_id = record.provenance.submission_id
+        if record.evidence_tier is EvidenceTier.E2_DELEGATED and submission_id is not None:
+            canonical_submission_ids.add(submission_id)
+    corrected_submission_ids: list[str] = []
     for path in sorted((run / "execution-submissions").glob("*.json")):
         relative = path.relative_to(run).as_posix()
         digest = sha256_bytes(path.read_bytes())
         if indexed.get(relative) != digest:
             raise ValueError(f"execution submission is not sealed or hash-matched: {relative}")
         submission = ExecutionBundle.model_validate_json(path.read_text(encoding="utf-8"))
+        if canonical_submission_ids and submission.submission_id not in canonical_submission_ids:
+            continue
         work = by_work.get(submission.work_id)
         if work is None:
             raise ValueError(f"execution work item is missing: {submission.work_id}")
@@ -409,8 +440,11 @@ def overlay_package_access(
             raise ValueError(f"provider mismatch for {submission.work_id}")
         if expected_host is not None and submission.host != expected_host:
             raise ValueError(f"host mismatch for {submission.work_id}")
-        if expected_model is not None and submission.model != expected_model:
+        effective_model = model_corrections.get(submission.submission_id, submission.model)
+        if expected_model is not None and effective_model != expected_model:
             raise ValueError(f"model mismatch for {submission.work_id}")
+        if effective_model != submission.model:
+            corrected_submission_ids.append(submission.submission_id)
         if work.get("package_graph_ref") != expected_graph_ref:
             raise ValueError(f"snapshot graph ref mismatch for {submission.work_id}")
         node_map = {str(key): str(value) for key, value in work["package_node_map"].items()}
@@ -446,6 +480,7 @@ def overlay_package_access(
                 "provider": submission.provider_id,
                 "host": submission.host,
                 "model": submission.model,
+                "effective_model": effective_model,
                 "trace_completeness": "typed_package_access",
                 "source_artifact": relative,
                 "source_sha256": digest,
@@ -512,6 +547,7 @@ def overlay_package_access(
                     "snapshot_hash": graph.snapshot_hash,
                     "host": submission.host,
                     "model": submission.model,
+                    "effective_model": effective_model,
                     "trace_sequence": event.sequence,
                     "path": event.path,
                     "bytes_loaded": event.bytes_loaded,
@@ -550,8 +586,127 @@ def overlay_package_access(
         mapped_events=mapped,
         rejected_events=rejected,
         typed_mapping_rate=(mapped / total if total else 0.0),
+        model_correction_ref=model_correction_ref,
+        model_correction_sha256=correction_hash,
+        model_corrected_submission_ids=tuple(sorted(corrected_submission_ids)),
     )
     return overlaid, audit
+
+
+def _load_model_corrections(
+    run: Path,
+    correction_ref: str | None,
+) -> tuple[dict[str, str], str | None]:
+    """Validate one append-only, user-confirmed Host metadata correction.
+
+    The correction changes only the effective model used for provenance checks;
+    original submissions, records, ledger rows, and hashes remain untouched.
+    """
+
+    if correction_ref is None:
+        return {}, None
+    relative = Path(correction_ref)
+    if relative.is_absolute() or ".." in relative.parts:
+        raise ValueError("model correction ref must be repository-relative")
+    audit_path = next(
+        (parent / relative for parent in (run, *run.parents) if (parent / relative).is_file()),
+        None,
+    )
+    if audit_path is None:
+        raise ValueError("model correction audit cannot be resolved")
+    audit_bytes = audit_path.read_bytes()
+    audit = json.loads(audit_bytes)
+    if audit.get("status") != "passed" or audit.get("run_id") != run.name:
+        raise ValueError("model correction audit belongs to another or failed run")
+    checks = audit.get("machine_checks")
+    if not isinstance(checks, dict) or not checks or not all(checks.values()):
+        raise ValueError("model correction audit machine checks are not all passing")
+    decision_ref = audit.get("decision_ref")
+    if not isinstance(decision_ref, str):
+        raise ValueError("model correction audit lacks its decision ref")
+    decision_relative = Path(decision_ref)
+    if decision_relative.is_absolute() or ".." in decision_relative.parts:
+        raise ValueError("model correction decision ref must be repository-relative")
+    decision_path = next(
+        (
+            parent / decision_relative
+            for parent in (run, *run.parents)
+            if (parent / decision_relative).is_file()
+        ),
+        None,
+    )
+    if decision_path is None:
+        raise ValueError("model correction decision cannot be resolved")
+    decision_bytes = decision_path.read_bytes()
+    if sha256_bytes(decision_bytes) != audit.get("decision_sha256"):
+        raise ValueError("model correction decision hash mismatch")
+    decision = json.loads(decision_bytes)
+    binding = decision.get("run_binding")
+    runtime_path = run / "runtime-session.json"
+    runtime = json.loads(runtime_path.read_text(encoding="utf-8"))
+    if (
+        not isinstance(binding, dict)
+        or binding.get("run_id") != run.name
+        or binding.get("config_hash") != runtime.get("config_hash")
+        or decision.get("reviewer") != "user"
+        or decision.get("correction_reason") != "host_cli_metadata_label_error"
+    ):
+        raise ValueError("model correction decision binding is invalid")
+    checkpoint_id = binding.get("checkpoint_id")
+    if not isinstance(checkpoint_id, str):
+        raise ValueError("model correction decision lacks checkpoint binding")
+    checkpoint_path = run / "budget-checkpoints" / f"{checkpoint_id}.json"
+    if (
+        not checkpoint_path.is_file()
+        or sha256_bytes(checkpoint_path.read_bytes()) != binding.get("checkpoint_sha256")
+    ):
+        raise ValueError("model correction checkpoint hash mismatch")
+    recorded_model = decision.get("recorded_model")
+    effective_model = decision.get("effective_actual_model")
+    if not isinstance(recorded_model, str) or not isinstance(effective_model, str):
+        raise ValueError("model correction labels are invalid")
+    originals = {
+        str(item["submission_id"]): item
+        for item in audit.get("original_submission_hashes", [])
+        if isinstance(item, dict) and "submission_id" in item
+    }
+    corrections: dict[str, str] = {}
+    for row in decision.get("affected_submissions", []):
+        if not isinstance(row, dict):
+            raise ValueError("model correction affected submission is invalid")
+        submission_id = str(row.get("submission_id"))
+        original = originals.get(submission_id)
+        if original is None:
+            raise ValueError("model correction lacks original submission hash")
+        source_ref = Path(str(original.get("submission_ref")))
+        if source_ref.is_absolute() or ".." in source_ref.parts:
+            raise ValueError("corrected submission ref must be repository-relative")
+        source_path = next(
+            (
+                parent / source_ref
+                for parent in (run, *run.parents)
+                if (parent / source_ref).is_file()
+            ),
+            None,
+        )
+        if source_path is None or sha256_bytes(source_path.read_bytes()) != original.get(
+            "submission_sha256"
+        ):
+            raise ValueError("corrected original submission hash mismatch")
+        submission = ExecutionBundle.model_validate_json(source_path.read_text(encoding="utf-8"))
+        if (
+            submission.submission_id != submission_id
+            or submission.work_id != row.get("work_id")
+            or submission.host_task_id != row.get("host_task_id")
+            or submission.context_id != row.get("context_id")
+            or submission.host != decision.get("host")
+            or submission.model != recorded_model
+        ):
+            raise ValueError("model correction submission binding mismatch")
+        corrections[submission_id] = effective_model
+    if len(corrections) != audit.get("affected_submission_count"):
+        raise ValueError("model correction affected submission count mismatch")
+    return corrections, sha256_bytes(audit_bytes)
 
 
 def _step_kind(step: TraceStep, layer: str) -> EdgeKind:

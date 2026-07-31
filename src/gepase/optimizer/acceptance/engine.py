@@ -22,7 +22,12 @@ from gepase.optimizer.acceptance.models import (
     build_gate_decision,
 )
 from gepase.optimizer.acceptance.policy import AcceptancePolicy, decide_acceptance
-from gepase.optimizer.acceptance.validation import ValidationPolicy, run_validation_gate
+from gepase.optimizer.acceptance.validation import (
+    RelativeEfficiencyEvidence,
+    RelativeEfficiencyPolicy,
+    ValidationPolicy,
+    run_validation_gate,
+)
 from gepase.optimizer.candidate import PackageCandidate
 from gepase.optimizer.evolution.models import (
     EvolutionCandidateIdentity,
@@ -145,6 +150,8 @@ class ValidationGatedAcceptance:
         complexity_regression: float = 0.0,
         secondary_objective_improvements: dict[str, float] | None = None,
         secondary_evidence_refs: tuple[str, ...] = (),
+        relative_efficiency_policy: RelativeEfficiencyPolicy | None = None,
+        relative_efficiency_evidence: RelativeEfficiencyEvidence | None = None,
         validation_policy: ValidationPolicy | None = None,
         minibatch_policy: MinibatchPolicy | None = None,
         static_regression_aware: bool = False,
@@ -153,6 +160,11 @@ class ValidationGatedAcceptance:
         exclusive_closure_ids: tuple[str, ...] = (),
         record_evolution_candidate: bool = True,
     ) -> GateDecision:
+        if relative_efficiency_evidence is not None and (
+            candidate is None
+            or relative_efficiency_evidence.candidate_id != candidate.candidate_id
+        ):
+            raise ValueError("relative-efficiency evidence does not bind the candidate")
         parent_root = (
             self.run_dir
             / "gate-parent"
@@ -197,6 +209,8 @@ class ValidationGatedAcceptance:
                 policy=validation_policy or ValidationPolicy(),
                 secondary_objective_improvements=secondary_objective_improvements,
                 secondary_evidence_refs=secondary_evidence_refs,
+                relative_efficiency_policy=relative_efficiency_policy,
+                relative_efficiency_evidence=relative_efficiency_evidence,
             )
             gate3 = validation.gate
             validation_stats = validation.statistics
@@ -220,6 +234,7 @@ class ValidationGatedAcceptance:
             variance=variance,
             efficiency_regression=efficiency_regression,
             complexity_regression=complexity_regression,
+            relative_efficiency_v2_active=relative_efficiency_evidence is not None,
         )
         gates = (*first_four, policy.gate_4)
         rejection = None

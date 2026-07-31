@@ -12,6 +12,10 @@ from typing import Any, Literal
 
 from pydantic import Field
 
+from gepase.evals.candidate_pipeline import (
+    CandidateValidationIncompleteResolution,
+    build_validation_incomplete_resolution,
+)
 from gepase.evals.engine import MultiFidelityEvalEngine
 from gepase.evals.eval_plan import FrozenEvalPlan
 from gepase.evals.functional import AnalyzerSubmission
@@ -40,10 +44,16 @@ from gepase.mutation.validators.static_gate import run_static_gate
 from gepase.optimizer.acceptance.engine import ValidationGatedAcceptance
 from gepase.optimizer.acceptance.minibatch import run_minibatch_gate
 from gepase.optimizer.acceptance.models import GateOutcome
-from gepase.optimizer.acceptance.validation import derive_task_score_secondary_evidence
+from gepase.optimizer.acceptance.validation import (
+    RelativeEfficiencyEvidence,
+    RelativeEfficiencyPolicy,
+    derive_relative_efficiency_evidence,
+    derive_task_score_secondary_evidence,
+)
 from gepase.optimizer.candidate import PackageCandidate, build_seed_candidate
 from gepase.optimizer.evolution.branching import (
     BranchRegistry,
+    MutationBranchState,
     freeze_lineage_root,
 )
 from gepase.optimizer.evolution.models import (
@@ -114,6 +124,7 @@ from gepase.package.slicing import reverse_slice
 from gepase.run_lifecycle import RunLifecycle, RunLifecycleMode, RunLifecycleStatus
 from gepase.schemas.common import FrozenModel
 from gepase.store.artifacts import (
+    CANDIDATE_BUNDLE_SEAL_NAME,
     ArtifactStore,
     atomic_write,
     canonical_json_bytes,
@@ -355,10 +366,18 @@ class R4EvolutionController:
                 "checkpoint.json",
                 "runtime-session.json",
             )
-            self.lifecycle.prepare(
-                lifecycle_mode,
-                required_files=() if lifecycle_mode is RunLifecycleMode.CREATE_NEW else required,
-            )
+            if lifecycle_mode is RunLifecycleMode.CREATE_NEW and self.run_dir.exists():
+                self.lifecycle.recover_empty_initialization(
+                    required_files=("run-lifecycle.json",),
+                    allowed_files=("run-lifecycle.json",),
+                )
+            else:
+                self.lifecycle.prepare(
+                    lifecycle_mode,
+                    required_files=(
+                        () if lifecycle_mode is RunLifecycleMode.CREATE_NEW else required
+                    ),
+                )
         else:
             # Sealed v0.1 configs predate the typed lifecycle contract.  Keep
             # their exact fingerprint and read behavior without retroactively
@@ -645,6 +664,19 @@ class R4EvolutionController:
         evidence_run = self._safe_project_ref(evidence_run_ref, directory=True)
         artifact_index_path, _scoped_hashes = resolve_scoped_artifact_index(evidence_run)
         metadata_path = evidence_run / "run-metadata.json"
+        model_correction_ref: str | None = None
+        model_correction_sha256: str | None = None
+        if evidence_variant == "original" and evidence_run.parent.name == "runs":
+            correction_path = (
+                evidence_run.parent.parent
+                / "stage"
+                / "model-provenance-correction-audit.json"
+            )
+            if correction_path.is_file():
+                if not correction_path.resolve().is_relative_to(self.project_root):
+                    raise ValueError("model correction audit escapes the project")
+                model_correction_ref = correction_path.relative_to(self.project_root).as_posix()
+                model_correction_sha256 = sha256_bytes(correction_path.read_bytes())
         evidence_scope_hash = canonical_fingerprint(
             {
                 "evidence_run_ref": evidence_run_ref,
@@ -662,6 +694,8 @@ class R4EvolutionController:
                 "seed": self.config.seed,
                 "timeout_seconds": self.config.timeout_seconds,
                 "reference_key_hash": reference_key_hash,
+                "model_correction_ref": model_correction_ref,
+                "model_correction_sha256": model_correction_sha256,
             }
         )
         graph_policy_hash = policy.policy_hash
@@ -754,6 +788,7 @@ class R4EvolutionController:
                 parent.content_hash if evidence_variant == "candidate" else None
             ),
             expected_reference_key_hash=reference_key_hash,
+            model_correction_ref=model_correction_ref,
         )
         layers = self._graph_layer_counts(graph)
         if layers["planned"] or layers["semantic_hypothesis"]:
@@ -1041,26 +1076,7 @@ class R4EvolutionController:
                 },
                 "graph_slice": scope.failure_slice.model_dump(mode="json"),
                 "causal_contract": {"required": True},
-                "causal_targets": [
-                    {
-                        "node_id": node.node_id,
-                        "failure_evidence_ids": [evidence_ref],
-                        "causal_path_node_ids": (
-                            list(scope.target_set.causal_path_node_ids)
-                            if scope.target_set is not None
-                            else [node.node_id]
-                        ),
-                        "expected_affected_assertions": [],
-                        "expected_affected_metrics": [
-                            "task_correctness",
-                            "output_quality",
-                            "skill_gain",
-                        ],
-                        "allowed_operation_classes": [self._operation_for(node).value],
-                        "executable_target": node.path.endswith((".py", ".sh")),
-                    }
-                    for node in scope.selected_nodes
-                ],
+                "causal_targets": self._causal_targets(scope, (evidence_ref,)),
                 "preserve": [
                     "unrelated package behavior",
                     "public interfaces unless explicitly targeted",
@@ -1098,6 +1114,12 @@ class R4EvolutionController:
         )
         gepa = assert_compatible_gepa()
         self._write("resolved-config.json", self.config)
+        if self.config.efficiency_policy_mode == "relative_v2":
+            assert self.config.relative_efficiency_policy is not None
+            self._write(
+                "relative-efficiency-policy.json",
+                self.config.relative_efficiency_policy,
+            )
         self._write("reference-evidence-key.json", key)
         self._write("reference-cache-audit.json", audit)
         self._write("gepa-provenance.json", gepa)
@@ -1295,6 +1317,34 @@ class R4EvolutionController:
             self._save_state(self.state())
         return exported
 
+    def _causal_targets(
+        self,
+        scope: _ProposalScope,
+        evidence_refs: tuple[str, ...],
+    ) -> list[dict[str, object]]:
+        """Project one shared causal contract for every bounded proposal path."""
+
+        return [
+            {
+                "node_id": node.node_id,
+                "failure_evidence_ids": list(evidence_refs),
+                "causal_path_node_ids": (
+                    list(scope.target_set.causal_path_node_ids)
+                    if scope.target_set is not None
+                    else [node.node_id]
+                ),
+                "expected_affected_assertions": [],
+                "expected_affected_metrics": [
+                    "task_correctness",
+                    "output_quality",
+                    "skill_gain",
+                ],
+                "allowed_operation_classes": [self._operation_for(node).value],
+                "executable_target": node.path.endswith((".py", ".sh")),
+            }
+            for node in scope.selected_nodes
+        ]
+
     def pause_at_barrier(
         self,
         barrier: RuntimeBarrier,
@@ -1327,6 +1377,7 @@ class R4EvolutionController:
             completed_work_ids=completed_work_ids,
             not_exported_work_ids=not_exported_work_ids,
             candidate_gate_summary=candidate_gate_summary or {},
+            config_policy_provenance=self.config.efficiency_policy_provenance,
             next_batch_estimate=estimate,
             continuation_risk_zh=continuation_risk_zh,
         )
@@ -1472,28 +1523,75 @@ class R4EvolutionController:
 
     def apply_proposals(self) -> dict[str, Any]:
         state = self.state()
+        if state.phase is not EvolutionPhase.PROPOSAL:
+            raise ValueError("initial proposal apply requires the proposal phase")
+        if state.branch_candidate_ids:
+            raise ValueError("initial proposal apply cannot rewrite existing branch projections")
         seed = PackageCandidate.model_validate_json(
             (self.run_dir / "seed-candidate.json").read_text(encoding="utf-8")
         )
-        source_graph = PackageAnalyzer().analyze(self.project_root / seed.source_package_ref).graph
+        if seed.candidate_id != state.seed_candidate_id:
+            raise ValueError("initial proposal seed differs from evolution state")
+        branch_plan = self._read("branch-plan.json")
+        raw_branches = branch_plan.get("branches")
+        if not isinstance(raw_branches, list) or len(raw_branches) != self.config.branch_count:
+            raise ValueError("initial branch plan does not match frozen branch count")
+        planned_work_ids = tuple(str(item["work_id"]) for item in raw_branches)
+        if len(planned_work_ids) != len(set(planned_work_ids)):
+            raise ValueError("initial branch plan repeats proposal work")
         with PatchProposalStore(self.run_dir / "proposal-work.sqlite3") as proposal_store:
             all_works = proposal_store.work_items()
             all_submissions = proposal_store.submissions()
         by_work_id = {item.work_id: item for item in all_works}
-        completed_pairs = [
+        all_completed_pairs = [
             (by_work_id[submission.work_id], submission)
             for submission in all_submissions
             if submission.status is ProposalWorkStatus.COMPLETED
             and submission.patch is not None
             and submission.work_id in by_work_id
         ]
-        if len(completed_pairs) < self.config.branch_count:
-            raise ValueError("all required branch proposals must be ingested before apply")
+        completed_pairs: list[tuple[PatchProposalWorkItem, PatchProposalSubmission]] = []
+        for planned_work_id in planned_work_ids:
+            matches = [
+                pair
+                for pair in all_completed_pairs
+                if pair[0].work_id == planned_work_id
+                or pair[0].work_id.startswith(f"{planned_work_id}-repair-")
+            ]
+            if len(matches) != 1:
+                raise ValueError("each initial branch requires one completed typed proposal")
+            completed_pairs.append(matches[0])
         works = [item for item, _submission in completed_pairs]
         submissions = [submission for _item, submission in completed_pairs]
+        for work, submission in completed_pairs:
+            failure = work.actionable_side_information.get("failure_evidence")
+            generation = work.actionable_side_information.get("generation_contract")
+            patch = submission.patch
+            if (
+                work.work_type != "package_patch_proposal"
+                or work.run_id != self.config.run_id
+                or work.parent_candidate_id != seed.candidate_id
+                or work.parent_snapshot_hash != seed.snapshot_hash
+                or work.parent_content_hash != seed.content_hash
+                or generation is not None
+                or not isinstance(failure, dict)
+                or failure.get("kind") != "low_score"
+                or patch is None
+                or patch.proposal_work_id != work.work_id
+                or patch.base_candidate_id != seed.candidate_id
+                or patch.base_snapshot_hash != seed.snapshot_hash
+                or patch.base_content_hash != seed.content_hash
+            ):
+                raise ValueError("initial proposal apply received non-initial or stale work")
+        if (
+            state.budget_usage.candidates + len(completed_pairs)
+            > self.config.runtime_budget.max_candidates
+        ):
+            raise ValueError("initial proposal apply exceeds the frozen candidate budget")
         causality = audit_causality(works, submissions)
         if not causality["valid"]:
             raise ValueError("proposal causality audit failed")
+        source_graph = PackageAnalyzer().analyze(self.project_root / seed.source_package_ref).graph
         self._write("proposal-causality-audit.json", causality)
         root = freeze_lineage_root(
             package_id=seed.package_id,
@@ -1564,13 +1662,21 @@ class R4EvolutionController:
                 self._write(f"candidates/{candidate.candidate_id}/application.json", application)
                 self._write(f"candidates/{candidate.candidate_id}/patch.json", patch)
                 self._write(f"branches/{branch.branch_id}.json", branch)
+                self._seal_materialized_candidate_bundle(
+                    candidate,
+                    application,
+                    patch,
+                    graph,
+                )
                 with CandidateStore(self.run_dir / "candidates.sqlite3") as store:
                     store.add_candidate(candidate, CandidateStatus.PROPOSED)
                 branches.append(branch.model_dump(mode="json"))
                 candidate_ids.append(candidate.candidate_id)
         if len(candidate_ids) < self.config.branch_count:
             raise ValueError("fewer than two valid mutation branches survived Gate 0/1")
-        usage = state.budget_usage.model_copy(update={"candidates": len(candidate_ids)})
+        usage = state.budget_usage.model_copy(
+            update={"candidates": state.budget_usage.candidates + len(candidate_ids)}
+        )
         self._save_state(
             state.model_copy(
                 update={
@@ -1596,6 +1702,195 @@ class R4EvolutionController:
     def _candidate_patch(self, candidate_id: str) -> PackagePatch:
         return PackagePatch.model_validate_json(
             (self.run_dir / f"candidates/{candidate_id}/patch.json").read_text(encoding="utf-8")
+        )
+
+    def _seal_materialized_candidate_bundle(
+        self,
+        candidate: PackageCandidate,
+        application: PatchApplication,
+        patch: PackagePatch,
+        graph: PackageGraph,
+    ) -> dict[str, Any]:
+        """Validate and append-only seal one immutable materialized Candidate bundle."""
+
+        candidate_dir = self.run_dir / f"candidates/{candidate.candidate_id}"
+        required = {
+            "candidate.json": "application/json",
+            "application.json": "application/json",
+            "patch.json": "application/json",
+            "graph.json": "application/json",
+        }
+        optional = {"branch.json": "application/json"}
+        existing_files = {
+            path.relative_to(candidate_dir).as_posix()
+            for path in candidate_dir.rglob("*")
+            if path.is_file()
+        }
+        allowed = set(required) | set(optional) | {
+            CANDIDATE_BUNDLE_SEAL_NAME,
+            "artifact-index.json",
+        }
+        missing = sorted(set(required) - existing_files)
+        unexpected = sorted(existing_files - allowed)
+        if missing or unexpected:
+            raise ValueError(
+                "Candidate bundle file set is incomplete or unbounded: "
+                f"missing={missing}, unexpected={unexpected}"
+            )
+        stored_candidate = PackageCandidate.model_validate_json(
+            (candidate_dir / "candidate.json").read_text(encoding="utf-8")
+        )
+        stored_application = PatchApplication.model_validate_json(
+            (candidate_dir / "application.json").read_text(encoding="utf-8")
+        )
+        stored_patch = PackagePatch.model_validate_json(
+            (candidate_dir / "patch.json").read_text(encoding="utf-8")
+        )
+        stored_graph = PackageGraph.model_validate_json(
+            (candidate_dir / "graph.json").read_text(encoding="utf-8")
+        )
+        if (
+            stored_candidate != candidate
+            or stored_application != application
+            or stored_patch != patch
+            or stored_graph != graph
+        ):
+            raise ValueError("Candidate bundle files differ from materialization outputs")
+        if candidate.created_from_run != self.config.run_id:
+            raise ValueError("Candidate bundle belongs to another evolution run")
+        if (
+            application.status is not PatchApplicationStatus.APPLIED
+            or application.candidate_id != candidate.candidate_id
+            or application.candidate_content_hash != candidate.content_hash
+            or application.patch_id != patch.patch_id
+            or application.parent_candidate_id != patch.base_candidate_id
+            or application.parent_content_hash != patch.base_content_hash
+            or patch.base_snapshot_hash != candidate.snapshot_hash
+            or graph.package_id != candidate.package_id
+            or graph.snapshot_hash != candidate.content_hash
+        ):
+            raise ValueError("Candidate/Application/Patch/Graph identity mismatch")
+        if application.workspace_ref is None:
+            raise ValueError("materialized Candidate lacks a Package workspace")
+        workspace = self._safe_project_ref(application.workspace_ref, directory=True)
+        workspace_snapshot = load_package(workspace)
+        workspace_analysis = PackageAnalyzer().analyze(workspace)
+        if (
+            workspace_snapshot.package_id != candidate.package_id
+            or workspace_snapshot.snapshot_hash != candidate.content_hash
+            or workspace_analysis.graph != graph
+        ):
+            raise ValueError("Candidate workspace Package or graph content mismatch")
+        with CandidateStore(self.run_dir / "candidates.sqlite3") as candidates:
+            direct_parents = tuple(candidates.candidate(item) for item in candidate.parent_ids)
+            base = candidates.candidate(patch.base_candidate_id)
+            ancestors: set[str] = set()
+            pending = list(candidate.parent_ids)
+            while pending:
+                parent_id = pending.pop()
+                if parent_id in ancestors:
+                    continue
+                ancestors.add(parent_id)
+                pending.extend(candidates.candidate(parent_id).parent_ids)
+        if (
+            not direct_parents
+            or candidate.generation != max(item.generation for item in direct_parents) + 1
+            or any(
+                item.package_id != candidate.package_id
+                or item.snapshot_hash != candidate.snapshot_hash
+                for item in direct_parents
+            )
+            or base.candidate_id not in ancestors
+            or base.package_id != candidate.package_id
+            or base.snapshot_hash != candidate.snapshot_hash
+            or base.content_hash != patch.base_content_hash
+        ):
+            raise ValueError("Candidate parent or lineage binding mismatch")
+        if application.graph_diff is not None and (
+            application.graph_diff.before_snapshot != base.content_hash
+            or application.graph_diff.after_snapshot != candidate.content_hash
+        ):
+            raise ValueError("Candidate graph diff does not bind base and child content")
+        branch_ref: str | None = None
+        if (candidate_dir / "branch.json").is_file():
+            branch = MutationBranchState.model_validate_json(
+                (candidate_dir / "branch.json").read_text(encoding="utf-8")
+            )
+            if (
+                branch.package_id != candidate.package_id
+                or branch.source_snapshot_hash != candidate.snapshot_hash
+                or branch.head_candidate_id != candidate.candidate_id
+                or branch.generation != candidate.generation
+                or branch.candidate_chain[-1] != candidate.candidate_id
+            ):
+                raise ValueError("Candidate branch lineage binding mismatch")
+            branch_ref = "branch.json"
+
+        artifact_media_types = dict(required)
+        if branch_ref is not None:
+            artifact_media_types[branch_ref] = optional[branch_ref]
+        artifact_hashes = {
+            relative: sha256_bytes((candidate_dir / relative).read_bytes())
+            for relative in sorted(artifact_media_types)
+        }
+        binding = {
+            "schema_version": "1.0.0",
+            "binding_kind": "package_candidate_bundle",
+            "candidate_id": candidate.candidate_id,
+            "package_id": candidate.package_id,
+            "source_snapshot_hash": candidate.snapshot_hash,
+            "content_hash": candidate.content_hash,
+            "parent_ids": list(candidate.parent_ids),
+            "generation": candidate.generation,
+            "created_from_run": candidate.created_from_run,
+            "base_candidate_id": patch.base_candidate_id,
+            "patch_id": patch.patch_id,
+            "application_id": application.application_id,
+            "workspace_ref": application.workspace_ref,
+            "workspace_snapshot_hash": workspace_snapshot.snapshot_hash,
+            "branch_ref": branch_ref,
+            "artifact_hashes": artifact_hashes,
+        }
+        store = ArtifactStore(candidate_dir)
+        binding_ref = store.write_json_append_only(CANDIDATE_BUNDLE_SEAL_NAME, binding)
+        for relative, media_type in sorted(artifact_media_types.items()):
+            store.index_existing_append_only(relative, media_type)
+        verification = store.verify_complete()
+        return {
+            "candidate_id": candidate.candidate_id,
+            "binding_ref": (candidate_dir / CANDIDATE_BUNDLE_SEAL_NAME)
+            .relative_to(self.project_root)
+            .as_posix(),
+            "binding_sha256": binding_ref.sha256,
+            "artifact_index_ref": (candidate_dir / "artifact-index.json")
+            .relative_to(self.project_root)
+            .as_posix(),
+            "artifact_index_sha256": sha256_bytes(
+                (candidate_dir / "artifact-index.json").read_bytes()
+            ),
+            "verification": verification.as_dict(),
+        }
+
+    def seal_candidate_bundle(self, candidate_id: str) -> dict[str, Any]:
+        """Backfill or verify one materialized Candidate through the shared seal path."""
+
+        candidate_dir = self.run_dir / f"candidates/{candidate_id}"
+        candidate = PackageCandidate.model_validate_json(
+            (candidate_dir / "candidate.json").read_text(encoding="utf-8")
+        )
+        if self._candidate(candidate_id) != candidate:
+            raise ValueError("CandidateStore differs from the Candidate bundle")
+        return self._seal_materialized_candidate_bundle(
+            candidate,
+            PatchApplication.model_validate_json(
+                (candidate_dir / "application.json").read_text(encoding="utf-8")
+            ),
+            PackagePatch.model_validate_json(
+                (candidate_dir / "patch.json").read_text(encoding="utf-8")
+            ),
+            PackageGraph.model_validate_json(
+                (candidate_dir / "graph.json").read_text(encoding="utf-8")
+            ),
         )
 
     def plan_candidate(
@@ -1833,6 +2128,12 @@ class R4EvolutionController:
             pool.snapshot(self.run_dir / "evolution-pool.json")
 
     def finalize_validation(self, candidate_id: str) -> dict[str, Any]:
+        validation_run = self.run_dir / f"evals/{candidate_id}/validation"
+        summary_path = validation_run / "candidate-run-summary.json"
+        if summary_path.is_file():
+            summary = self._read(summary_path.relative_to(self.run_dir).as_posix())
+            if summary.get("status") == "evidence_incomplete":
+                return self._finalize_validation_incomplete(candidate_id, validation_run)
         train = self._paired_scores(candidate_id, "train")
         validation = self._paired_scores(candidate_id, "validation")
         candidate = self._candidate(candidate_id)
@@ -1841,14 +2142,13 @@ class R4EvolutionController:
         # A merge child has multiple lineage parents but its deterministic union
         # is rebased onto the explicit application parent (the common LCA).
         parent = self._candidate(application.parent_candidate_id)
-        secondary = derive_task_score_secondary_evidence(self.project_root, validation)
-        secondary_ref = (
-            (self.run_dir / f"secondary-objectives/{candidate_id}.json")
-            .relative_to(self.project_root)
-            .as_posix()
-        )
-        self._write(f"secondary-objectives/{candidate_id}.json", secondary)
-        efficiency_delta = secondary.improvements["task_score_efficiency"]
+        (
+            efficiency_regression,
+            secondary_improvements,
+            secondary_evidence_refs,
+            relative_policy,
+            relative_evidence,
+        ) = self._validation_efficiency_inputs(candidate_id, validation)
         decision = ValidationGatedAcceptance(
             self.project_root, self.run_dir, run_id=self.config.run_id
         ).evaluate(
@@ -1858,9 +2158,11 @@ class R4EvolutionController:
             application,
             train_pairs=train,
             validation_pairs=validation,
-            efficiency_regression=max(0.0, -efficiency_delta),
-            secondary_objective_improvements=secondary.improvements,
-            secondary_evidence_refs=(*secondary.evidence_refs, secondary_ref),
+            efficiency_regression=efficiency_regression,
+            secondary_objective_improvements=secondary_improvements,
+            secondary_evidence_refs=secondary_evidence_refs,
+            relative_efficiency_policy=relative_policy,
+            relative_efficiency_evidence=relative_evidence,
             minibatch_policy=self.config.train_policy,
             validation_policy=self.config.validation_policy,
             record_evolution_candidate=False,
@@ -1902,10 +2204,127 @@ class R4EvolutionController:
                 RuntimeBarrier.CANDIDATE_VALIDATION_COMPLETE,
                 candidate_gate_summary={candidate_id: decision.verdict.value},
                 continuation_risk_zh=(
-                    "该候选已完整覆盖 3-case held-out validation; 继续不会改写已完成分数。"
+                    "该候选已完整覆盖冻结 held-out validation; 继续不会改写已完成分数。"
                 ),
             )
         return result
+
+    def _validation_efficiency_inputs(
+        self,
+        candidate_id: str,
+        validation: tuple[PairedScore, ...],
+    ) -> tuple[
+        float,
+        dict[str, float] | None,
+        tuple[str, ...],
+        RelativeEfficiencyPolicy | None,
+        RelativeEfficiencyEvidence | None,
+    ]:
+        """Resolve v1/v2 evidence for the sole ValidationGatedAcceptance path."""
+
+        efficiency_regression = 0.0
+        secondary_improvements: dict[str, float] | None = None
+        secondary_evidence_refs: tuple[str, ...] = ()
+        relative_policy: RelativeEfficiencyPolicy | None = None
+        relative_evidence: RelativeEfficiencyEvidence | None = None
+        if self.config.efficiency_policy_mode == "relative_v2":
+            relative_policy = self.config.relative_efficiency_policy
+            assert relative_policy is not None
+            policy_path = self.run_dir / "relative-efficiency-policy.json"
+            if not policy_path.is_file():
+                raise ValueError("relative_v2 run lacks its frozen policy artifact")
+            persisted_policy = type(relative_policy).model_validate_json(
+                policy_path.read_text(encoding="utf-8")
+            )
+            if persisted_policy != relative_policy:
+                raise ValueError("relative_v2 policy artifact differs from resolved config")
+            reference_key = ReferenceEvidenceKey.model_validate_json(
+                (self.run_dir / "reference-evidence-key.json").read_text(encoding="utf-8")
+            )
+            relative_evidence = derive_relative_efficiency_evidence(
+                self.project_root,
+                validation,
+                candidate_id=candidate_id,
+                reference_run_ref=reference_key.reference_run_ref,
+                reference_key_hash=reference_key.key_hash,
+                policy=relative_policy,
+            )
+            evidence_relative = f"relative-efficiency-evidence/{candidate_id}.json"
+            self._write(evidence_relative, relative_evidence)
+            secondary_evidence_refs = (
+                policy_path.relative_to(self.project_root).as_posix(),
+                (self.run_dir / evidence_relative).relative_to(self.project_root).as_posix(),
+            )
+        else:
+            secondary = derive_task_score_secondary_evidence(
+                self.project_root, validation
+            )
+            secondary_ref = (
+                (self.run_dir / f"secondary-objectives/{candidate_id}.json")
+                .relative_to(self.project_root)
+                .as_posix()
+            )
+            self._write(f"secondary-objectives/{candidate_id}.json", secondary)
+            secondary_improvements = secondary.improvements
+            secondary_evidence_refs = (*secondary.evidence_refs, secondary_ref)
+            efficiency_delta = secondary.improvements["task_score_efficiency"]
+            efficiency_regression = max(0.0, -efficiency_delta)
+        return (
+            efficiency_regression,
+            secondary_improvements,
+            secondary_evidence_refs,
+            relative_policy,
+            relative_evidence,
+        )
+
+    def _finalize_validation_incomplete(
+        self,
+        candidate_id: str,
+        validation_run: Path,
+    ) -> dict[str, Any]:
+        """Persist one fail-closed held-out terminal state without inventing a Gate."""
+
+        state = self.state()
+        if candidate_id in state.evaluated_candidate_ids:
+            raise ValueError("complete GateDecision cannot be replaced by incomplete evidence")
+        admission_path = self.run_dir / f"train-admission/{candidate_id}.json"
+        if not admission_path.is_file():
+            raise ValueError("validation-incomplete candidate lacks train admission")
+        admission = TrainAdmission.model_validate_json(admission_path.read_text(encoding="utf-8"))
+        if not admission.passed:
+            raise ValueError("train-rejected candidate cannot resolve held-out validation")
+        required_task_ids = self._candidate_split_task_ids(candidate_id, "validation")
+        resolution = build_validation_incomplete_resolution(
+            self.project_root,
+            validation_run,
+            owner_run_id=self.config.run_id,
+            candidate_id=candidate_id,
+            required_task_ids=required_task_ids,
+        )
+        relative = f"validation-resolutions/{candidate_id}.json"
+        target = self.run_dir / relative
+        if target.is_file():
+            stored = CandidateValidationIncompleteResolution.model_validate_json(
+                target.read_text(encoding="utf-8")
+            )
+            if stored != resolution:
+                raise ValueError("validation-incomplete resolution changed after persistence")
+        else:
+            self._write(relative, resolution)
+        if candidate_id not in state.validation_incomplete_candidate_ids:
+            self._save_state(
+                state.model_copy(
+                    update={
+                        "validation_incomplete_candidate_ids": tuple(
+                            dict.fromkeys(
+                                (*state.validation_incomplete_candidate_ids, candidate_id)
+                            )
+                        ),
+                        "phase": EvolutionPhase.REFLECTION,
+                    }
+                )
+            )
+        return resolution.model_dump(mode="json")
 
     def _identity(
         self,
@@ -2088,6 +2507,12 @@ class R4EvolutionController:
         self._write(f"candidates/{child.candidate_id}/graph.json", graph)
         self._write(f"candidates/{child.candidate_id}/application.json", application)
         self._write(f"candidates/{child.candidate_id}/patch.json", merge_patch)
+        self._seal_materialized_candidate_bundle(
+            child,
+            application,
+            merge_patch,
+            graph,
+        )
         self._write("merge/contribution-map.json", contribution_map)
         self._write(
             "merge/build-record.json",
@@ -2726,6 +3151,7 @@ class R4EvolutionController:
                     "parent_candidate_id": parent.candidate_id,
                     "parent_generation": parent.generation,
                     "planned_generation": parent.generation + 1,
+                    "planned_from_phase": state.phase.value,
                     "branch_id": branch["branch_id"],
                     "branch_root_candidate_id": branch["branch_root_candidate_id"],
                     "train_feedback_ref": feedback_ref,
@@ -2743,6 +3169,13 @@ class R4EvolutionController:
                 },
                 "graph_slice": scope.failure_slice.model_dump(mode="json"),
                 "causal_contract": {"required": True},
+                "causal_targets": self._causal_targets(scope, evidence_refs),
+                "preserve": [
+                    "the exact generation-1 parent Package outside exported targets",
+                    "unrelated package behavior",
+                    "public interfaces unless explicitly targeted",
+                    "all held-out, sibling, deployable, and merge evidence",
+                ],
             },
             rejected_history=rejected_history,
             output_instructions=(
@@ -2781,6 +3214,283 @@ class R4EvolutionController:
             reason_codes=("train_admitted_pareto_parent_refinement_planned",),
         )
         self._write(f"generation2-plans/{parent.candidate_id}.json", outcome)
+        return outcome
+
+    @staticmethod
+    def _generation2_evidence_refs(
+        work: PatchProposalWorkItem,
+        patch: PackagePatch,
+    ) -> tuple[str, ...]:
+        generation = work.actionable_side_information.get("generation_contract", {})
+        generation_refs = (
+            str(generation.get("train_feedback_ref", "")),
+            *(str(item) for item in generation.get("train_evolution_pool_refs", [])),
+        ) if isinstance(generation, dict) else ()
+        operation_refs = tuple(
+            reference for operation in patch.operations for reference in operation.evidence_refs
+        )
+        target_set_refs = work.target_set.evidence_refs if work.target_set is not None else ()
+        return tuple(
+            reference
+            for reference in (
+                *work.evidence_refs,
+                *patch.evidence_refs,
+                *operation_refs,
+                *target_set_refs,
+                *generation_refs,
+            )
+            if reference
+        )
+
+    def apply_generation2_refinement(self, work_id: str) -> dict[str, Any]:
+        """Materialize one typed generation-2 proposal on its exact branch parent."""
+
+        outcome_relative = f"generation2-applications/{work_id}.json"
+        outcome_path = self.run_dir / outcome_relative
+        if outcome_path.is_file():
+            outcome = self._read(outcome_relative)
+            candidate_id = outcome.get("candidate_id")
+            if outcome.get("status") == "materialized":
+                if not isinstance(candidate_id, str):
+                    raise ValueError("stored generation-2 outcome lacks candidate identity")
+                candidate = self._candidate(candidate_id)
+                branch = MutationBranchState.model_validate(
+                    self._read(f"branches/{outcome['branch_id']}.json")
+                )
+                state = self.state()
+                if (
+                    candidate.generation != 2
+                    or candidate.parent_ids != (outcome.get("parent_candidate_id"),)
+                    or branch.head_candidate_id != candidate_id
+                    or branch.candidate_chain[-1] != candidate_id
+                    or candidate_id not in state.branch_candidate_ids
+                ):
+                    raise ValueError("stored generation-2 outcome differs from durable state")
+            return outcome
+
+        state = self.state()
+        if state.phase not in {EvolutionPhase.TRAIN_EXECUTION, EvolutionPhase.REFLECTION}:
+            raise ValueError("generation-2 apply requires train_execution or reflection phase")
+        with PatchProposalStore(self.run_dir / "proposal-work.sqlite3") as proposal_store:
+            work = proposal_store.get_work(work_id)
+            submissions = [
+                item for item in proposal_store.submissions() if item.work_id == work_id
+            ]
+        if len(submissions) != 1:
+            raise ValueError("generation-2 apply requires one completed typed submission")
+        submission = submissions[0]
+        if submission.status is not ProposalWorkStatus.COMPLETED or submission.patch is None:
+            raise ValueError("generation-2 apply requires one completed typed submission")
+        patch = submission.patch
+        generation = work.actionable_side_information.get("generation_contract")
+        failure = work.actionable_side_information.get("failure_evidence")
+        if not isinstance(generation, dict) or not isinstance(failure, dict):
+            raise ValueError("generation-2 work lacks its typed generation contract")
+        parent_candidate_id = str(generation.get("parent_candidate_id", ""))
+        branch_id = str(generation.get("branch_id", ""))
+        if (
+            work.work_type != "package_patch_proposal"
+            or work.run_id != self.config.run_id
+            or failure.get("kind") != "train_refinement"
+            or generation.get("parent_generation") != 1
+            or generation.get("planned_generation") != 2
+            or generation.get("planned_from_phase") != state.phase.value
+            or generation.get("held_out_evidence_read") is not False
+            or generation.get("sibling_evidence_read") is not False
+            or generation.get("merge_path_used") is not False
+            or work.parent_candidate_id != parent_candidate_id
+        ):
+            raise ValueError("proposal work is not an active parent-bound generation-2 work")
+        plan = Generation2PlanningOutcome.model_validate_json(
+            (self.run_dir / f"generation2-plans/{parent_candidate_id}.json").read_text(
+                encoding="utf-8"
+            )
+        )
+        if (
+            plan.status != "planned"
+            or plan.proposal_work_id != work_id
+            or plan.parent_candidate_id != parent_candidate_id
+            or plan.parent_generation != 1
+            or plan.planned_generation != 2
+            or plan.branch_id != branch_id
+            or plan.held_out_evidence_read
+        ):
+            raise ValueError("generation-2 work differs from its immutable plan")
+
+        parent = self._candidate(parent_candidate_id)
+        seed = self._candidate(state.seed_candidate_id)
+        branch = MutationBranchState.model_validate(self._read(f"branches/{branch_id}.json"))
+        if (
+            parent.generation != 1
+            or parent.package_id != seed.package_id
+            or parent.snapshot_hash != seed.snapshot_hash
+            or branch.package_id != parent.package_id
+            or branch.source_snapshot_hash != parent.snapshot_hash
+            or branch.lineage_root_candidate_id != seed.candidate_id
+            or branch.branch_root_candidate_id != generation.get("branch_root_candidate_id")
+            or branch.head_candidate_id != parent.candidate_id
+            or branch.generation != parent.generation
+            or branch.candidate_chain[-1] != parent.candidate_id
+            or parent.candidate_id not in state.branch_candidate_ids
+        ):
+            raise ValueError("generation-2 parent is stale, cross-package, or cross-snapshot")
+        if (
+            work.parent_snapshot_hash != parent.snapshot_hash
+            or work.parent_content_hash != parent.content_hash
+            or patch.proposal_work_id != work.work_id
+            or patch.base_candidate_id != parent.candidate_id
+            or patch.base_snapshot_hash != parent.snapshot_hash
+            or patch.base_content_hash != parent.content_hash
+            or set(patch.selected_node_ids) != {item.node_id for item in work.targets}
+        ):
+            raise ValueError("generation-2 proposal is stale or bound to another parent")
+        evidence_refs = self._generation2_evidence_refs(work, patch)
+        if any(self._held_out_reference(reference) for reference in evidence_refs):
+            raise ValueError("held-out evidence entered generation-2 materialization")
+        causality = audit_causality((work,), (submission,))
+        if not causality["valid"]:
+            raise ValueError("generation-2 proposal causality audit failed")
+        if state.budget_usage.candidates >= self.config.runtime_budget.max_candidates - 1:
+            raise ValueError("generation-2 candidate would consume the reserved merge slot")
+
+        parent_application = self._candidate_application(parent.candidate_id)
+        if (
+            parent_application.status is not PatchApplicationStatus.APPLIED
+            or parent_application.candidate_id != parent.candidate_id
+            or parent_application.candidate_content_hash != parent.content_hash
+            or parent_application.workspace_ref is None
+        ):
+            raise ValueError("generation-2 parent lacks its exact materialized application")
+        parent_workspace = self._safe_project_ref(
+            parent_application.workspace_ref,
+            directory=True,
+        )
+        if load_package(parent_workspace).snapshot_hash != parent.content_hash:
+            raise ValueError("generation-2 parent workspace content hash is stale")
+        parent_graph = PackageGraph.model_validate_json(
+            (self.run_dir / f"candidates/{parent.candidate_id}/graph.json").read_text(
+                encoding="utf-8"
+            )
+        )
+        if parent_graph.snapshot_hash != parent.content_hash:
+            raise ValueError("generation-2 parent graph is stale")
+
+        with RejectedEditStore(self.run_dir / "rejected.sqlite3") as rejected:
+            gate0 = run_schema_gate(parent, patch, parent_graph, rejected_store=rejected)
+            application, candidate = apply_package_patch(
+                self.project_root,
+                parent,
+                patch,
+                self.run_dir / "candidate-workspaces",
+                run_id=self.config.run_id,
+                candidate_parent_ids=(parent.candidate_id,),
+                candidate_generation=2,
+            )
+            gate1 = run_static_gate(
+                self.project_root,
+                application,
+                baseline_package_root=parent_workspace,
+            )
+        self._write(f"patches/{patch.patch_id}.json", patch)
+        self._write(f"applications/{application.application_id}.json", application)
+        self._write(
+            f"pre-eval-gates/{patch.patch_id}.json",
+            {"gate_0": gate0.model_dump(mode="json"), "gate_1": gate1.model_dump(mode="json")},
+        )
+        if (
+            gate0.outcome is not GateOutcome.PASSED
+            or gate1.outcome is not GateOutcome.PASSED
+            or application.status is not PatchApplicationStatus.APPLIED
+            or candidate is None
+            or application.workspace_ref is None
+        ):
+            outcome = {
+                "schema_version": "1.0.0",
+                "status": "pre_eval_rejected",
+                "work_id": work_id,
+                "parent_candidate_id": parent.candidate_id,
+                "branch_id": branch.branch_id,
+                "patch_id": patch.patch_id,
+                "application_id": application.application_id,
+                "gate_0": gate0.outcome.value,
+                "gate_1": gate1.outcome.value,
+                "parent_bound": True,
+            }
+            self._write(outcome_relative, outcome)
+            return outcome
+        if candidate.parent_ids != (parent.candidate_id,) or candidate.generation != 2:
+            raise ValueError("generation-2 candidate lineage differs from its exact parent")
+
+        refined_branch = branch.model_copy(
+            update={
+                "head_candidate_id": candidate.candidate_id,
+                "generation": 2,
+                "operator_history": (*branch.operator_history, candidate.operator),
+                "candidate_chain": (*branch.candidate_chain, candidate.candidate_id),
+            }
+        )
+        refined_branch = MutationBranchState.model_validate(
+            refined_branch.model_dump(mode="json")
+        )
+        candidate_graph = PackageAnalyzer().analyze(
+            self.project_root / application.workspace_ref
+        ).graph
+        self._write(f"candidates/{candidate.candidate_id}/candidate.json", candidate)
+        self._write(f"candidates/{candidate.candidate_id}/graph.json", candidate_graph)
+        self._write(f"candidates/{candidate.candidate_id}/application.json", application)
+        self._write(f"candidates/{candidate.candidate_id}/patch.json", patch)
+        self._write(f"candidates/{candidate.candidate_id}/branch.json", refined_branch)
+        self._write(f"branches/{branch.branch_id}.json", refined_branch)
+        self._seal_materialized_candidate_bundle(
+            candidate,
+            application,
+            patch,
+            candidate_graph,
+        )
+        with CandidateStore(self.run_dir / "candidates.sqlite3") as store:
+            store.add_candidate(candidate, CandidateStatus.PROPOSED)
+        if self.config.active_session_budget_policy is not None:
+            self._session().record_internal_usage(
+                accounting_id=f"candidate:{candidate.candidate_id}",
+                usage=UsageAllowance(
+                    agent_calls=0,
+                    estimated_tokens=0,
+                    active_wall_clock_ms=0,
+                    candidates=1,
+                ),
+            )
+        usage = state.budget_usage.model_copy(
+            update={"candidates": state.budget_usage.candidates + 1}
+        )
+        self._save_state(
+            state.model_copy(
+                update={
+                    "phase": EvolutionPhase.TRAIN_EXECUTION,
+                    "branch_candidate_ids": (
+                        *state.branch_candidate_ids,
+                        candidate.candidate_id,
+                    ),
+                    "budget_usage": usage,
+                }
+            )
+        )
+        outcome = {
+            "schema_version": "1.0.0",
+            "status": "materialized",
+            "work_id": work_id,
+            "parent_candidate_id": parent.candidate_id,
+            "candidate_id": candidate.candidate_id,
+            "generation": candidate.generation,
+            "branch_id": refined_branch.branch_id,
+            "candidate_chain": list(refined_branch.candidate_chain),
+            "patch_id": patch.patch_id,
+            "application_id": application.application_id,
+            "gate_0": gate0.outcome.value,
+            "gate_1": gate1.outcome.value,
+            "parent_bound": True,
+            "held_out_evidence_read": False,
+        }
+        self._write(outcome_relative, outcome)
         return outcome
 
     def prepare_recovery_proposal(self, rejected_candidate_id: str) -> PatchProposalWorkItem:
@@ -2934,26 +3644,7 @@ class R4EvolutionController:
                 },
                 "graph_slice": scope.failure_slice.model_dump(mode="json"),
                 "causal_contract": {"required": True},
-                "causal_targets": [
-                    {
-                        "node_id": node.node_id,
-                        "failure_evidence_ids": list(evidence_refs),
-                        "causal_path_node_ids": (
-                            list(scope.target_set.causal_path_node_ids)
-                            if scope.target_set is not None
-                            else [node.node_id]
-                        ),
-                        "expected_affected_assertions": [],
-                        "expected_affected_metrics": [
-                            "task_correctness",
-                            "output_quality",
-                            "skill_gain",
-                        ],
-                        "allowed_operation_classes": [self._operation_for(node).value],
-                        "executable_target": node.path.endswith((".py", ".sh")),
-                    }
-                    for node in scope.selected_nodes
-                ],
+                "causal_targets": self._causal_targets(scope, evidence_refs),
                 "preserve": [
                     "the rejected edit must not be copied implicitly",
                     "unrelated package behavior",
@@ -3097,6 +3788,12 @@ class R4EvolutionController:
         self._write(f"candidates/{candidate.candidate_id}/application.json", application)
         self._write(f"candidates/{candidate.candidate_id}/patch.json", patch)
         self._write(f"branches/{branch.branch_id}.json", branch)
+        self._seal_materialized_candidate_bundle(
+            candidate,
+            application,
+            patch,
+            candidate_graph,
+        )
         with CandidateStore(self.run_dir / "candidates.sqlite3") as store:
             store.add_candidate(candidate, CandidateStatus.PROPOSED)
         usage = state.budget_usage.model_copy(
@@ -3187,6 +3884,31 @@ class R4EvolutionController:
             json.loads(path.read_text(encoding="utf-8")) for path in selector_cache_paths
         ]
         selector_cache_required = self.config.selector_graph_policy.mode == "static_observed"
+        admissions = {
+            path.stem: TrainAdmission.model_validate_json(path.read_text(encoding="utf-8"))
+            for path in sorted((self.run_dir / "train-admission").glob("candidate-*.json"))
+        }
+        required_validation = {
+            candidate_id for candidate_id, admission in admissions.items() if admission.passed
+        }
+        terminal_validation = set(state.evaluated_candidate_ids) | set(
+            state.validation_incomplete_candidate_ids
+        )
+        incomplete_resolution_valid = True
+        for candidate_id in state.validation_incomplete_candidate_ids:
+            resolution_path = self.run_dir / f"validation-resolutions/{candidate_id}.json"
+            if not resolution_path.is_file():
+                incomplete_resolution_valid = False
+                continue
+            resolution = CandidateValidationIncompleteResolution.model_validate_json(
+                resolution_path.read_text(encoding="utf-8")
+            )
+            incomplete_resolution_valid &= (
+                resolution.run_id == self.config.run_id
+                and resolution.candidate_id == candidate_id
+                and not resolution.gate_eligible
+                and not resolution.deployable
+            )
         result = {
             "schema_version": "1.0.0",
             "valid": (
@@ -3196,6 +3918,8 @@ class R4EvolutionController:
                 and merge_cross_package_count == 0
                 and isolation_valid
                 and (not selector_cache_required or bool(selector_cache_audits))
+                and required_validation == terminal_validation
+                and incomplete_resolution_valid
             ),
             "single_candidate_model": "gepase.optimizer.candidate.PackageCandidate",
             "single_patch_model": "gepase.mutation.schema.PackagePatch",
@@ -3217,6 +3941,15 @@ class R4EvolutionController:
                 ],
             },
             "reflection_count_by_candidate": reflection_counts,
+            "validation_resolution": {
+                "required_candidate_ids": sorted(required_validation),
+                "gate_decision_candidate_ids": sorted(state.evaluated_candidate_ids),
+                "evidence_incomplete_candidate_ids": sorted(
+                    state.validation_incomplete_candidate_ids
+                ),
+                "all_admitted_candidates_resolved": required_validation == terminal_validation,
+                "typed_incomplete_resolutions_valid": incomplete_resolution_valid,
+            },
             "proposal_causality": audit_causality(work_items, submissions),
             "isolation_valid": isolation_valid,
             "merge": merge_record,
@@ -3259,13 +3992,31 @@ class R4EvolutionController:
             candidate_id for candidate_id, admission in admissions.items() if admission.passed
         }
         evaluated = set(state.evaluated_candidate_ids)
-        if required_validation != evaluated:
-            missing = sorted(required_validation - evaluated)
-            extra = sorted(evaluated - required_validation)
+        incomplete = set(state.validation_incomplete_candidate_ids)
+        terminal_validation = evaluated | incomplete
+        if evaluated & incomplete:
+            raise ValueError("R4 validation terminal sets overlap")
+        if required_validation != terminal_validation:
+            missing = sorted(required_validation - terminal_validation)
+            extra = sorted(terminal_validation - required_validation)
             raise ValueError(
                 f"R4 cannot complete before all admitted candidates resolve validation: "
                 f"missing={missing}, extra={extra}"
             )
+        for candidate_id in incomplete:
+            resolution_path = self.run_dir / f"validation-resolutions/{candidate_id}.json"
+            if not resolution_path.is_file():
+                raise ValueError("validation-incomplete candidate lacks typed resolution")
+            resolution = CandidateValidationIncompleteResolution.model_validate_json(
+                resolution_path.read_text(encoding="utf-8")
+            )
+            if (
+                resolution.run_id != self.config.run_id
+                or resolution.candidate_id != candidate_id
+                or resolution.gate_eligible
+                or resolution.deployable
+            ):
+                raise ValueError("typed validation-incomplete resolution is inconsistent")
         outcome_path = self.run_dir / "merge/outcome.json"
         if outcome_path.is_file():
             merge_outcome = MergeOutcome.model_validate_json(
@@ -3283,6 +4034,35 @@ class R4EvolutionController:
                 raise ValueError("evaluated MergeOutcome child is absent from run state")
         elif not state.merge_candidate_ids or not set(state.merge_candidate_ids) <= evaluated:
             raise ValueError("R4 cannot complete before the legacy merge child resolves validation")
+
+        if state.phase is EvolutionPhase.COMPLETE:
+            runtime_report = self.run_dir / "scheduler/runtime-report.json"
+            audit_path = self.run_dir / "r4-audit.json"
+            if not runtime_report.is_file() or not audit_path.is_file():
+                raise ValueError("complete R4 state lacks terminal runtime/audit evidence")
+            audit = self._read("r4-audit.json")
+            if audit.get("valid") is not True:
+                raise ValueError("stored R4 completion audit is invalid")
+            if self.config.active_session_budget_policy is not None:
+                runtime_state = self._session().state()
+                if runtime_state.status is not RuntimeSessionStatus.COMPLETE:
+                    raise ValueError("complete R4 state and active-session status disagree")
+            return {
+                "phase": EvolutionPhase.COMPLETE.value,
+                "deployable_candidate_ids": list(state.deployable_candidate_ids),
+                "evaluated_candidate_ids": list(state.evaluated_candidate_ids),
+                "validation_incomplete_candidate_ids": list(
+                    state.validation_incomplete_candidate_ids
+                ),
+                "runtime_report_ref": runtime_report.relative_to(
+                    self.project_root
+                ).as_posix(),
+                "exhausted_axes": self._read("scheduler/runtime-report.json").get(
+                    "exhausted_axes", []
+                ),
+                "audit_valid": True,
+                "idempotent": True,
+            }
 
         runtime_state: ActiveSessionState | None = None
         if self.config.active_session_budget_policy is not None:
@@ -3310,6 +4090,10 @@ class R4EvolutionController:
                             else "not_deployable"
                         )
                         for candidate_id in state.evaluated_candidate_ids
+                    }
+                    | {
+                        candidate_id: "validation_evidence_incomplete"
+                        for candidate_id in state.validation_incomplete_candidate_ids
                     },
                     continuation_risk_zh=(
                         "预注册搜索已收口; 继续后 Core 将冻结 runtime, "
@@ -3497,6 +4281,9 @@ class R4EvolutionController:
             "phase": EvolutionPhase.COMPLETE.value,
             "deployable_candidate_ids": list(completed_state.deployable_candidate_ids),
             "evaluated_candidate_ids": list(completed_state.evaluated_candidate_ids),
+            "validation_incomplete_candidate_ids": list(
+                completed_state.validation_incomplete_candidate_ids
+            ),
             "runtime_report_ref": (self.run_dir / "scheduler/runtime-report.json")
             .relative_to(self.project_root)
             .as_posix(),

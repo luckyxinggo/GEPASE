@@ -14,6 +14,7 @@ from gepase.cli.app import app
 from gepase.evals.candidate_pipeline import (
     CandidateFunctionalCoordinator,
     CandidatePairSummary,
+    build_validation_incomplete_resolution,
 )
 from gepase.evals.eval_plan import RubricCriterion
 from gepase.evals.functional import (
@@ -207,6 +208,76 @@ def _single_attempt_terminalization(
         allowed_repair_attempts=0,
         terminalized_at=datetime(2026, 7, 30, tzinfo=UTC),
     )
+
+
+def test_validation_incomplete_resolution_partitions_frozen_tasks_without_fake_score() -> None:
+    local = ROOT / "artifacts/local"
+    local.mkdir(parents=True, exist_ok=True)
+    with tempfile.TemporaryDirectory(prefix="validation-resolution-", dir=local) as temporary:
+        run = Path(temporary) / "validation"
+        store = ArtifactStore(run)
+        terminalization = _single_attempt_terminalization(
+            run_id="fixture-owner",
+            task_id="task-incomplete",
+            work_id="grader-work-incomplete",
+        )
+        store.write_json(
+            "run-metadata.json",
+            {
+                "mode": "frozen-candidate",
+                "split": "validation",
+                "candidate_id": "candidate-fixture",
+                "selected_case_ids": ["task-scored", "task-incomplete"],
+            },
+        )
+        store.write_json(
+            "candidate-run-summary.json",
+            {
+                "candidate_id": "candidate-fixture",
+                "split": "validation",
+                "status": "evidence_incomplete",
+                "evidence_complete": False,
+                "gate_eligible": False,
+                "pair_summaries": [{"task_id": "task-scored"}],
+                "incomplete_cases": [
+                    {
+                        "task_id": "task-incomplete",
+                        "role": "independent_grader",
+                        "work_id": terminalization.work_id,
+                        "terminalization_id": terminalization.terminalization_id,
+                        "disposition": "evidence_incomplete",
+                    }
+                ],
+            },
+        )
+        store.write_json(
+            f"role-terminalizations/independent_grader/{terminalization.work_id}.json",
+            terminalization.model_dump(mode="json"),
+        )
+
+        first = build_validation_incomplete_resolution(
+            ROOT,
+            run,
+            owner_run_id="fixture-owner",
+            candidate_id="candidate-fixture",
+            required_task_ids=("task-scored", "task-incomplete"),
+        )
+        second = build_validation_incomplete_resolution(
+            ROOT,
+            run,
+            owner_run_id="fixture-owner",
+            candidate_id="candidate-fixture",
+            required_task_ids=("task-incomplete", "task-scored"),
+        )
+
+        assert first == second
+        assert not first.gate_eligible
+        assert not first.deployable
+        assert first.scored_task_ids == ("task-scored",)
+        assert first.incomplete_cases[0].terminalization_id == terminalization.terminalization_id
+        payload = first.model_dump(mode="json")
+        assert "score" not in payload
+        assert "winner" not in payload
 
 
 @pytest.mark.parametrize("role", tuple(FunctionalRole))
