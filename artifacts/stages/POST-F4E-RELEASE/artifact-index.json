@@ -1,0 +1,47 @@
+{
+  "artifacts": [
+    {
+      "media_type": "application/json",
+      "path": "core-generality-audit.json",
+      "sha256": "ff317b37095dd57bb006b37639d724bb29a283a0c3d6ee76949c3bed54cd7398",
+      "size_bytes": 1441
+    },
+    {
+      "media_type": "application/json",
+      "path": "machine-gates.json",
+      "sha256": "f591b9aa4a8642eb0e3174e62b42d5d1017ad72c4a24831db1f4ada5d0da0ce1",
+      "size_bytes": 1790
+    },
+    {
+      "media_type": "application/json",
+      "path": "publication-manifest.json",
+      "sha256": "f4160f270c15e06899722e1da12a11176125e0518c427dc29c4802e12a867e46",
+      "size_bytes": 1733
+    },
+    {
+      "media_type": "application/json",
+      "path": "source-f4e-evidence.json",
+      "sha256": "a28bef0d6741fa83b596bf85f941333a7709d99f2fd5ddda1b82d691a66ba0fd",
+      "size_bytes": 1201
+    },
+    {
+      "media_type": "application/json",
+      "path": "stage-report.json",
+      "sha256": "1e90403611ec45c902c0def4ae830d401246815f82cbabee822d44f06a56c7e8",
+      "size_bytes": 1848
+    },
+    {
+      "media_type": "application/json",
+      "path": "user-visual-confirmation.json",
+      "sha256": "f687b43e7b39b2ada08640b10819de67718857a3a6d354be530bfd786b73446e",
+      "size_bytes": 732
+    },
+    {
+      "media_type": "application/json",
+      "path": "verification.json",
+      "sha256": "6d9458c156df9ba96723a8d36d3fab956903acf7790184210633a376bde8167a",
+      "size_bytes": 1511
+    }
+  ],
+  "schema_version": "1.0.0"
+}

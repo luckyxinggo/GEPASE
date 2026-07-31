@@ -23,6 +23,21 @@ uv run gepase mock run \
 uv run gepase artifact verify artifacts/local/mock-run --format json
 ```
 
+Verify the published relative-efficiency v2 narrative report without access to private raw Agent
+workspaces:
+
+```bash
+uv run gepase artifact verify \
+  artifacts/runs/f4e-slack-gif-creator-relative-efficiency-v2-report \
+  --format json
+uv run gepase artifact verify artifacts/stages/POST-F4E-RELEASE --format json
+```
+
+The first command checks the 56-file self-contained report seal. The second verifies the curated
+release-stage evidence, including the F4e Machine Gate and user visual confirmation. Rebuilding the
+report from scratch still requires the unpublished sealed F4b/F4c raw evidence and is intentionally
+not promised by a clean public clone.
+
 ## 2. Reproduce the sealed canary result without rerunning Agents
 
 The committed R2–R5 evidence is content indexed. These commands verify the original EvalPlan,

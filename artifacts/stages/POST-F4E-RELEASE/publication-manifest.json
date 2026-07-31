@@ -1,0 +1,47 @@
+{
+  "schema_version": "1.0.0",
+  "stage_id": "POST-F4E-RELEASE",
+  "report_ref": "artifacts/runs/f4e-slack-gif-creator-relative-efficiency-v2-report",
+  "report_index_sha256": "842210ab10a4dca592fd2a74aa2f665c28b9c96d66384c466ce0a8ea72da789f",
+  "report_objects": 56,
+  "report_total_size_bytes": 12614943,
+  "task_native_gifs": 51,
+  "deployable_archives": [
+    {
+      "path": "packages/candidate-5e0d9d99c64bc48aec7ff44c.zip",
+      "sha256": "720b9bcc31b8676f20afa05bb591ea0364c228f4df04e871cc3ba75c7fb0caea"
+    },
+    {
+      "path": "packages/candidate-2e8e3a558badfda8648a46cc.zip",
+      "sha256": "6ff947894f602b9de982f3400fca4382ccee5585b652f54db9b4bb7110a47f56"
+    }
+  ],
+  "readme_held_out_task": "functional-validation-loop-sparkles-006",
+  "readme_gifs": [
+    {
+      "variant": "no-skill",
+      "path": "evidence/gifs/44-gif-25cec5b0a95e5d31469c63ba.gif",
+      "sha256": "53c2fe76abbb5b594666553f8951a980286a7996a33c564b0662f9a454ad887e"
+    },
+    {
+      "variant": "original",
+      "path": "evidence/gifs/45-gif-25bfb2d03163b320a64b30cf.gif",
+      "sha256": "9eadd1af8e60fcab6b65f86a298a420e2af28ad8bd3e106815793b69dc8ef7c0"
+    },
+    {
+      "variant": "candidate",
+      "display_rank": 1,
+      "path": "evidence/gifs/42-gif-4007d0e2d4dd38f41ac4437f.gif",
+      "sha256": "8c37788deb5c7bb7ba2cc31fc1984a18688814220676ea969a094dc978d9262f"
+    },
+    {
+      "variant": "candidate",
+      "display_rank": 2,
+      "path": "evidence/gifs/41-gif-2de981b5ec17e4a6cb54b2ae.gif",
+      "sha256": "307a3ca22e0a4f9a7c6c8d5c710e5f7531a77db040ba5f0e76715dc3ba93376b"
+    }
+  ],
+  "license_files_per_deployable_archive": 1,
+  "contains_raw_agent_workspace": false,
+  "contains_raw_reference_or_evolution": false
+}

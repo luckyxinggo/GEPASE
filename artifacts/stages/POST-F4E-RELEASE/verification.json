@@ -1,0 +1,44 @@
+{
+  "schema_version": "1.0.0",
+  "stage_id": "POST-F4E-RELEASE",
+  "targeted_tests": "21 passed",
+  "full_pytest": "263 passed",
+  "ruff": "passed",
+  "pyright": "0 errors, 0 warnings",
+  "schema_count": 65,
+  "schema_double_export_sha256": "823a46885ab996c436ea27c0d4902d8b6f2f7c7c73664dfc15935a216f77222b",
+  "markdown_links": "passed",
+  "license": "passed",
+  "tracked_only_secret_private_path_scan": {
+    "scanned_files": 2407,
+    "findings": 0,
+    "valid": true
+  },
+  "build": {
+    "sdist": "gepase-0.1.0.tar.gz",
+    "wheel": "gepase-0.1.0-py3-none-any.whl",
+    "valid": true
+  },
+  "git_diff_check": "passed",
+  "public_report": {
+    "checked": 56,
+    "missing": 0,
+    "hash_mismatch": 0,
+    "schema_errors": 0,
+    "unindexed_files": 0,
+    "valid": true,
+    "total_size_bytes": 12614943,
+    "under_20_mib": true,
+    "deployable_archives": 2,
+    "archive_license_and_private_path_scan": "passed"
+  },
+  "protected_seals": {
+    "f4c_evolution": "316fe6718e363bca70946b1c10c492f72946d212a147e73ad8c4b6aff04b3a37",
+    "f4b_reference": "486600bd5362c2699e63a84c6559e1aca0b09fbf876943c3837b310576c6ea46",
+    "f4d_stage": "3ac96ef7afa0051ba1ecc6636b0def6fc3ede3acfa2ec0f38f68ea5b8341ef11",
+    "f4c_v1_report": "7953ce167f4b076be62638764427ebd4e6f2f68b71fe72701287395ab047a05d",
+    "f4d_v2_report": "d8a1b2bc67469fc0df424e1213788c0716dab64eaa629790ff9034ff889c4171",
+    "unchanged": true
+  },
+  "legacy_r4_config_hash": "3a224bcb9f3887b6af9974915b51407be7d757535b71b18913af70ebcc757572"
+}

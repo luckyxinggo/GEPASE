@@ -1,0 +1,54 @@
+{
+  "schema_version": "1.0.0",
+  "stage_id": "POST-F4E-RELEASE",
+  "status": "complete",
+  "branch": "codex/f4-full-rerun",
+  "started_from_commit": "c41328e53dfae9e841ae4770b752fd76ce1acc74",
+  "summary_zh": "完成未来默认策略、历史兼容、公开 F4e 中文叙事报告与 GitHub 文档收敛；没有重新运行 Agent 或产生新效果证据。",
+  "code_implemented": {
+    "future_r4_default": "relative_v2",
+    "explicit_legacy_mode": "v1_legacy",
+    "future_report_default": "narrative_v1",
+    "explicit_classic_mode": "classic",
+    "validation_path": "existing RelativeEfficiencyPolicy/Evidence plus ValidationGatedAcceptance",
+    "second_system_added": false
+  },
+  "engineering_validation": {
+    "machine_gates": "7/7",
+    "full_pytest": "263 passed",
+    "ruff": "passed",
+    "pyright": "0 errors, 0 warnings",
+    "schema_double_export": "passed",
+    "markdown_links": "passed",
+    "license": "passed",
+    "secret_private_path_scan": "passed",
+    "build": "passed",
+    "artifact_seals": "passed"
+  },
+  "algorithm_effect_boundary": {
+    "displayed_outcome": "strict_improvement",
+    "deployable_frontier": 2,
+    "source": "existing sealed F4c executions with zero-Agent relative-efficiency v2 policy replay",
+    "new_agent_experiment": false,
+    "new_effect_score": false,
+    "cross_file_optimization_effect_proven": false
+  },
+  "usage": {
+    "agent_calls": 0,
+    "api_calls": 0,
+    "executors": 0,
+    "graders": 0,
+    "comparators": 0,
+    "analyzers": 0,
+    "reflections": 0,
+    "proposers": 0,
+    "new_evaluations": 0,
+    "new_candidates": 0,
+    "new_patches": 0,
+    "new_effect_scores": 0
+  },
+  "published_report_ref": "artifacts/runs/f4e-slack-gif-creator-relative-efficiency-v2-report/index.html",
+  "commit_created": false,
+  "push_performed": false,
+  "pull_request_created": false
+}

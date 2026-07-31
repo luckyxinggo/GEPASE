@@ -2,7 +2,7 @@
 
 **Graph-Enhanced Package-Aware Skill Evolution｜图增强、面向完整 Skill Package 的技能进化框架**
 
-[简体中文](README_zh.md) · [English](README.md) · [交互式结果报告](artifacts/runs/r5-slack-gif-creator-report/index.html)
+[简体中文](README_zh.md) · [English](README.md) · [最新中文叙事报告](artifacts/runs/f4e-slack-gif-creator-relative-efficiency-v2-report/index.html)
 
 GEPASE 是独立的 Python Core、CLI 与 API，用于评测和进化完整 Agent Skill Package，而不只
 修改 `SKILL.md`。它把 instructions、references、scripts、assets、metadata 及其依赖图视为
@@ -12,9 +12,9 @@ GEPASE 是独立的 Python Core、CLI 与 API，用于评测和进化完整 Agen
 `PackagePatch`、同 Package 多父合并和严格 held-out Validation Gate 组成。Codex、Claude
 Code 或其他 Agent Host 负责隔离执行各角色；证据、候选、搜索状态与接受结论始终属于 Core。
 
-> **v0.1 证据边界：**当前只在 pinned 的公开 `slack-gif-creator` Package 上封存了一次
-> 正向应用结果。它不是跨 Skill、跨模型或多 seed 的普遍性结论，也不证明图引导或完整
-> Package 修改始终优于只优化 `SKILL.md`。
+> **证据边界：**当前效果证据仍只来自 pinned 的公开 `slack-gif-creator`、一个 Frozen
+> EvalPlan、一个 Agent Host/模型配置和有界搜索，不能外推为跨 Skill、跨模型或多 seed 的
+> 普遍性结论。
 
 ![GEPASE 架构](docs/assets/architecture.svg)
 
@@ -26,25 +26,23 @@ GEPASE 严格区分三类结论：
 |---|---|
 | **代码已经实现** | 单一 Python Package 中已经包含 Package IR/Graph、E0/E2/E3 Eval Core、人工审核 EvalPlan、typed evidence、六维评分、GEPA adapter/per-key Pareto 选择、结构化 Patch、Gate 0–3、lineage/merge、stores、report 和 deploy CLI。 |
 | **工程机制通过测试** | Core 具有 unit、integration、fault、contract、schema、artifact hash、resume/cache、角色隔离、merge conflict、secret 与 release 检查；R5 可独立重验封存的上游运行。 |
-| **算法效果已经观察到** | v0.1 的一次 frozen `slack-gif-creator` 运行得到 deployable candidate：train `+0.04190`、held-out validation `+0.12427`、validation `3/3` wins。后续独立 GH-E1 图加固复现则得到可复算负结果 `no_strict_improvement`，不能用前一次正分补齐。 |
+| **算法效果已经观察到** | relative-efficiency v2 结果为 `strict_improvement`，deployable frontier=`2`：第一名 held-out validation `+0.09920`、relative cost `1.83254`；第二名 `+0.07906`、relative cost `1.93702`。 |
 
-![封存的 canary 结果](docs/assets/canary-results.svg)
+当前完整搜索真实完成了两个 generation-1、两个 parent-bound generation-2 和一个条件同
+Package Merge candidate。五个候选都沿同一 Controller、Candidate、Patch、Gate 和 Pareto 主链
+结算，最终两个进入 deployable frontier。static+observed Package Graph、角色 typed failure、
+0/1/多 frontier 与同 Package Merge 均已走通；但本轮实际生效 Patch 仍集中在 `SKILL.md`，不能
+据此宣称已经验证跨文件优化效果。
 
-严格 Gate funnel 共处理四个候选：四个通过 schema/static Gate，三个进入 held-out
-validation，最终一个进入 deployable frontier。一个 train 阶段看好的候选和一个同 Package
-多父 merge child 因 validation 回归被拒绝；一个超时分支作为 typed failure 被保留。被接受的
-候选只修改了 `SKILL.md` 中一个有界 instruction node。完整 Package Graph 和 merge 路径都已
-实际运行，但本次正向结果没有证明跨文件编辑成功。
+### 同一个 held-out case 的真实任务产物
 
-### 同一个 held-out case 的三个真实任务产物
+| no-skill | 原始 Skill | v2 第一名 | v2 第二名 |
+|---|---|---|---|
+| ![No-skill GIF](artifacts/runs/f4e-slack-gif-creator-relative-efficiency-v2-report/evidence/gifs/44-gif-25cec5b0a95e5d31469c63ba.gif) | ![原始 Skill GIF](artifacts/runs/f4e-slack-gif-creator-relative-efficiency-v2-report/evidence/gifs/45-gif-25bfb2d03163b320a64b30cf.gif) | ![v2 第一名 candidate GIF](artifacts/runs/f4e-slack-gif-creator-relative-efficiency-v2-report/evidence/gifs/42-gif-4007d0e2d4dd38f41ac4437f.gif) | ![v2 第二名 candidate GIF](artifacts/runs/f4e-slack-gif-creator-relative-efficiency-v2-report/evidence/gifs/41-gif-2de981b5ec17e4a6cb54b2ae.gif) |
 
-| no-skill | 原始 Skill | deployable candidate |
-|---|---|---|
-| ![No-skill GIF](artifacts/runs/r5-slack-gif-creator-report/assets/gifs/functional-validation-loop-sparkles-006/no-skill.gif) | ![原始 Skill GIF](artifacts/runs/r5-slack-gif-creator-report/assets/gifs/functional-validation-loop-sparkles-006/original.gif) | ![Deployable candidate GIF](artifacts/runs/r5-slack-gif-creator-report/assets/gifs/functional-validation-loop-sparkles-006/candidate.gif) |
-
-[中文自包含报告](artifacts/runs/r5-slack-gif-creator-report/index.html)还展示了全部三组 validation
-对照、六维评分、Package Graph、候选/merge DAG、Gate funnel、rejected edits、provenance 和
-deployable archive。
+[最新中文叙事报告](artifacts/runs/f4e-slack-gif-creator-relative-efficiency-v2-report/index.html)
+按任务组织 no-skill/original/candidate GIF，对照展示搜索谱系、六维分数、质量—成本关系、
+“失败→图定位→Patch→评测→Gate”、Merge、runtime、hash/provenance 和两个 deployable archive。
 
 ### 图加固分支的独立复现
 
@@ -87,9 +85,10 @@ flowchart LR
 
 Package Graph 不是装饰：当前 selector 的正式运行视图仅由 static + observed layer 组成，用于
 failure localization、mutation scope、blast radius、dependency closure 和 merge conflict
-检查。GH-P1 的 semantic-hypothesis 实验已封存为 stalled 历史证据，不再由 active runtime
-生成或消费。cross-package merge 是硬错误。Agent Skill 只是薄适配层，
-不能保存候选池、评分策略或 Gate 结论。
+检查。主链支持 parent-bound generation-2、Grader/Comparator/Analyzer typed failure、
+0/1/多个 deployable candidate 和条件同 Package Merge；cross-package merge 始终是硬错误。
+GH-P1 的 semantic-hypothesis 实验已封存为 stalled 历史证据，不再由 active runtime 生成或
+消费。Agent Skill 只是薄适配层，不能保存候选池、评分策略或 Gate 结论。
 
 ## 快速开始
 
@@ -109,6 +108,14 @@ uv run gepase mock run \
   --output artifacts/local/mock-run \
   --format json
 uv run gepase artifact verify artifacts/local/mock-run --format json
+```
+
+干净 clone 可直接验证最新公开叙事报告，不需要本地 raw Agent workspace：
+
+```bash
+uv run gepase artifact verify \
+  artifacts/runs/f4e-slack-gif-creator-relative-efficiency-v2-report \
+  --format json
 ```
 
 不重跑 R3/R4，直接重验封存结果并导出 deployable Package：
@@ -143,9 +150,10 @@ artifact hash 完整一致时，才能复用已经封存的 reference。
 
 `TaskScoreVector` 分别保留 `task_correctness`、`output_quality`、`skill_gain`、
 `reliability`、`efficiency` 和 `package_quality`。确定性 assertion 即使为 1.0，也不会被描述为
-Skill 综合质量满分。未来 Validation Gate 会从 paired TaskScoreVector 显式复算独立的
-`task_score_efficiency` secondary objective；它不是 case category `quality_efficiency`，也不与
-只使用 correctness/quality 的 primary utility 重复计数。
+Skill 综合质量满分。新 `2.0.0` evolution config 默认使用 `relative_v2`：在 held-out Gate 中
+相对 original Skill 比较 duration、tool calls 和兼容的 token telemetry，并保留 artifact size 为
+单独指标；`v1_legacy` 只能显式启用。新 `2.0.0` report config 默认使用 `narrative_v1`，旧
+`classic` 模板仍可显式选择。旧 `1.0.0` 配置缺少新字段时继续按 v1/classic 解释并保持旧哈希。
 
 ## Agent-native 与可选 Headless 角色
 

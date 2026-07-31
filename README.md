@@ -2,7 +2,7 @@
 
 **Graph-Enhanced Package-Aware Skill Evolution**
 
-[English](README.md) · [简体中文](README_zh.md) · [Interactive result report](artifacts/runs/r5-slack-gif-creator-report/index.html)
+[English](README.md) · [简体中文](README_zh.md) · [Latest narrative report](artifacts/runs/f4e-slack-gif-creator-relative-efficiency-v2-report/index.html)
 
 GEPASE is an independent Python Core, CLI, and API for evaluating and evolving complete Agent
 Skill packages—not only `SKILL.md`. It treats instructions, references, scripts, assets, metadata,
@@ -13,10 +13,9 @@ graph-guided typed `PackagePatch` edits, same-package multi-parent merge, and a 
 Validation Gate. Codex, Claude Code, or another Agent host performs isolated role execution; the
 Core remains the source of truth for evidence, candidates, search state, and acceptance.
 
-> **v0.1 evidence boundary.** The framework has one sealed positive application result on the
-> pinned public `slack-gif-creator` Package. It is not a claim of cross-Skill, cross-model, or
-> multi-seed generalization, nor proof that graph guidance or package-wide editing always beats
-> SKILL.md-only optimization.
+> **Evidence boundary.** Current effect evidence still covers one pinned public
+> `slack-gif-creator`, one Frozen EvalPlan, one Agent host/model configuration, and one bounded
+> search. It is not a cross-Skill, cross-model, multi-seed, or generalization claim.
 
 ![GEPASE architecture](docs/assets/architecture.svg)
 
@@ -28,26 +27,25 @@ GEPASE deliberately separates three different claims:
 |---|---|
 | **Code implemented** | Package IR/Graph, E0/E2/E3 Eval Core, reviewed EvalPlan, typed evidence, six-dimensional scores, the GEPA adapter/per-key Pareto selector, structured Patch, Gate 0–3, lineage/merge, stores, report and deploy CLI are present in one Python package. |
 | **Engineering mechanism tested** | Unit, integration, fault, contract, schema, artifact-hash, resume/cache, role-isolation, merge-conflict, secret and release checks cover the Core. R5 independently verifies the sealed upstream runs. |
-| **Algorithm effect observed** | The v0.1 frozen `slack-gif-creator` run produced one deployable candidate: train `+0.04190`, held-out validation `+0.12427`, and `3/3` validation wins. A later independent GH-E1 graph-hardening reproduction produced the reproducible negative outcome `no_strict_improvement`; the earlier positive score was not reused. |
+| **Algorithm effect observed** | Relative-efficiency v2 yields `strict_improvement` and deployable frontier=`2`: rank 1 held-out validation `+0.09920`, relative cost `1.83254`; rank 2 `+0.07906`, relative cost `1.93702`. |
 
-![Sealed canary result](docs/assets/canary-results.svg)
+The completed search materialized two generation-1 candidates, two parent-bound generation-2
+candidates, and one conditional same-package Merge candidate through the same Controller,
+Candidate, Patch, Gate, and Pareto mainline. Two candidates entered the deployable frontier.
+Static+observed graph guidance, typed role failures, 0/1/many frontier outcomes, and conditional
+same-package Merge are exercised; however, effective edits in this run still concentrate in
+`SKILL.md`, so it does not demonstrate successful cross-file optimization.
 
-The strict funnel evaluated four proposed candidates: all passed schema/static Gates, three entered
-held-out validation, and one became deployable. A train-promising candidate and a same-package
-merge child were rejected for validation regressions; a timeout branch was preserved as a typed
-failure. The accepted candidate changed one bounded instruction node in `SKILL.md`. The full
-Package Graph and merge path ran, but this particular positive result does not demonstrate a
-successful cross-file edit.
+### One held-out case, real task-native outputs
 
-### One held-out case, three real task-native outputs
+| no-skill | original Skill | v2 rank 1 | v2 rank 2 |
+|---|---|---|---|
+| ![No-skill GIF](artifacts/runs/f4e-slack-gif-creator-relative-efficiency-v2-report/evidence/gifs/44-gif-25cec5b0a95e5d31469c63ba.gif) | ![Original Skill GIF](artifacts/runs/f4e-slack-gif-creator-relative-efficiency-v2-report/evidence/gifs/45-gif-25bfb2d03163b320a64b30cf.gif) | ![v2 rank-1 candidate GIF](artifacts/runs/f4e-slack-gif-creator-relative-efficiency-v2-report/evidence/gifs/42-gif-4007d0e2d4dd38f41ac4437f.gif) | ![v2 rank-2 candidate GIF](artifacts/runs/f4e-slack-gif-creator-relative-efficiency-v2-report/evidence/gifs/41-gif-2de981b5ec17e4a6cb54b2ae.gif) |
 
-| no-skill | original Skill | deployable candidate |
-|---|---|---|
-| ![No-skill GIF](artifacts/runs/r5-slack-gif-creator-report/assets/gifs/functional-validation-loop-sparkles-006/no-skill.gif) | ![Original Skill GIF](artifacts/runs/r5-slack-gif-creator-report/assets/gifs/functional-validation-loop-sparkles-006/original.gif) | ![Deployable candidate GIF](artifacts/runs/r5-slack-gif-creator-report/assets/gifs/functional-validation-loop-sparkles-006/candidate.gif) |
-
-The [self-contained Chinese report](artifacts/runs/r5-slack-gif-creator-report/index.html) includes
-all three validation comparisons, score vectors, Package Graph, candidate/merge DAG, Gate funnel,
-rejected edits, provenance, and the deployable archive.
+The [latest self-contained Chinese narrative report](artifacts/runs/f4e-slack-gif-creator-relative-efficiency-v2-report/index.html)
+organizes no-skill/original/candidate GIFs by task and shows lineage, six-dimensional scores,
+quality-cost trade-offs, failure-to-graph-to-Patch-to-Gate traces, Merge, runtime, provenance, and
+both deployable archives.
 
 ### Independent graph-hardening reproduction
 
@@ -94,8 +92,10 @@ flowchart LR
 The active selector graph is strictly a static+observed view supporting failure localization,
 mutation scope, blast radius, dependency closure, and merge conflict checks. The sealed GH-P1
 semantic-hypothesis experiment remains stalled historical evidence and is no longer generated or
-consumed by the active runtime. Cross-package merge is a hard error. Agent-facing
-Skills are thin adapters and never own the candidate pool, scoring policy, or Gate decision.
+consumed by the active runtime. The mainline supports parent-bound generation-2,
+Grader/Comparator/Analyzer typed failures, 0/1/many deployable outcomes, and conditional
+same-package Merge; cross-package merge is a hard error. Agent-facing Skills are thin adapters and
+never own the candidate pool, scoring policy, or Gate decision.
 
 ## Quick start
 
@@ -115,6 +115,15 @@ uv run gepase mock run \
   --output artifacts/local/mock-run \
   --format json
 uv run gepase artifact verify artifacts/local/mock-run --format json
+```
+
+A clean clone can verify the latest published narrative report without the local raw Agent
+workspace:
+
+```bash
+uv run gepase artifact verify \
+  artifacts/runs/f4e-slack-gif-creator-relative-efficiency-v2-report \
+  --format json
 ```
 
 Verify the sealed result and materialize its deployable Package without rerunning R3/R4:
@@ -150,10 +159,11 @@ EvalPlan, scoring policy, model/host, environment, seed, tool policy, and artifa
 
 The `TaskScoreVector` keeps `task_correctness`, `output_quality`, `skill_gain`, `reliability`,
 `efficiency`, and `package_quality` separate. A deterministic assertion rate of 1.0 is never
-presented as overall Skill quality. Future Validation Gate decisions explicitly recompute the
-`task_score_efficiency` secondary objective from paired vectors. That axis is distinct from the
-`quality_efficiency` case category and is not double-counted in the correctness/quality primary
-utility.
+presented as overall Skill quality. New `2.0.0` evolution configs default to `relative_v2`, which
+compares held-out duration, tool calls, and compatible token telemetry against the original Skill
+while keeping artifact size separate; `v1_legacy` remains an explicit option. New `2.0.0` report
+configs default to `narrative_v1`, while `classic` remains explicit. Historical `1.0.0` configs
+missing these fields retain v1/classic semantics and their prior fingerprints.
 
 ## Agent-native and optional Headless roles
 

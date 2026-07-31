@@ -1,0 +1,14 @@
+{
+  "schema_version": "1.0.0",
+  "stage_id": "POST-F4E-RELEASE",
+  "source_gate_id": "PGEF4E-G06",
+  "reviewed_at_utc": "2026-07-31T09:42:38Z",
+  "reviewer": "user",
+  "review_channel": "current_codex_task",
+  "confirmation_text_zh": "可以的，我觉得没问题",
+  "decision": "accepted",
+  "published_report_ref": "artifacts/runs/f4e-slack-gif-creator-relative-efficiency-v2-report/index.html",
+  "published_report_artifact_index_sha256": "842210ab10a4dca592fd2a74aa2f665c28b9c96d66384c466ce0a8ea72da789f",
+  "source_review_sha256": "41de26933e0c7af756f87ee7949ce47a625e5dce7cf6b94ccffc8b742b416525",
+  "evidence_boundary": "human visual review only; no rescoring, Gate recomputation, Agent work, or new algorithm evidence"
+}

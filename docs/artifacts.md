@@ -50,6 +50,19 @@ Post-GH-E1 cleanup evidence is stored under `artifacts/stages/POST-GH-E1-CLEANUP
 read-only audit surface: it may hash and replay sealed GH-E1 inputs, but it must not be added to any
 GH-E1 run/stage index or reinterpret the sealed `no_strict_improvement` outcome.
 
+The current public F4e result is the
+[`f4e-slack-gif-creator-relative-efficiency-v2-report`](../artifacts/runs/f4e-slack-gif-creator-relative-efficiency-v2-report/index.html).
+It is a self-contained narrative projection with 51 task-native GIFs, two deployable Package
+archives, report data, and a 56/56 artifact index. Its underlying F4b Reference, F4c evolution,
+Agent workspaces, and F4d replay directory remain ignored local sealed research evidence. The
+published report retains their content hashes and repository-relative provenance references; a
+clean clone verifies the public report seal but does not claim to contain those unpublished raw
+runs.
+
+`artifacts/stages/POST-F4E-RELEASE/` contains the safe publication Gate, source-seal bindings, and
+the user's visual acceptance. It records zero Agent/API/Eval/Proposal/Candidate/Patch calls for the
+release convergence itself.
+
 Raw Agent workspaces remain byte-preserved locally. Four optional diagnostics contain six
 private-path findings and are explicitly quarantined by hash; none appears in the 138 artifacts
 referenced by the 29 Core-accepted E2 records or in the published report/stage surface. Required
