@@ -1,0 +1,126 @@
+{
+  "additionalProperties": false,
+  "description": "Versioned held-out resource policy measured relative to original Skill.",
+  "properties": {
+    "aggregate": {
+      "const": "median_per_axis_then_equal_weight_mean",
+      "default": "median_per_axis_then_equal_weight_mean",
+      "title": "Aggregate",
+      "type": "string"
+    },
+    "artifact_size_mode": {
+      "default": "report_only",
+      "enum": [
+        "report_only",
+        "registered_constraint"
+      ],
+      "title": "Artifact Size Mode",
+      "type": "string"
+    },
+    "comparable_axes": {
+      "default": [
+        "duration_ms",
+        "tool_calls",
+        "tokens"
+      ],
+      "items": {
+        "enum": [
+          "duration_ms",
+          "tool_calls",
+          "tokens",
+          "artifact_size_bytes"
+        ],
+        "type": "string"
+      },
+      "minItems": 1,
+      "title": "Comparable Axes",
+      "type": "array"
+    },
+    "frontier_method": {
+      "const": "pareto_layers",
+      "default": "pareto_layers",
+      "title": "Frontier Method",
+      "type": "string"
+    },
+    "frontier_objectives": {
+      "default": [
+        "validation_primary_delta",
+        "relative_efficiency_score"
+      ],
+      "maxItems": 2,
+      "minItems": 2,
+      "prefixItems": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "string"
+        }
+      ],
+      "title": "Frontier Objectives",
+      "type": "array"
+    },
+    "frontier_tie_break": {
+      "default": [
+        "validation_primary_delta_desc",
+        "relative_efficiency_score_desc",
+        "candidate_id_asc"
+      ],
+      "maxItems": 3,
+      "minItems": 3,
+      "prefixItems": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "string"
+        },
+        {
+          "type": "string"
+        }
+      ],
+      "title": "Frontier Tie Break",
+      "type": "array"
+    },
+    "max_relative_cost_ratio": {
+      "default": 2.0,
+      "exclusiveMinimum": 0,
+      "title": "Max Relative Cost Ratio",
+      "type": "number"
+    },
+    "policy_hash": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Policy Hash",
+      "type": "string"
+    },
+    "policy_id": {
+      "const": "relative_efficiency_v2",
+      "default": "relative_efficiency_v2",
+      "title": "Policy Id",
+      "type": "string"
+    },
+    "schema_version": {
+      "const": "2.0.0",
+      "default": "2.0.0",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "score_mapping": {
+      "const": "one_over_one_plus_ratio",
+      "default": "one_over_one_plus_ratio",
+      "title": "Score Mapping",
+      "type": "string"
+    },
+    "unknown_efficiency_policy": {
+      "const": "no_cross_availability_dominance_known_first_on_tie",
+      "default": "no_cross_availability_dominance_known_first_on_tie",
+      "title": "Unknown Efficiency Policy",
+      "type": "string"
+    }
+  },
+  "required": [
+    "policy_hash"
+  ],
+  "title": "RelativeEfficiencyPolicy",
+  "type": "object"
+}

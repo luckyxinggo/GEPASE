@@ -60,6 +60,7 @@ from gepase.optimizer.session_runtime import (
     BudgetCheckpoint,
     BudgetContinuationDecision,
     HostAttemptAccounting,
+    MeasurementKind,
     RuntimeBarrier,
     RuntimeBudgetBinding,
     RuntimeSessionStatus,
@@ -981,6 +982,7 @@ class MultiFidelityEvalEngine:
                     + (submission.usage.output_tokens or 0),
                     actual_duration_ms=submission.usage.duration_ms,
                     repairs=1 if submission.repair_attempt else 0,
+                    token_count_kind=MeasurementKind(submission.usage.token_count_kind),
                 )
         self.snapshot_ledger()
         result = {
@@ -1688,13 +1690,12 @@ def build_submission(
     input_tokens: int | None = None,
     output_tokens: int | None = None,
     tool_calls: int | None = None,
-    token_count_kind: Literal["reported", "estimated", "unavailable"] = "estimated",
+    token_count_kind: Literal["reported", "estimated", "unavailable"] = "unavailable",
     repair_attempt: bool = False,
     failure_kind: ProviderFailureKind | None = None,
     failure_detail: str | None = None,
 ) -> WorkSubmission:
     references: list[ArtifactRef] = []
-    total_bytes = 0
     artifact_root_ref: str | None = None
     transcript_ref: ArtifactRef | None = None
     if artifact_root is not None:
@@ -1720,7 +1721,6 @@ def build_submission(
                 selected_paths.append(path)
         for path in selected_paths:
             data = path.read_bytes()
-            total_bytes += len(data)
             references.append(
                 ArtifactRef(
                     path=path.relative_to(resolved).as_posix(),
@@ -1759,6 +1759,19 @@ def build_submission(
         "repair_attempt": repair_attempt,
         "failure_kind": failure_value,
     }
+    if token_count_kind == "unavailable":
+        resolved_input_tokens = 0
+        resolved_output_tokens = 0
+    else:
+        resolved_input_tokens = (
+            input_tokens if input_tokens is not None else max(1, len(item.prompt) // 4)
+        )
+        # Artifact bytes are task evidence, not model text.  Estimate only the
+        # small typed control payload when the host explicitly selects estimated
+        # telemetry; never convert task-native output size into tokens.
+        resolved_output_tokens = (
+            output_tokens if output_tokens is not None else max(1, len(str(payload)) // 4)
+        )
     return WorkSubmission(
         submission_id=submission_id_for(payload),
         work_id=item.work_id,
@@ -1774,14 +1787,8 @@ def build_submission(
         planned_trace=planned_trace,
         observed_trace=observed_trace,
         usage=UsageRecord(
-            input_tokens=(
-                input_tokens if input_tokens is not None else max(1, len(item.prompt) // 4)
-            ),
-            output_tokens=(
-                output_tokens
-                if output_tokens is not None
-                else max(1, total_bytes // 4 + len(str(payload)) // 4)
-            ),
+            input_tokens=resolved_input_tokens,
+            output_tokens=resolved_output_tokens,
             tool_calls=(tool_calls if tool_calls is not None else len(observed_trace)),
             duration_ms=duration_ms,
             token_count_kind=token_count_kind,

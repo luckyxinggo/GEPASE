@@ -1,0 +1,66 @@
+{
+  "schema_version": "1.0.0",
+  "stage_id": "POST-F4E-RELEASE",
+  "status": "complete",
+  "passed": 7,
+  "total": 7,
+  "gates": [
+    {
+      "gate_id": "PF4ER-G00",
+      "name": "protected_evidence_and_branch_preflight",
+      "passed": true,
+      "evidence_refs": ["source-f4e-evidence.json"]
+    },
+    {
+      "gate_id": "PF4ER-G01",
+      "name": "versioned_future_defaults_and_historical_compatibility",
+      "passed": true,
+      "evidence_refs": [
+        "configs/examples/r4-evolution-v2.json",
+        "configs/examples/evolution-report-v2.json",
+        "schemas/r4_evolution_config.schema.json",
+        "schemas/evolution_outcome_report_config.schema.json"
+      ]
+    },
+    {
+      "gate_id": "PF4ER-G02",
+      "name": "single_core_generality",
+      "passed": true,
+      "evidence_refs": ["core-generality-audit.json"]
+    },
+    {
+      "gate_id": "PF4ER-G03",
+      "name": "safe_public_narrative_report",
+      "passed": true,
+      "evidence_refs": [
+        "publication-manifest.json",
+        "user-visual-confirmation.json",
+        "artifacts/runs/f4e-slack-gif-creator-relative-efficiency-v2-report/artifact-index.json"
+      ]
+    },
+    {
+      "gate_id": "PF4ER-G04",
+      "name": "github_documentation_surface",
+      "passed": true,
+      "evidence_refs": [
+        "README.md",
+        "README_zh.md",
+        "docs/reproduction.md",
+        "docs/artifacts.md",
+        "docs/configuration.md"
+      ]
+    },
+    {
+      "gate_id": "PF4ER-G05",
+      "name": "tests_static_schema_security_license_build_and_seals",
+      "passed": true,
+      "evidence_refs": ["verification.json"]
+    },
+    {
+      "gate_id": "PF4ER-G06",
+      "name": "zero_agent_release_boundary",
+      "passed": true,
+      "evidence_refs": ["stage-report.json"]
+    }
+  ]
+}

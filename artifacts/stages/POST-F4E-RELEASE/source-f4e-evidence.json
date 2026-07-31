@@ -1,0 +1,17 @@
+{
+  "schema_version": "1.0.0",
+  "stage_id": "POST-F4E-RELEASE",
+  "read_only_source": true,
+  "source_f4e_stage_ref": "artifacts/local/f4c-c41328e5-slack-gif-creator/stage/post-run-report-readability-v1",
+  "source_f4e_stage_artifact_index_sha256": "0da9aad79b1b20f5f2ab0842ccd8f5f6f8b7279eac63ae1fee84d434223492cf",
+  "source_f4e_machine_gates_sha256": "3499978105812d9a79ec704e79c47cfec55e6a48b3093405971f0503898e31cd",
+  "source_f4e_stage_report_sha256": "ebccffc44651152aa223e484e6a227045a89025facd2637ced3327d2ff663b71",
+  "source_f4e_user_review_sha256": "41de26933e0c7af756f87ee7949ce47a625e5dce7cf6b94ccffc8b742b416525",
+  "source_report_ref": "artifacts/local/f4c-c41328e5-slack-gif-creator/reports/f4c-relative-efficiency-v2-readable-final-sealed",
+  "source_report_artifact_index_sha256": "842210ab10a4dca592fd2a74aa2f665c28b9c96d66384c466ce0a8ea72da789f",
+  "published_report_ref": "artifacts/runs/f4e-slack-gif-creator-relative-efficiency-v2-report",
+  "published_report_artifact_index_sha256": "842210ab10a4dca592fd2a74aa2f665c28b9c96d66384c466ce0a8ea72da789f",
+  "source_and_public_report_byte_equal": true,
+  "source_mutated": false,
+  "raw_reference_or_evolution_published": false
+}

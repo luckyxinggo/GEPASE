@@ -372,6 +372,21 @@ def r4_plan_generation2(
     )
 
 
+@optimizer_app.command("r4-apply-generation2")
+def r4_apply_generation2(
+    run_dir: Annotated[Path, typer.Option("--run-dir")],
+    config: Annotated[Path, typer.Option("--config")],
+    work_id: Annotated[str, typer.Option("--work-id")],
+    output_format: Annotated[str, typer.Option("--format")] = "json",
+) -> None:
+    """Apply one ingested generation-2 patch to its exact generation-1 parent."""
+
+    emit(
+        _r4(run_dir, config).apply_generation2_refinement(work_id),
+        output_format,
+    )
+
+
 @optimizer_app.command("r4-pre-eval-gates")
 def r4_pre_eval_gates(
     run_dir: Annotated[Path, typer.Option("--run-dir")],

@@ -76,7 +76,7 @@ const sections=$$('main section');const nav=$$('.topbar nav a');const observer=n
 </script></body></html>"""
 
 
-def render_outcome_report(data: dict[str, Any]) -> str:
+def _render_outcome_report_classic(data: dict[str, Any]) -> str:
     """Render a compact report for complete and budget-incomplete outcomes."""
 
     title = html.escape(str(data["title_zh"]))
@@ -91,6 +91,8 @@ def render_outcome_report(data: dict[str, Any]) -> str:
     gallery = list(data.get("evidence_gallery", []))
     merge = dict(data["merge"])
     runtime = dict(data["runtime"])
+    policy_evaluation = dict(data.get("policy_evaluation", {}))
+    frontier_ranking = dict(data.get("frontier_ranking", {}))
     frontier_html = "".join(
         (
             "<article><h3>"
@@ -111,24 +113,60 @@ def render_outcome_report(data: dict[str, Any]) -> str:
             "<p>完整证据链中没有通过 held-out strict Gate 的候选; "
             "报告不会为负结果合成业务产物。</p></article>"
         )
-    candidate_rows = "".join(
-        "<tr><td>"
-        + html.escape(str(item["candidate_id"]))
-        + "</td><td>"
-        + html.escape(str(item["gate_status"]))
-        + "</td><td>"
-        + html.escape(str(item["train_mean_delta"]))
-        + f"<br><small>{item.get('train_wins', 0)}W / {item.get('train_ties', 0)}T / {item.get('train_losses', 0)}L</small>"
-        + "</td><td>"
-        + html.escape(str(item["validation_mean_delta"]))
-        + f"<br><small>{item.get('validation_wins', 0)}W / {item.get('validation_ties', 0)}T / {item.get('validation_losses', 0)}L</small>"
-        + "</td><td>"
-        + html.escape(", ".join(item["rejection_reasons"]) or "—")
-        + "<details><summary>六维、Patch 与 Graph path</summary><pre>"
-        + html.escape(json.dumps(item, ensure_ascii=False, indent=2))
-        + "</pre></details></td></tr>"
-        for item in candidates
-    )
+    if not policy_evaluation:
+        candidate_rows = "".join(
+            "<tr><td>"
+            + html.escape(str(item["candidate_id"]))
+            + "</td><td>"
+            + html.escape(str(item["gate_status"]))
+            + "</td><td>"
+            + html.escape(str(item["train_mean_delta"]))
+            + f"<br><small>{item.get('train_wins', 0)}W / {item.get('train_ties', 0)}T / {item.get('train_losses', 0)}L</small>"
+            + "</td><td>"
+            + html.escape(str(item["validation_mean_delta"]))
+            + f"<br><small>{item.get('validation_wins', 0)}W / {item.get('validation_ties', 0)}T / {item.get('validation_losses', 0)}L</small>"
+            + "</td><td>"
+            + html.escape(", ".join(item["rejection_reasons"]) or "—")
+            + "<details><summary>六维、Patch 与 Graph path</summary><pre>"
+            + html.escape(json.dumps(item, ensure_ascii=False, indent=2))
+            + "</pre></details></td></tr>"
+            for item in candidates
+        )
+    else:
+        candidate_rows_parts: list[str] = []
+        for item in candidates:
+            relative = item.get("relative_efficiency") or {}
+            ratio = relative.get("relative_cost_ratio")
+            score = relative.get("relative_efficiency_score")
+            relative_summary = (
+                f"ratio={float(ratio):.4f}<br>score={float(score):.4f}"
+                if ratio is not None and score is not None
+                else "unavailable / inconclusive"
+            )
+            if item.get("display_rank") is not None:
+                relative_summary += (
+                    f"<br>layer {item['pareto_layer']} / rank {item['display_rank']}"
+                )
+            candidate_rows_parts.append(
+                "<tr><td>"
+                + html.escape(str(item["candidate_id"]))
+                + "</td><td>"
+                + html.escape(str(item["gate_status"]))
+                + "</td><td>"
+                + html.escape(str(item["train_mean_delta"]))
+                + f"<br><small>{item.get('train_wins', 0)}W / {item.get('train_ties', 0)}T / {item.get('train_losses', 0)}L</small>"
+                + "</td><td>"
+                + html.escape(str(item["validation_mean_delta"]))
+                + f"<br><small>{item.get('validation_wins', 0)}W / {item.get('validation_ties', 0)}T / {item.get('validation_losses', 0)}L</small>"
+                + "</td><td>"
+                + relative_summary
+                + "</td><td>"
+                + html.escape(", ".join(item["rejection_reasons"]) or "—")
+                + "<details><summary>六维、相对效率、Patch 与 Graph path</summary><pre>"
+                + html.escape(json.dumps(item, ensure_ascii=False, indent=2))
+                + "</pre></details></td></tr>"
+            )
+        candidate_rows = "".join(candidate_rows_parts)
     gallery_html = "".join(
         "<article class=\"gif-card\"><h3>"
         + html.escape(str(item["task_id"]))
@@ -156,6 +194,47 @@ def render_outcome_report(data: dict[str, Any]) -> str:
     merge_rejections = json.dumps(
         merge.get("rejection_reason_counts", {}), ensure_ascii=False
     )
+    if policy_evaluation.get("policy_id") == "relative_efficiency_v2":
+        efficiency_html = (
+            "<div class=\"cards\"><article><h3>Original Skill 基准</h3>"
+            "<p>逐 held-out task 以同一 frozen reference 的 original Skill 为分母。"
+            "默认比较 duration_ms 与 tool_calls；token 仅在 measurement kind 相同且"
+            "双方可用时加入。</p></article><article><h3>稳健聚合</h3>"
+            "<p>每轴先取 task ratio 中位数，再对可用轴等权平均。资源分数为 "
+            "<code>1/(1+ratio)</code>；ratio 0.5 / 1 / 2 对应约 0.667 / 0.5 / "
+            "0.333。</p></article><article><h3>极端退化线</h3><p>只有可比聚合成本达到或超过 "
+            + html.escape(
+                str(policy_evaluation.get("max_relative_cost_ratio", "unavailable"))
+            )
+            + " 倍 original 时才触发 "
+            "<code>extreme_relative_cost_regression</code>。产物大小默认仅报告一次。"
+            "</p></article></div><div class=\"panel\"><h3>Policy、逐轴证据与 Pareto 排名</h3>"
+            "<p><strong>v1 TaskScoreVector.efficiency</strong> 仅作为“v1 绝对预算诊断”"
+            "保留，不参与 v2 混算。</p><pre>"
+            + html.escape(
+                json.dumps(
+                    {
+                        "policy": policy_evaluation,
+                        "frontier_ranking": frontier_ranking,
+                        "candidate_relative_evidence": {
+                            item["candidate_id"]: item.get("relative_efficiency")
+                            for item in candidates
+                        },
+                    },
+                    ensure_ascii=False,
+                    indent=2,
+                )
+            )
+            + "</pre></div>"
+        )
+        efficiency_section = (
+            '<section id="efficiency"><div class="eyebrow">RELATIVE EFFICIENCY</div>'
+            f"<h2>资源效率证据与策略边界</h2>{efficiency_html}</section>\n"
+        )
+        candidate_header = "<th>相对效率</th><th>拒绝理由</th>"
+    else:
+        efficiency_section = ""
+        candidate_header = "<th>拒绝理由</th>"
     embedded = _script_json(data)
     return f"""<!doctype html>
 <html lang="zh-CN"><head><meta charset="utf-8">
@@ -184,10 +263,10 @@ overflow-wrap:anywhere}}.boundary{{border-left:4px solid var(--warn);padding:14p
 <section id="evidence"><div class="eyebrow">CORE-ACCEPTED GIF EVIDENCE</div><h2>fresh no-skill / original / candidate 真实产物</h2>
 <p>以下 GIF 全部来自本轮 TaskScoreVector 回链的 E2 ExecutionBundle，并按原始 SHA-256 复制进报告 seal；失败或未被 Core 接受的 raw workspace 不会混入。</p>
 <div class="gallery">{gallery_html}</div></section>
-<section id="candidates"><div class="eyebrow">CANDIDATES</div><h2>候选与 Gate 漏斗</h2>
+{efficiency_section}<section id="candidates"><div class="eyebrow">CANDIDATES</div><h2>候选与 Gate 漏斗</h2>
 <div class="panel"><p><span class="metric">{len(candidates)}</span> 个候选; frontier {len(frontier)} 个</p>
 <table><thead><tr><th>Candidate</th><th>Gate</th><th>Train Δ</th><th>Validation Δ</th>
-<th>拒绝理由</th></tr></thead><tbody>{candidate_rows}</tbody></table></div></section>
+{candidate_header}</tr></thead><tbody>{candidate_rows}</tbody></table></div></section>
 <section id="merge"><div class="eyebrow">CONDITIONAL MERGE</div><h2>多父 Merge 终态</h2>
 <div class="panel"><p>状态: <code>{html.escape(str(merge["status"]))}</code></p>
 <p>拒绝理由计数: {html.escape(merge_rejections)}</p>
@@ -199,3 +278,409 @@ overflow-wrap:anywhere}}.boundary{{border-left:4px solid var(--warn);padding:14p
 <p>待处理 work: <code>{html.escape(pending)}</code></p>
 <h3>Provenance</h3><pre>{html.escape(json.dumps(data["provenance"], ensure_ascii=False, indent=2))}</pre></div></section>
 <script type="application/json" id="report-data">{embedded}</script></main></body></html>"""
+
+
+def _outcome_number(value: object, digits: int = 4) -> str:
+    if value is None:
+        return "不可用"
+    if isinstance(value, float):
+        return f"{value:+.{digits}f}"
+    return str(value)
+
+
+def _outcome_candidate_card(candidate: dict[str, Any]) -> str:
+    train = dict(candidate["train"])
+    validation = dict(candidate["validation"])
+    relative = dict(candidate["relative_efficiency"])
+    objective_rows = "".join(
+        "<div class=\"objective-row\"><span>"
+        + html.escape(str(row["label_zh"]))
+        + "</span><div class=\"diverging\"><i class=\"neg\"></i><i class=\"axis\"></i>"
+        + (
+            "<i class=\"value "
+            + html.escape(str(row["validation_bar"]["side"]))
+            + "\" style=\"--w:"
+            + f"{float(row['validation_bar']['percent']):.3f}"
+            + "%\"></i>"
+            if row["validation_bar"]["available"]
+            else ""
+        )
+        + "</div><code>"
+        + html.escape(_outcome_number(row["validation_delta"], 3))
+        + "</code></div>"
+        for row in candidate["objective_deltas"]
+    )
+    axis_rows = "".join(
+        "<li><b>"
+        + html.escape(str(row["label_zh"]))
+        + "</b><span>"
+        + (
+            f"中位数 {float(row['median_ratio']):.3f}×"
+            if row["median_ratio"] is not None
+            else "共同排除"
+        )
+        + "</span><small>"
+        + html.escape(
+            f"纳入 {row['included_tasks']} 项 / 排除 {row['excluded_tasks']} 项"
+            + (
+                " · " + "、".join(str(value) for value in row["exclusion_reasons"])
+                if row["exclusion_reasons"]
+                else ""
+            )
+        )
+        + "</small></li>"
+        for row in relative["axes"]
+    ) or "<li><b>相对效率</b><span>不可用</span><small>没有足够的可比证据</small></li>"
+    operations = "".join(
+        "<article class=\"operation\"><div><span class=\"op\">"
+        + html.escape(str(operation.get("op") or "未知操作"))
+        + "</span><b>"
+        + html.escape(str(operation.get("path") or "路径不可用"))
+        + "</b></div><p>"
+        + html.escape(str(operation.get("rationale") or "没有可展示的 rationale"))
+        + "</p><small>预期："
+        + html.escape(str(operation.get("expected_benefit") or "不可用"))
+        + " · 风险："
+        + html.escape(str(operation.get("regression_risk") or "不可用"))
+        + "</small></article>"
+        for operation in candidate["operations"]
+    ) or "<p class=\"empty\">该候选没有可展示的 typed Patch 操作。</p>"
+    chain = "".join(
+        "<li><b>"
+        + html.escape(str(item["step"]))
+        + "</b><span>"
+        + html.escape(str(item["summary"]))
+        + "</span></li>"
+        for item in candidate["causal_chain"]
+    )
+    reason_text = "；".join(candidate["reasons_zh"]) or "没有额外拒绝理由"
+    parent_text = " + ".join(candidate["parent_aliases_zh"]) or "原始 Skill"
+    files = "、".join(candidate["modified_files"]) or "无实际文件修改"
+    rank = (
+        f"Pareto 层 {candidate['pareto_layer']} · 排名 {candidate['display_rank']}"
+        if candidate["display_rank"] is not None
+        else "未进入 deployable 排名"
+    )
+    ratio = relative["relative_cost_ratio"]
+    return (
+        "<article class=\"candidate-detail tone-"
+        + html.escape(str(candidate["status_tone"]))
+        + "\" id=\"candidate-"
+        + html.escape(str(candidate["short_id"]))
+        + "\"><header><div><span class=\"candidate-kind\">"
+        + html.escape(str(candidate["operator_zh"]))
+        + "</span><h3>"
+        + html.escape(str(candidate["alias_zh"]))
+        + "</h3><p>父代："
+        + html.escape(parent_text)
+        + " · 修改："
+        + html.escape(files)
+        + "</p></div><span class=\"status\">"
+        + html.escape(str(candidate["status_zh"]))
+        + "</span></header><div class=\"candidate-metrics\"><div><b>"
+        + html.escape(_outcome_number(train["mean_delta"]))
+        + "</b><span>train Δ · "
+        + f"{train['wins']}胜 {train['ties']}平 {train['losses']}负"
+        + "</span></div><div><b>"
+        + html.escape(_outcome_number(validation["mean_delta"]))
+        + "</b><span>validation Δ · "
+        + f"{validation['wins']}胜 {validation['ties']}平 {validation['losses']}负"
+        + "</span></div><div><b>"
+        + (f"{float(ratio):.3f}×" if ratio is not None else "不可用")
+        + "</b><span>相对 original 成本</span></div><div><b>"
+        + html.escape(rank)
+        + "</b><span>质量—成本前沿</span></div></div><div class=\"candidate-grid\"><div><h4>六维 validation Δ</h4>"
+        + objective_rows
+        + "</div><div><h4>相对效率轴</h4><ul class=\"axis-list\">"
+        + axis_rows
+        + "</ul></div></div><div class=\"reason-note\"><b>Gate 解释：</b>"
+        + html.escape(reason_text)
+        + "</div><ol class=\"causal-chain\">"
+        + chain
+        + "</ol><details><summary>查看 Patch 操作与技术引用</summary><p>"
+        + html.escape(str(candidate["patch_summary"]))
+        + "</p><div class=\"operations\">"
+        + operations
+        + "</div><pre>"
+        + html.escape(json.dumps(candidate["technical_refs"], ensure_ascii=False, indent=2))
+        + "</pre></details></article>"
+    )
+
+
+def _outcome_gallery_task(task: dict[str, Any]) -> str:
+    assets = []
+    for asset in task["assets"]:
+        evidence = dict(asset.get("typed_evidence", {}))
+        deterministic = dict(evidence.get("deterministic", {}))
+        grader = dict(evidence.get("grader", {}))
+        comparator = evidence.get("comparator")
+        usage = dict(evidence.get("usage") or {})
+        assertion_rows = "".join(
+            "<li><span aria-hidden=\"true\">"
+            + ("✓" if row.get("passed") else "×")
+            + "</span><b>"
+            + html.escape(str(row.get("assertion_id") or "assertion"))
+            + "</b><small>"
+            + html.escape(str(row.get("detail") or "没有说明"))
+            + "</small></li>"
+            for row in deterministic.get("assertions", [])
+        ) or "<li><small>确定性 assertion 明细不可用</small></li>"
+        comparator_text = (
+            f"AB {comparator.get('ab_candidate_outcome')} / "
+            f"BA {comparator.get('ba_candidate_outcome')}"
+            if isinstance(comparator, dict)
+            else "未预注册或不可用"
+        )
+        label = {
+            "no-skill": "不使用 Skill",
+            "original": "原始 Skill",
+            "candidate": asset.get("candidate_alias_zh") or "候选",
+        }.get(str(asset["variant"]), str(asset["variant"]))
+        candidate_attr = html.escape(str(asset.get("candidate_id") or "reference"))
+        assets.append(
+            "<article class=\"artifact-card\" data-variant=\""
+            + html.escape(str(asset["variant"]))
+            + "\" data-candidate=\""
+            + candidate_attr
+            + "\"><header><h4>"
+            + html.escape(str(label))
+            + "</h4><span>"
+            + html.escape(str(asset.get("candidate_status_zh") or "Reference"))
+            + "</span></header><div class=\"gif-frame\"><img loading=\"lazy\" src=\""
+            + html.escape(str(asset["report_path"]))
+            + "\" alt=\""
+            + html.escape(str(asset["label_zh"]))
+            + "\"></div><div class=\"artifact-metrics\"><span>assertions <b>"
+            + (
+                f"{deterministic.get('passed', 0)}/{deterministic.get('total', 0)}"
+                if evidence.get("available")
+                else "不可用"
+            )
+            + "</b></span><span>独立评分 <b>"
+            + (
+                f"{float(grader['score']):.3f}"
+                if grader.get("score") is not None
+                else "不可用"
+            )
+            + "</b></span><span>时长 <b>"
+            + (
+                f"{int(usage['duration_ms']) / 1000:.1f}s"
+                if usage.get("duration_ms") is not None
+                else "不可用"
+            )
+            + "</b></span><span>工具 <b>"
+            + str(usage.get("tool_calls", "不可用"))
+            + "</b></span></div><p class=\"grader-copy\">"
+            + html.escape(str(grader.get("feedback_zh") or "独立 Grader 反馈不可用。"))
+            + "</p><details><summary>assertion、匿名比较与证据</summary><ul class=\"assertions\">"
+            + assertion_rows
+            + "</ul><p><b>匿名比较：</b>"
+            + html.escape(comparator_text)
+            + "</p><code>sha256: "
+            + html.escape(str(asset["sha256"]))
+            + "</code><pre>"
+            + html.escape(
+                json.dumps(
+                    {
+                        "source_ref": asset["source_ref"],
+                        "vector_ref": evidence.get("vector_ref"),
+                        "usage": evidence.get("usage"),
+                    },
+                    ensure_ascii=False,
+                    indent=2,
+                )
+            )
+            + "</pre></details></article>"
+        )
+    prompt = next(
+        (
+            str(asset.get("typed_evidence", {}).get("prompt_zh"))
+            for asset in task["assets"]
+            if asset.get("typed_evidence", {}).get("prompt_zh")
+        ),
+        "任务摘要不可用",
+    )
+    return (
+        "<details class=\"task-group\" data-split=\""
+        + html.escape(str(task["split"]))
+        + "\" "
+        + ("open" if task["default_open"] else "")
+        + "><summary><span><b>"
+        + html.escape(str(task["task_alias_zh"]))
+        + "</b><small>"
+        + html.escape(str(task["task_id"]))
+        + "</small></span><span>"
+        + f"{len(task['assets'])} 份真实产物"
+        + "</span></summary><p class=\"task-prompt\">"
+        + html.escape(prompt)
+        + "</p><div class=\"artifact-grid\">"
+        + "".join(assets)
+        + "</div></details>"
+    )
+
+
+def _render_outcome_report_narrative(data: dict[str, Any]) -> str:
+    presentation = dict(data["presentation"])
+    headline = dict(presentation["headline"])
+    outcome = dict(presentation["outcome"])
+    candidates = list(presentation["candidates"])
+    first = headline.get("first")
+    second = headline.get("second")
+    funnel = "".join(
+        "<li><strong>"
+        + html.escape(str(item["count"]))
+        + "</strong><span>"
+        + html.escape(str(item["label_zh"]))
+        + "</span></li>"
+        for item in presentation["funnel"]
+    )
+    lineage = "".join(
+        "<article class=\"lineage-node tone-"
+        + html.escape(str(node["status_tone"]))
+        + "\"><small>generation "
+        + str(node["generation"])
+        + "</small><b>"
+        + html.escape(str(node["alias_zh"]))
+        + "</b><code>"
+        + html.escape(str(node["candidate_id"])[-12:])
+        + "</code></article>"
+        for node in presentation["lineage"]["nodes"]
+    )
+    edges = "".join(
+        "<li><code>"
+        + html.escape(str(edge["source"])[-12:])
+        + "</code><span>→</span><code>"
+        + html.escape(str(edge["target"])[-12:])
+        + "</code><small>"
+        + ("多父合并" if edge["kind"] == "merge" else "结构化变异")
+        + "</small></li>"
+        for edge in presentation["lineage"]["edges"]
+    )
+    candidate_cards = "".join(_outcome_candidate_card(row) for row in candidates)
+    scatter = dict(presentation["charts"]["scatter"])
+    scatter_points = "".join(
+        "<a class=\"scatter-point tone-"
+        + html.escape(str(row["status_tone"]))
+        + "\" style=\"--x:"
+        + f"{float(row['scatter']['x_percent']):.3f}"
+        + "%;--y:"
+        + f"{float(row['scatter']['y_percent']):.3f}"
+        + "%\" href=\"#candidate-"
+        + html.escape(str(row["short_id"]))
+        + "\" aria-label=\""
+        + html.escape(
+            f"{row['alias_zh']}，validation delta {row['validation']['mean_delta']}，"
+            f"相对成本 {row['relative_efficiency']['relative_cost_ratio']}"
+        )
+        + "\"><span>"
+        + html.escape(str(row["alias_zh"]))
+        + "</span></a>"
+        for row in scatter["points"]
+    ) or "<p class=\"empty\">没有可比较的质量—成本点。</p>"
+    task_groups = "".join(
+        _outcome_gallery_task(task) for task in presentation["tasks"]
+    ) or "<p class=\"empty\">当前结局没有可展示的 task-native GIF。</p>"
+    candidate_options = "".join(
+        "<option value=\""
+        + html.escape(str(row["candidate_id"]))
+        + ("\" selected" if row.get("display_rank") == 1 else "\"")
+        + ">"
+        + html.escape(str(row["alias_zh"]))
+        + " · "
+        + html.escape(str(row["status_zh"]))
+        + "</option>"
+        for row in candidates
+    )
+    frontier_cards = "".join(
+        "<article><span class=\"rank\">#"
+        + str(row.get("display_rank") or "—")
+        + "</span><h3>"
+        + html.escape(str(row["alias_zh"]))
+        + "</h3><p>validation Δ <b>"
+        + html.escape(_outcome_number(row["validation"]["mean_delta"]))
+        + "</b> · relative cost <b>"
+        + (
+            f"{float(row['relative_efficiency']['relative_cost_ratio']):.3f}×"
+            if row["relative_efficiency"]["relative_cost_ratio"] is not None
+            else "不可用"
+        )
+        + "</b></p></article>"
+        for row in (first, second)
+        if row is not None
+    ) or "<article><h3>没有 deployable 候选</h3><p>报告保留完整负结果。</p></article>"
+    package = dict(presentation["package"])
+    package_truth = (
+        "本轮实际修改文件：" + "、".join(package["modified_files"])
+        if package["modified_files"]
+        else "本轮没有 materialized 文件修改"
+    )
+    graph_slices = "".join(
+        "<article><h3>"
+        + html.escape(str(row["alias_zh"]))
+        + "</h3><p>父代图 binding "
+        + str(row["graph"]["binding_count"])
+        + " · observed access "
+        + str(row["graph"]["mapped_access_events"])
+        + " · target nodes "
+        + str(len(row["graph"]["target_nodes"]))
+        + "</p><div class=\"node-list\">"
+        + "".join(
+            "<code>" + html.escape(str(node)) + "</code>"
+            for node in row["graph"]["target_nodes"]
+        )
+        + "</div></article>"
+        for row in candidates
+        if row["graph"]["available"] or row["graph"]["target_nodes"]
+    ) or "<p class=\"empty\">没有足够的 selector graph 切片证据。</p>"
+    runtime = dict(presentation["runtime"])
+    raw_evidence = html.escape(
+        json.dumps(
+            {
+                "provenance": data.get("provenance"),
+                "policy_evaluation": data.get("policy_evaluation"),
+                "frontier_ranking": data.get("frontier_ranking"),
+                "process_evidence": data.get("process_evidence"),
+                "runtime": data.get("runtime"),
+            },
+            ensure_ascii=False,
+            indent=2,
+        )
+    )
+    embedded = _script_json(data)
+    title = html.escape(str(data["title_zh"]))
+    first_delta = (
+        _outcome_number(first["validation"]["mean_delta"]) if first is not None else "不可用"
+    )
+    first_cost = (
+        f"{float(first['relative_efficiency']['relative_cost_ratio']):.3f}×"
+        if first is not None
+        and first["relative_efficiency"]["relative_cost_ratio"] is not None
+        else "不可用"
+    )
+    return f"""<!doctype html>
+<html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="color-scheme" content="light"><title>{title}</title>
+<style>
+:root{{--paper:#f3f0e8;--surface:#fffdf8;--ink:#202622;--muted:#687069;--line:#d8d4c8;--night:#202924;--coral:#b9533c;--coral-soft:#f3ddd4;--teal:#17685b;--teal-soft:#dcebe5;--amber:#936217;--amber-soft:#f3e7cc;--red:#9e4039;--red-soft:#f2ddda;--mono:ui-monospace,SFMono-Regular,Menlo,monospace;--serif:Georgia,"Songti SC",serif;--sans:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei",sans-serif}}*{{box-sizing:border-box}}html{{scroll-behavior:smooth;scroll-padding-top:68px}}body{{margin:0;background:var(--paper);color:var(--ink);font:15px/1.68 var(--sans)}}a{{color:var(--teal);text-underline-offset:3px}}a:focus-visible,button:focus-visible,select:focus-visible,summary:focus-visible{{outline:3px solid #e29773;outline-offset:3px}}code,pre{{font-family:var(--mono)}}.topbar{{position:sticky;top:0;z-index:10;display:flex;align-items:center;gap:18px;padding:11px clamp(18px,4vw,64px);background:#f3f0e8ed;border-bottom:1px solid var(--line);backdrop-filter:blur(12px)}}.brand{{font:700 11px var(--mono);letter-spacing:.16em;color:var(--coral);white-space:nowrap}}nav{{display:flex;gap:4px;overflow:auto}}nav a{{white-space:nowrap;padding:7px 9px;border-radius:7px;color:var(--muted);text-decoration:none;font-size:13px}}nav a:hover{{background:var(--surface);color:var(--ink)}}.hero{{padding:clamp(58px,8vw,112px) clamp(22px,7vw,108px) 56px;background:radial-gradient(circle at 88% 18%,#d7e7df 0,transparent 27%),linear-gradient(145deg,#fffdf8 0%,#eee8de 74%);border-bottom:1px solid var(--line)}}.eyebrow{{font:700 11px var(--mono);letter-spacing:.15em;color:var(--coral);text-transform:uppercase}}h1{{font:500 clamp(40px,6vw,76px)/1.04 var(--serif);letter-spacing:-.035em;max-width:1100px;margin:18px 0}}h2{{font:500 clamp(30px,4vw,48px)/1.14 var(--serif);margin:12px 0}}h3{{margin:0;font-size:19px}}h4{{margin:0 0 10px}}.lead{{max-width:880px;font-size:18px;color:var(--muted)}}.hero-metrics,.cards{{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:12px}}.hero-metrics{{margin-top:34px;max-width:1100px}}.metric{{border-top:2px solid var(--ink);padding:13px 2px}}.metric b{{display:block;font:500 clamp(26px,4vw,43px)/1.1 var(--serif)}}.metric span{{display:block;margin-top:7px;color:var(--muted);font-size:12px}}.boundary{{max-width:980px;margin-top:24px;padding:15px 17px;border-left:3px solid var(--amber);background:var(--amber-soft);color:#6b4b1b}}main{{max-width:1440px;margin:auto;padding:0 clamp(18px,4vw,64px) 90px}}section{{padding:68px 0 24px;border-bottom:1px solid var(--line)}}.intro{{max-width:900px;color:var(--muted);font-size:16px}}.panel,.cards>article,.candidate-detail,.task-group,.graph-grid>article{{background:var(--surface);border:1px solid var(--line);border-radius:15px}}.panel{{padding:20px}}.three-layers article{{padding:18px}}.three-layers b{{font:700 11px var(--mono);color:var(--teal)}}.rank{{display:inline-grid;place-items:center;width:35px;height:35px;border-radius:50%;background:var(--teal);color:white;font-weight:700}}.funnel{{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:8px;padding:0;list-style:none}}.funnel li{{padding:16px;background:var(--surface);border:1px solid var(--line);border-radius:12px;text-align:center}}.funnel strong{{display:block;font:500 36px var(--serif)}}.funnel span{{color:var(--muted);font-size:12px}}.lineage-wrap{{display:grid;grid-template-columns:1.4fr .8fr;gap:14px}}.lineage-grid{{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;padding:16px;background:var(--night);border-radius:14px}}.lineage-node{{display:flex;min-height:98px;flex-direction:column;justify-content:center;padding:13px;border:2px solid #66746b;border-radius:10px;background:#2c3731;color:#eef2ed}}.lineage-node small,.lineage-node code{{color:#afbbb2;font-size:10px}}.lineage-node.tone-accepted{{border-color:#5ec4a6}}.lineage-node.tone-rejected{{border-color:#d07168}}.lineage-node.tone-incomplete{{border-color:#e1b75f}}.lineage-node.tone-root{{border-color:#a9b2ac}}.edge-list{{margin:0;padding:15px 24px;background:var(--surface);border:1px solid var(--line);border-radius:14px}}.edge-list li{{display:grid;grid-template-columns:1fr auto 1fr;gap:7px;padding:7px 0;border-bottom:1px solid var(--line)}}.edge-list small{{grid-column:1/-1;color:var(--muted)}}.candidate-detail{{margin:16px 0;padding:22px;border-left:5px solid var(--line)}}.candidate-detail.tone-accepted{{border-left-color:var(--teal)}}.candidate-detail.tone-rejected{{border-left-color:var(--red)}}.candidate-detail.tone-incomplete{{border-left-color:var(--amber)}}.candidate-detail>header{{display:flex;justify-content:space-between;gap:14px}}.candidate-detail header p{{margin:8px 0;color:var(--muted)}}.candidate-kind{{font:700 10px var(--mono);letter-spacing:.1em;color:var(--coral)}}.status{{height:max-content;padding:5px 9px;border-radius:99px;background:var(--teal-soft);color:var(--teal);font-size:12px;font-weight:700}}.tone-rejected .status{{background:var(--red-soft);color:var(--red)}}.tone-incomplete .status{{background:var(--amber-soft);color:var(--amber)}}.candidate-metrics{{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin:19px 0}}.candidate-metrics div{{padding:12px;border-top:2px solid var(--ink)}}.candidate-metrics b{{display:block;font:500 23px var(--serif)}}.candidate-metrics span{{font-size:11px;color:var(--muted)}}.candidate-grid{{display:grid;grid-template-columns:1fr 1fr;gap:20px}}.objective-row{{display:grid;grid-template-columns:150px minmax(130px,1fr) 62px;gap:8px;align-items:center;margin:7px 0;font-size:12px}}.diverging{{position:relative;height:9px;border-radius:99px;background:#ebe7de}}.diverging .axis{{position:absolute;left:50%;top:-3px;width:1px;height:15px;background:#767c76}}.diverging .value{{position:absolute;top:1px;height:7px;width:var(--w);background:var(--teal)}}.diverging .value.positive{{left:50%}}.diverging .value.negative{{right:50%;background:var(--coral)}}.axis-list{{display:grid;gap:8px;padding:0;list-style:none}}.axis-list li{{display:grid;grid-template-columns:1fr auto;padding:10px;background:#f5f1e9;border-radius:9px}}.axis-list small{{grid-column:1/-1;color:var(--muted)}}.reason-note{{margin:16px 0;padding:12px;background:#f6efe2;border-left:3px solid var(--amber)}}.causal-chain{{display:grid;grid-template-columns:repeat(5,1fr);gap:9px;padding:0;list-style:none;counter-reset:chain}}.causal-chain li{{position:relative;padding:12px;border:1px solid var(--line);border-radius:10px;background:#faf8f2}}.causal-chain b,.causal-chain span{{display:block}}.causal-chain span{{margin-top:7px;color:var(--muted);font-size:12px}}details summary{{cursor:pointer;font-weight:700}}details pre{{max-height:330px;overflow:auto;padding:13px;border-radius:9px;background:#222925;color:#e8eee8;white-space:pre-wrap;word-break:break-word;font-size:11px}}.operations{{display:grid;gap:8px}}.operation{{padding:13px;border:1px solid var(--line);border-radius:9px}}.operation .op{{margin-right:8px;color:var(--coral);font:700 10px var(--mono)}}.operation p{{color:var(--muted)}}.scatter{{position:relative;height:390px;margin-top:18px;border-left:2px solid var(--ink);border-bottom:2px solid var(--ink);background:linear-gradient(90deg,transparent 44%,#b9533c22 44%,#b9533c22 45%,transparent 45%),linear-gradient(0deg,#17685b0a,#17685b00)}}.scatter:before{{content:"original 1.0×";position:absolute;left:43%;bottom:-28px;color:var(--muted);font-size:11px}}.scatter:after{{content:"extreme cost line";position:absolute;right:8%;top:8px;color:var(--red);font-size:11px}}.scatter-point{{position:absolute;left:var(--x);bottom:var(--y);transform:translate(-50%,50%);display:grid;place-items:center;width:20px;height:20px;border-radius:50%;background:var(--teal);border:3px solid white;box-shadow:0 0 0 1px var(--teal);text-decoration:none}}.scatter-point.tone-rejected{{background:var(--red);box-shadow:0 0 0 1px var(--red)}}.scatter-point span{{position:absolute;top:24px;white-space:nowrap;padding:2px 5px;background:var(--surface);color:var(--ink);font-size:11px}}.chart-legend{{display:flex;justify-content:space-between;color:var(--muted);font-size:12px}}.toolbar{{display:flex;flex-wrap:wrap;gap:12px;align-items:center;margin:16px 0;padding:12px;background:#f8f5ee;border:1px solid var(--line);border-radius:10px}}select{{padding:7px 9px;border:1px solid #aaa69d;border-radius:7px;background:white;font:inherit}}.task-group{{margin:12px 0;overflow:hidden}}.task-group>summary{{display:flex;justify-content:space-between;gap:16px;padding:16px 18px;background:#f8f5ee}}.task-group>summary b,.task-group>summary small{{display:block}}.task-group>summary small{{color:var(--muted);font:10px var(--mono)}}.task-prompt{{max-width:920px;padding:0 18px;color:var(--muted)}}.artifact-grid{{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1px;background:var(--line)}}.artifact-card{{min-width:0;padding:16px;background:var(--surface)}}.artifact-card>header{{display:flex;justify-content:space-between;gap:8px}}.artifact-card>header span{{color:var(--muted);font-size:11px}}.gif-frame{{height:250px;margin:12px 0;display:grid;place-items:center;overflow:hidden;border-radius:10px;background:radial-gradient(circle,#fff,#ece8df)}}.gif-frame img{{max-width:100%;max-height:238px}}.artifact-metrics{{display:grid;grid-template-columns:1fr 1fr;gap:7px;font-size:11px;color:var(--muted)}}.artifact-metrics b{{display:block;color:var(--ink)}}.grader-copy{{min-height:72px;color:var(--muted);font-size:12px}}.assertions{{padding:0;list-style:none}}.assertions li{{display:grid;grid-template-columns:20px 1fr;gap:6px;padding:5px 0}}.assertions small{{grid-column:2;color:var(--muted)}}.graph-grid{{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:10px}}.graph-grid>article{{padding:16px;background:var(--night);color:#eef2ed}}.graph-grid p{{color:#b8c2bb}}.node-list{{display:flex;flex-wrap:wrap;gap:5px}}.node-list code{{padding:4px 6px;border:1px solid #56625a;border-radius:5px;font-size:9px}}.package-truth{{padding:15px;border-left:3px solid var(--coral);background:var(--coral-soft)}}.runtime-grid{{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:10px}}.runtime-grid div{{padding:12px;border-top:2px solid var(--ink)}}.runtime-grid b{{display:block;font:500 25px var(--serif)}}.evidence-zone>details{{margin:9px 0;padding:13px;border:1px solid var(--line);border-radius:9px;background:var(--surface)}}.empty{{padding:18px;background:var(--amber-soft);color:#6b4b1b}}footer{{padding:32px clamp(22px,7vw,108px);color:var(--muted);border-top:1px solid var(--line)}}@media(max-width:980px){{.lineage-wrap,.candidate-grid{{grid-template-columns:1fr}}.candidate-metrics{{grid-template-columns:1fr 1fr}}.causal-chain{{grid-template-columns:1fr 1fr}}}}@media(max-width:650px){{nav{{display:none}}.candidate-metrics,.causal-chain{{grid-template-columns:1fr}}.objective-row{{grid-template-columns:105px 1fr 54px}}.artifact-grid{{grid-template-columns:1fr}}section{{padding-top:52px}}}}@media print{{.topbar,.toolbar{{display:none}}body{{background:white}}section,.candidate-detail{{break-inside:avoid}}details{{display:block}}}}
+</style></head><body>
+<div class="topbar"><span class="brand">GEPASE / OUTCOME</span><nav aria-label="报告目录"><a href="#overview">结论</a><a href="#process">过程</a><a href="#candidates">候选</a><a href="#scores">评分与效率</a><a href="#tasks">任务产物</a><a href="#package">Graph / Patch</a><a href="#runtime">运行</a><a href="#evidence">证据与复现</a></nav></div>
+<header class="hero" id="overview"><div class="eyebrow">Graph-Enhanced Package-Aware Skill Evolution</div><h1>{html.escape(str(outcome['label_zh']))}</h1><p class="lead">{title}。首屏只呈现已经由 Core 决定的 outcome、候选漏斗与质量—成本排名；浏览器不重新评分，也不改变 Gate。</p><div class="hero-metrics"><div class="metric"><b>{headline['proposed']}</b><span>进入搜索的候选</span></div><div class="metric"><b>{headline['deployable']}</b><span>deployable frontier</span></div><div class="metric"><b>{html.escape(first_delta)}</b><span>第一名 validation Δ</span></div><div class="metric"><b>{html.escape(first_cost)}</b><span>第一名相对 original 成本</span></div></div><p class="boundary"><b>结论边界：</b>{html.escape(str(outcome['boundary_zh']))}</p></header>
+<main><section><div class="eyebrow">01 / THREE LAYERS</div><h2>三层结论，分别成立</h2><div class="cards three-layers"><article><b>代码实现</b><p>通用 builder 从 typed evidence 派生展示投影；HTML 只负责呈现和筛选。</p></article><article><b>工程机制</b><p>报告、Package 归档与任务原生产物纳入新 seal，旧 evidence 保持只读。</p></article><article><b>算法效果</b><p>本页展示既有 sealed run 在当前 policy 下的 Gate 与 frontier，不新增实验分数。</p></article></div><h3 style="margin-top:28px">第一名与第二名</h3><div class="cards">{frontier_cards}</div></section>
+<section id="process"><div class="eyebrow">02 / SEARCH STORY</div><h2>从 Reference 到部署前沿</h2><p class="intro">流程依次经过失败证据、Package Graph 定位、结构化 Patch、train Gate、Reflection/Pareto、generation-2、条件 Merge 和 held-out Gate。</p><ol class="funnel">{funnel}</ol><div class="lineage-wrap"><div class="lineage-grid" aria-label="候选父子谱系">{lineage}</div><ol class="edge-list" aria-label="谱系边">{edges}</ol></div></section>
+<section id="candidates"><div class="eyebrow">03 / CANDIDATES</div><h2>每个候选为何入选或淘汰</h2><p class="intro">中文别名只用于阅读；完整 Candidate ID、Patch refs、Graph refs 和 reason code 保留在折叠技术区。</p>{candidate_cards}</section>
+<section id="scores"><div class="eyebrow">04 / QUALITY × COST</div><h2>质量提升与相对资源成本</h2><p class="intro">横轴是 Candidate 相对 frozen original 的成本比，纵轴是 held-out validation Δ。1.0× 是 original 基准，policy 中的极端成本线为 {float(scatter['extreme_ratio']):.1f}×。六维条形由 Python 投影预先计算，浏览器不决定排序或 Gate。</p><div class="panel"><div class="chart-legend"><span>更省资源 ← relative cost → 更高成本</span><span>validation Δ 越高越好 ↑</span></div><div class="scatter" role="img" aria-label="候选质量提升与相对资源成本散点图">{scatter_points}</div></div></section>
+<section id="tasks"><div class="eyebrow">05 / TASK-NATIVE OUTPUTS</div><h2>按任务对照真实 GIF</h2><p class="intro">默认展示 held-out validation 与排名第一的 Candidate。每组将 no-skill、original 和所选 Candidate 放在同一任务下；证据不完整的候选会保留状态标记，不会混成 accepted 结果。</p><div class="toolbar"><label>Split <select id="split-filter"><option value="validation">仅 validation</option><option value="all">全部</option><option value="train">仅 train</option></select></label><label>Candidate <select id="candidate-filter"><option value="all">全部候选</option>{candidate_options}</select></label></div><div id="task-groups">{task_groups}</div></section>
+<section id="package"><div class="eyebrow">06 / PACKAGE GRAPH & PATCH</div><h2>失败 → 图定位 → Patch → 评测 → Gate</h2><p class="package-truth"><b>事实边界：</b>完整 Package 进入 snapshot、graph 和访问分析；selector 实际使用 {package['graph_binding_count']} 个 graph binding，定位 {package['target_node_count']} 个修改目标。{html.escape(package_truth)}。package-aware 不等于所有文件都被修改。</p><div class="graph-grid">{graph_slices}</div></section>
+<section id="runtime"><div class="eyebrow">07 / RUNTIME</div><h2>中性呈现实际运行规模</h2><div class="runtime-grid"><div><b>{runtime.get('agent_calls', '不可用')}</b><span>历史 Agent calls</span></div><div><b>{runtime.get('estimated_tokens', '不可用')}</b><span>保守 estimated tokens</span></div><div><b>{runtime.get('active_wall_clock_ms', '不可用')}</b><span>active ms</span></div><div><b>{runtime.get('repairs', '不可用')}</b><span>repairs</span></div><div><b>0</b><span>本报告新增 Agent/API/Eval</span></div></div></section>
+<section id="evidence" class="evidence-zone"><div class="eyebrow">08 / EVIDENCE & REPRODUCTION</div><h2>证据与复现</h2><p class="intro">路径、hash、policy、Runtime 与机器 JSON 默认折叠；它们仍被复制到 report-data 和 artifact seal 中，可用于逐字节复核。</p><details><summary>Policy、frontier ranking、process 与 Runtime 原始投影</summary><pre>{raw_evidence}</pre></details><details><summary>完整 report-data.json</summary><p><a href="report-data.json">下载或查看机器可读报告数据</a></p><code>{html.escape(str(data.get('outcome_input_ref')))}</code></details><details><summary>可部署 Package 归档</summary><div class="cards">{"".join(f'<article><b>{html.escape(str(item["candidate_id"]))}</b><p><a href="{html.escape(str(item["archive_path"]))}">下载 Package ZIP</a></p><code>{html.escape(str(item["archive_sha256"]))}</code></article>' for item in data.get('deployable_frontier', [])) or '<p class="empty">没有可部署 Package 归档。</p>'}</div></details></section>
+<script type="application/json" id="report-data">{embedded}</script></main><footer>GEPASE · self-contained sealed report · 无 CDN / 无远程字体 / 无浏览器端评分</footer>
+<script>
+const split=document.getElementById('split-filter'),candidate=document.getElementById('candidate-filter');function filterTasks(){{const s=split.value,c=candidate.value;document.querySelectorAll('.task-group').forEach(group=>{{group.hidden=s!=='all'&&group.dataset.split!==s;group.querySelectorAll('.artifact-card').forEach(card=>{{card.hidden=card.dataset.variant==='candidate'&&c!=='all'&&card.dataset.candidate!==c}})}})}}split.addEventListener('change',filterTasks);candidate.addEventListener('change',filterTasks);filterTasks();
+</script></body></html>"""
+
+
+def render_outcome_report(data: dict[str, Any]) -> str:
+    """Render the classic report or the opt-in generic narrative projection."""
+
+    if data.get("presentation") is None:
+        return _render_outcome_report_classic(data)
+    return _render_outcome_report_narrative(data)

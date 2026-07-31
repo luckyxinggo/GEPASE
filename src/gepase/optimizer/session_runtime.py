@@ -11,7 +11,7 @@ import math
 from datetime import UTC, datetime
 from enum import StrEnum
 from pathlib import Path
-from typing import Literal
+from typing import Any, Literal
 
 from pydantic import Field, model_validator
 
@@ -259,6 +259,7 @@ class BudgetCheckpoint(FrozenModel):
     in_progress_work_ids: tuple[str, ...]
     not_exported_work_ids: tuple[str, ...]
     candidate_gate_summary: dict[str, str]
+    config_policy_provenance: dict[str, Any] = Field(default_factory=dict)
     next_batch_estimate: UsageAllowance | None = None
     continuation_risk_zh: str = Field(min_length=1)
     previous_decision_hash: str | None = Field(default=None, pattern=r"^[0-9a-f]{64}$")
@@ -571,6 +572,7 @@ class ActiveSessionRuntime:
         repairs: int = 0,
         proposals: int = 0,
         candidates: int = 0,
+        token_count_kind: MeasurementKind = MeasurementKind.ESTIMATED,
         now: datetime | None = None,
     ) -> ActiveSessionState:
         actual_values = (
@@ -608,9 +610,14 @@ class ActiveSessionRuntime:
                 for name in UsageAllowance.model_fields
             }
         )
+        settled_tokens = (
+            reserved_share.estimated_tokens
+            if token_count_kind is MeasurementKind.UNAVAILABLE
+            else actual_tokens
+        )
         actual = UsageAllowance(
             agent_calls=1,
-            estimated_tokens=actual_tokens,
+            estimated_tokens=settled_tokens,
             active_wall_clock_ms=0,
             repairs=repairs,
             proposals=proposals,
@@ -633,7 +640,7 @@ class ActiveSessionRuntime:
             role=match.role,
             reserved_upper_bound_share=reserved_share,
             actual=actual,
-            token_variance=actual_tokens - reserved_share.estimated_tokens,
+            token_variance=settled_tokens - reserved_share.estimated_tokens,
             agent_duration_ms=actual_duration_ms,
             approved_tranche_exceeded_after_settlement=not updated.used.add(
                 self.reserved_usage(updated)
@@ -912,6 +919,7 @@ class ActiveSessionRuntime:
         candidate_gate_summary: dict[str, str],
         next_batch_estimate: UsageAllowance | None,
         continuation_risk_zh: str,
+        config_policy_provenance: dict[str, Any] | None = None,
         now: datetime | None = None,
     ) -> BudgetCheckpoint:
         if (
@@ -948,6 +956,7 @@ class ActiveSessionRuntime:
             "completed_work_ids": sorted(set(completed_work_ids)),
             "in_progress_work_ids": list(in_progress_work_ids),
             "not_exported_work_ids": sorted(set(not_exported_work_ids)),
+            "config_policy_provenance": config_policy_provenance or {},
             "created_at": current.isoformat(),
         }
         checkpoint_id = (
@@ -983,6 +992,7 @@ class ActiveSessionRuntime:
             in_progress_work_ids=in_progress_work_ids,
             not_exported_work_ids=tuple(sorted(set(not_exported_work_ids))),
             candidate_gate_summary=dict(sorted(candidate_gate_summary.items())),
+            config_policy_provenance=config_policy_provenance or {},
             next_batch_estimate=next_batch_estimate,
             continuation_risk_zh=continuation_risk_zh,
             previous_decision_hash=state.latest_decision_hash,

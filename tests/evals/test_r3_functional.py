@@ -3,18 +3,25 @@ from __future__ import annotations
 import json
 import tempfile
 from pathlib import Path
+from types import SimpleNamespace
+from typing import Literal, cast
 
 import pytest
 
 from gepase.evals.engine import MultiFidelityEvalEngine, build_submission
-from gepase.evals.evidence import TraceStep
+from gepase.evals.eval_plan import FrozenEvalPlan
+from gepase.evals.evidence import EvaluationRecord, TraceStep, UsageRecord
+from gepase.evals.functional import FunctionalScoringPolicy
+from gepase.evals.functional_pipeline import FunctionalEvalCoordinator
 from gepase.evals.work_items import EvalWorkItem
+from gepase.schemas.common import ArtifactRef
 
 ROOT = Path(__file__).resolve().parents[2]
 FROZEN_PLAN = ROOT / "artifacts/runs/r2-slack-gif-creator-evalplan/frozen-eval-plan.json"
 SCORING_POLICY = ROOT / "configs/canaries/slack-gif-creator-r3-scoring.json"
 PACKAGE_GRAPH = ROOT / "artifacts/runs/r2-slack-gif-creator-evalplan/package/graph.json"
 SKILL_REF = "benchmarks/canaries/slack-gif-creator/package"
+TokenCountKind = Literal["reported", "estimated", "unavailable"]
 
 
 def _plan(engine: MultiFidelityEvalEngine) -> None:
@@ -143,3 +150,168 @@ def test_real_gif_ingest_derives_content_level_e3() -> None:
         assert all(value.evidence_refs for value in derived.assertion_results)
         assert all(value.measurements for value in derived.assertion_results)
         assert (run_dir / f"deterministic/{item.work_id}.json").is_file()
+
+
+def test_unavailable_tokens_are_excluded_without_double_counting_binary_size() -> None:
+    frozen = FrozenEvalPlan.model_validate_json(FROZEN_PLAN.read_text(encoding="utf-8"))
+    policy = FunctionalScoringPolicy.model_validate_json(
+        SCORING_POLICY.read_text(encoding="utf-8")
+    )
+    case = frozen.functional_cases[0]
+    item = cast(EvalWorkItem, SimpleNamespace(task_id=case.case_id))
+    artifact = ArtifactRef(
+        path=case.requested_output.filename,
+        sha256="a" * 64,
+        media_type=case.requested_output.media_type,
+        size_bytes=3_500_000,
+    )
+    coordinator = object.__new__(FunctionalEvalCoordinator)
+    coordinator.cases = {case.case_id: case}
+    coordinator.policy = policy
+    left = cast(
+        EvaluationRecord,
+        SimpleNamespace(
+            artifacts=(artifact,),
+            usage=UsageRecord(
+                input_tokens=31,
+                output_tokens=875_000,
+                duration_ms=0,
+                tool_calls=0,
+                token_count_kind="unavailable",
+            ),
+        ),
+    )
+    right = cast(
+        EvaluationRecord,
+        SimpleNamespace(
+            artifacts=(artifact,),
+            usage=UsageRecord(
+                input_tokens=0,
+                output_tokens=0,
+                duration_ms=0,
+                tool_calls=0,
+                token_count_kind="unavailable",
+            ),
+        ),
+    )
+
+    left_score = coordinator._efficiency(left, item, include_token_usage=False)
+    right_score = coordinator._efficiency(right, item, include_token_usage=False)
+
+    assert left_score == pytest.approx(2 / 3)
+    assert right_score == left_score
+    with pytest.raises(ValueError, match="unavailable token telemetry"):
+        coordinator._efficiency(left, item, include_token_usage=True)
+
+
+def _efficiency_fixture() -> tuple[
+    FunctionalEvalCoordinator,
+    EvalWorkItem,
+    ArtifactRef,
+]:
+    frozen = FrozenEvalPlan.model_validate_json(FROZEN_PLAN.read_text(encoding="utf-8"))
+    policy = FunctionalScoringPolicy.model_validate_json(
+        SCORING_POLICY.read_text(encoding="utf-8")
+    )
+    case = frozen.functional_cases[0]
+    coordinator = object.__new__(FunctionalEvalCoordinator)
+    coordinator.cases = {case.case_id: case}
+    coordinator.policy = policy
+    return (
+        coordinator,
+        cast(EvalWorkItem, SimpleNamespace(task_id=case.case_id)),
+        ArtifactRef(
+            path=case.requested_output.filename,
+            sha256="b" * 64,
+            media_type=case.requested_output.media_type,
+            size_bytes=policy.artifact_size_budget_bytes // 2,
+        ),
+    )
+
+
+def _efficiency_source(
+    artifact: ArtifactRef,
+    kind: TokenCountKind,
+    *,
+    input_tokens: int = 100,
+    output_tokens: int = 100,
+) -> EvaluationRecord:
+    return cast(
+        EvaluationRecord,
+        SimpleNamespace(
+            artifacts=(artifact,),
+            usage=UsageRecord(
+                input_tokens=input_tokens,
+                output_tokens=output_tokens,
+                duration_ms=0,
+                tool_calls=0,
+                token_count_kind=kind,
+            ),
+        ),
+    )
+
+
+def test_reference_unavailable_candidate_estimated_uses_common_non_token_basis() -> None:
+    coordinator, item, artifact = _efficiency_fixture()
+    candidate = _efficiency_source(artifact, "estimated", input_tokens=800_000)
+    original = _efficiency_source(artifact, "unavailable")
+    no_skill = _efficiency_source(artifact, "unavailable")
+
+    common = coordinator._common_token_count_kind(candidate, original, no_skill)
+
+    assert common is None
+    scores = [
+        coordinator._efficiency(source, item, include_token_usage=common is not None)
+        for source in (candidate, original, no_skill)
+    ]
+    assert scores == pytest.approx([5 / 6, 5 / 6, 5 / 6])
+
+
+def test_reference_estimated_candidate_unavailable_uses_common_non_token_basis() -> None:
+    coordinator, item, artifact = _efficiency_fixture()
+    candidate = _efficiency_source(artifact, "unavailable")
+    original = _efficiency_source(artifact, "estimated", input_tokens=800_000)
+    no_skill = _efficiency_source(artifact, "estimated", input_tokens=400_000)
+
+    common = coordinator._common_token_count_kind(candidate, original, no_skill)
+
+    assert common is None
+    scores = [
+        coordinator._efficiency(source, item, include_token_usage=common is not None)
+        for source in (candidate, original, no_skill)
+    ]
+    assert scores == pytest.approx([5 / 6, 5 / 6, 5 / 6])
+
+
+@pytest.mark.parametrize("kind", ["estimated", "reported"])
+def test_three_available_compatible_sources_include_token_axis(
+    kind: TokenCountKind,
+) -> None:
+    coordinator, item, artifact = _efficiency_fixture()
+    sources = tuple(
+        _efficiency_source(artifact, kind, input_tokens=10, output_tokens=10)
+        for _ in range(3)
+    )
+
+    common = coordinator._common_token_count_kind(*sources)
+
+    assert common == kind
+    with_tokens = coordinator._efficiency(sources[0], item, include_token_usage=True)
+    without_tokens = coordinator._efficiency(sources[0], item, include_token_usage=False)
+    assert with_tokens != without_tokens
+
+
+def test_incompatible_available_measurement_kinds_exclude_token_axis() -> None:
+    coordinator, item, artifact = _efficiency_fixture()
+    candidate = _efficiency_source(artifact, "reported", input_tokens=800_000)
+    original = _efficiency_source(artifact, "estimated", input_tokens=200_000)
+    no_skill = _efficiency_source(artifact, "reported", input_tokens=400_000)
+
+    common = coordinator._common_token_count_kind(candidate, original, no_skill)
+
+    assert common is None
+    scores = [
+        coordinator._efficiency(source, item, include_token_usage=common is not None)
+        for source in (candidate, original, no_skill)
+    ]
+    assert scores == pytest.approx([5 / 6, 5 / 6, 5 / 6])

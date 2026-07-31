@@ -390,7 +390,7 @@ def submit_work(
     input_tokens: Annotated[int | None, typer.Option("--input-tokens")] = None,
     output_tokens: Annotated[int | None, typer.Option("--output-tokens")] = None,
     tool_calls: Annotated[int | None, typer.Option("--tool-calls")] = None,
-    token_count_kind: Annotated[str, typer.Option("--token-count-kind")] = "estimated",
+    token_count_kind: Annotated[str, typer.Option("--token-count-kind")] = "unavailable",
     repair_attempt: Annotated[bool, typer.Option("--repair-attempt")] = False,
     failure_kind: Annotated[str | None, typer.Option("--failure-kind")] = None,
     failure_detail: Annotated[str | None, typer.Option("--failure-detail")] = None,

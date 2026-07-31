@@ -13,6 +13,7 @@ from typing import Any
 from gepase.schemas.common import ArtifactRef
 
 INDEX_NAME = "artifact-index.json"
+CANDIDATE_BUNDLE_SEAL_NAME = "candidate-bundle-seal.json"
 
 
 def sha256_bytes(data: bytes) -> str:
@@ -170,6 +171,49 @@ class ArtifactStore:
         self._write_index()
         return ref
 
+    def index_existing_append_only(
+        self,
+        relative_path: str,
+        media_type: str = "application/octet-stream",
+    ) -> ArtifactRef:
+        """Index an immutable existing artifact without permitting hash replacement."""
+
+        path = (self.root / relative_path).resolve()
+        if not path.is_relative_to(self.root):
+            raise ValueError("artifact path escapes store root")
+        if not path.is_file():
+            raise FileNotFoundError(path)
+        data = path.read_bytes()
+        expected = ArtifactRef(
+            path=relative_path,
+            sha256=sha256_bytes(data),
+            media_type=media_type,
+            size_bytes=len(data),
+        )
+        existing = self._refs.get(relative_path)
+        if existing is not None:
+            if existing != expected:
+                raise ValueError(
+                    f"append-only artifact index disagrees with existing content: {relative_path}"
+                )
+            return existing
+        self._refs[relative_path] = expected
+        self._write_index()
+        return expected
+
+    def verify_complete(self) -> VerificationResult:
+        """Require a fully indexed, hash-matched artifact scope."""
+
+        result = self.verify()
+        if not result.valid or result.unindexed_files != 0:
+            raise ValueError(
+                "artifact store verification failed: "
+                f"missing={result.missing}, hash_mismatch={result.hash_mismatch}, "
+                f"schema_errors={result.schema_errors}, "
+                f"unindexed_files={result.unindexed_files}"
+            )
+        return result
+
     def prune_missing(self) -> int:
         """Remove stale index entries after an explicitly curated artifact cleanup."""
         missing = [relative for relative in self._refs if not (self.root / relative).is_file()]
@@ -249,3 +293,78 @@ def resolve_scoped_artifact_index(run_dir: Path) -> tuple[Path, dict[str, str]]:
         if scoped.get("run-metadata.json"):
             return index_path, scoped
     raise ValueError("artifact scope has no complete local or ancestor seal")
+
+
+def resolve_verified_artifact(artifact_path: Path) -> tuple[Path, str]:
+    """Resolve one artifact through a complete local or ancestor ArtifactStore."""
+
+    artifact = artifact_path.resolve(strict=True)
+    digest = sha256_bytes(artifact.read_bytes())
+    for owner in artifact.parents:
+        index_path = owner / INDEX_NAME
+        if not index_path.is_file():
+            continue
+        try:
+            ArtifactStore(owner).verify_complete()
+        except (ValueError, json.JSONDecodeError):
+            continue
+        raw = json.loads(index_path.read_text(encoding="utf-8"))
+        artifacts = raw.get("artifacts")
+        if not isinstance(artifacts, list):
+            continue
+        relative = artifact.relative_to(owner).as_posix()
+        refs = [
+            item
+            for item in artifacts
+            if isinstance(item, dict) and item.get("path") == relative
+        ]
+        if len(refs) == 1 and refs[0].get("sha256") == digest:
+            return owner, relative
+    raise ValueError("artifact is not covered by a complete hash-matched ArtifactStore")
+
+
+def verify_candidate_bundle_artifact(
+    artifact_path: Path,
+    *,
+    expected_candidate_id: str,
+    expected_package_id: str,
+    expected_content_hash: str,
+) -> tuple[Path, str, dict[str, Any]]:
+    """Verify an artifact against one immutable Candidate-level bundle seal."""
+
+    artifact = artifact_path.resolve(strict=True)
+    owner = artifact.parent
+    relative = artifact.relative_to(owner).as_posix()
+    binding_path = owner / CANDIDATE_BUNDLE_SEAL_NAME
+    if not binding_path.is_file() or not (owner / INDEX_NAME).is_file():
+        raise ValueError("Candidate bundle seal is missing")
+    ArtifactStore(owner).verify_complete()
+    binding = json.loads(binding_path.read_text(encoding="utf-8"))
+    if not isinstance(binding, dict):
+        raise ValueError("Candidate bundle seal must be an object")
+    if (
+        binding.get("schema_version") != "1.0.0"
+        or binding.get("binding_kind") != "package_candidate_bundle"
+        or binding.get("candidate_id") != expected_candidate_id
+        or binding.get("package_id") != expected_package_id
+        or binding.get("content_hash") != expected_content_hash
+        or binding.get("workspace_snapshot_hash") != expected_content_hash
+    ):
+        raise ValueError("Candidate bundle seal identity mismatch")
+    artifact_hashes = binding.get("artifact_hashes")
+    if not isinstance(artifact_hashes, dict):
+        raise ValueError("Candidate bundle seal lacks artifact hashes")
+    required = {"candidate.json", "application.json", "patch.json", "graph.json"}
+    if not required <= set(artifact_hashes):
+        raise ValueError("Candidate bundle seal lacks required immutable artifacts")
+    digest = sha256_bytes(artifact.read_bytes())
+    if artifact_hashes.get(relative) != digest:
+        raise ValueError("Candidate bundle artifact hash mismatch")
+    raw_index = json.loads((owner / INDEX_NAME).read_text(encoding="utf-8"))
+    rows = raw_index.get("artifacts")
+    if not isinstance(rows, list):
+        raise ValueError("Candidate bundle artifact index is malformed")
+    matches = [row for row in rows if isinstance(row, dict) and row.get("path") == relative]
+    if len(matches) != 1 or matches[0].get("sha256") != digest:
+        raise ValueError("Candidate bundle artifact index binding mismatch")
+    return owner, relative, binding

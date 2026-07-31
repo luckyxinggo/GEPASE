@@ -93,6 +93,11 @@
       "title": "Config Hash",
       "type": "string"
     },
+    "config_policy_provenance": {
+      "additionalProperties": true,
+      "title": "Config Policy Provenance",
+      "type": "object"
+    },
     "continuation_risk_zh": {
       "minLength": 1,
       "title": "Continuation Risk Zh",

@@ -19,10 +19,33 @@ from gepase.evals.eval_plan import (
     RequestedOutput,
     RubricCriterion,
 )
+from gepase.evals.evidence import UsageRecord
+from gepase.evals.functional import (
+    FunctionalRole,
+    RoleAttemptFailure,
+    RoleAttemptKind,
+    RoleFailureKind,
+    build_role_attempt_terminalization,
+)
 from gepase.evals.statistics import PairedScore
-from gepase.evals.work_items import canonical_hash
-from gepase.mutation.proposer import PatchProposalStore
-from gepase.mutation.schema import PatchApplication, PatchApplicationStatus
+from gepase.evals.work_items import (
+    ExecutionBundle,
+    PackageAccessEvent,
+    PackageAccessKind,
+    canonical_hash,
+)
+from gepase.mutation.proposer import (
+    PatchProposalStore,
+    PatchProposalWorkItem,
+    build_patch_submission,
+)
+from gepase.mutation.schema import (
+    PackagePatch,
+    PatchApplication,
+    PatchApplicationStatus,
+    application_id_for,
+    package_patch_from_proposal,
+)
 from gepase.optimizer.candidate import (
     PackageCandidate,
     build_seed_candidate,
@@ -40,6 +63,7 @@ from gepase.optimizer.evolution_controller import (
     _SelectorGraphView,
 )
 from gepase.optimizer.materialize import materialize_candidate
+from gepase.optimizer.merge.models import MergeOutcome, MergeOutcomeStatus
 from gepase.optimizer.runtime import BudgetUsage, EvolutionPhase, EvolutionRunState
 from gepase.optimizer.status import CandidateStatus
 from gepase.package.analyzer import PackageAnalyzer
@@ -227,7 +251,7 @@ def build_generation2_fixture_controller(
     atomic_write(config_path, canonical_json_bytes(config))
     controller = R4EvolutionController(ROOT, run_dir, config_path)
 
-    workspace = run_dir / f"candidates/{parent.candidate_id}/workspace"
+    workspace = run_dir / f"candidate-workspaces/{parent.candidate_id}/workspace"
     materialize_candidate(ROOT, parent, workspace)
     graph = PackageAnalyzer().analyze(workspace).graph
     controller._write("fixture-selector-graph.json", graph)
@@ -265,8 +289,54 @@ def build_generation2_fixture_controller(
         original_workspace_hash_unchanged=True,
     )
     controller._write(f"candidates/{parent.candidate_id}/candidate.json", parent)
-    controller._write(f"candidates/{parent.candidate_id}/application.json", application)
     controller._write(f"candidates/{parent.candidate_id}/graph.json", graph)
+
+    seed_graph = PackageAnalyzer().analyze(package_dir).graph
+    seed_target = next(
+        node
+        for node in seed_graph.nodes
+        if node.mutable and node.kind in {NodeKind.INSTRUCTION, NodeKind.SECTION}
+    )
+    fixture_patch = package_patch_from_proposal(
+        {
+            "proposal_work_id": "proposal-work-generation2-parent-fixture",
+            "base_candidate_id": seed.candidate_id,
+            "base_snapshot_hash": seed.snapshot_hash,
+            "base_content_hash": seed.content_hash,
+            "selector": "fixture",
+            "selected_node_ids": [seed_target.node_id],
+            "operations": [
+                {
+                    "operation_id": "op-generation2-parent-fixture",
+                    "op": "replace_markdown_block",
+                    "target_node_id": seed_target.node_id,
+                    "path": seed_target.path,
+                    "precondition_hash": seed_target.content_hash,
+                    "replacement": (
+                        "## Workflow\n\nUse explicit, deterministic steps for every task."
+                    ),
+                    "evidence_refs": ["artifacts/local/fixture/train-evidence.json"],
+                    "expected_benefit": "Create the deterministic generation-1 parent.",
+                    "regression_risk": "low",
+                    "rationale": "Exercise Candidate bundle sealing.",
+                }
+            ],
+            "edit_budget": controller.config.patch_budget.model_dump(mode="json"),
+            "evidence_refs": ["artifacts/local/fixture/train-evidence.json"],
+            "summary": "Create the deterministic generation-1 parent fixture.",
+        }
+    )
+    application = application.model_copy(
+        update={
+            "application_id": application_id_for(
+                fixture_patch.patch_id,
+                seed.candidate_id,
+            ),
+            "patch_id": fixture_patch.patch_id,
+        }
+    )
+    controller._write(f"candidates/{parent.candidate_id}/application.json", application)
+    controller._write(f"candidates/{parent.candidate_id}/patch.json", fixture_patch)
 
     branch = MutationBranchState(
         branch_id="branch-generation2-fixture",
@@ -426,6 +496,148 @@ def build_generation2_fixture_controller(
     )
 
 
+def build_generation2_active_selector_fixture(
+    base: Path,
+    *,
+    seal_candidate: bool = True,
+) -> _Generation2Fixture:
+    """Build an active-run fixture that exercises the real graph overlay path."""
+
+    fixture = build_generation2_fixture_controller(base)
+    controller = fixture.controller
+    del controller.__dict__["build_selector_graph_view"]
+    graph_ref = (
+        controller.run_dir / f"candidates/{fixture.parent.candidate_id}/graph.json"
+    ).relative_to(ROOT).as_posix()
+    eval_dir = controller.run_dir / f"evals/{fixture.parent.candidate_id}/train"
+    metadata = json.loads((eval_dir / "run-metadata.json").read_text(encoding="utf-8"))
+    metadata.update(
+        {
+            "package_graph_ref": graph_ref,
+            "host": controller.config.host,
+            "model": controller.config.model,
+            "seed": controller.config.seed,
+            "timeout_seconds": controller.config.timeout_seconds,
+        }
+    )
+    store = ArtifactStore(eval_dir)
+    store.write_json("run-metadata.json", metadata)
+    graph = PackageGraph.model_validate_json(
+        (
+            controller.run_dir / f"candidates/{fixture.parent.candidate_id}/graph.json"
+        ).read_text(encoding="utf-8")
+    )
+    file_node = next(node for node in graph.nodes if node.kind is NodeKind.FILE)
+    workspace_ref = fixture.controller._candidate_application(
+        fixture.parent.candidate_id
+    ).workspace_ref
+    assert workspace_ref is not None
+    store.write_json(
+        "executor-work-items/work-active-selector.json",
+        {
+            "work_id": "work-active-selector",
+            "task_id": metadata["selected_case_ids"][0],
+            "skill_ref": workspace_ref,
+            "package_graph_ref": graph_ref,
+            "package_node_map": {file_node.path: file_node.node_id},
+        },
+    )
+    store.write_json(
+        "execution-submissions/work-active-selector.json",
+        ExecutionBundle(
+            submission_id="submission-active-selector",
+            work_id="work-active-selector",
+            provider_id=controller.config.provider_snapshot,
+            host=controller.config.host,
+            model=controller.config.model,
+            host_task_id="host-task-active-selector",
+            context_id="context-active-selector",
+            package_access=(
+                PackageAccessEvent(
+                    sequence=0,
+                    kind=PackageAccessKind.READ,
+                    path=file_node.path,
+                    node_id=file_node.node_id,
+                    bytes_loaded=1,
+                    tokens_loaded=1,
+                ),
+            ),
+            usage=UsageRecord(duration_ms=1),
+            started_at=FROZEN_AT,
+            finished_at=FROZEN_AT,
+        ).model_dump(mode="json"),
+    )
+    store.write_json(
+        "package-access/work-active-selector.json",
+        {
+            "schema_version": "1.0.0",
+            "work_id": "work-active-selector",
+            "variant": "candidate",
+            "valid": True,
+        },
+    )
+    store.verify_complete()
+    if seal_candidate:
+        controller.seal_candidate_bundle(fixture.parent.candidate_id)
+    return fixture
+
+
+def _generation2_raw_proposal(work: PatchProposalWorkItem) -> dict[str, object]:
+    operations = []
+    for index, target in enumerate(work.targets, 1):
+        operation = (
+            work.allowed_operations[0]
+            if len(work.allowed_operations) == 1
+            else work.allowed_operations[index - 1]
+        )
+        operations.append(
+            {
+                "operation_id": f"op-generation2-{index}",
+                "op": operation.value,
+                "target_node_id": target.node_id,
+                "path": target.path,
+                "precondition_hash": target.content_hash,
+                "replacement": (
+                    target.content.rstrip()
+                    + "\n\nGeneration-2 keeps this parent-bound refinement deterministic.\n"
+                ),
+                "evidence_refs": list(work.evidence_refs),
+                "expected_benefit": "Exercise the parent-bound deterministic refinement path.",
+                "regression_risk": "low",
+                "rationale": "The replacement is limited to the exported causal target.",
+            }
+        )
+    return {
+        "operations": operations,
+        "summary": "Apply the deterministic generation-2 test refinement.",
+    }
+
+
+def _plan_and_ingest_generation2(
+    fixture: _Generation2Fixture,
+    *,
+    patch_override: PackagePatch | None = None,
+) -> tuple[PatchProposalWorkItem, str]:
+    controller = fixture.controller
+    plan = controller.plan_generation2_refinement(fixture.parent.candidate_id)
+    assert plan.proposal_work_id is not None
+    with PatchProposalStore(controller.run_dir / "proposal-work.sqlite3") as proposals:
+        work = proposals.get_work(plan.proposal_work_id)
+    submission = build_patch_submission(
+        work,
+        _generation2_raw_proposal(work),
+        host="fixture-host",
+        model="fixture-model",
+        host_task_id="fixture-generation2-proposer",
+        duration_ms=1,
+        token_estimate=1,
+    )
+    if patch_override is not None:
+        submission = submission.model_copy(update={"patch": patch_override})
+    controller.ingest_proposal(submission)
+    return work, submission.work_id
+
+
 def test_generation2_plan_is_parent_bound_train_only_bounded_and_idempotent() -> None:
     local = ROOT / "artifacts/local"
     local.mkdir(parents=True, exist_ok=True)
@@ -464,6 +676,13 @@ def test_generation2_plan_is_parent_bound_train_only_bounded_and_idempotent() ->
         assert not generation["held_out_evidence_read"]
         assert not generation["sibling_evidence_read"]
         assert not generation["merge_path_used"]
+        causal_targets = work["actionable_side_information"]["causal_targets"]
+        assert {item["node_id"] for item in causal_targets} == {
+            item["node_id"] for item in work["targets"]
+        }
+        assert all(item["failure_evidence_ids"] for item in causal_targets)
+        assert all(item["causal_path_node_ids"] for item in causal_targets)
+        assert all(item["expected_affected_metrics"] for item in causal_targets)
         assert not any("/validation/" in ref for ref in work["evidence_refs"])
         assert first.train_feedback_ref is not None
         projection = json.loads(
@@ -479,6 +698,103 @@ def test_generation2_plan_is_parent_bound_train_only_bounded_and_idempotent() ->
             for item in projection["diagnoses"]
             for ref in item["evidence_refs"]
         )
+
+
+def test_active_run_candidate_seal_enables_real_generation2_graph_overlay() -> None:
+    local = ROOT / "artifacts/local"
+    local.mkdir(parents=True, exist_ok=True)
+    with tempfile.TemporaryDirectory(prefix="generation2-active-seal-", dir=local) as temporary:
+        fixture = build_generation2_active_selector_fixture(Path(temporary))
+        controller = fixture.controller
+        assert "build_selector_graph_view" not in controller.__dict__
+        before = controller.state().budget_usage
+
+        outcome = controller.plan_generation2_refinement(fixture.parent.candidate_id)
+
+        assert outcome.status == "planned"
+        assert outcome.selector_graph_ref is not None
+        assert controller.state().budget_usage == before
+        candidate_dir = controller.run_dir / f"candidates/{fixture.parent.candidate_id}"
+        verification = ArtifactStore(candidate_dir).verify_complete()
+        assert verification.checked == 5
+        assert controller.state().phase is not EvolutionPhase.COMPLETE
+
+
+def test_active_run_generation2_rejects_missing_or_tampered_candidate_seal() -> None:
+    local = ROOT / "artifacts/local"
+    local.mkdir(parents=True, exist_ok=True)
+    for failure in ("missing", "graph_tamper", "unindexed"):
+        with tempfile.TemporaryDirectory(
+            prefix=f"generation2-active-{failure}-",
+            dir=local,
+        ) as temporary:
+            fixture = build_generation2_active_selector_fixture(
+                Path(temporary),
+                seal_candidate=failure != "missing",
+            )
+            candidate_dir = (
+                fixture.controller.run_dir / f"candidates/{fixture.parent.candidate_id}"
+            )
+            if failure == "graph_tamper":
+                atomic_write(candidate_dir / "graph.json", b"{}\n")
+            elif failure == "unindexed":
+                atomic_write(candidate_dir / "unexpected.json", b"{}\n")
+            with pytest.raises(ValueError, match="sealed or hash-matched"):
+                fixture.controller.plan_generation2_refinement(fixture.parent.candidate_id)
+
+
+@pytest.mark.parametrize("failure", ("wrong_graph_snapshot", "wrong_application_content"))
+def test_candidate_seal_rejects_wrong_snapshot_or_content(failure: str) -> None:
+    local = ROOT / "artifacts/local"
+    local.mkdir(parents=True, exist_ok=True)
+    with tempfile.TemporaryDirectory(prefix=f"candidate-seal-{failure}-", dir=local) as temporary:
+        fixture = build_generation2_fixture_controller(Path(temporary))
+        candidate_dir = (
+            fixture.controller.run_dir / f"candidates/{fixture.parent.candidate_id}"
+        )
+        if failure == "wrong_graph_snapshot":
+            graph = PackageGraph.model_validate_json(
+                (candidate_dir / "graph.json").read_text(encoding="utf-8")
+            )
+            atomic_write(
+                candidate_dir / "graph.json",
+                canonical_json_bytes(
+                    graph.model_copy(update={"snapshot_hash": "0" * 64}).model_dump(
+                        mode="json"
+                    )
+                ),
+            )
+        else:
+            application = PatchApplication.model_validate_json(
+                (candidate_dir / "application.json").read_text(encoding="utf-8")
+            )
+            atomic_write(
+                candidate_dir / "application.json",
+                canonical_json_bytes(
+                    application.model_copy(
+                        update={"candidate_content_hash": "0" * 64}
+                    ).model_dump(mode="json")
+                ),
+            )
+        with pytest.raises(ValueError, match="identity mismatch"):
+            fixture.controller.seal_candidate_bundle(fixture.parent.candidate_id)
+
+
+def test_terminal_r4_seal_remains_compatible_with_candidate_substores() -> None:
+    local = ROOT / "artifacts/local"
+    local.mkdir(parents=True, exist_ok=True)
+    with tempfile.TemporaryDirectory(prefix="generation2-terminal-seal-", dir=local) as temporary:
+        fixture = build_generation2_active_selector_fixture(Path(temporary))
+        state = fixture.controller.state().model_copy(update={"phase": EvolutionPhase.COMPLETE})
+        fixture.controller._write("evolution-state.json", state)
+
+        result = fixture.controller.seal()
+
+        assert result["valid"]
+        assert result["unindexed_files"] == 0
+        assert ArtifactStore(
+            fixture.controller.run_dir / f"candidates/{fixture.parent.candidate_id}"
+        ).verify_complete().valid
 
 
 def test_generation2_no_parent_and_budget_caps_are_typed() -> None:
@@ -540,6 +856,121 @@ def test_generation2_fixture_uses_complete_train_admission() -> None:
         assert {item.task_id for item in admission.paired_scores} == expected
 
 
+def test_validation_incomplete_terminalization_is_durable_and_complete_is_idempotent() -> None:
+    local = ROOT / "artifacts/local"
+    local.mkdir(parents=True, exist_ok=True)
+    with tempfile.TemporaryDirectory(prefix="validation-incomplete-complete-", dir=local) as tmp:
+        fixture = build_generation2_fixture_controller(Path(tmp))
+        controller = fixture.controller
+        controller._write("resolved-config.json", controller.config)
+        candidate_id = fixture.parent.candidate_id
+        validation_ids = tuple(
+            sorted(
+                case.case_id
+                for case in fixture.plan.functional_cases
+                if case.split == "validation"
+            )
+        )
+        assert len(validation_ids) == 1
+        work_id = "grader-work-validation-incomplete"
+        terminalization = build_role_attempt_terminalization(
+            run_id=controller.config.run_id,
+            task_id=validation_ids[0],
+            work_id=work_id,
+            role=FunctionalRole.INDEPENDENT_GRADER,
+            attempts=(
+                RoleAttemptFailure(
+                    attempt_kind=RoleAttemptKind.INITIAL,
+                    host_attempt_accounting_id="host-attempt-validation-incomplete",
+                    host_task_id="host-task-validation-incomplete",
+                    context_id="context-validation-incomplete",
+                    evidence_sha256="e" * 64,
+                    failure_kind=RoleFailureKind.TIMEOUT,
+                    source_refs=("artifacts/local/validation-incomplete.json",),
+                ),
+            ),
+            allowed_repair_attempts=0,
+            terminalized_at=FROZEN_AT,
+        )
+        validation_run = controller.run_dir / f"evals/{candidate_id}/validation"
+        store = ArtifactStore(validation_run)
+        store.write_json(
+            "run-metadata.json",
+            {
+                "mode": "frozen-candidate",
+                "split": "validation",
+                "candidate_id": candidate_id,
+                "selected_case_ids": list(validation_ids),
+                "frozen_plan_ref": fixture.plan_path.relative_to(ROOT).as_posix(),
+                "frozen_plan_hash": fixture.plan.plan_hash,
+            },
+        )
+        store.write_json(
+            "candidate-run-summary.json",
+            {
+                "candidate_id": candidate_id,
+                "split": "validation",
+                "status": "evidence_incomplete",
+                "evidence_complete": False,
+                "gate_eligible": False,
+                "pair_summaries": [],
+                "incomplete_cases": [
+                    {
+                        "task_id": validation_ids[0],
+                        "role": "independent_grader",
+                        "work_id": work_id,
+                        "terminalization_id": terminalization.terminalization_id,
+                        "disposition": "evidence_incomplete",
+                    }
+                ],
+            },
+        )
+        store.write_json(
+            f"role-terminalizations/independent_grader/{work_id}.json",
+            terminalization.model_dump(mode="json"),
+        )
+        controller._write(
+            "merge/outcome.json",
+            MergeOutcome(
+                status=MergeOutcomeStatus.NO_ELIGIBLE_PARENT_SET,
+                considered_parent_candidate_ids=(candidate_id,),
+                considered_parent_set_count=0,
+                eligible_parent_set_count=0,
+                rejected_parent_set_count=0,
+                rejection_reason_counts={"insufficient_parents": 1},
+                cross_package_pair_count=0,
+                enumeration_ref="artifacts/local/fixture/merge-enumeration.json",
+            ),
+        )
+        controller._write(
+            "evolution-state.json",
+            controller.state().model_copy(update={"evaluated_candidate_ids": ()}),
+        )
+
+        first_resolution = controller.finalize_validation(candidate_id)
+        second_resolution = controller.finalize_validation(candidate_id)
+        assert first_resolution == second_resolution
+        assert controller.state().evaluated_candidate_ids == ()
+        assert controller.state().validation_incomplete_candidate_ids == (candidate_id,)
+
+        original_audit = controller.audit
+
+        def fixture_audit(self: R4EvolutionController) -> dict[str, object]:
+            result = {"schema_version": "1.0.0", "valid": True}
+            self._write("r4-audit.json", result)
+            return result
+
+        controller.audit = MethodType(fixture_audit, controller)  # type: ignore[method-assign]
+        first_complete = controller.complete()
+        controller.audit = original_audit  # type: ignore[method-assign]
+        second_complete = controller.complete()
+
+        assert first_complete["phase"] == "complete"
+        assert second_complete["idempotent"]
+        assert second_complete["validation_incomplete_candidate_ids"] == [candidate_id]
+        assert controller.state().deployable_candidate_ids == ()
+
+
 def test_generation2_accepts_non_five_case_frozen_train_split() -> None:
     local = ROOT / "artifacts/local"
     local.mkdir(parents=True, exist_ok=True)
@@ -564,6 +995,233 @@ def test_generation2_accepts_non_five_case_frozen_train_split() -> None:
         assert {item["task_id"] for item in projection["task_feedback"]} == set(
             metadata["selected_case_ids"]
         )
+
+
+def test_generation2_complete_parent_bound_mainline_is_idempotent() -> None:
+    local = ROOT / "artifacts/local"
+    local.mkdir(parents=True, exist_ok=True)
+    with tempfile.TemporaryDirectory(prefix="generation2-mainline-", dir=local) as temporary:
+        fixture = build_generation2_fixture_controller(Path(temporary))
+        controller = fixture.controller
+        before_state = controller.state()
+        work, work_id = _plan_and_ingest_generation2(fixture)
+
+        first = controller.apply_generation2_refinement(work_id)
+        second = controller.apply_generation2_refinement(work_id)
+
+        assert first == second
+        assert first["status"] == "materialized"
+        assert first["parent_candidate_id"] == fixture.parent.candidate_id
+        assert first["generation"] == 2
+        assert first["gate_0"] == "passed"
+        assert first["gate_1"] == "passed"
+        assert first["parent_bound"]
+        assert not first["held_out_evidence_read"]
+        child = controller._candidate(first["candidate_id"])
+        assert child.parent_ids == (fixture.parent.candidate_id,)
+        assert child.generation == 2
+        branch = MutationBranchState.model_validate_json(
+            (controller.run_dir / f"branches/{first['branch_id']}.json").read_text(
+                encoding="utf-8"
+            )
+        )
+        assert branch.candidate_chain == (
+            fixture.seed.candidate_id,
+            fixture.parent.candidate_id,
+            child.candidate_id,
+        )
+        assert branch.head_candidate_id == child.candidate_id
+        assert branch.generation == 2
+        assert len(branch.operator_history) == 2
+        assert work.parent_content_hash == fixture.parent.content_hash
+        assert "Generation-2 keeps" in next(
+            component.content
+            for component in child.components
+            if component.path == work.targets[0].path
+        )
+        state = controller.state()
+        assert state.branch_candidate_ids[-1] == child.candidate_id
+        assert state.budget_usage.candidates == before_state.budget_usage.candidates + 1
+        with CandidateStore(controller.run_dir / "candidates.sqlite3") as candidates:
+            assert candidates.candidate(child.candidate_id) == child
+            assert len(candidates.candidates()) == 3
+
+
+def test_generation2_apply_cli_uses_the_same_parent_bound_controller_path() -> None:
+    local = ROOT / "artifacts/local"
+    local.mkdir(parents=True, exist_ok=True)
+    with tempfile.TemporaryDirectory(prefix="generation2-apply-cli-", dir=local) as temporary:
+        fixture = build_generation2_fixture_controller(Path(temporary))
+        _work, work_id = _plan_and_ingest_generation2(fixture)
+        args = [
+            "optimizer",
+            "r4-apply-generation2",
+            "--run-dir",
+            fixture.controller.run_dir.as_posix(),
+            "--config",
+            fixture.config_path.as_posix(),
+            "--work-id",
+            work_id,
+        ]
+
+        first = CliRunner().invoke(app, args)
+        second = CliRunner().invoke(app, args)
+
+        assert first.exit_code == 0, first.output
+        assert second.exit_code == 0, second.output
+        assert json.loads(first.output) == json.loads(second.output)
+        assert json.loads(first.output)["status"] == "materialized"
+
+
+@pytest.mark.parametrize(
+    ("binding", "match"),
+    (
+        ("wrong_parent", "another parent"),
+        ("stale_hash", "stale"),
+    ),
+)
+def test_generation2_apply_rejects_wrong_parent_and_stale_hash(
+    binding: str,
+    match: str,
+) -> None:
+    local = ROOT / "artifacts/local"
+    local.mkdir(parents=True, exist_ok=True)
+    with tempfile.TemporaryDirectory(prefix=f"generation2-{binding}-", dir=local) as temporary:
+        fixture = build_generation2_fixture_controller(Path(temporary))
+        plan = fixture.controller.plan_generation2_refinement(fixture.parent.candidate_id)
+        assert plan.proposal_work_id is not None
+        with PatchProposalStore(fixture.controller.run_dir / "proposal-work.sqlite3") as store:
+            work = store.get_work(plan.proposal_work_id)
+        original = build_patch_submission(
+            work,
+            _generation2_raw_proposal(work),
+            host="fixture-host",
+            model="fixture-model",
+            host_task_id=f"fixture-{binding}",
+            duration_ms=1,
+            token_estimate=1,
+        )
+        assert original.patch is not None
+        payload = original.patch.identity_payload()
+        if binding == "wrong_parent":
+            payload.update(
+                {
+                    "base_candidate_id": fixture.seed.candidate_id,
+                    "base_content_hash": fixture.seed.content_hash,
+                }
+            )
+        else:
+            payload["base_content_hash"] = "0" * 64
+        invalid_patch = package_patch_from_proposal(payload)
+        fixture.controller.ingest_proposal(original.model_copy(update={"patch": invalid_patch}))
+
+        with pytest.raises(ValueError, match=match):
+            fixture.controller.apply_generation2_refinement(work.work_id)
+        assert not (fixture.controller.run_dir / "generation2-applications").exists()
+
+
+def test_generation2_apply_rejects_cross_package_or_snapshot_branch() -> None:
+    local = ROOT / "artifacts/local"
+    local.mkdir(parents=True, exist_ok=True)
+    invalid_bindings = (
+        {"package_id": "pkg-cross-package"},
+        {"source_snapshot_hash": "0" * 64},
+    )
+    for invalid_binding in invalid_bindings:
+        with tempfile.TemporaryDirectory(
+            prefix="generation2-apply-cross-binding-",
+            dir=local,
+        ) as temporary:
+            fixture = build_generation2_fixture_controller(Path(temporary))
+            _work, work_id = _plan_and_ingest_generation2(fixture)
+            branch_path = fixture.controller.run_dir / "branches/branch-generation2-fixture.json"
+            branch = MutationBranchState.model_validate_json(
+                branch_path.read_text(encoding="utf-8")
+            )
+            fixture.controller._write(
+                "branches/branch-generation2-fixture.json",
+                branch.model_copy(update=invalid_binding),
+            )
+
+            with pytest.raises(ValueError, match="cross-package, or cross-snapshot"):
+                fixture.controller.apply_generation2_refinement(work_id)
+            assert not (fixture.controller.run_dir / "generation2-applications").exists()
+
+
+def test_generation2_apply_rejects_validation_leakage() -> None:
+    local = ROOT / "artifacts/local"
+    local.mkdir(parents=True, exist_ok=True)
+    with tempfile.TemporaryDirectory(prefix="generation2-validation-leak-", dir=local) as temporary:
+        fixture = build_generation2_fixture_controller(Path(temporary))
+        plan = fixture.controller.plan_generation2_refinement(fixture.parent.candidate_id)
+        assert plan.proposal_work_id is not None
+        with PatchProposalStore(fixture.controller.run_dir / "proposal-work.sqlite3") as store:
+            work = store.get_work(plan.proposal_work_id)
+        submission = build_patch_submission(
+            work,
+            _generation2_raw_proposal(work),
+            host="fixture-host",
+            model="fixture-model",
+            host_task_id="fixture-validation-leak",
+            duration_ms=1,
+            token_estimate=1,
+        )
+        assert submission.patch is not None
+        payload = submission.patch.identity_payload()
+        validation_ref = "artifacts/local/evals/candidate/validation/task.json"
+        payload["evidence_refs"] = [validation_ref]
+        for operation in payload["operations"]:  # type: ignore[union-attr]
+            operation["evidence_refs"] = [validation_ref]
+        leaked_patch = package_patch_from_proposal(payload)
+        fixture.controller.ingest_proposal(submission.model_copy(update={"patch": leaked_patch}))
+
+        with pytest.raises(ValueError, match="held-out evidence"):
+            fixture.controller.apply_generation2_refinement(work.work_id)
+        assert not (fixture.controller.run_dir / "generation2-applications").exists()
+
+
+def test_generation2_apply_rechecks_candidate_cap() -> None:
+    local = ROOT / "artifacts/local"
+    local.mkdir(parents=True, exist_ok=True)
+    with tempfile.TemporaryDirectory(prefix="generation2-candidate-cap-", dir=local) as temporary:
+        fixture = build_generation2_fixture_controller(Path(temporary))
+        _work, work_id = _plan_and_ingest_generation2(fixture)
+        state = fixture.controller.state()
+        fixture.controller._write(
+            "evolution-state.json",
+            state.model_copy(
+                update={
+                    "budget_usage": state.budget_usage.model_copy(
+                        update={
+                            "candidates": fixture.controller.config.runtime_budget.max_candidates
+                            - 1
+                        }
+                    )
+                }
+            ),
+        )
+
+        with pytest.raises(ValueError, match="reserved merge slot"):
+            fixture.controller.apply_generation2_refinement(work_id)
+        assert not (fixture.controller.run_dir / "generation2-applications").exists()
+
+
+def test_initial_apply_fails_closed_before_rewriting_non_proposal_phase() -> None:
+    local = ROOT / "artifacts/local"
+    local.mkdir(parents=True, exist_ok=True)
+    with tempfile.TemporaryDirectory(prefix="initial-apply-phase-guard-", dir=local) as temporary:
+        fixture = build_generation2_fixture_controller(Path(temporary))
+        branch_before = (
+            fixture.controller.run_dir / "branches/branch-generation2-fixture.json"
+        ).read_bytes()
+
+        with pytest.raises(ValueError, match="requires the proposal phase"):
+            fixture.controller.apply_proposals()
+
+        assert (
+            fixture.controller.run_dir / "branches/branch-generation2-fixture.json"
+        ).read_bytes() == branch_before
+        assert not (fixture.controller.run_dir / "proposal-causality-audit.json").exists()
 
 
 def test_generation2_cli_uses_existing_store_and_is_idempotent(

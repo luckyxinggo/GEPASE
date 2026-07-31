@@ -12,7 +12,7 @@ import json
 from datetime import UTC, datetime
 from enum import StrEnum
 from pathlib import Path
-from typing import Literal
+from typing import Any, Literal
 
 from pydantic import Field, model_validator
 
@@ -21,7 +21,11 @@ from gepase.evals.functional import FunctionalScoringPolicy
 from gepase.evals.scores import TaskScoreVector
 from gepase.mutation.schema import PatchEditBudget
 from gepase.optimizer.acceptance.minibatch import MinibatchPolicy
-from gepase.optimizer.acceptance.validation import ValidationPolicy
+from gepase.optimizer.acceptance.validation import (
+    RelativeEfficiencyPolicy,
+    ValidationPolicy,
+    build_relative_efficiency_policy,
+)
 from gepase.optimizer.candidate import build_seed_candidate
 from gepase.optimizer.session_runtime import ActiveSessionBudgetPolicy
 from gepase.schemas.common import FrozenModel
@@ -87,7 +91,7 @@ class ConditionalMergePolicy(FrozenModel):
 
 
 class R4EvolutionConfig(FrozenModel):
-    schema_version: Literal["1.0.0"] = "1.0.0"
+    schema_version: Literal["1.0.0", "2.0.0"] = "2.0.0"
     run_id: str
     package_ref: str
     package_graph_ref: str
@@ -114,14 +118,47 @@ class R4EvolutionConfig(FrozenModel):
     patch_budget: PatchEditBudget
     train_policy: MinibatchPolicy
     validation_policy: ValidationPolicy
+    efficiency_policy_mode: Literal["v1_legacy", "relative_v2"] = "relative_v2"
+    relative_efficiency_policy: RelativeEfficiencyPolicy | None = Field(
+        default_factory=build_relative_efficiency_policy
+    )
     enable_e1: Literal[False] = False
     require_ab_ba_comparator: Literal[True] = True
     candidate_reflection_limit: Literal[1] = 1
     require_same_package_merge: Literal[True] = True
     forbid_cross_package_merge: Literal[True] = True
 
+    @model_validator(mode="before")
+    @classmethod
+    def versioned_efficiency_default(cls, value: Any) -> Any:
+        """Resolve future defaults without reinterpreting sealed v1 configs."""
+
+        if not isinstance(value, dict):
+            return value
+        payload = dict(value)
+        version = payload.get("schema_version", "2.0.0")
+        default_mode = "v1_legacy" if version == "1.0.0" else "relative_v2"
+        mode = payload.setdefault("efficiency_policy_mode", default_mode)
+        if mode == "relative_v2":
+            payload.setdefault(
+                "relative_efficiency_policy",
+                build_relative_efficiency_policy().model_dump(mode="json"),
+            )
+        else:
+            payload.setdefault("relative_efficiency_policy", None)
+        return payload
+
     @model_validator(mode="after")
     def paths_and_budget(self) -> R4EvolutionConfig:
+        if self.schema_version == "1.0.0" and self.efficiency_policy_mode != "v1_legacy":
+            raise ValueError("R4 schema 1.0.0 retains v1 legacy efficiency semantics")
+        if (self.efficiency_policy_mode == "relative_v2") != (
+            self.relative_efficiency_policy is not None
+        ):
+            raise ValueError(
+                "relative_v2 requires exactly one RelativeEfficiencyPolicy; "
+                "v1_legacy forbids it"
+            )
         for value in (
             self.package_ref,
             self.package_graph_ref,
@@ -169,6 +206,26 @@ class R4EvolutionConfig(FrozenModel):
             if initial.candidates != self.runtime_budget.max_candidates:
                 raise ValueError("initial candidate tranche differs from RuntimeBudget")
         return self
+
+    @property
+    def efficiency_policy_provenance(self) -> dict[str, Any]:
+        if self.efficiency_policy_mode == "relative_v2":
+            assert self.relative_efficiency_policy is not None
+            return {
+                "mode": self.efficiency_policy_mode,
+                "policy_version": self.relative_efficiency_policy.schema_version,
+                "policy_id": self.relative_efficiency_policy.policy_id,
+                "policy_hash": self.relative_efficiency_policy.policy_hash,
+                "max_relative_cost_ratio": (
+                    self.relative_efficiency_policy.max_relative_cost_ratio
+                ),
+            }
+        return {
+            "mode": self.efficiency_policy_mode,
+            "policy_version": "1.0.0",
+            "policy_id": "task_score_efficiency_v1_legacy",
+            "maximum_efficiency_regression": 0.15,
+        }
 
 
 class ReferenceEvidenceKey(FrozenModel):
@@ -287,11 +344,26 @@ class EvolutionRunState(FrozenModel):
     branch_candidate_ids: tuple[str, ...] = ()
     merge_candidate_ids: tuple[str, ...] = ()
     evaluated_candidate_ids: tuple[str, ...] = ()
+    validation_incomplete_candidate_ids: tuple[str, ...] = ()
     reflected_candidate_ids: tuple[str, ...] = ()
     deployable_candidate_ids: tuple[str, ...] = ()
     budget_usage: BudgetUsage = BudgetUsage()
     stopped_reason: str | None = None
     updated_at: datetime = Field(default_factory=lambda: datetime.now(UTC))
+
+    @model_validator(mode="after")
+    def terminal_validation_sets_are_disjoint(self) -> EvolutionRunState:
+        evaluated = set(self.evaluated_candidate_ids)
+        incomplete = set(self.validation_incomplete_candidate_ids)
+        if len(evaluated) != len(self.evaluated_candidate_ids):
+            raise ValueError("evaluated candidate IDs must be unique")
+        if len(incomplete) != len(self.validation_incomplete_candidate_ids):
+            raise ValueError("validation-incomplete candidate IDs must be unique")
+        if evaluated & incomplete:
+            raise ValueError("complete and incomplete validation resolutions must be disjoint")
+        if not set(self.deployable_candidate_ids) <= evaluated:
+            raise ValueError("deployable candidates require a complete validation GateDecision")
+        return self
 
 
 def load_r4_config(project_root: Path, path: Path) -> tuple[str, R4EvolutionConfig]:
@@ -299,7 +371,10 @@ def load_r4_config(project_root: Path, path: Path) -> tuple[str, R4EvolutionConf
     resolved = path.resolve(strict=True)
     if not resolved.is_relative_to(root):
         raise ValueError("R4 config must remain inside the project")
-    config = R4EvolutionConfig.model_validate_json(resolved.read_text(encoding="utf-8"))
+    raw = json.loads(resolved.read_text(encoding="utf-8"))
+    if not isinstance(raw, dict):
+        raise ValueError("R4 config must be a JSON object")
+    config = R4EvolutionConfig.model_validate(raw)
     payload = config.model_dump(mode="json")
     # A field added with a backward-compatible default must not silently change
     # the fingerprint of a sealed legacy config that never declared it.  New
@@ -310,8 +385,12 @@ def load_r4_config(project_root: Path, path: Path) -> tuple[str, R4EvolutionConf
         "active_session_budget_policy",
         "conditional_merge_policy",
     ):
-        if field_name not in config.model_fields_set:
+        if field_name not in raw:
             payload.pop(field_name)
+    if raw.get("schema_version", "2.0.0") == "1.0.0":
+        for field_name in ("efficiency_policy_mode", "relative_efficiency_policy"):
+            if field_name not in raw:
+                payload.pop(field_name)
     if "task_score_secondary_minimum_effect" not in config.validation_policy.model_fields_set:
         payload["validation_policy"].pop("task_score_secondary_minimum_effect")
     return sha256_bytes(canonical_json_bytes(payload)), config

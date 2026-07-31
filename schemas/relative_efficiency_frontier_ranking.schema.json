@@ -1,0 +1,93 @@
+{
+  "$defs": {
+    "RelativeEfficiencyFrontierRank": {
+      "additionalProperties": false,
+      "properties": {
+        "candidate_id": {
+          "title": "Candidate Id",
+          "type": "string"
+        },
+        "display_rank": {
+          "minimum": 1,
+          "title": "Display Rank",
+          "type": "integer"
+        },
+        "efficiency_evidence_complete": {
+          "title": "Efficiency Evidence Complete",
+          "type": "boolean"
+        },
+        "pareto_layer": {
+          "minimum": 1,
+          "title": "Pareto Layer",
+          "type": "integer"
+        },
+        "relative_efficiency_score": {
+          "anyOf": [
+            {
+              "maximum": 1,
+              "minimum": 0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Relative Efficiency Score"
+        },
+        "validation_primary_delta": {
+          "title": "Validation Primary Delta",
+          "type": "number"
+        }
+      },
+      "required": [
+        "candidate_id",
+        "pareto_layer",
+        "display_rank",
+        "validation_primary_delta",
+        "efficiency_evidence_complete"
+      ],
+      "title": "RelativeEfficiencyFrontierRank",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "objective_order": {
+      "default": [
+        "validation_primary_delta",
+        "relative_efficiency_score"
+      ],
+      "maxItems": 2,
+      "minItems": 2,
+      "prefixItems": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "string"
+        }
+      ],
+      "title": "Objective Order",
+      "type": "array"
+    },
+    "ranks": {
+      "items": {
+        "$ref": "#/$defs/RelativeEfficiencyFrontierRank"
+      },
+      "title": "Ranks",
+      "type": "array"
+    },
+    "schema_version": {
+      "const": "2.0.0",
+      "default": "2.0.0",
+      "title": "Schema Version",
+      "type": "string"
+    }
+  },
+  "required": [
+    "ranks"
+  ],
+  "title": "RelativeEfficiencyFrontierRanking",
+  "type": "object"
+}

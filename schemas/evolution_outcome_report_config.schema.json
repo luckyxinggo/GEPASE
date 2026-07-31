@@ -26,6 +26,15 @@
       "title": "Package Id",
       "type": "string"
     },
+    "presentation_mode": {
+      "default": "narrative_v1",
+      "enum": [
+        "classic",
+        "narrative_v1"
+      ],
+      "title": "Presentation Mode",
+      "type": "string"
+    },
     "report_id": {
       "minLength": 1,
       "title": "Report Id",
@@ -38,8 +47,11 @@
       "type": "string"
     },
     "schema_version": {
-      "const": "1.0.0",
-      "default": "1.0.0",
+      "default": "2.0.0",
+      "enum": [
+        "1.0.0",
+        "2.0.0"
+      ],
       "title": "Schema Version",
       "type": "string"
     },

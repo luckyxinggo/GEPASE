@@ -1,0 +1,44 @@
+{
+  "schema_version": "1.0.0",
+  "stage_id": "POST-F4E-RELEASE",
+  "valid": true,
+  "single_mainline": true,
+  "second_runtime_or_evaluator_or_search": false,
+  "features": {
+    "relative_efficiency": [
+      "src/gepase/optimizer/acceptance/validation.py",
+      "src/gepase/optimizer/acceptance/engine.py",
+      "src/gepase/optimizer/evolution_controller.py"
+    ],
+    "generation_2": [
+      "src/gepase/optimizer/evolution_controller.py",
+      "src/gepase/mutation/proposer.py"
+    ],
+    "role_terminalization": [
+      "src/gepase/evals/functional_pipeline.py",
+      "src/gepase/cli/eval.py"
+    ],
+    "dynamic_graph": [
+      "src/gepase/package/dynamic_graph.py",
+      "src/gepase/optimizer/evolution_controller.py"
+    ],
+    "candidate_seal": [
+      "src/gepase/store/artifacts.py",
+      "src/gepase/optimizer/evolution_controller.py"
+    ],
+    "narrative_report": [
+      "src/gepase/reporting/outcome.py",
+      "src/gepase/reporting/canary_html.py"
+    ]
+  },
+  "production_feature_files_current_skill_literal_matches": 0,
+  "production_feature_files_candidate_id_literal_matches": 0,
+  "production_feature_files_case_id_literal_matches": 0,
+  "legacy_boundary": "src/gepase/reporting/canary.py retains explicit R5 compatibility commands and is not the generic multi-outcome mainline",
+  "agent_calls": 0,
+  "api_calls": 0,
+  "new_evaluations": 0,
+  "new_candidates": 0,
+  "new_patches": 0,
+  "new_effect_scores": 0
+}

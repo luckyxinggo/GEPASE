@@ -1,0 +1,306 @@
+{
+  "$defs": {
+    "RelativeEfficiencyAxisAggregate": {
+      "additionalProperties": false,
+      "properties": {
+        "axis": {
+          "enum": [
+            "duration_ms",
+            "tool_calls",
+            "tokens",
+            "artifact_size_bytes"
+          ],
+          "title": "Axis",
+          "type": "string"
+        },
+        "excluded_tasks": {
+          "additionalProperties": {
+            "type": "string"
+          },
+          "title": "Excluded Tasks",
+          "type": "object"
+        },
+        "median_ratio": {
+          "anyOf": [
+            {
+              "minimum": 0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Median Ratio"
+        },
+        "task_ratios": {
+          "additionalProperties": {
+            "type": "number"
+          },
+          "title": "Task Ratios",
+          "type": "object"
+        }
+      },
+      "required": [
+        "axis",
+        "task_ratios",
+        "excluded_tasks"
+      ],
+      "title": "RelativeEfficiencyAxisAggregate",
+      "type": "object"
+    },
+    "RelativeEfficiencyAxisObservation": {
+      "additionalProperties": false,
+      "properties": {
+        "axis": {
+          "enum": [
+            "duration_ms",
+            "tool_calls",
+            "tokens",
+            "artifact_size_bytes"
+          ],
+          "title": "Axis",
+          "type": "string"
+        },
+        "candidate_measurement_kind": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Candidate Measurement Kind"
+        },
+        "candidate_value": {
+          "anyOf": [
+            {
+              "minimum": 0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Candidate Value"
+        },
+        "exclusion_reason": {
+          "anyOf": [
+            {
+              "enum": [
+                "missing",
+                "zero_original",
+                "measurement_kind_mismatch",
+                "unavailable",
+                "report_only"
+              ],
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Exclusion Reason"
+        },
+        "included": {
+          "title": "Included",
+          "type": "boolean"
+        },
+        "original_measurement_kind": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Original Measurement Kind"
+        },
+        "original_value": {
+          "anyOf": [
+            {
+              "minimum": 0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Original Value"
+        },
+        "ratio": {
+          "anyOf": [
+            {
+              "minimum": 0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Ratio"
+        }
+      },
+      "required": [
+        "axis",
+        "included"
+      ],
+      "title": "RelativeEfficiencyAxisObservation",
+      "type": "object"
+    },
+    "RelativeEfficiencyTaskEvidence": {
+      "additionalProperties": false,
+      "properties": {
+        "axes": {
+          "items": {
+            "$ref": "#/$defs/RelativeEfficiencyAxisObservation"
+          },
+          "title": "Axes",
+          "type": "array"
+        },
+        "candidate_record_ref": {
+          "title": "Candidate Record Ref",
+          "type": "string"
+        },
+        "candidate_vector_ref": {
+          "title": "Candidate Vector Ref",
+          "type": "string"
+        },
+        "original_record_ref": {
+          "title": "Original Record Ref",
+          "type": "string"
+        },
+        "original_vector_ref": {
+          "title": "Original Vector Ref",
+          "type": "string"
+        },
+        "task_id": {
+          "title": "Task Id",
+          "type": "string"
+        }
+      },
+      "required": [
+        "task_id",
+        "candidate_vector_ref",
+        "original_vector_ref",
+        "candidate_record_ref",
+        "original_record_ref",
+        "axes"
+      ],
+      "title": "RelativeEfficiencyTaskEvidence",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "description": "Content-addressed paired resource evidence; it never rewrites TaskScoreVector.",
+  "properties": {
+    "availability": {
+      "enum": [
+        "comparable",
+        "unavailable"
+      ],
+      "title": "Availability",
+      "type": "string"
+    },
+    "axis_aggregates": {
+      "items": {
+        "$ref": "#/$defs/RelativeEfficiencyAxisAggregate"
+      },
+      "title": "Axis Aggregates",
+      "type": "array"
+    },
+    "candidate_id": {
+      "title": "Candidate Id",
+      "type": "string"
+    },
+    "evidence_id": {
+      "title": "Evidence Id",
+      "type": "string"
+    },
+    "evidence_refs": {
+      "items": {
+        "type": "string"
+      },
+      "minItems": 1,
+      "title": "Evidence Refs",
+      "type": "array"
+    },
+    "policy_hash": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Policy Hash",
+      "type": "string"
+    },
+    "reference_key_hash": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Reference Key Hash",
+      "type": "string"
+    },
+    "reference_variant": {
+      "const": "original",
+      "default": "original",
+      "title": "Reference Variant",
+      "type": "string"
+    },
+    "relative_cost_ratio": {
+      "anyOf": [
+        {
+          "minimum": 0,
+          "type": "number"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Relative Cost Ratio"
+    },
+    "relative_efficiency_score": {
+      "anyOf": [
+        {
+          "maximum": 1,
+          "minimum": 0,
+          "type": "number"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Relative Efficiency Score"
+    },
+    "schema_version": {
+      "const": "2.0.0",
+      "default": "2.0.0",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "tasks": {
+      "items": {
+        "$ref": "#/$defs/RelativeEfficiencyTaskEvidence"
+      },
+      "minItems": 1,
+      "title": "Tasks",
+      "type": "array"
+    }
+  },
+  "required": [
+    "evidence_id",
+    "candidate_id",
+    "reference_key_hash",
+    "policy_hash",
+    "tasks",
+    "axis_aggregates",
+    "availability",
+    "evidence_refs"
+  ],
+  "title": "RelativeEfficiencyEvidence",
+  "type": "object"
+}

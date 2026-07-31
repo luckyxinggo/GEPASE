@@ -154,6 +154,39 @@
       "title": "Mappings",
       "type": "array"
     },
+    "model_corrected_submission_ids": {
+      "default": [],
+      "items": {
+        "type": "string"
+      },
+      "title": "Model Corrected Submission Ids",
+      "type": "array"
+    },
+    "model_correction_ref": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Model Correction Ref"
+    },
+    "model_correction_sha256": {
+      "anyOf": [
+        {
+          "pattern": "^[0-9a-f]{64}$",
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Model Correction Sha256"
+    },
     "observed_edges": {
       "minimum": 0,
       "title": "Observed Edges",

@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import json
 from pathlib import Path
 
 from gepase.evals.reference_runtime import load_reference_execution_config
@@ -68,3 +69,50 @@ def test_report_config_has_reference_fallback_without_creating_runs() -> None:
     # state of a real GH-E1 run.  Absence is enforced by the E0.5 gate before the
     # phase starts; a test suite must remain runnable after the phase has begun.
     assert all(not Path(reference).is_absolute() for reference in config.input_refs)
+
+
+def test_versioned_future_defaults_do_not_reinterpret_sealed_configs() -> None:
+    legacy_hash, legacy = load_r4_config(
+        ROOT,
+        ROOT / "configs/canaries/slack-gif-creator-r4.json",
+    )
+    assert legacy_hash == "3a224bcb9f3887b6af9974915b51407be7d757535b71b18913af70ebcc757572"
+    assert legacy.schema_version == "1.0.0"
+    assert legacy.efficiency_policy_mode == "v1_legacy"
+    assert legacy.relative_efficiency_policy is None
+
+    example_path = ROOT / "configs/examples/r4-evolution-v2.json"
+    _future_hash, future = load_r4_config(ROOT, example_path)
+    assert future.schema_version == "2.0.0"
+    assert future.efficiency_policy_mode == "relative_v2"
+    assert future.relative_efficiency_policy is not None
+    assert future.relative_efficiency_policy.policy_id == "relative_efficiency_v2"
+    assert future.relative_efficiency_policy.max_relative_cost_ratio == 2.0
+    assert "slack-gif-creator" not in example_path.read_text(encoding="utf-8")
+
+    explicit_legacy = json.loads(example_path.read_text(encoding="utf-8"))
+    explicit_legacy["efficiency_policy_mode"] = "v1_legacy"
+    explicit = type(future).model_validate(explicit_legacy)
+    assert explicit.efficiency_policy_mode == "v1_legacy"
+    assert explicit.relative_efficiency_policy is None
+
+
+def test_versioned_report_defaults_are_future_narrative_and_legacy_classic() -> None:
+    future = EvolutionOutcomeReportConfig.model_validate_json(
+        (ROOT / "configs/examples/evolution-report-v2.json").read_text(encoding="utf-8")
+    )
+    assert future.schema_version == "2.0.0"
+    assert future.presentation_mode == "narrative_v1"
+    assert "slack-gif-creator" not in (
+        ROOT / "configs/examples/evolution-report-v2.json"
+    ).read_text(encoding="utf-8")
+
+    explicit_classic = future.model_copy(update={"presentation_mode": "classic"})
+    assert explicit_classic.presentation_mode == "classic"
+
+    historical_path = ROOT / "configs/graph-hardening/slack-gif-creator-gh-e1-report.json"
+    historical_bytes = historical_path.read_bytes()
+    historical = EvolutionOutcomeReportConfig.model_validate_json(historical_bytes)
+    assert historical.schema_version == "1.0.0"
+    assert historical.presentation_mode == "classic"
+    assert historical_path.read_bytes() == historical_bytes

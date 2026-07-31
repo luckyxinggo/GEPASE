@@ -1,0 +1,341 @@
+{
+  "artifacts": [
+    {
+      "media_type": "application/zip",
+      "path": "packages/candidate-5e0d9d99c64bc48aec7ff44c.zip",
+      "sha256": "720b9bcc31b8676f20afa05bb591ea0364c228f4df04e871cc3ba75c7fb0caea",
+      "size_bytes": 15777
+    },
+    {
+      "media_type": "application/zip",
+      "path": "packages/candidate-2e8e3a558badfda8648a46cc.zip",
+      "sha256": "6ff947894f602b9de982f3400fca4382ccee5585b652f54db9b4bb7110a47f56",
+      "size_bytes": 15804
+    },
+    {
+      "media_type": "image/gif",
+      "path": "evidence/gifs/00-gif-a43beb274e7eb939cf284cac.gif",
+      "sha256": "ea8ed98e81e5c79781875505330c3ba29daff7f69937800713c0b3ba474c20cd",
+      "size_bytes": 106516
+    },
+    {
+      "media_type": "image/gif",
+      "path": "evidence/gifs/01-gif-9d61239491bdfe92b6f4e4dd.gif",
+      "sha256": "f7551e7d10427abee111e25553019d0a39fe296424b59da5fa0c14f7a0c1e612",
+      "size_bytes": 27199
+    },
+    {
+      "media_type": "image/gif",
+      "path": "evidence/gifs/02-gif-46e0989b140c06bb903614ce.gif",
+      "sha256": "36dfc22869518e7eea7731bd2218a70e3f17aaf23d4dbc3c78b712333e474f3c",
+      "size_bytes": 59662
+    },
+    {
+      "media_type": "image/gif",
+      "path": "evidence/gifs/03-gif-87f2a17262def25597921430.gif",
+      "sha256": "d96f530b6b869e213505601b0e785c1e0391f0cb559066ac11b35e5c245d27f0",
+      "size_bytes": 47252
+    },
+    {
+      "media_type": "image/gif",
+      "path": "evidence/gifs/04-gif-4b5a80309963858999981910.gif",
+      "sha256": "7fac8036b759e7237c32ec9f258c41fd2ebf8d9d3bc716b5012512bb46ece00f",
+      "size_bytes": 41733
+    },
+    {
+      "media_type": "image/gif",
+      "path": "evidence/gifs/05-gif-9bece190d7c908c77e2c4164.gif",
+      "sha256": "0c58dd170237f6834004aa08dc4004229e907d37bd50ac750c541a509c18269d",
+      "size_bytes": 33665
+    },
+    {
+      "media_type": "image/gif",
+      "path": "evidence/gifs/06-gif-ce2cac65070994a6e981e049.gif",
+      "sha256": "3d6147eff653836e6d44bb32acb10e9c62ac456f692b04bde24f82fd6076b490",
+      "size_bytes": 14629
+    },
+    {
+      "media_type": "image/gif",
+      "path": "evidence/gifs/07-gif-45387ecf9396129b14d03990.gif",
+      "sha256": "1720eab59e8f11aa3f315f81b216dd75c197e12826577e4e2296500ac6a68216",
+      "size_bytes": 55721
+    },
+    {
+      "media_type": "image/gif",
+      "path": "evidence/gifs/08-gif-c5c0265575cfe511ad068b20.gif",
+      "sha256": "571aac6c2dd95f43c1733d9b3db57b3c4689a8479efb28097488f4f02485e991",
+      "size_bytes": 86834
+    },
+    {
+      "media_type": "image/gif",
+      "path": "evidence/gifs/09-gif-7664918ad373566973ffabba.gif",
+      "sha256": "078d9885cd383aba227b7165388eb2802bbb72c6c0642c3f75513b795f3f6c08",
+      "size_bytes": 81492
+    },
+    {
+      "media_type": "image/gif",
+      "path": "evidence/gifs/10-gif-53470f23dbf26f588391566e.gif",
+      "sha256": "646069cda0b5f492d09bd3a44e996b21b57147be1730092d2e00b921e229fd48",
+      "size_bytes": 116411
+    },
+    {
+      "media_type": "image/gif",
+      "path": "evidence/gifs/11-gif-9350520916aa0ae4cb7b1c5b.gif",
+      "sha256": "ad288e6b90a76e1454ea8731a8eb15bbea2a795f9298a77e11a4b315467acf6b",
+      "size_bytes": 53550
+    },
+    {
+      "media_type": "image/gif",
+      "path": "evidence/gifs/12-gif-d89c4e1ed9f5e301fa3359f2.gif",
+      "sha256": "6178d0193802dfc016bb78a32e9697117fe5d8100b54ad94869020c966912bd1",
+      "size_bytes": 99442
+    },
+    {
+      "media_type": "image/gif",
+      "path": "evidence/gifs/13-gif-64381119649c990721f77efa.gif",
+      "sha256": "5c030aab377267fc7727c4bc9f747ac73b78dd37edd4e007e9a702577714d8cb",
+      "size_bytes": 93112
+    },
+    {
+      "media_type": "image/gif",
+      "path": "evidence/gifs/14-gif-dfcbeb5802995c9ca4769e00.gif",
+      "sha256": "bb5b2944947a5507afbe1decc06c7ac656b5304e43af25b5b1918382a7e3d6ab",
+      "size_bytes": 37686
+    },
+    {
+      "media_type": "image/gif",
+      "path": "evidence/gifs/15-gif-c696d133657f6330d9c49e98.gif",
+      "sha256": "bfa3431cc0125d106a6d3ade81178cc15b4acbe4cfb7da9c59e98fdfd327988c",
+      "size_bytes": 34039
+    },
+    {
+      "media_type": "image/gif",
+      "path": "evidence/gifs/16-gif-3b1b4c78a0331827b585136d.gif",
+      "sha256": "fb989d389891bc7ba0434f954621de59053e3c174889ae97cffc4e4271e99056",
+      "size_bytes": 46600
+    },
+    {
+      "media_type": "image/gif",
+      "path": "evidence/gifs/17-gif-6708d3feb29e37e26eac9b22.gif",
+      "sha256": "3ab27161a36b425dd6ee1a59fe713a9a65b23805b11dc722a62b2033615863b2",
+      "size_bytes": 38149
+    },
+    {
+      "media_type": "image/gif",
+      "path": "evidence/gifs/18-gif-e25cd87f83ed71af89bfa580.gif",
+      "sha256": "be9788218ea494ed48f671f165305ac16784c1f1cccd04e2c74ae95954ffdf03",
+      "size_bytes": 44619
+    },
+    {
+      "media_type": "image/gif",
+      "path": "evidence/gifs/19-gif-9ba2a39ce64b62352ab1e1fc.gif",
+      "sha256": "22cd1abf1eca4f2e814e3e6fb548e93b25b1e9d4d9f52188f0d28e5b99ebbf9c",
+      "size_bytes": 35375
+    },
+    {
+      "media_type": "image/gif",
+      "path": "evidence/gifs/20-gif-869a4bf976afed028fa71bca.gif",
+      "sha256": "955456babebee61a9958515587accdde69cfee93324bd16121f8924deb9dd861",
+      "size_bytes": 24450
+    },
+    {
+      "media_type": "image/gif",
+      "path": "evidence/gifs/21-gif-b18700ddeb19547800441d2e.gif",
+      "sha256": "8785e1ae73a6a55605f783d04199a274087365baf6be4e5a44fc55438734ef5b",
+      "size_bytes": 1136021
+    },
+    {
+      "media_type": "image/gif",
+      "path": "evidence/gifs/22-gif-0c0b72f3e01df3f05594845c.gif",
+      "sha256": "eb31cccd37333a2ae19226fba347bedc178214b2ff07ad826cfa66c57604cfac",
+      "size_bytes": 336032
+    },
+    {
+      "media_type": "image/gif",
+      "path": "evidence/gifs/23-gif-ada9fc0f92f5225164efc7ce.gif",
+      "sha256": "b315c0de1f7cc90a8e56aeacbdedaab8032bef5b50764d5e7b672dc0afbfb7a6",
+      "size_bytes": 117887
+    },
+    {
+      "media_type": "image/gif",
+      "path": "evidence/gifs/24-gif-0f0afcb3cf23f77c7537901d.gif",
+      "sha256": "6a3ac7cd337c036b8f8ef0834aa0ef1e4e14140d2a30cc8f3bf41382739a1e68",
+      "size_bytes": 366130
+    },
+    {
+      "media_type": "image/gif",
+      "path": "evidence/gifs/25-gif-15eac7624300e830ec95f917.gif",
+      "sha256": "29074c9c6e5577c30e05b3ab77f878c6ad874c277d30394772e4115dab95a5db",
+      "size_bytes": 563671
+    },
+    {
+      "media_type": "image/gif",
+      "path": "evidence/gifs/26-gif-b29f86808f44b3d263909a8a.gif",
+      "sha256": "f7210904ecc2dda4ed3cba6e4e337d778ec469775be6507f143ed78ded7a9282",
+      "size_bytes": 209643
+    },
+    {
+      "media_type": "image/gif",
+      "path": "evidence/gifs/27-gif-bf2c44bd3b6f71e6d233ede5.gif",
+      "sha256": "17dc13beaf2aa3f5e171cf2eaf804cda8be1e4c2b59f8cb46253cbc35735908b",
+      "size_bytes": 126113
+    },
+    {
+      "media_type": "image/gif",
+      "path": "evidence/gifs/28-gif-71657a7ae34a8559ada9e219.gif",
+      "sha256": "d79ae141a05cfb6e2e41304bd18814ba5cb20c8b6523667812f4d7face62a096",
+      "size_bytes": 33346
+    },
+    {
+      "media_type": "image/gif",
+      "path": "evidence/gifs/29-gif-6199dedf4efd0ff0cc471c84.gif",
+      "sha256": "fb31f5b866e089ba626ebd53a7badeb29159bf9738ea89b5eb59d46c0aad4df0",
+      "size_bytes": 21574
+    },
+    {
+      "media_type": "image/gif",
+      "path": "evidence/gifs/30-gif-027a537e79169cad085229a5.gif",
+      "sha256": "6886776f3f855289488955eff7329fa6f083eeeaa3ce11c853790dfcdeb3b317",
+      "size_bytes": 17444
+    },
+    {
+      "media_type": "image/gif",
+      "path": "evidence/gifs/31-gif-dac9fa79886b79a76b8d5a2b.gif",
+      "sha256": "baefc403d06ad84dedfdeccdf7a29f81fcde8dbb3802fd713ae5c6e9ce59d840",
+      "size_bytes": 312891
+    },
+    {
+      "media_type": "image/gif",
+      "path": "evidence/gifs/32-gif-5118d229a00434323b979fda.gif",
+      "sha256": "c904a40aa359cbdbc9d01c6fe952499aea19d163e2e492d061b4bfa78301a384",
+      "size_bytes": 31062
+    },
+    {
+      "media_type": "image/gif",
+      "path": "evidence/gifs/33-gif-827de98799de04ae89c29026.gif",
+      "sha256": "c671feac424859b7b260aeb5ff0b95190d68cbd3bd8060b058bd721865140cca",
+      "size_bytes": 3470025
+    },
+    {
+      "media_type": "image/gif",
+      "path": "evidence/gifs/34-gif-b3546b4211e6cd54da699caf.gif",
+      "sha256": "6b1e354ebf89c7820dd677031de76e43a80cb3e220f1a025c82396c0083b8cb8",
+      "size_bytes": 35861
+    },
+    {
+      "media_type": "image/gif",
+      "path": "evidence/gifs/35-gif-1d3dbf973635c4cb20a47e97.gif",
+      "sha256": "565373d3180d8f83d2d87bb9bcdc6d9030f956ed3765459e5a18b704da7bcc00",
+      "size_bytes": 193664
+    },
+    {
+      "media_type": "image/gif",
+      "path": "evidence/gifs/36-gif-e305883265447911383884c7.gif",
+      "sha256": "a45c486b9a55164c92e7c83c3f92547e08009af9b33f9bc1df5098e84da711d2",
+      "size_bytes": 520600
+    },
+    {
+      "media_type": "image/gif",
+      "path": "evidence/gifs/37-gif-9933b5c7cf3da5dcee2f1558.gif",
+      "sha256": "5dc0596f37602efe0da61d13cb7450cf1e12f94be1de7f720cdae90a7cca0baf",
+      "size_bytes": 852275
+    },
+    {
+      "media_type": "image/gif",
+      "path": "evidence/gifs/38-gif-2ea5d5a1787951b2fa8604a1.gif",
+      "sha256": "27b411d6e19c1d815a3549185886edc8a120f6e37e106ac0c6de57ddf593a746",
+      "size_bytes": 189048
+    },
+    {
+      "media_type": "image/gif",
+      "path": "evidence/gifs/39-gif-a5285d34dbcfd8227afe9488.gif",
+      "sha256": "21de7351c1db6189603ff62d79bbd382ea820a7758f49a13e7a2511bd61bdc7e",
+      "size_bytes": 418757
+    },
+    {
+      "media_type": "image/gif",
+      "path": "evidence/gifs/40-gif-8895b0e5a519a542831df43d.gif",
+      "sha256": "62287cbb3602989c84ab09bfe0e877ac5ad4a56a79ba7fa4da49c528101506dc",
+      "size_bytes": 47490
+    },
+    {
+      "media_type": "image/gif",
+      "path": "evidence/gifs/41-gif-2de981b5ec17e4a6cb54b2ae.gif",
+      "sha256": "307a3ca22e0a4f9a7c6c8d5c710e5f7531a77db040ba5f0e76715dc3ba93376b",
+      "size_bytes": 62844
+    },
+    {
+      "media_type": "image/gif",
+      "path": "evidence/gifs/42-gif-4007d0e2d4dd38f41ac4437f.gif",
+      "sha256": "8c37788deb5c7bb7ba2cc31fc1984a18688814220676ea969a094dc978d9262f",
+      "size_bytes": 44325
+    },
+    {
+      "media_type": "image/gif",
+      "path": "evidence/gifs/43-gif-3b5ce5908f76bdcf186ab020.gif",
+      "sha256": "1e7c0fab6b5553267f17a6ac9edf5d1800a3e37eaf427d4ab87e0f7e5a7f9c3f",
+      "size_bytes": 68451
+    },
+    {
+      "media_type": "image/gif",
+      "path": "evidence/gifs/44-gif-25cec5b0a95e5d31469c63ba.gif",
+      "sha256": "53c2fe76abbb5b594666553f8951a980286a7996a33c564b0662f9a454ad887e",
+      "size_bytes": 75960
+    },
+    {
+      "media_type": "image/gif",
+      "path": "evidence/gifs/45-gif-25bfb2d03163b320a64b30cf.gif",
+      "sha256": "9eadd1af8e60fcab6b65f86a298a420e2af28ad8bd3e106815793b69dc8ef7c0",
+      "size_bytes": 44834
+    },
+    {
+      "media_type": "image/gif",
+      "path": "evidence/gifs/46-gif-b1bfcf3add8a25e3b685f3ff.gif",
+      "sha256": "e3aaa28c5689806dcc53cb3eb4512b37af1f1a2a86b1c7bf301da2910b8594eb",
+      "size_bytes": 20277
+    },
+    {
+      "media_type": "image/gif",
+      "path": "evidence/gifs/47-gif-0f0d29a19300aa439fc0af13.gif",
+      "sha256": "743d0bab466fea9a4aeafcb6de6cb6fc8a421d45cbda3ca42c833a2eeaa8cd8f",
+      "size_bytes": 66618
+    },
+    {
+      "media_type": "image/gif",
+      "path": "evidence/gifs/48-gif-771f669fc828495c79c5f8e5.gif",
+      "sha256": "25917a385d2e72179bb14e561db6de68a58e139195f2ba108281546ecd6fc936",
+      "size_bytes": 46209
+    },
+    {
+      "media_type": "image/gif",
+      "path": "evidence/gifs/49-gif-5db9461038096152c33a3253.gif",
+      "sha256": "8326b94f62655b02b336aeb110cd0aa4cc2df89ebc7895c60b1868bb480b3bf2",
+      "size_bytes": 27982
+    },
+    {
+      "media_type": "image/gif",
+      "path": "evidence/gifs/50-gif-d8946d86d0be72d20c441214.gif",
+      "sha256": "d1840402621455bcbbb74638aa608a66d537339539db976439d72ac41f32a02a",
+      "size_bytes": 32897
+    },
+    {
+      "media_type": "application/json",
+      "path": "report-data.json",
+      "sha256": "8df01f9495d1595aae14fe73800461a64d3c652b93f78d9d546ec091d7016503",
+      "size_bytes": 836912
+    },
+    {
+      "media_type": "application/json",
+      "path": "evidence-manifest.json",
+      "sha256": "9e9f31e8eac20970cec5d9008a91e6936ed837e5c08fbc55b09df4fc01003625",
+      "size_bytes": 9056
+    },
+    {
+      "media_type": "text/html",
+      "path": "index.html",
+      "sha256": "8dcda42203793568906cac864f28b4b03c47e5d4fca08965aa47c979fe2cd397",
+      "size_bytes": 1056843
+    }
+  ],
+  "schema_version": "1.0.0"
+}
