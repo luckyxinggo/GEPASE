@@ -1,0 +1,116 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1440" height="520" viewBox="0 0 1440 520" role="img" aria-labelledby="title desc">
+  <title id="title">GEPASE</title>
+  <desc id="desc">GEPASE turns complete Agent Skill packages into graph-structured candidate state, learns from real Agent evidence, and admits only held-out improvements.</desc>
+  <defs>
+    <linearGradient id="background" x1="0" y1="0" x2="1" y2="1">
+      <stop stop-color="#101828"/>
+      <stop offset="0.56" stop-color="#18243a"/>
+      <stop offset="1" stop-color="#26334d"/>
+    </linearGradient>
+    <radialGradient id="glow" cx="50%" cy="50%" r="50%">
+      <stop stop-color="#60a5fa" stop-opacity=".28"/>
+      <stop offset="1" stop-color="#60a5fa" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="package" x1="0" y1="0" x2="1" y2="1">
+      <stop stop-color="#fff7ed"/>
+      <stop offset="1" stop-color="#ffedd5"/>
+    </linearGradient>
+    <linearGradient id="frontier" x1="0" y1="0" x2="1" y2="1">
+      <stop stop-color="#d1fae5"/>
+      <stop offset="1" stop-color="#a7f3d0"/>
+    </linearGradient>
+    <filter id="shadow" x="-30%" y="-30%" width="160%" height="160%">
+      <feDropShadow dx="0" dy="16" stdDeviation="18" flood-color="#020617" flood-opacity=".28"/>
+    </filter>
+    <marker id="arrow" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+      <path d="M0 0l10 5-10 5z" fill="#94a3b8"/>
+    </marker>
+    <style>
+      .brand{font:800 78px ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;letter-spacing:-3px;fill:#f8fafc}
+      .tagline{font:600 25px ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;fill:#dbeafe}
+      .sub{font:500 17px ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;fill:#94a3b8}
+      .pill{font:650 14px ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;fill:#e2e8f0}
+      .node-title{font:750 15px ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;fill:#172033}
+      .node-sub{font:550 11px ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;fill:#64748b}
+      .line{fill:none;stroke:#94a3b8;stroke-width:2;stroke-linecap:round;stroke-dasharray:5 7;marker-end:url(#arrow)}
+    </style>
+  </defs>
+
+  <rect width="1440" height="520" rx="30" fill="url(#background)"/>
+  <circle cx="1120" cy="210" r="330" fill="url(#glow)"/>
+  <circle cx="1280" cy="480" r="220" fill="url(#glow)" opacity=".55"/>
+
+  <g transform="translate(74 72)">
+    <g transform="translate(0 4)">
+      <circle cx="28" cy="28" r="26" fill="#60a5fa" opacity=".18"/>
+      <circle cx="18" cy="19" r="7" fill="#fbbf24"/>
+      <circle cx="39" cy="15" r="6" fill="#60a5fa"/>
+      <circle cx="42" cy="39" r="8" fill="#34d399"/>
+      <path d="M23 18l10-2m-10 8l14 11" fill="none" stroke="#dbeafe" stroke-width="3" stroke-linecap="round"/>
+    </g>
+    <text x="72" y="57" class="brand">GEPASE</text>
+    <text x="4" y="113" class="tagline">Evolve complete Agent Skill packages—with evidence.</text>
+    <text x="4" y="149" class="sub">Graph-enhanced · package-aware · real Agent evaluation · held-out validation</text>
+
+    <g transform="translate(4 196)">
+      <rect width="170" height="38" rx="19" fill="#ffffff12" stroke="#ffffff24"/>
+      <circle cx="20" cy="19" r="5" fill="#fbbf24"/><text x="35" y="24" class="pill">Whole-package state</text>
+      <rect x="184" width="168" height="38" rx="19" fill="#ffffff12" stroke="#ffffff24"/>
+      <circle cx="204" cy="19" r="5" fill="#60a5fa"/><text x="219" y="24" class="pill">Typed evidence</text>
+      <rect x="366" width="169" height="38" rx="19" fill="#ffffff12" stroke="#ffffff24"/>
+      <circle cx="386" cy="19" r="5" fill="#34d399"/><text x="401" y="24" class="pill">Strict Gate 0–3</text>
+    </g>
+
+    <text x="4" y="310" class="sub">The Agent host executes isolated roles. The Python Core owns truth.</text>
+  </g>
+
+  <g transform="translate(770 64)" filter="url(#shadow)">
+    <path d="M164 150C222 116 249 116 307 149" class="line"/>
+    <path d="M363 150C421 116 449 116 507 149" class="line"/>
+    <path d="M505 250C447 282 421 282 363 250" class="line"/>
+
+    <g transform="translate(4 96)">
+      <rect x="16" y="-14" width="142" height="112" rx="18" fill="#ffffff14" stroke="#ffffff2f"/>
+      <rect x="8" y="-7" width="142" height="112" rx="18" fill="#ffffff21" stroke="#ffffff38"/>
+      <rect width="142" height="112" rx="18" fill="url(#package)"/>
+      <path d="M104 0h20l18 18v12h-38z" fill="#fed7aa"/>
+      <text x="20" y="36" class="node-title">Skill Package</text>
+      <text x="20" y="59" class="node-sub">SKILL.md · refs · code</text>
+      <text x="20" y="78" class="node-sub">assets · metadata</text>
+    </g>
+
+    <g transform="translate(217 92)">
+      <rect width="146" height="120" rx="22" fill="#eff6ff" stroke="#93c5fd"/>
+      <path d="M31 39l38-18 42 22M31 39l15 48m23-66l-2 55m44-33L90 91M46 87l44 4M67 76l23 15" fill="none" stroke="#60a5fa" stroke-width="3" stroke-linecap="round"/>
+      <circle cx="31" cy="39" r="8" fill="#fbbf24"/><circle cx="69" cy="21" r="8" fill="#60a5fa"/><circle cx="111" cy="43" r="8" fill="#a78bfa"/>
+      <circle cx="46" cy="87" r="8" fill="#34d399"/><circle cx="67" cy="76" r="8" fill="#fb7185"/><circle cx="90" cy="91" r="8" fill="#22d3ee"/>
+      <text x="73" y="111" text-anchor="middle" class="node-sub">Package Graph</text>
+    </g>
+
+    <g transform="translate(417 92)">
+      <rect width="146" height="120" rx="22" fill="#f5f3ff" stroke="#c4b5fd"/>
+      <path d="M32 65c12-29 36-40 61-28 19 9 25 28 15 45-11 19-36 24-57 13-16-9-22-24-17-38" fill="none" stroke="#8b5cf6" stroke-width="4" stroke-linecap="round"/>
+      <path d="M25 54l10 3 3-11" fill="none" stroke="#8b5cf6" stroke-width="4" stroke-linecap="round"/>
+      <circle cx="58" cy="61" r="7" fill="#fbbf24"/><circle cx="82" cy="48" r="7" fill="#60a5fa"/><circle cx="91" cy="78" r="7" fill="#34d399"/>
+      <text x="73" y="111" text-anchor="middle" class="node-sub">GEPA · Pareto · Patch</text>
+    </g>
+
+    <g transform="translate(217 250)">
+      <rect width="146" height="108" rx="22" fill="#fff7ed" stroke="#fdba74"/>
+      <rect x="28" y="27" width="90" height="54" rx="11" fill="#ffedd5" stroke="#fb923c"/>
+      <path d="M47 45h52M47 60h38" stroke="#fb923c" stroke-width="4" stroke-linecap="round"/>
+      <text x="73" y="99" text-anchor="middle" class="node-sub">Real Agent evidence</text>
+    </g>
+
+    <g transform="translate(417 250)">
+      <rect width="146" height="108" rx="22" fill="url(#frontier)" stroke="#34d399"/>
+      <circle cx="73" cy="50" r="25" fill="#ffffffaa"/>
+      <path d="M60 50l9 9 18-21" fill="none" stroke="#059669" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
+      <text x="73" y="99" text-anchor="middle" class="node-sub">Deployable frontier</text>
+    </g>
+
+    <path d="M290 213v36" class="line"/>
+    <path d="M490 213v36" class="line"/>
+    <path d="M363 304h53" class="line"/>
+  </g>
+</svg>
