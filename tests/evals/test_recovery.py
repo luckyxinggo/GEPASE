@@ -9,6 +9,7 @@ from typing import Any
 
 import pytest
 
+import gepase.optimizer.session_runtime as session_runtime_module
 from gepase.evals.candidate_pipeline import CandidateFunctionalCoordinator
 from gepase.evals.engine import MultiFidelityEvalEngine, build_submission
 from gepase.evals.evidence import ProviderFailureKind, TraceStep
@@ -527,7 +528,15 @@ def test_candidate_typed_failure_skips_agent_grader_and_comparator() -> None:
         assert decision["agent_comparator_calls"] == 0
 
 
-def test_recovered_success_ingests_without_double_accounting() -> None:
+def test_recovered_success_ingests_without_double_accounting(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    frozen_now = datetime(2026, 7, 29, tzinfo=UTC)
+    monkeypatch.setattr(
+        session_runtime_module,
+        "_now",
+        lambda value=None: value or frozen_now,
+    )
     local = ROOT / "artifacts/local"
     local.mkdir(parents=True, exist_ok=True)
     with tempfile.TemporaryDirectory(prefix="recovery-success-", dir=local) as temporary:
@@ -626,7 +635,14 @@ def test_repair_exhaustion_terminalizes_once_without_double_accounting_and_conti
     attempt_reason: HostAttemptReason,
     repairs: int,
     failure_kind: ProviderFailureKind,
+    monkeypatch: pytest.MonkeyPatch,
 ) -> None:
+    frozen_now = datetime(2026, 7, 29, tzinfo=UTC)
+    monkeypatch.setattr(
+        session_runtime_module,
+        "_now",
+        lambda value=None: value or frozen_now,
+    )
     local = ROOT / "artifacts/local"
     local.mkdir(parents=True, exist_ok=True)
     with tempfile.TemporaryDirectory(prefix="recovery-terminal-", dir=local) as temporary:
