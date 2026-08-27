@@ -1552,6 +1552,13 @@ learning-course/                     # 本地零基础深度课程；14 页 HTML
 
 新记录放在最上方，至少说明：日期/标识、修改范围、行为变化、原因、验证、未解决问题。历史过程只保留摘要；详细证据以对应 artifact、stage report 和 Git diff 为准。
 
+### 2026-08-27 · github-readme-information-architecture-refresh
+
+- 展示范围：只重构中英 README 的信息架构并新增 `readme-hero.svg`、`evolution-loop.svg`、`f4e-search-lineage.svg` 三张原生、可访问的 GitHub SVG；没有修改 Core、config、schema、Eval、scoring、Gate、GEPA、Graph、Patch、Candidate、Runtime 或 sealed evidence。首页现在按“定位与价值 → 真实结果/产物 → 端到端主链 → 设计选择 → Quick Start → 架构索引 → 证据与限制”渐进呈现，GH-E1 长篇历史下沉为 sealed report/state 链接但负结果没有删除。
+- 叙事与视觉：首屏明确 GEPASE 不是第二套 Agent Runtime，突出 complete Package、typed evidence、strict Gate 与 Core/Host 所有权边界；真实搜索谱系图如实展示 2 个 generation-1、2 个 parent-bound generation-2、1 个 same-package Merge、2 个 deployable 以及 rejected/incomplete 分支；端到端图把隔离 Agent 执行、唯一 Core 状态机和 append-only provenance 分为三个责任平面。结果数字、四组 held-out GIF、F4e 报告链接、实际 Patch 仍集中于 `SKILL.md` 和单 Skill/单 plan/单 host-model/有界运行限制保持不变。
+- CI 稳定性：全量验证发现 4 个 recovery test 将 Runtime 固定创建在 2026-07-29、后续 export 却读取真实当前时间，随日历推进会把等待天数误算为 active time。仅在 `tests/evals/test_recovery.py` 使用 `monkeypatch` 固定该测试自己的 Runtime clock；生产 Runtime 与预算契约未变，4 个相关 case 与全量套件恢复确定性。
+- 验证：pytest 263 passed；Ruff clean；Pyright 0 errors/0 warnings；65 个 schema 连续两次导出后 Git 无差异；Markdown links、license、tracked-only secret/private-path scan（2,410 files/0 findings）、SVG XML、`git diff --check`、F4e report 56/56 seal、POST-F4E-RELEASE 7/7 seal、sdist/wheel build 全部通过。Agent/API/Eval/Proposal/Candidate/Patch/新效果分增量为 0，F4c/F4d/F4e 的 v1/v2 结果与三层结论没有变化；本轮未 commit、push 或创建 PR。
+
 ### 2026-07-31 · post-f4e-release-defaults-and-publication
 
 - 默认行为：在唯一 `R4EvolutionConfig → R4EvolutionController → RelativeEfficiencyPolicy/Evidence → ValidationGatedAcceptance` 主链中增加 schema-version-aware 默认。新 `2.0.0` evolution config 缺省为 `relative_v2`，策略 version/hash/axes/`max_relative_cost_ratio` 进入 resolved config、config fingerprint、runtime checkpoint policy provenance 与 outcome provenance；新 `2.0.0` report config 缺省为 `narrative_v1`。`v1_legacy` 与 `classic` 可显式选择，没有复制 scoring、Gate、replay 或 renderer。

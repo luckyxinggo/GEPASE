@@ -1,101 +1,112 @@
-# GEPASE
+<p align="center">
+  <img src="docs/assets/readme-hero.svg" alt="GEPASE — evidence-first evolution for complete Agent Skill packages" width="100%" />
+</p>
 
-**Graph-Enhanced Package-Aware Skill Evolution**
+<p align="center">
+  <a href="README_zh.md">简体中文</a> ·
+  <a href="artifacts/runs/f4e-slack-gif-creator-relative-efficiency-v2-report/index.html">Interactive report</a> ·
+  <a href="docs/reproduction.md">Reproduce</a> ·
+  <a href="learning.html">Learning guide</a>
+</p>
 
-[English](README.md) · [简体中文](README_zh.md) · [Latest narrative report](artifacts/runs/f4e-slack-gif-creator-relative-efficiency-v2-report/index.html)
+<p align="center">
+  <a href="https://github.com/luckyxinggo/GEPASE/actions/workflows/ci.yml"><img alt="CI" src="https://github.com/luckyxinggo/GEPASE/actions/workflows/ci.yml/badge.svg" /></a>
+  <img alt="Python 3.11+" src="https://img.shields.io/badge/Python-3.11%2B-3776AB?logo=python&logoColor=white" />
+  <img alt="263 tests" src="https://img.shields.io/badge/tests-263%20passed-16a34a" />
+  <a href="LICENSE"><img alt="Apache 2.0" src="https://img.shields.io/badge/license-Apache--2.0-2563eb" /></a>
+</p>
 
-GEPASE is an independent Python Core, CLI, and API for evaluating and evolving complete Agent
-Skill packages—not only `SKILL.md`. It treats instructions, references, scripts, assets, metadata,
-and their dependency graph as external trainable state while keeping model weights frozen.
+GEPASE is an evidence-first Python framework for **evaluating and evolving complete Agent Skill
+packages**. Instead of treating only the prompt as mutable, it models `SKILL.md`, references,
+scripts, assets, metadata, and their dependency graph as external trainable state while keeping
+model weights frozen.
 
-Its loop combines real Agent execution, independent grading, GEPA-style reflective/Pareto search,
-graph-guided typed `PackagePatch` edits, same-package multi-parent merge, and a strict held-out
-Validation Gate. Codex, Claude Code, or another Agent host performs isolated role execution; the
-Core remains the source of truth for evidence, candidates, search state, and acceptance.
+It combines real Agent execution, blind evaluation, GEPA-style reflective/Pareto search,
+graph-guided typed patches, held-out validation, and conditional same-package Merge in one
+auditable mainline.
 
-> **Evidence boundary.** Current effect evidence still covers one pinned public
-> `slack-gif-creator`, one Frozen EvalPlan, one Agent host/model configuration, and one bounded
-> search. It is not a cross-Skill, cross-model, multi-seed, or generalization claim.
+> **Architecture boundary:** GEPASE is not another general Agent runtime. Codex, Claude Code, or
+> another host executes isolated roles; GEPASE Core owns evidence, scores, candidates, search
+> state, checkpoints, and acceptance.
 
-![GEPASE architecture](docs/assets/architecture.svg)
+## Why GEPASE?
 
-## What is actually validated?
-
-GEPASE deliberately separates three different claims:
-
-| Claim level | Current evidence |
-|---|---|
-| **Code implemented** | Package IR/Graph, E0/E2/E3 Eval Core, reviewed EvalPlan, typed evidence, six-dimensional scores, the GEPA adapter/per-key Pareto selector, structured Patch, Gate 0–3, lineage/merge, stores, report and deploy CLI are present in one Python package. |
-| **Engineering mechanism tested** | Unit, integration, fault, contract, schema, artifact-hash, resume/cache, role-isolation, merge-conflict, secret and release checks cover the Core. R5 independently verifies the sealed upstream runs. |
-| **Algorithm effect observed** | Relative-efficiency v2 yields `strict_improvement` and deployable frontier=`2`: rank 1 held-out validation `+0.09920`, relative cost `1.83254`; rank 2 `+0.07906`, relative cost `1.93702`. |
-
-The completed search materialized two generation-1 candidates, two parent-bound generation-2
-candidates, and one conditional same-package Merge candidate through the same Controller,
-Candidate, Patch, Gate, and Pareto mainline. Two candidates entered the deployable frontier.
-Static+observed graph guidance, typed role failures, 0/1/many frontier outcomes, and conditional
-same-package Merge are exercised; however, effective edits in this run still concentrate in
-`SKILL.md`, so it does not demonstrate successful cross-file optimization.
-
-### One held-out case, real task-native outputs
-
-| no-skill | original Skill | v2 rank 1 | v2 rank 2 |
+| Complete candidate state | Evidence before claims | Structured evolution | Fail-closed deployment |
 |---|---|---|---|
-| ![No-skill GIF](artifacts/runs/f4e-slack-gif-creator-relative-efficiency-v2-report/evidence/gifs/44-gif-25cec5b0a95e5d31469c63ba.gif) | ![Original Skill GIF](artifacts/runs/f4e-slack-gif-creator-relative-efficiency-v2-report/evidence/gifs/45-gif-25bfb2d03163b320a64b30cf.gif) | ![v2 rank-1 candidate GIF](artifacts/runs/f4e-slack-gif-creator-relative-efficiency-v2-report/evidence/gifs/42-gif-4007d0e2d4dd38f41ac4437f.gif) | ![v2 rank-2 candidate GIF](artifacts/runs/f4e-slack-gif-creator-relative-efficiency-v2-report/evidence/gifs/41-gif-2de981b5ec17e4a6cb54b2ae.gif) |
+| Snapshot and reason over instructions, references, code, assets, metadata, and dependencies. | Compare no-skill, original, and candidate in isolated contexts with task-native outputs. | Localize failures with static+observed graphs and apply bounded, typed `PackagePatch` edits. | Admit only strict held-out improvements; preserve rejections, incomplete work, lineage, usage, and hashes. |
 
-The [latest self-contained Chinese narrative report](artifacts/runs/f4e-slack-gif-creator-relative-efficiency-v2-report/index.html)
-organizes no-skill/original/candidate GIFs by task and shows lineage, six-dimensional scores,
-quality-cost trade-offs, failure-to-graph-to-Patch-to-Gate traces, Merge, runtime, provenance, and
-both deployable archives.
+Most Skill tooling answers “can an Agent load this package?” GEPASE is designed to answer the
+harder questions: **did it improve the task, why did it fail, what changed, and is the result safe
+to deploy?**
 
-### Independent graph-hardening reproduction
+## A real end-to-end result
 
-GH-E1 on `codex/graph-hardening` restarted from a fresh no-skill/original reference while retaining
-the same pinned Package and frozen EvalPlan. One graph-guided candidate reached train `+0.07083`
-with `5/5` wins, but was rejected because held-out `quality_efficiency=-0.15972` crossed the
-`-0.05` category floor. The second candidate regressed at train (`-0.16221`). The final frontier
-is empty and the outcome is `no_strict_improvement`. This demonstrates honest negative-result
-closure, not superiority of graph guidance over another search strategy.
+The latest public run used the pinned multi-file `slack-gif-creator` Skill, one frozen EvalPlan,
+and a bounded five-candidate search. It exercised generation-1, parent-bound generation-2, and
+same-package Merge through the same Controller and Gate mainline.
 
-The realized GH-E1 search depth was two seed-rooted generation-1 candidates. Reflection preserved
-task-level feedback but created no generation-2 child, and rejected-branch recovery created another
-seed-rooted generation-1 branch. GH-E1 therefore demonstrates one bounded GEPA-style
-reflection/Pareto mainline run, not realized multi-generation evolution. A future second-generation
-contract should remain bounded to two initial branches, at most two refinement/recovery children,
-and at most one conditional merge child under `max_candidates=5`.
+| Search realized | Gate funnel | Deployable frontier | Best held-out result |
+|---|---|---|---|
+| 2 generation-1 + 2 generation-2 + 1 Merge | 5 candidates → 4 train-admitted → 3 validation-completed | **2 candidates** | **+0.09920** validation delta · relative cost **1.83254** |
 
-The [GH-E1 self-contained Chinese report](artifacts/runs/gh-e1-slack-gif-creator-report/final/index.html)
-contains 29 hash-verified task-native GIFs, the Package Graph, both patches, lineage, reflections,
-conditional merge, six-dimensional scores, and authoritative ActiveSession/HostAttempt usage.
+The second deployable candidate achieved `+0.07906` validation delta at relative cost `1.93702`.
+Both won all three held-out cases. Effective patches in this run still concentrate in `SKILL.md`,
+so this is **not** evidence of successful cross-file optimization.
 
-The public Git surface intentionally contains that self-contained report, the safety-reviewed
-GH-E0.5/GH-E1/post-GH-E1 stage evidence, frozen configs, Core, and tests. The byte-preserved GH-E1
-reference/evolution runs remain local sealed research evidence because they include raw Agent
-workspaces and machine-local diagnostics. A clean clone verifies the published report and stage
-seals; it does not claim to contain or replay the unpublished raw evolution seal.
+![F4e search lineage](docs/assets/f4e-search-lineage.svg)
 
-## How it works
+### One held-out task, four real outputs
 
-```mermaid
-flowchart LR
-    P["Complete Skill Package"] --> G["Package IR + Graph"]
-    G --> E["Reviewed EvalPlan"]
-    E --> X["Isolated Agent execution"]
-    X --> S["Assertions + blind grading + comparison"]
-    S --> A["TaskScoreVector + ASI"]
-    A --> O["GEPA / Pareto search"]
-    O --> T["Graph-guided typed PackagePatch"]
-    T --> V["Gate 0–3 + held-out validation"]
-    V -->|strict gain| D["Deployable frontier"]
-    V -->|reject| A
-```
+| no-skill | original Skill | deployable rank 1 | deployable rank 2 |
+|---|---|---|---|
+| ![No-skill GIF](artifacts/runs/f4e-slack-gif-creator-relative-efficiency-v2-report/evidence/gifs/44-gif-25cec5b0a95e5d31469c63ba.gif) | ![Original Skill GIF](artifacts/runs/f4e-slack-gif-creator-relative-efficiency-v2-report/evidence/gifs/45-gif-25bfb2d03163b320a64b30cf.gif) | ![Rank-1 candidate GIF](artifacts/runs/f4e-slack-gif-creator-relative-efficiency-v2-report/evidence/gifs/42-gif-4007d0e2d4dd38f41ac4437f.gif) | ![Rank-2 candidate GIF](artifacts/runs/f4e-slack-gif-creator-relative-efficiency-v2-report/evidence/gifs/41-gif-2de981b5ec17e4a6cb54b2ae.gif) |
 
-The active selector graph is strictly a static+observed view supporting failure localization,
-mutation scope, blast radius, dependency closure, and merge conflict checks. The sealed GH-P1
-semantic-hypothesis experiment remains stalled historical evidence and is no longer generated or
-consumed by the active runtime. The mainline supports parent-bound generation-2,
-Grader/Comparator/Analyzer typed failures, 0/1/many deployable outcomes, and conditional
-same-package Merge; cross-package merge is a hard error. Agent-facing Skills are thin adapters and
-never own the candidate pool, scoring policy, or Gate decision.
+The [self-contained Chinese narrative report](artifacts/runs/f4e-slack-gif-creator-relative-efficiency-v2-report/index.html)
+shows all 51 task-native GIFs, the search lineage, six-dimensional scores, quality–cost trade-offs,
+failure → graph → Patch → Gate traces, runtime accounting, provenance, and both deployable archives.
+
+## How the engineering pipeline works
+
+![GEPASE end-to-end pipeline](docs/assets/evolution-loop.svg)
+
+1. **Compile the Package.** Build an immutable snapshot, typed IR, parse coverage, and a static
+   dependency graph for the complete Skill directory.
+2. **Freeze the evaluation contract.** Review and hash cases, fixtures, train/validation splits,
+   rubrics, scoring, host/model, seed, timeout, and tool policy.
+3. **Build a paired reference.** Run no-skill and original Skill in isolated contexts; ingest E2
+   task outputs, deterministic E3 assertions, blind grading, comparison, and analysis.
+4. **Turn failures into graph evidence.** Overlay observed package access onto the static graph,
+   derive failure slices, and rank relevant targets without granting semantic guesses authority.
+5. **Propose a bounded edit.** Reflection and the Proposer produce a typed `PackagePatch`; Core
+   validates target scope, preconditions, dependency closure, impact, and atomic rollback.
+6. **Materialize and evaluate a Candidate.** Candidate bundles bind Package, parent, Patch,
+   application, graph, workspace, run metadata, and an immutable intermediate seal.
+7. **Search without erasing failures.** Train Gate, task-level GEPA feedback, Pareto selection,
+   rejected-edit memory, generation-2, and eligible same-package Merge share one Controller.
+8. **Validate once, then report.** Held-out evidence cannot modify the candidate. Gate 3 applies
+   strict improvement and protected-category floors before exporting the deployable frontier.
+
+## Design choices that matter
+
+- **Typed boundaries, isolated roles.** Executor, Independent Grader, Comparator, Analyzer,
+  Reflection, and Proposer exchange only validated WorkItems/submissions; no hidden shared chat
+  history decides the winner.
+- **The graph changes decisions.** The active selector consumes only verified static and observed
+  layers for localization, mutation scope, blast radius, dependency closure, and merge conflict
+  analysis. It is not a decorative visualization.
+- **Assertions are not overall quality.** `TaskScoreVector` keeps task correctness, output quality,
+  skill gain, reliability, efficiency, and package quality separate.
+- **Resumability is part of correctness.** Reservations, Host attempts, typed role failures,
+  checkpoints, Candidate seals, and artifact indexes are append-only and hash-bound.
+- **Package-aware does not mean unsafe mutation.** Text, code, and metadata have bounded typed edit
+  operations. Binary assets are visible to snapshots, graphs, evidence, and Gates but remain
+  immutable until a dedicated validator exists.
+- **Merge is deliberately narrow.** Only compatible branches of the same Package, snapshot, and
+  common root may merge. Cross-package Merge is a hard error.
+
+New `2.0.0` evolution configs default to `relative_v2` efficiency, and new report configs default
+to the `narrative_v1` presentation used above. `v1_legacy` and `classic` remain explicit options;
+historical `1.0.0` configs retain their original interpretation and fingerprints.
 
 ## Quick start
 
@@ -107,7 +118,7 @@ uv run gepase --version
 uv run gepase doctor --format json
 ```
 
-Run the deterministic offline smoke test—no Agent or API call:
+Run a deterministic offline smoke test—no Agent or API call:
 
 ```bash
 uv run gepase mock run \
@@ -117,8 +128,7 @@ uv run gepase mock run \
 uv run gepase artifact verify artifacts/local/mock-run --format json
 ```
 
-A clean clone can verify the latest published narrative report without the local raw Agent
-workspace:
+Verify the latest published report in a clean clone:
 
 ```bash
 uv run gepase artifact verify \
@@ -126,105 +136,65 @@ uv run gepase artifact verify \
   --format json
 ```
 
-Verify the sealed result and materialize its deployable Package without rerunning R3/R4:
+The full [reproduction guide](docs/reproduction.md) covers EvalPlan review, Agent-native work
+export/submit/ingest, resume, optional role-scoped Headless routing, report verification, and
+deployable Package export.
 
-```bash
-uv run gepase report verify \
-  --config configs/canaries/slack-gif-creator-r5.json \
-  --report-dir artifacts/runs/r5-slack-gif-creator-report \
-  --format json
-uv run gepase report deploy \
-  --config configs/canaries/slack-gif-creator-r5.json \
-  --report-dir artifacts/runs/r5-slack-gif-creator-report \
-  --output artifacts/local/deployed-slack-gif-creator \
-  --format json
-```
+## Repository architecture
 
-See [Reproduction and release evidence](docs/reproduction.md) for artifact verification, report
-rebuild, Eval review, Agent-native execution, resume, optional role-scoped Headless configuration,
-and deployment.
+| Path | Responsibility |
+|---|---|
+| [`src/gepase/package/`](src/gepase/package/) | Package snapshots, Markdown/Python/shell/config IR, graph layers, failure slices, graph diffs |
+| [`src/gepase/evals/`](src/gepase/evals/) | EvalPlan, isolated role work, E2/E3 evidence, paired scoring, statistics, ledger, runtime |
+| [`src/gepase/optimizer/`](src/gepase/optimizer/) | Candidate, GEPA/Pareto, generation-2, strict Gate, recovery, same-package Merge |
+| [`src/gepase/mutation/`](src/gepase/mutation/) | Typed `PackagePatch`, target scope, impact checks, atomic apply/rollback |
+| [`src/gepase/store/`](src/gepase/store/) | Artifact, Candidate, checkpoint, pool, rejection, and proposal stores |
+| [`src/gepase/reporting/`](src/gepase/reporting/) | Read-only reports derived from sealed evidence |
+| [`.agents/skills/gepase-orchestrator/`](.agents/skills/gepase-orchestrator/) | Thin Agent-host adapter; never a second evaluator or search system |
+| [`tests/`](tests/) · [`schemas/`](schemas/) | Unit/integration/fault/contract coverage and generated exchange schemas |
 
-## Evaluation contract
+## Evidence, status, and limits
 
-Trigger Eval is kept separate from functional quality. Functional cases run `no-skill` and
-`original` in isolated contexts; candidate runs may reuse the sealed reference only when the full
-EvalPlan, scoring policy, model/host, environment, seed, tool policy, and artifact hashes match.
+GEPASE separates three claims instead of blending them:
 
-| Tier | Meaning | Acceptance role |
-|---|---|---|
-| E0 | Static structure, syntax, reference and safety checks | Preflight only |
-| E1 | Optional plan simulation without tool execution | Disabled by default; never sufficient for acceptance |
-| E2 | Real Agent execution with task-native output, transcript, observed trace and usage | Required functional evidence |
-| E3 | Deterministic assertions over the E2 output | High-confidence evidence channel, not an overall Skill score |
+| Claim | Public evidence |
+|---|---|
+| **Code implemented** | One Python package contains the Package, Eval, Graph, Candidate, Patch, Controller, Gate, Runtime, Store, and reporting mainline. |
+| **Engineering mechanism tested** | 263 tests plus Ruff, Pyright, schema idempotence, security, license, link, artifact-seal, resume, isolation, and fault checks. |
+| **Algorithm effect observed** | The public relative-efficiency v2 result is `strict_improvement` with a two-candidate deployable frontier. |
 
-The `TaskScoreVector` keeps `task_correctness`, `output_quality`, `skill_gain`, `reliability`,
-`efficiency`, and `package_quality` separate. A deterministic assertion rate of 1.0 is never
-presented as overall Skill quality. New `2.0.0` evolution configs default to `relative_v2`, which
-compares held-out duration, tool calls, and compatible token telemetry against the original Skill
-while keeping artifact size separate; `v1_legacy` remains an explicit option. New `2.0.0` report
-configs default to `narrative_v1`, while `classic` remains explicit. Historical `1.0.0` configs
-missing these fields retain v1/classic semantics and their prior fingerprints.
+Current effect evidence covers **one public Skill, one frozen EvalPlan, one host/model snapshot, and
+one bounded run**. It does not establish cross-Skill, cross-model, multi-seed, graph-vs-random, or
+Package-vs-SKILL-only superiority. An earlier independent graph-hardening run closed honestly as
+`no_strict_improvement`; its [sealed report](artifacts/runs/gh-e1-slack-gif-creator-report/final/index.html)
+is retained rather than hidden.
 
-## Agent-native and optional Headless roles
-
-Agent-native is the default and does not require an additional API key. The repo-scoped
-`.agents/skills/gepase-orchestrator/` adapter dispatches Eval Designer, Executor, Grader,
-Comparator, Analyzer, Reflection, and Patch proposal work in isolated contexts.
-
-`configs/examples/headless-roles.yaml` and `schemas/project_config.schema.json` define optional
-per-role provider routing. v0.1 validates this provider-neutral interface but does not ship a
-second built-in API runtime; a host adapter must implement the same typed work/submission protocol.
-
-```bash
-uv run gepase config validate configs/examples/headless-roles.yaml --format json
-```
-
-## Repository map
-
-```text
-src/gepase/        Python Core, CLI and public API
-  package/         Package snapshot, IR, Graph, slices and diffs
-  evals/           EvalPlan, role work, evidence, scoring and statistics
-  optimizer/       Candidate, GEPA adapter, search, Gate and merge
-  mutation/        Typed PackagePatch, validation, apply and rollback
-  store/           Artifact, candidate, checkpoint, pool and rejection stores
-  reporting/       Read-only sealed-evidence reports
-.agents/skills/    Thin Agent-host orchestration adapter
-benchmarks/        Public integration fixtures and pinned canary
-schemas/           Generated public exchange schemas
-artifacts/runs/    Curated R2–R5 evidence and the self-contained GH-E1 report
-artifacts/stages/  Public safety-reviewed Stage Gates and completion evidence
-tests/             Unit, integration, contract, fault and release tests
-```
-
-`skills_test/`, `.env`, `artifacts/local/`, generated `results/`, and the raw GH-E1
-reference/evolution runs are ignored. Private Skills, credentials, raw Agent workspaces,
-production traces, and local absolute paths must never enter public artifacts.
+Raw Agent workspaces and machine-local research evidence remain outside Git. A clean clone can
+verify curated report/stage seals, but does not claim to include unpublished raw evolution runs.
+See [artifact policy](docs/artifacts.md), [benchmark scope](docs/benchmark.md), and the authoritative
+[project state / decision log](state.md).
 
 ## Documentation
 
-- [Reproduction guide](docs/reproduction.md)
-- [Multi-fidelity evaluation](docs/evaluation.md)
-- [Agent-native orchestration](docs/orchestrator.md)
-- [Configuration](docs/configuration.md)
-- [Artifact contract](docs/artifacts.md)
-- [Benchmark v1 scope](docs/benchmark.md)
-- [Project state and decision log](state.md)
-- [Algorithm learning guide](learning.html)
-- [Contributing](CONTRIBUTING.md) · [Security](SECURITY.md)
+- [Evaluation model](docs/evaluation.md) · [Agent-native orchestration](docs/orchestrator.md)
+- [Configuration](docs/configuration.md) · [Artifact contract](docs/artifacts.md)
+- [Reproduction](docs/reproduction.md) · [Benchmark scope](docs/benchmark.md)
+- [Project state](state.md) · [Algorithm learning guide](learning.html)
+- [Contributing](CONTRIBUTING.md) · [Security policy](SECURITY.md)
 
 ## Method lineage
 
-GEPASE uses the locally pinned `gepa==0.1.4` implementation as its reflective search skeleton. Its
-evaluation design is informed by Anthropic's skill-creator; bounded edits and validation discipline
-by SkillOpt; iterative execution history by Darwin-skill; and the frozen-model/external-policy view
-by Heuristic Learning. GEPASE's extension is to make the complete Skill Package and its dependency
-graph the candidate state, then connect that state to typed evidence, patches, merge, and held-out
-Gates. See [learning.html](learning.html) for sources and the exact reuse/extension boundary.
+GEPASE uses the pinned `gepa==0.1.4` implementation as its reflective-search skeleton. Its
+evaluation design is informed by Anthropic skill-creator; bounded edits and validation discipline
+by SkillOpt; iterative execution history by Darwin-skill; and the frozen-model/external-policy
+view by Heuristic Learning. GEPASE extends this lineage by making the **complete Package plus its
+dependency graph** the candidate state and connecting it to typed evidence, Patch, Merge, and
+held-out acceptance. Exact reuse and extension boundaries are documented in
+[learning.html](learning.html).
 
-The canary Package is pinned from [`anthropics/skills`](https://github.com/anthropics/skills) at
-commit `fa0fa64bdc967915dc8399e803be67759e1e62b8`; its Apache-2.0 attribution and exact tree/blob
-hashes are included in `benchmarks/canaries/slack-gif-creator/`.
+The public canary is pinned from [`anthropics/skills`](https://github.com/anthropics/skills) at
+commit `fa0fa64bdc967915dc8399e803be67759e1e62b8`; upstream provenance, Apache-2.0 attribution, and
+tree/blob hashes are preserved under [`benchmarks/canaries/slack-gif-creator/`](benchmarks/canaries/slack-gif-creator/).
 
 ## License
 

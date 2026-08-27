@@ -1,0 +1,118 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1440" height="680" viewBox="0 0 1440 680" role="img" aria-labelledby="title desc">
+  <title id="title">F4e search lineage and deployable frontier</title>
+  <desc id="desc">A real bounded search created two generation-one candidates, two generation-two candidates, and one same-package merge. Two candidates reached the relative-efficiency v2 deployable frontier.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#fffdf8"/><stop offset="1" stop-color="#f7f4ee"/></linearGradient>
+    <filter id="shadow" x="-25%" y="-25%" width="150%" height="160%"><feDropShadow dx="0" dy="7" stdDeviation="8" flood-color="#334155" flood-opacity=".11"/></filter>
+    <marker id="arrow" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0l10 5-10 5z" fill="#94a3b8"/></marker>
+    <marker id="arrow-green" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0l10 5-10 5z" fill="#10b981"/></marker>
+    <style>
+      .title{font:800 30px ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;fill:#172033}
+      .sub{font:500 15px ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;fill:#64748b}
+      .col{font:750 13px ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;letter-spacing:.8px;fill:#64748b}
+      .name{font:750 15px ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;fill:#172033}
+      .metric{font:650 12px ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;fill:#475569}
+      .status{font:750 11px ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+      .card{fill:#fff;stroke:#d8dee9;stroke-width:1.4;rx:16;filter:url(#shadow)}
+      .accepted{fill:#ecfdf5;stroke:#6ee7b7;stroke-width:1.6;rx:16;filter:url(#shadow)}
+      .rejected{fill:#fff7ed;stroke:#fdba74;stroke-width:1.4;rx:16;filter:url(#shadow)}
+      .incomplete{fill:#f8fafc;stroke:#cbd5e1;stroke-width:1.4;rx:16;filter:url(#shadow)}
+      .edge{fill:none;stroke:#94a3b8;stroke-width:2;stroke-linecap:round;marker-end:url(#arrow)}
+      .merge-edge{fill:none;stroke:#a78bfa;stroke-width:2;stroke-linecap:round;stroke-dasharray:6 6;marker-end:url(#arrow)}
+      .frontier-edge{fill:none;stroke:#10b981;stroke-width:2.5;stroke-linecap:round;marker-end:url(#arrow-green)}
+    </style>
+  </defs>
+
+  <rect width="1440" height="680" rx="30" fill="url(#bg)"/>
+  <text x="58" y="58" class="title">A bounded search that actually reached generation-2 and Merge</text>
+  <text x="58" y="86" class="sub">F4e public snapshot · 5 candidate bundles · 4 train-admitted · 3 validation-completed · 2 deployable under relative-efficiency v2</text>
+
+  <text x="86" y="132" class="col">SEED</text>
+  <text x="292" y="132" class="col">GENERATION 1</text>
+  <text x="600" y="132" class="col">GENERATION 2</text>
+  <text x="902" y="132" class="col">SAME-PACKAGE MERGE</text>
+  <text x="1198" y="132" class="col">FRONTIER</text>
+
+  <path d="M229 330C255 330 254 225 281 225" class="edge"/>
+  <path d="M229 330C255 330 254 443 281 443" class="edge"/>
+  <path d="M529 225h57" class="edge"/>
+  <path d="M529 443h57" class="edge"/>
+  <path d="M529 225C723 225 724 320 877 320" class="merge-edge"/>
+  <path d="M529 443C723 443 724 339 877 339" class="merge-edge"/>
+  <path d="M529 443C775 443 912 235 1169 235" class="frontier-edge"/>
+  <path d="M834 225C986 225 1032 434 1169 434" class="frontier-edge"/>
+
+  <g transform="translate(58 272)">
+    <rect width="171" height="116" class="card"/>
+    <circle cx="28" cy="28" r="14" fill="#f59e0b"/>
+    <path d="M22 28h12M28 22v12" stroke="#fff" stroke-width="3" stroke-linecap="round"/>
+    <text x="20" y="61" class="name">Original Package</text>
+    <text x="20" y="84" class="metric">frozen snapshot + plan</text>
+    <text x="20" y="103" class="metric">paired reference anchor</text>
+  </g>
+
+  <g transform="translate(281 165)">
+    <rect width="248" height="120" class="incomplete"/>
+    <text x="20" y="31" class="name">G1-A · branch A</text>
+    <text x="20" y="55" class="metric">train +0.04095 · 3 / 0 / 2</text>
+    <text x="20" y="77" class="metric">validation evidence incomplete</text>
+    <rect x="20" y="91" width="120" height="20" rx="10" fill="#e2e8f0"/><text x="80" y="105" text-anchor="middle" class="status" fill="#475569">FAIL-CLOSED</text>
+  </g>
+
+  <g transform="translate(281 383)">
+    <rect width="248" height="120" class="accepted"/>
+    <text x="20" y="31" class="name">G1-B · branch B</text>
+    <text x="20" y="55" class="metric">train +0.01517 · 3 / 0 / 2</text>
+    <text x="20" y="77" class="metric">validation +0.09920 · cost 1.83254</text>
+    <rect x="20" y="91" width="96" height="20" rx="10" fill="#a7f3d0"/><text x="68" y="105" text-anchor="middle" class="status" fill="#047857">RANK 1</text>
+  </g>
+
+  <g transform="translate(586 165)">
+    <rect width="248" height="120" class="accepted"/>
+    <text x="20" y="31" class="name">G2-A · parent G1-A</text>
+    <text x="20" y="55" class="metric">train +0.03742 · 4 / 0 / 1</text>
+    <text x="20" y="77" class="metric">validation +0.07906 · cost 1.93702</text>
+    <rect x="20" y="91" width="96" height="20" rx="10" fill="#a7f3d0"/><text x="68" y="105" text-anchor="middle" class="status" fill="#047857">RANK 2</text>
+  </g>
+
+  <g transform="translate(586 383)">
+    <rect width="248" height="120" class="rejected"/>
+    <text x="20" y="31" class="name">G2-B · parent G1-B</text>
+    <text x="20" y="55" class="metric">train +0.03123 · 1 / 0 / 4</text>
+    <text x="20" y="77" class="metric">strict train Gate rejected</text>
+    <rect x="20" y="91" width="100" height="20" rx="10" fill="#fed7aa"/><text x="70" y="105" text-anchor="middle" class="status" fill="#c2410c">REJECTED</text>
+  </g>
+
+  <g transform="translate(877 270)">
+    <rect width="244" height="132" class="rejected"/>
+    <text x="20" y="31" class="name">Merge · G1-A + G1-B</text>
+    <text x="20" y="55" class="metric">one eligible common-root parent set</text>
+    <text x="20" y="77" class="metric">validation +0.01432 · 2 / 0 / 1</text>
+    <text x="20" y="97" class="metric">protected objective regression</text>
+    <rect x="20" y="105" width="100" height="20" rx="10" fill="#fed7aa"/><text x="70" y="119" text-anchor="middle" class="status" fill="#c2410c">REJECTED</text>
+  </g>
+
+  <g transform="translate(1169 175)">
+    <rect width="215" height="120" class="accepted"/>
+    <circle cx="28" cy="29" r="14" fill="#10b981"/><path d="M21 29l5 5 10-12" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+    <text x="51" y="34" class="name">Deployable #1</text>
+    <text x="20" y="65" class="metric">generation-1 branch</text>
+    <text x="20" y="86" class="metric">strict held-out improvement</text>
+    <text x="20" y="106" class="metric">archive + seal published</text>
+  </g>
+
+  <g transform="translate(1169 374)">
+    <rect width="215" height="120" class="accepted"/>
+    <circle cx="28" cy="29" r="14" fill="#10b981"/><path d="M21 29l5 5 10-12" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+    <text x="51" y="34" class="name">Deployable #2</text>
+    <text x="20" y="65" class="metric">generation-2 child</text>
+    <text x="20" y="86" class="metric">strict held-out improvement</text>
+    <text x="20" y="106" class="metric">archive + seal published</text>
+  </g>
+
+  <rect x="58" y="573" width="1326" height="67" rx="18" fill="#ffffffa8" stroke="#e2e8f0"/>
+  <circle cx="88" cy="606" r="7" fill="#10b981"/><text x="103" y="611" class="metric">accepted</text>
+  <circle cx="202" cy="606" r="7" fill="#f59e0b"/><text x="217" y="611" class="metric">rejected</text>
+  <circle cx="316" cy="606" r="7" fill="#94a3b8"/><text x="331" y="611" class="metric">incomplete / fail-closed</text>
+  <text x="543" y="611" class="metric">All effective edits in this run remained concentrated in SKILL.md; cross-file optimization is not claimed.</text>
+</svg>
