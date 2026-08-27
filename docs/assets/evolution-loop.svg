@@ -28,8 +28,9 @@
 
   <rect x="54" y="116" width="1332" height="116" class="lane" fill="#fff7ed" stroke="#fed7aa"/>
   <text x="80" y="151" class="lane-title">Agent host · isolated execution plane</text>
-  <text x="80" y="174" class="lane-sub">Every role receives only its typed WorkItem and returns a typed submission. No role can admit a candidate.</text>
-  <g transform="translate(548 141)">
+  <text x="80" y="176" class="lane-sub">Typed WorkItems in; validated submissions out.</text>
+  <text x="80" y="199" class="lane-sub">Contexts stay isolated; no role owns acceptance.</text>
+  <g transform="translate(548 158)">
     <rect width="104" height="36" rx="18" fill="#fff" stroke="#fdba74"/><text x="52" y="23" text-anchor="middle" class="pill">Executor</text>
     <rect x="116" width="104" height="36" rx="18" fill="#fff" stroke="#fdba74"/><text x="168" y="23" text-anchor="middle" class="pill">Grader</text>
     <rect x="232" width="110" height="36" rx="18" fill="#fff" stroke="#fdba74"/><text x="287" y="23" text-anchor="middle" class="pill">Comparator</text>
@@ -94,7 +95,7 @@
     </g>
   </g>
 
-  <path d="M1096 488c0 56-78 61-279 61H693c-153 0-174-23-174-63v-21" class="loop"/>
+  <path d="M1096 488c0 56-72 61-236 61H850c-111 0-127-23-127-63v-21" class="loop"/>
   <rect x="600" y="512" width="520" height="39" rx="19.5" fill="#f5f3ff" stroke="#c4b5fd"/>
   <text x="860" y="536" text-anchor="middle" class="pill">Reflection · Pareto · generation-2 · conditional same-package Merge</text>
 

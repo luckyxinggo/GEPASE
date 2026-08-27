@@ -18,6 +18,7 @@
       .rejected{fill:#fff7ed;stroke:#fdba74;stroke-width:1.4;rx:16;filter:url(#shadow)}
       .incomplete{fill:#f8fafc;stroke:#cbd5e1;stroke-width:1.4;rx:16;filter:url(#shadow)}
       .edge{fill:none;stroke:#94a3b8;stroke-width:2;stroke-linecap:round;marker-end:url(#arrow)}
+      .merge-input{fill:none;stroke:#a78bfa;stroke-width:2;stroke-linecap:round;stroke-dasharray:6 6}
       .merge-edge{fill:none;stroke:#a78bfa;stroke-width:2;stroke-linecap:round;stroke-dasharray:6 6;marker-end:url(#arrow)}
       .frontier-edge{fill:none;stroke:#10b981;stroke-width:2.5;stroke-linecap:round;marker-end:url(#arrow-green)}
     </style>
@@ -37,10 +38,12 @@
   <path d="M229 330C255 330 254 443 281 443" class="edge"/>
   <path d="M529 225h57" class="edge"/>
   <path d="M529 443h57" class="edge"/>
-  <path d="M529 225C723 225 724 320 877 320" class="merge-edge"/>
-  <path d="M529 443C723 443 724 339 877 339" class="merge-edge"/>
-  <path d="M529 443C775 443 912 235 1169 235" class="frontier-edge"/>
-  <path d="M834 225C986 225 1032 434 1169 434" class="frontier-edge"/>
+  <path d="M529 225H548V318H805V329" class="merge-input"/>
+  <path d="M529 443H548V340H805V329" class="merge-input"/>
+  <circle cx="805" cy="329" r="5" fill="#a78bfa"/>
+  <path d="M813 329H877" class="merge-edge"/>
+  <path d="M529 443H548Q568 443 568 423V170Q568 150 588 150H1080C1130 150 1125 235 1169 235" class="frontier-edge"/>
+  <path d="M834 225C980 225 1128 205 1138 321C1144 376 1136 434 1169 434" class="frontier-edge"/>
 
   <g transform="translate(58 272)">
     <rect width="171" height="116" class="card"/>

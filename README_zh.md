@@ -24,7 +24,7 @@ assets、metadata 及其依赖图共同视为冻结模型之外的可训练状�
 真实 Agent 执行、盲化评测、GEPA 式反思/Pareto 搜索、图引导 typed Patch、held-out
 validation 与同 Package 条件 Merge，都在同一条可审计主链中完成。
 
-> **架构边界：**GEPASE 不自研另一套通用 Agent Runtime。Codex、Claude Code 或其他 Host
+> **架构边界：** GEPASE 不自研另一套通用 Agent Runtime。Codex、Claude Code 或其他 Host
 > 负责隔离执行角色；证据、分数、候选、搜索状态、checkpoint 与接受结论始终由 GEPASE Core
 > 持有。
 
